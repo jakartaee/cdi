@@ -1,0 +1,1744 @@
+<chapter id="spi">
+  <title>Portable extensions</title>
+  
+  <para>A portable extension may integrate with the container by:</para>
+    
+  <itemizedlist>
+    <listitem>
+      <para>Providing its own beans, interceptors and decorators to
+      the container</para>
+    </listitem>
+    <listitem>
+      <para>Injecting dependencies into its own objects using the
+      dependency injection service</para>
+    </listitem>
+    <listitem>
+      <para>Providing a context implementation for a custom scope</para>
+    </listitem>
+    <listitem>
+      <para>Augmenting or overriding the annotation-based metadata with
+      metadata from some other source</para>
+    </listitem>
+  </itemizedlist>
+  
+  <!--
+  <para>Bean definitions provided by a portable extension may be associated
+  with a certain <emphasis>activity</emphasis>.</para>
+  -->
+  <!--
+  <para>Integration with portable extensions is enabled via the important SPI
+  interfaces <literal>Bean</literal> and <literal>BeanManager</literal>.</para>
+  -->
+  
+  <section id="bean">
+    <title>The <literal>Bean</literal> interface</title>
+    
+    <para>The <literal>BeanAttributes</literal> interface exposes the basic attributes 
+    of a bean.</para> 
+    
+    <programlisting><![CDATA[public interface BeanAttributes<T> {
+    public Set<Type> getTypes();
+    public Set<Annotation> getQualifiers();
+    public Class<? extends Annotation> getScope();
+    public String getName();
+    public Set<Class<? extends Annotation>> getStereotypes();
+    public boolean isAlternative();
+    public boolean isNullable();
+}]]></programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>getTypes()</literal>, <literal>getQualifiers()</literal>, 
+        <literal>getScope()</literal>, <literal>getName()</literal> and
+        <literal>getStereotypes()</literal> must return the bean types, qualifiers, 
+        scope type, EL name and stereotypes of the bean, as defined in 
+        <xref linkend="concepts"/>.</para>
+      </listitem>
+      <listitem>
+        <para><literal>isAlternative()</literal> must return <literal>true</literal> 
+        if the bean is an alternative, and <literal>false</literal> otherwise.</para>
+      </listitem>
+      <listitem>
+        <para><literal>isNullable()</literal> must return <literal>true</literal> 
+        if the method <literal>Bean.create()</literal> sometimes returns a null value, and 
+        <literal>false</literal> otherwise, as defined in <xref linkend="null"/>.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.Bean</literal> defines
+    everything the container needs to manage instances of a certain bean.</para>
+      
+    <programlisting><![CDATA[public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
+    public Class<?> getBeanClass();
+    public Set<InjectionPoint> getInjectionPoints();
+}]]></programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>getBeanClass()</literal> returns the bean class of 
+        the managed bean or session bean or of the bean that declares the producer 
+        method or field.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getInjectionPoints()</literal> returns a set of 
+        <literal>InjectionPoint</literal> objects, defined in 
+        <xref linkend="injectionpoint"/>, representing injection points of the bean, 
+        that will be validated by the container at initialization time.</para>
+      </listitem>
+    </itemizedlist>
+        
+    <para>Note that implementations of <literal>Bean</literal> must also implement
+    the inherited operations defined by the <literal>Contextual</literal> interface 
+    defined in <xref linkend="contextual"/>.</para>
+    
+    <para>An instance of <literal>Bean</literal> exists for every enabled bean.</para>
+    
+    <para>A portable extension may add support for new kinds of beans beyond 
+    those defined by the this specification (managed beans, session beans, 
+    producer methods, producer fields and resources) by implementing 
+    <literal>Bean</literal> and registering beans with the container, using the 
+    mechanism defined in <xref linkend="abd"/>.</para>
+    
+    <section id="decorator">
+      <title>The <literal>Decorator</literal> interface</title>
+      
+      <para>The <literal>Bean</literal> object for a decorator must implement
+      the interface <literal>javax.enterprise.inject.spi.Decorator</literal>.</para>
+      
+      <programlisting><![CDATA[public interface Decorator<T> extends Bean<T> {
+    public Set<Type> getDecoratedTypes();
+    public Type getDelegateType();
+    public Set<Annotation> getDelegateQualifiers();
+}]]></programlisting>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>getDecoratedTypes()</literal> returns the decorated 
+          types of the decorator.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getDelegateType()</literal> and 
+          <literal>getDelegateQualifiers()</literal> return the delegate type 
+          and qualifiers of the decorator.</para>
+        </listitem>
+      </itemizedlist>
+      
+    <para>An instance of <literal>Decorator</literal> exists for every enabled
+    decorator.</para>
+    
+    </section>
+      
+    <section id="interceptor">
+      <title>The <literal>Interceptor</literal> interface</title>
+      
+      <para>The <literal>Bean</literal> object for an interceptor must implement 
+      <literal>javax.enterprise.inject.spi.Interceptor</literal>.</para>
+      
+      <programlisting><![CDATA[public interface Interceptor<T> extends Bean<T> {
+    public Set<Annotation> getInterceptorBindings();
+    public boolean intercepts(InterceptionType type);
+    public Object intercept(InterceptionType type, T instance, InvocationContext ctx);
+}]]></programlisting>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>getInterceptorBindings()</literal> returns the interceptor 
+          bindings of the interceptor.</para>
+        </listitem>
+        <listitem>
+          <para><literal>intercepts()</literal> returns <literal>true</literal> if 
+          the interceptor intercepts the specified kind of lifecycle callback or 
+          method invocation, and <literal>false</literal> otherwise.</para>
+        </listitem>
+        <listitem>
+          <para><literal>intercept()</literal> invokes the specified kind of lifecycle 
+          callback or method invocation interception upon the given instance of the 
+          interceptor.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>An <literal>InterceptionType</literal> identifies the kind of lifecycle 
+      callback, EJB timeout method or business method.</para>
+
+      <programlisting>public enum InterceptionType { 
+    AROUND_INVOKE, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
+}</programlisting>
+        
+    <para>An instance of <literal>Interceptor</literal> exists for every enabled 
+    interceptor.</para>
+    
+    </section>
+    
+    <section id="observermethod">
+      <title>The <literal>ObserverMethod</literal> interface</title>
+      
+      <para>The interface <literal>javax.enterprise.inject.spi.ObserverMethod</literal>
+      defines everything the container needs to know about an observer method.</para>
+      
+      <programlisting><![CDATA[public interface ObserverMethod<T> {
+    public Class<?> getBeanClass();
+    public Type getObservedType();
+    public Set<Annotation> getObservedQualifiers();
+    public Reception getReception();
+    public TransactionPhase getTransactionPhase();
+    public void notify(T event);
+}]]></programlisting>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>getBeanClass()</literal> returns the bean class of the bean 
+          that declares the observer method.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getObservedType()</literal> and <literal>getObservedQualifiers()</literal>
+          return the observed event type and qualifiers.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getReception()</literal> returns <literal>IF_EXISTS</literal> for a
+          conditional observer and <literal>ALWAYS</literal> otherwise.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getTransactionPhase()</literal> returns the appropriate transaction phase
+          for a transactional observer method or <literal>IN_PROGRESS</literal> otherwise.</para>
+        </listitem>
+        <listitem>
+          <para><literal>notify()</literal> calls the observer method, as defined in
+          <xref linkend="observers"/>.</para>
+        </listitem>
+      </itemizedlist>
+      
+    <para>An instance of <literal>ObserverMethod</literal> exists for every observer method of every 
+    enabled bean.</para>
+
+    </section>
+    
+  </section>
+  
+  <section id="it">
+        <title>The <literal>Producer</literal> and <literal>InjectionTarget</literal> 
+        interfaces</title>
+      
+      <para>The interface <literal>javax.enterprise.inject.spi.Producer</literal>  
+      provides a generic operation for producing an instance of a type.</para>
+      
+      <programlisting><![CDATA[public interface Producer<T> {
+    public T produce(CreationalContext<T> ctx);
+    public void dispose(T instance);
+    public Set<InjectionPoint> getInjectionPoints();
+}]]></programlisting>
+      
+      <para>For a <literal>Producer</literal> that represents a class:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para><literal>produce()</literal> calls the constructor annotated 
+          <literal>@Inject</literal> if it exists, or the constructor with no 
+          parameters otherwise, as defined in <xref linkend="instantiation"/>,
+          and returns the resulting instance. If the class has interceptors, 
+          <literal>produce()</literal> is responsible for building the 
+          interceptors and decorators of the instance.</para>
+        </listitem>
+       <listitem>
+          <para><literal>dispose()</literal> does nothing.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getInjectionPoints()</literal> returns the set of 
+          <literal>InjectionPoint</literal> objects representing all injected fields, 
+          bean constructor parameters and initializer method parameters.</para> 
+        </listitem>
+      </itemizedlist>
+      
+      <para>For a <literal>Producer</literal> that represents a producer method or 
+      field:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para><literal>produce()</literal> calls the producer method on, 
+          or accesses the producer field of, a contextual instance of the 
+          <!--most specialized bean that specializes the--> bean that declares 
+          the producer method, as defined in <xref linkend="methods"/>.</para>
+        </listitem>
+       <listitem>
+          <para><literal>dispose()</literal> calls the disposer method, if
+          any, on a contextual instance of the <!--most specialized bean that 
+          specializes the--> bean that declares the disposer method, as defined 
+          in <xref linkend="methods"/>, or performs any additional required
+          cleanup, if any, to destroy state associated with a resource.</para>
+        </listitem>
+         <listitem>
+          <para><literal>getInjectionPoints()</literal> returns the set of 
+          <literal>InjectionPoint</literal> objects representing all parameters
+          of the producer method.</para> 
+        </listitem>
+      </itemizedlist>
+
+      <para>The subinterface <literal>javax.enterprise.inject.spi.InjectionTarget</literal>  
+      provides operations for performing dependency injection and lifecycle callbacks
+      on an instance of a type.</para>
+      
+      <programlisting><![CDATA[public interface InjectionTarget<T> {
+        extends Producer<T>
+    public void inject(T instance, CreationalContext<T> ctx);
+    public void postConstruct(T instance);
+    public void preDestroy(T instance);
+}]]></programlisting>
+      
+      <itemizedlist>
+        <!--listitem>
+          <para><literal>produce()</literal> calls the constructor annotated 
+          <literal>@Inject</literal> if it exists, or the constructor with no 
+          parameters otherwise, as defined in 
+          <xref linkend="instantiation"/>.</para>
+        </listitem-->
+        <listitem>
+          <para><literal>inject()</literal> performs dependency injection upon the 
+          given object. The container performs Java EE component environment 
+          injection, according to the semantics required by the Java EE platform 
+          specification, sets the value of all injected fields, and calls all 
+          initializer methods, as defined in 
+          <xref linkend="fieldsinitializermethods"/>.</para>
+        </listitem>
+        <listitem>
+          <para><literal>postConstruct()</literal> calls the <literal>@PostConstruct</literal> 
+          callback, if it exists, according to the semantics required by the Java EE 
+          platform specification.</para>
+        </listitem>
+        <listitem>
+          <para><literal>preDestroy()</literal> calls the <literal>@PreDestroy</literal> 
+          callback, if it exists, according to the semantics required by the Java 
+          EE platform specification.</para>
+        </listitem>
+        <!--listitem>
+          <para><literal>getInjectionPoints()</literal> returns the set of 
+          <literal>InjectionPoint</literal> objects representing all injected fields, 
+          bean constructor parameters and initializer method parameters.</para> 
+        </listitem-->   
+      </itemizedlist>
+      
+  </section>
+  
+  <section id="beanmanager">
+    <title>The <literal>BeanManager</literal> object</title>
+    
+    <para>Portable extensions sometimes interact directly with the container via 
+    programmatic API call. The interface <literal>javax.enterprise.inject.spi.BeanManager</literal> 
+    provides operations for obtaining contextual references for beans, along with many 
+    other operations of use to portable extensions.</para>
+    
+    <para>The container provides a built-in bean with bean type <literal>BeanManager</literal>, 
+    scope <literal>@Dependent</literal> and qualifier <literal>@Default</literal>. 
+    The built-in implementation must be a passivation capable dependency, as defined in 
+    <xref linkend="passivationcapabledependency"/>. Thus, any bean may obtain an 
+    instance of <literal>BeanManager</literal> by injecting it:</para>
+    
+    <programlisting>@Inject BeanManager manager;</programlisting>
+    
+    <para>Java EE components may obtain an instance of <literal>BeanManager</literal> 
+    from JNDI by looking up the name <literal>java:comp/BeanManager</literal>.</para>
+    
+    <para>Any operation of <literal>BeanManager</literal> may be called at any time
+    during the execution of the application.</para>
+    
+    <section>
+      <title>Obtaining a contextual reference for a bean</title>
+
+      <para>The method <literal>BeanManager.getReference()</literal> returns a contextual 
+      reference for a given bean and bean type, as defined in 
+      <xref linkend="contextualreference"/>.</para>
+    
+      <programlisting><![CDATA[public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);]]></programlisting>
+
+      <para>The first parameter is the <literal>Bean</literal> object representing the 
+      bean. The second parameter represents a bean type that must be implemented by any 
+      client proxy that is returned. The third parameter is an instance of 
+      <literal>CreationalContext</literal> that may be used to destroy any object with
+      scope <literal>@Dependent</literal> that is created.</para>
+      
+      <para>If the given type is not a bean type of the given bean, an
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+    </section>
+
+    <section>
+      <title>Obtaining an injectable reference</title>
+      
+      <para>The method <literal>BeanManager.getInjectableReference()</literal> returns
+      an injectable reference for a given injection point, as defined in 
+      <xref linkend="injectableinstance"/>.</para>
+    
+      <programlisting><![CDATA[public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);]]></programlisting>
+      
+      <para>The first parameter represents the target injection point. The second 
+      parameter is an instance of <literal>CreationalContext</literal> that may be used 
+      to destroy any object with scope <literal>@Dependent</literal> that is created.</para>
+
+      <para>If the <literal>InjectionPoint</literal> represents a decorator delegate
+      injection point, <literal>getInjectableReference()</literal> returns a delegate, 
+      as defined in <xref linkend="delegateattribute"/>.</para>
+
+      <para>If typesafe resolution results in an unsatisfied dependency, the container
+      must throw an <literal>UnsatisfiedResolutionException</literal>. If typesafe 
+      resolution results in an unresolvable ambiguous dependency, the container must 
+      throw an <literal>AmbiguousResolutionException</literal>.</para>
+      
+      <para>Implementations of <literal>Bean</literal> usually maintain a reference to
+      an instance of <literal>BeanManager</literal>. When the <literal>Bean</literal> 
+      implementation performs dependency injection, it must obtain the contextual 
+      instances to inject by calling <literal>BeanManager.getInjectableReference()</literal>, 
+      passing an instance of <literal>InjectionPoint</literal> that represents the 
+      injection point and the instance of <literal>CreationalContext</literal> that 
+      was passed to <literal>Bean.create()</literal>.</para>
+
+      <!--
+      <para><emphasis>Open issue: exceptions if InjectionPoint is nonsense.</emphasis></para>
+      -->
+    
+    </section>
+    
+    <section>
+      <title>Obtaining a <literal>CreationalContext</literal></title>
+    
+      <para>An instance of <literal>CreationalContext</literal> for a certain instance of
+      <literal>Contextual</literal> may be obtained by calling 
+      <literal>BeanManager.createCreationalContext()</literal>.</para> 
+       
+      <programlisting><![CDATA[public <T> CreationalContext<T> createCreationalContext(Contextual<T> contextual);]]></programlisting>
+      
+      <para>An instance of <literal>CreationalContext</literal> for a non-contextual object
+      may be obtained by passing a null value to <literal>createCreationalContext()</literal>.</para>
+      
+    </section>
+    
+  <section>
+    <title>Obtaining a <literal>Bean</literal> by type</title>
+    
+    <para>The method <literal>BeanManager.getBeans()</literal> returns the set of beans which 
+    have the given required type and qualifiers and are available for injection in the module
+    or library containing the class into which the <literal>BeanManager</literal> was injected 
+    or the Java EE component from whose JNDI environment namespace the <literal>BeanManager</literal> 
+    was obtained, according to the rules of typesafe resolution defined in 
+    <xref linkend="typesaferesolution"/>.</para>
+    
+    <programlisting><![CDATA[public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);]]></programlisting>
+
+    <para>The first parameter is a required bean type. The remaining parameters are required 
+    qualifiers.</para> 
+    
+    <para>If no qualifiers are passed to <literal>getBeans()</literal>, the default 
+    qualifier <literal>@Default</literal> is assumed.</para>
+
+    <para>If the given type represents a type variable, an 
+    <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+    <para>If two instances of the same qualifier type are given, an 
+    <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+    <para>If an instance of an annotation that is not a qualifier type is given, an 
+    <literal>IllegalArgumentException</literal> is thrown.</para>
+
+    <!--  
+    <para>If an instance of <literal>javax.enterprise.inject.New</literal> is 
+    passed to <literal>getBeans()</literal>, non-portable behavior results. Portable
+    applications should not pass qualifiers of type <literal>@New</literal> to
+    <literal>getBeans()</literal>.</para>
+    -->
+
+  </section>
+  
+  <section>
+    <title>Obtaining a <literal>Bean</literal> by name</title>
+
+    <para>The method <literal>BeanManager.getBeans()</literal> which accepts a string
+    returns the set of beans which have the given EL name and are available for injection
+    in the module or library containing the class into which the <literal>BeanManager</literal> 
+    was injected or the Java EE component from whose JNDI environment namespace the 
+    <literal>BeanManager</literal> was obtained, according to the rules of EL name resolution 
+    defined in <xref linkend="nameresolution"/>.</para>
+
+    <programlisting><![CDATA[public Set<Bean<?>> getBeans(String name);]]></programlisting>
+
+    <para>The parameter is an EL name.</para>
+    
+  </section>
+  
+  <!--section>
+    <title>Obtaining the most specialized bean</title>
+    
+    <para>The method <literal>BeanManager.getMostSpecializedBean()</literal> returns 
+    the <literal>Bean</literal> object representing the most specialized enabled
+    bean that specializes the given bean, as defined in 
+    <xref linkend="mostspecialized"/>.</para>
+    
+    <programlisting><![CDATA[public <X> Bean<? extends X> getMostSpecializedBean(Bean<X> bean);]]></programlisting>
+
+  </section-->
+  
+  <section>
+    <title>Obtaining a passivation capable bean by identifier</title>
+    
+    <para>The method <literal>BeanManager.getPassivationCapableBean()</literal>
+    returns the <literal>PassivationCapable</literal> bean with the given
+    identifier (see <xref linkend="passivationcapable"/>).</para>
+    
+    <programlisting><![CDATA[public Bean<?> getPassivationCapableBean(String id);]]></programlisting>
+    
+  </section>
+  
+  <section>
+    <title>Resolving an ambiguous dependency</title>
+    
+    <para>The method <literal>BeanManager.resolve()</literal> applies the
+    ambiguous dependency resolution rules defined in <xref linkend="ambigdependencies"/>
+    to a set of <literal>Bean</literal>s.</para>
+    
+    <programlisting><![CDATA[public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);]]></programlisting>
+
+    <para>If the ambiguous dependency resolution rules fail, the container 
+    must throw an <literal>AmbiguousResolutionException</literal>.</para>
+    
+  </section>
+  
+  <section>
+    <title>Validating an injection point</title>
+    
+    <para>The <literal>BeanManager.validate()</literal> operation validates 
+    an injection point and throws an <literal>InjectionException</literal> 
+    if there is a deployment problem (for example, an unsatisfied or 
+    unresolvable ambiguous dependency) associated with the injection point.</para>
+      
+    <programlisting>public void validate(InjectionPoint injectionPoint);</programlisting>
+
+  </section>
+  
+  <section>
+    <title>Firing an event</title>
+      
+    <para>The method <literal>BeanManager.fireEvent()</literal> fires an event 
+    and notifies observers, according to <xref linkend="observernotification"/>.</para>
+      
+    <programlisting>public void fireEvent(Object event, Annotation... qualifiers);</programlisting>
+
+    <para>The first argument is the event object. The remaining parameters are 
+    event qualifiers.</para>
+
+    <para>If the runtime type of the event object contains a type variable, an 
+    <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+    <para>If two instances of the same qualifier type are given, an 
+    <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+    <para>If an instance of an annotation that is not a qualifier type is given, 
+    an <literal>IllegalArgumentException</literal> is thrown.</para>
+
+  </section>
+
+  <section>
+    <title>Observer method resolution</title>
+    
+      <para>The method <literal>BeanManager.resolveObserverMethods()</literal> resolves
+      observer methods for an event according to the rules of observer resolution defined 
+      in <xref linkend="observerresolution"/>.</para>
+      
+      <programlisting><![CDATA[public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);]]></programlisting>
+
+      <para>The first parameter of <literal>resolveObserverMethods()</literal> is the event
+      object. The remaining parameters are event qualifiers.</para>
+      
+      <para>If the runtime type of the event object contains a type variable, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+      <para>If two instances of the same qualifier type are given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+      <para>If an instance of an annotation that is not a qualifier type is given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+
+  </section>
+  
+    <section>
+      <title>Decorator resolution</title>
+      
+      <para>The method <literal>BeanManager.resolveDecorators()</literal> returns the 
+      ordered list of decorators for a set of bean types and a set of qualifiers and
+      which are enabled in the module or library containing the class into which the 
+      <literal>BeanManager</literal> was injected or the Java EE component from whose 
+      JNDI environment namespace the <literal>BeanManager</literal> was obtained, 
+      as defined in <xref linkend="decoratorresolution"/>.</para>
+      
+      <programlisting><![CDATA[List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);]]></programlisting>
+
+      <para>The first argument is the set of bean types of the decorated bean. The
+      annotations are qualifiers declared by the decorated bean.</para>
+
+      <para>If two instances of the same qualifier type are given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+
+      <para>If an instance of an annotation that is not a qualifier type is given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+      
+      <para>If the set of bean types is empty, an <literal>IllegalArgumentException</literal> 
+      is thrown.</para>
+      
+    </section>
+    
+    <section>
+      <title>Interceptor resolution</title>
+      
+      <para>The method <literal>BeanManager.resolveInterceptors()</literal> returns the 
+      ordered list of interceptors for a set of interceptor bindings and a type of 
+      interception and which are enabled in the module or library containing the class into 
+      which the <literal>BeanManager</literal> was injected or the Java EE component from 
+      whose JNDI environment namespace the <literal>BeanManager</literal> was obtained, 
+      as defined in <xref linkend="interceptorresolution"/>.</para>
+      
+      <programlisting><![CDATA[List<Interceptor<?>> resolveInterceptors(InterceptionType type, 
+                                         Annotation... interceptorBindings);]]></programlisting>
+
+      <para>If two instances of the same interceptor binding type are given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+
+      <para>If no interceptor binding type instance is given, an 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+
+      <para>If an instance of an annotation that is not an interceptor binding type is 
+      given, an <literal>IllegalArgumentException</literal> is thrown.</para>
+
+    </section>
+
+  <section>
+    <title>Determining if an annotation is a qualifier type, scope type, stereotype 
+    or interceptor binding type</title>
+    
+    <para>A portable extension may test an annotation to determine if it is a 
+    qualifier type, scope type, stereotype or interceptor binding type, obtain the 
+    set of meta-annotations declared by a stereotype or interceptor binding type, 
+    or determine if a scope type is a normal or passivating scope.</para>
+    
+    <programlisting><![CDATA[public boolean isScope(Class<? extends Annotation> annotationType);
+public boolean isQualifier(Class<? extends Annotation> annotationType);
+public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
+public boolean isStereotype(Class<? extends Annotation> annotationType);
+    
+public boolean isNormalScope(Class<? extends Annotation> scopeType);
+public boolean isPassivatingScope(Class<? extends Annotation> scopeType);
+public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotation> qualifierType);
+public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);]]></programlisting>
+    
+  </section>
+  
+  <!--section>
+    <title>Discovering the enabled deployment types</title>
+    
+    <para>The method <literal>BeanManager.getEnabledDeploymentTypes()</literal> 
+    exposes the list of enabled deployment types, in order of lower to higher 
+    precedence, as defined by <xref linkend="enablement"/>.</para>
+    
+    <programlisting><![CDATA[public List<Class<? extends Annotation>> getEnabledDeploymentTypes();]]></programlisting>
+
+    <para>Portable extensions may use this method to inspect meta-annotations
+    that appear on the deployment types and thereby discover information about
+    the deployment.</para>
+    
+  </section-->
+    
+  <section>
+    <title>Obtaining the active <literal>Context</literal> for a scope</title>
+    
+    <para>The method <literal>BeanManager.getContext()</literal> retrieves an 
+    active context object associated with the a given scope, as defined in 
+    <xref linkend="activecontext"/>.</para>
+    
+    <programlisting><![CDATA[public Context getContext(Class<? extends Annotation> scopeType);]]></programlisting>
+        
+  </section>
+  
+  <section>
+    <title>Obtaining the <literal>ELResolver</literal></title>
+    
+    <para>The method <literal>BeanManager.getELResolver()</literal> returns
+    the <literal>javax.el.ELResolver</literal> specified in <xref linkend="el"/>.</para>
+    
+    <programlisting><![CDATA[public ELResolver getELResolver();]]></programlisting>
+    
+  </section>
+  
+  <section>
+    <title>Wrapping a Unified EL <literal>ExpressionFactory</literal></title>
+    
+    <para>The method <literal>BeanManager.wrapExpressionFactory()</literal> returns a
+    wrapper <literal>javax.el.ExpressionFactory</literal> that delegates 
+    <literal>MethodExpression</literal> and <literal>ValueExpression</literal> creation 
+    to the given <literal>ExpressionFactory</literal>. When a Unified EL expression is
+    evaluated using a <literal>MethodExpression</literal> or <literal>ValueExpression</literal> 
+    returned by the wrapper <literal>ExpressionFactory</literal>, the rules defined in
+    <xref linkend="dependentscopeel"/> are enforced by the container.</para>
+    
+    <programlisting><![CDATA[public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);]]></programlisting>
+    
+  </section>
+  
+  <section>
+    <title>Obtaining an <literal>AnnotatedType</literal> for a class</title>
+    
+    <para>The method <literal>BeanManager.createAnnotatedType()</literal> returns
+    an <literal>AnnotatedType</literal> that may be used to read the annotations
+    of a given Java class or interface.</para>
+    
+    <programlisting><![CDATA[public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);]]></programlisting>
+    
+  </section>
+  
+  <section>
+    <title>Obtaining an <literal>InjectionTarget</literal> for a class</title>
+    
+    <para>The method <literal>BeanManager.createInjectionTarget()</literal> returns
+    a container provided implementation of <literal>InjectionTarget</literal> for a
+    given <literal>AnnotatedType</literal> or throws an 
+    <literal>IllegalArgumentException</literal> if there is a definition error 
+    associated with any injection point of the type.</para>
+    
+    <programlisting><![CDATA[public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);]]></programlisting>
+    
+    <!-- TODO: createInjectionTarget(AnnotatedConstructor) -->
+
+  </section>
+  
+  <section>
+    <title>Obtaining a <literal>Producer</literal> for a field or method</title>
+    
+    <para>The method <literal>BeanManager.createProducer()</literal> returns a 
+    container provided implementation of <literal>Producer</literal> for a given 
+    <literal>AnnotatedMethod</literal> or <literal>AnnotatedField</literal> or 
+    throws an <literal>IllegalArgumentException</literal> if there is a definition 
+    error associated with the producer method or field.</para>
+    
+    <programlisting><![CDATA[public Producer<?> createProducer(AnnotatedField<?> field);
+public Producer<?> createProducer(AnnotatedMethod<?> method);]]></programlisting>
+
+  </section>
+  
+  <section>
+    <title>Obtaining an <literal>InjectionPoint</literal></title>
+    
+    <para>The method <literal>BeanManager.createInjectionPoint()</literal> returns
+    a container provided implementation of <literal>InjectionPoint</literal> for a 
+    given <literal>AnnotatedField</literal> or <literal>AnnotatedParameter</literal> 
+    or throws an <literal>IllegalArgumentException</literal> if there is a definition 
+    error associated with the injection point.</para>
+    
+    <programlisting><![CDATA[public InjectionPoint createInjectionPoint(AnnotatedField<?> field);
+public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);]]></programlisting>
+
+  </section>
+  
+  <section>
+    <title>Obtaining a <literal>BeanAttributes</literal></title>
+
+    <para>The method <literal>BeanManager.createBeanAttributes()</literal> returns
+    a container provided implementation of <literal>BeanAttributes</literal> by reading 
+    the annotations of a given <literal>AnnotatedType</literal> or <literal>AnnotatedMember</literal>,
+    according to the rules define in <xref linkend="concepts"/>, or throws an 
+    <literal>IllegalArgumentException</literal> if there is a definition error associated with 
+    the declared bean attributes.</para>
+    
+    <programlisting><![CDATA[public BeanAttributes createBeanAttributes(AnnotatedType<?> type);
+public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></programlisting>
+
+  </section>
+  
+  <section>
+    <title>Obtaining a <literal>Bean</literal></title>
+    
+    <para>The method <literal>BeanManager.createBean()</literal> returns a container 
+    provided implementation of <literal>Bean</literal>. The method accepts:</para>
+    
+     <itemizedlist>
+       <listitem>
+         <para>a <literal>BeanAttributes</literal>, which determines the bean types, qualifiers, scope, 
+         name and stereotypes of the returned <literal>Bean</literal>, and the return values of
+         <literal>isAlternative()</literal> and <literal>isNullable()</literal>, and</para>
+       </listitem>
+       <listitem>
+         <para>a class, which determines the return value of <literal>Bean.getClass()</literal>.</para>
+       </listitem>
+    </itemizedlist>
+ 
+    <para>The first version of the method also accepts:</para>
+    
+    <itemizedlist>
+       <listitem>
+         <para>an <literal>InjectionTarget</literal>, which is used to create and destroy instances of 
+         the bean, to perform dependency injection and lifecycle callbacks, and which determines
+         the return value of <literal>Bean.getInjectionPoints()</literal>.</para>
+       </listitem>
+    </itemizedlist>
+    
+    <programlisting><![CDATA[public Bean<?> createBean(BeanAttributes attributes, Class<?> beanClass, 
+                          InjectionTarget<?> injectionTarget);]]></programlisting>
+                          
+    <para>The second version of the method also accepts:</para>
+    
+    <itemizedlist>
+       <listitem>
+         <para>a <literal>Producer</literal>, which is used to create and destroy instances of 
+         the bean, and which determines the return value of <literal>Bean.getInjectionPoints()</literal>.</para>
+       </listitem>
+    </itemizedlist>
+    
+    <programlisting><![CDATA[public Bean<?> createBean(BeanAttributes attributes, Class<?> beanClass, 
+                          Producer<?> producer);]]></programlisting>
+    
+  </section>
+
+  <section>
+    <title>Obtaining the instance of an <literal>Extension</literal></title>
+    
+    <para>The method <literal>BeanManager.getExtensions()</literal> returns the 
+    container's instance of an <literal>Extension</literal> class declared in
+    <literal>META-INF/services</literal>, or throws an 
+    <literal>IllegalArgumentException</literal> if the container has no instance
+    of the given class.</para>
+  
+    <programlisting><![CDATA[public <T extends Extension> T getExtension(Class<T> extensionClass);]]></programlisting>
+
+  </section>
+
+  </section>
+
+  <section>
+    <title>Alternative metadata sources</title>
+    
+    <para>A portable extension may provide an alternative metadata source, such as 
+    configuration by XML.</para>
+    
+    <para>The interfaces <literal>AnnotatedType</literal>, <literal>AnnotatedField</literal>, 
+    <literal>AnnotatedMethod</literal>, <literal>AnnotatedConstructor</literal> and 
+    <literal>AnnotatedParameter</literal> in the package <literal>javax.enterprise.inject.spi</literal>
+    allow a portable extension to specify metadata that overrides the annotations that
+    exist on a bean class. The portable extension is responsible for implementing the 
+    interfaces, thereby exposing the metadata to the container.</para>
+    
+    <programlisting><![CDATA[public interface AnnotatedType<X>
+        extends Annotated {
+    public Class<X> getJavaClass();
+    public Set<AnnotatedConstructor<X>> getConstructors();
+    public Set<AnnotatedMethod<? super X>> getMethods();
+    public Set<AnnotatedField<? super X>> getFields();
+}]]></programlisting>
+
+    <programlisting><![CDATA[public interface AnnotatedField<X> 
+        extends AnnotatedMember<X> {    
+    public Field getJavaMember();
+}]]></programlisting>
+
+    <programlisting><![CDATA[public interface AnnotatedMethod<X> 
+        extends AnnotatedCallable<X> {
+    public Method getJavaMember();
+}]]></programlisting>
+    
+    <programlisting><![CDATA[public interface AnnotatedConstructor<X> 
+        extends AnnotatedCallable<X> {
+    public Constructor<X> getJavaMember();
+}]]></programlisting>
+
+    <programlisting><![CDATA[public interface AnnotatedParameter<X> 
+        extends Annotated {
+    public int getPosition();
+    public AnnotatedCallable<X> getDeclaringCallable();
+}]]></programlisting>
+
+    <programlisting><![CDATA[public interface AnnotatedMember<X> 
+        extends Annotated {
+    public Member getJavaMember();
+    public boolean isStatic();
+    public AnnotatedType<X> getDeclaringType();
+}]]></programlisting>
+
+    <programlisting><![CDATA[public interface AnnotatedCallable<X> 
+        extends AnnotatedMember<X> {
+    public List<AnnotatedParameter<X>> getParameters();
+}]]></programlisting>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.Annotated</literal> 
+    exposes the overriding annotations and type declarations.</para> 
+
+    <programlisting><![CDATA[public interface Annotated {
+    public Type getBaseType();
+    public Set<Type> getTypeClosure();
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType); 
+    public Set<Annotation> getAnnotations(); 
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
+}]]></programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>getBaseType()</literal> returns the type of the program
+        element.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getTypeClosure()</literal> returns all types to which
+        the base type should be considered assignable.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getAnnotation()</literal> returns the program element 
+        annotation of the given annotation type, or a null value.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getAnnotations()</literal> returns all annotations of
+        the program element.</para>
+      </listitem>
+      <listitem>
+        <para><literal>isAnnotationPresent()</literal> returns <literal>true</literal>
+        if the program element has an annotation of the given annotation type,
+        or <literal>false</literal> otherwise.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>The container must use the operations of <literal>Annotated</literal>
+    and its subinterfaces to discover program element types and annotations, instead 
+    of directly calling the Java Reflection API. In particular, the container must:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>call <literal>Annotated.getBaseType()</literal> to determine the type of 
+        an injection point, event parameter or disposed parameter,</para>
+      </listitem>
+      <listitem>
+        <para>call <literal>Annotated.getTypeClosure()</literal> to determine the bean 
+        types of any kind of bean,</para>
+      </listitem>
+      <listitem>
+        <para>call <literal>Annotated.getAnnotations()</literal> to determine the scope, 
+        qualifiers, stereotypes and interceptor bindings of a bean,</para>
+      </listitem>
+      <listitem>
+        <para>call <literal>Annotated.isAnnotationPresent()</literal> and 
+        <literal>Annotated.getAnnotation()</literal> to read any bean annotations 
+        defined by this specification, and</para>
+      </listitem>
+      <listitem>
+        <para>call <literal>AnnotatedType.getConstructors()</literal>, 
+        <literal>AnnotatedType.getMethods()</literal> and 
+        <literal>AnnotatedType.getFields()</literal> to determine the members of a 
+        bean class.</para>
+      </listitem>
+    </itemizedlist>
+    
+  </section>
+  
+  <section id="initevents">
+    <title>Container lifecycle events</title>
+    
+    <para>During the application initialization process, the container fires a series of events, 
+    allowing portable extensions to integrate with the container initialization process defined 
+    in <xref linkend="initialization"/>.</para>
+    
+    <para>Observer methods of these events must belong to <emphasis>extensions</emphasis>. An 
+    extension is a service provider of the service <literal>javax.enterprise.inject.spi.Extension</literal> 
+    declared in <literal>META-INF/services</literal>.</para>
+    
+    <programlisting>public interface Extension {}</programlisting>
+    
+    <para>Service providers may have observer methods, which may observe any event, including 
+    any container lifecycle event, and obtain an injected <literal>BeanManager</literal> 
+    reference.</para>
+    
+    <para>The container instantiates a single instance of each extension at the beginning 
+    of the application initialization process and maintains a reference to it until the 
+    application shuts down. The container delivers event notifications to this instance by 
+    calling its observer methods.</para>
+    
+    <para>For each service provider, the container must provide a bean of scope 
+    <literal>@ApplicationScoped</literal> and qualifier <literal>@Default</literal>, supporting 
+    injection of a reference to the service provider instance. The bean types of this bean include 
+    the class of the service provider and all superclasses and interfaces.</para>
+    
+    <section id="bbd">
+      <title><literal>BeforeBeanDiscovery</literal> event</title>
+    
+      <para>The container must fire an event before it begins the bean discovery process.
+      The event object must be of type 
+      <literal>javax.enterprise.inject.spi.BeforeBeanDiscovery</literal>:</para>
+    
+      <programlisting><![CDATA[public interface BeforeBeanDiscovery {
+    public void addQualifier(Class<? extends Annotation> qualifier);
+    public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
+    public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
+    public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
+    public void addAnnotatedType(AnnotatedType<?> type);
+}]]></programlisting>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>addQualifier()</literal> declares an annotation type as a qualifier type.</para>
+        </listitem>
+        <listitem>
+          <para><literal>addScope()</literal> declares an annotation type as a scope type.</para>
+        </listitem>
+        <listitem>
+          <para><literal>addStereotype()</literal> declares an annotation type as a stereotype,
+          and specifies its meta-annotations.</para>
+        </listitem>
+        <listitem>
+          <para><literal>addInterceptorBinding()</literal> declares an annotation type as an 
+          interceptor binding type, and specifies its meta-annotations.</para>
+        </listitem>
+        <listitem>
+          <para><literal>addAnnotatedType()</literal> adds a given <literal>AnnotatedType</literal>
+          to the set of types which will be scanned during bean discovery.</para>
+        </listitem>
+      </itemizedlist>
+    
+      <programlisting>void beforeBeanDiscovery(@Observes BeforeBeanDiscovery event) { ... }</programlisting>
+    
+      <para>If any observer method of the <literal>BeforeBeanDiscovery</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section id="abd">
+      <title><literal>AfterBeanDiscovery</literal> event</title>
+    
+      <para>The container must fire a second event when it has fully completed the bean 
+      discovery process, validated that there are no definition errors relating to the 
+      discovered beans, and registered <literal>Bean</literal> and <literal>ObserverMethod</literal> 
+      objects for the discovered beans, but before detecting deployment problems.</para>
+    
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.AfterBeanDiscovery</literal>:</para>
+    
+      <programlisting><![CDATA[public interface AfterBeanDiscovery {
+    public void addDefinitionError(Throwable t);
+    public void addBean(Bean<?> bean);
+    public void addObserverMethod(ObserverMethod<?> observerMethod);
+    public void addContext(Context context);
+}]]></programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>addDefinitionError()</literal> registers a definition error
+        with the container, causing the container to abort deployment after all observers
+        have been notified.</para>
+      </listitem>
+      <listitem>
+        <para><literal>addBean()</literal> fires an event of type <literal>ProcessBean</literal>
+        containing the given <literal>Bean</literal> and then registers the <literal>Bean</literal> 
+        with the container, thereby making it available for injection into other beans.
+        The given <literal>Bean</literal> may implement <literal>Interceptor</literal> or
+        <literal>Decorator</literal>.</para>
+      </listitem>
+      <listitem>
+        <para><literal>addObserverMethod()</literal> fires an event of type 
+        <literal>ProcessObserverMethod</literal> containing the given <literal>ObserverMethod</literal> 
+        and then registers the <literal>ObserverMethod</literal> with the container, thereby 
+        making it available for event notifications.</para>
+      </listitem>
+      <listitem>
+        <para><literal>addContext()</literal> registers a custom <literal>Context</literal> 
+        object with the container.</para>
+      </listitem>
+    </itemizedlist>
+    
+      <para>A portable extension may take advantage of this event to register beans,
+      interceptors, decorators, observer methods and custom context objects with the 
+      container.</para>
+    
+      <programlisting>void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager) { ... }</programlisting>
+    
+      <para>If any observer method of the <literal>AfterBeanDiscovery</literal> event 
+      throws an exception, the exception is treated as a definition error by the 
+      container.</para>
+ 
+    </section>
+    
+    <section id="adv">
+      <title><literal>AfterDeploymentValidation</literal> event</title>
+    
+      <para>The container must fire a third event after it has validated that there are 
+      no deployment problems and before creating contexts or processing requests.</para>
+    
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.AfterDeploymentValidation</literal>:</para>
+    
+      <programlisting>public interface AfterDeploymentValidation {
+    public void addDeploymentProblem(Throwable t);
+}</programlisting>
+        
+    <itemizedlist>
+      <listitem>
+        <para><literal>addDeploymentProblem()</literal> registers a deployment
+        problem with the container, causing the container to abort deployment after all 
+        observers have been notified.</para>
+      </listitem>
+    </itemizedlist>
+    
+      <programlisting>void afterDeploymentValidation(@Observes AfterDeploymentValidation event, BeanManager manager) { ... }</programlisting>
+    
+      <para>If any observer method of the <literal>AfterDeploymentValidation</literal> event 
+      throws an exception, the exception is treated as a deployment problem by the container.</para>
+    
+      <para>The container must not allow any request to be processed by the deployment 
+      until all observers of this event return.</para>
+    
+    </section>
+    
+    <section id="bs">
+      <title><literal>BeforeShutdown</literal> event</title>
+    
+      <para>The container must fire a final event after it has finished processing requests
+      and destroyed all contexts.</para>
+    
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.BeforeShutdown</literal>:</para>
+    
+      <programlisting>public interface BeforeShutdown {}</programlisting>
+        
+      <programlisting>void beforeShutdown(@Observes BeforeShutdown event, BeanManager manager) { ... }</programlisting>
+    
+      <para>If any observer method of the <literal>BeforeShutdown</literal> event throws an 
+      exception, the exception is ignored by the container.</para>
+    
+    </section>
+    
+    <section>
+      <title><literal>ProcessModule</literal> event</title>
+      
+      <para>The container must fire an event for each bean deployment archive, before it processes 
+      the classes packaged in that module.</para>
+    
+      <para>The event object must be of type <literal>javax.enterprise.inject.spi.ProcessModule</literal>.</para>
+      
+      <programlisting><![CDATA[public interface ProcessModule {
+    public Set<Class> getAlternatives();
+    public List<Class> getInterceptors();
+    public List<Class> getDecorators();
+    public Iterator<AnnotatedType> getAnnotatedTypes();
+}]]></programlisting>
+
+      <itemizedlist>
+      <listitem>
+        <para><literal>getAlternatives()</literal> returns the set of enabled alternatives of the bean
+        deployment archive.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getInterceptors()</literal> returns the list of enabled interceptors of the bean
+        deployment archive.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getDecorators()</literal> returns the list of enabled decorators of the bean
+        deployment archive.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getAnnotatedTypes()</literal> returns an iterator over <literal>AnnotatedType</literal>
+        objects representing the Java classes and interfaces in the bean archive.</para>
+      </listitem>
+      <!--
+      <listitem>
+        <para><literal>addAnnotatedType()</literal></para>
+      </listitem>
+      -->
+      </itemizedlist>
+      
+      <para>Any observer of this event is permitted to add classes to, or remove classes from, the 
+      set of alternatives, list of interceptors or list of decorators. The container must use the
+      final values of these collections, after all observers have been called, to determine the
+      enabled alternatives, interceptors, and decorators for the bean deployment archive. The initial
+      values of these collections is determined by reading the <literal>beans.xml</literal> file
+      of the bean deployment archive.</para>
+
+      <para>If any observer method of a <literal>ProcessModule</literal> event throws 
+      an exception, the exception is treated as a deployment problem by the container.</para>
+    
+    </section>
+    
+    <section id="pat">
+      <title><literal>ProcessAnnotatedType</literal> event</title>
+      
+      <para>The container must fire an event for each Java class or interface it discovers
+      in a bean archive, before it reads the declared annotations.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessAnnotatedType&lt;X&gt;</literal>, 
+      where <literal>X</literal> is the class.</para>
+      
+      <programlisting><![CDATA[public interface ProcessAnnotatedType<X> {
+    public AnnotatedType<X> getAnnotatedType();
+    public void setAnnotatedType(AnnotatedType<X> type);
+    public void veto();
+}]]></programlisting>
+
+    <itemizedlist>
+    <listitem>
+      <para><literal>getAnnotatedType()</literal> returns the <literal>AnnotatedType</literal> 
+      object that will be used by the container to read the declared annotations.</para>
+    </listitem>
+    <listitem>
+      <para><literal>setAnnotatedType()</literal> replaces the <literal>AnnotatedType</literal>.</para>
+    </listitem>
+    <listitem>      
+      <para><literal>veto()</literal> forces the container to ignore the type.</para>
+    </listitem>
+    </itemizedlist>
+    
+      <para>Any observer of this event is permitted to wrap and/or replace the 
+      <literal>AnnotatedType</literal>. The container must use the final value of this property, 
+      after all observers have been called, to discover the types and read the annotations of 
+      the program elements.</para>
+    
+      <para>For example, the following observer decorates the <literal>AnnotatedType</literal>
+      for every class that is discovered by the container.</para>
+      
+      <programlisting>&lt;T&gt; void decorateAnnotatedType(@Observes ProcessAnnotatedType&lt;T&gt; pat) {
+    pat.setAnnotatedType( decorate( pat.getAnnotatedType() ) );
+}</programlisting>
+      
+      <para>If any observer method of a <literal>ProcessAnnotatedType</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section>
+      <title><literal>ProcessInjectionPoint</literal> event</title>
+
+      <para>The container must fire an event for every injection point of every Java EE component 
+      class supporting injection that may be instantiated by the container at runtime.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessInjectionPoint&lt;T, X&gt;</literal> where 
+      <literal>T</literal> is the bean class of the bean that declares the injectoion point, and 
+      <literal>X</literal> is the declared type of the injection point.</para>
+      
+      <programlisting><![CDATA[public interface ProcessInjectionPoint<T, X> {
+    public InjectionPoint getInjectionPoint();
+    public void setInjectionPoint(InjectionPoint injectionPoint);
+    public void addDefinitionError(Throwable t);
+}]]></programlisting>
+      
+    <itemizedlist>
+    <listitem>
+      <para><literal>getInjectionPoint()</literal> returns the <literal>InjectionPoint</literal> 
+      object that will be used by the container to perform injection.</para>
+    </listitem>
+    <listitem>
+      <para><literal>setInjectionPoint()</literal> replaces the <literal>InjectionPoint</literal>.</para>
+    </listitem>
+    <listitem>
+      <para><literal>addDefinitionError()</literal> registers a definition error with the 
+      container, causing the container to abort deployment after bean discovery is complete.</para>
+    </listitem>
+    </itemizedlist>
+    
+      <para>Any observer of this event is permitted to wrap and/or replace the 
+      <literal>InjectionPoint</literal>. The container must use the final value of this 
+      property, after all observers have been called, whenever it performs injection upon 
+      the injection point.</para>
+      
+      <para>If any observer method of a <literal>ProcessInjectionPoint</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section id="pit">
+      <title><literal>ProcessInjectionTarget</literal> event</title>
+      
+      <para>The container must fire an event for every Java EE component class supporting 
+      injection that may be instantiated by the container at runtime, including every 
+      managed bean declared using <literal>@ManagedBean</literal>, EJB session or 
+      message-driven bean, enabled bean, enabled interceptor or enabled decorator.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessInjectionTarget&lt;X&gt;</literal>, 
+      where <literal>X</literal> is the managed bean class, session bean class or Java
+      EE component class supporting injection.</para>
+      
+      <programlisting><![CDATA[public interface ProcessInjectionTarget<X> {
+    public AnnotatedType<X> getAnnotatedType();
+    public InjectionTarget<X> getInjectionTarget();
+    public void setInjectionTarget(InjectionTarget<X> injectionTarget);
+    public void addDefinitionError(Throwable t);
+}]]></programlisting>
+
+    <itemizedlist>
+    <listitem>    
+      <para><literal>getAnnotatedType()</literal> returns the <literal>AnnotatedType</literal> 
+      representing the managed bean class, session bean class or other Java EE component 
+      class supporting injection.</para>
+    </listitem>
+    <listitem>
+      <para><literal>getInjectionTarget()</literal> returns the <literal>InjectionTarget</literal> 
+      object that will be used by the container to perform injection.</para>
+    </listitem>
+    <listitem>
+      <para><literal>setInjectionTarget()</literal> replaces the <literal>InjectionTarget</literal>.</para>
+    </listitem>
+    <listitem>
+      <para><literal>addDefinitionError()</literal> registers a definition error with the 
+      container, causing the container to abort deployment after bean discovery is complete.</para>
+    </listitem>
+    </itemizedlist>
+    
+      <para>Any observer of this event is permitted to wrap and/or replace the 
+      <literal>InjectionTarget</literal>. The container must use the final value of this 
+      property, after all observers have been called, whenever it performs injection upon 
+      the managed bean, session bean or other Java EE component class supporting injection.</para>
+      
+      <para>For example, this observer decorates the <literal>InjectionTarget</literal> 
+      for all servlets.</para>
+      
+      <programlisting>&lt;T extends Servlet&gt; void decorateServlet(@Observes ProcessInjectionTarget&lt;T&gt; pit) {
+    pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
+}</programlisting>
+      
+      <para>If any observer method of a <literal>ProcessInjectionTarget</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section id="pp">
+      <title><literal>ProcessProducer</literal> event</title>
+      
+      <para>The container must fire an event for each producer method or field of each
+      enabled bean, including resources.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessProducer&lt;T, X&gt;</literal>, where 
+      <literal>T</literal> is the bean class of the bean that declares the producer method
+      or field and <literal>X</literal> is the return type of the producer method or the type 
+      of the producer field.</para>
+      
+      <programlisting><![CDATA[public interface ProcessProducer<T, X> {
+    public AnnotatedMember<T> getAnnotatedMember();
+    public Producer<X> getProducer();
+    public void setProducer(Producer<X> producer);
+    public void addDefinitionError(Throwable t);
+}]]></programlisting>
+
+      <itemizedlist>
+      <listitem>    
+        <para><literal>getAnnotatedMember()</literal> returns the <literal>AnnotatedField</literal> 
+        representing the producer field or the <literal>AnnotatedMethod</literal> representing
+        the producer method.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getProducer()</literal> returns the <literal>Producer</literal> 
+        object that will be used by the container to call the producer method or read
+        the producer field.</para>
+      </listitem>
+      <listitem>
+        <para><literal>setProducer()</literal> replaces the <literal>Producer</literal>.</para>
+      </listitem>
+      <listitem>
+        <para><literal>addDefinitionError()</literal> registers a definition error with the 
+        container, causing the container to abort deployment after bean discovery is complete.</para>
+      </listitem>
+      </itemizedlist>
+    
+      <para>Any observer of this event is permitted to wrap and/or replace the 
+      <literal>Producer</literal>. The container must use the final value of this 
+      property, after all observers have been called, whenever it calls the producer
+      or disposer.</para>
+      
+      <para>For example, this observer decorates the <literal>Producer</literal> 
+      for all producer methods and fields of type <literal>EntityManager</literal>.</para>
+      
+      <programlisting>void decorateEntityManager(@Observes ProcessProducer&lt;?, EntityManager&gt; pp) {
+    pit.setProducer( decorate( pp.getProducer() ) );
+}</programlisting>
+      
+      <para>If any observer method of a <literal>ProcessProducer</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+      <para>For producer methods, the event must be of type <literal>ProcessProducerMethod</literal>.</para>
+    
+      <programlisting><![CDATA[public interface ProcessProducerMethod<T, X> extends ProcessProducer<T, X> {
+    public AnnotatedMethod<T> getAnnotatedMember();
+}]]></programlisting>
+
+      <para>For producer fields, the event must be of type <literal>ProcessProducerField</literal>.</para>
+    
+      <programlisting><![CDATA[public interface ProcessProducerField<T, X> extends ProcessProducer<T, X> {
+    public AnnotatedField<T> getAnnotatedMember();
+    public void setInitializer(Initializer<X> producer);
+}]]></programlisting>
+
+      <itemizedlist>
+      <listitem>    
+        <para><literal>setInitializer()</literal> sets the <literal>Initializer</literal> object 
+        that will be used by the container to obtain the initial value of the producer field.</para>
+      </listitem>
+      </itemizedlist>
+      
+      <para>The interface <literal>Initializer</literal> lets a portable extension provide an initial
+      value for a producer field.</para>
+      
+      <programlisting><![CDATA[public interface Initilizer<X> {
+    public X getInitialValue(AnnotatedField<?> field);
+}]]></programlisting>
+
+      <itemizedlist>
+      <listitem>    
+        <para><literal>getInitialValue()</literal> returns the initial value of the producer field.
+        If the producer field is non-static, the container must inject this value to the producer 
+        field when it performs Java EE component environment injection upon an instance of the bean
+        that declares the producer field. The container must use this value as the value of the 
+        producer field, whether static or non-static, unless the application explicitly assigns a
+        value to the field before the field is accessed by the container.</para>
+      </listitem>
+      </itemizedlist>
+    
+    </section>
+    
+    <section>
+      <title><literal>ProcessBeanAttributes</literal> event</title>
+
+      <para>The container must fire an event for each enabled bean, interceptor or decorator
+      deployed in a bean archive, before registering the <literal>Bean</literal> object. No 
+      event is fired for any <literal>@New</literal> qualified bean, defined in 
+      <xref linkend="new"/>.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessBeanAttributes&lt;T&gt;</literal> where 
+      <literal>T</literal> is the bean class of the managed bean or session bean, the return
+      type of the producer method, or the type of the producer field.</para>
+      
+      <para>Resources are considered to be producer fields.</para>
+      
+      <programlisting><![CDATA[public interface ProcessBeanAttributes<T> {
+    public Annotated getAnnotated();
+    public BeanAttributes getBeanAttributes();
+    public void setBeanAttributes(BeanAttributes<T> beanAttributes);
+    public void addDefinitionError(Throwable t);
+    public void veto();
+}]]></programlisting>
+      
+    <itemizedlist>
+    <listitem>    
+      <para><literal>getAnnotated()</literal> returns the <literal>AnnotatedType</literal> 
+      representing the managed bean class or session bean class, the <literal>AnnotatedMethod</literal>
+      representing the producer field, or the <literal>AnnotatedField</literal> representing
+      the producer field.</para>
+    </listitem>
+    <listitem>
+      <para><literal>getBeanAttributes()</literal> returns the <literal>BeanAttributes</literal> 
+      object that will be used by the container to manage instances of the bean.</para>
+    </listitem>
+    <listitem>
+      <para><literal>setBeanAttributes()</literal> replaces the <literal>BeanAttributes</literal>.</para>
+    </listitem>
+    <listitem>
+      <para><literal>addDefinitionError()</literal> registers a definition error with the 
+      container, causing the container to abort deployment after bean discovery is complete.</para>
+    </listitem>
+    <listitem>      
+      <para><literal>veto()</literal> forces the container to ignore the bean.</para>
+    </listitem>
+    </itemizedlist>
+    
+      <para>Any observer of this event is permitted to wrap and/or replace the 
+      <literal>BeanAttributes</literal>. The container must use the final value of this 
+      property, after all observers have been called, to manage instances of the bean.</para>
+      
+      <para>If any observer method of a <literal>ProcessBeanAttributes</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section id="pb">
+      <title><literal>ProcessBean</literal> event</title>
+      
+      <para>The container must fire an event for each enabled bean, interceptor or decorator
+      deployed in a bean archive, before registering the <literal>Bean</literal> object. No 
+      event is fired for any <literal>@New</literal> qualified bean, defined in 
+      <xref linkend="new"/>.</para>
+      
+      <para>The event object type in the package <literal>javax.enterprise.inject.spi</literal>
+      depends upon what kind of bean was discovered:</para>
+      
+      <itemizedlist>
+        <!--
+        <listitem>
+          <para>For a decorator with bean class <literal>X</literal>, the container must
+          raise an event of type <literal>ProcessDecorator&lt;X&gt;</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>For an interceptor with class <literal>X</literal>, the container must
+          raise an event of type <literal>ProcessInterceptor&lt;X&gt;</literal>.</para>
+        </listitem>
+        -->
+        <listitem>
+          <para>For a managed bean with bean class <literal>X</literal>, <!--that is not an
+          interceptor or decorator--> the container must raise an event of type 
+          <literal>ProcessManagedBean&lt;X&gt;</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>For a session bean with bean class <literal>X</literal>, the container must 
+          raise an event of type <literal>ProcessSessionBean&lt;X&gt;</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>For a producer method with method return type <literal>X</literal> of a bean 
+          with bean class <literal>T</literal>, the container must raise an event of type 
+          <literal>ProcessProducerMethod&lt;T, X&gt;</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>For a producer field with field type <literal>X</literal> of a bean with 
+          bean class <literal>T</literal>, the container must raise an event of type 
+          <literal>ProcessProducerField&lt;T, X&gt;</literal>.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>Resources are considered to be producer fields.</para>
+      
+      <para>The interface <literal>javax.enterprise.inject.spi.ProcessBean</literal> is a 
+      supertype of all these event types:</para>
+      
+      <programlisting><![CDATA[public interface ProcessBean<X> {
+    public Annotated getAnnotated();
+    public Bean<X> getBean();
+    public void addDefinitionError(Throwable t);
+}]]></programlisting>
+
+    <itemizedlist>
+    <listitem>
+      <para><literal>getAnnotated()</literal> returns the <literal>AnnotatedType</literal> 
+      representing the bean class, the <literal>AnnotatedMethod</literal> representing the
+      producer method, or the <literal>AnnotatedField</literal> representing the producer
+      field.</para>
+    </listitem>
+    <listitem>
+      <para><literal>getBean()</literal> returns the <literal>Bean</literal> object that 
+      is about to be registered. The <literal>Bean</literal> may implement 
+      <literal>Interceptor</literal> or <literal>Decorator</literal>.</para>
+    </listitem>
+    <listitem>
+      <para><literal>addDefinitionError()</literal> registers a definition error with the
+      container, causing the container to abort deployment after bean discovery is
+      complete.</para>
+    </listitem>
+    </itemizedlist>
+    
+      <programlisting><![CDATA[public interface ProcessSessionBean<X> 
+        extends ProcessManagedBean<Object> {
+    public String getEjbName();
+    public SessionBeanType getSessionBeanType();
+}]]></programlisting>
+
+      <itemizedlist>
+        <listitem>
+          <para><literal>getEjbName()</literal> returns the EJB name of the session
+          bean.</para>
+        </listitem>
+        <listitem>
+          <para><literal>getSessionBeanType()</literal> returns a 
+          <literal>javax.enterprise.inject.spi.SessionBeanType</literal> representing 
+          the kind of session bean.</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting><![CDATA[public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }]]></programlisting>
+      
+      <programlisting><![CDATA[public interface ProcessManagedBean<X> 
+        extends ProcessBean<X> {
+    public AnnotatedType<X> getAnnotatedBeanClass();
+}]]></programlisting>
+    
+      <programlisting><![CDATA[public interface ProcessProducerMethod<T, X> 
+        extends ProcessBean<X> {
+    public AnnotatedMethod<T> getAnnotatedProducerMethod();
+    public AnnotatedParameter<T> getAnnotatedDisposedParameter();
+}]]></programlisting>
+      
+      <programlisting><![CDATA[public interface ProcessProducerField<T, X> 
+        extends ProcessBean<X> {
+    public AnnotatedField<T> getAnnotatedProducerField();
+}]]></programlisting>
+      
+      <!--  
+      <programlisting><![CDATA[public interface ProcessDecorator<X> 
+        extends ProcessManagedBean<X> {
+    public Decorator<X> getBean();
+}]]></programlisting>
+    
+      <programlisting><![CDATA[public interface ProcessInterceptor<X> 
+        extends ProcessManagedBean<X> {
+    public Interceptor<X> getBean();
+}]]></programlisting>
+      -->
+      <para>If any observer method of a <literal>ProcessBean</literal> event throws 
+      an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+    <section id="pom">
+      <title><literal>ProcessObserverMethod</literal> event</title>
+      
+      <para>The container must fire an event for each observer method of each enabled bean,
+      before registering the <literal>ObserverMethod</literal> object.</para>
+      
+      <para>The event object must be of type 
+      <literal>javax.enterprise.inject.spi.ProcessObserverMethod&lt;T, X&gt;</literal>, where 
+      <literal>T</literal> is the bean class of the bean that declares the observer method
+      and <literal>X</literal> is the observed event type of the observer method.</para>
+      
+      <programlisting><![CDATA[public interface ProcessObserverMethod<T, X> {
+    public AnnotatedParameter<T> getAnnotatedEventParameter();
+    public ObserverMethod<X> getObserverMethod();
+    public void addDefinitionError(Throwable t);
+}]]></programlisting>
+
+    <itemizedlist>
+    <listitem>    
+      <para><literal>getAnnotatedEventParameter()</literal> returns the <literal>AnnotatedParameter</literal> 
+      representing the event parameter.</para>
+    </listitem>
+    <listitem>
+      <para><literal>getObserverMethod()</literal> returns the <literal>ObserverMethod</literal> 
+      object that will be used by the container to call the observer method.</para>
+    </listitem>
+    <listitem>
+      <para><literal>addDefinitionError()</literal> registers a definition error with the 
+      container, causing the container to abort deployment after bean discovery is complete.</para>
+    </listitem>
+    </itemizedlist>
+    
+    <para>If any observer method of a <literal>ProcessObserverMethod</literal> event throws 
+    an exception, the exception is treated as a definition error by the container.</para>
+    
+    </section>
+    
+  </section>
+  
+  <!--  
+  <section>
+    <title>Activities</title>
+    
+    <para>Bean definitions may be scoped to an <emphasis>activity</emphasis>.
+    This specification only provides a programmatic API for defining
+    activities, since this feature is intended for use with third-party
+    orchestration frameworks that integrate with the container.</para>
+    
+    <para>The method <literal>createActivity()</literal> creates a new child
+    activity of an activity and returns a <literal>BeanManager</literal>
+    for the activity:</para>
+    
+    <programlisting>public interface BeanManager {
+    public BeanManager createActivity();
+    ...
+}</programlisting>
+
+    <para>A child activity inherits all beans, interceptors, decorators, observers, 
+    and contexts defined by its direct and indirect parent activities:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>every bean belonging to a parent activity also belongs to the
+        child activity, is eligible for injection into other beans belonging
+        to the child activity and may be obtained by dynamic lookup via the 
+        child activity,</para>
+      </listitem>
+      <listitem>
+        <para>every interceptor and decorator belonging to a parent activity 
+        also belongs to the child activity and may be applied to any bean 
+        belonging to the child activity,</para>
+      </listitem>
+      <listitem>
+        <para>every observer belonging to a parent activity also belongs to 
+        the child activity and receives events fired via the child activity, 
+        and</para>
+      </listitem>
+      <listitem>
+        <para>every context object belonging to the parent activity also belongs 
+        to the child activity.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>Beans and observers may be registered with an activity by calling
+    <literal>addBean()</literal> or <literal>addObserver()</literal> on the 
+    <literal>BeanManager</literal> object that represents the activity.</para>
+    
+    <para>Beans and observers registered with an activity are visible only to 
+    that activity and its children&mdash;they are never visible to direct or 
+    indirect parent activities, or to other children of the parent activity:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>a bean registered with the child activity is not available for 
+        injection into any bean registered with a parent activity,</para>
+      </listitem>
+      <listitem>
+        <para>a bean registered with a child activity is not available for 
+        injection into non-contextual objects,</para>
+      </listitem>
+      <listitem>
+        <para>a bean registered with a child activity may not be obtained
+        by dynamic lookup via the parent activity, and</para>
+      </listitem>
+      <listitem>
+        <para>an observer registered with the child activity does not receive
+        events fired via a parent activity.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>If a bean registered with a child activity has the bean type and all
+    qualifiers of some injection point of some bean registered with a direct or 
+    indirect parent activity, the container automatically detects the problem and 
+    treats it as a deployment problem.</para>
+    
+    <para>The container is not required to support registration of an interceptor 
+    or decorator with a child activity. Portable extensions and applications should 
+    not depend upon the ability to register an interceptor or decorator with 
+    a child activity.</para>
+
+    <section>
+      <title>Current activity</title>
+ 
+      <para>An activity may be associated with the current context for a normal 
+      scope by calling <literal>setCurrent()</literal>, passing the normal scope 
+      type:</para>
+     
+      <programlisting>public interface BeanManager {
+    public BeanManager setCurrent(Class&lt;? extends Annotation&gt; scopeType);
+    ...
+}</programlisting>
+
+      <para>If the given scope is not active when <literal>setCurrent()</literal> is 
+      called, a <literal>ContextNotActiveException</literal> is thrown. If the given 
+      scope type is not a normal scope, an <literal>IllegalArgumentException</literal>
+      is thrown.</para>
+    
+      <para>All EL evaluations (as defined <xref linkend="el"/>), all calls to 
+      any injected <literal>BeanManager</literal> object or <literal>BeanManager</literal> 
+      object obtained via JNDI lookup (as defined by <xref linkend="beanmanager"/>),
+      all calls to any injected <literal>Event</literal> object (as defined in
+      <xref linkend="eventinterface"/>) and all calls to any injected 
+      <literal>Instance</literal> object (as defined by <xref linkend="dynamiclookup"/>) 
+      are processed by the <emphasis>current activity</emphasis>:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>If the root activity has no active normal scope such that the current 
+          context for that scope has an associated activity, the root activity is 
+          the current activity.</para>
+        </listitem>
+        <listitem>
+          <para>If the root activity has exactly one active normal scope such that the 
+          current context for that scope has an associated activity, that activity is 
+          the current activity.</para>
+        </listitem>
+        <listitem>
+          <para>Otherwise, there is no well-defined current activity, and the behavior
+          is undefined. Portable extensions and applications should not depend upon
+          the behavior of the container when two different current contexts have an 
+          associated activity.</para>
+        </listitem>
+      </itemizedlist>
+    
+      <para>A bean registered with an activity is only available to Unified EL 
+      expressions that are evaluated when that activity or one of its children is the 
+      current activity.</para>
+       
+    </section>
+    
+  </section>
+  -->
+  
+</chapter>

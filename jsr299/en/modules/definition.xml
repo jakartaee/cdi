@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="concepts">
+  <title>Concepts</title>
+  
+  <para>A Java EE component is a <emphasis>bean</emphasis> if the 
+  lifecycle of its instances may be managed by the container according
+  to the lifecycle context model defined in <xref linkend="contexts"/>.
+  A bean may bear metadata defining its lifecycle and interactions with 
+  other components.</para>
+
+  <para>Speaking more abstractly, a bean is a source of contextual
+  objects which define application state and/or logic. These objects 
+  are called <emphasis>contextual instances of the bean</emphasis>. The 
+  container creates and destroys these instances and associates them 
+  with the appropriate context. Contextual instances of a bean may be 
+  injected into other objects (including other bean instances) that 
+  execute in the same context, and may be used in EL expressions that 
+  are evaluated in the same context.</para>
+  
+  <para>A bean comprises the following attributes:</para>
+
+  <itemizedlist>
+  
+    <listitem>
+      <para>A (nonempty) set of bean types</para>
+    </listitem>
+
+    <listitem>
+      <para>A (nonempty) set of qualifiers</para>
+    </listitem>
+
+    <listitem>
+      <para>A scope</para>
+    </listitem>
+
+    <listitem>
+      <para>Optionally, a bean EL name</para>
+    </listitem>
+
+    <listitem>
+      <para>A set of interceptor bindings</para>
+    </listitem>
+
+    <listitem>
+      <para>A bean implementation</para>
+    </listitem>
+
+  </itemizedlist>
+  
+  <para>Furthermore, a bean may or may not be an alternative.</para>
+  
+  <para>In most cases, a bean developer provides the bean implementation by 
+  writing business logic in Java code. The developer then defines the remaining 
+  attributes by explicitly annotating the bean class, or by allowing them to be 
+  defaulted by the container, as specified in <xref linkend="implementation"/>. 
+  In certain other cases&mdash;for example, Java EE component environment resources, 
+  defined in <xref linkend="resources"/>&mdash;the developer provides only the 
+  annotations and the bean implementation is provided by the container.</para>
+
+  <!--
+  <para>A bean implementation may be a Java class, an EJB session bean class, 
+  a producer method or field or a Java EE component environment resource, as 
+  specified in <xref linkend="implementation"/>.</para>
+  -->
+  
+  <para>The bean types and qualifiers of a bean determine where its instances will 
+  be injected by the container, as defined in <xref linkend="injectionelresolution"/>.</para>
+  
+  <para>The bean developer may also create interceptors and/or decorators or 
+  reuse existing interceptors and/or decorators. The interceptor bindings of 
+  a bean determine which interceptors will be applied at runtime. The bean 
+  types and qualifiers of a bean determine which decorators will be applied at 
+  runtime. Interceptors are defined by Java interceptors specification, and 
+  interceptor bindings are specified in <xref linkend="interceptors"/>.
+  Decorators are defined in <xref linkend="decorators"/>.</para>
+  
+  <!--  
+  <para>A bean implementation may produce or consume events. The event 
+  notification facility is specified in <xref linkend="events"/>.</para>
+  -->
+  
+  <section id="capabilities">
+    <title>Functionality provided by the container to the bean</title>
+
+    <para>A bean is provided by the container with the following
+    capabilities:</para>
+
+  <itemizedlist>
+    <listitem>
+      <para>transparent creation and destruction and scoping to a particular 
+      context, specified in <xref linkend="contexts"/> and 
+      <xref linkend="lifecycle"/>,</para>
+    </listitem>
+
+    <listitem>
+      <para>scoped resolution by bean type and qualifier annotation type when
+      injected into a Java-based client, as defined by
+      <xref linkend="typesaferesolution"/>,</para>
+    </listitem>
+
+    <listitem>
+      <para>scoped resolution by name when used in a Unified EL expression,
+      as defined by <xref linkend="nameresolution"/>,</para>
+    </listitem>
+
+    <listitem>
+      <para>lifecycle callbacks and automatic injection of other bean 
+      instances, specified in <xref linkend="implementation"/> and 
+      <xref linkend="injectionelresolution"/>,</para>
+    </listitem>
+    
+    <listitem>
+      <para>method interception, callback interception, and decoration, as 
+      defined in <xref linkend="interceptors"/> and <xref linkend="decorators"/>, 
+      and</para>
+    </listitem>
+
+    <listitem>
+      <para>event notification, as defined in <xref linkend="events"/>.</para>
+    </listitem>
+  </itemizedlist>
+  
+  </section>
+  
+  <section id="beantypes">
+    <title>Bean types</title>
+
+    <para>A bean type defines a client-visible type of the bean. A bean may 
+    have multiple bean types. For example, the following bean has four bean 
+    types:</para>
+    
+    <programlisting>public class BookShop
+        extends Business
+        implements Shop&lt;Book&gt; { 
+    ... 
+}</programlisting>
+    
+    <para>The bean types are <literal>BookShop</literal>, <literal>Business</literal>,
+    <literal>Shop&lt;Book&gt;</literal> and <literal>Object</literal>.</para>
+    
+    <para>Meanwhile, this session bean has only the local interfaces 
+    <literal>BookShop</literal> and <literal>Auditable</literal>, along with 
+    <literal>Object</literal>, as bean types, since the bean class is not a 
+    client-visible type.</para>
+    
+    <programlisting>@Stateful 
+public class BookShopBean 
+        extends Business 
+        implements BookShop, Auditable { 
+    ... 
+}</programlisting>
+
+    <para>The rules for determining the (unrestricted) set of bean types for 
+    a bean are defined in <xref linkend="managedbeantypes"/>, 
+    <xref linkend="sessionbeantypes"/>, <xref linkend="producermethodtypes"/>,
+    <xref linkend="producerfieldtypes"/> and <xref linkend="resourcetypes"/>.
+    <!--and <xref linkend="jmstypes"/>--></para>
+    
+    <para>All beans have the bean type <literal>java.lang.Object</literal>.</para>
+    
+    <para>The bean types of a bean are used by the rules of typesafe resolution
+    defined in <xref linkend="typesaferesolution"/>.</para>
+    
+    <section id="legalbeantypes">
+      <title>Legal bean types</title>
+
+      <para>Almost any Java type may be a bean type of a bean:</para>
+    
+      <itemizedlist>
+        <listitem>
+          <para>A bean type may be an interface, a concrete class or an abstract 
+          class, and may be declared final or have final methods.</para>
+        </listitem>
+        <listitem>
+          <para>A bean type may be a parameterized type with actual type parameters
+          and type variables.</para>
+        </listitem>
+        <listitem>
+          <para>A bean type may be an array type. Two array types are considered
+          identical only if the element type is identical.</para>
+        </listitem>
+        <listitem>
+          <para>A bean type may be a primitive type. Primitive types are considered 
+          to be identical to their corresponding wrapper types in 
+          <literal>java.lang</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>A bean type may be a raw type.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>A type variable is not a legal bean type. A parameterized type that
+      contains a wildcard type parameter is not a legal bean type.</para>
+      
+      <para>Note that certain additional restrictions are specified in 
+      <xref linkend="unproxyable"/> for beans with a normal scope, as defined in 
+      <xref linkend="normalscope"/>.</para>
+    
+    </section>
+    
+    <section>
+      <title>Restricting the bean types of a bean</title>
+      
+      <para>The bean types of a bean may be restricted by annotating the bean
+      class or producer method or field with the annotation
+      <literal>@javax.enterprise.inject.Typed</literal>.</para>
+      
+    <programlisting>@Typed(Shop.class)
+public class BookShop
+        extends Business
+        implements Shop&lt;Book&gt; { 
+    ... 
+}</programlisting>
+
+      <para>When a <literal>@Typed</literal> annotation is explicitly
+      specified, only the types whose classes are explicitly listed using the
+      <literal>value</literal> member, together with <literal>java.lang.Object</literal>, 
+      are bean types of the bean.</para>
+      
+      <para>In the example, the bean has a two bean types: 
+      <literal>Shop&lt;Book&gt;</literal> and <literal>Object</literal>.</para>
+      
+      <para>If a bean class or producer method or field specifies a 
+      <literal>@Typed</literal> annotation, and the <literal>value</literal> 
+      member specifies a class which does not correspond to a type in the
+      unrestricted set of bean types of a bean, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+    
+    </section>
+    
+    <section>
+      <title>Typecasting between bean types</title>
+    
+      <para>A client of a bean may typecast its contextual reference to a 
+      bean to any bean type of the bean which is a Java interface. However, 
+      the client may not in general typecast its contextual reference to an
+      arbitrary concrete bean type of the bean. For example, if our managed 
+      bean was injected to the following field:</para>
+    
+      <programlisting>@Inject Business biz;</programlisting>
+    
+      <para>Then the following typecast is legal:</para>
+    
+      <programlisting>Shop&lt;Book&gt; bookShop = (Shop&lt;Book&gt;) biz;</programlisting>
+        
+      <para>However, the following typecast is not legal and might result in 
+      an exception at runtime:</para>
+    
+      <programlisting>BookShop bookShop = (BookShop) biz;</programlisting>
+        
+    </section>
+
+  </section>
+
+  <section>
+    <title>Qualifiers</title>
+
+    <para>For a given bean type, there may be multiple beans which implement 
+    the type. For example, an application may have two implementations of the
+    interface <literal>PaymentProcessor</literal>:</para>
+    
+    <programlisting>class SynchronousPaymentProcessor 
+        implements PaymentProcessor { 
+    ... 
+}</programlisting>
+
+    <programlisting>class AsynchronousPaymentProcessor 
+        implements PaymentProcessor { 
+    ... 
+}</programlisting>
+
+    <para>A client that needs a <literal>PaymentProcessor</literal> that processes
+    payments synchronously needs some way to distinguish between the two different
+    implementations. One approach would be for the client to explicitly specify
+    the class that implements the <literal>PaymentProcessor</literal> interface.
+    However, this approach creates a hard dependence between client and 
+    implementation&mdash;exactly what use of the interface was designed to avoid!</para>
+
+    <para>A <emphasis>qualifier type</emphasis> represents some client-visible semantic 
+    associated with a type that is satisfied by some implementations of the type (and 
+    not by others). For example, we could introduce qualifier types representing
+    synchronicity and asynchronicity. In Java code, qualifier types are represented by
+    annotations.</para>
+
+    <programlisting>@Synchronous
+class SynchronousPaymentProcessor 
+        implements PaymentProcessor { 
+    ... 
+}</programlisting>
+
+    <programlisting>@Asynchronous
+class AsynchronousPaymentProcessor 
+        implements PaymentProcessor { 
+    ... 
+}</programlisting>
+
+    <para>Finally, qualifier types are applied to injection points to distinguish which
+    implementation is required by the client. For example, when the container encounters 
+    the following injected field, an instance of <literal>SynchronousPaymentProcessor</literal> 
+    will be injected:</para>
+
+    <programlisting>@Inject @Synchronous PaymentProcessor paymentProcessor;</programlisting>
+
+    <para>But in this case, an instance of <literal>AsynchronousPaymentProcessor</literal> 
+    will be injected:</para>
+
+    <programlisting>@Inject @Asynchronous PaymentProcessor paymentProcessor;</programlisting>
+
+    <para>The container inspects the qualifier annotations and type of the injected 
+    attribute to determine the bean instance to be injected, according to the 
+    rules of typesafe resolution defined in <xref linkend="typesaferesolution"/>.</para>
+    
+    <para>An injection point may even specify multiple qualifiers.</para>
+
+    <para>Qualifier types are also used as event selectors by event consumers, 
+    as defined in <xref linkend="events"/>, and to bind decorators to beans, 
+    as specified in <xref linkend="decorators"/>.</para>
+    
+    <section id="builtinqualifiers">
+      <title>Built-in qualifier types</title>
+      
+      <para>Three standard qualifier types are defined in the package 
+      <literal>javax.enterprise.inject</literal>. In addition, the built-in qualifier 
+      type <literal>@Named</literal> is defined by the package 
+      <literal>javax.inject</literal>.</para>
+      
+      <para>Every bean has the built-in qualifier <literal>@Any</literal>, even if it 
+      does not explicitly declare this qualifier, except for the special 
+      <literal>@New</literal> qualified beans defined in <xref linkend="new"/>.</para>
+      
+      <para>If a bean does not explicitly declare a qualifier other than <literal>@Named</literal>, 
+      the bean has exactly one additional qualifier, of type <literal>@Default</literal>. 
+      This is called the <emphasis>default qualifier</emphasis>.</para>
+      
+      <para>The following declarations are equivalent:</para>
+      
+      <programlisting>@Default
+public class Order { ... }</programlisting>
+
+      <programlisting>public class Order { ... }</programlisting>
+      
+      <para>Both declarations result in a bean with two qualifiers: <literal>@Any</literal>
+      and <literal>@Default</literal>.</para>
+      
+      <para>The following declaration results in a bean with three qualifiers: 
+      <literal>@Any</literal>, <literal>@Default</literal> and <literal>@Named("ord")</literal>.</para>
+
+      <programlisting>@Named("ord")
+public class Order { ... }</programlisting>
+      
+      <para>The default qualifier is also assumed for any injection point that does not 
+      explicitly declare a qualifier, <!--other than <literal>@Named</literal>--> as defined 
+      in <xref linkend="injectionpointdefaultqualifier"/>. The following declarations, in 
+      which the use of the <literal>@Inject</literal> annotation identifies the constructor
+      parameter as an injection point, are equivalent:</para>
+
+      <programlisting>public class Order {
+    @Inject
+    public Order(@Default OrderProcessor processor) { ... }
+}</programlisting>
+
+      <programlisting>public class Order {
+    @Inject
+    public Order(OrderProcessor processor) { ... }
+}</programlisting>
+
+    </section>
+    
+    <section id="definingqualifiertypes">
+      <title>Defining new qualifier types</title>
+
+      <para>A qualifier type is a Java annotation defined as
+      <literal>@Target({METHOD, FIELD, PARAMETER, TYPE})</literal> and
+      <literal>@Retention(RUNTIME)</literal>.</para>
+      
+      <para>A qualifier type may be declared by specifying the 
+      <literal>@javax.inject.Qualifier</literal> meta-annotation.</para>
+
+      <programlisting>@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Synchronous {}</programlisting>
+
+      <programlisting>@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Asynchronous {}</programlisting>
+
+      <para>A qualifier type may define annotation members.</para>
+
+      <programlisting>@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface PayBy {
+    PaymentMethod value();
+}</programlisting>
+
+    </section>
+    
+    <section>
+      <title>Declaring the qualifiers of a bean</title>
+
+      <para>The qualifiers of a bean are declared by annotating the bean
+      class or producer method or field with the qualifier types.</para>
+      
+      <programlisting>@LDAP 
+class LdapAuthenticator 
+        implements Authenticator {
+    ...
+}</programlisting>
+      
+      <programlisting>public class Shop {
+
+   @Produces @All
+   public List&lt;Product&gt; getAllProducts() { ... }
+
+   @Produces @WishList
+   public List&lt;Product&gt; getWishList() { ... }
+
+}</programlisting>
+
+      <para>Any bean may declare multiple qualifier types.</para>
+      
+      <programlisting>@Synchronous @Reliable
+class SynchronousReliablePaymentProcessor 
+        implements PaymentProcessor {
+    ...
+}</programlisting>
+      
+    </section>
+
+    <!--
+    <section id="qualifiertype.xml">
+      <title>Declaring the qualifiers of a bean using XML</title>
+
+      <para>If a bean is declared in <literal>beans.xml</literal>, 
+      qualifiers may be specified using the qualifier type names:</para>
+
+      <programlisting>&lt;myapp:SynchronousPaymentProcessor&gt;
+    &lt;myapp:Synchronous/&gt;
+    &lt;myapp:Reliable/&gt;
+&lt;/myapp:SynchronousPaymentProcessor&gt;</programlisting>
+            
+    </section>
+    -->
+
+    <section>
+      <title>Specifying qualifiers of an injected field</title>
+
+      <para>Qualifier types may be applied to injected fields (see
+      <xref linkend="injectedfields"/>) to determine the bean that is injected, 
+      according to the rules of typesafe resolution defined in 
+      <xref linkend="typesaferesolution"/>.</para>
+      
+      <programlisting>@Inject @LDAP Authenticator authenticator;</programlisting>
+      
+      <para>A bean may only be injected to an injection point if it has all 
+      the qualifiers of the injection point.</para>
+
+      <programlisting>@Inject @Synchronous @Reliable PaymentProcessor paymentProcessor;</programlisting>
+
+      <programlisting>@Inject @All List&lt;Product&gt; catalog;</programlisting>
+
+      <programlisting>@Inject @WishList List&lt;Product&gt; wishList;</programlisting>
+      
+      <!--
+      <para>For a bean defined in XML, the qualifiers of a field may be specified 
+      using XML:</para>
+      
+      <programlisting><![CDATA[<myapp:paymentProcessor>
+    <myapp:PaymentProcessor>
+        <myapp:Asynchronous/>
+        <myapp:Reliable/>
+    </myapp:PaymentProcessor>
+</myapp:paymentProcessor>]]></programlisting>
+
+      <para>When the qualifiers of a field are specified using XML, any qualifier 
+      annotations of the field are ignored.</para>
+      -->
+      
+    </section>
+
+    <section>
+      <title>Specifying qualifiers of a method or constructor parameter</title>
+
+      <para>Qualifier types may be applied to parameters of producer methods,
+      initializer methods, disposer methods, observer methods or bean constructors 
+      (see <xref linkend="implementation"/>) to determine the bean instance 
+      that is passed when the method is called by the container. The container 
+      uses the rules of typesafe resolution defined in 
+      <xref linkend="typesaferesolution"/> to determine values for these 
+      parameters.</para>
+
+      <para>For example, when the container encounters the following
+      producer method, an instance of <literal>SynchronousPaymentProcessor</literal> 
+      will be passed to the first parameter and an instance of
+      <literal>AsynchronousPaymentProcessor</literal> will be passed to the
+      second parameter:</para>
+
+      <programlisting>@Produces
+PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync, 
+                                     @Asynchronous PaymentProcessor async) {
+    return isSynchronous() ? sync : async;
+}</programlisting>
+      
+      <!--
+      <para>For a bean defined in XML, the qualifiers of a method parameter 
+      may be specified using XML:</para>
+      
+      <programlisting><![CDATA[<myapp:getPaymentProcessor>
+    <Produces/>
+    <myapp:PaymentProcessor>
+        <myapp:Synchronous/>
+    </myapp:PaymentProcessor>
+    <myapp:PaymentProcessor>
+        <myapp:Asynchronous/>
+    </myapp:PaymentProcessor>
+</myapp:getPaymentProcessor>]]></programlisting>
+      
+      <para>When the qualifiers of a parameter are specified using XML, any
+      qualifier annotations of the parameter are ignored.</para>
+      -->
+      
+    </section>
+    
+  </section>
+
+  <section>
+    <title>Scopes</title>
+    
+    <para>Java EE components such as servlets, EJBs and JavaBeans do not have a 
+    well-defined <emphasis>scope</emphasis>. These components are either:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para><emphasis>singletons</emphasis>, such as EJB singleton beans, whose
+        state is shared between all clients,</para>
+      </listitem>
+      <listitem>
+        <para><emphasis>stateless objects</emphasis>, such as servlets and stateless 
+        session beans, which do not contain client-visible state, or</para>
+      </listitem>
+      <listitem>
+        <para>objects that must be explicitly created and destroyed by their client, 
+        such as JavaBeans and stateful session beans, whose state is shared by 
+        explicit reference passing between clients.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>Scoped objects, by contrast, exist in a well-defined lifecycle context:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>they may be automatically created when needed and then automatically 
+        destroyed when the context in which they were created ends, and</para>
+      </listitem>
+      <listitem>
+        <para>their state is automatically shared by clients that execute in the same
+        context.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>All beans have a scope. The scope of a bean determines the lifecycle 
+    of its instances, and which instances of the bean are visible to instances of 
+    other beans, as defined in <xref linkend="contexts"/>. A scope type is 
+    represented by an annotation type.</para>
+    
+    <para>For example, an object that represents the current user is represented by a
+    session scoped object:</para>
+    
+    <programlisting>@Produces @SessionScoped User getCurrentUser() { ... }</programlisting>
+    
+    <para>An object that represents an order is represented by a conversation scoped
+    object:</para>
+    
+    <programlisting>@ConversationScoped 
+public class Order { ... }</programlisting>
+
+    <para>A list that contains the results of a search screen might be represented by
+    a request scoped object:</para>
+
+    <programlisting>@Produces @RequestScoped @Named("orders") 
+List&lt;Order&gt; getOrderSearchResults() { ... }</programlisting>
+    
+    <para>The set of scope types is extensible.</para>
+    
+    <section id="builtinscopes">
+      <title>Built-in scope types</title>
+
+      <para>There are five standard scope types defined by this specification,
+      all defined in the package <literal>javax.enterprise.context</literal>.</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>The <literal>@RequestScoped</literal>, <literal>@ApplicationScoped</literal> 
+          and <literal>@SessionScoped</literal> annotations defined in 
+          <xref linkend="builtincontexts"/> represent the standard scopes defined by 
+          the Java Servlets specification.</para>
+        </listitem>
+        <listitem>
+          <para>The <literal>@ConversationScoped</literal> annotation represents the 
+          conversation scope defined in <xref linkend="conversationcontext"/>.</para> 
+        </listitem>
+        <listitem>
+          <para>Finally, there is a <literal>@Dependent</literal> pseudo-scope for 
+          dependent objects, as defined in <xref linkend="dependentcontext"/>.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>If an interceptor or decorator has any scope other than 
+      <literal>@Dependent</literal>, non-portable behavior results.</para>
+      
+    </section>
+
+    <section>
+      <title>Defining new scope types</title>
+
+      <para>A scope type is a Java annotation defined as
+      <literal>@Target({TYPE, METHOD, FIELD})</literal> and
+      <literal>@Retention(RUNTIME)</literal>. All scope types must also specify 
+      the <literal>@javax.inject.Scope</literal> or 
+      <literal>@javax.enterprise.context.NormalScope</literal>
+      meta-annotation.</para>
+
+      <para>For example, the following annotation declares a "business process 
+      scope":</para>
+
+      <programlisting>@Inherited
+@NormalScope
+@Target({TYPE, METHOD, FIELD})
+@Retention(RUNTIME)
+public @interface BusinessProcessScoped {}</programlisting>
+
+      <para>Custom scopes are normally defined by portable extensions, which must 
+      also provide a <emphasis>context object</emphasis>, as defined in 
+      <xref linkend="context"/>, that implements the custom scope.</para>
+
+    </section>
+
+    <section>
+      <title>Declaring the bean scope</title>
+
+      <para>The scope of a bean is defined by annotating the bean class 
+      or producer method or field with a scope type.</para>
+
+      <para>A bean class or producer method or field may specify at most 
+      one scope type annotation. If a bean class or producer method or 
+      field specifies multiple scope type annotations, the container 
+      automatically detects the problem and treats it as a definition 
+      error.</para>
+
+      <programlisting>public class Shop {
+
+   @Produces @ApplicationScoped @All
+   public List&lt;Product&gt; getAllProducts() { ... }
+
+   @Produces @SessionScoped @WishList
+   public List&lt;Product&gt; getWishList() { ..... }
+
+}</programlisting>
+
+      <para>Likewise, a bean with the custom business process scope may be 
+      declared by annotating it with the <literal>@BusinessProcessScoped</literal>
+      annotation:</para>
+
+      <programlisting>@BusinessProcessScoped
+public class Order { ... }</programlisting>
+
+      <para>Alternatively, a scope type may be specified using a stereotype
+      annotation, as defined in <xref linkend="declaringstereotypes"/>.</para>
+
+    </section>
+
+    <!--
+    <section id="scopetype.xml">
+      <title>Declaring the bean scope using XML</title>
+
+      <para>If the bean is declared in <literal>beans.xml</literal>, 
+      the scope may be specified using the scope annotation type name:</para>
+
+      <programlisting>&lt;myapp:ProductList&gt;
+    &lt;RequestScoped/&gt;
+&lt;/myapp:ProductList&gt;</programlisting>
+
+      <para>If more than one scope type is specified in XML, the container 
+      automatically detects the problem and treats it as a definition error.</para>
+ 
+      <para>Alternatively, a scope type may be specified using a stereotype
+      declared in XML, as defined in <xref linkend="stereotypexml"/>.</para>
+      
+    </section>
+    -->
+
+    <section>
+      <title>Default scope</title>
+
+      <para>When no scope is explicitly declared by annotating the bean class or 
+      producer method or field the scope of a bean is defaulted.</para>
+
+      <para>The <emphasis>default scope</emphasis> for a bean which does not
+      explicitly declare a scope depends upon its declared stereotypes:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>If the bean does not declare any stereotype with a declared default 
+          scope, the default scope for the bean is <literal>@Dependent</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If all stereotypes declared by the bean that have some declared
+          default scope have the same default scope, then that scope is the default
+          scope for the bean.</para>
+        </listitem>
+        <listitem>
+          <para>If there are two different stereotypes declared by the bean that
+          declare different default scopes, then there is no default scope and the
+          bean must explicitly declare a scope. If it does not explicitly
+          declare a scope, the container automatically detects the problem and treats 
+          it as a definition error.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>If a bean explicitly declares a scope, any default scopes declared
+      by stereotypes are ignored.</para>      
+
+    </section>
+     
+  </section>
+
+  <section>
+    <title>Bean EL names</title>
+
+    <para>A bean may have a <emphasis>bean EL name</emphasis>. A bean with 
+    an EL name may be referred to by its name in Unified EL expressions. A 
+    valid bean EL name is a period-separated list of valid EL identifiers.</para>
+    
+    <para>The following strings are valid EL names:</para>
+    
+    <programlisting>org.mydomain.myapp.settings</programlisting>
+    <programlisting>orderManager</programlisting>
+    
+    <para>There is no relationship between the EL name of a session bean and 
+    the EJB name of the bean.</para>
+
+    <para>Subject to the restrictions defined in <xref linkend="ambignames"/>, 
+    multiple beans may share the same EL name.</para>
+    
+    <para>Bean EL names allow the direct use of beans in JSP or JSF pages, as 
+    defined in <xref linkend="el"/>. For example, a bean with the name 
+    <literal>products</literal> could be used like this:</para>
+
+    <programlisting>&lt;h:outputText value="#{products.total}"/&gt;</programlisting>
+      
+    <!--para>Resources and message destinations do not have EL names.</para-->
+
+    <para>Bean EL names are used by the rules of EL name resolution defined in
+    <xref linkend="nameresolution"/>.</para>
+    
+    <!--
+    <para><emphasis>Open issue: should a bean be allowed to have multiple EL names?</emphasis></para>
+    -->
+    
+    <section>
+      <title>Declaring the bean EL name</title>
+
+      <para>To specify the EL name of a bean, the qualifier 
+      <literal>@javax.inject.Named</literal> is applied to the bean class or 
+      producer method or field. This bean is named <literal>currentOrder</literal>:</para>
+
+      <programlisting>@Named("currentOrder")
+public class Order { ... }</programlisting>
+
+      <para>If the <literal>@Named</literal> annotation does not specify the
+      <literal>value</literal> member, the EL name is defaulted.</para>
+      
+    </section>
+
+    <!--
+    <section  id="name.xml">
+      <title>Declaring the bean EL name using XML</title>
+
+      <para>If the bean is declared in
+      <literal>beans.xml</literal>, the name may be 
+      specified using <literal>&lt;Named&gt;</literal>:</para>
+
+      <programlisting>&lt;myapp:ProductList&gt;
+    &lt;Named&gt;products&lt;/Named&gt;
+&lt;/myapp:ProductList&gt;</programlisting>
+
+      <para>If the <literal>&lt;Named&gt;</literal> element is empty,
+      the default name is assumed.</para>
+            
+    </section>
+    -->
+    
+    <section id="defname">
+      <title>Default bean EL names</title>
+      
+      <para>In the following circumstances, a <emphasis>default EL name</emphasis> 
+      must be assigned by the container:</para>
+      
+      <itemizedlist>
+      <listitem>
+        <para>A bean class or producer method or field of a bean declares a 
+        <literal>@Named</literal> annotation and no EL name is explicitly 
+        specified by the <literal>value</literal> member.</para>
+      </listitem>
+      <!--
+      <listitem>
+        <para>An empty <literal>&lt;Named&gt;</literal> element is specified 
+        by a bean defined in XML.</para>
+      </listitem>
+      -->
+      <listitem>
+        <para>A bean declares a stereotype that declares an empty 
+        <literal>@Named</literal> annotation, and the bean does not 
+        explicitly specify an EL name.</para>
+      </listitem>
+      </itemizedlist>
+      
+      <para>The default name for a bean depends upon the bean implementation. 
+      The rules for determining the default name for a bean are defined in 
+      <xref linkend="managedbeanname"/>, <xref linkend="sessionbeanname"/>,
+      <xref linkend="producermethodname"/> and 
+      <xref linkend="producerfieldname"/>.</para>
+            
+    </section>
+
+    <section>
+      <title>Beans with no EL name</title>
+      
+      <para>If <literal>@Named</literal> is not declared by the bean, nor by 
+      its stereotypes, a bean has no EL name.</para>
+
+      <para>If an interceptor or decorator has a name, non-portable behavior 
+      results.</para>
+      
+    </section>
+
+  </section>
+  
+  <section>
+    <title>Alternatives</title>
+    
+    <para>An <emphasis>alternative</emphasis> is a bean that must be explicitly 
+    declared in the <literal>beans.xml</literal> file if it should be available 
+    for lookup, injection or EL resolution.</para>
+    
+    <section>
+      <title>Declaring an alternative</title>
+      
+      <para>An alternative may be declared by annotating the bean class or 
+      producer method or field with the <literal>@Alternative</literal> 
+      annotation.</para>
+      
+      <programlisting>@Alternative
+public class MockOrder extends Order { ... }</programlisting>
+
+      <para>Alternatively, an alternative may be declared by annotating a bean, 
+      producer method or producer field with a stereotype that declares an
+      <literal>@Alternative</literal> annotation.</para>
+      
+      <!--para>If a bean is an alternative, all producer methods and fields of the 
+      bean are also alternatives.</para-->
+      
+      <para>If an interceptor or decorator is an alternative, non-portable 
+      behavior results.</para>
+      
+    </section>
+    
+  </section>
+  
+  <section id="stereotypes">
+    <title>Stereotypes</title>
+    
+    <para>In many systems, use of architectural patterns produces a set of 
+    recurring bean roles. A <emphasis>stereotype</emphasis> allows a 
+    framework developer to identify such a role and declare some common 
+    metadata for beans with that role in a central place.</para>
+    
+    <para>A stereotype encapsulates any combination of:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>a default scope, and</para>
+      </listitem>
+      <!--
+      <listitem>
+        <para>a restriction upon the bean scope,</para>
+      </listitem>
+      <listitem>
+        <para>a requirement that the bean implement or extend a certain 
+        type, and</para>
+      </listitem>
+      -->
+      <listitem>
+        <para>a set of interceptor bindings.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>A stereotype may also specify that:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>all beans with the stereotype have defaulted bean EL names, 
+        or that</para>
+      </listitem>
+      <listitem>
+        <para>all beans with the stereotype are alternatives.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>A bean may declare zero, one or multiple stereotypes.</para>
+    
+    <section>
+      <title>Defining new stereotypes</title>
+      
+      <para>A bean stereotype is a Java annotation defined as
+      <literal>@Target({TYPE, METHOD, FIELD})</literal>, <literal>@Target(TYPE)</literal>,
+      <literal>@Target(METHOD)</literal>, <literal>@Target(FIELD)</literal> or 
+      <literal>@Target({METHOD, FIELD})</literal> and <literal>@Retention(RUNTIME)</literal>.</para>
+      
+      <para>A stereotype may be declared by specifying the 
+      <literal>@javax.enterprise.inject.Stereotype</literal> 
+      meta-annotation.</para>
+
+      <programlisting>@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+      <section>
+        <title>Declaring the default scope for a stereotype</title>
+
+        <para>The default scope of a stereotype is defined by annotating the 
+        stereotype with a scope type. A stereotype may declare at most one 
+        scope. If a stereotype declares more than one scope, the container 
+        automatically detects the problem and treats it as a definition error.</para>
+      
+        <para>For example, the following stereotype might be used to identify 
+        action classes in a web application:</para>
+
+        <programlisting>@RequestScoped
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+        <para>Then actions would have scope <literal>@RequestScoped</literal>
+        unless the scope is explicitly specified by the bean.</para>
+      
+      </section>
+      
+      <section>
+        <title>Specifying interceptor bindings for a stereotype</title>
+        
+        <para>The interceptor bindings of a stereotype are defined by annotating the 
+        stereotype with the interceptor binding types. A stereotype may declare zero, 
+        one or multiple interceptor bindings, as defined in 
+        <xref linkend="stereotypeinterceptorbindings"/>.</para>
+
+        <para>We may specify interceptor bindings that apply to all actions:</para>
+
+        <programlisting>@RequestScoped
+@Secure
+@Transactional
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+      </section>
+
+      <section>
+        <title>Declaring a <literal>@Named</literal> stereotype</title>
+
+        <para>A stereotype may declare an empty <literal>@Named</literal> annotation,
+        which specifies that every bean with the stereotype has a defaulted name when 
+        a name is not explicitly specified by the bean.</para>
+        
+        <para>If a stereotype declares a non-empty <literal>@Named</literal>
+        annotation, the container automatically detects the problem and treats it as 
+        a definition error.</para>
+      
+        <para>We may specify that all actions have names:</para>
+      
+        <programlisting>@RequestScoped
+@Secure
+@Transactional
+@Named
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+      <para>A stereotype should not declare any qualifier annotation other than
+      <literal>@Named</literal>. If a stereotype declares any other qualifier 
+      annotation, non-portable behavior results.</para>
+      
+      <para>A stereotype should not be annotated <literal>@Typed</literal>. 
+      If a stereotype is annotated <literal>@Typed</literal>, non-portable 
+      behavior results.</para>
+      
+      </section>
+      
+      <section>
+        <title>Declaring an <literal>@Alternative</literal> stereotype</title>
+        
+        <para>A stereotype may declare an <literal>@Alternative</literal> annotation,
+        which specifies that every bean with the stereotype is an alternative.</para>
+      
+        <para>We may specify that all mock objects are alternatives:</para>
+      
+        <programlisting>@Alternative
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Mock {}</programlisting>
+
+      </section>
+      
+      <!--  
+      <section>
+        <title>Restricting bean scopes and types using a stereotype</title>
+
+        <para>If all actions are request scoped, we can make this restriction explicit:</para>
+      
+        <programlisting>@RequestScoped
+@Secure
+@Transactional
+@Stereotype(supportedScopes=RequestScoped.class)
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+        <para>We may even require that all actions extend some <literal>ActionBase</literal> 
+        class:</para>
+
+        <programlisting>@RequestScoped
+@Secure
+@Transactional
+@Stereotype(requiredTypes=ActionBase.class)
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+        
+      </section>
+      -->
+
+      <section>
+        <title>Stereotypes with additional stereotypes</title>
+      
+        <para>A stereotype may declare other stereotypes.</para>
+      
+        <programlisting>@Auditable
+@Action
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface AuditableAction {}</programlisting>      
+      
+        <para>Stereotype declarations are transitive&mdash;a stereotype declared
+        by a second stereotype is inherited by all beans and other stereotypes 
+        that declare the second stereotype.</para>
+        
+        <!--
+        <para>Stereotypes declared <literal>@Target(METHOD)</literal> may not
+        be applied to stereotypes declared <literal>@Target({TYPE, METHOD})</literal>
+        or <literal>@Target(TYPE)</literal>.</para>
+        -->
+
+        <para>Stereotypes declared <literal>@Target(TYPE)</literal> may not
+        be applied to stereotypes declared <literal>@Target({TYPE, METHOD, FIELD})</literal>,
+        <literal>@Target(METHOD)</literal>, <literal>@Target(FIELD)</literal>
+        or <literal>@Target({METHOD, FIELD})</literal>.</para>
+
+      </section>
+
+    </section>
+    
+    <section id="declaringstereotypes">
+      <title>Declaring the stereotypes for a bean</title>
+      
+      <para>Stereotype annotations may be applied to a bean class or producer 
+      method or field.</para>
+      
+      <programlisting>@Action
+public class LoginAction { ... }</programlisting>
+
+      <para>The default scope declared by the stereotype may be overridden by 
+      the bean:</para>
+
+      <programlisting>@Mock @ApplicationScoped @Action
+public class MockLoginAction extends LoginAction { ... }</programlisting>
+
+      <para>Multiple stereotypes may be applied to the same bean:</para>
+      
+      <programlisting>@Dao @Action
+public class LoginAction { ... }</programlisting>
+
+    </section>
+    
+    <!--
+    <section id="stereotypexml">
+      <title>Declaring the stereotypes for a bean using XML</title>
+      
+      <para>If the bean is declared in <literal>beans.xml</literal>, 
+      stereotypes may be declared using the stereotype annotation type name:</para>
+
+      <programlisting>&lt;myapp:LoginAction&gt;
+    &lt;myfwk:Action/&gt;
+&lt;/myapp:LoginAction&gt;</programlisting>
+
+    </section>
+    -->
+    
+    <!--
+    <section>
+      <title>Stereotype restrictions</title>
+      
+      <para>A stereotype may place certain restrictions upon the beans that
+      declare the stereotype.</para>
+      
+      <para>If a stereotype declares a <literal>requiredType</literal>, and the 
+      bean types do not include the type, the container automatically detects the 
+      problem and treats it as a definition error.</para>
+
+      <para>If a stereotype explicitly declares a set of scope types using
+      <literal>supportedScopes</literal>, and the bean scope is not in that
+      set, the container automatically detects the problem and treats it as 
+      a definition error.</para>
+      
+      <para>If a bean declares multiple stereotypes, it must satisfy every
+      restriction declared by every declared stereotype.</para>
+      
+    </section>
+    -->
+    
+    <section id="model">
+      <title>Built-in stereotypes</title>
+      
+      <para>The built-in stereotype <literal>@javax.enterprise.inject.Model</literal> 
+      is intended for use with beans that define the <emphasis>model</emphasis> 
+      layer of an MVC web application architecture such as JSF:</para>
+      
+      <programlisting>@Named
+@RequestScoped
+@Stereotype
+@Target({TYPE, METHOD, FIELD})
+@Retention(RUNTIME)
+public @interface Model {}</programlisting>
+
+      <para>In addition, the special-purpose <literal>@Interceptor</literal> and 
+      <literal>@Decorator</literal> stereotypes are defined in 
+      <xref linkend="declaringinterceptor"/> and 
+      <xref linkend="decoratorannotation"/>.</para>
+      
+    </section>
+    
+  </section>
+  
+  <section id="exceptions">
+    <title>Problems detected automatically by the container</title>
+ 
+    <para>When the application violates a rule defined by this specification,
+    the container automatically detects the problem. There are three kinds of
+    problem:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>Definition errors&mdash;occur when a single bean definition
+        violates the rules of this specification</para>
+      </listitem>
+      <listitem>
+        <para>Deployment problems&mdash;occur when there are problems resolving
+        dependencies, or inconsistent specialization, in a particular deployment</para>
+      </listitem>
+      <listitem>
+        <para>Exceptions&mdash;occur at runtime</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>Definition errors are <emphasis>developer errors</emphasis>. They may be
+    detected by tooling at development time, and are also detected by the container at 
+    initialization time. If a definition error exists in a deployment, initialization 
+    will be aborted by the container.</para>
+    
+    <para>Deployment problems are detected by the container at initialization time. If
+    a deployment problem exists in a deployment, initialization will be aborted by the 
+    container.</para>
+    
+    <para>The container is permitted to define a non-portable mode, for use at development 
+    time, in which some definition errors and deployment problems do not cause application 
+    initialization to abort.</para>
+    
+    <para>Exceptions represent problems that may not be detected until they actually occur 
+    at runtime. All exceptions defined by this specification are unchecked exceptions. All
+    exceptions defined by this specification may be safely caught and handled by the 
+    application.</para>
+     
+  </section>
+
+</chapter>

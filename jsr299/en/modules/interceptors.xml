@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="interceptors">
+    
+    <title>Interceptor bindings</title>
+
+    <para>Managed beans and EJB session and message-driven beans support interception. 
+    <emphasis>Interceptors</emphasis> are used to separate cross-cutting concerns from 
+    business logic. The Java Interceptors specification defines the basic programming 
+    model and semantics. This specification defines a typesafe mechanism for associating 
+    interceptors to beans using <emphasis>interceptor bindings</emphasis>.</para>
+
+    <para>Interceptor bindings may be used to associate interceptors with any managed bean 
+    that is not itself an interceptor or decorator or with any EJB session or message-driven 
+    bean. An interceptor instance is a dependent object of the object it intercepts.</para>
+
+    <section id="interceptorbindings">
+      <title>Interceptor binding types</title>
+      
+      <para>An <emphasis>interceptor binding type</emphasis> is a Java annotation 
+      defined as <literal>@Target({TYPE, METHOD})</literal> or <literal>@Target(TYPE)</literal>
+      and <literal>@Retention(RUNTIME)</literal>.</para> 
+      
+      <para>An interceptor binding type may be declared by specifying the 
+      <literal>@javax.interceptor.InterceptorBinding</literal> meta-annotation.</para>
+      
+      <programlisting>@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface Transactional {}</programlisting>
+      
+      <section>
+        <title>Interceptor binding types with additional interceptor bindings</title>
+      
+        <para>An interceptor binding type may declare other interceptor bindings.</para>
+      
+        <programlisting>@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+@Transactional
+public @interface DataAccess {}</programlisting>      
+      
+        <!--
+        <programlisting><![CDATA[<myfwk:DataAccess>
+    <InterceptorBinding/>
+    <myfwk:Transactional/>
+</myfwk:DataAccess>]]></programlisting>
+       -->
+
+        <para>Interceptor bindings are transitive&mdash;an interceptor binding declared
+        by an interceptor binding type is inherited by all beans and other
+        interceptor binding types that declare that interceptor binding type.</para>
+
+        <para>Interceptor binding types declared <literal>@Target(TYPE)</literal> may not
+        be applied to interceptor binding types declared 
+        <literal>@Target({TYPE, METHOD})</literal>.</para>
+
+      </section>
+    
+      <section id="stereotypeinterceptorbindings">
+        <title>Interceptor bindings for stereotypes</title>
+        
+        <para>Interceptor bindings may be applied to a stereotype by annotating the
+        stereotype annotation:</para>
+        
+      <programlisting>@Transactional
+@Secure
+@RequestScoped
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Action {}</programlisting>
+
+        <para>An interceptor binding declared by a stereotype is inherited by any
+        bean that declares that stereotype.</para>
+        
+        <para>If a stereotype declares interceptor bindings, it must be defined as 
+        <literal>@Target(TYPE)</literal>.</para>
+        
+      </section>
+      
+    </section>
+     
+     <!-- 
+     <section>
+      <title>Interceptor implementation</title>
+    
+      <para>An <emphasis>interceptor</emphasis> is a managed bean with a
+      bean class that is also an interceptor class as defined by the EJB 
+      specification.</para>
+      
+      <para>An interceptor with scope <literal>@Dependent</literal> must
+      be serializable. If an interceptor has scope <literal>@Dependent</literal>
+      and is not serializable, the container automatically detects the problem and 
+      treats it as a definition error.</para>
+    
+      <para>An interceptor may be either a business method interceptor, a
+      lifecycle callback interceptor or both.</para>
+      
+    <section>
+      <title>Business method interceptors</title>
+      
+      <para>An interceptor method for business method invocations is a method
+      of an interceptor with return type <literal>Object</literal> and a single 
+      parameter of type <literal>javax.interceptor.InvocationContext</literal>, 
+      annotated <literal>@AroundInvoke</literal>.</para>
+      
+      <para>Interceptor methods for business method invocations are called by
+      the container when a business method is invoked.</para>
+      
+      <para>If an interceptor has an interceptor method for business method 
+      invocations, we describe it as a <emphasis>business method 
+      interceptor</emphasis>.</para>
+      
+    </section>
+    
+    <section>
+      <title>Lifecycle callback interceptors</title>
+     
+      <para>An interceptor method for a lifecycle callback is a method
+      of an interceptor bean class with return type 
+      <literal>void</literal> and a single parameter of type
+      <literal>javax.interceptor.InvocationContext</literal>, annotated
+      <literal>@PostConstruct</literal>, <literal>@PreDestroy</literal>,
+      <literal>@PrePassivate</literal> or <literal>@PostActivate</literal>.</para>
+      
+      <para>Interceptor methods for a lifecycle callbacks are called by
+      the container when the corresponding <literal>@PostConstruct</literal>, 
+      <literal>@PreDestroy</literal>, <literal>@PrePassivate</literal> or 
+      <literal>@PostActivate</literal> events occur.</para>
+      
+      <para>If an interceptor has an interceptor method for a lifecycle
+      callback, we describe it as a <emphasis>lifecycle callback 
+      interceptor</emphasis>.</para>
+      
+    </section>
+    
+    -->
+        
+        
+    <!--
+    <section id="interceptors.xml">
+      <title>Declaring an interceptor using XML</title>
+
+      <para>Additional interceptors may be declared in <literal>beans.xml</literal>,
+      using the interceptor bean class name and the <literal>&lt;Interceptor&gt;</literal> 
+      element:</para>
+      
+      <programlisting><![CDATA[<myfwk:TransactionInterceptor>
+    <Interceptor/>
+    <myfwk:Transactional/>
+</myfwk:TransactionInterceptor>]]></programlisting>
+
+      <para>When an interceptor is declared in XML, the container ignores 
+      any interceptor binding annotations applied to the interceptor class.</para>
+      
+      <para>If the interceptor bean class is already annotated 
+      <literal>@Interceptor</literal>, two different interceptors exist, 
+      with different interceptor bindings.</para>
+
+    </section>
+    -->
+
+    <section id="declaringinterceptor">
+      <title>Declaring the interceptor bindings of an interceptor</title>
+      
+      <para>The interceptor bindings of an interceptor are specified by 
+      annotating the interceptor class with the binding types and the 
+      <literal>@javax.interceptor.Interceptor</literal> annotation.</para>
+    
+      <programlisting>@Transactional @Interceptor
+public class TransactionInterceptor {
+
+   @AroundInvoke 
+   public Object manageTransaction(InvocationContext ctx) throws Exception { ... }
+
+}</programlisting>
+
+      <para>An interceptor class may declare multiple interceptor bindings.</para>
+      
+      <para>Multiple interceptors may declare the same interceptor bindings.</para>
+      
+      <para>If an interceptor does not declare an <literal>@Interceptor</literal>
+      annotation, it must be bound to beans using <literal>@Interceptors</literal>
+      or <literal>ejb-jar.xml</literal>.</para>
+
+      <para>All interceptors declared using <literal>@Interceptor</literal> 
+      should specify at least one interceptor binding. If an interceptor declared 
+      using <literal>@Interceptor</literal> does not declare any interceptor 
+      binding, non-portable behavior results.</para>
+            
+      <para>An interceptor for lifecycle callbacks may only declare interceptor
+      binding types that are defined as <literal>@Target(TYPE)</literal>. If an
+      interceptor for lifecycle callbacks declares an interceptor binding type 
+      that is defined <literal>@Target({TYPE, METHOD})</literal>, the container 
+      automatically detects the problem and treats it as a definition error.</para>
+      
+    </section>
+       
+    <section>
+      <title>Binding an interceptor to a bean</title>
+
+      <para>An interceptor binding may be declared by annotating the bean class, 
+      or a method of the bean class, with the interceptor binding type.</para>
+       
+      <para>In the following example, the <literal>TransactionInterceptor</literal>
+      will be applied at the class level, and therefore applies to all business 
+      methods of the class:</para>
+
+      <programlisting>@Transactional
+public class ShoppingCart { ... }</programlisting>
+
+      <para>In this example, the <literal>TransactionInterceptor</literal>
+      will be applied at the method level:</para>
+
+      <programlisting>public class ShoppingCart {
+
+   @Transactional 
+   public void placeOrder() { ... }
+
+}</programlisting>
+
+      <para>A bean class or method of a bean class may declare multiple interceptor 
+      bindings.</para>
+      
+      <para>If the bean class of a managed bean declares or inherits a class 
+      level interceptor binding or a stereotype with interceptor bindings,
+      it must not be declared final, or have any non-static, non-private, final 
+      methods. If a managed bean has a class-level interceptor binding and
+      is declared final or has a non-static, non-private, final method, the 
+      container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a non-static, non-private method of a bean class of a managed 
+      bean declares a method level interceptor binding, neither the method 
+      nor the bean class may be declared final. If a non-static, non-private, 
+      final method of a managed bean has a method level interceptor binding, 
+      the container automatically detects the problem and treats it as a 
+      definition error.</para>
+
+    </section>
+    <!--
+    <section id="interceptorbindingtype.xml">
+      <title>Binding an interceptor using XML</title>
+
+      <para>Class-level or method-level interceptor binding types may be applied 
+      to any bean declared in <literal>beans.xml</literal>.</para>
+      
+      <para>In the following example, the <literal>TransactionInterceptor</literal>
+      will be applied at the class level:</para>
+
+      <programlisting><![CDATA[<myapp:ShoppingCart>
+   <myfwk:Transactional/>
+</myapp:ShoppingCart>]]></programlisting>
+
+      <para>In this example, the <literal>TransactionInterceptor</literal>
+      will be applied at the method level:</para>
+
+      <programlisting><![CDATA[<myapp:ShoppingCart>
+   <myapp:placeOrder>
+       <myfwk:Transactional/>
+   </myapp:placeOrder>
+</myapp:ShoppingCart>]]></programlisting>
+      -->
+      <!-- 
+      <para>If any class-level interceptor binding type is specified in XML, the 
+      interceptor binding annotations appearing on the bean class are 
+      ignored. The class-level interceptor bindings for the bean include 
+      all interceptor bindings declared using XML, together with all interceptor 
+      bindings of all stereotypes declared by the bean.</para>
+      
+      <para>Otherwise, if no class-level interceptor binding types are specified 
+      in XML, the interceptor binding annotations that appear on the bean 
+      class are used. The class-level interceptor bindings for the bean include 
+      all interceptor bindings declared by annotating the bean class, 
+      together with all interceptor bindings of all stereotypes declared by the bean
+      .</para>
+            
+      <para>If any method-level interceptor binding type is specified in XML, the 
+      interceptor binding annotations appearing on that method are ignored. The 
+      method-level interceptor bindings for that method include only the interceptor 
+      bindings declared using XML.</para>
+      
+      <para>Otherwise, if no method-level interceptor binding types are specified 
+      in XML, the interceptor binding annotations that appear on that method are 
+      used. The method-level interceptor bindings for that method include all the 
+      interceptor bindings declared by annotating the method.</para>
+      -->
+      <!--  
+    </section>
+     -->
+    
+    <section id="enabledinterceptors">
+      <title>Interceptor enablement and ordering</title>
+    
+      <para>By default, a bean archive has no enabled interceptors bound via interceptor 
+      bindings. An interceptor must be explicitly enabled by listing its class under the 
+      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal> 
+      file of the bean archive.</para>
+    
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <interceptors>
+      <class>org.mycompany.myfwk.TransactionInterceptor</class>
+      <class>org.mycompany.myfwk.LoggingInterceptor</class>
+   </interceptors>
+</beans>]]></programlisting>
+
+      <para>The order of the interceptor declarations determines the interceptor 
+      ordering. Interceptors which occur earlier in the list are called first.</para>
+      
+      <para>Each child <literal>&lt;class&gt;</literal> element must specify the name
+      of an interceptor class. If there is no class with the specified name, or if 
+      the class with the specified name is not an interceptor class, the container 
+      automatically detects the problem and treats it as a deployment problem.</para>
+
+      <para>If the same class is listed twice under the <literal>&lt;interceptors&gt;</literal>
+      element, the container automatically detects the problem and treats it as a 
+      deployment problem.</para>
+      
+      <para>Interceptors declared using <literal>@Interceptors</literal> or in 
+      <literal>ejb-jar.xml</literal> are called before interceptors declared using 
+      interceptor bindings.</para>
+      
+      <para>Interceptors are called before decorators.</para>
+    
+      <para>An interceptor is said to be <emphasis>enabled</emphasis> if it is enabled 
+      in at least one bean archive.</para>
+            
+    </section>
+    
+    <section id="interceptorresolution">
+      <title>Interceptor resolution</title>
+ 
+      <para>The process of matching interceptors to a certain lifecycle callback method, 
+      EJB timeout method or business method of a certain bean is called 
+      <emphasis>interceptor resolution</emphasis>.</para>
+      
+      <para>For a lifecycle callback method, the interceptor bindings include the 
+      interceptor bindings declared or inherited by the bean at the class level, including,
+      recursively, interceptor bindings declared as meta-annotations of other interceptor 
+      bindings and stereotypes.</para>
+      
+      <para>For a business method or EJB timeout method, the interceptor bindings include 
+      the interceptor bindings declared or inherited by the bean at the class level, 
+      including, recursively, interceptor bindings declared as meta-annotations of other 
+      interceptor bindings and stereotypes, together with all interceptor bindings declared 
+      at the method level, including, recursively, interceptor bindings declared as 
+      meta-annotations of other interceptor bindings.</para>
+
+      <para>An interceptor is bound to a method if:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>The method has all the interceptor bindings of the interceptor. A method 
+          has an interceptor binding of an interceptor if it has an interceptor binding 
+          with (a) the same type and (b) the same annotation member value for each member 
+          which is not annotated <literal>@javax.enterprise.util.Nonbinding</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>The interceptor intercepts the given kind of lifecycle callback or 
+          business method.</para>
+        </listitem>
+        <listitem>
+          <para>The interceptor is enabled in the bean archive containing the bean.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>For a custom implementation of the <literal>Interceptor</literal> interface
+      defined in <xref linkend="interceptor"/>, the container calls 
+      <literal>getInterceptorBindings()</literal> to determine the interceptor bindings
+      of the interceptor and <literal>intercepts()</literal> to determine if the 
+      interceptor intercepts a given kind of lifecycle callback, EJB timeout or 
+      business method.</para>
+    
+      <section>
+        <title>Interceptors with multiple bindings</title>
+
+        <para>An interceptor class may specify multiple interceptor bindings.</para>
+      
+        <programlisting>@Transactional @Secure @Interceptor
+public class TransactionalSecurityInterceptor {
+
+   @AroundInvoke 
+   public void aroundInvoke() throws Exception { ... }
+
+}</programlisting>
+
+        <para>This interceptor will be bound to all methods of this bean:</para>
+
+        <programlisting>@Transactional @Secure
+public class ShoppingCart { ... }</programlisting>
+
+        <para>The interceptor will also be bound to the <literal>placeOrder()</literal> method 
+        of this bean:</para> 
+
+        <programlisting>@Transactional
+public class ShoppingCart {
+
+   @Secure
+   public void placeOrder() { ... }
+ 
+}</programlisting>
+      
+        <para>However, it will not be bound to the <literal>placeOrder()</literal> method 
+        of this bean, since the <literal>@Secure</literal> interceptor binding does not 
+        appear:</para>
+
+        <programlisting>@Transactional
+public class ShoppingCart {
+
+   public void placeOrder() { ... }
+ 
+}</programlisting>
+
+      </section>
+    
+      <section id="interceptorbindingmembers">
+        <title>Interceptor binding types with members</title>   
+
+        <para>Interceptor binding types may have annotation members.</para>
+      
+        <programlisting>@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface Transactional {
+   boolean requiresNew() default false;
+}</programlisting>
+
+        <para>Any interceptor with that interceptor binding type must select a
+        member value:</para>
+
+        <programlisting>@Transactional(requiresNew=true) @Interceptor
+public class RequiresNewTransactionInterceptor {
+
+   @AroundInvoke 
+   public Object manageTransaction(InvocationContext ctx) throws Exception { ... }
+
+}</programlisting>
+
+        <para>The <literal>RequiresNewTransactionInterceptor</literal> applies to
+        this bean:</para>
+
+        <programlisting>@Transactional(requiresNew=true)
+public class ShoppingCart { ... }</programlisting>
+
+        <para>But not to this bean:</para>
+
+        <programlisting>@Transactional
+public class ShoppingCart { ... }</programlisting>
+
+        <para>Annotation member values are compared using <literal>equals()</literal>.</para>
+      
+        <para>An annotation member may be excluded from consideration using the
+        <literal>@Nonbinding</literal> annotation.</para>
+      
+        <programlisting>@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface Transactional {
+   @Nonbinding boolean requiresNew() default false;
+}</programlisting>
+
+        <para>Array-valued or annotation-valued members of an interceptor binding 
+        type should be annotated <literal>@Nonbinding</literal> in a portable 
+        application. If an array-valued or annotation-valued member of an interceptor 
+        binding type is not annotated <literal>@Nonbinding</literal>, non-portable 
+        behavior results.</para>
+      
+        <para>If the set of interceptor bindings of a bean or interceptor, including 
+        bindings inherited from stereotypes and other interceptor bindings, has two 
+        instances of a certain interceptor binding type and the instances have
+        different values of some annotation member, the container automatically 
+        detects the problem and treats it as a definition error.</para>
+      
+      </section>
+      
+    </section>
+  
+    <!--
+    
+    <section id="interceptorinvocation">
+      <title>Interceptor invocation</title>
+      
+      <para>Whenever a business method or lifecycle callback is invoked on an instance 
+      of a bean with interceptors, the container intercepts the method invocation and 
+      invokes interceptors of the callback or business method.</para>
+      
+      <para>The container identifies the first interceptor in the interceptor stack for 
+      the method. If no such interceptor exists, the container starts processing the 
+      decorator stack, as defined in <xref linkend="decoratorinvocation"/>. Otherwise, 
+      the container builds an instance of <literal>javax.interceptor.InvocationContext</literal> 
+      and calls the appropriate interceptor method of the interceptor.</para>
+      
+      <para>When any interceptor is invoked by the container, it may in turn call 
+      <literal>InvocationContext.proceed()</literal>. The container then identifies the 
+      first interceptor in the interceptor stack for the method such that the interceptor 
+      has not previously been invoked during this business method or lifecycle callback 
+      invocation. If no such interceptor exists, the container starts processing the 
+      decorator stack. Otherwise, the container calls the appropriate interceptor method.</para>
+      
+      <para>Eventually, by recursion, the interceptor stack is exhausted of uninvoked
+      interceptors.</para>
+      
+    </section>
+    -->
+    
+</chapter>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+                      "../support/docbook-dtd/docbookx.dtd"
+
+[
+<!ENTITY license                   SYSTEM "modules/license.xml">
+<!ENTITY architecture              SYSTEM "modules/architecture.xml">
+<!ENTITY definition                SYSTEM "modules/definition.xml">
+<!ENTITY implementation            SYSTEM "modules/implementation.xml">
+<!ENTITY inheritance               SYSTEM "modules/inheritance.xml">
+<!ENTITY injectionelresolution     SYSTEM "modules/injectionelresolution.xml">
+<!ENTITY scopescontexts            SYSTEM "modules/scopescontexts.xml">
+<!ENTITY lifecycle                 SYSTEM "modules/lifecycle.xml">
+<!ENTITY decorators                SYSTEM "modules/decorators.xml">
+<!ENTITY events                    SYSTEM "modules/events.xml">
+<!ENTITY spi                       SYSTEM "modules/spi.xml">
+<!ENTITY packagingdeployment       SYSTEM "modules/packagingdeployment.xml">
+
+<!ENTITY ejbinterceptors           SYSTEM "modules/ejbinterceptors.xml">
+<!ENTITY interceptors              SYSTEM "modules/interceptors.xml">
+<!ENTITY helperliterals            SYSTEM "modules/helperliterals.xml">
+<!ENTITY packages                  SYSTEM "modules/packages.xml">
+]>
+
+<book lang="en">
+
+    <bookinfo>
+        <title>JSR-299: Contexts and Dependency Injection for the Java EE platform</title>
+        <authorgroup>
+          <othercredit>
+            <othername>JSR-299 Expert Group</othername>
+          </othercredit>
+          <author>
+            <firstname>Gavin</firstname>
+            <surname>King</surname>
+            <affiliation>
+              <orgname>Red Hat Middleware, LLC</orgname>
+            </affiliation>
+          </author>
+        </authorgroup>
+        <releaseinfo>Final Draft</releaseinfo>
+        <date>10 November 2009</date>
+    </bookinfo>
+
+    <toc/>
+    
+    &license;
+    &architecture;
+    &definition;
+    &implementation;
+    &inheritance;
+    &injectionelresolution;
+    &scopescontexts;
+    &lifecycle;
+    &decorators;
+    &interceptors;
+    &events;
+    &spi;
+    &packagingdeployment;
+    <!--
+    &helperliterals;
+    &packages;
+    -->
+    
+</book>
+

@@ -1,0 +1,1965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="implementation">
+  <title>Programming model</title>
+  
+  <para>The container provides built-in support for injection and contextual 
+  lifecycle management of the following kinds of bean:</para>
+  
+  <itemizedlist>
+    <listitem>
+      <para>Managed beans</para>
+    </listitem>
+    <listitem>
+      <para>Session beans</para>
+    </listitem>
+    <listitem>
+      <para>Producer methods and fields</para>
+    </listitem>
+    <listitem>
+      <para>Resources (Java EE resources, persistence contexts, 
+      persistence units, remote EJBs and web services)</para>
+    </listitem>
+    <!--  
+    <listitem>
+      <para>Message destinations (JMS topics and queues)</para>
+    </listitem>
+    -->
+  </itemizedlist>
+  
+  <para>All containers must support managed beans, producer methods and producer
+  fields. Java EE and embeddable EJB containers are required by the Java EE and EJB 
+  specifications to support EJB session beans and the Java EE component environment. 
+  Other containers are not required to provide support for injection or lifecycle
+  management of session beans or resources.</para>
+    
+  <para>A portable extension may provide other kinds of beans by implementing the 
+  interface <literal>Bean</literal> defined in <xref linkend="bean"/>.</para>
+   
+  <section id="managedbeans">
+    <title>Managed beans</title>
+    
+    <para>A <emphasis>managed bean</emphasis> is a bean that is implemented by a 
+    Java class. This class is called the <emphasis>bean class</emphasis> of the 
+    managed bean. The basic lifecycle and semantics of managed beans are defined 
+    by the Managed Beans specification.</para>
+    
+    <para>If the bean class of a managed bean is annotated with both the 
+    <literal>@Interceptor</literal> and <literal>@Decorator</literal> stereotypes, 
+    the container automatically detects the problem and treats it as a definition 
+    error.</para>
+    
+    <para>If a managed bean has a public field, it must have scope 
+    <literal>@Dependent</literal>. If a managed bean with a public field declares 
+    any scope other than <literal>@Dependent</literal>, the container automatically 
+    detects the problem and treats it as a definition error.</para>
+    
+    <para>If the managed bean class is a generic type, it must have scope
+    <literal>@Dependent</literal>. If a managed bean with a parameterized bean 
+    class declares any scope other than <literal>@Dependent</literal>, the 
+    container automatically detects the problem and treats it as a definition 
+    error.</para>
+    
+    <section id="whatclassesarebeans">
+      <title>Which Java classes are managed beans?</title>
+
+      <para>A top-level Java class is a managed bean if it is defined to be a 
+      managed bean by any other Java EE specification, or if it meets all of the 
+      following conditions:</para>
+      
+      <itemizedlist>
+      
+      <!--
+      <listitem>
+        <para>It is not a parameterized type.</para>
+      </listitem>
+      -->
+      
+      <listitem>
+        <para>It is not a non-static inner class.</para>
+      </listitem>
+      
+      <listitem>
+        <para>It is a concrete class, or is annotated <literal>@Decorator</literal>.</para>
+      </listitem>
+      
+      <listitem>
+        <para>It is not annotated with an EJB component-defining annotation or 
+        declared as an EJB bean class in <literal>ejb-jar.xml</literal>.</para>
+      </listitem>
+      
+      <listitem>
+        <para>It does not implement 
+        <literal>javax.enterprise.inject.spi.Extension</literal>.</para>
+      </listitem>
+      
+      <listitem>
+        <para>It has an appropriate constructor&mdash;either:</para>
+        <itemizedlist>
+          <listitem>
+            <para>the class has a constructor with no parameters, or</para>
+          </listitem>
+          <listitem>
+            <para>the class declares a constructor annotated 
+            <literal>@Inject</literal>.</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      
+      </itemizedlist>
+      
+      <para>All Java classes that meet these conditions are managed beans 
+      and thus no special declaration is required to define a managed bean.</para>
+      
+    </section>
+    
+    <section id="managedbeantypes">
+      <title>Bean types of a managed bean</title>
+      
+      <para>The unrestricted set of bean types for a managed bean contains the bean 
+      class, every superclass and all interfaces it implements directly or indirectly.</para>
+      
+      <!--
+      <para>For every parameterized type such that every type parameter is 
+      <literal>java.lang.Object</literal> in the set of bean types, the raw type
+      is also in the set of bean types.</para>
+      -->
+    
+      <para>Note the additional restrictions upon bean types of beans with normal 
+      scopes defined in <xref linkend="unproxyable"/>.</para>
+      
+    </section>
+    
+    <section>
+      <title>Declaring a managed bean</title>
+      
+      <para>A managed bean with a constructor that takes no parameters does not 
+      require any special annotations. The following classes are beans:</para>
+
+      <programlisting>public class Shop { .. }</programlisting>
+
+      <programlisting>class PaymentProcessorImpl implements PaymentProcessor { ... }</programlisting>
+
+      <para>If the managed bean does not have a constructor that takes no 
+      parameters, it must have a constructor annotated <literal>@Inject</literal>.
+      No additional special annotations are required.</para>
+
+      <para>A bean class may specify a scope, name, stereotypes and/or 
+      qualifiers:</para>
+      
+      <programlisting>@ConversationScoped @Default
+public class ShoppingCart { ... }</programlisting>
+
+      <para>A managed bean may extend another managed bean:</para>
+
+      <programlisting>@Named("loginAction")
+public class LoginAction { ... }</programlisting>
+
+      <programlisting>@Mock
+@Named("loginAction")
+public class MockLoginAction extends LoginAction { ... }</programlisting>
+
+      <para>The second bean is a "mock object" that overrides the implementation
+      of <literal>LoginAction</literal> when running in an embedded EJB Lite based 
+      integration testing environment.</para>
+
+    </section>
+
+    <!--
+    <section id="managedbeans.xml">
+      <title>Declaring a managed bean using XML</title>
+        
+      <para>Managed beans may be declared in <literal>beans.xml</literal>
+      using the bean class name.</para>
+
+      <programlisting>&lt;myapp:Order&gt;
+    &lt;deployment:Staging/&gt;
+    &lt;ConversationScoped/&gt;
+    ...
+&lt;/myapp:Order&gt;</programlisting>
+      
+      <para>A managed bean may even be declared at any injection point declared in 
+      XML, as defined in <xref linkend="xml.inlinedeclaration"/>, in which case no 
+      qualifiers are specified.</para>
+      
+      <para>If the bean class of a managed bean defined in XML is a 
+      parameterized type or a non-static inner class, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+
+      <para>If the bean class of a managed bean defined in XML is an 
+      abstract class, and the managed bean is not a decorator, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+      
+      <para>If the bean class of a managed bean defined in XML is
+      annotated <literal>@Interceptor</literal>, then the bean must be explicitly 
+      declared as an interceptor in XML, as defined in <xref linkend="interceptors.xml"/>. 
+      If a managed bean defined in XML has a bean class annotated 
+      <literal>@Interceptor</literal> and is not declared as an interceptor in XML, the 
+      container automatically detects the problem and treats it as a definition error.</para>
+
+      <para>If the bean class of a managed bean defined in XML is
+      annotated <literal>@Decorator</literal>, then the bean must be explicitly 
+      declared as a decorator in XML, as defined in <xref linkend="decorators.xml"/>. 
+      If a managed bean defined in XML has a bean class annotated 
+      <literal>@Decorator</literal> and is not declared as a decorator in XML, the 
+      container automatically detects the problem and treats it as a definition 
+      error.</para>
+
+    </section>
+    -->
+    
+    <section id="specializemanagedbean">
+      <title>Specializing a managed bean</title>
+    
+      <para>If a bean class of a managed bean X 
+      is annotated <literal>@Specializes</literal>, then the bean class of X 
+      must directly extend the bean class of another managed bean Y. 
+      Then X <emphasis>directly specializes</emphasis> Y, as defined in 
+      <xref linkend="specialization"/>.</para>
+      
+      <para>If the bean class of X does not directly extend the bean class of 
+      another managed bean, the container automatically detects the problem 
+      and treats it as a definition error.</para>
+      
+      <para>For example, <literal>MockLoginAction</literal> directly
+      specializes <literal>LoginAction</literal>:</para>
+      
+      <programlisting>public class LoginAction { ... }</programlisting>
+
+      <programlisting>@Mock @Specializes
+public class MockLoginAction extends LoginAction { ... }</programlisting>
+
+      <!--
+      <para>If a managed bean X defined in XML declares the 
+      <literal>&lt;Specializes&gt;</literal> element, then the bean 
+      class of X must be the bean class of another managed bean Y
+      defined using annotations. Then:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>X inherits all qualifiers of Y, and</para>
+        </listitem>
+        <listitem>
+          <para>if Y has a name, X has the same name as Y.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>We say that X <emphasis>directly specializes</emphasis> Y, and
+      we can be certain that Y will never be instantiated or called by the
+      container if X is enabled.</para>
+      -->
+      
+    </section>
+    
+    <section id="managedbeanname">
+      <title>Default name for a managed bean</title>
+      
+      <para>The default name for a managed bean is the unqualified class 
+      name of the bean class, after converting the first 
+      character to lower case.</para>
+      
+      <para>For example, if the bean class is named <literal>ProductList</literal>,
+      the default bean EL name is <literal>productList</literal>.</para>
+      
+    </section>
+
+  </section>
+
+  <section id="sessionbeans">
+    <title>Session beans</title>
+
+    <para>A <emphasis>session bean</emphasis> is a bean that is implemented by a 
+    session bean with an EJB 3.x client view. The basic lifecycle and semantics of 
+    EJB session beans are defined by the EJB specification.</para>
+    
+    <para>A stateless session bean must belong to the <literal>@Dependent</literal> 
+    pseudo-scope. A singleton bean must belong to either the 
+    <literal>@ApplicationScoped</literal> scope or to the <literal>@Dependent</literal> 
+    pseudo-scope. If a session bean specifies an illegal scope, the container 
+    automatically detects the problem and treats it as a definition error. A 
+    stateful session bean may have any scope.</para>
+       
+    <para>When a contextual instance of a session bean is obtained via the dependency 
+    injection service, the behavior of <literal>SessionContext.getInvokedBusinessInterface()</literal> 
+    is specific to the container implementation. Portable applications should not 
+    rely upon the value returned by this method.</para>
+
+    <para>If the bean class of a session bean is annotated <literal>@Interceptor</literal> 
+    or <literal>@Decorator</literal>, the container automatically detects the problem and 
+    treats it as a definition error.</para>
+    
+    <para>If the session bean class is a generic type, it must have scope
+    <literal>@Dependent</literal>. If a session bean with a parameterized bean class
+    declares any scope other than <literal>@Dependent</literal>, the container 
+    automatically detects the problem and treats it as a definition error.</para>
+    
+    <section>
+      <title>EJB remove methods of session beans</title>
+      
+      <para>If a session bean is a stateful session bean:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>If the scope is <literal>@Dependent</literal>, the application 
+          <emphasis>may</emphasis> call any EJB remove method of a contextual 
+          instance of the session bean.</para>
+        </listitem>
+        <listitem>
+          <para>Otherwise, the application <emphasis>may not</emphasis> directly
+          call any EJB remove method of any contextual instance of the session 
+          bean.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>If the application directly calls an EJB remove method of a contextual 
+      instance of a session bean that is a stateful session bean and declares any 
+      scope other than <literal>@Dependent</literal>, an 
+      <literal>UnsupportedOperationException</literal> is thrown.</para>
+      
+      <para>If the application directly calls an EJB remove method of a contextual 
+      instance of a session bean that is a stateful session bean and has scope 
+      <literal>@Dependent</literal> then no parameters are passed to the method by 
+      the container. Furthermore, the container ignores the instance instead of 
+      destroying it when <literal>Contextual.destroy()</literal> is called, as 
+      defined in <xref linkend="statefullifecycle"/>.</para>
+      
+    </section>
+   
+    <section id="sessionbeantypes">
+      <title>Bean types of a session bean</title>
+      
+      <para>The unrestricted set of bean types for a session bean contains all local 
+      interfaces of the bean and their superinterfaces. If the session bean has a bean 
+      class local view, the unrestricted set of bean types contains the bean class and 
+      all superclasses. In addition, <literal>java.lang.Object</literal> is a bean type 
+      of every session bean.</para>
+      
+      <para>Remote interfaces are not included in the set of bean types.</para>
+
+    </section>
+    
+    <section>
+      <title>Declaring a session bean</title>
+      
+      <para>A session bean does not require any special annotations apart from the
+      component-defining annotation (or XML declaration) required by the EJB specification. 
+      The following EJBs are beans:</para>
+
+      <programlisting>@Singleton
+class Shop { .. }</programlisting>
+
+      <programlisting>@Stateless
+class PaymentProcessorImpl implements PaymentProcessor { ... }</programlisting>
+
+      <para>A bean class may also specify a scope, name, stereotypes and/or qualifiers:</para>
+      
+      <programlisting>@ConversationScoped @Stateful @Default @Model
+public class ShoppingCart { ... }</programlisting>
+
+      <para>A session bean class may extend another  
+      bean class:</para>
+
+      <programlisting>@Stateless
+@Named("loginAction")
+public class LoginActionImpl implements LoginAction { ... }</programlisting>
+
+      <programlisting>@Stateless
+@Mock
+@Named("loginAction")
+public class MockLoginActionImpl extends LoginActionImpl { ... }</programlisting>
+
+    </section>
+
+    <!--
+    <section id="ejb.xml">
+      <title>Declaring a session bean using XML</title>
+        
+      <para>Session beans may be declared in <literal>beans.xml</literal>
+      using the bean class name (for EJBs defined using a component-defining annotation) 
+      or bean class and EJB name (for EJBs defined in <literal>ejb-jar.xml</literal>).</para>
+
+      <programlisting>&lt;myapp:OrderBean&gt;
+    &lt;deployment:Staging/&gt;
+    &lt;ConversationScoped/&gt;
+    ...
+&lt;/myapp:OrderBean&gt;</programlisting>
+
+      <programlisting>&lt;myapp:OrderBean ejbName="RushOrder"&gt;
+    &lt;myapp:Rush/&gt;
+    &lt;ConversationScoped/&gt;
+    ...
+&lt;/myapp:OrderBean&gt;</programlisting>
+
+      <para>The <literal>ejbName</literal> attribute declares the EJB name of an EJB
+      defined in <literal>ejb-jar.xml</literal>.</para>
+
+      <para>If an entity or message-driven bean class is declared in XML, the container 
+      automatically detects the problem and treats it as a definition error.</para>
+      
+    </section>
+    -->
+
+    <section id="specializesessionbean">
+      <title>Specializing a session bean</title>
+    
+      <para>If a bean class of a session bean X 
+      is annotated <literal>@Specializes</literal>, then the bean class of 
+      X must directly extend the bean class of another session bean Y. 
+      Then X <emphasis>directly specializes</emphasis> Y, 
+      as defined in <xref linkend="specialization"/>.</para>
+      
+      <para>If the bean class of X does not directly extend the bean class of 
+      another session bean, the container automatically detects the problem 
+      and treats it as a definition error.</para> 
+      
+      <!--
+      <para>Furthermore:</para>
+        
+      <itemizedlist>
+        <listitem>
+          <para>X must support all local interfaces supported by Y, and</para>
+        </listitem>
+        <listitem>
+          <para>if Y supports a bean-class local view, X must also support a 
+          bean-class local view.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>Otherwise, the container automatically detects the problem and 
+      treats it as a definition error.</para>
+       -->
+      
+      <para>For example, <literal>MockLoginActionBean</literal> directly
+      specializes <literal>LoginActionBean</literal>:</para>
+      
+      <programlisting>@Stateless
+public class LoginActionBean implements LoginAction { ... }</programlisting>
+
+      <programlisting>@Stateless @Mock @Specializes
+public class MockLoginActionBean extends LoginActionBean { ... }</programlisting>
+      
+      <!--
+      <para>If a session bean X defined in XML declares the 
+      <literal>&lt;Specializes&gt;</literal> element, then the bean 
+      class of X must be the bean class of another session bean
+       Y defined using annotations. Then:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>X inherits all qualifiers of Y, and</para>
+        </listitem>
+        <listitem>
+          <para>if Y has a name, X has the same name as Y.</para>
+        </listitem>
+      </itemizedlist>
+            
+      <para>We say that X <emphasis>directly specializes</emphasis> Y, and
+      we can be certain that Y will never be instantiated or called by the
+      container if X is enabled.</para>
+      -->
+      
+    </section>
+
+    <section id="sessionbeanname">
+      <title>Default name for a session bean</title>
+      
+      <para>The default name for a managed bean is the unqualified class 
+      name of the session bean class, after converting the first character 
+      to lower case.</para>
+      
+      <para>For example, if the bean class is named <literal>ProductList</literal>,
+      the default bean EL name is <literal>productList</literal>.</para>
+      
+    </section>
+
+  </section>
+
+  <section id="producermethod">
+    <title>Producer methods</title>
+
+    <para>A <emphasis>producer method</emphasis> acts as a source of objects to 
+    be injected, where:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>the objects to be injected are not required to be instances of
+        beans, or</para>
+      </listitem>
+
+      <listitem>
+        <para>the concrete type of the objects to be injected may vary at
+        runtime, or</para>
+      </listitem>
+
+      <listitem>
+        <para>the objects require some custom initialization that is not 
+        performed by the bean constructor.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>A producer method must be a non-abstract method of a managed bean class 
+    or session bean class. A producer method may be either static or non-static. 
+    If the bean is a session bean, the producer method must be either a business 
+    method of the EJB or a static method of the bean class.</para>
+    
+    <para>If a producer method sometimes returns a null value, then the 
+    producer method must have scope <literal>@Dependent</literal>. If a 
+    producer method returns a null value at runtime, and the producer method 
+    declares any other scope, an <literal>IllegalProductException</literal> 
+    is thrown by the container. This restriction allows the container
+    to use a client proxy, as defined in 
+    <xref linkend="clientproxies"/>.</para>
+    
+    <para>If the producer method return type is a parameterized type, it 
+    must specify an actual type parameter or type variable for each type
+    parameter.</para>
+    
+    <para>If a producer method return type contains a wildcard type parameter 
+    the container automatically detects the problem and treats it as a 
+    definition error.</para>
+
+    <para>If the producer method return type is a parameterized type with a
+    type variable, it must have scope <literal>@Dependent</literal>. If a 
+    producer method with a parameterized return type with a type variable
+    declares any scope other than <literal>@Dependent</literal>, the container 
+    automatically detects the problem and treats it as a definition error.</para>
+    
+    <para>If a producer method return type is a type variable the container 
+    automatically detects the problem and treats it as a definition error.</para>
+    
+    <para>The application may call producer methods directly. However, if the
+    application calls a producer method directly, no parameters will be passed 
+    to the producer method by the container; the returned object is not bound 
+    to any context; and its lifecycle is not managed by the container.</para>
+    
+    <para>A bean may declare multiple producer methods.</para>
+    
+    <section id="producermethodtypes">
+      <title>Bean types of a producer method</title>
+      
+      <para>The bean types of a producer method depend upon the method return 
+      type:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>If the return type is an interface, the unrestricted set of bean types 
+          contains the return type, all interfaces it extends directly or indirectly
+          and <literal>java.lang.Object</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If a return type is primitive or is a Java array type, the unrestricted 
+          set of bean types contains exactly two types: the method return type and 
+          <literal>java.lang.Object</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If the return type is a class, the unrestricted set of bean types 
+          contains the return type, every superclass and all interfaces it implements 
+          directly or indirectly.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>Note the additional restrictions upon bean types of beans with normal 
+      scopes defined in <xref linkend="unproxyable"/>.</para>
+      
+    </section>
+    
+    <section id="declaringproducermethod">
+      <title>Declaring a producer method</title>
+
+      <para>A producer method may be declared by annotating a method with the 
+      <literal>@javax.enterprise.inject.Produces</literal> annotation.</para>
+
+      <programlisting>public class Shop {
+   @Produces PaymentProcessor getPaymentProcessor() { ... }
+   @Produces List&lt;Product&gt; getProducts() { ... }
+}</programlisting>
+
+      <para>A producer method may also specify scope, name, stereotypes and/or 
+      qualifiers.</para>
+    
+      <programlisting>public class Shop {
+   @Produces @ApplicationScoped @Catalog @Named("catalog") 
+   List&lt;Product&gt; getProducts() { ... }
+}</programlisting>
+
+      <para>If a producer method is annotated <literal>@Inject</literal>,
+      has a parameter annotated <literal>@Disposes</literal>, or has a parameter 
+      annotated <literal>@Observes</literal>, the container automatically detects 
+      the problem and treats it as a definition error.</para>
+      
+      <para>If a non-static method of a session bean class is annotated 
+      <literal>@Produces</literal>, and the method is not a business method of the 
+      session bean, the container automatically detects the problem and treats it 
+      as a definition error.</para>
+      
+      <para>Interceptors and decorators may not declare producer methods. If an
+      interceptor or decorator has a method annotated <literal>@Produces</literal>,
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+    
+    <!--
+    <section id="producer.xml">
+      <title>Declaring a producer method using XML</title>
+      
+      <para>For a bean defined in XML, a producer method may be declared 
+      using the method name, the <literal>&lt;Produces&gt;</literal> element,
+      the return type, and the parameter types of the method:</para>
+        
+      <programlisting><![CDATA[<myapp:Shop>
+       
+    <myapp:getProducts>
+        <Produces>
+            <ApplicationScoped/>
+            <List>
+                <myapp:Product/>
+                <myapp:Catalog/>
+            </List>
+            <Named>catalog</Named>
+        </Produces>
+    </myapp:getProducts>
+    
+</myapp:Shop>]]></programlisting>
+
+       <para>When a producer method is declared in XML, the container 
+       ignores qualifier annotations applied to the Java method or method 
+       parameters.</para>
+      
+      <para>If the bean class of a bean declared in XML does 
+      not have a method with the name and parameter types declared in XML, 
+      the container automatically detects the problem and treats it as 
+      a definition error.</para>
+
+    </section>
+    -->
+    
+      <para>A producer method may have any number of parameters. All producer 
+      method parameters are injection points.</para>
+
+      <programlisting>public class OrderFactory {
+
+   @Produces @ConversationScoped
+   public Order createCurrentOrder(@New(Order.class) Order order, @Selected Product product) {
+       order.setProduct(product);
+       return order;
+   }
+
+}</programlisting>
+
+      <!--
+      <programlisting><![CDATA[<myapp:OrderFactory>
+       
+    <myapp:createCurrentOrder>
+        
+        <Produces>
+            <ConversationScoped/>
+            <myapp:Order/>
+        </Produces>
+        
+        <myapp:Order>
+            <New/>
+        </myapp:Order>
+        
+        <myapp:Product>
+            <myapp:Selected/>
+        </myapp:Product>
+        
+    </myapp:createCurrentOrder>
+    
+</myapp:OrderFactory>]]></programlisting>
+      -->
+
+   </section>
+    
+    <section id="specializeproducermethod">
+      <title>Specializing a producer method</title>
+    
+      <para>If a producer method X is annotated <literal>@Specializes</literal>, 
+      then it must be non-static and directly override another producer method Y. 
+      Then  X <emphasis>directly specializes</emphasis> Y, as defined in 
+      <xref linkend="specialization"/>.</para>
+      
+      <para>If the method is static or does not directly override another producer 
+      method, the container automatically detects the problem and treats it as 
+      a definition error.</para>
+      
+      <programlisting>@Mock
+public class MockShop extends Shop {
+
+   @Override @Specializes
+   @Produces 
+   PaymentProcessor getPaymentProcessor() { 
+      return new MockPaymentProcessor(); 
+   }
+
+   @Override @Specializes
+   @Produces 
+   List&lt;Product&gt; getProducts() {
+      return PRODUCTS;
+   }
+   
+   ...
+
+}</programlisting>
+
+    </section>
+     
+    <section id="disposermethod">
+      <title>Disposer methods</title>
+      
+      <para>A disposer method allows the application to perform customized
+      cleanup of an object returned by a producer method.</para>
+      
+      <para>A disposer method must be a non-abstract method of a managed bean class 
+      or session bean class. A disposer method may be either static or non-static. 
+      If the bean is a session bean, the disposer method must be a business method 
+      of the EJB or a static method of the bean class.</para>
+      
+      <para>A bean may declare multiple disposer methods.</para>
+      
+    </section>
+    
+    <section>
+      <title>Disposed parameter of a disposer method</title>
+      
+      <para>Each disposer method must have exactly one <emphasis>disposed 
+      parameter</emphasis>, of the same type as the corresponding producer 
+      method return type. When searching for disposer methods for a producer 
+      method, the container considers the type and qualifiers of the disposed 
+      parameter. If a producer method declared by the same bean class is 
+      assignable to the disposed parameter, according to the rules of typesafe 
+      resolution defined in <xref linkend="typesaferesolution"/>, the 
+      container must call this method when destroying any instance returned 
+      by that producer method.</para>
+      
+      <para>A disposer method may resolve to multiple producer methods 
+      declared by the bean class, in which case the container must call 
+      it when destroying any instance returned by any of these producer 
+      methods.</para> 
+      
+    </section>
+    
+    <section>
+      <title>Declaring a disposer method</title>
+      
+      <para>A disposer method may be declared by annotating a parameter 
+      <literal>@javax.enterprise.inject.Disposes</literal>. That parameter is the 
+      disposed parameter. Qualifiers may be declared by annotating the disposed 
+      parameter:</para>
+      
+      <programlisting>public class UserDatabaseEntityManager {
+
+    @Produces @ConversationScoped @UserDatabase
+    public EntityManager create(EntityManagerFactory emf) {
+        return emf.createEntityManager();
+    }
+    
+    public void close(@Disposes @UserDatabase EntityManager em) {
+        em.close();
+    }
+
+}</programlisting>
+      
+      <para>If a method has more than one parameter annotated <literal>@Disposes</literal>, 
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a disposer method is annotated <literal>@Produces</literal> or 
+      <literal>@Inject</literal> or has a parameter annotated <literal>@Observes</literal>, 
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a non-static method of a session bean class has a parameter 
+      annotated <literal>@Disposes</literal>, and the method is not a business 
+      method of the session bean, the container automatically detects the problem 
+      and treats it as a definition error.</para>
+
+      <para>Interceptors and decorators may not declare disposer methods. If an
+      interceptor or decorator has a method annotated <literal>@Disposes</literal>,
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+    
+    <!--
+    <section id="disposer.xml">
+      <title>Declaring a disposer method using XML</title>
+      
+      <para>For a bean defined in XML, a disposer method may be declared 
+      using the method name, the <literal>&lt;Disposes&gt;</literal> element,
+      and the parameter types of the method:</para>
+        
+      <programlisting><![CDATA[<myfwk:UserDatabaseEntityManager>
+       
+    <myfwk:create>
+        <Produces>
+            <ConversationScoped/>
+            <EntityManager>
+                <myapp:UserDatabase/>
+            </EntityManager>
+        </Produces>
+        <EntityManagerFactory/>
+    </myfwk:create>
+    
+    <myfwk:close>
+        <Disposes>
+            <EntityManager>
+                <myapp:UserDatabase/>
+            </EntityManager>
+        </Disposes>
+    </myfwk:close>
+    
+</mmyfwk:UserDatabaseEntityManager>]]></programlisting>
+
+      <para>When a disposer method is declared in XML, the container 
+      ignores qualifier annotations applied to the Java method parameters.</para>
+      
+      <para>If the bean class of a bean declared in XML does 
+      not have a method with the name and parameter types declared in XML, 
+      the container automatically detects the problem and treats it as 
+      a definition error.</para>
+
+    </section>
+    -->
+      
+      <para>In addition to the disposed parameter, a disposer method may declare 
+      additional parameters, which may also specify qualifiers. These additional
+      parameters are injection points.</para>
+      
+      <programlisting>public void close(@Disposes @UserDatabase EntityManager em, Logger log) { ... }</programlisting>
+      
+      <!-- 
+<programlisting><![CDATA[<myfwk:close>
+
+    <Disposes>
+        <EntityManager>
+            <myapp:UserDatabase/>
+        </EntityManager>
+    </Disposes>
+    
+    <myfwk:Log>
+        <myfwk:Logger/>
+    <myfwk:Log>
+    
+</myfwk:close>]]></programlisting>     
+      --> 
+
+    </section>
+    
+    <section>
+      <title>Disposer method resolution</title>
+      
+      <para>A disposer method is bound to a producer method if:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the producer method is declared by the same bean class as the 
+          disposer method, and</para>
+        </listitem>
+        <listitem>
+          <para>the producer method is assignable to the disposed parameter, 
+          according to the rules of typesafe resolution defined in 
+          <xref linkend="typesaferesolution"/> 
+          (using <xref linkend="assignableparameters"/>).</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>If there are multiple disposer methods for a single producer method, 
+      the container automatically detects the problem and treats it as a 
+      definition error.</para>
+      
+      <para>If there is no producer method declared by the bean class that is
+      assignable to the disposed parameter of a disposer method, the container 
+      automatically detects the problem and treats it as a definition error.</para>
+      
+    </section>
+      
+    <section id="producermethodname">
+      <title>Default name for a producer method</title>
+    
+      <para>The default name for a producer method is the method name,
+      unless the method follows the JavaBeans property getter naming convention, 
+      in which case the default name is the JavaBeans property name.</para>
+
+      <para>For example, this producer method is named <literal>products</literal>:</para>
+
+      <programlisting>@Produces @Named
+public List&lt;Product&gt; getProducts() { ... }</programlisting>
+
+      <para>This producer method is named <literal>paymentProcessor</literal>:</para>
+
+      <programlisting>@Produces @Named
+public PaymentProcessor paymentProcessor() { ... }</programlisting>
+
+    </section>
+
+  </section>
+
+  <section id="producerfield">
+    <title>Producer fields</title>
+
+    <para>A <emphasis>producer field</emphasis> is a slightly simpler alternative 
+    to a producer method.</para>
+    
+    <para>A producer field must be a field of a managed bean class or session 
+    bean class. A producer field may be either static or non-static. If the 
+    bean is a session bean, the producer field must be a static field of the 
+    bean class.</para>
+    
+    <para>If a producer field sometimes contains a null value when accessed, 
+    then the producer field must have scope <literal>@Dependent</literal>. If 
+    a producer field contains a null value at runtime, and the producer field 
+    declares any other scope, an <literal>IllegalProductException</literal> 
+    is thrown by the container. This restriction allows the container to use a 
+    client proxy, as defined in 
+    <xref linkend="clientproxies"/>.</para>
+      
+    <para>If the producer field type is a parameterized type, it must specify 
+    an actual type parameter or type variable for each type parameter.</para>
+    
+    <para>If a producer field type contains a wildcard type parameter the 
+    container automatically detects the problem and treats it as a definition 
+    error.</para>
+
+    <para>If the producer field type is a parameterized type with a type variable, 
+    it must have scope <literal>@Dependent</literal>. If a producer field with a 
+    parameterized type with a type variable declares any scope other than 
+    <literal>@Dependent</literal>, the container automatically detects the problem 
+    and treats it as a definition error.</para>
+    
+    <para>If a producer field type is a type variable the container automatically 
+    detects the problem and treats it as a definition error.</para>
+
+    <para>The application may access producer fields directly. However, if the
+    application accesses a producer field directly, the returned object is not 
+    bound to any context; and its lifecycle is not managed by the container.</para>
+    
+    <para>A bean may declare multiple producer fields.</para>
+    
+    <section id="producerfieldtypes">
+      <title>Bean types of a producer field</title>
+      
+      <para>The bean types of a producer field depend upon the field type:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>If the field type is an interface, the unrestricted set of bean types 
+          contains the field type, all interfaces it extends directly or indirectly
+          and <literal>java.lang.Object</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If a field type is primitive or is a Java array type, the unrestricted 
+          set of bean types contains exactly two types: the field type and 
+          <literal>java.lang.Object</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If the field type is a class, the unrestricted set of bean types 
+          contains the field type, every superclass and all interfaces it implements 
+          directly or indirectly.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>Note the additional restrictions upon bean types of beans with normal 
+      scopes defined in <xref linkend="unproxyable"/>.</para>
+      
+    </section>
+    
+    <section>
+      <title>Declaring a producer field</title>
+
+      <para>A producer field may be declared by annotating a field with the 
+      <literal>@javax.enterprise.inject.Produces</literal> annotation.</para>
+
+      <programlisting>public class Shop {
+   @Produces PaymentProcessor paymentProcessor = ....;
+   @Produces List&lt;Product&gt; products = ....;
+}</programlisting>
+
+      <para>A producer field may also specify scope, name, stereotypes and/or 
+      qualifiers.</para>
+    
+      <programlisting>public class Shop {
+   @Produces @ApplicationScoped @Catalog @Named("catalog") 
+   List&lt;Product&gt; products = ....;
+}</programlisting>
+      
+      <para>If a producer field is annotated <literal>@Inject</literal>, the 
+      container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a non-static field of a session bean class is annotated 
+      <literal>@Produces</literal>, the container automatically detects the problem 
+      and treats it as a definition error.</para>
+      
+      <para>Interceptors and decorators may not declare producer fields. If an
+      interceptor or decorator has a field annotated <literal>@Produces</literal>,
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+    
+    </section>
+    
+    <!--
+    <section id="producerfield.xml">
+      <title>Declaring a producer field using XML</title>
+      
+      <para>For a bean defined in XML, a producer field may be declared 
+      using the field name, the <literal>&lt;Produces&gt;</literal> element,
+      and the type:</para>
+        
+      <programlisting><![CDATA[<myapp:Shop>
+       
+    <myapp:products>
+        <Produces>
+            <ApplicationScoped/>
+            <List>
+                <myapp:Product/>
+                <myapp:Catalog/>
+            </List>
+            <Named>catalog</Named>
+        </Produces>
+    </myapp:products>
+    
+</myapp:Shop>]]></programlisting>
+
+       <para>When a producer field is declared in XML, the container 
+       ignores qualifier annotations applied to the Java field.</para>
+      
+      <para>If the bean class of a bean declared in XML does 
+      not have a field with the name and type declared in XML, 
+      the container automatically detects the problem and treats it as 
+      a definition error.</para>
+
+    </section>
+    -->
+    
+    <section id="producerfieldname">
+      <title>Default name for a producer field</title>
+    
+      <para>The default name for a producer field is the field name.</para>
+
+      <para>For example, this producer field is named <literal>products</literal>:</para>
+
+      <programlisting>@Produces @Named
+public List&lt;Product&gt; products = ...;</programlisting>
+
+    </section>
+
+  </section>
+  
+  <section id="resources">
+    <title>Resources</title>
+    
+    <para>A <emphasis>resource</emphasis> is a bean that represents a reference to 
+    a resource, persistence context, persistence unit, remote EJB or web service in 
+    the Java EE component environment.</para>
+    
+    <para>By declaring a resource, we enable an object from the Java EE component
+    environment to be injected by a specifying only its type and qualifiers at the
+    injection point. For example, if <literal>@CustomerDatabase</literal> is a 
+    qualifier:</para>
+    
+    <programlisting>@Inject @CustomerDatabase Datasource customerData;</programlisting>
+    <programlisting>@Inject @CustomerDatabase EntityManager customerDatabaseEntityManager;</programlisting>
+    <programlisting>@Inject @CustomerDatabase EntityManagerFactory customerDatabaseEntityManagerFactory;</programlisting>
+    <programlisting>@Inject PaymentService remotePaymentService;</programlisting>
+    
+    <para>The container is not required to support resources with scope other than
+    <literal>@Dependent</literal>. Portable applications should not define resources
+    with any scope other than <literal>@Dependent</literal>.</para>
+    
+    <para>A resource may not have an EL name.</para>
+    
+    <section>
+      <title>Declaring a resource</title>
+      
+      <para>A resource may be declared by specifying a Java EE component environment 
+      injection annotation as part of a producer field declaration. The producer field
+      may be static.</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>For a Java EE resource, <literal>@Resource</literal> must be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence context, <literal>@PersistenceContext</literal> must 
+          be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence unit, <literal>@PersistenceUnit</literal> must be 
+          specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a remote EJB, <literal>@EJB</literal> must be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a web service, <literal>@WebServiceRef</literal> must be 
+          specified.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>The injection annotation specifies the metadata needed to obtain the
+      resource, entity manager, entity manager factory, remote EJB instance or 
+      web service reference from the component environment.</para>
+      
+      <programlisting>@Produces @WebServiceRef(lookup="java:app/service/PaymentService")
+PaymentService paymentService;</programlisting>
+      
+      <programlisting>@Produces @EJB(ejbLink="../their.jar#PaymentService")
+PaymentService paymentService;</programlisting>
+      
+      <programlisting>@Produces @Resource(lookup="java:global/env/jdbc/CustomerDatasource")
+@CustomerDatabase Datasource customerDatabase;</programlisting>
+      
+      <programlisting>@Produces @PersistenceContext(unitName="CustomerDatabase")
+@CustomerDatabase EntityManager customerDatabasePersistenceContext;</programlisting>
+      
+      <programlisting>@Produces @PersistenceUnit(unitName="CustomerDatabase")
+@CustomerDatabase EntityManagerFactory customerDatabasePersistenceUnit;</programlisting>
+
+      <para>The bean type and qualifiers of the resource are determined by the producer 
+      field declaration.</para>
+      
+      <para>If the producer field declaration specifies an EL name, the container 
+      automatically detects the problem and treats it as a definition error.</para>
+      
+      <para>If the matching object in the Java EE component environment is not of the 
+      same type as the producer field declaration, the container automatically detects 
+      the problem and treats it as a definition error.</para>
+      
+    </section>
+    
+    <section id="resourcetypes">
+      <title>Bean types of a resource</title>
+      
+      <para>The unrestricted set of bean types of a resource is determined by the declared 
+      type of the producer field, as specified by <xref linkend="producerfieldtypes"/>.</para>
+      
+    </section>
+    
+    <!--
+    <section id="resources.xml">
+      <title>Declaring a resource using XML</title>
+    
+      <para>A resource may be declared in <literal>beans.xml</literal>
+      using an element that represents the Java type of the resource:</para> 
+      
+      <itemizedlist>
+        <listitem>
+          <para>For a Java EE resource, the EE resource type must be specified&mdash;for
+          example <literal>javax.sql.Datasource</literal> for a JDBC datasource.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence context, <literal>javax.persistence.EntityManager</literal>
+          must be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence unit, <literal>javax.persistence.EntityManagerFactory</literal>
+          must be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a remote EJB, an EJB remote interface type must be specified.</para>
+        </listitem>
+        <listitem>
+          <para>For a web service, a web service type must be specified.</para>
+        </listitem>
+      </itemizedlist> 
+        
+      <para>The bean type of the resource is this specified type.</para>
+      
+      <para>Each resource declaration must contain a child <literal>&lt;Resource&gt;</literal>,
+      <literal>&lt;PersistenceContext&gt;</literal>, <literal>&lt;PersistenceUnit&gt;</literal>,
+      <literal>&lt;EJB&gt;</literal> or <literal>&lt;WebServiceRef&gt;</literal> element.</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>For a Java EE resource, a JNDI name or mapped name must be specified 
+          using the <literal>&lt;name&gt;</literal> or <literal>&lt;mappedName&gt;</literal>
+          child elements of the <literal>&lt;Resource&gt;</literal> element.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence context, a persistence unit name must be specified 
+          using the <literal>&lt;unitName&gt;</literal> child element of the
+          <literal>&lt;PersistenceContext&gt;</literal> element.</para>
+        </listitem>
+        <listitem>
+          <para>For a persistence unit, a persistence unit name must be specified 
+          using the <literal>&lt;unitName&gt;</literal> child element of the
+          <literal>&lt;PersistenceUnit&gt;</literal> element.</para>
+        </listitem>
+        <listitem>
+          <para>For a remote EJB, a JNDI name, mapped name or EJB link must be specified 
+          using the <literal>&lt;name&gt;</literal>, <literal>&lt;mappedName&gt;</literal>
+          or <literal>&lt;ejbLink&gt;</literal> child elements of the <literal>&lt;EJB&gt;</literal> 
+          element.</para>
+        </listitem>
+        <listitem>
+          <para>For a web service, a JNDI name or mapped name must be specified 
+          using the <literal>&lt;name&gt;</literal> or <literal>&lt;mappedName&gt;</literal>
+          child elements of the <literal>&lt;WebServiceRef&gt;</literal> element.
+          Optionally, a URL pointing to a WSDL document may be specified using the
+          <literal>&lt;wsdlLocation&gt;</literal> child element.</para>
+        </listitem>
+      </itemizedlist>
+    
+      <programlisting><![CDATA[<theirapp:PaymentService>
+    <WebServiceRef>
+        <name>java:app/service/PaymentService</name>
+        <wsdlLocation>http://theirdomain.com/services/PaymentService.wsdl</wsdlLocation>
+    <WebServiceRef>
+</theirapp:PaymentService/>]]></programlisting>
+
+      <programlisting><![CDATA[<theirapp:PaymentService>
+    <EJB>
+        <ejbLink>../their.jar#PaymentService</ejbLink>
+    <EJB>
+</theirapp:PaymentService/>]]></programlisting>
+
+      <para>The semantics are the subelements of <literal>&lt;Resource&gt;</literal>,
+      <literal>&lt;PersistenceContext&gt;</literal>, <literal>&lt;PersistenceUnit&gt;</literal>,
+      <literal>&lt;EJB&gt;</literal> and <literal>&lt;WebServiceRef&gt;</literal> are
+      identical to the semantics of the annotation members of <literal>@Resource</literal>,
+      <literal>@PersistenceContext</literal>, <literal>@PersistenceUnit</literal>,
+      <literal>@EJB</literal> and <literal>@WebServiceRef</literal>.</para>
+      
+      <para>The JNDI name specified by the <literal>&lt;name&gt;</literal> element must
+      be a name in the global <literal>java:global</literal> or application 
+      <literal>java:app</literal> naming context.</para>
+
+      <para>Optionally, one or more qualifiers may be specified.</para>
+
+      <programlisting><![CDATA[<Datasource>
+    <Resource>
+        <name>java:global/env/jdbc/CustomerDatasource</name>
+    </Resource>
+    <myapp:CustomerDatabase/>
+</Datasource>]]></programlisting>
+
+      <programlisting><![CDATA[<EntityManager>
+    <PersistenceContext>
+        <unitName>CustomerDatabase</unitName>
+    </PersistenceContext>
+    <myapp:CustomerDatabase/>
+</EntityManager>]]></programlisting>
+
+      <programlisting><![CDATA[<EntityManagerFactory>
+    <PersistenceUnit>
+        <unitName>CustomerDatabase</unitName>
+    </PersistenceUnit>
+    <myapp:CustomerDatabase/>
+</EntityManagerFactory>]]></programlisting>
+
+      <para>If no qualifier is explicitly specified, the default qualifier
+      <literal>@Default</literal> is assumed.</para>
+
+      <para><emphasis>Open issue: do we need to allow specification of 
+      <literal>authentication</literal> and <literal>shareable</literal>?</emphasis></para>
+
+    </section>
+    -->
+
+  </section>
+
+  <!--
+  <section>
+    <title>Message destinations</title>
+    
+    <para>Beans that send JMS messages must interact with at least two different
+    objects defined by the JMS API:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>to send a message to a queue, the bean must interact with a
+        <literal>QueueSession</literal> and the <literal>QueueSender</literal>, or</para>
+      </listitem>
+      <listitem>
+        <para>to send a message to a topic, the bean must interact with a
+        <literal>TopicSession</literal> and the <literal>TopicPublisher</literal>.</para>
+       </listitem>
+    </itemizedlist>
+    
+    <para>A <emphasis>message destination</emphasis> is a bean that represents a 
+    message destination reference in the Java EE component environment.</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>For a queue, the <literal>Queue</literal>, <literal>QueueConnection</literal>,
+        <literal>QueueSession</literal>, <literal>QueueReceiver</literal> and/or 
+        <literal>QueueSender</literal> may be injected.</para>
+      </listitem>
+      <listitem>
+        <para>For a topic, the <literal>Topic</literal>, <literal>TopicConnection</literal>,
+        <literal>TopicSession</literal>, <literal>TopicSubscriber</literal> and/or 
+        <literal>TopicPublisher</literal> may be injected.</para>
+       </listitem>
+    </itemizedlist>
+    
+    <para>The lifecycles of the injected objects are managed by the container, and
+    therefore the application need not explicitly <literal>close()</literal> any 
+    injected object. If the application calls the <literal>close()</literal> method 
+    of the injected object, an <literal>UnsupportedOperationException</literal> is 
+    thrown by the container.</para>
+    
+    <programlisting>@PaymentProcessor QueueSender paymentSender;
+@PaymentProcessor QueueSession paymentSession;
+
+public void sendMessage() {
+    MapMessage msg = paymentSession.createMapMessage();
+    ...
+    paymentSender.send(msg);
+}</programlisting>
+    
+    <programlisting>@Prices TopicPublisher pricePublisher;
+@Prices TopicSession priceSession;
+
+public void sendMessage(String price) {
+    pricePublisher.send( priceSession.createTextMessage(price) );
+}</programlisting>
+
+    <para>A message destination must have scope <literal>@Dependent</literal> and may not 
+    have an EL name.</para>
+    
+    <section id="jmstypes">
+      <title>Bean types of a message destination</title>
+      
+      <para>The bean types of a message destination depend upon whether it represents a queue or topic.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>If the message destination represents a queue, the bean types are <literal>Queue</literal>, 
+          <literal>QueueConnection</literal>, <literal>QueueSession</literal>, <literal>QueueReceiver</literal> 
+          and <literal>QueueSender</literal>.</para>
+        </listitem>
+        <listitem>
+          <para>If the message destination represents a topic, the bean types are <literal>Topic</literal>, 
+          <literal>TopicConnection</literal>, <literal>TopicSession</literal>, <literal>TopicSubscriber</literal> 
+          and <literal>TopicPublisher</literal>.</para>
+         </listitem>
+      </itemizedlist>
+      
+      <para>In addition, the supertypes <literal>Session</literal>, <literal>MessageProducer</literal>,
+      <literal>MessageConsumer</literal>, <literal>Connection</literal> and <literal>Destination</literal>
+      are bean types of any message destination.</para>
+      
+    </section>
+    
+    <section>
+      <title>Declaring a message destination</title>
+      
+      <para>A message destination may be declared by specifying a <literal>@Resource</literal> 
+      annotation as part of a producer field declaration of type <literal>Topic</literal> 
+      or <literal>Queue</literal>.</para>
+      
+      <para>The <literal>@Resource</literal> annotation specifies the metadata needed 
+      to obtain the topic or queue from the component environment.</para>
+      
+      <para>Each message destination declaration must also specify the JMS 
+      <literal>ConnectionFactory</literal> to be used, using the 
+      <literal>@javax.inject.enterprise.ConnectionFactory</literal> annotation.</para>
+      
+      <programlisting>class Jms {
+      
+    @Resource(lookup="java:global/env/jms/PaymentQueue")
+    @ConnectionFactory(@Resource(lookup="java:global/env/jms/ConnectionFactory"))
+    @Produces @PaymentProcessor Queue paymentQueue;
+    
+}</programlisting>
+
+      <para>The qualifiers of the resource are determined 
+      by the producer field declaration.</para>
+      
+      <para>Alternatively, the <literal>@ConnectionFactory</literal> may be specified
+      at the class level:</para>
+      
+      <programlisting>@ConnectionFactory(@Resource(lookup="java:global/env/jms/ConnectionFactory"))
+class Jms {
+
+    @Resource(lookup="java:global/env/jms/Prices")
+    @Produces @Prices Topic pricesTopic;
+
+    @Resource(lookup="java:global/env/jms/PaymentQueue")
+    @Produces @PaymentProcessor Queue paymentQueue;
+
+}</programlisting>
+
+      <para>A field level <literal>@ConnectionFactory</literal> annotation overrides any
+      <literal>@ConnectionFactory</literal> specified at the class level.</para>
+      
+      <para>If no <literal>@ConnectionFactory</literal> is specified at either the class
+      or field level, the container automatically detects the problem and treats it as a 
+      definition error.</para>
+      
+      <para>If the producer field declaration specifies an EL name or any scope other 
+      than <literal>@Dependent</literal>, the container automatically detects the problem 
+      and treats it as a definition error.</para>
+      
+      <para>If the message destination in the Java EE component environment is not of 
+      the same type as the producer field declaration, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+      
+    </section>
+
+  </section>
+    -->
+    <!--
+    <section id="jms.xml">
+      <title>Declaring a message destination using XML</title>
+    
+      <para>A message destination may be declared using the <literal>&lt;Topic&gt;</literal>
+      or <literal>&lt;Queue&gt;</literal> elements in <literal>beans.xml</literal>.</para>
+      
+      <para>Each message destination declaration must contain a child <literal>&lt;Resource&gt;</literal> 
+      element. A JNDI name or mapped name must be specified using the <literal>&lt;name&gt;</literal> 
+      or <literal>&lt;mappedName&gt;</literal> child elements of the <literal>&lt;Resource&gt;</literal> 
+      element.</para>
+      
+      <para><emphasis>Open issue: do we need to explicitly specify the connection factory, 
+      using the constructor injection syntax, or does the container just know which one
+      to use?</emphasis></para>
+      
+      <para>One or more qualifiers may be specified. If no qualifier is explicitly specified, 
+      the default qualifier <literal>@Default</literal> is assumed.</para>
+    
+      <programlisting><![CDATA[<Queue>
+    <Resource>
+        <name>java:global/env/jms/PaymentQueue</name>
+    </Resource>
+    <myapp:PaymentProcessor/>    
+</Queue>]]></programlisting>
+    
+      <programlisting><![CDATA[<Topic>
+    <Resource>
+        <name>java:global/env/jms/Prices</name>
+    </Resource>
+    <myapp:Prices/>    
+</Topic>]]></programlisting>
+
+      <para><emphasis>Open issue: do we need to allow specification of 
+      <literal>transacted</literal> and <literal>acknowledgeMode</literal>
+      for the session?</emphasis></para>
+    
+    </section>
+    -->
+    
+    <section>
+      <title>Additional built-in beans</title>
+      
+      <para>A Java EE or embeddable EJB container must provide the following built-in 
+      beans, all of which have qualifier <literal>@Default</literal>:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>a bean with bean type <literal>javax.transaction.UserTransaction</literal>,
+          allowing injection of a reference to the JTA <literal>UserTransaction</literal>,</para>
+        </listitem>
+        <listitem>
+          <para>a bean with bean type <literal>javax.security.Principal</literal>,
+          allowing injection of a <literal>Principal</literal> representing the current
+          caller identity,</para>
+        </listitem>
+        <listitem>
+          <para>a bean with bean type <literal>javax.validation.ValidationFactory</literal>,
+          allowing injection of the default Bean Validation <literal>ValidationFactory</literal>,
+          and</para>
+        </listitem>
+        <listitem>
+          <para>a bean with bean type <literal>javax.validation.Validator</literal>,
+          allowing injection of a <literal>Validator</literal> for the default 
+           Bean Validation <literal>ValidationFactory</literal>.</para>
+        </listitem>
+      </itemizedlist>
+            
+      <para>These beans are passivation capable dependencies, as defined 
+      in <xref linkend="passivationcapabledependency"/>.</para>
+      
+      <para>If a Java EE component class has an injection point of type
+      <literal>UserTransaction</literal> and qualifier <literal>@Default</literal>,
+      and may not validly make use of the JTA <literal>UserTransaction</literal> 
+      according to the Java EE platform specification, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+      
+    </section>
+    
+    <section>
+      <title>Bean constructors</title>
+
+      <para>When the container instantiates a bean class, it calls the <emphasis>bean 
+      constructor</emphasis>. The bean constructor is a constructor of the bean class.</para>
+      
+      <para>The application may call bean constructors directly. However, if the 
+      application directly instantiates the bean, no parameters are passed to the 
+      constructor by the container; the returned object is not bound to any context; 
+      no dependencies are injected by the container; and the lifecycle of the new 
+      instance is not managed by the container.</para>
+      
+      <section>
+        <title>Declaring a bean constructor</title>
+        
+        <para>The bean constructor may be identified by annotating the constructor 
+        <literal>@Inject</literal>.</para>
+      
+        <programlisting>@SessionScoped
+public class ShoppingCart implements Serializable {
+
+   private User customer;
+   
+   @Inject
+   public ShoppingCart(User customer) {
+       this.customer = customer;
+   }
+   
+   public ShoppingCart(ShoppingCart original) {
+       this.customer = original.customer;
+   }
+   
+   ShoppingCart() {}
+   
+   ...
+
+}</programlisting>
+
+        <programlisting>@ConversationScoped
+public class Order {
+
+   private Product product;
+   private User customer;
+
+   @Inject
+   public Order(@Selected Product product, User customer) {
+       this.product = product;
+       this.customer = customer;
+   }
+   
+   public Order(Order original) {
+       this.product = original.product;
+       this.customer = original.customer;
+   }
+   
+   Order() {}
+   
+   ...
+
+}</programlisting>
+
+        <para>If a bean class does not explicitly declare a constructor using 
+        <literal>@Inject</literal>, the constructor that accepts no parameters 
+        is the bean constructor.</para>
+      
+        <para>If a bean class has more than one constructor annotated 
+        <literal>@Inject</literal>, the container automatically detects the 
+        problem and treats it as a definition error.</para>
+      
+        <para>If a bean constructor has a parameter annotated <literal>@Disposes</literal>, 
+        or <literal>@Observes</literal>, the container automatically detects the 
+        problem and treats it as a definition error.</para>
+      
+      <!--
+      <section id="constructor.xml">
+        <title>Declaring a bean constructor using XML.</title>
+        
+        <para>For a managed bean defined using XML, the bean constructor
+        may be specified by listing the parameter types of the constructer, in
+        order, as direct children of the element that declares the bean.</para>
+        
+        <programlisting><![CDATA[<myapp:ShoppingCart>
+    <ConversationScoped/>
+    <myapp:User/>
+</myapp:ShoppingCart>]]></programlisting>
+
+      <programlisting><![CDATA[<myapp:Order>
+    <ConversationScoped/>
+    <myapp:Product>
+        <Selected/>
+    </myapp:Product>
+    <myapp:User/>
+</myapp:Order>]]></programlisting>
+
+         <para>If a managed bean defined using XML does not explicitly 
+         declare constructor parameters in XML, the constructor that accepts 
+         no parameters is the bean constructor.</para>
+         
+         <para>If a managed bean declared in XML does not have a constructor 
+         with the parameter types declared in XML, the container automatically 
+         detects the problem and treats it as a definition error.</para>
+
+         <para>When a bean constructor is declared in XML, the container 
+         ignores qualifier annotations applied to Java constructor parameters.</para>
+      
+         <para><emphasis>Open issue: should it default to use the 
+         constructor annotated <literal>@Inject</literal>?</emphasis></para>
+      
+      </section>
+      -->
+
+        <para>A bean constructor may have any number of parameters. All parameters 
+        of a bean constructor are injection points.</para>
+      
+      </section>
+
+    </section>
+    
+    <section id="injectedfields">
+      <title>Injected fields</title>
+
+      <para>An <emphasis>injected field</emphasis> is a non-static, non-final field
+      of a bean class, or of any Java EE component class supporting injection.</para>
+      
+      <section>
+        <title>Declaring an injected field</title>
+        
+        <para>An injected field may be declared by annotating the field 
+        <literal>@javax.inject.Inject</literal>.</para>
+        
+      <programlisting>@ConversationScoped
+public class Order {
+   
+   @Inject @Selected Product product;
+   @Inject User customer;
+
+}</programlisting>
+
+        <para>If an injected field is annotated <literal>@Produces</literal>, the 
+        container automatically detects the problem and treats it as a definition 
+        error.</para>
+      
+      </section>
+
+      <!--
+      <section id="injected.xml">
+        <title>Declaring an injected field using XML</title>
+        
+        <para>For bean defined in XML, an injected field may be declared 
+        using the field name and a child element representing the type of the 
+        field:</para>
+        
+        <programlisting><![CDATA[<myapp:Order>
+    <ConversationScoped/>
+    
+    <myapp:product>
+        <myapp:Product>
+            <myapp:Selected/>
+        </myapp:Product/>
+    </myapp:product>
+    
+    <myapp:customer>
+        <myapp:User/> 
+    </myapp:customer>
+    
+</myapp:Order>]]></programlisting>
+
+        <para>When an injected field is declared in XML, the container 
+        ignores qualifier annotations applied to the Java field.</para>
+      
+        <para>If the type element does not declare any qualifier, the default
+        qualifier <literal>@Default</literal> is assumed.</para>
+
+        <para>If the bean class of a bean declared in XML does 
+        not have a field with the name and type declared in XML, the container 
+        automatically detects the problem and treats it as a definition error.</para>
+
+      </section>
+      -->
+      
+    </section>
+
+    <section>
+      <title>Initializer methods</title>
+
+      <para>An <emphasis>initializer method</emphasis> is a non-abstract, non-static,
+      non-generic method of a bean class, or of any Java EE component class supporting 
+      injection. If the bean is a session bean, the initializer method is <emphasis>not</emphasis> 
+      required to be a business method of the session bean.</para>
+      
+      <para>A bean class may declare multiple (or zero) initializer methods.</para>
+
+      <para>Method interceptors are never called when the container calls an 
+      initializer method.</para>
+
+      <para>The application may call initializer methods directly, but then no 
+      parameters will be passed to the method by the container.</para>
+      
+      <section id="declaringinitializer">
+        <title>Declaring an initializer method</title>
+        
+        <para>An initializer method may be declared by annotating the method 
+        <literal>@javax.inject.Inject</literal>.</para>
+        
+        <programlisting>@ConversationScoped
+public class Order {
+   
+   private Product product;
+   private User customer;
+
+   @Inject 
+   void setProduct(@Selected Product product) {
+       this.product = product;
+   }
+   
+   @Inject 
+   public void setCustomer(User customer) {
+       this.customer = customer;
+   }
+
+}</programlisting>
+
+        <para>If a generic method of a bean is annotated <literal>@Inject</literal>,
+        the container automatically detects the problem and treats it as a definition 
+        error.</para>
+      
+        <para>If an initializer method is annotated <literal>@Produces</literal>,
+        has a parameter annotated <literal>@Disposes</literal>, or has a parameter 
+        annotated <literal>@Observes</literal>, the container automatically detects 
+        the problem and treats it as a definition error.</para>
+      
+      <!--
+      <section id="initializer.xml">
+        <title>Declaring an initializer method using XML</title>
+        
+        <para>For a bean defined in XML, an initializer method may be declared 
+        using the method name, the <literal>&lt;Initializer&gt;</literal> element 
+        and the parameter types of the method.</para>
+        
+        <programlisting><![CDATA[<myapp:Order>
+    <ConversationScoped/>
+    
+    <myapp:setProduct>
+        <Initializer/>
+        <myapp:Product>
+            <myapp:Selected/>
+        </myapp:Product>
+    </myapp:setOrder>
+
+    <myapp:setCustomer>
+        <Initializer/>
+        <myapp:User/>
+    </myapp:setCustomer>
+
+</myapp:Order>]]></programlisting>
+
+        <para>When an initializer method is declared in XML, the container 
+        ignores qualifier annotations applied to the Java method parameters.</para>
+      
+        <para>If the bean class of a bean declared in XML does 
+        not have a method with the name and parameter types declared in XML,
+        the container automatically detects the problem and treats it as 
+        a definition error.</para>
+        
+      </section>
+      -->
+        
+        <para>An initializer method may have any number of parameters. All
+        initializer method parameters are injection points.</para>
+      
+      </section>
+
+    </section>
+    
+  <section id="injectionpointdefaultqualifier">
+    <title>The default qualifier at injection points</title>
+    
+    <para>If an injection point declares no qualifier, the injection point 
+    has exactly one qualifier, the default qualifier <literal>@Default</literal>.</para>
+  
+    <para>The following are equivalent:</para>
+
+    <programlisting>@ConversationScoped
+public class Order {
+   
+   private Product product;
+   private User customer;
+   
+   @Inject
+   public void init(@Selected Product product, User customer) {
+       this.product = product;
+       this.customer = customer;
+   }
+
+}</programlisting>      
+
+    <programlisting>@ConversationScoped
+public class Order {
+   
+   private Product product;
+   private User customer;
+   
+   @Inject
+   public void init(@Selected Product product, @Default User customer) {
+       this.product = product;
+       this.customer = customer;
+   }
+
+}</programlisting>
+
+    <!--
+    <para>As are the following:</para>
+
+    <programlisting><![CDATA[<myapp:Order>
+    <ConversationScoped/>
+    
+    <myapp:init>
+        <Initializer/>
+        <myapp:Product>
+            <myapp:Selected/>
+        </myapp:Product>
+        <myapp:User/>
+    </myapp:init>
+
+</myapp:Order>]]></programlisting>
+
+    <programlisting><![CDATA[<myapp:Order>
+    <ConversationScoped/>
+    
+    <myapp:init>
+        <Initializer/>
+        <myapp:Product>
+            <myapp:Selected/>
+        </myapp:Product>
+        <myapp:User>
+            <Default/>
+        </myapp:User>
+    </myapp:init>
+
+</myapp:Order>]]></programlisting>
+       -->
+       <para>The following definitions are equivalent:</para>
+
+       <programlisting>public class Payment {
+
+   public Payment(BigDecimal amount) { ... }
+   
+   @Inject Payment(Order order) { 
+      this(order.getAmount(); 
+   }
+
+}</programlisting>
+
+      <programlisting>public class Payment {
+
+   public Payment(BigDecimal amount) { ... }
+   
+   @Inject Payment(@Default Order order) { 
+      this(order.getAmount(); 
+   }
+
+}</programlisting>
+      <!--
+      <para>As are the following:</para>
+
+      <programlisting><![CDATA[<myapp:Payment>
+    <myapp:Order/>
+</myapp:Payment>]]></programlisting>
+
+        <programlisting><![CDATA[<myapp:Payment>
+    <myapp:Order>
+        <Default/>
+    </myapp:Order>
+</myapp:Payment>]]></programlisting>
+      -->
+      
+      <para>Finally, the following are equivalent:</para>
+      
+      <programlisting><![CDATA[@Inject Order order;]]></programlisting>
+      <programlisting><![CDATA[@Inject @Default Order order;]]></programlisting>
+      
+  </section>
+  
+  <section>
+    <title>The qualifier <literal>@Named</literal> at injection points</title>
+
+      <para>The use of <literal>@Named</literal> as an injection point qualifier is not
+      recommended, except in the case of integration with legacy code that uses
+      string-based names to identify beans.</para>
+      
+      <para>If an injected field declares a <literal>@Named</literal> annotation that
+      does not specify the <literal>value</literal> member, the name of the field is 
+      assumed. For example, the following field has the qualifier 
+      <literal>@Named("paymentService")</literal>:</para>
+      
+      <programlisting>@Inject @Named PaymentService paymentService;</programlisting>
+      
+      <para>If any other injection point declares a <literal>@Named</literal> annotation 
+      that does not specify the <literal>value</literal> member, the container automatically 
+      detects the problem and treats it as a definition error.</para>
+      
+  </section>
+  
+    <section id="new">
+      <title><literal>@New</literal> qualified beans</title>
+      
+      <para>For each managed bean, and for each session bean, a second bean exists 
+      which:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>has the same bean class,</para>
+        </listitem>
+        <listitem>
+          <para>has the same bean types,</para>
+        </listitem>
+        <listitem>
+          <para>has the same bean constructor, initializer methods and injected 
+          fields, and</para>
+        </listitem>
+        <listitem>
+          <para>has the same interceptor bindings.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>However, this second bean:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>has scope <literal>@Dependent</literal>,</para>
+        </listitem>
+        <listitem>
+          <para>has a exactly one qualifier: <literal>@javax.enterprise.inject.New(X.class)</literal>
+          where <literal>X</literal> is the bean class,</para> 
+        </listitem>
+        <listitem>
+          <para>has no bean EL name,</para>
+        </listitem> 
+        <listitem>
+          <para>has no stereotypes,</para>
+        </listitem> 
+        <listitem>
+          <para>has no observer methods, producer methods or fields or disposer 
+          methods, and</para>
+        </listitem>
+        <listitem>
+          <para>is not an alternative, and</para>
+        </listitem>
+        <listitem>
+          <para>is enabled, in the sense of <xref linkend="enablement"/>, if and
+          only if some other enabled bean has an injection point with the qualifier 
+          <literal>@New(X.class)</literal> where <literal>X</literal> is the bean 
+          class.</para>
+        </listitem>
+      </itemizedlist>
+      
+      <para>This bean is called the <emphasis><literal>@New</literal> qualified 
+      bean</emphasis> for the class <literal>X</literal>.</para>
+      
+      <para>Note that this second bean exists&mdash;and may be enabled and available 
+      for injection&mdash;even if the first bean is disabled, as defined by 
+      <xref linkend="enablement"/>, or if the bean class is deployed outside of a 
+      bean archive, as defined in <xref linkend="beanarchive"/>, and is therefore not 
+      discovered during the bean discovery process defined in 
+      <xref linkend="packagingdeployment"/>. The container discovers <literal>@New</literal> 
+      qualified beans by inspecting injection points of other enabled beans.</para>
+      
+      <para>This allows the application to obtain a new instance of a bean which is
+      not bound to the declared scope, but has had dependency injection performed.</para>
+      
+      <programlisting>@Produces @ConversationScoped 
+@Special Order getSpecialOrder(@New(Order.class) Order order) {
+    ...
+    return order;
+}</programlisting>
+      
+      <para>When the qualifier <literal>@New</literal> is specified at an injection 
+      point and no <literal>value</literal> member is explicitly specified, the 
+      container defaults the <literal>value</literal> to the declared type of the 
+      injection point. So the following injection point has qualifier
+      <literal>@New(Order.class)</literal>:</para>
+            
+      <programlisting>@Produces @ConversationScoped 
+@Special Order getSpecialOrder(@New Order order) { ... }</programlisting>
+
+    </section>
+
+</chapter>
