@@ -11,10 +11,10 @@
    <groupId>javax.enterprise</groupId>
    <artifactId>cdi-api</artifactId>
    <packaging>jar</packaging>
-   <version>1.0-SNAPSHOT</version>
+   <version>1.1-SNAPSHOT</version>
 
    <name>CDI APIs</name>
-   <description>APIs for JSR-299: Contexts and Dependency Injection for Java EE</description>
+   <description>APIs for CDI (Contexts and Dependency Injection for Java EE)</description>
 
    <url>http://www.seamframework.org/Weld</url>
    <licenses>
@@ -32,12 +32,12 @@
 
    <issueManagement>
       <system>JIRA</system>
-      <url>http://jira.jboss.org/browse/WELD</url>
+      <url>http://jira.jboss.org/browse/CDI</url>
    </issueManagement>
 
    <organization>
-      <name>Seam Framework</name>
-      <url>http://seamframework.org</url>
+      <name>JBoss by Red Hat, Inc.</name>
+      <url>http://jboss.org</url>
    </organization>
 
    <inceptionYear>2008</inceptionYear>
@@ -48,7 +48,7 @@
          <id>pmuir</id>
          <organization>Red Hat Inc.</organization>
          <roles>
-            <role>Project Lead</role>
+            <role>Specfication Lead</role>
          </roles>
          <email>pmuir@redhat.com</email>
       </developer>
@@ -176,9 +176,9 @@
    </dependencies>
 
    <scm>
-      <connection>scm:svn:http://anonsvn.jboss.org/repos/weld/cdi-api/trunk</connection>
-      <developerConnection>scm:svn:https://svn.jboss.org/repos/weld/cdi-api/trunk</developerConnection>
-      <url>http://fisheye.jboss.org/browse/weld/cdi-api/trunk</url>
+      <connection>scm:git:git@github.com:pmuir/cdi.git</connection>
+      <url>scm:git:git@github.com:pmuir/cdi.git</url>
+      <developerConnection>scm:git:git@github.com:pmuir/cdi.git</developerConnection>  
    </scm>
 
    <profiles>
