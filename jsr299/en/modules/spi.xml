@@ -137,7 +137,7 @@
       <programlisting><![CDATA[public interface Interceptor<T> extends Bean<T> {
     public Set<Annotation> getInterceptorBindings();
     public boolean intercepts(InterceptionType type);
-    public Object intercept(InterceptionType type, T instance, InvocationContext ctx);
+    public Object intercept(InterceptionType type, T instance, InvocationContext ctx) throws Exception;
 }]]></programlisting>
 
       <itemizedlist>
