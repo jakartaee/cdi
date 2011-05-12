@@ -1,0 +1,54 @@
+<html>
+
+<body>
+
+<p>Contexts and Dependency Injection (CDI) defines a set of 
+complementary services that help improve the structure of application
+code.</p>
+
+<ul>
+<li>A well-defined lifecycle for stateful
+{@linkplain javax.enterprise.inject beans} bound to well-defined 
+lifecycle {@linkplain javax.enterprise.context contexts}, where 
+the set of contexts is {@linkplain javax.enterprise.context.spi 
+extensible}</li>
+<li>A sophisticated, typesafe {@linkplain javax.enterprise.inject 
+dependency injection mechanism}, including the ability to select 
+dependencies at either {@linkplain javax.inject.Qualifier development} 
+or {@linkplain javax.enterprise.inject.Alternative deployment} time, 
+without verbose configuration</li>
+<li>Support for Java EE modularity and the Java EE component
+architecture&mdash;the modular structure of a Java EE application is 
+taken into account when resolving dependencies between Java EE 
+components</li>
+<li>{@linkplain javax.enterprise.inject Integration} with the 
+Unified Expression Language, allowing any bean to be used directly 
+within a JSF or JSP page</li>
+<li>The ability to {@linkplain javax.decorator decorate} injected 
+beans</li>
+<li>The ability to associate 
+{@linkplain javax.interceptor interceptors} with beans via typesafe
+{@linkplain javax.enterprise.inject interceptor bindings}</li>
+<li>An {@linkplain javax.enterprise.event event} notification model</li>
+<li>A web {@linkplain javax.enterprise.context.ConversationScoped 
+conversation context} in addition to the three standard 
+web contexts defined by the Java Servlets specification</li>
+<li>An {@linkplain javax.enterprise.inject.spi SPI} allowing portable 
+extensions to integrate cleanly with the container</li>
+</ul>
+
+<p>CDI allows objects to be bound to lifecycle contexts, to be 
+injected, to be associated with interceptors and decorators, and to 
+interact in a loosely coupled fashion by 
+{@linkplain javax.enterprise.event.Event firing} and 
+{@linkplain javax.enterprise.event.Observes observing} events. 
+{@linkplain javax.enterprise.inject Various kinds} of objects are 
+injectable, including EJB 3 session beans, managed beans, 
+{@linkplain javax.enterprise.inject.Produces producer methods} and 
+Java EE resources. We refer to these objects in general terms as beans 
+and to instances of beans that are bound to contexts as contextual 
+instances.</p>
+
+</body>
+
+</html>
