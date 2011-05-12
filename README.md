@@ -3,4 +3,4 @@
 Sources in GIT
 ====
 
-Master contains the work-in-progress on CDI 1.1 specification and API
+Master contains the work-in-progress on CDI 1.1 specification
