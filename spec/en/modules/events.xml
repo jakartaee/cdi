@@ -108,10 +108,10 @@
           parameters into consideration.</para>
         </listitem>
         <listitem>
-          <para>The observer method has all the event qualifiers. An observer method 
-          has an event qualifier if it has an observed event qualifier with (a) the 
-          same type and (b) the same annotation member value for each member which 
-          is not annotated <literal>@javax.enterprise.util.Nonbinding</literal>.</para>
+          <para>The observer method has no event qualifiers or has a subset of the event 
+	      qualifiers. An observer method has an event qualifier if it has an observed event 
+	      qualifier with (a) the same type and (b) the same annotation member value for each 
+	      member which is not annotated <literal>@javax.enterprise.util.Nonbinding</literal>.</para>
         </listitem>
         <listitem>
           <para>Either the event is not a container lifecycle event, as defined in 
