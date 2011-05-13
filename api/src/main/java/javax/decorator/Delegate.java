@@ -26,17 +26,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Identifies the delegate injection point of a decorator.
- * May be applied to a field, bean constructor parameter or 
- * initializer method parameter of a decorator bean class.</p>
+ * <p>
+ * Identifies the delegate injection point of a decorator. May be applied to a
+ * field, bean constructor parameter or initializer method parameter of a
+ * decorator bean class.
+ * </p>
  * 
  * <pre>
  * &#064;Decorator 
  * class TimestampLogger implements Logger { 
  *    &#064;Inject &#064;Delegate &#064;Any Logger logger; 
  *    ... 
- * } 
+ * }
  * </pre>
+ * 
  * <pre>
  * &#064;Decorator 
  * class TimestampLogger implements Logger { 
@@ -47,20 +50,23 @@ import java.lang.annotation.Target;
  *       this.logger=logger; 
  *    } 
  *    ... 
- * } 
+ * }
  * </pre>
  * 
- * <p>A decorator must have exactly one delegate injection point. The 
- * delegate injection point must be an injected field, initializer 
- * method parameter or bean constructor method parameter.</p>
+ * <p>
+ * A decorator must have exactly one delegate injection point. The delegate
+ * injection point must be an injected field, initializer method parameter or
+ * bean constructor method parameter.
+ * </p>
  * 
- * <p>The container injects a delegate object to the delegate injection 
- * point. The delegate object implements the delegate type and delegates 
- * method invocations along the decorator stack. When the container calls 
- * a decorator during business method interception, the decorator may 
- * invoke any method of the delegate object. If a decorator invokes the 
- * delegate object at any other time, the invoked method throws an 
- * {@link java.lang.IllegalStateException}.</p>
+ * <p>
+ * The container injects a delegate object to the delegate injection point. The
+ * delegate object implements the delegate type and delegates method invocations
+ * along the decorator stack. When the container calls a decorator during
+ * business method interception, the decorator may invoke any method of the
+ * delegate object. If a decorator invokes the delegate object at any other
+ * time, the invoked method throws an {@link java.lang.IllegalStateException}.
+ * </p>
  * 
  * <pre>
  * &#064;Decorator 
@@ -71,16 +77,16 @@ import java.lang.annotation.Target;
  *       logger.log( timestamp() + ": " + message );
  *    }
  *    ...
- * } 
+ * }
  * </pre>
  * 
- * @see javax.decorator.Decorator &#064;Decorator specifies that a
- * class is a decorator.
+ * @see javax.decorator.Decorator &#064;Decorator specifies that a class is a
+ *      decorator.
  * 
  * @author Gavin King
  * @author Pete Muir
  */
-@Target({FIELD, PARAMETER})
+@Target({ FIELD, PARAMETER })
 @Retention(RUNTIME)
 @Documented
 public @interface Delegate

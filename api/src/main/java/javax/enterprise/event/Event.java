@@ -22,16 +22,24 @@ import java.lang.annotation.Annotation;
 import javax.enterprise.util.TypeLiteral;
 
 /**
- * <p>Allows the application to fire events of a particular type.</p>
+ * <p>
+ * Allows the application to fire events of a particular type.
+ * </p>
  * 
- * <p>Beans fire events via an instance of the <tt>Event</tt> 
- * interface, which may be injected:</p>
+ * <p>
+ * Beans fire events via an instance of the <tt>Event</tt> interface, which may
+ * be injected:
+ * </p>
  * 
  * <pre>
- * &#064;Inject &#064;Any Event&lt;LoggedInEvent&gt; loggedInEvent;
+ * &#064;Inject
+ * &#064;Any
+ * Event&lt;LoggedInEvent&gt; loggedInEvent;
  * </pre>
  * 
- * <p>The <tt>fire()</tt> method accepts an event object:</p>
+ * <p>
+ * The <tt>fire()</tt> method accepts an event object:
+ * </p>
  * 
  * <pre>
  * public void login() { 
@@ -40,27 +48,36 @@ import javax.enterprise.util.TypeLiteral;
  * }
  * </pre>
  * 
- * <p>Any combination of qualifiers may be specified at the injection 
- * point:</p>
+ * <p>
+ * Any combination of qualifiers may be specified at the injection point:
+ * </p>
  * 
  * <pre>
- * &#064;Inject &#064;Admin Event&lt;LoggedInEvent&gt; adminLoggedInEvent;
+ * &#064;Inject
+ * &#064;Admin
+ * Event&lt;LoggedInEvent&gt; adminLoggedInEvent;
  * </pre>
  * 
- * <p>Or, the {@link javax.enterprise.inject.Any &#064;Any} qualifier may 
- * be used, allowing the application to specify qualifiers dynamically:</p>
+ * <p>
+ * Or, the {@link javax.enterprise.inject.Any &#064;Any} qualifier may be used,
+ * allowing the application to specify qualifiers dynamically:
+ * </p>
  * 
  * <pre>
- * &#064;Inject &#064;Any Event&lt;LoggedInEvent&gt; loggedInEvent;
+ * &#064;Inject
+ * &#064;Any
+ * Event&lt;LoggedInEvent&gt; loggedInEvent;
  * </pre>
  * 
- * <p>For an injected <tt>Event</tt>:</p>
+ * <p>
+ * For an injected <tt>Event</tt>:
+ * </p>
  * 
  * <ul>
- * <li>the <em>specified type</em> is the type parameter specified at the 
+ * <li>the <em>specified type</em> is the type parameter specified at the
  * injection point, and</li>
- * <li>the <em>specified qualifiers</em> are the qualifiers specified at 
- * the injection point.</li>
+ * <li>the <em>specified qualifiers</em> are the qualifiers specified at the
+ * injection point.</li>
  * </ul>
  * 
  * @author Gavin King
@@ -74,51 +91,60 @@ public interface Event<T>
 {
 
    /**
-    * <p>Fires an event with the specified qualifiers and notifies 
-    * observers.</p>
+    * <p>
+    * Fires an event with the specified qualifiers and notifies observers.
+    * </p>
     * 
     * @param event the event object
-    * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
+    * @throws IllegalArgumentException if the runtime type of the event object
+    *            contains a type variable
     */
    public void fire(T event);
-   
+
    /**
-    * <p>Obtains a child <tt>Event</tt> for the given additional 
-    * required qualifiers.</p>
+    * <p>
+    * Obtains a child <tt>Event</tt> for the given additional required
+    * qualifiers.
+    * </p>
     * 
     * @param qualifiers the additional specified qualifiers
     * @return the child <tt>Event</tt>
-    * @throws IllegalArgumentException if passed two instances of the 
-    * same qualifier type, or an instance of an annotation that is not 
-    * a qualifier type
+    * @throws IllegalArgumentException if passed two instances of the same
+    *            qualifier type, or an instance of an annotation that is not a
+    *            qualifier type
     */
    public Event<T> select(Annotation... qualifiers);
-   
+
    /**
-    * <p>Obtains a child <tt>Event</tt> for the given required type and 
-    * additional required qualifiers.</p>
+    * <p>
+    * Obtains a child <tt>Event</tt> for the given required type and additional
+    * required qualifiers.
+    * </p>
     * 
     * @param <U> the specified type
     * @param subtype a {@link java.lang.Class} representing the specified type
     * @param qualifiers the additional specified qualifiers
     * @return the child <tt>Event</tt>
-    * @throws IllegalArgumentException if passed two instances of the 
-    * same qualifier type, or an instance of an annotation that is not 
-    * a qualifier type
+    * @throws IllegalArgumentException if passed two instances of the same
+    *            qualifier type, or an instance of an annotation that is not a
+    *            qualifier type
     */
    public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
-   
+
    /**
-    * <p>Obtains a child <tt>Event</tt> for the given required type and 
-    * additional required qualifiers.</p>
+    * <p>
+    * Obtains a child <tt>Event</tt> for the given required type and additional
+    * required qualifiers.
+    * </p>
     * 
     * @param <U> the specified type
-    * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing the specified type
+    * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing
+    *           the specified type
     * @param qualifiers the additional specified qualifiers
     * @return the child <tt>Event</tt>
-    * @throws IllegalArgumentException if passed two instances of the 
-    * same qualifier type, or an instance of an annotation that is not 
-    * a qualifier type
+    * @throws IllegalArgumentException if passed two instances of the same
+    *            qualifier type, or an instance of an annotation that is not a
+    *            qualifier type
     */
    public <U extends T> Event<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
 }

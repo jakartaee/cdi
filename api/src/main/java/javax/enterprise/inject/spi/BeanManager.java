@@ -33,23 +33,31 @@ import javax.enterprise.inject.InjectionException;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 
 /**
- * <p>Allows a portable extension to interact directly with the container.
- * Provides operations for obtaining contextual references for beans, along 
- * with many other operations of use to portable extensions.</p>
+ * <p>
+ * Allows a portable extension to interact directly with the container. Provides
+ * operations for obtaining contextual references for beans, along with many
+ * other operations of use to portable extensions.
+ * </p>
  * 
- * <p>Any bean may obtain an instance of <tt>BeanManager</tt> by injecting
- * it:</p>
+ * <p>
+ * Any bean may obtain an instance of <tt>BeanManager</tt> by injecting it:
+ * </p>
  * 
  * <pre>
- * &#064;Inject BeanManager manager;
+ * &#064;Inject
+ * BeanManager manager;
  * </pre>
  * 
- * <p>Java EE components may obtain an instance of <tt>BeanManager</tt> from
- * {@linkplain javax.naming JNDI} by looking up the name {@code
- * java:comp/BeanManager}.</p>
+ * <p>
+ * Java EE components may obtain an instance of <tt>BeanManager</tt> from
+ * {@linkplain javax.naming JNDI} by looking up the name
+ * {@code java:comp/BeanManager}.
+ * </p>
  * 
- * <p>Any operation of <tt>BeanManager</tt> may be called at any time during 
- * the execution of the application.</p>
+ * <p>
+ * Any operation of <tt>BeanManager</tt> may be called at any time during the
+ * execution of the application.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -60,41 +68,42 @@ public interface BeanManager
 {
 
    /**
-    * Obtains a contextual reference for a certain {@linkplain Bean bean} and 
-    * a certain bean type of the bean.
+    * Obtains a contextual reference for a certain {@linkplain Bean bean} and a
+    * certain bean type of the bean.
     * 
     * @param bean the {@link Bean} object representing the bean
-    * @param beanType a bean type that must be implemented by any client proxy 
+    * @param beanType a bean type that must be implemented by any client proxy
     *           that is returned
-    * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that 
-    *           may be used to destroy any object with scope 
+    * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that
+    *           may be used to destroy any object with scope
     *           {javax.enterprise.context.Dependent} that is created
     * @return a contextual reference representing the bean
     * @throws IllegalArgumentException if the given type is not a bean type of
-    *           the given bean
+    *            the given bean
     */
    public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
 
    /**
-    * Obtains an injectable reference for a certain {@linkplain InjectionPoint 
+    * Obtains an injectable reference for a certain {@linkplain InjectionPoint
     * injection point}.
     * 
     * @param ij the target injection point
-    * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that 
-    *           may be used to destroy any object with scope 
+    * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that
+    *           may be used to destroy any object with scope
     *           {javax.enterprise.context.Dependent} that is created
     * @return the injectable reference
-    * @throws UnsatisfiedResolutionException if typesafe resolution results in 
-    *           an unsatisfied dependency
-    * @throws AmbiguousResolutionException typesafe resolution results in an 
-    *           unresolvable ambiguous dependency
+    * @throws UnsatisfiedResolutionException if typesafe resolution results in
+    *            an unsatisfied dependency
+    * @throws AmbiguousResolutionException typesafe resolution results in an
+    *            unresolvable ambiguous dependency
     */
    public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 
    /**
-    * Obtain an instance of a {@link javax.enterprise.context.spi.CreationalContext} 
-    * for the given {@linkplain javax.enterprise.context.spi.Contextual contextual type}, 
-    * or for a non-contextual object.
+    * Obtain an instance of a
+    * {@link javax.enterprise.context.spi.CreationalContext} for the given
+    * {@linkplain javax.enterprise.context.spi.Contextual contextual type}, or
+    * for a non-contextual object.
     * 
     * @param contextual the {@link javax.enterprise.context.spi.Contextual}, or
     *           a null value in the case of a non-contextual object
@@ -103,30 +112,31 @@ public interface BeanManager
    public <T> CreationalContext<T> createCreationalContext(Contextual<T> contextual);
 
    /**
-    * Return the set of beans which have the given required type and qualifiers 
-    * and are available for injection in the module or library containing the class 
-    * into which the <tt>BeanManager</tt> was injected or the Java EE component from 
-    * whose JNDI environment namespace the <tt>BeanManager</tt> was obtained, 
-    * according to the rules of typesafe resolution. If no qualifiers are given, the 
-    * {@linkplain javax.enterprise.inject.Default default qualifier} is assumed.
+    * Return the set of beans which have the given required type and qualifiers
+    * and are available for injection in the module or library containing the
+    * class into which the <tt>BeanManager</tt> was injected or the Java EE
+    * component from whose JNDI environment namespace the <tt>BeanManager</tt>
+    * was obtained, according to the rules of typesafe resolution. If no
+    * qualifiers are given, the {@linkplain javax.enterprise.inject.Default
+    * default qualifier} is assumed.
     * 
     * @param beanType the required bean type
     * @param qualifiers the required qualifiers
     * @return the resulting set of {@linkplain Bean beans}
     * @throws IllegalArgumentException if the given type represents a type
     *            variable
-    * @throws IllegalArgumentException if two instances of the same qualifier type
-    *            are given
+    * @throws IllegalArgumentException if two instances of the same qualifier
+    *            type are given
     * @throws IllegalArgumentException if an instance of an annotation that is
     *            not a qualifier type is given
     */
    public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
 
    /**
-    * Return the set of beans which have the given EL name and are available for 
-    * injection in the module or library containing the class into which the 
-    * <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI 
-    * environment namespace the <tt>BeanManager</tt> was obtained, according to 
+    * Return the set of beans which have the given EL name and are available for
+    * injection in the module or library containing the class into which the
+    * <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+    * environment namespace the <tt>BeanManager</tt> was obtained, according to
     * the rules of EL name resolution.
     * 
     * @param name the EL name
@@ -135,19 +145,18 @@ public interface BeanManager
    public Set<Bean<?>> getBeans(String name);
 
    /**
-    * Returns the {@link javax.enterprise.inject.spi.PassivationCapable} bean with 
-    * the given identifier.
+    * Returns the {@link javax.enterprise.inject.spi.PassivationCapable} bean
+    * with the given identifier.
     * 
     * @param id the identifier
-    * @return a {@link Bean} that implements 
-    *            {@link javax.enterprise.inject.spi.PassivationCapable}
-    *            and has the given identifier, or a null value if there 
-    *            is no such bean
+    * @return a {@link Bean} that implements
+    *         {@link javax.enterprise.inject.spi.PassivationCapable} and has the
+    *         given identifier, or a null value if there is no such bean
     */
    public Bean<?> getPassivationCapableBean(String id);
 
    /**
-    * Apply the ambiguous dependency resolution rules to a set of 
+    * Apply the ambiguous dependency resolution rules to a set of
     * {@linkplain Bean beans}.
     * 
     * @param <X> a common type of the beans
@@ -160,11 +169,11 @@ public interface BeanManager
    /**
     * Validate a certain {@linkplain InjectionPoint injection point}.
     * 
-    * @param injectionPoint the {@linkplain InjectionPoint injection point} to 
-    *            validate
-    * @throws InjectionException if there is a deployment problem (for
-    *            example, an unsatisfied or unresolvable ambiguous dependency)
-    *            associated with the injection point
+    * @param injectionPoint the {@linkplain InjectionPoint injection point} to
+    *           validate
+    * @throws InjectionException if there is a deployment problem (for example,
+    *            an unsatisfied or unresolvable ambiguous dependency) associated
+    *            with the injection point
     */
    public void validate(InjectionPoint injectionPoint);
 
@@ -175,10 +184,10 @@ public interface BeanManager
     * @param qualifiers the event qualifiers
     * @throws IllegalArgumentException if the runtime type of the event object
     *            contains a type variable
-    * @throws IllegalArgumentException if two instances of the same qualifier type
-    *            are given
-    * @throws IllegalArgumentException if an instance of an annotation that is not 
-    * a qualifier type is given
+    * @throws IllegalArgumentException if two instances of the same qualifier
+    *            type are given
+    * @throws IllegalArgumentException if an instance of an annotation that is
+    *            not a qualifier type is given
     */
    public void fireEvent(Object event, Annotation... qualifiers);
 
@@ -188,20 +197,20 @@ public interface BeanManager
     * @param <T> the type of the event
     * @param event the event object
     * @param qualifiers the event qualifiers
-    * @throws IllegalArgumentException if the runtime type of the event object 
+    * @throws IllegalArgumentException if the runtime type of the event object
     *            contains a type variable
-    * @throws IllegalArgumentException if two instances of the same qualifier type
-    *            are given
-    * @throws IllegalArgumentException if an instance of an annotation that is not
-    *            a qualifier type is given
+    * @throws IllegalArgumentException if two instances of the same qualifier
+    *            type are given
+    * @throws IllegalArgumentException if an instance of an annotation that is
+    *            not a qualifier type is given
     */
    public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);
 
    /**
-    * Return an ordered list of {@linkplain Decorator decorators} for a set of 
-    * bean types and a set of qualifiers and which are enabled in the module or 
+    * Return an ordered list of {@linkplain Decorator decorators} for a set of
+    * bean types and a set of qualifiers and which are enabled in the module or
     * library containing the class into which the <tt>BeanManager</tt> was
-    * injected or the Java EE component from whose JNDI environment namespace 
+    * injected or the Java EE component from whose JNDI environment namespace
     * the <tt>BeanManager</tt> was obtained.
     * 
     * @param types the set of bean types of the decorated bean
@@ -216,20 +225,20 @@ public interface BeanManager
    public List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 
    /**
-    * Return an ordered list of enabled {@linkplain Interceptor interceptors} for 
-    * a set of interceptor bindings and a type of interception and which are enabled 
-    * in the module or library containing the class into which the <tt>BeanManager</tt> 
-    * was injected or the Java EE component from whose JNDI environment namespace 
-    * the <tt>BeanManager</tt> was obtained.
+    * Return an ordered list of enabled {@linkplain Interceptor interceptors}
+    * for a set of interceptor bindings and a type of interception and which are
+    * enabled in the module or library containing the class into which the
+    * <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+    * environment namespace the <tt>BeanManager</tt> was obtained.
     * 
     * @param type the type of the interception
     * @param interceptorBindings the interceptor bindings
     * @return the resulting set of {@linkplain Interceptor interceptors}
     * @throws IllegalArgumentException if no interceptor binding type is given
-    * @throws IllegalArgumentException if two instances of the same interceptor 
+    * @throws IllegalArgumentException if two instances of the same interceptor
     *            binding type are given
-    * @throws IllegalArgumentException if an instance of an annotation that is not 
-    *            an interceptor binding type is given
+    * @throws IllegalArgumentException if an instance of an annotation that is
+    *            not an interceptor binding type is given
     */
    public List<Interceptor<?>> resolveInterceptors(InterceptionType type, Annotation... interceptorBindings);
 
@@ -238,13 +247,13 @@ public interface BeanManager
     * {@linkplain javax.enterprise.context scope type}.
     * 
     * @param annotationType the annotation type
-    * @return true if the annotation type is a 
-    *            {@linkplain javax.enterprise.context scope type}
+    * @return true if the annotation type is a
+    *         {@linkplain javax.enterprise.context scope type}
     */
    public boolean isScope(Class<? extends Annotation> annotationType);
 
    /**
-    * Test the given annotation type to determine if it is a 
+    * Test the given annotation type to determine if it is a
     * {@linkplain javax.enterprise.context normal scope type}.
     * 
     * @param annotationType the annotation type
@@ -267,18 +276,20 @@ public interface BeanManager
     * {@linkplain javax.inject.Qualifier qualifier type}.
     * 
     * @param annotationType the annotation type
-    * @return <tt>true</tt> if the annotation type is a 
-    *            {@linkplain javax.inject.Qualifier qualifier type}
+    * @return <tt>true</tt> if the annotation type is a
+    *         {@linkplain javax.inject.Qualifier qualifier type}
     */
    public boolean isQualifier(Class<? extends Annotation> annotationType);
 
    /**
     * Test the given annotation type to determine if it is an
-    * {@linkplain javax.interceptor.InterceptorBinding interceptor binding type}.
+    * {@linkplain javax.interceptor.InterceptorBinding interceptor binding type}
+    * .
     * 
     * @param annotationType the annotation to test
-    * @return <tt>true</tt> if the annotation type is a {@linkplain 
-    *            javax.interceptor.InterceptorBinding interceptor binding type} 
+    * @return <tt>true</tt> if the annotation type is a
+    *         {@linkplain javax.interceptor.InterceptorBinding interceptor
+    *         binding type}
     */
    public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
 
@@ -293,11 +304,12 @@ public interface BeanManager
    public boolean isStereotype(Class<? extends Annotation> annotationType);
 
    /**
-    * Obtains the set of meta-annotations for a certain 
-    * {@linkplain javax.interceptor.InterceptorBinding interceptor binding type}.
+    * Obtains the set of meta-annotations for a certain
+    * {@linkplain javax.interceptor.InterceptorBinding interceptor binding type}
+    * .
     * 
-    * @param bindingType the
-    *           {@linkplain javax.interceptor.InterceptorBinding interceptor binding type}
+    * @param bindingType the {@linkplain javax.interceptor.InterceptorBinding
+    *           interceptor binding type}
     * @return the set of meta-annotations
     */
    public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotation> bindingType);
@@ -313,15 +325,16 @@ public interface BeanManager
    public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);
 
    /**
-    * Obtains an active {@linkplain javax.enterprise.context.spi.Context
-    * context object} for the given {@linkplain javax.enterprise.context scope}.
+    * Obtains an active {@linkplain javax.enterprise.context.spi.Context context
+    * object} for the given {@linkplain javax.enterprise.context scope}.
     * 
     * @param scopeType the {@linkplain javax.enterprise.context scope}
-    * @return the {@linkplain javax.enterprise.context.spi.Context context object}
-    * @throws ContextNotActiveException if there is no active context object for the
-    *            given scope
-    * @throws IllegalArgumentException if there is more than one active context object
-    *            for the given scope
+    * @return the {@linkplain javax.enterprise.context.spi.Context context
+    *         object}
+    * @throws ContextNotActiveException if there is no active context object for
+    *            the given scope
+    * @throws IllegalArgumentException if there is more than one active context
+    *            object for the given scope
     */
    public Context getContext(Class<? extends Annotation> scopeType);
 
@@ -346,7 +359,7 @@ public interface BeanManager
    public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 
    /**
-    * Obtain an {@link AnnotatedType} that may be used to read the annotations 
+    * Obtain an {@link AnnotatedType} that may be used to read the annotations
     * of the given class or interface.
     * 
     * @param <T> the class or interface
@@ -356,9 +369,9 @@ public interface BeanManager
    public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
 
    /**
-    * Obtains an {@link InjectionTarget} for the given {@link AnnotatedType}. 
-    * The container ignores the annotations and types declared by the elements 
-    * of the actual Java class and uses the metadata provided via the 
+    * Obtains an {@link InjectionTarget} for the given {@link AnnotatedType}.
+    * The container ignores the annotations and types declared by the elements
+    * of the actual Java class and uses the metadata provided via the
     * {@link Annotated} interface instead.
     * 
     * @param <T> the type

@@ -28,31 +28,34 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Specifies that a bean is session scoped.</p>
+ * <p>
+ * Specifies that a bean is session scoped.
+ * </p>
  * 
- * <p>The session scope is active:</p>
+ * <p>
+ * The session scope is active:
+ * </p>
  * 
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet 
- * in the web application, during the doFilter() method of 
- * any servlet filter and when the container calls any 
- * <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or 
+ * <li>during the <tt>service()</tt> method of any servlet in the web
+ * application, during the doFilter() method of any servlet filter and when the
+ * container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
  * <tt>ServletRequestListener</tt>.</li>
  * </ul>
  * 
- * <p>The session context is shared between all servlet 
- * requests that occur in the same HTTP session. The session 
- * context is destroyed when the HTTPSession times out, 
- * after all <tt>HttpSessionListeners</tt> have been called, 
- * and at the very end of any request in which 
- * <tt>invalidate()</tt> was called, after all filters and 
- * <tt>ServletRequestListeners</tt> have been called.</p>
+ * <p>
+ * The session context is shared between all servlet requests that occur in the
+ * same HTTP session. The session context is destroyed when the HTTPSession
+ * times out, after all <tt>HttpSessionListeners</tt> have been called, and at
+ * the very end of any request in which <tt>invalidate()</tt> was called, after
+ * all filters and <tt>ServletRequestListeners</tt> have been called.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
  */
 
-@Target( { TYPE, METHOD, FIELD })
+@Target({ TYPE, METHOD, FIELD })
 @Retention(RUNTIME)
 @Documented
 @NormalScope(passivating = true)

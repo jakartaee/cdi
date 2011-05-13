@@ -28,43 +28,46 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Specifies that a bean is request scoped.</p>
+ * <p>
+ * Specifies that a bean is request scoped.
+ * </p>
  * 
- * <p>The request scope is active:</p>
+ * <p>
+ * The request scope is active:
+ * </p>
  * 
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet in the web 
- * application, during the <tt>doFilter()</tt> method of any servlet 
- * filter and when the container calls any <tt>ServletRequestListener</tt> 
- * or <tt>AsyncListener</tt>,</li>
+ * <li>during the <tt>service()</tt> method of any servlet in the web
+ * application, during the <tt>doFilter()</tt> method of any servlet filter and
+ * when the container calls any <tt>ServletRequestListener</tt> or
+ * <tt>AsyncListener</tt>,</li>
  * <li>during any Java EE web service invocation,</li>
- * <li>during any remote method invocation of any EJB, during 
- * any asynchronous method invocation of any EJB, during any 
- * call to an EJB timeout method and during message delivery 
- * to any EJB message-driven bean, and</li>
- * <li>during any message delivery to a MessageListener for 
- * a JMS topic or queue obtained from the Java EE component 
- * environment.</li>
+ * <li>during any remote method invocation of any EJB, during any asynchronous
+ * method invocation of any EJB, during any call to an EJB timeout method and
+ * during message delivery to any EJB message-driven bean, and</li>
+ * <li>during any message delivery to a MessageListener for a JMS topic or queue
+ * obtained from the Java EE component environment.</li>
  * </ul>
  * 
- * <p>The request context is destroyed:</p>
+ * <p>
+ * The request context is destroyed:
+ * </p>
  * 
  * <ul>
- * <li>at the end of the servlet request, after the <tt>service()</tt>
- * method, all <tt>doFilter()</tt> methods, and all <tt>requestDestroyed()</tt>
- * and <tt>onComplete()</tt> notifications return,</li>
+ * <li>at the end of the servlet request, after the <tt>service()</tt> method,
+ * all <tt>doFilter()</tt> methods, and all <tt>requestDestroyed()</tt> and
+ * <tt>onComplete()</tt> notifications return,</li>
  * <li>after the web service invocation completes,</li>
- * <li>after the EJB remote method invocation, asynchronous 
- * method invocation, timeout or message delivery completes, or</li>
- * <li>after the message delivery to the <tt>MessageListener</tt> 
- * completes.</li>
+ * <li>after the EJB remote method invocation, asynchronous method invocation,
+ * timeout or message delivery completes, or</li>
+ * <li>after the message delivery to the <tt>MessageListener</tt> completes.</li>
  * </ul>
  * 
  * @author Gavin King
  * @author Pete Muir
  */
 
-@Target( { TYPE, METHOD, FIELD })
+@Target({ TYPE, METHOD, FIELD })
 @Retention(RUNTIME)
 @Documented
 @NormalScope

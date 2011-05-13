@@ -27,14 +27,17 @@ import java.lang.annotation.Target;
 
 /**
  * 
- * <p>Identifies a producer method or field. May be applied to 
- * a method or field of a bean class.</p>
+ * <p>
+ * Identifies a producer method or field. May be applied to a method or field of
+ * a bean class.
+ * </p>
  * 
- * <p>A producer method must be a non-abstract method of a managed 
- * bean class or session bean class. A producer method may be 
- * either static or non-static. If the bean is a session bean, the 
- * producer method must be either a business method of the EJB or 
- * a static method of the bean class.</p>
+ * <p>
+ * A producer method must be a non-abstract method of a managed bean class or
+ * session bean class. A producer method may be either static or non-static. If
+ * the bean is a session bean, the producer method must be either a business
+ * method of the EJB or a static method of the bean class.
+ * </p>
  * 
  * <pre>
  * public class Shop {
@@ -42,58 +45,79 @@ import java.lang.annotation.Target;
  *    &#064;Catalog &#064;Named("catalog") 
  *    List&lt;Product&gt; getProducts() { ... }
  *    ...
- * } 
+ * }
  * </pre>
  * 
- * <p>A producer field must be a field of a managed bean class 
- * or session bean class. A producer field may be either static or 
- * non-static. If the bean is a session bean, the producer field 
- * must be a static field of the bean class.</p>
- *
+ * <p>
+ * A producer field must be a field of a managed bean class or session bean
+ * class. A producer field may be either static or non-static. If the bean is a
+ * session bean, the producer field must be a static field of the bean class.
+ * </p>
+ * 
  * <pre>
  * public class Shop { 
  *    &#064;Produces &#064;ApplicationScoped 
  *    &#064;Catalog &#064;Named("catalog") 
  *    List&lt;Product&gt; products = ...;
  *    ...
- * } 
+ * }
  * </pre>
  * 
- * <p>If a producer method sometimes returns a null value, or if
- * a producer field sometimes contains a null value when accessed,
- * then the producer method or field must have scope 
- * {@link javax.enterprise.context.Dependent &#064;Dependent}.</p>
+ * <p>
+ * If a producer method sometimes returns a null value, or if a producer field
+ * sometimes contains a null value when accessed, then the producer method or
+ * field must have scope {@link javax.enterprise.context.Dependent
+ * &#064;Dependent}.
+ * </p>
  * 
- * <p>A producer method return type or producer field type may not
- * be a type variable.</p>
+ * <p>
+ * A producer method return type or producer field type may not be a type
+ * variable.
+ * </p>
  * 
- * <p>If the producer method return type or producer field type is 
- * a parameterized type, it must specify an actual type parameter 
- * or type variable for each type parameter.</p>
+ * <p>
+ * If the producer method return type or producer field type is a parameterized
+ * type, it must specify an actual type parameter or type variable for each type
+ * parameter.
+ * </p>
  * 
- * <p>If the producer method return type or producer field type is 
- * a parameterized type with a type variable, it must have scope 
- * {@link javax.enterprise.context.Dependent &#064;Dependent}.</p>
- *
- * <p>A producer method may have any number of parameters. All 
- * producer method parameters are injection points.</p>
+ * <p>
+ * If the producer method return type or producer field type is a parameterized
+ * type with a type variable, it must have scope
+ * {@link javax.enterprise.context.Dependent &#064;Dependent}.
+ * </p>
  * 
- * <pre>public class OrderFactory {
+ * <p>
+ * A producer method may have any number of parameters. All producer method
+ * parameters are injection points.
+ * </p>
  * 
- *    &#064;Produces &#064;ConversationScoped
- *    public Order createCurrentOrder(&#064;New(Order.class) Order order, &#064;Selected Product product) {
+ * <pre>
+ * public class OrderFactory
+ * {
+ * 
+ *    &#064;Produces
+ *    &#064;ConversationScoped
+ *    public Order createCurrentOrder(@New(Order.class) Order order, @Selected Product product)
+ *    {
  *       order.setProduct(product);
  *       return order;
  *    }
  * 
- * }</pre>
-
- * <p>A bean may declare multiple producer methods or fields.</p>
+ * }
+ * </pre>
  * 
- * <p>Producer methods and fields are not inherited by bean subclasses.</p>
+ * <p>
+ * A bean may declare multiple producer methods or fields.
+ * </p>
  * 
- * <p>Interceptors and decorators may not declare producer methods 
- * or fields.</p>
+ * <p>
+ * Producer methods and fields are not inherited by bean subclasses.
+ * </p>
+ * 
+ * <p>
+ * Interceptors and decorators may not declare producer methods or fields.
+ * </p>
  * 
  * @see javax.enterprise.inject.Disposes &#064;Disposes
  * 
@@ -101,7 +125,7 @@ import java.lang.annotation.Target;
  * @author Pete Muir
  */
 
-@Target({METHOD, FIELD})
+@Target({ METHOD, FIELD })
 @Retention(RUNTIME)
 @Documented
 public @interface Produces

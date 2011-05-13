@@ -19,7 +19,9 @@ package javax.enterprise.inject.spi;
 import java.util.List;
 
 /**
- * <p>Represents a callable member of a Java type.</p>
+ * <p>
+ * Represents a callable member of a Java type.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -30,7 +32,9 @@ public interface AnnotatedCallable<X> extends AnnotatedMember<X>
 {
 
    /**
-    * <p>Get the parameters of the callable member.</p>
+    * <p>
+    * Get the parameters of the callable member.
+    * </p>
     * 
     * @return the parameters
     */

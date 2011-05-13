@@ -38,8 +38,8 @@ public interface Producer<T>
     * <p>
     * If the {@code Producer} represents a class, this will invoke the
     * constructor annotated {@link javax.inject.Inject} if it exists, or the
-    * constructor with no parameters otherwise. If the class has interceptors, 
-    * <tt>produce()</tt> is responsible for building the interceptors and 
+    * constructor with no parameters otherwise. If the class has interceptors,
+    * <tt>produce()</tt> is responsible for building the interceptors and
     * decorators of the instance.
     * </p>
     * <p>
@@ -63,10 +63,10 @@ public interface Producer<T>
     * nothing.
     * </p>
     * <p>
-    * If the {@code Producer} represents a producer field or method, this 
-    * calls the disposer method, if any, on a contextual instance of the 
-    * bean that declares the disposer method or performs any additional 
-    * required cleanup, if any, to destroy state associated with a resource.
+    * If the {@code Producer} represents a producer field or method, this calls
+    * the disposer method, if any, on a contextual instance of the bean that
+    * declares the disposer method or performs any additional required cleanup,
+    * if any, to destroy state associated with a resource.
     * </p>
     * 
     * @param instance The instance to dispose
@@ -75,8 +75,8 @@ public interface Producer<T>
 
    /**
     * <p>
-    * Returns the set of all {@code InjectionPoints}. If the
-    * {@code Producer} represents a class, then this returns returns the set of
+    * Returns the set of all {@code InjectionPoints}. If the {@code Producer}
+    * represents a class, then this returns returns the set of
     * {@code InjectionPoint} objects representing all injected fields, bean
     * constructor parameters and initializer method parameters. For a producer
     * method, this returns the set of {@code InjectionPoint} objects

@@ -18,8 +18,10 @@
 package javax.enterprise.event;
 
 /**
- * <p>Indicates that a checked exception was thrown by an
- * observer method during event notification.</p>
+ * <p>
+ * Indicates that a checked exception was thrown by an observer method during
+ * event notification.
+ * </p>
  * 
  * @author Pete Muir
  * @author Gavin King

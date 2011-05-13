@@ -20,7 +20,9 @@ package javax.enterprise.inject.spi;
 import java.lang.reflect.Member;
 
 /**
- * <p>Represents a member of a Java type.</p>
+ * <p>
+ * Represents a member of a Java type.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -31,22 +33,27 @@ import java.lang.reflect.Member;
 public interface AnnotatedMember<X> extends Annotated
 {
    /**
-    * <p>Get the underlying {@link Member}.</p>
+    * <p>
+    * Get the underlying {@link Member}.
+    * </p>
     * 
     * @return the {@link Member}
     */
    public Member getJavaMember();
 
    /**
-    * <p>Determines if the member is static.</p>
+    * <p>
+    * Determines if the member is static.
+    * </p>
     * 
     * @return <tt>true</tt> if the member is static
     */
    public boolean isStatic();
 
    /**
-    * <p>Get the {@linkplain AnnotatedType type} which declares this 
-    * member.</p>
+    * <p>
+    * Get the {@linkplain AnnotatedType type} which declares this member.
+    * </p>
     * 
     * @return the type which declares this member
     */

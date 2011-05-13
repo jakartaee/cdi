@@ -16,13 +16,12 @@
  */
 package javax.enterprise.inject;
 
-
 /**
  * <t>Indicates a problem relating to typesafe resolution.</t>
  * 
  * @author Gavin King
  */
-public class ResolutionException extends InjectionException 
+public class ResolutionException extends InjectionException
 {
 
    private static final long serialVersionUID = -6280627846071966243L;

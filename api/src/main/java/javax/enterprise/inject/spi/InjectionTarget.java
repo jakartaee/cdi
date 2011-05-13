@@ -20,9 +20,8 @@ import javax.enterprise.context.spi.CreationalContext;
 
 /**
  * <p>
- * Provides operations for performing 
- * {@linkplain javax.enterprise.inject dependency injection} and
- * lifecycle callbacks on an instance of a type.
+ * Provides operations for performing {@linkplain javax.enterprise.inject
+ * dependency injection} and lifecycle callbacks on an instance of a type.
  * </p>
  * 
  * @see javax.annotation.PostConstruct
@@ -37,8 +36,8 @@ public interface InjectionTarget<T> extends Producer<T>
 
    /**
     * <p>
-    * Performs dependency injection upon the given object. Performs Java EE 
-    * component environment injection, sets the value of all injected fields, 
+    * Performs dependency injection upon the given object. Performs Java EE
+    * component environment injection, sets the value of all injected fields,
     * and calls all initializer methods.
     * </p>
     * 

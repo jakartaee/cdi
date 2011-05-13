@@ -17,9 +17,10 @@
 package javax.enterprise.inject;
 
 /**
- * <p>Indicates that no bean matches a certain combination of required 
- * type and required qualifiers and is eligible for injection into a 
- * certain class.</p>
+ * <p>
+ * Indicates that no bean matches a certain combination of required type and
+ * required qualifiers and is eligible for injection into a certain class.
+ * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
@@ -48,7 +49,5 @@ public class UnsatisfiedResolutionException extends ResolutionException
    {
       super(throwable);
    }
-
-   
 
 }

@@ -20,8 +20,8 @@ package javax.enterprise.inject.spi;
  * <p>
  * The event type of the third event fired by the container after it has
  * validated that there are no deployment problems and before creating contexts
- * or processing requests. If any observer method of the {@code
- * AfterDeploymentValidation} event throws an exception, the exception is
+ * or processing requests. If any observer method of the
+ * {@code AfterDeploymentValidation} event throws an exception, the exception is
  * treated as a deployment problem by the container.
  * </p>
  * <p>

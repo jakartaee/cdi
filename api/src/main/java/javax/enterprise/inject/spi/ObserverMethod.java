@@ -24,18 +24,20 @@ import javax.enterprise.event.Reception;
 import javax.enterprise.event.TransactionPhase;
 
 /**
- * <p>Represents an {@linkplain javax.enterprise.event.Observes observer method} 
- * of an {@linkplain javax.enterprise.inject enabled bean}. Defines everything 
- * the container needs to know about an observer method.</p>
+ * <p>
+ * Represents an {@linkplain javax.enterprise.event.Observes observer method} of
+ * an {@linkplain javax.enterprise.inject enabled bean}. Defines everything the
+ * container needs to know about an observer method.
+ * </p>
  * 
  * @author Gavin King
  * @author David Allen
- * @param <T> the event type 
+ * @param <T> the event type
  */
 public interface ObserverMethod<T>
 {
    /**
-    * Obtains the bean {@linkplain Class class} of the bean that declares the 
+    * Obtains the bean {@linkplain Class class} of the bean that declares the
     * observer method.
     * 
     * @return the defining {@linkplain Class class}
@@ -50,7 +52,8 @@ public interface ObserverMethod<T>
    public Type getObservedType();
 
    /**
-    * Obtains the set of {@linkplain javax.enterprise.event observed event qualifiers}.
+    * Obtains the set of {@linkplain javax.enterprise.event observed event
+    * qualifiers}.
     * 
     * @return the observed event {@linkplain javax.inject.Qualifier qualifiers}
     */

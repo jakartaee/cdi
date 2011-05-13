@@ -18,7 +18,7 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for each enabled producer method, 
+ * The container fires an event of this type for each enabled producer method,
  * before registering the {@link javax.enterprise.inject.spi.Bean} object.
  * </p>
  * <p>
@@ -30,8 +30,9 @@ package javax.enterprise.inject.spi;
  * @param <T> The return type of the producer method
  * @param <X> The class of the bean declaring the producer method
  */
-//These parameters are the wrong way according to the spec, however Oracle/JCP compatibility rules require us to 
-//keep the wrong ordering
+// These parameters are the wrong way according to the spec, however Oracle/JCP
+// compatibility rules require us to
+// keep the wrong ordering
 public interface ProcessProducerMethod<T, X> extends ProcessBean<X>
 {
    /**
@@ -44,11 +45,12 @@ public interface ProcessProducerMethod<T, X> extends ProcessBean<X>
    public AnnotatedMethod<T> getAnnotatedProducerMethod();
 
    /**
-    * Returns the {@link javax.enterprise.inject.spi.AnnotatedParameter} for
-    * any matching injection point of the same type as the producer method
-    * return type found on a disposal method.
+    * Returns the {@link javax.enterprise.inject.spi.AnnotatedParameter} for any
+    * matching injection point of the same type as the producer method return
+    * type found on a disposal method.
     * 
-    * @return the disposal method's {@link javax.enterprise.inject.spi.AnnotatedParameter}
+    * @return the disposal method's
+    *         {@link javax.enterprise.inject.spi.AnnotatedParameter}
     */
    public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }

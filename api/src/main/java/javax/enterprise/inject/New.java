@@ -30,13 +30,16 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- * <p>The built-in qualifier type.</p>
+ * <p>
+ * The built-in qualifier type.
+ * </p>
  * 
- * <p>The <tt>&#064;New</tt> qualifier allows the application 
- * to obtain a new instance of a bean which is not bound to 
- * the declared scope, but has had dependency injection 
- * performed.</p>
- *
+ * <p>
+ * The <tt>&#064;New</tt> qualifier allows the application to obtain a new
+ * instance of a bean which is not bound to the declared scope, but has had
+ * dependency injection performed.
+ * </p>
+ * 
  * <pre>
  * &#064;Produces &#064;ConversationScoped 
  * &#064;Special Order getSpecialOrder(&#064;New(Order.class) Order order) {
@@ -44,41 +47,44 @@ import javax.inject.Qualifier;
  *    return order;
  * }
  * </pre>
- *    
- * <p>When the <tt>&#064;New</tt> qualifier is specified 
- * at an injection point and no 
- * {@link javax.enterprise.inject.New#value() value} 
- * member is explicitly specified, the container defaults 
- * the {@link javax.enterprise.inject.New#value() value} 
- * to the declared type of the injection point. So the 
- * following injection point has qualifier
- * <tt>&#064;New(Order.class)</tt>:</p>
+ * 
+ * <p>
+ * When the <tt>&#064;New</tt> qualifier is specified at an injection point and
+ * no {@link javax.enterprise.inject.New#value() value} member is explicitly
+ * specified, the container defaults the
+ * {@link javax.enterprise.inject.New#value() value} to the declared type of the
+ * injection point. So the following injection point has qualifier
+ * <tt>&#064;New(Order.class)</tt>:
+ * </p>
  * 
  * <pre>
  * &#064;Produces &#064;ConversationScoped 
  * &#064;Special Order getSpecialOrder(&#064;New Order order) { ... }
  * </pre>
- *
+ * 
  * @author Gavin King
  * @author Pete Muir
  */
 
-@Target( { FIELD, PARAMETER, METHOD, TYPE })
+@Target({ FIELD, PARAMETER, METHOD, TYPE })
 @Retention(RUNTIME)
 @Documented
 @Qualifier
 public @interface New
 {
    /**
-    * <p>Specifies the bean class of the new instance. The class 
-    * must be the bean class of an enabled or disabled bean. The 
-    * bean class need not be deployed in a bean archive.</p>
+    * <p>
+    * Specifies the bean class of the new instance. The class must be the bean
+    * class of an enabled or disabled bean. The bean class need not be deployed
+    * in a bean archive.
+    * </p>
     * 
-    * <p>Defaults to the declared type of the injection point if
-    * not specified.</p> 
+    * <p>
+    * Defaults to the declared type of the injection point if not specified.
+    * </p>
     * 
     * @return the bean class of the new instance
     */
    Class<?> value() default New.class;
-   
+
 }

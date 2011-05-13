@@ -20,7 +20,9 @@ package javax.enterprise.inject.spi;
 import java.lang.reflect.Constructor;
 
 /**
- * <p>Represents a constructor of a Java class.</p>
+ * <p>
+ * Represents a constructor of a Java class.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -32,7 +34,9 @@ public interface AnnotatedConstructor<X> extends AnnotatedCallable<X>
 {
 
    /**
-    * <p>Get the underlying {@link Constructor}.</p>
+    * <p>
+    * Get the underlying {@link Constructor}.
+    * </p>
     * 
     * @return the constructor
     */

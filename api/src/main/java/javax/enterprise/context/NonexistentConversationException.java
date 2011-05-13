@@ -18,12 +18,16 @@
 package javax.enterprise.context;
 
 /**
- * <p>Indicates that the conversation context could not be restored.</p>
+ * <p>
+ * Indicates that the conversation context could not be restored.
+ * </p>
  * 
- * <p>If the propagated conversation cannot be restored, the container must
+ * <p>
+ * If the propagated conversation cannot be restored, the container must
  * associate the request with a new transient conversation and throw an
- * exception of type <tt>NonexistentConversationException</tt> from the
- * restore view phase of the JSF lifecycle.</p>
+ * exception of type <tt>NonexistentConversationException</tt> from the restore
+ * view phase of the JSF lifecycle.
+ * </p>
  * 
  * @see javax.enterprise.context.ConversationScoped
  * 

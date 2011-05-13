@@ -20,17 +20,18 @@ package javax.enterprise.inject.spi;
 /**
  * <p>
  * The container fires an event of this type for each
- * {@linkplain javax.enterprise.inject.Produces producer method or field}
- * of each enabled bean, including resources.
+ * {@linkplain javax.enterprise.inject.Produces producer method or field} of
+ * each enabled bean, including resources.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@code
- * Producer}. The container must use the final value of this property, after all
- * observers have been called, whenever it calls the producer or disposer.
+ * Any observer of this event is permitted to wrap and/or replace the
+ * {@code Producer}. The container must use the final value of this property,
+ * after all observers have been called, whenever it calls the producer or
+ * disposer.
  * </p>
  * <p>
- * For example, this observer decorates the {@code Producer} for the all producer
- * methods and field of type {@code EntityManager}.
+ * For example, this observer decorates the {@code Producer} for the all
+ * producer methods and field of type {@code EntityManager}.
  * </p>
  * 
  * <pre>
@@ -40,8 +41,8 @@ package javax.enterprise.inject.spi;
  * }
  * </pre>
  * <p>
- * If any observer method of a {@code ProcessProducer} event throws an exception, the
- * exception is treated as a definition error by the container.
+ * If any observer method of a {@code ProcessProducer} event throws an
+ * exception, the exception is treated as a definition error by the container.
  * </p>
  * 
  * @see Producer

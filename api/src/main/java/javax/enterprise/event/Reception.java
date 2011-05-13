@@ -17,17 +17,21 @@
 package javax.enterprise.event;
 
 /**
- * <p>Distinguishes conditional 
- * {@linkplain javax.enterprise.event.Observes observer methods} from observer 
- * methods which are always notified.</p>
+ * <p>
+ * Distinguishes conditional {@linkplain javax.enterprise.event.Observes
+ * observer methods} from observer methods which are always notified.
+ * </p>
  * 
- * <p>A conditional observer method is an observer method which is notified 
- * of an event only if an instance of the bean that defines the observer 
- * method already exists in the current context.</p>
+ * <p>
+ * A conditional observer method is an observer method which is notified of an
+ * event only if an instance of the bean that defines the observer method
+ * already exists in the current context.
+ * </p>
  * 
- * <p>Beans with scope 
- * {@link javax.enterprise.context.Dependent &#064;Dependent} may not 
- * have conditional observer methods.</p>
+ * <p>
+ * Beans with scope {@link javax.enterprise.context.Dependent &#064;Dependent}
+ * may not have conditional observer methods.
+ * </p>
  * 
  * @author Gavin King
  * @author Dan Allen

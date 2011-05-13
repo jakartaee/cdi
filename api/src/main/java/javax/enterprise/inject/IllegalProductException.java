@@ -16,13 +16,14 @@
  */
 package javax.enterprise.inject;
 
-
 /**
- * <p>Indicates that a producer method returned a null value or a producer 
- * field contained a null value, and the scope of the producer method 
- * or field was not {@link javax.enterprise.context.Dependent}.</p>
+ * <p>
+ * Indicates that a producer method returned a null value or a producer field
+ * contained a null value, and the scope of the producer method or field was not
+ * {@link javax.enterprise.context.Dependent}.
+ * </p>
  */
-public class IllegalProductException extends InjectionException 
+public class IllegalProductException extends InjectionException
 {
 
    private static final long serialVersionUID = -6280627846071966243L;

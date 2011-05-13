@@ -19,7 +19,9 @@ package javax.enterprise.inject.spi;
 import java.lang.reflect.Method;
 
 /**
- * <p>Represents a method of a Java type.</p>
+ * <p>
+ * Represents a method of a Java type.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -31,7 +33,9 @@ public interface AnnotatedMethod<X> extends AnnotatedCallable<X>
 {
 
    /**
-    * <p>Get the underlying {@link Method}.</p> 
+    * <p>
+    * Get the underlying {@link Method}.
+    * </p>
     * 
     * @return the {@link Method}
     */

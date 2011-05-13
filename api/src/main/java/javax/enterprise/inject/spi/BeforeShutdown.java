@@ -18,10 +18,10 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The type of the final event the container fires after it has finished processing
- * requests and destroyed all contexts. If any observer method of the
- * {@code BeforeShutdown} event throws an exception, the exception is ignored by the
- * container.
+ * The type of the final event the container fires after it has finished
+ * processing requests and destroyed all contexts. If any observer method of the
+ * {@code BeforeShutdown} event throws an exception, the exception is ignored by
+ * the container.
  * </p>
  * 
  * @author David Allen

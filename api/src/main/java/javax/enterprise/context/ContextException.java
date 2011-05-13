@@ -17,36 +17,37 @@
 
 package javax.enterprise.context;
 
-
 /**
- * <p>Indicates a problem relating to context management.</p>
+ * <p>
+ * Indicates a problem relating to context management.
+ * </p>
  * 
  * @author Pete Muir
  * @author Shane Bryzak
  */
 public class ContextException extends RuntimeException
 {
-   
+
    private static final long serialVersionUID = -3599813072560026919L;
 
    public ContextException()
    {
       super();
    }
-   
+
    public ContextException(String message)
    {
       super(message);
    }
-   
+
    public ContextException(Throwable cause)
    {
       super(cause);
    }
-   
+
    public ContextException(String message, Throwable cause)
    {
       super(message, cause);
    }
-   
+
 }

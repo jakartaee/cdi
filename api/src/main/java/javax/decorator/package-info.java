@@ -94,3 +94,4 @@
  * 
  */
 package javax.decorator;
+

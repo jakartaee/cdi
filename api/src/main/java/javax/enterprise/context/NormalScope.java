@@ -25,7 +25,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Specifies that an annotation type is a normal scope type.</p>
+ * <p>
+ * Specifies that an annotation type is a normal scope type.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -37,14 +39,18 @@ import java.lang.annotation.Target;
 @Documented
 public @interface NormalScope
 {
-   
+
    /**
-    * <p>Determines whether the normal scope type is a passivating scope.</p>
+    * <p>
+    * Determines whether the normal scope type is a passivating scope.
+    * </p>
     * 
-    * <p>A bean is called passivation capable if the container is able to 
-    * temporarily transfer the state of any idle instance to secondary 
-    * storage. A passivating scope requires that beans with the scope are 
-    * passivation capable.</p>
+    * <p>
+    * A bean is called passivation capable if the container is able to
+    * temporarily transfer the state of any idle instance to secondary storage.
+    * A passivating scope requires that beans with the scope are passivation
+    * capable.
+    * </p>
     * 
     * @return <tt>true</tt> if the scope type is a passivating scope type
     */

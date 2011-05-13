@@ -70,7 +70,8 @@ public interface BeforeBeanDiscovery
     * 
     * @param bindingType The annotation type to treat as an interceptor binding
     *           type
-    * @param bindingTypeDef An optional list of annotations defining the {@linkplain Interceptor interceptor}
+    * @param bindingTypeDef An optional list of annotations defining the
+    *           {@linkplain Interceptor interceptor}
     */
    public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
 

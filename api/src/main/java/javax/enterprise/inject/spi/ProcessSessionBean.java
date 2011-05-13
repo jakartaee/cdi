@@ -40,8 +40,8 @@ public interface ProcessSessionBean<X> extends ProcessManagedBean<Object>
    public String getEjbName();
 
    /**
-    * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the
-    * kind of session bean.
+    * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing
+    * the kind of session bean.
     * 
     * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
     */

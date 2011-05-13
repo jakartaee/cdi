@@ -22,100 +22,107 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Type;
 import java.util.Set;
 
-
 /**
- * <p>Provides access to metadata about an injection point. May represent an 
- * {@linkplain javax.inject.Inject injected field} or a parameter of a 
- * {@linkplain javax.inject.Inject bean constructor}, 
- * {@linkplain javax.inject.Inject initializer method}, 
- * {@linkplain javax.enterprise.inject.Produces producer method}, 
- * {@linkplain javax.enterprise.inject.Disposes disposer method} or 
- * {@linkplain javax.enterprise.event.Observes observer method}.</p>
+ * <p>
+ * Provides access to metadata about an injection point. May represent an
+ * {@linkplain javax.inject.Inject injected field} or a parameter of a
+ * {@linkplain javax.inject.Inject bean constructor},
+ * {@linkplain javax.inject.Inject initializer method},
+ * {@linkplain javax.enterprise.inject.Produces producer method},
+ * {@linkplain javax.enterprise.inject.Disposes disposer method} or
+ * {@linkplain javax.enterprise.event.Observes observer method}.
+ * </p>
  * 
- * <p>Occasionally, a bean with scope 
- * {@link javax.enterprise.context.Dependent &#064;Dependent} needs to access 
- * metadata relating to the object to which it belongs. The bean may inject an 
- * {@code InjectionPoint} representing the injection point into which the bean 
- * was injected.</p>
+ * <p>
+ * Occasionally, a bean with scope {@link javax.enterprise.context.Dependent
+ * &#064;Dependent} needs to access metadata relating to the object to which it
+ * belongs. The bean may inject an {@code InjectionPoint} representing the
+ * injection point into which the bean was injected.
+ * </p>
  * 
- * <p>For example, the following producer method creates injectable <tt>Logger</tt>s. 
- * The log category of a <tt>Logger</tt> depends upon the class of the object into 
- * which it is injected.</p>
+ * <p>
+ * For example, the following producer method creates injectable <tt>Logger</tt>
+ * s. The log category of a <tt>Logger</tt> depends upon the class of the object
+ * into which it is injected.
+ * </p>
  * 
  * <pre>
- * &#064;Produces 
- * Logger createLogger(InjectionPoint injectionPoint) { 
- *    return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );
+ * &#064;Produces
+ * Logger createLogger(InjectionPoint injectionPoint)
+ * {
+ *    return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
  * }
  * </pre>
  * 
- * <p>Only {@linkplain javax.enterprise.context.Dependent dependent} objects, may 
- * obtain information about the injection point to which they belong.</p>
+ * <p>
+ * Only {@linkplain javax.enterprise.context.Dependent dependent} objects, may
+ * obtain information about the injection point to which they belong.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
  */
 public interface InjectionPoint
 {
-   
+
    /**
     * Get the required type of injection point.
     * 
     * @return the required type
     */
    public Type getType();
-   
+
    /**
     * Get the required qualifiers of the injection point.
     * 
     * @return the required qualifiers
     */
    public Set<Annotation> getQualifiers();
-   
+
    /**
-    * Get the {@link javax.enterprise.inject.spi.Bean} object representing the 
-    * bean that defines the injection point. If the injection point does not 
+    * Get the {@link javax.enterprise.inject.spi.Bean} object representing the
+    * bean that defines the injection point. If the injection point does not
     * belong to a bean, return a null value.
     * 
-    * @return the {@link javax.enterprise.inject.spi.Bean} object representing 
-    *         bean that defines the injection point, of null if the injection 
+    * @return the {@link javax.enterprise.inject.spi.Bean} object representing
+    *         bean that defines the injection point, of null if the injection
     *         point does not belong to a bean
     */
    public Bean<?> getBean();
-   
+
    /**
-    * Get the {@link java.lang.reflect.Field} object in the case of field 
-    * injection, the {@link java.lang.reflect.Method} object in
-    * the case of method parameter injection or the 
-    * {@link java.lang.reflect.Constructor} object in the case of constructor 
-    * parameter injection.
+    * Get the {@link java.lang.reflect.Field} object in the case of field
+    * injection, the {@link java.lang.reflect.Method} object in the case of
+    * method parameter injection or the {@link java.lang.reflect.Constructor}
+    * object in the case of constructor parameter injection.
     * 
     * @return the member
     */
    public Member getMember();
-   
+
    /**
-    * Obtain an instance of {@link javax.enterprise.inject.spi.AnnotatedField} 
-    * or {@link javax.enterprise.inject.spi.AnnotatedParameter}, depending upon 
-    * whether the injection point is an injected field or a constructor/method parameter.
+    * Obtain an instance of {@link javax.enterprise.inject.spi.AnnotatedField}
+    * or {@link javax.enterprise.inject.spi.AnnotatedParameter}, depending upon
+    * whether the injection point is an injected field or a constructor/method
+    * parameter.
     * 
     * @return an {@code AnnotatedField} or {@code AnnotatedParameter}
     */
    public Annotated getAnnotated();
-   
+
    /**
     * Determines if the injection point is a decorator delegate injection point.
     * 
-    * @return <tt>true</tt> if the injection point is a decorator delegate injection point, 
-    * and <tt>false</tt> otherwise
+    * @return <tt>true</tt> if the injection point is a decorator delegate
+    *         injection point, and <tt>false</tt> otherwise
     */
    public boolean isDelegate();
-   
+
    /**
     * Determines if the injection is a transient field.
     * 
-    * @return <tt>true</tt> if the injection point is a transient field, and <tt>false</tt> 
-    * otherwise
+    * @return <tt>true</tt> if the injection point is a transient field, and
+    *         <tt>false</tt> otherwise
     */
    public boolean isTransient();
 }

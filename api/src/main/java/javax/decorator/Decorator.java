@@ -27,22 +27,25 @@ import java.lang.annotation.Target;
 import javax.enterprise.inject.Stereotype;
 
 /**
- * <p>Specifies that a class is a decorator. May be applied to
- * a managed bean class.</p>
+ * <p>
+ * Specifies that a class is a decorator. May be applied to a managed bean
+ * class.
+ * </p>
  * 
  * <pre>
  * &#064;Decorator 
  * class TimestampLogger implements Logger { ... }
  * </pre>
  * 
- * <p>Decorators of a session bean must comply with the bean provider 
- * programming restrictions defined by the EJB specification. 
- * Decorators of a stateful session bean must comply with the rules 
- * for instance passivation and conversational state defined by the 
- * EJB specification.</p>
+ * <p>
+ * Decorators of a session bean must comply with the bean provider programming
+ * restrictions defined by the EJB specification. Decorators of a stateful
+ * session bean must comply with the rules for instance passivation and
+ * conversational state defined by the EJB specification.
+ * </p>
  * 
- * @see javax.decorator.Delegate &#064;Delegate identifies the 
- * delegate injection point of a decorator.
+ * @see javax.decorator.Delegate &#064;Delegate identifies the delegate
+ *      injection point of a decorator.
  * 
  * @author Gavin King
  * @author Pete Muir

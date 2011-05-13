@@ -17,10 +17,10 @@
 
 package javax.enterprise.inject;
 
-
 /**
- * <p>Indicates that a checked exception was thrown during 
- * creation of a bean.</p>
+ * <p>
+ * Indicates that a checked exception was thrown during creation of a bean.
+ * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
@@ -32,7 +32,7 @@ public class CreationException extends InjectionException
 
    public CreationException()
    {
-      
+
    }
 
    public CreationException(String message)

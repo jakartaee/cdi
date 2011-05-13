@@ -18,15 +18,19 @@
 package javax.enterprise.context;
 
 /**
- * <p>Indicates that the container has rejected a request because a concurrent
- * request is associated with the same conversation context.</p>
+ * <p>
+ * Indicates that the container has rejected a request because a concurrent
+ * request is associated with the same conversation context.
+ * </p>
  * 
- * <p>The container ensures that a long-running conversation may be associated with
+ * <p>
+ * The container ensures that a long-running conversation may be associated with
  * at most one request at a time, by blocking or rejecting concurrent requests.
  * If the container rejects a request, it must associate the request with a new
  * transient conversation and throw an exception of type
  * <tt>BusyConversationException</tt> from the restore view phase of the JSF
- * lifecycle.</p>
+ * lifecycle.
+ * </p>
  * 
  * @see javax.enterprise.context.ConversationScoped
  * 

@@ -22,34 +22,42 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
- * <p>Represents an enabled {@linkplain javax.decorator decorator}.</p>
+ * <p>
+ * Represents an enabled {@linkplain javax.decorator decorator}.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
- *
+ * 
  * @param <T> the decorator bean class
  */
 public interface Decorator<T> extends Bean<T>
 {
 
    /**
-    * <p>Obtains the {@linkplain Type type} of the 
-    * {@linkplain javax.decorator.Delegate delegate injection point}.</p>
+    * <p>
+    * Obtains the {@linkplain Type type} of the
+    * {@linkplain javax.decorator.Delegate delegate injection point}.
+    * </p>
     * 
     * @return the delegate {@linkplain Type type}
     */
    public Type getDelegateType();
 
    /**
-    * <p>Obtains the {@linkplain javax.inject.Qualifier qualifiers} of the 
-    * {@linkplain javax.decorator.Delegate delegate injection point}.</p>
+    * <p>
+    * Obtains the {@linkplain javax.inject.Qualifier qualifiers} of the
+    * {@linkplain javax.decorator.Delegate delegate injection point}.
+    * </p>
     * 
     * @return the delegate {@linkplain javax.inject.Qualifier qualifiers}
     */
    public Set<Annotation> getDelegateQualifiers();
-   
+
    /**
-    * <p>Obtains the {@linkplain javax.decorator decorated types}.</p>
+    * <p>
+    * Obtains the {@linkplain javax.decorator decorated types}.
+    * </p>
     * 
     * @return the set of decorated {@linkplain Type types}
     */

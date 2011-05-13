@@ -18,7 +18,7 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for each enabled producer field, 
+ * The container fires an event of this type for each enabled producer field,
  * before registering the {@link javax.enterprise.inject.spi.Bean} object.
  * Resources are considered to be producer fields.
  * </p>
@@ -32,7 +32,8 @@ package javax.enterprise.inject.spi;
  * @param <X> The class of the bean declaring the producer field
  * 
  */
-// These parameters are the wrong way according to the spec, however Oracle/JCP compatibility rules require us to 
+// These parameters are the wrong way according to the spec, however Oracle/JCP
+// compatibility rules require us to
 // keep the wrong ordering
 public interface ProcessProducerField<T, X> extends ProcessBean<X>
 {

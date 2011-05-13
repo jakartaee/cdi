@@ -25,21 +25,30 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 
-
 /**
- * <p>Supports inline instantiation of annotation type instances.</p>
+ * <p>
+ * Supports inline instantiation of annotation type instances.
+ * </p>
  * 
- * <p>An instance of an annotation type may be obtained by subclassing 
- * <tt>AnnotationLiteral</tt>.</p>
+ * <p>
+ * An instance of an annotation type may be obtained by subclassing
+ * <tt>AnnotationLiteral</tt>.
+ * </p>
  * 
  * <pre>
- * public abstract class PayByQualifier 
- *       extends AnnotationLiteral&lt;PayBy&gt;
- *       implements PayBy {}
+ * public abstract class PayByQualifier extends AnnotationLiteral&lt;PayBy&gt; implements PayBy
+ * {
+ * }
  * </pre>
  * 
  * <pre>
- * PayBy paybyCheque = new PayByQualifier() { public PaymentMethod value() { return CHEQUE; } };
+ * PayBy paybyCheque = new PayByQualifier()
+ * {
+ *    public PaymentMethod value()
+ *    {
+ *       return CHEQUE;
+ *    }
+ * };
  * </pre>
  * 
  * @author Pete Muir
@@ -51,27 +60,31 @@ import java.util.Arrays;
  * @see javax.enterprise.event.Event#select(Annotation...)
  * 
  */
-public abstract class AnnotationLiteral<T extends Annotation> 
-      implements Annotation, Serializable
+public abstract class AnnotationLiteral<T extends Annotation> implements Annotation, Serializable
 {
-   
+
+   private static final long serialVersionUID = 1L;
+
    private transient Class<T> annotationType;
    private transient Method[] members;
 
-   protected AnnotationLiteral() {}
-   
-   private Method[] getMembers() 
+   protected AnnotationLiteral()
    {
-      if (members==null) {
+   }
+
+   private Method[] getMembers()
+   {
+      if (members == null)
+      {
          members = annotationType().getDeclaredMethods();
-         if ( members.length>0 && !annotationType().isAssignableFrom(this.getClass()) )
+         if (members.length > 0 && !annotationType().isAssignableFrom(this.getClass()))
          {
             throw new RuntimeException(getClass() + " does not implement the annotation type with members " + annotationType().getName());
          }
       }
       return members;
    }
-	   
+
    private static Class<?> getAnnotationLiteralSubclass(Class<?> clazz)
    {
       Class<?> superclass = clazz.getSuperclass();
@@ -88,7 +101,7 @@ public abstract class AnnotationLiteral<T extends Annotation>
          return (getAnnotationLiteralSubclass(superclass));
       }
    }
-   
+
    @SuppressWarnings("unchecked")
    private static <T> Class<T> getTypeParameter(Class<?> annotationLiteralSuperclass)
    {
@@ -98,8 +111,7 @@ public abstract class AnnotationLiteral<T extends Annotation>
          ParameterizedType parameterizedType = (ParameterizedType) type;
          if (parameterizedType.getActualTypeArguments().length == 1)
          {
-            return (Class<T>) parameterizedType
-                  .getActualTypeArguments()[0];
+            return (Class<T>) parameterizedType.getActualTypeArguments()[0];
          }
       }
       return null;
@@ -107,7 +119,7 @@ public abstract class AnnotationLiteral<T extends Annotation>
 
    public Class<? extends Annotation> annotationType()
    {
-      if (annotationType==null) 
+      if (annotationType == null)
       {
          Class<?> annotationLiteralSubclass = getAnnotationLiteralSubclass(this.getClass());
          if (annotationLiteralSubclass == null)
@@ -133,71 +145,71 @@ public abstract class AnnotationLiteral<T extends Annotation>
          string.append(getMembers()[i].getName()).append('=');
          Object value = invoke(getMembers()[i], this);
          assertMemberValueNotNull(getMembers()[i], this, value);
-         if (value instanceof boolean[]) 
+         if (value instanceof boolean[])
          {
-            appendInBraces(string, Arrays.toString((boolean[])value));
+            appendInBraces(string, Arrays.toString((boolean[]) value));
          }
-         else if (value instanceof byte[]) 
+         else if (value instanceof byte[])
          {
-            appendInBraces(string, Arrays.toString((byte[])value));
+            appendInBraces(string, Arrays.toString((byte[]) value));
          }
-         else if (value instanceof short[]) 
+         else if (value instanceof short[])
          {
-            appendInBraces(string, Arrays.toString((short[])value));
+            appendInBraces(string, Arrays.toString((short[]) value));
          }
-         else if (value instanceof int[]) 
+         else if (value instanceof int[])
          {
-            appendInBraces(string, Arrays.toString((int[])value));
+            appendInBraces(string, Arrays.toString((int[]) value));
          }
-         else if (value instanceof long[]) 
+         else if (value instanceof long[])
          {
-            appendInBraces(string, Arrays.toString((long[])value));
+            appendInBraces(string, Arrays.toString((long[]) value));
          }
-         else if (value instanceof float[]) 
+         else if (value instanceof float[])
          {
-            appendInBraces(string, Arrays.toString((float[])value));
+            appendInBraces(string, Arrays.toString((float[]) value));
          }
-         else if (value instanceof double[]) 
+         else if (value instanceof double[])
          {
-            appendInBraces(string, Arrays.toString((double[])value));
+            appendInBraces(string, Arrays.toString((double[]) value));
          }
-         else if (value instanceof char[]) 
+         else if (value instanceof char[])
          {
-            appendInBraces(string, Arrays.toString((char[])value));
+            appendInBraces(string, Arrays.toString((char[]) value));
          }
-         else if (value instanceof String[]) 
+         else if (value instanceof String[])
          {
             String[] strings = (String[]) value;
             String[] quoted = new String[strings.length];
-            for(int j=0; j<strings.length; j++) 
+            for (int j = 0; j < strings.length; j++)
             {
                quoted[j] = "\"" + strings[j] + "\"";
             }
             appendInBraces(string, Arrays.toString(quoted));
          }
-         else if (value instanceof Class<?>[]) 
+         else if (value instanceof Class<?>[])
          {
             Class<?>[] classes = (Class<?>[]) value;
             String[] names = new String[classes.length];
-            for(int j=0; j<classes.length; j++) 
+            for (int j = 0; j < classes.length; j++)
             {
                names[j] = classes[j].getName() + ".class";
             }
             appendInBraces(string, Arrays.toString(names));
          }
-         else if (value instanceof Object[]) 
+         else if (value instanceof Object[])
          {
-            appendInBraces(string, Arrays.toString((Object[])value));
+            appendInBraces(string, Arrays.toString((Object[]) value));
          }
-         else if (value instanceof String) 
+         else if (value instanceof String)
          {
             string.append('"').append(value).append('"');
          }
-         else if (value instanceof Class<?>) 
+         else if (value instanceof Class<?>)
          {
-            string.append(((Class<?>)value).getName()).append(".class");
+            string.append(((Class<?>) value).getName()).append(".class");
          }
-         else 
+         else
          {
             string.append(value);
          }
@@ -208,11 +220,12 @@ public abstract class AnnotationLiteral<T extends Annotation>
       }
       return string.append(')').toString();
    }
-   
-   private void appendInBraces(StringBuilder buf, String s) {
-      buf.append('{').append(s.substring(1,s.length()-1)).append('}');
+
+   private void appendInBraces(StringBuilder buf, String s)
+   {
+      buf.append('{').append(s.substring(1, s.length() - 1)).append('}');
    }
-   
+
    @Override
    public boolean equals(Object other)
    {
@@ -229,43 +242,53 @@ public abstract class AnnotationLiteral<T extends Annotation>
                assertMemberValueNotNull(member, this, thatValue);
                if (thisValue instanceof byte[] && thatValue instanceof byte[])
                {
-                  if ( !Arrays.equals((byte[])thisValue, (byte[])thatValue) ) return false;
+                  if (!Arrays.equals((byte[]) thisValue, (byte[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof short[] && thatValue instanceof short[])
                {
-                  if ( !Arrays.equals((short[])thisValue, (short[])thatValue) ) return false;
+                  if (!Arrays.equals((short[]) thisValue, (short[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof int[] && thatValue instanceof int[])
                {
-                  if ( !Arrays.equals((int[])thisValue, (int[])thatValue) ) return false;
+                  if (!Arrays.equals((int[]) thisValue, (int[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof long[] && thatValue instanceof long[])
                {
-                  if ( !Arrays.equals((long[])thisValue, (long[])thatValue) ) return false;
+                  if (!Arrays.equals((long[]) thisValue, (long[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof float[] && thatValue instanceof float[])
                {
-                  if ( !Arrays.equals((float[])thisValue, (float[])thatValue) ) return false;
+                  if (!Arrays.equals((float[]) thisValue, (float[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof double[] && thatValue instanceof double[])
                {
-                  if ( !Arrays.equals((double[])thisValue, (double[])thatValue) ) return false;
+                  if (!Arrays.equals((double[]) thisValue, (double[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof char[] && thatValue instanceof char[])
                {
-                  if ( !Arrays.equals((char[])thisValue, (char[])thatValue) ) return false;
+                  if (!Arrays.equals((char[]) thisValue, (char[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof boolean[] && thatValue instanceof boolean[])
                {
-                  if ( !Arrays.equals((boolean[])thisValue, (boolean[])thatValue) ) return false;
+                  if (!Arrays.equals((boolean[]) thisValue, (boolean[]) thatValue))
+                     return false;
                }
                else if (thisValue instanceof Object[] && thatValue instanceof Object[])
                {
-                  if ( !Arrays.equals((Object[])thisValue, (Object[])thatValue) ) return false;
+                  if (!Arrays.equals((Object[]) thisValue, (Object[]) thatValue))
+                     return false;
                }
-               else 
+               else
                {
-            	   if (!thisValue.equals(thatValue)) return false;
+                  if (!thisValue.equals(thatValue))
+                     return false;
                }
             }
             return true;
@@ -273,12 +296,12 @@ public abstract class AnnotationLiteral<T extends Annotation>
       }
       return false;
    }
-   
+
    @Override
    public int hashCode()
    {
       int hashCode = 0;
-      for (Method member: getMembers())
+      for (Method member : getMembers())
       {
          int memberNameHashCode = 127 * member.getName().hashCode();
          Object value = invoke(member, this);
@@ -320,20 +343,21 @@ public abstract class AnnotationLiteral<T extends Annotation>
          {
             memberValueHashCode = Arrays.hashCode((Object[]) value);
          }
-         else 
+         else
          {
             memberValueHashCode = value.hashCode();
          }
          hashCode += memberNameHashCode ^ memberValueHashCode;
-      }       
+      }
       return hashCode;
    }
-   
+
    private static Object invoke(Method method, Object instance)
    {
       try
       {
-         if (!method.isAccessible()) method.setAccessible(true);
+         if (!method.isAccessible())
+            method.setAccessible(true);
          return method.invoke(instance);
       }
       catch (IllegalArgumentException e)
@@ -349,7 +373,7 @@ public abstract class AnnotationLiteral<T extends Annotation>
          throw new RuntimeException("Error checking value of member method " + method.getName() + " on " + method.getDeclaringClass(), e);
       }
    }
-   
+
    private static void assertMemberValueNotNull(Method member, Annotation instance, Object value)
    {
       if (value == null)

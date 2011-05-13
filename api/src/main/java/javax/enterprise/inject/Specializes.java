@@ -26,51 +26,51 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Indicates that a bean directly specializes another bean.
- * May be applied to a bean class or producer method.</p>
+ * <p>
+ * Indicates that a bean directly specializes another bean. May be applied to a
+ * bean class or producer method.
+ * </p>
  * 
- * <p>If a bean directly specializes a second bean, it
- * inherits:</p>
+ * <p>
+ * If a bean directly specializes a second bean, it inherits:
+ * </p>
  * 
  * <ul>
  * <li>all qualifiers of the second bean, and</li>
  * <li>the name, if any, of the second bean.</li>
  * </ul>
  * 
- * <p>If the second bean has a name, the bean may not 
- * declare a name using
- * {@link javax.inject.Named &#064;Named}. Furthermore, 
- * the bean must have all the bean types of the second
- * bean.</p>
+ * <p>
+ * If the second bean has a name, the bean may not declare a name using
+ * {@link javax.inject.Named &#064;Named}. Furthermore, the bean must have all
+ * the bean types of the second bean.
+ * </p>
  * 
  * <ul>
- * <li>If a bean class of a managed bean is annotated 
- * <tt>&#064;Specializes</tt>, then the bean class must 
- * directly extend the bean class of a second managed bean. 
- * Then the first managed bean directly specializes the 
- * second managed bean.</li>
+ * <li>If a bean class of a managed bean is annotated <tt>&#064;Specializes</tt>
+ * , then the bean class must directly extend the bean class of a second managed
+ * bean. Then the first managed bean directly specializes the second managed
+ * bean.</li>
  * 
- * <li>If a bean class of a session bean is annotated 
- * <tt>&#064;Specializes</tt>, then the bean class must 
- * directly extend the bean class of a second session bean. 
- * Then the first session bean directly specializes the 
- * second session bean.</li>
+ * <li>If a bean class of a session bean is annotated <tt>&#064;Specializes</tt>
+ * , then the bean class must directly extend the bean class of a second session
+ * bean. Then the first session bean directly specializes the second session
+ * bean.</li>
  * 
- * <li>If a producer method is annotated 
- * <tt>&#064;Specializes</tt>, then it must be non-static 
- * and directly override another producer method. Then the 
- * first producer method directly specializes the second
- * producer method.</li>
+ * <li>If a producer method is annotated <tt>&#064;Specializes</tt>, then it
+ * must be non-static and directly override another producer method. Then the
+ * first producer method directly specializes the second producer method.</li>
  * </ul>
  * 
- * <p>If a bean is specialized by any enabled bean, the
- * first bean is disabled.</p>
+ * <p>
+ * If a bean is specialized by any enabled bean, the first bean is disabled.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
  */
 
-@Target({TYPE, METHOD})
+@Target({ TYPE, METHOD })
 @Retention(RUNTIME)
 @Documented
 public @interface Specializes

@@ -17,9 +17,10 @@
 
 package javax.enterprise.context;
 
-
 /**
- * <p>Indicates that a context is not active.</p>
+ * <p>
+ * Indicates that a context is not active.
+ * </p>
  * 
  * @see javax.enterprise.context.spi.Context
  * 
@@ -30,27 +31,27 @@ package javax.enterprise.context;
 
 public class ContextNotActiveException extends ContextException
 {
-   
+
    private static final long serialVersionUID = -3599813072560026919L;
 
    public ContextNotActiveException()
    {
       super();
    }
-   
+
    public ContextNotActiveException(String message)
    {
       super(message);
    }
-   
+
    public ContextNotActiveException(Throwable cause)
    {
       super(cause);
    }
-   
+
    public ContextNotActiveException(String message, Throwable cause)
    {
       super(message, cause);
    }
-   
+
 }

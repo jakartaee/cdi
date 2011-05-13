@@ -30,31 +30,43 @@ import java.lang.annotation.Target;
 import javax.inject.Qualifier;
 
 /**
- * <p>The built-in qualifier type.</p>
+ * <p>
+ * The built-in qualifier type.
+ * </p>
  * 
- * <p>Every bean has the qualifier <tt>&#064;Any</tt>, 
- * even if it does not explicitly declare this qualifier, 
- * except for the special 
- * {@link javax.enterprise.inject.New &#064;New qualified beans}.</p>
+ * <p>
+ * Every bean has the qualifier <tt>&#064;Any</tt>, even if it does not
+ * explicitly declare this qualifier, except for the special
+ * {@link javax.enterprise.inject.New &#064;New qualified beans}.
+ * </p>
  * 
- * <p>Every event has the qualifier <tt>&#064;Any</tt>, 
- * even if it was raised without explicitly declaration 
- * of this qualifier.</p>
+ * <p>
+ * Every event has the qualifier <tt>&#064;Any</tt>, even if it was raised
+ * without explicitly declaration of this qualifier.
+ * </p>
  * 
- * <p>The <tt>&#064;Any</tt> qualifier allows an injection 
- * point to refer to all beans or all events of a certain 
- * bean type.</p>
+ * <p>
+ * The <tt>&#064;Any</tt> qualifier allows an injection point to refer to all
+ * beans or all events of a certain bean type.
+ * </p>
  * 
  * <pre>
- * &#064;Inject &#064;Any Instance&lt;PaymentProcessor&gt; anyPaymentProcessor;
+ * &#064;Inject
+ * &#064;Any
+ * Instance&lt;PaymentProcessor&gt; anyPaymentProcessor;
  * </pre>
  * 
  * <pre>
- * &#064;Inject &#064;Any Event&lt;User&gt; anyUserEvent;
+ * &#064;Inject
+ * &#064;Any
+ * Event&lt;User&gt; anyUserEvent;
  * </pre>
  * 
  * <pre>
- * &#064;Inject &#064;Delegate &#064;Any Logger logger;
+ * &#064;Inject
+ * &#064;Delegate
+ * &#064;Any
+ * Logger logger;
  * </pre>
  * 
  * @author Gavin King
@@ -63,7 +75,7 @@ import javax.inject.Qualifier;
 
 @Qualifier
 @Retention(RUNTIME)
-@Target( { TYPE, METHOD, FIELD, PARAMETER })
+@Target({ TYPE, METHOD, FIELD, PARAMETER })
 @Documented
 public @interface Any
 {

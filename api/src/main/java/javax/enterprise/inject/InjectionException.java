@@ -17,7 +17,6 @@
 
 package javax.enterprise.inject;
 
-
 /**
  * <t>Indicates a problem relating to dependency injection.</t>
  * 
@@ -31,20 +30,20 @@ public class InjectionException extends RuntimeException
    public InjectionException()
    {
    }
-   
+
    public InjectionException(String message, Throwable throwable)
    {
       super(message, throwable);
    }
-   
+
    public InjectionException(String message)
    {
       super(message);
    }
-   
+
    public InjectionException(Throwable throwable)
    {
       super(throwable);
    }
-   
+
 }

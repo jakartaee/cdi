@@ -23,14 +23,20 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
- * <p>Supports inline instantiation of objects that represent parameterized types
- * with actual type parameters.</p>
+ * <p>
+ * Supports inline instantiation of objects that represent parameterized types
+ * with actual type parameters.
+ * </p>
  * 
- * <p>An object that represents any parameterized type may be obtained by 
- * subclassing <tt>TypeLiteral</tt>.</p>
+ * <p>
+ * An object that represents any parameterized type may be obtained by
+ * subclassing <tt>TypeLiteral</tt>.
+ * </p>
  * 
  * <pre>
- * TypeLiteral&lt;List&lt;String&gt;&gt; stringListType = new TypeLiteral&lt;List&lt;String&gt;&gt;() {};
+ * TypeLiteral&lt;List&lt;String&gt;&gt; stringListType = new TypeLiteral&lt;List&lt;String&gt;&gt;()
+ * {
+ * };
  * </pre>
  * 
  * @author Gavin King
@@ -45,19 +51,23 @@ import java.lang.reflect.Type;
 public abstract class TypeLiteral<T> implements Serializable
 {
 
+   private static final long serialVersionUID = 1L;
+
    private transient Type actualType;
-   
-   protected TypeLiteral() {}
+
+   protected TypeLiteral()
+   {
+   }
 
    /**
     * @return the actual type represented by this object
     */
-   public final Type getType() 
+   public final Type getType()
    {
-      if (actualType==null) 
+      if (actualType == null)
       {
          Class<?> typeLiteralSubclass = getTypeLiteralSubclass(this.getClass());
-         if (typeLiteralSubclass == null) 
+         if (typeLiteralSubclass == null)
          {
             throw new RuntimeException(getClass() + " is not a subclass of TypeLiteral");
          }
@@ -74,26 +84,27 @@ public abstract class TypeLiteral<T> implements Serializable
     * @return the raw type represented by this object
     */
    @SuppressWarnings("unchecked")
-   public final Class<T> getRawType() {
+   public final Class<T> getRawType()
+   {
       Type type = getType();
-      if (type instanceof Class) 
+      if (type instanceof Class)
       {
          return (Class<T>) type;
       }
-      else if (type instanceof ParameterizedType) 
+      else if (type instanceof ParameterizedType)
       {
          return (Class<T>) ((ParameterizedType) type).getRawType();
       }
-      else if (type instanceof GenericArrayType) 
+      else if (type instanceof GenericArrayType)
       {
          return (Class<T>) Object[].class;
       }
-      else 
+      else
       {
          throw new RuntimeException("Illegal type");
       }
    }
-   
+
    private static Class<?> getTypeLiteralSubclass(Class<?> clazz)
    {
       Class<?> superclass = clazz.getSuperclass();
@@ -110,7 +121,7 @@ public abstract class TypeLiteral<T> implements Serializable
          return (getTypeLiteralSubclass(superclass));
       }
    }
-   
+
    private static Type getTypeParameter(Class<?> superclass)
    {
       Type type = superclass.getGenericSuperclass();
@@ -124,9 +135,10 @@ public abstract class TypeLiteral<T> implements Serializable
       }
       return null;
    }
-   
+
    @Override
-   public boolean equals(Object obj) {
+   public boolean equals(Object obj)
+   {
       if (obj instanceof TypeLiteral<?>)
       {
          TypeLiteral<?> that = (TypeLiteral<?>) obj;
@@ -134,9 +146,10 @@ public abstract class TypeLiteral<T> implements Serializable
       }
       return false;
    }
-   
+
    @Override
-   public int hashCode() {
+   public int hashCode()
+   {
       return getType().hashCode();
    }
 
@@ -145,5 +158,5 @@ public abstract class TypeLiteral<T> implements Serializable
    {
       return getType().toString();
    }
-   
+
 }

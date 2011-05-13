@@ -16,11 +16,11 @@
  */
 package javax.enterprise.inject;
 
-
 /**
- * <p>Indicates that multiple beans match a certain combination of required 
- * type and required qualifiers and are eligible for injection into a 
- * certain class.</p>
+ * <p>
+ * Indicates that multiple beans match a certain combination of required type
+ * and required qualifiers and are eligible for injection into a certain class.
+ * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
@@ -33,20 +33,20 @@ public class AmbiguousResolutionException extends ResolutionException
    public AmbiguousResolutionException()
    {
    }
-   
+
    public AmbiguousResolutionException(String message, Throwable throwable)
    {
       super(message, throwable);
    }
-   
+
    public AmbiguousResolutionException(String message)
    {
       super(message);
    }
-   
+
    public AmbiguousResolutionException(Throwable throwable)
    {
       super(throwable);
    }
-   
+
 }

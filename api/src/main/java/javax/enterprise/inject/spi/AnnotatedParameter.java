@@ -18,7 +18,9 @@
 package javax.enterprise.inject.spi;
 
 /**
- * <p>Represents a parameter of a method or constructor.</p>
+ * <p>
+ * Represents a parameter of a method or constructor.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
@@ -29,16 +31,19 @@ public interface AnnotatedParameter<X> extends Annotated
 {
 
    /**
-    * <p>Get the position of the parameter in the method or
-    * constructor argument list.</p>
+    * <p>
+    * Get the position of the parameter in the method or constructor argument
+    * list.
+    * </p>
     * 
     * @return the position of the parameter
     */
    public int getPosition();
 
    /**
-    * <p>Get the declaring {@linkplain AnnotatedCallable method or
-    * constructor}.</p>
+    * <p>
+    * Get the declaring {@linkplain AnnotatedCallable method or constructor}.
+    * </p>
     * 
     * @return the declaring callable
     */

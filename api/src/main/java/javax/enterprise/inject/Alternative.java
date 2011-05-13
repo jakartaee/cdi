@@ -27,44 +27,45 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * <p>Specifies that a bean is an alternative. May be
- * applied to a bean class, producer method or field
- * or {@linkplain javax.enterprise.inject.Stereotype stereotype}.</p>
+ * <p>
+ * Specifies that a bean is an alternative. May be applied to a bean class,
+ * producer method or field or {@linkplain javax.enterprise.inject.Stereotype
+ * stereotype}.
+ * </p>
  * 
  * <pre>
  * &#064;Alternative
  * public class MockOrder extends Order { ... }
  * </pre>
  * 
- * <p>An alternative is not available for injection, lookup 
- * or EL resolution to classes or JSP/JSF pages in a module 
- * unless the module is a bean archive and the alternative is 
- * explicitly <em>selected</em> in that bean archive. An 
- * alternative is never available for injection, lookup or EL 
- * resolution in a module that is not a bean archive.</p>
+ * <p>
+ * An alternative is not available for injection, lookup or EL resolution to
+ * classes or JSP/JSF pages in a module unless the module is a bean archive and
+ * the alternative is explicitly <em>selected</em> in that bean archive. An
+ * alternative is never available for injection, lookup or EL resolution in a
+ * module that is not a bean archive.
+ * </p>
  * 
- * <p>By default, a bean archive has no selected alternatives. 
- * An alternative must be explicitly declared using the 
- * <tt>&lt;alternatives&gt;</tt> element of the 
- * <tt>beans.xml</tt> file of the bean archive. The 
- * <tt>&lt;alternatives&gt;</tt> element contains a list of 
- * bean classes and stereotypes. An alternative is selected 
- * for the bean archive if either:</p>
+ * <p>
+ * By default, a bean archive has no selected alternatives. An alternative must
+ * be explicitly declared using the <tt>&lt;alternatives&gt;</tt> element of the
+ * <tt>beans.xml</tt> file of the bean archive. The
+ * <tt>&lt;alternatives&gt;</tt> element contains a list of bean classes and
+ * stereotypes. An alternative is selected for the bean archive if either:
+ * </p>
  * 
  * <ul>
- * <li>the alternative is a managed bean or session bean and the 
- * bean class of the bean is listed,</li>
- * <li>the alternative is a producer method, field or resource, 
- * and the bean class that declares the method or field is listed, 
- * or</li>
- * <li>any <tt>&#064;Alternative</tt> stereotype of the alternative 
- * is listed.</li>
+ * <li>the alternative is a managed bean or session bean and the bean class of
+ * the bean is listed,</li>
+ * <li>the alternative is a producer method, field or resource, and the bean
+ * class that declares the method or field is listed, or</li>
+ * <li>any <tt>&#064;Alternative</tt> stereotype of the alternative is listed.</li>
  * </ul>
  * 
  * @author Gavin King
  * @author Pete Muir
  */
-@Target({TYPE, METHOD, FIELD})
+@Target({ TYPE, METHOD, FIELD })
 @Retention(RUNTIME)
 @Documented
 public @interface Alternative
