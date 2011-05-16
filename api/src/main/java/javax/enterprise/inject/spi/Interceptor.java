@@ -33,45 +33,40 @@ import javax.interceptor.InvocationContext;
  * 
  * @param <T> the interceptor bean class
  */
-public interface Interceptor<T> extends Bean<T>
-{
+public interface Interceptor<T> extends Bean<T> {
 
-   /**
-    * <p>
-    * Obtains the {@linkplain javax.interceptor.InterceptorBinding interceptor
-    * bindings} of the interceptor.
-    * </p>
-    * 
-    * @return the set of {@linkplain javax.interceptor.InterceptorBinding
-    *         interceptor bindings}
-    */
-   public Set<Annotation> getInterceptorBindings();
+    /**
+     * <p>
+     * Obtains the {@linkplain javax.interceptor.InterceptorBinding interceptor bindings} of the interceptor.
+     * </p>
+     * 
+     * @return the set of {@linkplain javax.interceptor.InterceptorBinding interceptor bindings}
+     */
+    public Set<Annotation> getInterceptorBindings();
 
-   /**
-    * <p>
-    * Determines if the interceptor intercepts the specified
-    * {@linkplain InterceptionType kind of lifecycle callback or method
-    * invocation}.
-    * </p>
-    * 
-    * @param type the {@linkplain InterceptionType kind of interception}
-    * @return returns <tt>true</tt> if the interceptor intercepts callbacks or
-    *         business methods of the given type, and <tt>false</tt> otherwise.
-    */
-   public boolean intercepts(InterceptionType type);
+    /**
+     * <p>
+     * Determines if the interceptor intercepts the specified {@linkplain InterceptionType kind of lifecycle callback or method
+     * invocation}.
+     * </p>
+     * 
+     * @param type the {@linkplain InterceptionType kind of interception}
+     * @return returns <tt>true</tt> if the interceptor intercepts callbacks or business methods of the given type, and
+     *         <tt>false</tt> otherwise.
+     */
+    public boolean intercepts(InterceptionType type);
 
-   /**
-    * <p>
-    * Invokes the specified {@linkplain InterceptionType kind of lifecycle
-    * callback or method invocation interception} upon the given interceptor
-    * instance.
-    * </p>
-    * 
-    * @param type the {@linkplain InterceptionType kind of interception}
-    * @param instance the interceptor instance to invoke
-    * @param ctx the context for the invocation
-    * @return the invocation return value
-    */
-   public Object intercept(InterceptionType type, T instance, InvocationContext ctx);
+    /**
+     * <p>
+     * Invokes the specified {@linkplain InterceptionType kind of lifecycle callback or method invocation interception} upon the
+     * given interceptor instance.
+     * </p>
+     * 
+     * @param type the {@linkplain InterceptionType kind of interception}
+     * @param instance the interceptor instance to invoke
+     * @param ctx the context for the invocation
+     * @return the invocation return value
+     */
+    public Object intercept(InterceptionType type, T instance, InvocationContext ctx);
 
 }

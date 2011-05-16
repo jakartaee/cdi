@@ -18,36 +18,31 @@ package javax.enterprise.inject;
 
 /**
  * <p>
- * Indicates that no bean matches a certain combination of required type and
- * required qualifiers and is eligible for injection into a certain class.
+ * Indicates that no bean matches a certain combination of required type and required qualifiers and is eligible for injection
+ * into a certain class.
  * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
  */
-public class UnsatisfiedResolutionException extends ResolutionException
-{
+public class UnsatisfiedResolutionException extends ResolutionException {
 
-   private static final long serialVersionUID = 5350603312442756709L;
+    private static final long serialVersionUID = 5350603312442756709L;
 
-   public UnsatisfiedResolutionException()
-   {
-      super();
-   }
+    public UnsatisfiedResolutionException() {
+        super();
+    }
 
-   public UnsatisfiedResolutionException(String message, Throwable throwable)
-   {
-      super(message, throwable);
-   }
+    public UnsatisfiedResolutionException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 
-   public UnsatisfiedResolutionException(String message)
-   {
-      super(message);
-   }
+    public UnsatisfiedResolutionException(String message) {
+        super(message);
+    }
 
-   public UnsatisfiedResolutionException(Throwable throwable)
-   {
-      super(throwable);
-   }
+    public UnsatisfiedResolutionException(Throwable throwable) {
+        super(throwable);
+    }
 
 }

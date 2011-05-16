@@ -29,29 +29,24 @@ package javax.enterprise.context;
  * @author Gavin King
  */
 
-public class ContextNotActiveException extends ContextException
-{
+public class ContextNotActiveException extends ContextException {
 
-   private static final long serialVersionUID = -3599813072560026919L;
+    private static final long serialVersionUID = -3599813072560026919L;
 
-   public ContextNotActiveException()
-   {
-      super();
-   }
+    public ContextNotActiveException() {
+        super();
+    }
 
-   public ContextNotActiveException(String message)
-   {
-      super(message);
-   }
+    public ContextNotActiveException(String message) {
+        super(message);
+    }
 
-   public ContextNotActiveException(Throwable cause)
-   {
-      super(cause);
-   }
+    public ContextNotActiveException(Throwable cause) {
+        super(cause);
+    }
 
-   public ContextNotActiveException(String message, Throwable cause)
-   {
-      super(message, cause);
-   }
+    public ContextNotActiveException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

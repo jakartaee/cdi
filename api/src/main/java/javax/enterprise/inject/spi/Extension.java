@@ -19,33 +19,29 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * Service interface implemented by extensions. An extension is a service
- * provider declared in <tt>META-INF/services</tt>.
+ * Service interface implemented by extensions. An extension is a service provider declared in <tt>META-INF/services</tt>.
  * </p>
  * 
  * <p>
- * Service providers may have {@linkplain javax.enterprise.event.Observes
- * observer methods}, which may observe any event, including any
- * {@linkplain javax.enterprise.inject.spi container lifecycle event}, and
- * obtain an injected {@link javax.enterprise.inject.spi.BeanManager}.
+ * Service providers may have {@linkplain javax.enterprise.event.Observes observer methods}, which may observe any event,
+ * including any {@linkplain javax.enterprise.inject.spi container lifecycle event}, and obtain an injected
+ * {@link javax.enterprise.inject.spi.BeanManager}.
  * <p>
  * 
  * <p>
- * The container instantiates a single instance of each extension at the
- * beginning of the application initialization process and maintains a reference
- * to it until the application shuts down. The container delivers event
- * notifications to this instance by calling its observer methods.
+ * The container instantiates a single instance of each extension at the beginning of the application initialization process and
+ * maintains a reference to it until the application shuts down. The container delivers event notifications to this instance by
+ * calling its observer methods.
  * </p>
  * 
  * <p>
- * Service providers are made available for injection as beans with the
- * qualifier {@link javax.enterprise.inject.Default &#064;Default}.
+ * Service providers are made available for injection as beans with the qualifier {@link javax.enterprise.inject.Default
+ * &#064;Default}.
  * </p>
  * 
  * @author Gavin King
  * @author Pete Muir
  * 
  */
-public interface Extension
-{
+public interface Extension {
 }

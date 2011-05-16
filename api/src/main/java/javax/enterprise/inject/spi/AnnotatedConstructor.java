@@ -30,16 +30,15 @@ import java.lang.reflect.Constructor;
  * @param <X> the declaring class
  * @see Constructor
  */
-public interface AnnotatedConstructor<X> extends AnnotatedCallable<X>
-{
+public interface AnnotatedConstructor<X> extends AnnotatedCallable<X> {
 
-   /**
-    * <p>
-    * Get the underlying {@link Constructor}.
-    * </p>
-    * 
-    * @return the constructor
-    */
-   public Constructor<X> getJavaMember();
+    /**
+     * <p>
+     * Get the underlying {@link Constructor}.
+     * </p>
+     * 
+     * @return the constructor
+     */
+    public Constructor<X> getJavaMember();
 
 }

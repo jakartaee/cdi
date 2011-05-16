@@ -29,15 +29,14 @@ import java.lang.reflect.Method;
  * @param <X> the declaring type
  * @see Method
  */
-public interface AnnotatedMethod<X> extends AnnotatedCallable<X>
-{
+public interface AnnotatedMethod<X> extends AnnotatedCallable<X> {
 
-   /**
-    * <p>
-    * Get the underlying {@link Method}.
-    * </p>
-    * 
-    * @return the {@link Method}
-    */
-   public Method getJavaMember();
+    /**
+     * <p>
+     * Get the underlying {@link Method}.
+     * </p>
+     * 
+     * @return the {@link Method}
+     */
+    public Method getJavaMember();
 }

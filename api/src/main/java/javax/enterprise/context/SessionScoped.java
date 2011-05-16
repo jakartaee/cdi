@@ -37,18 +37,16 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet in the web
- * application, during the doFilter() method of any servlet filter and when the
- * container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
+ * <li>during the <tt>service()</tt> method of any servlet in the web application, during the doFilter() method of any servlet
+ * filter and when the container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
  * <tt>ServletRequestListener</tt>.</li>
  * </ul>
  * 
  * <p>
- * The session context is shared between all servlet requests that occur in the
- * same HTTP session. The session context is destroyed when the HTTPSession
- * times out, after all <tt>HttpSessionListeners</tt> have been called, and at
- * the very end of any request in which <tt>invalidate()</tt> was called, after
- * all filters and <tt>ServletRequestListeners</tt> have been called.
+ * The session context is shared between all servlet requests that occur in the same HTTP session. The session context is
+ * destroyed when the HTTPSession times out, after all <tt>HttpSessionListeners</tt> have been called, and at the very end of
+ * any request in which <tt>invalidate()</tt> was called, after all filters and <tt>ServletRequestListeners</tt> have been
+ * called.
  * </p>
  * 
  * @author Gavin King
@@ -60,6 +58,5 @@ import java.lang.annotation.Target;
 @Documented
 @NormalScope(passivating = true)
 @Inherited
-public @interface SessionScoped
-{
+public @interface SessionScoped {
 }

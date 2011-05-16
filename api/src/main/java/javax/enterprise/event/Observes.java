@@ -26,8 +26,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Identifies the event parameter of an observer method. May be applied to a
- * parameter of a method of a bean class or
+ * Identifies the event parameter of an observer method. May be applied to a parameter of a method of a bean class or
  * {@linkplain javax.enterprise.inject.spi.Extension extension}.
  * </p>
  * 
@@ -36,22 +35,19 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * An observer method is a non-abstract method of a managed bean class or
- * session bean class (or of an extension). An observer method may be either
- * static or non-static. If the bean is a session bean, the observer method must
- * be either a business method of the EJB or a static method of the bean class.
+ * An observer method is a non-abstract method of a managed bean class or session bean class (or of an extension). An observer
+ * method may be either static or non-static. If the bean is a session bean, the observer method must be either a business
+ * method of the EJB or a static method of the bean class.
  * </p>
  * 
  * <p>
- * Each observer method must have exactly one event parameter, of the same type
- * as the event type it observes. Event qualifiers may be declared by annotating
- * the event parameter. When searching for observer methods for an event, the
- * container considers the type and qualifiers of the event parameter.
+ * Each observer method must have exactly one event parameter, of the same type as the event type it observes. Event qualifiers
+ * may be declared by annotating the event parameter. When searching for observer methods for an event, the container considers
+ * the type and qualifiers of the event parameter.
  * </p>
  * 
  * <p>
- * If the event parameter does not explicitly declare any qualifier, the
- * observer method observes events with no qualifier.
+ * If the event parameter does not explicitly declare any qualifier, the observer method observes events with no qualifier.
  * </p>
  * 
  * <p>
@@ -59,9 +55,8 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * In addition to the event parameter, observer methods may declare additional
- * parameters, which may declare qualifiers. These additional parameters are
- * injection points.
+ * In addition to the event parameter, observer methods may declare additional parameters, which may declare qualifiers. These
+ * additional parameters are injection points.
  * </p>
  * 
  * <pre>
@@ -88,31 +83,27 @@ import java.lang.annotation.Target;
 @Target(PARAMETER)
 @Retention(RUNTIME)
 @Documented
-public @interface Observes
-{
-   /**
-    * <p>
-    * Specifies {@linkplain javax.enterprise.event.Reception under what
-    * conditions the observer method is notified}.
-    * </p>
-    * 
-    * <p>
-    * By default, the observer method is notified even if no instance of the
-    * bean that defines the observer method already exists in the current
-    * context.
-    * </p>
-    */
-   public Reception notifyObserver() default Reception.ALWAYS;
+public @interface Observes {
+    /**
+     * <p>
+     * Specifies {@linkplain javax.enterprise.event.Reception under what conditions the observer method is notified}.
+     * </p>
+     * 
+     * <p>
+     * By default, the observer method is notified even if no instance of the bean that defines the observer method already
+     * exists in the current context.
+     * </p>
+     */
+    public Reception notifyObserver() default Reception.ALWAYS;
 
-   /**
-    * <p>
-    * Specifies {@linkplain javax.enterprise.event.Reception at what time the
-    * observer method is notified}.
-    * </p>
-    * 
-    * <p>
-    * By default, the observer method is notified when the event is fired.
-    * </p>
-    */
-   public TransactionPhase during() default TransactionPhase.IN_PROGRESS;
+    /**
+     * <p>
+     * Specifies {@linkplain javax.enterprise.event.Reception at what time the observer method is notified}.
+     * </p>
+     * 
+     * <p>
+     * By default, the observer method is notified when the event is fired.
+     * </p>
+     */
+    public TransactionPhase during() default TransactionPhase.IN_PROGRESS;
 }

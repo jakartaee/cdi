@@ -20,73 +20,62 @@ import javax.enterprise.context.spi.Context;
 
 /**
  * <p>
- * The event type of the second event fired by the container when it has fully
- * completed the bean discovery process, validated that there are no definition
- * errors relating to the discovered beans, and registered
- * {@link javax.enterprise.inject.spi.Bean} and
- * {@link javax.enterprise.inject.spi.ObserverMethod} objects for the discovered
- * beans, but before detecting deployment problems.
+ * The event type of the second event fired by the container when it has fully completed the bean discovery process, validated
+ * that there are no definition errors relating to the discovered beans, and registered {@link javax.enterprise.inject.spi.Bean}
+ * and {@link javax.enterprise.inject.spi.ObserverMethod} objects for the discovered beans, but before detecting deployment
+ * problems.
  * </p>
  * <p>
- * A portable extension may take advantage of this event to register
- * {@linkplain javax.enterprise.inject.spi.Bean beans},
- * {@linkplain javax.enterprise.inject.spi.Interceptor interceptors},
- * {@linkplain javax.decorator.Decorator decorators},
- * {@linkplain javax.enterprise.event.Observes observer methods} and
- * {@linkplain javax.enterprise.context custom context} objects with the
- * container.
+ * A portable extension may take advantage of this event to register {@linkplain javax.enterprise.inject.spi.Bean beans},
+ * {@linkplain javax.enterprise.inject.spi.Interceptor interceptors}, {@linkplain javax.decorator.Decorator decorators},
+ * {@linkplain javax.enterprise.event.Observes observer methods} and {@linkplain javax.enterprise.context custom context}
+ * objects with the container.
  * </p>
  * 
  * <pre>
  *     void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager) { ... }
  * </pre>
  * <p>
- * If any observer method of the {@code AfterBeanDiscovery} event throws an
- * exception, the exception is treated as a definition error by the container.
+ * If any observer method of the {@code AfterBeanDiscovery} event throws an exception, the exception is treated as a definition
+ * error by the container.
  * </p>
  * 
  * @author David Allen
  */
-public interface AfterBeanDiscovery
-{
-   /**
-    * Registers a definition error with the container, causing the container to
-    * abort deployment after all observers have been notified.
-    * 
-    * @param t The definition error as a {@link java.lang.Throwable}
-    */
-   public void addDefinitionError(Throwable t);
+public interface AfterBeanDiscovery {
+    /**
+     * Registers a definition error with the container, causing the container to abort deployment after all observers have been
+     * notified.
+     * 
+     * @param t The definition error as a {@link java.lang.Throwable}
+     */
+    public void addDefinitionError(Throwable t);
 
-   /**
-    * Fires an event of type {@link javax.enterprise.inject.spi.ProcessBean}
-    * containing the given {@link javax.enterprise.inject.spi.Bean} and then
-    * registers the {@link javax.enterprise.inject.spi.Bean} with the container,
-    * thereby making it available for injection into other beans. The given
-    * {@link javax.enterprise.inject.spi.Bean} may implement
-    * {@link javax.enterprise.inject.spi.Interceptor} or
-    * {@link javax.decorator.Decorator}.
-    * 
-    * @param bean The bean to add to the deployment
-    */
-   public void addBean(Bean<?> bean);
+    /**
+     * Fires an event of type {@link javax.enterprise.inject.spi.ProcessBean} containing the given
+     * {@link javax.enterprise.inject.spi.Bean} and then registers the {@link javax.enterprise.inject.spi.Bean} with the
+     * container, thereby making it available for injection into other beans. The given {@link javax.enterprise.inject.spi.Bean}
+     * may implement {@link javax.enterprise.inject.spi.Interceptor} or {@link javax.decorator.Decorator}.
+     * 
+     * @param bean The bean to add to the deployment
+     */
+    public void addBean(Bean<?> bean);
 
-   /**
-    * Fires an event of type
-    * {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the
-    * given {@link javax.enterprise.inject.spi.ObserverMethod} and then
-    * registers the {@link javax.enterprise.inject.spi.ObserverMethod} with the
-    * container, thereby making it available for event notifications.
-    * 
-    * @param observerMethod The custom observer method to add to the deployment
-    */
-   public void addObserverMethod(ObserverMethod<?> observerMethod);
+    /**
+     * Fires an event of type {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the given
+     * {@link javax.enterprise.inject.spi.ObserverMethod} and then registers the
+     * {@link javax.enterprise.inject.spi.ObserverMethod} with the container, thereby making it available for event
+     * notifications.
+     * 
+     * @param observerMethod The custom observer method to add to the deployment
+     */
+    public void addObserverMethod(ObserverMethod<?> observerMethod);
 
-   /**
-    * Registers a custom {@link javax.enterprise.context.spi.Context} object
-    * with the container.
-    * 
-    * @param context The custom context to add to the deployment
-    */
-   public void addContext(Context context);
+    /**
+     * Registers a custom {@link javax.enterprise.context.spi.Context} object with the container.
+     * 
+     * @param context The custom context to add to the deployment
+     */
+    public void addContext(Context context);
 
 }

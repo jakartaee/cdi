@@ -35,14 +35,13 @@ import javax.inject.Qualifier;
  * </p>
  * 
  * <p>
- * If a bean does not explicitly declare a qualifier other than
- * {@link javax.inject.Named &#064;Named}, the bean has the qualifier
- * <tt>&#064;Default</tt>.
+ * If a bean does not explicitly declare a qualifier other than {@link javax.inject.Named &#064;Named}, the bean has the
+ * qualifier <tt>&#064;Default</tt>.
  * </p>
  * 
  * <p>
- * If an injection point declares no qualifier, the injection point has exactly
- * one qualifier, the default qualifier <tt>&#064;Default</tt>.
+ * If an injection point declares no qualifier, the injection point has exactly one qualifier, the default qualifier
+ * <tt>&#064;Default</tt>.
  * </p>
  * 
  * <p>
@@ -51,18 +50,16 @@ import javax.inject.Qualifier;
  * 
  * <pre>
  * &#064;ConversationScoped
- * public class Order
- * {
+ * public class Order {
  * 
- *    private Product product;
- *    private User customer;
+ *     private Product product;
+ *     private User customer;
  * 
- *    &#064;Inject
- *    public void init(@Selected Product product, User customer)
- *    {
- *       this.product = product;
- *       this.customer = customer;
- *    }
+ *     &#064;Inject
+ *     public void init(@Selected Product product, User customer) {
+ *         this.product = product;
+ *         this.customer = customer;
+ *     }
  * 
  * }
  * </pre>
@@ -70,18 +67,16 @@ import javax.inject.Qualifier;
  * <pre>
  * &#064;Default
  * &#064;ConversationScoped
- * public class Order
- * {
+ * public class Order {
  * 
- *    private Product product;
- *    private User customer;
+ *     private Product product;
+ *     private User customer;
  * 
- *    &#064;Inject
- *    public void init(@Selected Product product, @Default User customer)
- *    {
- *       this.product = product;
- *       this.customer = customer;
- *    }
+ *     &#064;Inject
+ *     public void init(@Selected Product product, @Default User customer) {
+ *         this.product = product;
+ *         this.customer = customer;
+ *     }
  * 
  * }
  * </pre>
@@ -94,6 +89,5 @@ import javax.inject.Qualifier;
 @Retention(RUNTIME)
 @Documented
 @Qualifier
-public @interface Default
-{
+public @interface Default {
 }

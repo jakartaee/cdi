@@ -23,10 +23,8 @@ package javax.enterprise.context;
  * </p>
  * 
  * <p>
- * If the propagated conversation cannot be restored, the container must
- * associate the request with a new transient conversation and throw an
- * exception of type <tt>NonexistentConversationException</tt> from the restore
- * view phase of the JSF lifecycle.
+ * If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation
+ * and throw an exception of type <tt>NonexistentConversationException</tt> from the restore view phase of the JSF lifecycle.
  * </p>
  * 
  * @see javax.enterprise.context.ConversationScoped
@@ -35,29 +33,24 @@ package javax.enterprise.context;
  * @author Gavin King
  */
 
-public class NonexistentConversationException extends ContextException
-{
+public class NonexistentConversationException extends ContextException {
 
-   private static final long serialVersionUID = -3599813072560026919L;
+    private static final long serialVersionUID = -3599813072560026919L;
 
-   public NonexistentConversationException()
-   {
-      super();
-   }
+    public NonexistentConversationException() {
+        super();
+    }
 
-   public NonexistentConversationException(String message)
-   {
-      super(message);
-   }
+    public NonexistentConversationException(String message) {
+        super(message);
+    }
 
-   public NonexistentConversationException(Throwable cause)
-   {
-      super(cause);
-   }
+    public NonexistentConversationException(Throwable cause) {
+        super(cause);
+    }
 
-   public NonexistentConversationException(String message, Throwable cause)
-   {
-      super(message, cause);
-   }
+    public NonexistentConversationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

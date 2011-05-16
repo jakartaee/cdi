@@ -35,9 +35,8 @@ import javax.inject.Qualifier;
  * </p>
  * 
  * <p>
- * The <tt>&#064;New</tt> qualifier allows the application to obtain a new
- * instance of a bean which is not bound to the declared scope, but has had
- * dependency injection performed.
+ * The <tt>&#064;New</tt> qualifier allows the application to obtain a new instance of a bean which is not bound to the declared
+ * scope, but has had dependency injection performed.
  * </p>
  * 
  * <pre>
@@ -49,12 +48,9 @@ import javax.inject.Qualifier;
  * </pre>
  * 
  * <p>
- * When the <tt>&#064;New</tt> qualifier is specified at an injection point and
- * no {@link javax.enterprise.inject.New#value() value} member is explicitly
- * specified, the container defaults the
- * {@link javax.enterprise.inject.New#value() value} to the declared type of the
- * injection point. So the following injection point has qualifier
- * <tt>&#064;New(Order.class)</tt>:
+ * When the <tt>&#064;New</tt> qualifier is specified at an injection point and no {@link javax.enterprise.inject.New#value()
+ * value} member is explicitly specified, the container defaults the {@link javax.enterprise.inject.New#value() value} to the
+ * declared type of the injection point. So the following injection point has qualifier <tt>&#064;New(Order.class)</tt>:
  * </p>
  * 
  * <pre>
@@ -70,21 +66,19 @@ import javax.inject.Qualifier;
 @Retention(RUNTIME)
 @Documented
 @Qualifier
-public @interface New
-{
-   /**
-    * <p>
-    * Specifies the bean class of the new instance. The class must be the bean
-    * class of an enabled or disabled bean. The bean class need not be deployed
-    * in a bean archive.
-    * </p>
-    * 
-    * <p>
-    * Defaults to the declared type of the injection point if not specified.
-    * </p>
-    * 
-    * @return the bean class of the new instance
-    */
-   Class<?> value() default New.class;
+public @interface New {
+    /**
+     * <p>
+     * Specifies the bean class of the new instance. The class must be the bean class of an enabled or disabled bean. The bean
+     * class need not be deployed in a bean archive.
+     * </p>
+     * 
+     * <p>
+     * Defaults to the declared type of the injection point if not specified.
+     * </p>
+     * 
+     * @return the bean class of the new instance
+     */
+    Class<?> value() default New.class;
 
 }

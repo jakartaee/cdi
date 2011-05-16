@@ -30,32 +30,31 @@ import java.lang.reflect.Member;
  * @param <X> the declaring type
  * @see Member
  */
-public interface AnnotatedMember<X> extends Annotated
-{
-   /**
-    * <p>
-    * Get the underlying {@link Member}.
-    * </p>
-    * 
-    * @return the {@link Member}
-    */
-   public Member getJavaMember();
+public interface AnnotatedMember<X> extends Annotated {
+    /**
+     * <p>
+     * Get the underlying {@link Member}.
+     * </p>
+     * 
+     * @return the {@link Member}
+     */
+    public Member getJavaMember();
 
-   /**
-    * <p>
-    * Determines if the member is static.
-    * </p>
-    * 
-    * @return <tt>true</tt> if the member is static
-    */
-   public boolean isStatic();
+    /**
+     * <p>
+     * Determines if the member is static.
+     * </p>
+     * 
+     * @return <tt>true</tt> if the member is static
+     */
+    public boolean isStatic();
 
-   /**
-    * <p>
-    * Get the {@linkplain AnnotatedType type} which declares this member.
-    * </p>
-    * 
-    * @return the type which declares this member
-    */
-   public AnnotatedType<X> getDeclaringType();
+    /**
+     * <p>
+     * Get the {@linkplain AnnotatedType type} which declares this member.
+     * </p>
+     * 
+     * @return the type which declares this member
+     */
+    public AnnotatedType<X> getDeclaringType();
 }

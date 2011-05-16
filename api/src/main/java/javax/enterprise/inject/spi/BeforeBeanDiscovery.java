@@ -20,67 +20,54 @@ import java.lang.annotation.Annotation;
 
 /**
  * <p>
- * This event type is thrown by the container before the bean discovery process
- * begins. If any observer method of the {@code BeforeBeanDiscovery} event
- * throws an exception, the exception is treated as a definition error by the
- * container.
+ * This event type is thrown by the container before the bean discovery process begins. If any observer method of the
+ * {@code BeforeBeanDiscovery} event throws an exception, the exception is treated as a definition error by the container.
  * </p>
  * 
  * @author Pete Muir
  * @author David Allen
  */
-public interface BeforeBeanDiscovery
-{
-   /**
-    * Declares an annotation type as a {@linkplain javax.inject.Qualifier}
-    * qualifier type.
-    * 
-    * @param qualifier The annotation to treat as a qualifier
-    */
-   public void addQualifier(Class<? extends Annotation> qualifier);
+public interface BeforeBeanDiscovery {
+    /**
+     * Declares an annotation type as a {@linkplain javax.inject.Qualifier} qualifier type.
+     * 
+     * @param qualifier The annotation to treat as a qualifier
+     */
+    public void addQualifier(Class<? extends Annotation> qualifier);
 
-   /**
-    * Declares an annotation type as a {@linkplain javax.enterprise.context
-    * scope type}.
-    * 
-    * @param scopeType The annotation type to treat as a
-    *           {@linkplain javax.enterprise.context scope type}
-    * @param normal Indicates if the scope is normal
-    * @param passivating Indicates if the scope is
-    *           {@linkplain javax.enterprise.inject.spi.PassivationCapable
-    *           passivation capable}
-    */
-   public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
+    /**
+     * Declares an annotation type as a {@linkplain javax.enterprise.context scope type}.
+     * 
+     * @param scopeType The annotation type to treat as a {@linkplain javax.enterprise.context scope type}
+     * @param normal Indicates if the scope is normal
+     * @param passivating Indicates if the scope is {@linkplain javax.enterprise.inject.spi.PassivationCapable passivation
+     *        capable}
+     */
+    public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
 
-   /**
-    * Declares an annotation type as a
-    * {@linkplain javax.enterprise.inject.Stereotype stereotype}, and specifies
-    * its meta-annotations.
-    * 
-    * @param stereotype The annotation type to treat as a
-    *           {@linkplain javax.enterprise.inject.Stereotype stereotype}
-    * @param stereotypeDef An optional list of annotations defining the
-    *           {@linkplain javax.enterprise.inject.Stereotype stereotype}
-    */
-   public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
+    /**
+     * Declares an annotation type as a {@linkplain javax.enterprise.inject.Stereotype stereotype}, and specifies its
+     * meta-annotations.
+     * 
+     * @param stereotype The annotation type to treat as a {@linkplain javax.enterprise.inject.Stereotype stereotype}
+     * @param stereotypeDef An optional list of annotations defining the {@linkplain javax.enterprise.inject.Stereotype
+     *        stereotype}
+     */
+    public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
 
-   /**
-    * Declares an annotation type as an {@linkplain Interceptor interceptor}
-    * binding type, and specifies its meta-annotations.
-    * 
-    * @param bindingType The annotation type to treat as an interceptor binding
-    *           type
-    * @param bindingTypeDef An optional list of annotations defining the
-    *           {@linkplain Interceptor interceptor}
-    */
-   public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
+    /**
+     * Declares an annotation type as an {@linkplain Interceptor interceptor} binding type, and specifies its meta-annotations.
+     * 
+     * @param bindingType The annotation type to treat as an interceptor binding type
+     * @param bindingTypeDef An optional list of annotations defining the {@linkplain Interceptor interceptor}
+     */
+    public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
 
-   /**
-    * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set
-    * of types which will be scanned during bean discovery.
-    * 
-    * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add
-    *           for later scanning
-    */
-   public void addAnnotatedType(AnnotatedType<?> type);
+    /**
+     * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set of types which will be scanned during bean
+     * discovery.
+     * 
+     * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
+     */
+    public void addAnnotatedType(AnnotatedType<?> type);
 }

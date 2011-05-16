@@ -18,12 +18,12 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for each enabled producer method,
- * before registering the {@link javax.enterprise.inject.spi.Bean} object.
+ * The container fires an event of this type for each enabled producer method, before registering the
+ * {@link javax.enterprise.inject.spi.Bean} object.
  * </p>
  * <p>
- * If any observer method of a {@code ProcessProducerMethod} event throws an
- * exception, the exception is treated as a definition error by the container.
+ * If any observer method of a {@code ProcessProducerMethod} event throws an exception, the exception is treated as a definition
+ * error by the container.
  * </p>
  * 
  * @author David Allen
@@ -33,24 +33,19 @@ package javax.enterprise.inject.spi;
 // These parameters are the wrong way according to the spec, however Oracle/JCP
 // compatibility rules require us to
 // keep the wrong ordering
-public interface ProcessProducerMethod<T, X> extends ProcessBean<X>
-{
-   /**
-    * Returns the {@link javax.enterprise.inject.spi.AnnotatedMethod}
-    * representing the producer method.
-    * 
-    * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} for the
-    *         producer method being registered
-    */
-   public AnnotatedMethod<T> getAnnotatedProducerMethod();
+public interface ProcessProducerMethod<T, X> extends ProcessBean<X> {
+    /**
+     * Returns the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the producer method.
+     * 
+     * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} for the producer method being registered
+     */
+    public AnnotatedMethod<T> getAnnotatedProducerMethod();
 
-   /**
-    * Returns the {@link javax.enterprise.inject.spi.AnnotatedParameter} for any
-    * matching injection point of the same type as the producer method return
-    * type found on a disposal method.
-    * 
-    * @return the disposal method's
-    *         {@link javax.enterprise.inject.spi.AnnotatedParameter}
-    */
-   public AnnotatedParameter<T> getAnnotatedDisposedParameter();
+    /**
+     * Returns the {@link javax.enterprise.inject.spi.AnnotatedParameter} for any matching injection point of the same type as
+     * the producer method return type found on a disposal method.
+     * 
+     * @return the disposal method's {@link javax.enterprise.inject.spi.AnnotatedParameter}
+     */
+    public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }

@@ -6,26 +6,22 @@ import java.lang.annotation.RetentionPolicy;
 import javax.enterprise.util.AnnotationLiteral;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Foo
-{
+public @interface Foo {
 
-   public String name();
+    public String name();
 
-   public class FooLiteral extends AnnotationLiteral<Foo> implements Foo
-   {
+    public class FooLiteral extends AnnotationLiteral<Foo> implements Foo {
 
-      private final String name;
+        private final String name;
 
-      public FooLiteral(String name)
-      {
-         this.name = name;
-      }
+        public FooLiteral(String name) {
+            this.name = name;
+        }
 
-      public String name()
-      {
-         return name;
-      }
+        public String name() {
+            return name;
+        }
 
-   }
+    }
 
 }

@@ -30,8 +30,8 @@ import javax.inject.Named;
 
 /**
  * <p>
- * The built-in stereotype intended for use with beans that define the model
- * layer of an MVC web application architecture such as JSF.
+ * The built-in stereotype intended for use with beans that define the model layer of an MVC web application architecture such
+ * as JSF.
  * </p>
  * 
  * @see javax.enterprise.inject.Stereotype
@@ -44,6 +44,5 @@ import javax.inject.Named;
 @Stereotype
 @Target({ TYPE, METHOD, FIELD })
 @Retention(RUNTIME)
-public @interface Model
-{
+public @interface Model {
 }

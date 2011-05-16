@@ -22,18 +22,17 @@ package javax.enterprise.inject.spi;
  * @author Gavin King
  * 
  */
-public enum SessionBeanType
-{
-   /**
-    * A {@linkplain javax.ejb.Stateless stateless} session bean
-    */
-   STATELESS,
-   /**
-    * A {@linkplain javax.ejb.Stateful stateful} session bean
-    */
-   STATEFUL,
-   /**
-    * A {@linkplain javax.ejb.Singleton singleton} session bean
-    */
-   SINGLETON
+public enum SessionBeanType {
+    /**
+     * A {@linkplain javax.ejb.Stateless stateless} session bean
+     */
+    STATELESS,
+    /**
+     * A {@linkplain javax.ejb.Stateful stateful} session bean
+     */
+    STATEFUL,
+    /**
+     * A {@linkplain javax.ejb.Singleton singleton} session bean
+     */
+    SINGLETON
 }

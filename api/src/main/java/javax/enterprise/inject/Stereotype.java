@@ -30,14 +30,13 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * In many systems, use of architectural patterns produces a set of recurring
- * bean roles. A stereotype allows a framework developer to identify such a role
- * and declare some common metadata for beans with that role in a central place.
+ * In many systems, use of architectural patterns produces a set of recurring bean roles. A stereotype allows a framework
+ * developer to identify such a role and declare some common metadata for beans with that role in a central place.
  * </p>
  * 
  * <p>
- * A bean may declare zero, one or multiple stereotypes, by applying the
- * stereotype annotation to the bean class or producer method or field.
+ * A bean may declare zero, one or multiple stereotypes, by applying the stereotype annotation to the bean class or producer
+ * method or field.
  * </p>
  * 
  * <p>
@@ -50,10 +49,8 @@ import java.lang.annotation.Target;
  * </ul>
  * 
  * <p>
- * The default scope of a stereotype is defined by annotating the stereotype
- * with a scope type. A stereotype may declare at most one scope. If a bean
- * explicitly declares a scope, any default scopes declared by its stereotypes
- * are ignored.
+ * The default scope of a stereotype is defined by annotating the stereotype with a scope type. A stereotype may declare at most
+ * one scope. If a bean explicitly declares a scope, any default scopes declared by its stereotypes are ignored.
  * </p>
  * 
  * <pre>
@@ -61,16 +58,14 @@ import java.lang.annotation.Target;
  * &#064;Stereotype
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
- * public @interface Action
- * {
+ * public @interface Action {
  * }
  * </pre>
  * 
  * <p>
- * The interceptor bindings of a stereotype are defined by annotating the
- * stereotype with the interceptor binding types. A stereotype may declare zero,
- * one or multiple interceptor bindings. An interceptor binding declared by a
- * stereotype is inherited by any bean that declares that stereotype.
+ * The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types. A
+ * stereotype may declare zero, one or multiple interceptor bindings. An interceptor binding declared by a stereotype is
+ * inherited by any bean that declares that stereotype.
  * </p>
  * 
  * <pre>
@@ -80,8 +75,7 @@ import java.lang.annotation.Target;
  * &#064;Stereotype
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
- * public @interface Action
- * {
+ * public @interface Action {
  * }
  * </pre>
  * 
@@ -95,9 +89,8 @@ import java.lang.annotation.Target;
  * </ul>
  * 
  * <p>
- * A stereotype may declare an empty {@link javax.inject.Named &#064;Named}
- * annotation, which specifies that every bean with the stereotype has a
- * defaulted name when a name is not explicitly specified by the bean.
+ * A stereotype may declare an empty {@link javax.inject.Named &#064;Named} annotation, which specifies that every bean with the
+ * stereotype has a defaulted name when a name is not explicitly specified by the bean.
  * </p>
  * 
  * <pre>
@@ -108,15 +101,13 @@ import java.lang.annotation.Target;
  * &#064;Stereotype
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
- * public @interface Action
- * {
+ * public @interface Action {
  * }
  * </pre>
  * 
  * <p>
- * A stereotype may declare an {@link javax.enterprise.inject.Alternative
- * &#064;Alternative} annotation, which specifies that every bean with the
- * stereotype is an alternative.
+ * A stereotype may declare an {@link javax.enterprise.inject.Alternative &#064;Alternative} annotation, which specifies that
+ * every bean with the stereotype is an alternative.
  * </p>
  * 
  * <pre>
@@ -124,19 +115,16 @@ import java.lang.annotation.Target;
  * &#064;Stereotype
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
- * public @interface Mock
- * {
+ * public @interface Mock {
  * }
  * </pre>
  * 
  * <p>
- * A stereotype may declare other stereotypes. Stereotype declarations are
- * transitive. A stereotype declared by a second stereotype is inherited by all
- * beans and other stereotypes that declare the second stereotype.
+ * A stereotype may declare other stereotypes. Stereotype declarations are transitive. A stereotype declared by a second
+ * stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
  * </p>
  * 
- * @see javax.enterprise.inject.Model the built-in stereotype
- *      <tt>&#064;Model</tt>
+ * @see javax.enterprise.inject.Model the built-in stereotype <tt>&#064;Model</tt>
  * 
  * @author Pete Muir
  * @author Gavin King
@@ -145,6 +133,5 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(ANNOTATION_TYPE)
 @Documented
-public @interface Stereotype
-{
+public @interface Stereotype {
 }

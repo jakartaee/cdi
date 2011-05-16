@@ -18,35 +18,30 @@ package javax.enterprise.inject;
 
 /**
  * <p>
- * Indicates that multiple beans match a certain combination of required type
- * and required qualifiers and are eligible for injection into a certain class.
+ * Indicates that multiple beans match a certain combination of required type and required qualifiers and are eligible for
+ * injection into a certain class.
  * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
  */
-public class AmbiguousResolutionException extends ResolutionException
-{
+public class AmbiguousResolutionException extends ResolutionException {
 
-   private static final long serialVersionUID = -2132733164534544788L;
+    private static final long serialVersionUID = -2132733164534544788L;
 
-   public AmbiguousResolutionException()
-   {
-   }
+    public AmbiguousResolutionException() {
+    }
 
-   public AmbiguousResolutionException(String message, Throwable throwable)
-   {
-      super(message, throwable);
-   }
+    public AmbiguousResolutionException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 
-   public AmbiguousResolutionException(String message)
-   {
-      super(message);
-   }
+    public AmbiguousResolutionException(String message) {
+        super(message);
+    }
 
-   public AmbiguousResolutionException(Throwable throwable)
-   {
-      super(throwable);
-   }
+    public AmbiguousResolutionException(Throwable throwable) {
+        super(throwable);
+    }
 
 }

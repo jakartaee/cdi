@@ -21,9 +21,8 @@ import javax.enterprise.inject.CreationException;
 
 /**
  * <p>
- * Defines operations to create and destroy contextual instances of a certain
- * type. Any implementation of {@code Contextual} is called a contextual type.
- * In particular, all beans are contextual types.
+ * Defines operations to create and destroy contextual instances of a certain type. Any implementation of {@code Contextual} is
+ * called a contextual type. In particular, all beans are contextual types.
  * </p>
  * 
  * @see javax.enterprise.inject.spi.Bean
@@ -32,33 +31,27 @@ import javax.enterprise.inject.CreationException;
  * @author Nicklas Karlsson
  * @author Pete Muir
  */
-public interface Contextual<T>
-{
-   /**
-    * Create a new instance of the contextual type. Instances should use the
-    * given {@link javax.enterprise.context.spi.CreationalContext} when
-    * obtaining contextual references to inject, in order to ensure that any
-    * dependent objects are associated with the contextual instance that is
-    * being created. An implementation may call
-    * {@link javax.enterprise.context.spi.CreationalContext#push(Object)}
-    * between instantiation and injection to help the container minimize the use
-    * of client proxy objects.
-    * 
-    * @param creationalContext the context in which this instance is being
-    *           created
-    * @return the contextual instance
-    * @throws CreationException if a checked exception occurs while creating the
-    *            instance
-    */
-   public T create(CreationalContext<T> creationalContext);
+public interface Contextual<T> {
+    /**
+     * Create a new instance of the contextual type. Instances should use the given
+     * {@link javax.enterprise.context.spi.CreationalContext} when obtaining contextual references to inject, in order to ensure
+     * that any dependent objects are associated with the contextual instance that is being created. An implementation may call
+     * {@link javax.enterprise.context.spi.CreationalContext#push(Object)} between instantiation and injection to help the
+     * container minimize the use of client proxy objects.
+     * 
+     * @param creationalContext the context in which this instance is being created
+     * @return the contextual instance
+     * @throws CreationException if a checked exception occurs while creating the instance
+     */
+    public T create(CreationalContext<T> creationalContext);
 
-   /**
-    * Destroy an instance of the contextual type. Implementations should call
-    * {@link javax.enterprise.context.spi.CreationalContext#release()} to allow
-    * the container to destroy dependent objects of the contextual instance.
-    * 
-    * @param instance the contextual instance to destroy
-    * @param creationalContext the context in which this instance was created
-    */
-   public void destroy(T instance, CreationalContext<T> creationalContext);
+    /**
+     * Destroy an instance of the contextual type. Implementations should call
+     * {@link javax.enterprise.context.spi.CreationalContext#release()} to allow the container to destroy dependent objects of
+     * the contextual instance.
+     * 
+     * @param instance the contextual instance to destroy
+     * @param creationalContext the context in which this instance was created
+     */
+    public void destroy(T instance, CreationalContext<T> creationalContext);
 }

@@ -24,19 +24,17 @@ import javax.inject.Provider;
 
 /**
  * <p>
- * Allows the application to dynamically obtain instances of beans with a
- * specified combination of required type and qualifiers.
+ * Allows the application to dynamically obtain instances of beans with a specified combination of required type and qualifiers.
  * </p>
  * 
  * <p>
- * In certain situations, injection is not the most convenient way to obtain a
- * contextual reference. For example, it may not be used when:
+ * In certain situations, injection is not the most convenient way to obtain a contextual reference. For example, it may not be
+ * used when:
  * </p>
  * 
  * <ul>
  * <li>the bean type or qualifiers vary dynamically at runtime, or</li>
- * <li>depending upon the deployment, there may be no bean which satisfies the
- * type and qualifiers, or</li>
+ * <li>depending upon the deployment, there may be no bean which satisfies the type and qualifiers, or</li>
  * <li>we would like to iterate over all beans of a certain type.</li>
  * </ul>
  * 
@@ -60,8 +58,8 @@ import javax.inject.Provider;
  * </pre>
  * 
  * <p>
- * Or, the {@link javax.enterprise.inject.Any &#064;Any} qualifier may be used,
- * allowing the application to specify qualifiers dynamically:
+ * Or, the {@link javax.enterprise.inject.Any &#064;Any} qualifier may be used, allowing the application to specify qualifiers
+ * dynamically:
  * </p>
  * 
  * <pre>
@@ -71,8 +69,7 @@ import javax.inject.Provider;
  * </pre>
  * 
  * <p>
- * Finally, the {@link javax.enterprise.inject.New &#064;New} qualifier may be
- * used, allowing the application to obtain a
+ * Finally, the {@link javax.enterprise.inject.New &#064;New} qualifier may be used, allowing the application to obtain a
  * {@link javax.enterprise.inject.New &#064;New} qualified bean:
  * </p>
  * 
@@ -87,18 +84,14 @@ import javax.inject.Provider;
  * </p>
  * 
  * <ul>
- * <li>the <em>required type</em> is the type parameter specified at the
- * injection point, and</li>
- * <li>the <em>required qualifiers</em> are the qualifiers specified at the
- * injection point.</li>
+ * <li>the <em>required type</em> is the type parameter specified at the injection point, and</li>
+ * <li>the <em>required qualifiers</em> are the qualifiers specified at the injection point.</li>
  * </ul>
  * 
  * <p>
- * The inherited {@link javax.inject.Provider#get()} method returns a contextual
- * references for the unique bean that matches the required type and required
- * qualifiers and is eligible for injection into the class into which the parent
- * <tt>Instance</tt> was injected, or throws an
- * {@link javax.enterprise.inject.UnsatisfiedResolutionException} or
+ * The inherited {@link javax.inject.Provider#get()} method returns a contextual references for the unique bean that matches the
+ * required type and required qualifiers and is eligible for injection into the class into which the parent <tt>Instance</tt>
+ * was injected, or throws an {@link javax.enterprise.inject.UnsatisfiedResolutionException} or
  * {@link javax.enterprise.inject.AmbiguousResolutionException}.
  * </p>
  * 
@@ -107,15 +100,14 @@ import javax.inject.Provider;
  * </pre>
  * 
  * <p>
- * The inherited {@link java.lang.Iterable#iterator()} method returns an
- * iterator over contextual references for beans that match the required type
- * and required qualifiers and are eligible for injection into the class into
- * which the parent <tt>Instance</tt> was injected.
+ * The inherited {@link java.lang.Iterable#iterator()} method returns an iterator over contextual references for beans that
+ * match the required type and required qualifiers and are eligible for injection into the class into which the parent
+ * <tt>Instance</tt> was injected.
  * </p>
  * 
  * <pre>
  * for (PaymentProcessor pp : anyPaymentProcessor)
- *    pp.test();
+ *     pp.test();
  * </pre>
  * 
  * @see javax.inject.Provider#get()
@@ -128,82 +120,68 @@ import javax.inject.Provider;
  * @param <T> the required bean type
  */
 
-public interface Instance<T> extends Iterable<T>, Provider<T>
-{
+public interface Instance<T> extends Iterable<T>, Provider<T> {
 
-   /**
-    * <p>
-    * Obtains a child <tt>Instance</tt> for the given additional required
-    * qualifiers.
-    * </p>
-    * 
-    * @param qualifiers the additional required qualifiers
-    * @return the child <tt>Instance</tt>
-    * @throws IllegalArgumentException if passed two instances of the same
-    *            qualifier type, or an instance of an annotation that is not a
-    *            qualifier type
-    */
-   public Instance<T> select(Annotation... qualifiers);
+    /**
+     * <p>
+     * Obtains a child <tt>Instance</tt> for the given additional required qualifiers.
+     * </p>
+     * 
+     * @param qualifiers the additional required qualifiers
+     * @return the child <tt>Instance</tt>
+     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     *         is not a qualifier type
+     */
+    public Instance<T> select(Annotation... qualifiers);
 
-   /**
-    * <p>
-    * Obtains a child <tt>Instance</tt> for the given required type and
-    * additional required qualifiers.
-    * </p>
-    * 
-    * @param <U> the required type
-    * @param subtype a {@link java.lang.Class} representing the required type
-    * @param qualifiers the additional required qualifiers
-    * @return the child <tt>Instance</tt>
-    * @throws IllegalArgumentException if passed two instances of the same
-    *            qualifier type, or an instance of an annotation that is not a
-    *            qualifier type
-    */
-   public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
+    /**
+     * <p>
+     * Obtains a child <tt>Instance</tt> for the given required type and additional required qualifiers.
+     * </p>
+     * 
+     * @param <U> the required type
+     * @param subtype a {@link java.lang.Class} representing the required type
+     * @param qualifiers the additional required qualifiers
+     * @return the child <tt>Instance</tt>
+     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     *         is not a qualifier type
+     */
+    public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
 
-   /**
-    * <p>
-    * Obtains a child <tt>Instance</tt> for the given required type and
-    * additional required qualifiers.
-    * </p>
-    * 
-    * @param <U> the required type
-    * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing
-    *           the required type
-    * @param qualifiers the additional required qualifiers
-    * @return the child <tt>Instance</tt>
-    * @throws IllegalArgumentException if passed two instances of the same
-    *            qualifier type, or an instance of an annotation that is not a
-    *            qualifier type
-    */
-   public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
+    /**
+     * <p>
+     * Obtains a child <tt>Instance</tt> for the given required type and additional required qualifiers.
+     * </p>
+     * 
+     * @param <U> the required type
+     * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing the required type
+     * @param qualifiers the additional required qualifiers
+     * @return the child <tt>Instance</tt>
+     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     *         is not a qualifier type
+     */
+    public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
 
-   /**
-    * <p>
-    * Determines if there is no bean that matches the required type and
-    * qualifiers and is eligible for injection into the class into which the
-    * parent <tt>Instance</tt> was injected.
-    * </p>
-    * 
-    * @return <tt>true</tt> if there is no bean that matches the required type
-    *         and qualifiers and is eligible for injection into the class into
-    *         which the parent <tt>Instance</tt> was injected, or <tt>false</tt>
-    *         otherwise.
-    */
-   public boolean isUnsatisfied();
+    /**
+     * <p>
+     * Determines if there is no bean that matches the required type and qualifiers and is eligible for injection into the class
+     * into which the parent <tt>Instance</tt> was injected.
+     * </p>
+     * 
+     * @return <tt>true</tt> if there is no bean that matches the required type and qualifiers and is eligible for injection
+     *         into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
+     */
+    public boolean isUnsatisfied();
 
-   /**
-    * <p>
-    * Determines if there is more than one bean that matches the required type
-    * and qualifiers and is eligible for injection into the class into which the
-    * parent <tt>Instance</tt> was injected.
-    * </p>
-    * 
-    * @return <tt>true</tt> if there is more than one bean that matches the
-    *         required type and qualifiers and is eligible for injection into
-    *         the class into which the parent <tt>Instance</tt> was injected, or
-    *         <tt>false</tt> otherwise.
-    */
-   public boolean isAmbiguous();
+    /**
+     * <p>
+     * Determines if there is more than one bean that matches the required type and qualifiers and is eligible for injection
+     * into the class into which the parent <tt>Instance</tt> was injected.
+     * </p>
+     * 
+     * @return <tt>true</tt> if there is more than one bean that matches the required type and qualifiers and is eligible for
+     *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
+     */
+    public boolean isAmbiguous();
 
 }

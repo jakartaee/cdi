@@ -28,16 +28,15 @@ import java.util.List;
  * 
  * @param <X> the declaring type
  */
-public interface AnnotatedCallable<X> extends AnnotatedMember<X>
-{
+public interface AnnotatedCallable<X> extends AnnotatedMember<X> {
 
-   /**
-    * <p>
-    * Get the parameters of the callable member.
-    * </p>
-    * 
-    * @return the parameters
-    */
-   public List<AnnotatedParameter<X>> getParameters();
+    /**
+     * <p>
+     * Get the parameters of the callable member.
+     * </p>
+     * 
+     * @return the parameters
+     */
+    public List<AnnotatedParameter<X>> getParameters();
 
 }

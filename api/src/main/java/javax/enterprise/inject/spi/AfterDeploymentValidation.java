@@ -18,28 +18,24 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The event type of the third event fired by the container after it has
- * validated that there are no deployment problems and before creating contexts
- * or processing requests. If any observer method of the
- * {@code AfterDeploymentValidation} event throws an exception, the exception is
- * treated as a deployment problem by the container.
+ * The event type of the third event fired by the container after it has validated that there are no deployment problems and
+ * before creating contexts or processing requests. If any observer method of the {@code AfterDeploymentValidation} event throws
+ * an exception, the exception is treated as a deployment problem by the container.
  * </p>
  * <p>
- * No requests will be processed by the deployment until all observers of this
- * event return.
+ * No requests will be processed by the deployment until all observers of this event return.
  * </p>
  * 
  * @author David Allen
  */
-public interface AfterDeploymentValidation
-{
+public interface AfterDeploymentValidation {
 
-   /**
-    * Registers a deployment problem with the container, causing the container
-    * to abort deployment after all observers have been notified.
-    * 
-    * @param t The deployment problem as a {@link java.lang.Throwable}
-    */
-   public void addDeploymentProblem(Throwable t);
+    /**
+     * Registers a deployment problem with the container, causing the container to abort deployment after all observers have
+     * been notified.
+     * 
+     * @param t The deployment problem as a {@link java.lang.Throwable}
+     */
+    public void addDeploymentProblem(Throwable t);
 
 }

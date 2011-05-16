@@ -18,13 +18,12 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for each enabled producer field,
- * before registering the {@link javax.enterprise.inject.spi.Bean} object.
- * Resources are considered to be producer fields.
+ * The container fires an event of this type for each enabled producer field, before registering the
+ * {@link javax.enterprise.inject.spi.Bean} object. Resources are considered to be producer fields.
  * </p>
  * <p>
- * If any observer method of a {@code ProcessProducerField} event throws an
- * exception, the exception is treated as a definition error by the container.
+ * If any observer method of a {@code ProcessProducerField} event throws an exception, the exception is treated as a definition
+ * error by the container.
  * </p>
  * 
  * @author David Allen
@@ -35,14 +34,11 @@ package javax.enterprise.inject.spi;
 // These parameters are the wrong way according to the spec, however Oracle/JCP
 // compatibility rules require us to
 // keep the wrong ordering
-public interface ProcessProducerField<T, X> extends ProcessBean<X>
-{
-   /**
-    * Returns the {@link javax.enterprise.inject.spi.AnnotatedField}
-    * representing the producer field.
-    * 
-    * @return the {@link javax.enterprise.inject.spi.AnnotatedField} for the
-    *         producer field being registered
-    */
-   public AnnotatedField<T> getAnnotatedProducerField();
+public interface ProcessProducerField<T, X> extends ProcessBean<X> {
+    /**
+     * Returns the {@link javax.enterprise.inject.spi.AnnotatedField} representing the producer field.
+     * 
+     * @return the {@link javax.enterprise.inject.spi.AnnotatedField} for the producer field being registered
+     */
+    public AnnotatedField<T> getAnnotatedProducerField();
 }

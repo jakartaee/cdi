@@ -25,29 +25,24 @@ package javax.enterprise.context;
  * @author Pete Muir
  * @author Shane Bryzak
  */
-public class ContextException extends RuntimeException
-{
+public class ContextException extends RuntimeException {
 
-   private static final long serialVersionUID = -3599813072560026919L;
+    private static final long serialVersionUID = -3599813072560026919L;
 
-   public ContextException()
-   {
-      super();
-   }
+    public ContextException() {
+        super();
+    }
 
-   public ContextException(String message)
-   {
-      super(message);
-   }
+    public ContextException(String message) {
+        super(message);
+    }
 
-   public ContextException(Throwable cause)
-   {
-      super(cause);
-   }
+    public ContextException(Throwable cause) {
+        super(cause);
+    }
 
-   public ContextException(String message, Throwable cause)
-   {
-      super(message, cause);
-   }
+    public ContextException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

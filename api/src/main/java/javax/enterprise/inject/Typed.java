@@ -28,8 +28,7 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Restricts the bean types of a bean. May be applied to a bean class or
- * producer method or field.
+ * Restricts the bean types of a bean. May be applied to a bean class or producer method or field.
  * </p>
  * 
  * <pre>
@@ -42,10 +41,8 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * When a <tt>&#064;Typed</tt> annotation is specified, only the types whose
- * classes are explicitly listed using the
- * {@link javax.enterprise.inject.Typed#value() value} member, along with
- * {@link java.lang.Object}, are bean types of the bean.
+ * When a <tt>&#064;Typed</tt> annotation is specified, only the types whose classes are explicitly listed using the
+ * {@link javax.enterprise.inject.Typed#value() value} member, along with {@link java.lang.Object}, are bean types of the bean.
  * </p>
  * 
  * @author Pete Muir
@@ -55,16 +52,15 @@ import java.lang.annotation.Target;
 @Target({ FIELD, METHOD, TYPE })
 @Retention(RUNTIME)
 @Documented
-public @interface Typed
-{
-   /**
-    * <p>
-    * Selects the bean types of the bean. Every class must correspond to a type
-    * in the unrestricted set of bean types of a bean.
-    * </p>
-    * 
-    * @return the classes corresponding to the bean types of the bean
-    */
-   Class<?>[] value() default {};
+public @interface Typed {
+    /**
+     * <p>
+     * Selects the bean types of the bean. Every class must correspond to a type in the unrestricted set of bean types of a
+     * bean.
+     * </p>
+     * 
+     * @return the classes corresponding to the bean types of the bean
+     */
+    Class<?>[] value() default {};
 
 }

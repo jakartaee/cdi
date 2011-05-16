@@ -37,23 +37,20 @@ import java.lang.annotation.Target;
 @Target(ANNOTATION_TYPE)
 @Retention(RUNTIME)
 @Documented
-public @interface NormalScope
-{
+public @interface NormalScope {
 
-   /**
-    * <p>
-    * Determines whether the normal scope type is a passivating scope.
-    * </p>
-    * 
-    * <p>
-    * A bean is called passivation capable if the container is able to
-    * temporarily transfer the state of any idle instance to secondary storage.
-    * A passivating scope requires that beans with the scope are passivation
-    * capable.
-    * </p>
-    * 
-    * @return <tt>true</tt> if the scope type is a passivating scope type
-    */
-   boolean passivating() default false;
+    /**
+     * <p>
+     * Determines whether the normal scope type is a passivating scope.
+     * </p>
+     * 
+     * <p>
+     * A bean is called passivation capable if the container is able to temporarily transfer the state of any idle instance to
+     * secondary storage. A passivating scope requires that beans with the scope are passivation capable.
+     * </p>
+     * 
+     * @return <tt>true</tt> if the scope type is a passivating scope type
+     */
+    boolean passivating() default false;
 
 }

@@ -25,22 +25,20 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Excludes a member of an annotation type (such as a
- * {@linkplain javax.inject.Qualifier qualifier type} or
- * {@linkplain javax.interceptor interceptor binding type}) from consideration
- * when the container compares two annotation instances.
+ * Excludes a member of an annotation type (such as a {@linkplain javax.inject.Qualifier qualifier type} or
+ * {@linkplain javax.interceptor interceptor binding type}) from consideration when the container compares two annotation
+ * instances.
  * </p>
  * 
  * <pre>
  * &#064;Qualifier
  * &#064;Retention(RUNTIME)
  * &#064;Target({ METHOD, FIELD, PARAMETER, TYPE })
- * public @interface PayBy
- * {
- *    PaymentMethod value();
+ * public @interface PayBy {
+ *     PaymentMethod value();
  * 
- *    &#064;Nonbinding
- *    String comment();
+ *     &#064;Nonbinding
+ *     String comment();
  * }
  * </pre>
  * 
@@ -52,6 +50,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RUNTIME)
 @Target(METHOD)
-public @interface Nonbinding
-{
+public @interface Nonbinding {
 }

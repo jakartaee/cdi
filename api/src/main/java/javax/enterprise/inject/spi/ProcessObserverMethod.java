@@ -19,14 +19,12 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for each
- * {@linkplain javax.enterprise.event.Observes observer method} of each enabled
- * bean, before registering the
- * {@link javax.enterprise.inject.spi.ObserverMethod} object.
+ * The container fires an event of this type for each {@linkplain javax.enterprise.event.Observes observer method} of each
+ * enabled bean, before registering the {@link javax.enterprise.inject.spi.ObserverMethod} object.
  * </p>
  * <p>
- * If any observer method of a {@code ProcessObserverMethod} event throws an
- * exception, the exception is treated as a definition error by the container.
+ * If any observer method of a {@code ProcessObserverMethod} event throws an exception, the exception is treated as a definition
+ * error by the container.
  * </p>
  * 
  * @see ObserverMethod
@@ -39,32 +37,28 @@ package javax.enterprise.inject.spi;
 // These parameters are the wrong way according to the spec, however Oracle/JCP
 // compatibility rules require us to
 // keep the wrong ordering
-public interface ProcessObserverMethod<T, X>
-{
-   /**
-    * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the
-    * observer method.
-    * 
-    * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod}
-    *         representing the observer method
-    */
-   public AnnotatedMethod<X> getAnnotatedMethod();
+public interface ProcessObserverMethod<T, X> {
+    /**
+     * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
+     * 
+     * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method
+     */
+    public AnnotatedMethod<X> getAnnotatedMethod();
 
-   /**
-    * The {@link javax.enterprise.inject.spi.ObserverMethod} object that will be
-    * used by the container to invoke the observer when a matching event is
-    * fired.
-    * 
-    * @return the {@link javax.enterprise.inject.spi.ObserverMethod} object that
-    *         will be used by the container to call the observer method
-    */
-   public ObserverMethod<T> getObserverMethod();
+    /**
+     * The {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to invoke the observer
+     * when a matching event is fired.
+     * 
+     * @return the {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to call the
+     *         observer method
+     */
+    public ObserverMethod<T> getObserverMethod();
 
-   /**
-    * Registers a definition error with the container, causing the container to
-    * abort deployment after bean discovery is complete.
-    * 
-    * @param t A {@link java.lang.Throwable} representing the definition error
-    */
-   public void addDefinitionError(Throwable t);
+    /**
+     * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
+     * complete.
+     * 
+     * @param t A {@link java.lang.Throwable} representing the definition error
+     */
+    public void addDefinitionError(Throwable t);
 }

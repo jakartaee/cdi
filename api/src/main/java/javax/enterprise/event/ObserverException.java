@@ -19,36 +19,30 @@ package javax.enterprise.event;
 
 /**
  * <p>
- * Indicates that a checked exception was thrown by an observer method during
- * event notification.
+ * Indicates that a checked exception was thrown by an observer method during event notification.
  * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
  */
-public class ObserverException extends RuntimeException
-{
+public class ObserverException extends RuntimeException {
 
-   private static final long serialVersionUID = -801836224808304381L;
+    private static final long serialVersionUID = -801836224808304381L;
 
-   public ObserverException()
-   {
+    public ObserverException() {
 
-   }
+    }
 
-   public ObserverException(String message)
-   {
-      super(message);
-   }
+    public ObserverException(String message) {
+        super(message);
+    }
 
-   public ObserverException(Throwable cause)
-   {
-      super(cause);
-   }
+    public ObserverException(Throwable cause) {
+        super(cause);
+    }
 
-   public ObserverException(String message, Throwable cause)
-   {
-      super(message, cause);
-   }
+    public ObserverException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

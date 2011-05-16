@@ -29,16 +29,15 @@ import java.lang.reflect.Field;
  * @param <X> the declaring type
  * @see Field
  */
-public interface AnnotatedField<X> extends AnnotatedMember<X>
-{
+public interface AnnotatedField<X> extends AnnotatedMember<X> {
 
-   /**
-    * <p>
-    * Get the underlying {@link Field}.
-    * </p>
-    * 
-    * @return the {@link Field}
-    */
-   public Field getJavaMember();
+    /**
+     * <p>
+     * Get the underlying {@link Field}.
+     * </p>
+     * 
+     * @return the {@link Field}
+     */
+    public Field getJavaMember();
 
 }
