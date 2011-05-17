@@ -113,6 +113,9 @@
     behavior results. Portable applications must deploy each bean class in no more 
     than one bean archive.</para>
     
+    <para>Bean archives may contain classes which are not deployed as beans. For example
+    a bean archive might contain message driven beans.</para>
+    
   </section>
   
   <section id="initialization">
