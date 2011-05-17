@@ -1,1 +1,5 @@
 api/target
+spec/build
+.project
+.settings
+.classpath
