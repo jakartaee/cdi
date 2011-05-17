@@ -296,16 +296,25 @@ public class PaymentStrategyProducer implements Serializable {
     the underlying resource, entity manager, entity manager factory, remote EJB 
     instance or web service reference. This object must be passivation capable.</para>
     
-    <para>When the <literal>destroy()</literal> method is called, the container 
-    discards this internal reference and performs any cleanup required of
-    state associated with the client or transaction.</para>
-    
     <para>The container must perform ordinary Java EE component environment
     injection upon any non-static field that functions as a resource declaration, 
     as defined by the Java EE platform and Common Annotations for the Java platform 
     specifications. The container is not required to perform Java EE component 
     environment injection upon a static field. Portable applications should not rely 
     upon the value of a static field that functions as a resource declaration.</para>
+    
+    <para>References to EJBs and web services are always dependent scoped and a new
+    instance must be obtained for every injection performed.</para>
+    
+    <para>For an entity manager associated with a resource definition, it must behave 
+    as though it were injected directly using <literal>@PersistencContext</literal>.</para>
+    
+    <para>When the <literal>destroy()</literal> method of a bean which represents a 
+    remote stateful EJB reference is called, the container will <emphasis>not</emphasis> 
+    automatically destroy the EJB reference. The application must explicitly call the
+    method annotated <literal>@Remove</literal>. This beahvior differs to that 
+    specified in <xref linkend="statefullifecycle" /> for beans which represent a 
+    local stateful EJB reference</para>
     
   </section>
   
