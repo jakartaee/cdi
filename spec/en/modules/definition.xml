@@ -252,7 +252,7 @@ public class BookShop
 
   </section>
 
-  <section>
+  <section id="qualifiers">
     <title>Qualifiers</title>
 
     <para>For a given bean type, there may be multiple beans which implement 
@@ -525,7 +525,7 @@ PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync,
     
   </section>
 
-  <section>
+  <section id="scopes">
     <title>Scopes</title>
     
     <para>Java EE components such as servlets, EJBs and JavaBeans do not have a 
@@ -726,7 +726,7 @@ public class Order { ... }</programlisting>
      
   </section>
 
-  <section>
+  <section id="names">
     <title>Bean EL names</title>
 
     <para>A bean may have a <emphasis>bean EL name</emphasis>. A bean with 
@@ -838,7 +838,7 @@ public class Order { ... }</programlisting>
 
   </section>
   
-  <section>
+  <section id="alternatives">
     <title>Alternatives</title>
     
     <para>An <emphasis>alternative</emphasis> is a bean that must be explicitly 
