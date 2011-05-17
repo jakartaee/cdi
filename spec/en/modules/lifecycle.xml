@@ -296,10 +296,6 @@ public class PaymentStrategyProducer implements Serializable {
     the underlying resource, entity manager, entity manager factory, remote EJB 
     instance or web service reference. This object must be passivation capable.</para>
     
-    <para>When the <literal>destroy()</literal> method is called, the container 
-    discards this internal reference and performs any cleanup required of
-    state associated with the client or transaction.</para>
-    
     <para>The container must perform ordinary Java EE component environment
     injection upon any non-static field that functions as a resource declaration, 
     as defined by the Java EE platform and Common Annotations for the Java platform 
