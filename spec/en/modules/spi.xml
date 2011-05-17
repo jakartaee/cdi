@@ -988,7 +988,9 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         </listitem>
         <listitem>
           <para><literal>addAnnotatedType()</literal> adds a given <literal>AnnotatedType</literal>
-          to the set of types which will be scanned during bean discovery.</para>
+          to the set of types which will be scanned during bean discovery. More than one 
+          <literal>AnnotatedType</literal> may use the same base type, and the container must 
+          consider these as different types.</para>
         </listitem>
       </itemizedlist>
     
