@@ -13,32 +13,24 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * If the annotation that is annotated with this meta-annotation is applied to an interface or abstract class then the container
- * will automatically provide a concrete implementation of the class/interface, and delegate all calls to abstract methods to
- * the handler class specified by this annotations.
+ * If the annotation that declares this meta-annotation is applied to an interface or abstract class then the container will
+ * automatically provide a concrete implementation of the class/interface, and delegate all calls to abstract methods to the
+ * handler class specified by these annotations.
  * </p>
  * 
  * <p>
- * The handler class must have a method with the following signature:
+ * Example of a {@link ServiceHandlerBinding} annotation:
  * </p>
  * 
  * <pre>
- *    &#64;AroundInvoke public Object aroundInvoke(final InvocationContext invocation) throws Exception
+ * &#064;Retention(RUNTIME)
+ * &#064;Target({ TYPE, METHOD })
+ * &#064;ServiceHandlerBindingType
+ * public &#064;interface EchoService {
+ * }
  * </pre>
  * 
- * <p>
- * Initializer methods and <code>&#64;PostConstruct</code> methods declared on the invocation handler will be called, however
- * <code>&#64;PreDestory</code> methods will not be called.
- * </p>
- * 
- * <p>
- * The annotation should have:
- * </p>
- * 
- * <pre>
- * &#64;Retention(RUNTIME)
- * &#64;Target({ TYPE })
- * </pre>
+ * @see javax.servicehandler.ServiceHandler javadoc for an example of implementation of this binding type
  * 
  * @author Stuart Douglas <stuart.w.douglas@gmail.com>
  * @author George Gastaldi <gegastaldi@gmail.com>
