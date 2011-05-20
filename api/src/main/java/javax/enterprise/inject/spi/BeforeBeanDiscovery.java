@@ -18,6 +18,12 @@ package javax.enterprise.inject.spi;
 
 import java.lang.annotation.Annotation;
 
+import javax.enterprise.context.NormalScope;
+import javax.enterprise.inject.Stereotype;
+import javax.inject.Qualifier;
+import javax.inject.Scope;
+import javax.interceptor.InterceptorBinding;
+
 /**
  * <p>
  * This event type is thrown by the container before the bean discovery process begins. If any observer method of the
@@ -29,14 +35,29 @@ import java.lang.annotation.Annotation;
  */
 public interface BeforeBeanDiscovery {
     /**
+     * <p>
      * Declares an annotation type as a {@linkplain javax.inject.Qualifier} qualifier type.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation a qualifier without adding {@link Qualifier} to it.
+     * </p>
      * 
      * @param qualifier The annotation to treat as a qualifier
      */
     public void addQualifier(Class<? extends Annotation> qualifier);
 
     /**
+     * <p>
      * Declares an annotation type as a {@linkplain javax.enterprise.context scope type}.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation a scope type without adding the {@link NormalScope} 
+     * or {@link Scope} annotations to it. You can also use this method to override an existing normal scope definition.
+     * </p>
+     * 
+     * @see AfterBeanDiscovery#addContext(javax.enterprise.context.spi.Context)
      * 
      * @param scopeType The annotation type to treat as a {@linkplain javax.enterprise.context scope type}
      * @param normal Indicates if the scope is normal
@@ -46,8 +67,15 @@ public interface BeforeBeanDiscovery {
     public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
 
     /**
+     * <p>
      * Declares an annotation type as a {@linkplain javax.enterprise.inject.Stereotype stereotype}, and specifies its
      * meta-annotations.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation a stereotype without adding {@link Stereotype} to it.
+     * You can also use this method to override an existing stereotype definition. 
+     * </p>
      * 
      * @param stereotype The annotation type to treat as a {@linkplain javax.enterprise.inject.Stereotype stereotype}
      * @param stereotypeDef An optional list of annotations defining the {@linkplain javax.enterprise.inject.Stereotype
@@ -56,7 +84,13 @@ public interface BeforeBeanDiscovery {
     public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
 
     /**
+     * <p>
      * Declares an annotation type as an {@linkplain Interceptor interceptor} binding type, and specifies its meta-annotations.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation an interceptor binding type without adding {@link InterceptorBinding} to it.
+     * </p>
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
      * @param bindingTypeDef An optional list of annotations defining the {@linkplain Interceptor interceptor}
