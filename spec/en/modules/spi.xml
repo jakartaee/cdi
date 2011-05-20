@@ -895,8 +895,8 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
     </itemizedlist>
     
     <para>The container must use the operations of <literal>Annotated</literal>
-    and its subinterfaces to discover program element types and annotations, instead 
-    of directly calling the Java Reflection API. In particular, the container must:</para>
+    and its subinterfaces to discover program element types and annotations. The container
+    must not directly call the Java Reflection API. In particular, the container must:</para>
     
     <itemizedlist>
       <listitem>
@@ -1182,7 +1182,7 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
     
       <para>Any observer of this event is permitted to wrap and/or replace the 
       <literal>AnnotatedType</literal>. The container must use the final value of this property, 
-      after all observers have been called, to discover the types and read the annotations of 
+      after all observers have been called, as the only source of types and annotations for the 
       the program elements.</para>
     
       <para>For example, the following observer decorates the <literal>AnnotatedType</literal>
