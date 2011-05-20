@@ -685,6 +685,11 @@ else {
           a JTA transaction in progress, the container calls the observer method during the 
           appropriate transaction completion phase.</para>
         </listitem>
+        <listitem>
+          <para>If the observer method is a conditional observer method and there is no context 
+          active for the scope to which the bean declaring the observer method belongs, then
+          the observer method should not be called.</para>
+        </listitem>
         <!--
         <listitem>
           <para>Otherwise, if the observer method is an asynchronous observer method, the container
