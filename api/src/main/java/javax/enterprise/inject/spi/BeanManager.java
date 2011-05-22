@@ -346,20 +346,40 @@ public interface BeanManager {
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
      * @param injectionTarget an {@link InjectionTarget}, which is used to create and destroy instances of the bean, to perform
-     *        dependency injection and lifecycle callbacks, and which determines the return value of {@link Bean#getInjectionPoints()}
+     *        dependency injection and lifecycle callbacks, and which determines the return value of
+     *        {@link Bean#getInjectionPoints()}
      * @return a container provided implementation of {@link Bean}
      */
     public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, InjectionTarget<?> injectionTarget);
-    
+
     /**
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link Producer}.
      * 
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
-     * @param producer a Producer, which is used to create and destroy instances of the bean, and which determines the return value of {@link Bean#getInjectionPoints()}
+     * @param producer a Producer, which is used to create and destroy instances of the bean, and which determines the return
+     *        value of {@link Bean#getInjectionPoints()}
      * @return a container provided implementation of {@link Bean}
      */
     public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, Producer<?> producer);
+
+    /**
+     * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
+     * 
+     * @param field the {@link AnnotatedField} defining the injection point
+     * @return the container provided {@link InjectionPoint}
+     * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     */
+    public InjectionPoint createInjectionPoint(AnnotatedField<?> field);
+
+    /**
+     * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedParameter}.
+     * 
+     * @param parameter the {@link AnnotatedParameter} defining the injection point
+     * @return the container provided {@link InjectionPoint}
+     * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     */
+    public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
 
 }

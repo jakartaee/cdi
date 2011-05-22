@@ -1205,7 +1205,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessInjectionPoint&lt;T, X&gt;</literal> where 
-      <literal>T</literal> is the bean class of the bean that declares the injectoion point, and 
+      <literal>T</literal> is the bean class of the bean that declares the injection point, and 
       <literal>X</literal> is the declared type of the injection point.</para>
       
       <programlisting><![CDATA[public interface ProcessInjectionPoint<T, X> {
