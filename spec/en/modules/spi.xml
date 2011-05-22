@@ -741,8 +741,8 @@ public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);]]><
     <literal>IllegalArgumentException</literal> if there is a definition error associated with 
     the declared bean attributes.</para>
     
-    <programlisting><![CDATA[public BeanAttributes createBeanAttributes(AnnotatedType<?> type);
-public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></programlisting>
+    <programlisting><![CDATA[public <T> BeanAttributes<T> createBeanAttributes(AnnotatedType<T> type);
+public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></programlisting>
 
   </section>
   
@@ -1109,10 +1109,10 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       <para>The event object must be of type <literal>javax.enterprise.inject.spi.ProcessModule</literal>.</para>
       
       <programlisting><![CDATA[public interface ProcessModule {
-    public Set<Class> getAlternatives();
-    public List<Class> getInterceptors();
-    public List<Class> getDecorators();
-    public Iterator<AnnotatedType> getAnnotatedTypes();
+    public Set<Class<?>> getAlternatives();
+    public List<Class<?>> getInterceptors();
+    public List<Class<?>> getDecorators();
+    public Iterator<AnnotatedType<?>> getAnnotatedTypes();
 }]]></programlisting>
 
       <itemizedlist>
@@ -1405,7 +1405,7 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       
       <programlisting><![CDATA[public interface ProcessBeanAttributes<T> {
     public Annotated getAnnotated();
-    public BeanAttributes getBeanAttributes();
+    public BeanAttributes<T> getBeanAttributes();
     public void setBeanAttributes(BeanAttributes<T> beanAttributes);
     public void addDefinitionError(Throwable t);
     public void veto();
