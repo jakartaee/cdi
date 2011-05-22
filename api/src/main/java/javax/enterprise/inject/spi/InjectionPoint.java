@@ -79,7 +79,7 @@ public interface InjectionPoint {
      * @return the {@link javax.enterprise.inject.spi.Bean} object representing bean that defines the injection point, of null
      *         if the injection point does not belong to a bean
      */
-    public Bean<?> getBean();
+    public BeanAttributes<?> getBean();
 
     /**
      * Get the {@link java.lang.reflect.Field} object in the case of field injection, the {@link java.lang.reflect.Method}

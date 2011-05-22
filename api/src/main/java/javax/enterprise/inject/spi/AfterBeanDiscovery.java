@@ -59,7 +59,7 @@ public interface AfterBeanDiscovery {
      * 
      * @param bean The bean to add to the deployment
      */
-    public void addBean(Bean<?> bean);
+    public void addBean(BeanAttributes<?> bean);
 
     /**
      * Fires an event of type {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the given
