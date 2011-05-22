@@ -382,4 +382,14 @@ public interface BeanManager {
      */
     public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
 
+    /**
+     * Obtains the container's instance of an Extension class declared in <code>META-INF/services</code>.
+     * 
+     * @param <T> the type of the extension
+     * @param extensionClass the type of the extension class
+     * @return the extension instance
+     * @throws IllegalArgumentException if the container has no instance of the given class
+     */
+    public <T extends Extension> T getExtension(Class<T> extensionClass);
+
 }
