@@ -1109,10 +1109,10 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       <para>The event object must be of type <literal>javax.enterprise.inject.spi.ProcessModule</literal>.</para>
       
       <programlisting><![CDATA[public interface ProcessModule {
-    public Set<Class> getAlternatives();
-    public List<Class> getInterceptors();
-    public List<Class> getDecorators();
-    public Iterator<AnnotatedType> getAnnotatedTypes();
+    public Set<Class<?>> getAlternatives();
+    public List<Class<?>> getInterceptors();
+    public List<Class<?>> getDecorators();
+    public Iterator<AnnotatedType<?>> getAnnotatedTypes();
 }]]></programlisting>
 
       <itemizedlist>
