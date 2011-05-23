@@ -978,6 +978,9 @@ public @interface PayBy {
     <para>The <literal>InjectionPoint</literal> injected into a disposer method represents the producer
     method for which the disposer method is being invoked.</para>
     
+    <para>The <literal>InjectionPoint</literal> injected into a decorator represents the injection point
+    on the bean the decorated type is injected into.</para>
+    
   </section>
 
   </section>
