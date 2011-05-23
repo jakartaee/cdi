@@ -116,6 +116,8 @@
     <para>Bean archives may contain classes which are not deployed as beans. For example
     a bean archive might contain message driven beans.</para>
     
+    <para>An extension may be deployed in any archive, including those that are not bean archives.</para>
+    
   </section>
   
   <section id="initialization">
