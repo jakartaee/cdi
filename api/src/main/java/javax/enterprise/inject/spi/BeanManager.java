@@ -53,6 +53,12 @@ import javax.enterprise.inject.UnsatisfiedResolutionException;
  * </p>
  * 
  * <p>
+ * Web components may obtain an instance of <tt>BeanManager</tt> by calling
+ * {@link javax.servlet.ServletContext#getAttribute(String)} with <tt>javax.enterprise.inject.spi.BeanManager</tt> as the
+ * attribute name.
+ * </p>
+ * 
+ * <p>
  * Any operation of <tt>BeanManager</tt> may be called at any time during the execution of the application.
  * </p>
  * 
@@ -69,7 +75,7 @@ public interface BeanManager {
      * @param bean the {@link Bean} object representing the bean
      * @param beanType a bean type that must be implemented by any client proxy that is returned
      * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that may be used to destroy any object with scope
-     *        {javax.enterprise.context.Dependent} that is created
+     *        {@link javax.enterprise.context.Dependent} that is created
      * @return a contextual reference representing the bean
      * @throws IllegalArgumentException if the given type is not a bean type of the given bean
      */
@@ -80,7 +86,7 @@ public interface BeanManager {
      * 
      * @param ij the target injection point
      * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that may be used to destroy any object with scope
-     *        {javax.enterprise.context.Dependent} that is created
+     *        {@link javax.enterprise.context.Dependent} that is created
      * @return the injectable reference
      * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
      * @throws AmbiguousResolutionException typesafe resolution results in an unresolvable ambiguous dependency
