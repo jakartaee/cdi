@@ -384,7 +384,7 @@ public class ShoppingCart { ... }</programlisting>
 public class TransactionalSecurityInterceptor {
 
    @AroundInvoke 
-   public void aroundInvoke() throws Exception { ... }
+   public Object aroundInvoke(InvocationContext context) throws Exception { ... }
 
 }</programlisting>
 
