@@ -172,17 +172,9 @@ class TimestampLogger implements Logger {
       <para>A decorator may be an abstract Java class, and is not required to 
       implement every method of every decorated type.</para>
       
-      <para>The decorator intercepts every method:</para>
-      
-      <itemizedlist>
-        <listitem>
-          <para>declared by a decorated type of the decorator</para>
-        </listitem>
-        <listitem>
-          <para>that is implemented by the bean class of the decorator.</para>
-        </listitem>
-      </itemizedlist>
-      
+      <para>The decorator intercepts every method which is declared by a decorated type
+	of the decorator and is implemented by the bean class of the decorator.</para>
+ 
      </section>
 
     </section>
