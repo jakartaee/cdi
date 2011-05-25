@@ -170,7 +170,11 @@ class TimestampLogger implements Logger {
       <para>A decorator is not required to implement the delegate type.</para>
       
       <para>A decorator may be an abstract Java class, and is not required to 
-      implement every method of every decorated type.</para>
+      implement every method of every decorated type. Whenever the decorator does
+      not implement a method of the decorated type, the container will provide an 
+      implicit implementation that calls the method on the delegate. If a decorator 
+      has abstract methods that are not declared by a decorated type, the container 
+      automatically detects the problem and treats it as a definition error. </para>
       
       <para>The decorator intercepts every method:</para>
       
