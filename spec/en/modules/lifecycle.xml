@@ -147,6 +147,10 @@ public class PaymentStrategyProducer implements Serializable {
         <para>Invocations of message listener methods of message-driven
         beans during message delivery are business method invocations.</para>
       </listitem>
+	  <listitem>
+        <para>Invocations of methods declared by java.lang.Object are not 
+	     business method invocations.</para>
+      </listitem>
     </itemizedlist>
     
     <para>If, and only if, an invocation is a business method invocation:</para>

@@ -741,8 +741,8 @@ public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);]]><
     <literal>IllegalArgumentException</literal> if there is a definition error associated with 
     the declared bean attributes.</para>
     
-    <programlisting><![CDATA[public BeanAttributes createBeanAttributes(AnnotatedType<?> type);
-public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></programlisting>
+    <programlisting><![CDATA[public <T> BeanAttributes<T> createBeanAttributes(AnnotatedType<T> type);
+public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></programlisting>
 
   </section>
   
@@ -895,8 +895,8 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
     </itemizedlist>
     
     <para>The container must use the operations of <literal>Annotated</literal>
-    and its subinterfaces to discover program element types and annotations, instead 
-    of directly calling the Java Reflection API. In particular, the container must:</para>
+    and its subinterfaces to discover program element types and annotations. The container
+    must not directly call the Java Reflection API. In particular, the container must:</para>
     
     <itemizedlist>
       <listitem>
@@ -1109,10 +1109,10 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       <para>The event object must be of type <literal>javax.enterprise.inject.spi.ProcessModule</literal>.</para>
       
       <programlisting><![CDATA[public interface ProcessModule {
-    public Set<Class> getAlternatives();
-    public List<Class> getInterceptors();
-    public List<Class> getDecorators();
-    public Iterator<AnnotatedType> getAnnotatedTypes();
+    public Set<Class<?>> getAlternatives();
+    public List<Class<?>> getInterceptors();
+    public List<Class<?>> getDecorators();
+    public Iterator<AnnotatedType<?>> getAnnotatedTypes();
 }]]></programlisting>
 
       <itemizedlist>
@@ -1182,7 +1182,7 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
     
       <para>Any observer of this event is permitted to wrap and/or replace the 
       <literal>AnnotatedType</literal>. The container must use the final value of this property, 
-      after all observers have been called, to discover the types and read the annotations of 
+      after all observers have been called, as the only source of types and annotations for the 
       the program elements.</para>
     
       <para>For example, the following observer decorates the <literal>AnnotatedType</literal>
@@ -1205,7 +1205,7 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessInjectionPoint&lt;T, X&gt;</literal> where 
-      <literal>T</literal> is the bean class of the bean that declares the injectoion point, and 
+      <literal>T</literal> is the bean class of the bean that declares the injection point, and 
       <literal>X</literal> is the declared type of the injection point.</para>
       
       <programlisting><![CDATA[public interface ProcessInjectionPoint<T, X> {
@@ -1405,7 +1405,7 @@ public BeanAttributes createBeanAttributes(AnnotatedMember<?> member);]]></progr
       
       <programlisting><![CDATA[public interface ProcessBeanAttributes<T> {
     public Annotated getAnnotated();
-    public BeanAttributes getBeanAttributes();
+    public BeanAttributes<T> getBeanAttributes();
     public void setBeanAttributes(BeanAttributes<T> beanAttributes);
     public void addDefinitionError(Throwable t);
     public void veto();

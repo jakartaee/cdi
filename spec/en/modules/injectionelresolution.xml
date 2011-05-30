@@ -871,8 +871,17 @@ public @interface PayBy {
     
     <para>The interface <literal>javax.enterprise.inject.spi.InjectionPoint</literal> provides access 
     to metadata about an injection point. An instance of <literal>InjectionPoint</literal> may
-    represent an injected field or a parameter of a bean constructor, initializer method,
-    producer method, disposer method or observer method.</para>
+    represent:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>an injected field or a parameter of a bean constructor, initializer method,
+    	producer method, disposer method or observer method, or</para>
+   	  </listitem>
+   	  <listitem>
+   	    <para>an instance obtained dynamically using <literal>Instance.get()</literal>.</para>
+   	  </listitem>
+    </itemizedlist>
     
     <programlisting><![CDATA[public interface InjectionPoint {
     public Type getType();
@@ -888,33 +897,57 @@ public @interface PayBy {
       <listitem>
         <para>The <literal>getBean()</literal> method returns the <literal>Bean</literal> object 
         representing the bean that defines the injection point. If the injection point does not
-        belong to a bean, <literal>getBean()</literal> returns a null value.</para>
+        belong to a bean, <literal>getBean()</literal> returns a null value. If the injection 
+        point represents a dynamically obtained instance, the <literal>getBean()</literal> method
+        should return the <literal>Bean</literal> object representing the bean that defines the 
+        <literal>Instance</literal> injection point.</para>
       </listitem>
       <listitem>
         <para>The <literal>getType()</literal> and <literal>getQualifiers()</literal> methods 
-        return the required type and required qualifiers of the injection point.</para>
+        return the required type and required qualifiers of the injection point. If the injection 
+        point represents a dynamically obtained instance, the <literal>getType()</literal> and 
+        <literal>getQualifiers()</literal> methods should return the required type (as defined
+        by <literal>Instance.select()</literal>), and required qualifiers of the injection point
+        including any additional required qualifers (as defined by 
+        <literal>Instance.select()</literal>).</para>
       </listitem>
       <listitem>
         <para>The <literal>getMember()</literal> method returns the <literal>Field</literal> object 
         in the case of field injection, the <literal>Method</literal> object in the case of method 
-        parameter injection or the <literal>Constructor</literal> object in the case of constructor 
-        parameter injection.</para>
+        parameter injection, or the <literal>Constructor</literal> object in the case of constructor 
+        parameter injection. If the injection point represents a dynamically obtained instance, 
+        the <literal>getMember()</literal> method returns the <literal>Field</literal> object 
+        representing the field that defines the <literal>Instance</literal> injection point
+        in the case of field injection, the <literal>Method</literal> object representing the method
+        that defines the <literal>Instance</literal> injection point in the case of method 
+        parameter injection, or the <literal>Constructor</literal> object representing the 
+        constructor that defines the <literal>Instance</literal> injection point in the case of
+        constructor parameter injection.</para>
       </listitem>
       <listitem>
         <para>The <literal>getAnnotated()</literal> method returns an instance of
         <literal>javax.enterprise.inject.spi.AnnotatedField</literal> or 
-        <literal>javax.enterprise.inject.spi.AnnotatedParameter</literal>, depending upon 
-        whether the injection point is an injected field or a constructor/method
-        parameter.</para>
+        <literal>javax.enterprise.inject.spi.AnnotatedParameter</literal>, depending upon whether 
+        the injection point is an injected field or a constructor/method parameter. If the 
+        injection point represents a dynamically obtained instance, then the 
+        <literal>getAnnotated()</literal>method returns an instance of
+        <literal>javax.enterprise.inject.spi.AnnotatedField</literal> or 
+        <literal>javax.enterprise.inject.spi.AnnotatedParameter</literal> representing the 
+        <literal>Instance</literal> injection point, depending upon whether the injection point is an injected
+        field or a constructor/method parameter.</para> 
       </listitem>
       <listitem>
         <para>The <literal>isDelegate()</literal> method returns <literal>true</literal>
         if the injection point is a decorator delegate injection point, and 
-        <literal>false</literal> otherwise.</para>
+        <literal>false</literal> otherwise. If the injection point represents a dynamically 
+        obtained instance then <literal>isDelegate()</literal> return false.</para>
       </listitem>
       <listitem>
         <para>The <literal>isTransient()</literal> method returns <literal>true</literal> 
-        if the injection point is a transient field, and <literal>false</literal> 
+        if the injection point is a transient field, and <literal>false</literal> otherwise. If the
+        injection point represents a dynamically obtained instance then the 
+        <literal>isTransient()</literal> method returns <literal>true</literal> if the 
+        <literal>Instance</literal> injection point is a transient field, and <literal>false</literal> 
         otherwise.</para>
       </listitem>
     </itemizedlist>
@@ -941,6 +974,9 @@ public @interface PayBy {
     <para>If a Java EE component class supporting injection that is not a bean has an 
     injection point of type <literal>InjectionPoint</literal> and qualifier <literal>@Default</literal>, 
     the container automatically detects the problem  and treats it as a definition error.</para>
+    
+    <para>The <literal>InjectionPoint</literal> injected into a disposer method represents the producer
+    method for which the disposer method is being invoked.</para>
     
   </section>
 

@@ -37,8 +37,13 @@ package javax.enterprise.event;
  */
 public enum Reception {
     /**
+     * <p>
      * Specifies that an observer method is only called if the current instance of the bean declaring the observer method
      * already exists.
+     * </p>
+     * <p>
+     * If there is no active context for the scope to which the bean declaring this observer method belongs.
+     * </p>
      */
     IF_EXISTS,
 

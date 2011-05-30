@@ -49,12 +49,12 @@ public enum InterceptionType {
     PRE_DESTROY,
 
     /**
-     * Intercepts bean passivation
+     * Intercepts bean passivation, only called for EJBs
      */
     PRE_PASSIVATE,
 
     /**
-     * Intercepts bean activation
+     * Intercepts bean activation, only called for EJBs
      */
     POST_ACTIVATE
 }

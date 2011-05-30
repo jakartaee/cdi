@@ -269,7 +269,7 @@ public interface BeanManager {
 
     /**
      * Obtains an active {@linkplain javax.enterprise.context.spi.Context context object} for the given
-     * {@linkplain javax.enterprise.context scope}.
+     * {@linkplain javax.enterprise.context scope} .
      * 
      * @param scopeType the {@linkplain javax.enterprise.context scope}
      * @return the {@linkplain javax.enterprise.context.spi.Context context object}
@@ -316,5 +316,80 @@ public interface BeanManager {
      * @throws IllegalArgumentException if there is a definition error associated with any injection point of the type
      */
     public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
+
+    /**
+     * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
+     * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
+     * instead.
+     * 
+     * @param <T> the type
+     * @param type the {@link AnnotatedType}
+     * @return a container probided implementation of {@link InjectionTarget}
+     */
+    public <T> BeanAttributes<T> createBeanAttributes(AnnotatedType<T> type);
+
+    /**
+     * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
+     * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
+     * instead.
+     * 
+     * @param <T> the type
+     * @param type the {@link AnnotatedType}
+     * @return a container probided implementation of {@link InjectionTarget}
+     */
+    public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> type);
+
+    /**
+     * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link InjectionTarget}.
+     * 
+     * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
+     *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
+     * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
+     * @param injectionTarget an {@link InjectionTarget}, which is used to create and destroy instances of the bean, to perform
+     *        dependency injection and lifecycle callbacks, and which determines the return value of
+     *        {@link Bean#getInjectionPoints()}
+     * @return a container provided implementation of {@link Bean}
+     */
+    public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, InjectionTarget<?> injectionTarget);
+
+    /**
+     * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link Producer}.
+     * 
+     * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
+     *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
+     * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
+     * @param producer a Producer, which is used to create and destroy instances of the bean, and which determines the return
+     *        value of {@link Bean#getInjectionPoints()}
+     * @return a container provided implementation of {@link Bean}
+     */
+    public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, Producer<?> producer);
+
+    /**
+     * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
+     * 
+     * @param field the {@link AnnotatedField} defining the injection point
+     * @return the container provided {@link InjectionPoint}
+     * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     */
+    public InjectionPoint createInjectionPoint(AnnotatedField<?> field);
+
+    /**
+     * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedParameter}.
+     * 
+     * @param parameter the {@link AnnotatedParameter} defining the injection point
+     * @return the container provided {@link InjectionPoint}
+     * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     */
+    public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
+
+    /**
+     * Obtains the container's instance of an Extension class declared in <code>META-INF/services</code>.
+     * 
+     * @param <T> the type of the extension
+     * @param extensionClass the type of the extension class
+     * @return the extension instance
+     * @throws IllegalArgumentException if the container has no instance of the given class
+     */
+    public <T extends Extension> T getExtension(Class<T> extensionClass);
 
 }
