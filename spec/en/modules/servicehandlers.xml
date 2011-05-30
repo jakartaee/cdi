@@ -19,4 +19,59 @@
       </listitem>
     </itemizedlist>
   </para>
+  <section id="servicehandlerbindings">
+    <title>Service Handler binding types</title>
+    <para>A <emphasis>service handler binding type</emphasis> is a Java annotation defined as
+        <literal>@Target({TYPE, METHOD})</literal> or <literal>@Target(TYPE)</literal> and
+        <literal>@Retention(RUNTIME)</literal>.</para>
+    <para>An service handler binding type may be declared by specifying the
+        <literal>@javax.servicehandler.ServiceHandlerBinding</literal> meta-annotation.</para>
+    <programlisting>@Inherited
+@ServiceHandlerBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface QueryService {}</programlisting>
+  </section>
+  <section id="declaringinterceptor">
+    <title>Declaring the service handler binding of a service handler</title>
+    <para>The service handler binding of a service handler is specified by annotating the service
+      handler class with the binding type and the
+        <literal>@javax.servicehandler.ServiceHandler</literal> annotation.</para>
+    <para>
+      <programlisting>@Retention(RUNTIME)
+@Target({METHOD})
+@interface Query {   
+     String value();   
+}</programlisting>
+    </para>
+    <programlisting>@QueryService @ServiceHandler
+public class QueryServiceHandler {
+
+   @Inject    
+   javax.persistence.EntityManager em;     
+
+   @AroundInvoke 
+   public Object handleQueryInvocation(InvocationContext ctx) throws Exception {
+      return em.createQuery(ctx.getMethod().getAnnotation(Query.class).value()).getResultList();
+   }
+
+}</programlisting>
+  </section>
+  <section>
+    <title>Binding a service handler to a bean</title>
+    <para>A service handler binding may be declared by annotating a interface or an abstract class,
+      with the service handler binding type.</para>
+    <para>In the following example, the <literal>QueryServiceHandler</literal> will be applied at
+      the class level, and therefore applies to all business methods of the class:</para>
+    <programlisting>@QueryService
+public interface ProductDAO{
+
+     @Query("select obj from Product obj where obj.productName like ?")
+     List&lt;Product> getAllProducts();
+
+}</programlisting>
+    <para>An abstract class or interface may define multiple service handlers.</para>
+    <para>If a service handler binding annotation is specified on an abstract method, the called
+      service handler applied will be .</para>
+  </section>
 </chapter>
