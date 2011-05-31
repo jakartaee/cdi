@@ -22,13 +22,12 @@
   <section id="servicehandlerbindings">
     <title>Service Handler binding types</title>
     <para>A <emphasis>service handler binding type</emphasis> is a Java annotation defined as
-        <literal>@Target({TYPE, METHOD})</literal> or <literal>@Target(TYPE)</literal> and
-        <literal>@Retention(RUNTIME)</literal>.</para>
+        <literal>@Target(TYPE)</literal> and <literal>@Retention(RUNTIME)</literal>.</para>
     <para>An service handler binding type may be declared by specifying the
         <literal>@javax.servicehandler.ServiceHandlerBinding</literal> meta-annotation.</para>
     <programlisting>@Inherited
 @ServiceHandlerBinding
-@Target({TYPE, METHOD})
+@Target(TYPE)
 @Retention(RUNTIME)
 public @interface QueryService {}</programlisting>
   </section>
@@ -57,21 +56,30 @@ public class QueryServiceHandler {
 
 }</programlisting>
   </section>
-  <section>
+  <section id="bindingservicehandlertobean">
     <title>Binding a service handler to a bean</title>
     <para>A service handler binding may be declared by annotating a interface or an abstract class,
       with the service handler binding type.</para>
-    <para>In the following example, the <literal>QueryServiceHandler</literal> will be applied at
-      the class level, and therefore applies to all business methods of the class:</para>
+    <para>In the following example, the <literal>QueryServiceHandler</literal> will be applied to
+      all abstract methods of the abstract class or interface:</para>
     <programlisting>@QueryService
 public interface ProductDAO{
 
-     @Query("select obj from Product obj where obj.productName like ?")
+     @Query("SELECT obj FROM Product obj")
      List&lt;Product> getAllProducts();
 
 }</programlisting>
-    <para>An abstract class or interface may define multiple service handlers.</para>
-    <para>If a service handler binding annotation is specified on an abstract method, the called
-      service handler applied will be .</para>
+    <para>An abstract class or interface may not define multiple service handlers. Failure to do so
+      should result in a definition error. </para>
+    <para>Interceptors and decorators are called before service handlers. </para>
+    <para>If an implementation is provided to a Service Handler annotated interface and this
+      implementation is not abstract, then the Service Handler bean should not be registered on
+      deployment time.</para>
+    <para/>
+  </section>
+  <section id="servicehandlerresolution">
+    <title>Service Handler resolution</title>
+    <para>Service Handler resolution follows the same strategy as described in <xref
+        linkend="interceptorresolution"/></para>
   </section>
 </chapter>

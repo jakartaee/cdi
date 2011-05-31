@@ -20,6 +20,7 @@
 <!ENTITY interceptors              SYSTEM "modules/interceptors.xml">
 <!ENTITY helperliterals            SYSTEM "modules/helperliterals.xml">
 <!ENTITY packages                  SYSTEM "modules/packages.xml">
+<!ENTITY servicehandlers           SYSTEM "modules/servicehandlers.xml">
 ]>
 
 <book lang="en">
@@ -54,6 +55,7 @@
     &lifecycle;
     &decorators;
     &interceptors;
+    &servicehandlers;
     &events;
     &spi;
     &packagingdeployment;
