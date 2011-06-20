@@ -1907,7 +1907,7 @@ public class Order {
           <para>has scope <literal>@Dependent</literal>,</para>
         </listitem>
         <listitem>
-          <para>has a exactly one qualifier: <literal>@javax.enterprise.inject.New(X.class)</literal>
+          <para>has exactly one qualifier: <literal>@javax.enterprise.inject.New(X.class)</literal>
           where <literal>X</literal> is the bean class,</para> 
         </listitem>
         <listitem>
