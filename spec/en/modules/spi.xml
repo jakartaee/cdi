@@ -821,6 +821,12 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     exist on a bean class. The portable extension is responsible for implementing the 
     interfaces, thereby exposing the metadata to the container.</para>
     
+    <para>In general, the behavior is as defined by the Java Language Specification, and
+    only deviations from the Java Lanaguage Specification are noted.</para>
+    
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedType</literal> 
+    exposes the <literal>Class</literal> object and members.</para> 
+    
     <programlisting><![CDATA[public interface AnnotatedType<X>
         extends Annotated {
     public Class<X> getJavaClass();
@@ -829,20 +835,48 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     public Set<AnnotatedField<? super X>> getFields();
 }]]></programlisting>
 
+    <itemizedlist>
+      <listitem>
+        <para><literal>getConstructors()</literal> returns all the constructors
+        declared for the type.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getMethods()</literal> returns all the methods declared
+        on the type and those declared on any supertypes.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getFields()</literal> returns all the fields declared
+        on the type and those declared on any supertypes.</para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedField</literal> 
+    exposes the <literal>Field</literal> object.</para>
+
     <programlisting><![CDATA[public interface AnnotatedField<X> 
         extends AnnotatedMember<X> {    
     public Field getJavaMember();
 }]]></programlisting>
 
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedMethod</literal> 
+    exposes the <literal>Method</literal> object.</para>
+
     <programlisting><![CDATA[public interface AnnotatedMethod<X> 
         extends AnnotatedCallable<X> {
     public Method getJavaMember();
 }]]></programlisting>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedConstructor</literal> 
+    exposes the <literal>Constuctor</literal> object.</para>
     
     <programlisting><![CDATA[public interface AnnotatedConstructor<X> 
         extends AnnotatedCallable<X> {
     public Constructor<X> getJavaMember();
 }]]></programlisting>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedParameter</literal> 
+    exposes the <literal>position</literal> of the parameter object and the declaring 
+    program element.</para>
 
     <programlisting><![CDATA[public interface AnnotatedParameter<X> 
         extends Annotated {
@@ -850,12 +884,18 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     public AnnotatedCallable<X> getDeclaringCallable();
 }]]></programlisting>
 
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedMemember</literal> 
+    exposes the <literal>Member</literal> object and the declaring type of the member.</para>
+
     <programlisting><![CDATA[public interface AnnotatedMember<X> 
         extends Annotated {
     public Member getJavaMember();
     public boolean isStatic();
     public AnnotatedType<X> getDeclaringType();
 }]]></programlisting>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedCallable</literal> 
+    exposes the parameters of an invokable object.</para>
 
     <programlisting><![CDATA[public interface AnnotatedCallable<X> 
         extends AnnotatedMember<X> {
@@ -896,6 +936,10 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         or <literal>false</literal> otherwise.</para>
       </listitem>
     </itemizedlist>
+    
+    <para>If the <literal>Annotated</literal> represents a type, then the annotations returned
+    should include all annotations on the type and it's super types regardless of whether the
+    annotation is marked <literal>@Inherited</literal>.</para>
     
     <para>The container must use the operations of <literal>Annotated</literal>
     and its subinterfaces to discover program element types and annotations. The container
