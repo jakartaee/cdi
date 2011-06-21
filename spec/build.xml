@@ -7,7 +7,7 @@
    language, or you can call lang.revdiff to get a difference report for a particular
    language, compared with the English reference.
 -->
-<project name="JSR 299 specification" default="all.doc" basedir=".">
+<project name="CDI specification" default="all.doc" basedir=".">
     <!-- Allow this to be overriden by others importing this project. -->
     <dirname property="imported.basedir" file="${ant.file.ReferenceDocumentation}"/>
 
@@ -18,8 +18,10 @@
     <property name="support.dir"           value="${imported.basedir}/support"/>
 
     <!-- Base name for documentation artifacts. -->
-    <tstamp />
-    <property name="docname"               value="JSR-299-${DSTAMP}"/>
+    <tstamp>
+       <format property="date" pattern="dd MMMM yyyy "/>
+    </tstamp>
+    <property name="docname"               value="cdi-spec"/>
 
     <!-- Set DocBook stylesheets. -->
     <property name="db.style.fopdf"        value="fopdf.xsl"/>
@@ -61,6 +63,13 @@
         <delete dir="${build.dir}"/>
 
     </target>
+	
+	 <target name="prepare">
+	 	 <filter token="" value="${date}"/>
+	    <copy tofile="${lang}/master-filtered.xml" filtering="true">
+	       <fileset file="${lang}/master.xml" />
+	 	 </copy>
+	 </target>
 
     <target name="lang.all">
         <!-- Compile the documentation for a single language in all formats. -->
@@ -87,7 +96,7 @@
             <classpath refid="lib.classpath"/>
             <arg value="-o"/>
             <arg value="${build.dir}/${lang}/pdf/docbook_fop.tmp"/>
-            <arg value="${basedir}/${lang}/master.xml"/>
+            <arg value="${basedir}/${lang}/master-filtered.xml"/>
             <arg value="${basedir}/${lang}/styles/${db.style.fopdf}"/>
         </java>
 
@@ -121,7 +130,7 @@
         </java>
     </target>
 
-    <target name="lang.docpdf" depends="lang.docpdf.normal,lang.docpdf.customized"
+    <target name="lang.docpdf" depends="prepare,lang.docpdf.normal,lang.docpdf.customized"
             description="Generates the PDF documentation only for a language (set lang)">
         <!-- House keeping,delete temporary files. -->
         <delete>
@@ -130,19 +139,19 @@
         <delete  dir="${build.dir}/${lang}/pdf/images"/>
     </target>
 
-    <target name="lang.dochtml"
+    <target name="lang.dochtml" depends="prepare"
             description="Generates the HTML documentation only for a language (set lang)">
 
         <mkdir dir="${build.dir}/${lang}/html/"/>
 
         <java classname="com.icl.saxon.StyleSheet" fork="true" dir="${build.dir}/${lang}/html" maxmemory="192m">
             <classpath refid="lib.classpath"/>
-            <arg value="${basedir}/${lang}/master.xml"/>
+            <arg value="${basedir}/${lang}/master-filtered.xml"/>
             <arg value="${basedir}/${lang}/styles/${db.style.html}"/>
         </java>
     </target>
 
-    <target name="lang.dochtmlsingle"
+    <target name="lang.dochtmlsingle" depends="prepare"
         description="Generates the single-page HTML documentation only for a language (set lang)">
 
         <mkdir dir="${build.dir}/${lang}/html_single/"/>
@@ -151,12 +160,12 @@
             <classpath refid="lib.classpath"/>
             <arg value="-o"/>
             <arg value="${build.dir}/${lang}/html_single/index.html"/>
-            <arg value="${basedir}/${lang}/master.xml"/>
+            <arg value="${basedir}/${lang}/master-filtered.xml"/>
             <arg value="${basedir}/${lang}/styles/${db.style.htmlsingle}"/>
         </java>
     </target>
 
-    <target name="lang.htmlmisc">
+    <target name="lang.htmlmisc" depends="prepare">
 
         <!-- Copy images and CSS for HTML documentation, language specific. -->
         <copy todir="${build.dir}/${lang}/shared/images">
