@@ -685,7 +685,10 @@ public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stere
     
     <para>The method <literal>BeanManager.createAnnotatedType()</literal> returns
     an <literal>AnnotatedType</literal> that may be used to read the annotations
-    of a given Java class or interface.</para>
+    of a given Java class or interface. If the <literal>AnnotatedType</literal> for
+    the class has been wrapped or replaced by <literal>ProcessAnnotatedType</literal>
+    then the wrapped or replaced <literal>AnnotatedType</literal> should be returned
+    <literal>BeanManager.createAnnoatedType()</literal>.</para>
     
     <programlisting><![CDATA[public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);]]></programlisting>
     
