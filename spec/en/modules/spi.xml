@@ -182,6 +182,7 @@
     public Reception getReception();
     public TransactionPhase getTransactionPhase();
     public void notify(T event);
+    public void notify(T event, Set<Annotation> qualifiers);
 }]]></programlisting>
 
       <itemizedlist>
