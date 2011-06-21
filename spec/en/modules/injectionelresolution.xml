@@ -347,7 +347,7 @@
         </listitem>
         <listitem>
           <para>the required type parameter is an actual type, the bean type parameter 
-          is a type variable and the actual type is assignable to the upper bound, if 
+          is a type variable and the actual type is assignable from the upper bound, if
           any, of the type variable, or</para>
         </listitem>
         <listitem>
