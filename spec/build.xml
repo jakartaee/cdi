@@ -65,7 +65,7 @@
     </target>
 	
 	 <target name="prepare">
-	 	 <filter token="" value="${date}"/>
+	 	 <filter token="date" value="${date}"/>
 	    <copy tofile="${lang}/master-filtered.xml" filtering="true">
 	       <fileset file="${lang}/master.xml" />
 	 	 </copy>
