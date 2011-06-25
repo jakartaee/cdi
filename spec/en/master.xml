@@ -26,21 +26,34 @@
 <book lang="en">
 
     <bookinfo>
-        <title>JSR-299: Contexts and Dependency Injection for the Java EE platform</title>
+        <title>Contexts and Dependency Injection for the Java EE platform</title>
         <authorgroup>
           <othercredit>
-            <othername>JSR-299 Expert Group</othername>
+            <othername>CDI 1.1 Expert Group</othername>
+          </othercredit>
+          <author>
+            <firstname>Pete</firstname>
+            <surname>Muir</surname>
+            <affiliation>
+              <jobtitle>CDI 1.1 Specification Lead</jobtitle>
+              <orgname>Red Hat Middleware, LLC</orgname>
+            </affiliation>
+          </author>
+          <othercredit>
+            <othername>CDI 1.0 Expert Group</othername>
           </othercredit>
           <author>
             <firstname>Gavin</firstname>
             <surname>King</surname>
             <affiliation>
+              <jobtitle>CDI 1.0 Specification Lead</jobtitle>
               <orgname>Red Hat Middleware, LLC</orgname>
             </affiliation>
           </author>
         </authorgroup>
-        <releaseinfo>Final Draft</releaseinfo>
-        <date>10 November 2009</date>
+        <releaseinfo>CDI 1.1 Working Draft</releaseinfo>
+        <date>@date@</date>
+        <pubdate>@date@</pubdate>
     </bookinfo>
 
     <toc/>

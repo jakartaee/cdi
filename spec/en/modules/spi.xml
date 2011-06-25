@@ -336,6 +336,9 @@
     <para>Java EE components may obtain an instance of <literal>BeanManager</literal> 
     from JNDI by looking up the name <literal>java:comp/BeanManager</literal>.</para>
     
+    <para>Web components may obtain an instance of <literal>BeanManager</literal> 
+    by calling <literal>ServletContext.getAttribute("javax.enterprise.inject.spi.BeanManager")</literal>.</para>
+    
     <para>Any operation of <literal>BeanManager</literal> may be called at any time
     during the execution of the application.</para>
     
@@ -941,7 +944,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     
     <para>Service providers may have observer methods, which may observe any event, including 
     any container lifecycle event, and obtain an injected <literal>BeanManager</literal> 
-    reference.</para>
+    reference. If other beans are injected into service providers, non-portable behavior
+    results.</para>
     
     <para>The container instantiates a single instance of each extension at the beginning 
     of the application initialization process and maintains a reference to it until the 
@@ -985,7 +989,9 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         </listitem>
         <listitem>
           <para><literal>addAnnotatedType()</literal> adds a given <literal>AnnotatedType</literal>
-          to the set of types which will be scanned during bean discovery.</para>
+          to the set of types which will be scanned during bean discovery. More than one 
+          <literal>AnnotatedType</literal> may use the same base type, and the container must 
+          consider these as different types.</para>
         </listitem>
       </itemizedlist>
     
@@ -1113,6 +1119,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
     public Iterator<AnnotatedType<?>> getAnnotatedTypes();
+    public InputStream getBeansXml();
 }]]></programlisting>
 
       <itemizedlist>
@@ -1131,6 +1138,10 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <listitem>
         <para><literal>getAnnotatedTypes()</literal> returns an iterator over <literal>AnnotatedType</literal>
         objects representing the Java classes and interfaces in the bean archive.</para>
+      </listitem>
+      <listitem>
+        <para><literal>getBeansXml()</literal> returns an input stream which can be used to read in the 
+        <literal>beans.xml</literal> for this module.</para>
       </listitem>
       <!--
       <listitem>
