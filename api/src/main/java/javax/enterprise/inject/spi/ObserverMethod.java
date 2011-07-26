@@ -75,4 +75,12 @@ public interface ObserverMethod<T> {
      * @param event the event object
      */
     public void notify(T event);
+    
+    /**
+     * Calls the observer method, passing the given event object.
+     * 
+     * @param event the event object
+     * @param qualifiers the qualifiers with which the event was called
+     */
+    public void notify(T event, Set<Annotation> qualifiers);
 }
