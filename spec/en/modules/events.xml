@@ -751,6 +751,13 @@ else {
       to determine if the observer method is a conditional or transactional observer
       method, and <literal>notify()</literal> to invoke the method.</para>
       
+      <note>
+         <para>CDI 1.1 implementations should call the <code>notify</code> method
+         which takes both the event object and the event qualifiers only. The 
+         <code>notify</code> method which takes only the event object is retained 
+         only for backwards compatibility.</para>
+      </note>
+      
     <section>
       <title>Observer method invocation context</title>
       
