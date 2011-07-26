@@ -1463,6 +1463,24 @@ class Jms {
            Bean Validation <literal>ValidatorFactory</literal>.</para>
         </listitem>
       </itemizedlist>
+      
+      <para>A servlet container must provide the following built-in beans, all of which 
+      have qualifier <literal>@Default</literal>:</para>
+      
+      <itemizedlist>
+         <listitem>
+          <para>a bean with bean type <literal>javax.servlet.http.HttpServletRequest</literal>,
+          allowing injection of a reference to the <literal>HttpServletRequest</literal></para>
+        </listitem>
+        <listitem>
+          <para>a bean with bean type <literal>javax.servlet.http.HttpSession</literal>,
+          allowing injection of a reference to the <literal>HttpSession</literal>,</para>
+        </listitem>
+        <listitem>
+          <para>a bean with bean type <literal>javax.servlet.ServletContext</literal>,
+          allowing injection of a reference to the <literal>ServletContext</literal>,</para>
+        </listitem>
+      </itemizedlist>
             
       <para>These beans are passivation capable dependencies, as defined 
       in <xref linkend="passivationcapabledependency"/>.</para>
