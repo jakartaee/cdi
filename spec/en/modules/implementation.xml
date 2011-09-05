@@ -1615,7 +1615,8 @@ public class Order {
       <title>Injected fields</title>
 
       <para>An <emphasis>injected field</emphasis> is a non-static, non-final field
-      of a bean class, or of any Java EE component class supporting injection.</para>
+      of a bean class, a non-static, non-final field of an enum, or of any Java EE 
+      component class supporting injection.</para>
       
       <section>
         <title>Declaring an injected field</title>
@@ -1679,9 +1680,10 @@ public class Order {
       <title>Initializer methods</title>
 
       <para>An <emphasis>initializer method</emphasis> is a non-abstract, non-static,
-      non-generic method of a bean class, or of any Java EE component class supporting 
-      injection. If the bean is a session bean, the initializer method is <emphasis>not</emphasis> 
-      required to be a business method of the session bean.</para>
+      non-generic method of a bean class, a non-abstract, non-static method of an enum
+      or of any Java EE component class supporting injection. If the bean is a session 
+      bean, the initializer method is <emphasis>not</emphasis> required to be a 
+      business method of the session bean.</para>
       
       <para>A bean class may declare multiple (or zero) initializer methods.</para>
 

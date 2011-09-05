@@ -113,6 +113,9 @@
     behavior results. Portable applications must deploy each bean class in no more 
     than one bean archive.</para>
     
+    <para>If an enum declaring injection points is defined in installed library jars,
+    non-portable behavior results.</para>
+    
     <para>Bean archives may contain classes which are not deployed as beans. For example
     a bean archive might contain message driven beans.</para>
     
@@ -169,8 +172,35 @@
         if any observer registers a deployment problem.</para>
       </listitem>
       <listitem>
+         <para>Next, the container must inject any enums declaring injection
+         points.</para>
+      </listitem>
+      <listitem>
         <para>Finally, the container begins directing requests to the 
         application.</para>
+      </listitem>
+    </itemizedlist>
+    
+  </section>
+  
+    <section id="shutdown">
+    <title>Application shutdown lifecycle</title>
+    
+    <para>When an application is stopped, the container performs the
+    following steps:</para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>First, the container must destroy all contexts.</para>
+      </listitem>
+      <listitem>
+        <para>Next, the container must destroy dependent objects 
+        injected into enums.</para>
+      </listitem>
+      <listitem>
+        <para>Finally, the container must fire an event of type 
+        <literal>BeforeShutdown</literal>, as defined in
+        <xref linkend="bs"/>.</para>
       </listitem>
     </itemizedlist>
     

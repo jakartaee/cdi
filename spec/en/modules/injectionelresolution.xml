@@ -7,11 +7,11 @@
   
   <itemizedlist>
     <listitem>
-      <para>Any injected field of a bean class</para>
+      <para>Any injected field of a bean class or enum</para>
     </listitem>
     <listitem>
-      <para>Any parameter of a bean constructor, initializer method, 
-      producer method or disposer method</para> 
+      <para>Any parameter of a bean constructor, bean initializer method, 
+      enum initializer method, producer method or disposer method</para> 
     </listitem>
     <listitem>
       <para>Any parameter of an observer method, except for the event 
@@ -660,18 +660,21 @@ public @interface PayBy {
         using <literal>@EJB</literal>),</para>
       </listitem>
       <listitem>
-        <para>non-contextual instances of managed beans, and</para>
+        <para>non-contextual instances of managed beans,</para>
       </listitem>
       <listitem>
         <para>instances of any other Java EE component class supporting 
-        injection.</para>
+        injection, and</para>
+      </listitem>
+      <listitem>
+        <para>enums.</para>
       </listitem>
     </itemizedlist>
     
     <para>A Java EE 5 container is not required to support injection for 
     non-contextual objects.</para>
     
-    <para>The container interacts with instances of beans and other Java EE
+    <para>The container interacts with instances of beans, enums and other Java EE
     component classes supporting injection by calling methods and getting
     and setting field values.</para>
     
@@ -694,7 +697,7 @@ public @interface PayBy {
       <title>Injection of fields and initializer methods</title>
 
       <para>When the container creates a new instance of a managed bean, session
-      bean, or of any other Java EE component class supporting injection, the 
+      bean, enum, or of any other Java EE component class supporting injection, the 
       container must:</para>
       
       <itemizedlist>
@@ -739,7 +742,7 @@ public @interface PayBy {
     <section id="destruction">
       <title>Destruction of dependent objects</title>
       
-      <para>When the container destroys an instance of a bean or of any Java EE 
+      <para>When the container destroys an instance of a bean, enum or of any Java EE 
       component class supporting injection, the container destroys all dependent 
       objects, as defined in <xref linkend="dependentdestruction"/>, 
       after the <literal>@PreDestroy</literal> callback completes and after the 
