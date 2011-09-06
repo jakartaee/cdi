@@ -864,10 +864,9 @@
     <section>
       <title>Validation of passivation capable beans and dependencies</title>
     
-      <para>For every bean which declares a passivating scope, and for every
-      stateful session bean, the container must validate that the bean truly is 
-      passivation capable and that, in addition, its dependencies are passivation 
-      capable.</para>
+      <para>For every bean which declares a passivating scope, the container must
+      validate that the bean truly is passivation capable and that, in addition, its
+      dependencies are passivation capable.</para>
     
       <para>If a managed bean which declares a passivating scope:</para>
     
