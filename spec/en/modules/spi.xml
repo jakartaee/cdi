@@ -1609,6 +1609,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <programlisting><![CDATA[public interface ProcessProducerField<T, X> 
         extends ProcessBean<X> {
     public AnnotatedField<T> getAnnotatedProducerField();
+    public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }]]></programlisting>
       
       <!--  
