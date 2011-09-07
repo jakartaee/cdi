@@ -1876,6 +1876,28 @@ public class Order {
       
   </section>
   
+  <section id="veto">
+    <title>Vetoing beans</title>
+    
+    <para>Any class or package may be prevented from providing bean definitions by 
+    adding the <literal>@Veto</literal> annotation on the class or package.</para>
+    
+    <programlisting>@Veto
+    public class Order {
+    ...
+ }</programlisting>
+    
+    <para>Any class or package may be prevented from providing bean definitions 
+    based on the availability of other classes by adding the 
+    <literal>@Requires</literal> annotation on the class or package.</para>
+    
+    <programlisting>@Requires({Customer.class, Supplier.class})
+    public class Order {
+    ...
+ }</programlisting>
+    
+  </section>
+  
   <section>
     <title>The qualifier <literal>@Named</literal> at injection points</title>
 
