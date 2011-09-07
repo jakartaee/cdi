@@ -1,17 +1,14 @@
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.Instance;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.enterprise.inject.Instance;
 
 /**
  * Provides access to the current container.
@@ -21,7 +18,9 @@ import javax.enterprise.inject.Instance;
  */
 public abstract class CDI<T> implements Instance<T> {
 
-   protected static final Set<CDIProvider> providers = new HashSet<CDIProvider>();
+   protected static volatile Set<CDIProvider> providers = null;
+
+   private static final Object lock = new Object();
 
    /**
     * <p>
@@ -38,9 +37,12 @@ public abstract class CDI<T> implements Instance<T> {
     */
    public static <T> CDI<T> current() {
       CDI<T> cdi = null;
-
-      if (providers.size() == 0) {
-         findAllProviders();
+      if(providers == null) {
+          synchronized (lock) {
+              if(providers == null) {
+                  findAllProviders();
+              }
+          }
       }
       for (CDIProvider provider : providers) {
          cdi = provider.getCDI();
@@ -56,10 +58,18 @@ public abstract class CDI<T> implements Instance<T> {
    // Helper methods
 
    private static void findAllProviders() {
+      Set<CDIProvider> providers = new LinkedHashSet<CDIProvider>();
       try {
-         ClassLoader loader = Thread.currentThread().getContextClassLoader();
-         Enumeration<URL> resources = loader.getResources("META-INF/services/" + CDIProvider.class.getName());
-         Set<String> names = new HashSet<String>();
+         final ClassLoader loader = CDI.class.getClassLoader();
+         final Enumeration<URL> resources;
+         if(loader != null) {
+            resources = loader.getResources("META-INF/services/" + CDIProvider.class.getName());
+         } else {
+            //this should not happen unless the CDI api is on the boot class path
+            resources = ClassLoader.getSystemResources("META-INF/services/" + CDIProvider.class.getName());
+         }
+
+         final Set<String> names = new HashSet<String>();
          while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
             InputStream is = url.openStream();
@@ -70,7 +80,7 @@ public abstract class CDI<T> implements Instance<T> {
             }
          }
          for (String s : names) {
-            Class<CDIProvider> providerClass = (Class<CDIProvider>) loader.loadClass(s);
+            final Class<CDIProvider> providerClass = (Class<CDIProvider>) Class.forName(s, true, loader);
             providers.add(providerClass.newInstance());
          }
       } catch (IOException e) {
@@ -82,6 +92,7 @@ public abstract class CDI<T> implements Instance<T> {
       } catch (ClassNotFoundException e) {
          throw new IllegalStateException(e);
       }
+      CDI.providers = Collections.unmodifiableSet(providers);
    }
 
    private static final Pattern nonCommentPattern = Pattern.compile("^([^#]+)");
