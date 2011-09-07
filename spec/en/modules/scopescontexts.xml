@@ -1257,8 +1257,10 @@
         </listitem>
       </itemizedlist>
       
-      <para>When no conversation is propagated to a Servlet request, the request is 
-      associated with a new transient conversation.</para>
+      <para>When no conversation is propagated to a Servlet request, or if a 
+      GET request parameter named <literal>conversationPropagation</literal>
+      has the value <literal>none</literal> the request is associated with a
+      new transient conversation.</para>
 
       <para>All long-running conversations are scoped to a particular HTTP 
       servlet session and may not cross session boundaries.</para>
