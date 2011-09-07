@@ -35,7 +35,7 @@ public interface InjectionTarget<T> extends Producer<T> {
 
     /**
      * <p>
-     * Performs dependency injection upon the given object. Performs Java EE component environment injection, sets the value of
+     * Performs dependency injection upon the instance. Performs Java EE component environment injection, sets the value of
      * all injected fields, and calls all initializer methods.
      * </p>
      * 
