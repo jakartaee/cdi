@@ -471,10 +471,15 @@ public @interface Transactional {
         binding type is not annotated <literal>@Nonbinding</literal>, non-portable 
         behavior results.</para>
       
-        <para>If the set of interceptor bindings of a bean or interceptor, including 
+        <para>Beans and interceptors may override the bindings that they inherit. 
+        Interceptor bindings defined at method level may override the interceptor 
+        bindings declared or inherited at the class level. 
+        If the set of interceptor bindings of a bean or interceptor, including 
         bindings inherited from stereotypes and other interceptor bindings, has two 
         instances of a certain interceptor binding type and the instances have
-        different values of some annotation member, the container automatically 
+        different values of some annotation member, the bean or interceptor must
+        override the inherited set by definining an annotation instance of its own. Otherwise,
+        the container automatically 
         detects the problem and treats it as a definition error.</para>
       
       </section>
