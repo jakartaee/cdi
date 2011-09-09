@@ -760,19 +760,11 @@
       </listitem>
       <listitem>
         <para>A producer method is passivation capable if and only if it never
-        returns a value which is not passivation capable at runtime. A producer 
-        method with a primitive return type or a return type that implements or 
-        extends <literal>Serializable</literal> is passivation capable. A producer 
-        method with a return type that is declared final and does not implement 
-        <literal>Serializable</literal> is not passivation capable.</para>
+        returns a value which is not passivation capable at runtime.</para>
       </listitem>
       <listitem>
         <para>A producer field is passivation capable if and only if it never
-        refers to a value which is not passivation capable at runtime. A producer 
-        field with a primitive type or a type that implements or extends 
-        <literal>Serializable</literal> is passivation capable. A producer field 
-        with a type that is declared final and does not implement 
-        <literal>Serializable</literal> is not passivation capable.</para>
+        refers to a value which is not passivation capable at runtime.</para>
       </listitem>
       </itemizedlist>
     
@@ -903,62 +895,38 @@
       <para>then the container automatically detects the problem and treats it 
       as a deployment problem.</para>
     
-      <para>If a producer method declares a passivating scope and:</para>
-    
-      <itemizedlist>
-        <listitem>
-          <para>the container is able to determine that it is not passivation 
-          capable by inspecting its return type, or</para>
-        </listitem>
-        <listitem>
-          <para>has a parameter that does not resolve to a passivation capable
-          dependency,
-          </para>
-        </listitem>
-      </itemizedlist>
-    
-      <para>then the container automatically detects the problem and treats it 
+      <para>If a producer method declares a passivating scope and has a return type
+      that is declared final and does not implement or extend <literal>Serializable</literal>
+      then the container automatically detects the problem and treats it
       as a deployment problem.</para>
-    
-      <para>If a producer field declares a passivating scope and:</para>
-    
-      <itemizedlist>
-        <listitem>
-          <para>the container is able to determine that it is not passivation 
-          capable by inspecting its type,</para>
-        </listitem>
-      </itemizedlist>
-    
-      <para>then the container automatically detects the problem and treats it 
+
+      <para>If a producer method declares a passivating scope and doesn't only return
+      <literal>Serializable</literal> types at runtime, then the container must throw
+      an <literal>IllegalProductException</literal>.</para>
+
+      <para>If a producer field declares a passivating scope and has a type that
+      is declared final and does not implement or extend <literal>Serializable</literal>
+      then the container automatically detects the problem and treats it
       as a deployment problem.</para>
-    
-      <para>In some cases, the container is not able to determine at deploy time
-      whether a producer method or field is passivation capable.</para>
 
-      <itemizedlist>
-          <listitem>
-              <para>If a producer method or field which declares a passivating scope
-              returns an unserializable object at runtime, the container must throw an
-              <literal>IllegalProductException</literal>.</para>
-          </listitem>
-          <listitem>
-              <para>If a producer method or field of scope <literal>@Dependent</literal> returns
-              an unserializable object for injection into an injection point that requires
-              a passivation capable dependency, the container must throw an
-              <literal>IllegalProductException</literal></para>
-          </listitem>
-      </itemizedlist>
+      <para>If a producer field declares a passivating scope and doesn't only contain
+      <literal>Serializable</literal> values at runtime then the container
+      must throw an <literal>IllegalProductException</literal>.</para>
 
+      <para>If a producer method or field of scope <literal>@Dependent</literal> returns
+      an unserializable object for injection into an injection point that requires
+      a passivation capable dependency, the container must throw an
+      <literal>IllegalProductException</literal></para>
 
-      <para>For a custom implementation of <literal>Bean</literal>, the container 
+      <para>For a custom implementation of <literal>Bean</literal>, the container
       calls <literal>getInjectionPoints()</literal> to determine the injection 
       points, and <literal>InjectionPoint.isTransient()</literal> to determine 
       whether the injection point is a transient field.</para>
     
       <para>If a bean which declares a passivating scope type, or any stateful
-      session bean, has a decorator which is not a passivation capable dependency,
-      the container automatically detects the problem and treats it as a deployment 
-      problem.</para>
+      session bean, has a decorator or interceptor which is not a
+      passivation capable dependency, the container automatically detects
+      the problem and treats it as a deployment problem.</para>
     
     </section>
     
