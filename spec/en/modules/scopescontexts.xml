@@ -875,14 +875,12 @@
           <para>is not passivation capable,</para>
         </listitem>
         <listitem>
-          <para>has a non-transient injected field, bean constructor parameter 
-          or initializer method parameter that does not resolve to a passivation 
+          <para>has a non-transient injected field that does not resolve to a passivation
           capable dependency, or</para>
         </listitem>
         <listitem>
-          <para>has an interceptor or decorator with a non-transient injected field, 
-          bean constructor parameter or initializer method parameter that does not 
-          resolve to a passivation capable dependency,</para>
+          <para>has an interceptor or decorator with a non-transient injected field
+          that does not resolve to a passivation capable dependency,</para>
         </listitem>
       </itemizedlist> 
     
@@ -893,14 +891,12 @@
     
       <itemizedlist>
         <listitem>
-          <para>has a non-transient injected field, bean constructor parameter 
-          or initializer method parameter that does not resolve to a passivation 
-          capable dependency, or</para>
+          <para>has a non-transient injected field that does not resolve to a
+          passivation capable dependency, or</para>
         </listitem>
         <listitem>
-          <para>has an interceptor or decorator with a non-transient injected field, 
-          bean constructor parameter or initializer method parameter that does not 
-          resolve to a passivation capable dependency,</para>
+          <para>has an interceptor or decorator with a non-transient injected field
+          that does not resolve to a passivation capable dependency,</para>
         </listitem>
       </itemizedlist> 
     
