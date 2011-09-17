@@ -1038,9 +1038,9 @@
         </listitem>
       </itemizedlist>
       
-      <para>An event with qualifiers <literal>@Request</literal> <literal>@Initialized</literal>
-        is fired when the request context is initialized and an event with qualifiers 
-        <literal>@Request</literal> <literal>@Destroyed</literal> when the request context
+      <para>An event with qualifier <literal>@Initialized(RequestScoped.class)</literal>
+        is fired when the request context is initialized and an event with qualifier
+        <literal>@Destroyed(RequestScoped.class)</literal> when the request context
         is destroyed. The event payload is:</para>
       
       <itemizedlist>
@@ -1094,10 +1094,10 @@
       was called, after all filters and <literal>ServletRequestListener</literal>s
       have been called.</para>
       
-      <para>An event with the <literal>HttpSessionEvent</literal> as payload and with qualifiers 
-      <literal>@Session</literal> <literal>@Initialized</literal> is fired when the 
-      session context is initialized and an event with qualifiers 
-      <literal>@Session</literal> <literal>@Destroyed</literal> when the session context
+      <para>An event with the <literal>HttpSessionEvent</literal> as payload and with 
+      qualifier <literal>@Initialized(SessionScoped.class)</literal> is fired when the 
+      session context is initialized and an event with qualifier 
+      <literal>@Destroyed(SessionScoped.class)</literal> when the session context
       is destroyed.</para>
       
     </section>
@@ -1151,9 +1151,9 @@
       within the same application. The application context is destroyed when 
       the application is shut down.</para>
       
-      <para>An event with qualifiers <literal>@Application</literal> <literal>@Initialized</literal>
-      is fired when the application context is initialized and an event with qualifiers 
-      <literal>@Application</literal> <literal>@Destroyed</literal> is fired when the 
+      <para>An event with qualifier <literal>@Initialized(ApplicationScoped.class)</literal>
+      is fired when the application context is initialized and an event with qualifier 
+      <literal>@Destroyed(ApplicationScoped.class)</literal> is fired when the 
       application is destroyed. The event payload is:</para>
       
       <itemizedlist>
@@ -1188,10 +1188,10 @@
         </listitem-->
       </itemizedlist>
       
-      <para>An event with the <literal>FacesContext</literal> as the payload and with qualifiers 
-      <literal>@Conversation</literal> <literal>@Initialized</literal> is fired when the 
-      conversation context is initialized and an event with qualifiers 
-      <literal>@Conversation</literal> <literal>@Destroyed</literal> when the conversation context
+      <para>An event with the <literal>FacesContext</literal> as the payload and with qualifier 
+      <literal>@Initialized(ConversationScoped.class)</literal> is fired when the 
+      conversation context is initialized and an event with qualifier 
+      <literal>@Destroyed(ConversationScoped.class)</literal> when the conversation context
       is destroyed.</para>
 
       <para>The conversation context provides access to state associated with 
