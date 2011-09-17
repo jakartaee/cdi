@@ -1,5 +1,6 @@
-package javax.enterprise.context.lifecycle;
+package javax.enterprise.context;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -14,7 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * <p>
- * The <code>@Initialized</code> qualifier.
+ * The <code>@Destroyed</code> qualifier.
  * </p>
  * 
  * @author Pete Muir
@@ -24,6 +25,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface Initialized {
+public @interface Destroyed {
+   
+   /**
+    * The scope for which to observe initialization
+    */
+   Class<Annotation> value();
 
 }
