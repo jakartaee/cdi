@@ -1,5 +1,6 @@
-package javax.enterprise.context.lifecycle;
+package javax.enterprise.context;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -14,24 +15,21 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * <p>
- * The <code>@Session</code> qualifier.
- * </p>
- * 
- * <p>
- * An event of type {@link javax.servlet.http.HttpSessionEvent} and with qualifiers
- * <code>@Session</code> <code>@Initialized</code> is fired when the session context is initialized
- * and an event with qualifiers <code>@Session</code> <code>@Destroyed</code> when the session
- * context is destroyed.
+ * The <code>@Initialized</code> qualifier.
  * </p>
  * 
  * @author Pete Muir
- * @see Initialized
  * @see Destroyed
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface Session {
+public @interface Initialized {
+   
+   /**
+    * The scope for which to observe initialization
+    */
+   Class<Annotation> value();
 
 }
