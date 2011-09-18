@@ -965,12 +965,12 @@
     <para>The container provides an implementation of the <literal>Context</literal>
     interface for each of the built-in scopes.</para>
     
-    <para>The built-in context object is active during servlet, web service and EJB 
-    invocations, or in the case of the conversation context object, for JSF requests.
-    For other kinds of invocations, a portable extension may define a custom context 
-    object for any or all of the built-in scopes. For example, a third-party web 
-    application framework might provide a conversation context object for the
-    built-in conversation scope.</para>
+    <para>The built-in request and application context objects are active during servlet,
+    web service and EJB invocations, and the built in session and request context objects 
+    are active during servlet and web service invocations. For other kinds of invocations,
+    a portable extension may define a custom context object for any or all of the built-in
+    scopes. For example, a remoting framework might provide a request context object for 
+    the built-in request scope.</para>
     
     <para>The context associated with a built-in normal scope propagates across 
     local, synchronous Java method calls, including invocation of EJB local business 
@@ -1038,6 +1038,31 @@
         </listitem>
       </itemizedlist>
       
+      <para>An event with qualifier <literal>@Initialized(RequestScoped.class)</literal>
+        is fired when the request context is initialized and an event with qualifier
+        <literal>@Destroyed(RequestScoped.class)</literal> when the request context
+        is destroyed. The event payload is:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
+          due to a servlet request, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
+          due to a web service invocation, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>???</literal> if the context is initialized or destroyed 
+          due to a EJB remote method invocation, asynchronous method invocation, 
+          timeout or message delivery, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>???</literal> if the context is initialized or destroyed 
+          due to a message delivery to a <literal>MessageListener</literal>.</para>
+        </listitem>
+      </itemizedlist>
+      
     </section>
 
     <section id="sessioncontext">
@@ -1068,6 +1093,12 @@
       have been called, and at the very end of any request in which <literal>invalidate()</literal> 
       was called, after all filters and <literal>ServletRequestListener</literal>s
       have been called.</para>
+      
+      <para>An event with the <literal>HttpSessionEvent</literal> as payload and with 
+      qualifier <literal>@Initialized(SessionScoped.class)</literal> is fired when the 
+      session context is initialized and an event with qualifier 
+      <literal>@Destroyed(SessionScoped.class)</literal> when the session context
+      is destroyed.</para>
       
     </section>
 
@@ -1119,6 +1150,21 @@
       timeouts and message deliveries to message-driven beans that execute 
       within the same application. The application context is destroyed when 
       the application is shut down.</para>
+      
+      <para>An event with qualifier <literal>@Initialized(ApplicationScoped.class)</literal>
+      is fired when the application context is initialized and an event with qualifier 
+      <literal>@Destroyed(ApplicationScoped.class)</literal> is fired when the 
+      application is destroyed. The event payload is:</para>
+      
+      <itemizedlist>
+         <listitem>
+            <para>the <literal>ServletContextEvent</literal> if the application is a web application
+            deployed to a Servlet container, or</para>
+         </listitem>
+         <listitem>
+            <para>the <literal>???</literal> in ???</para>
+         </listitem>
+      </itemizedlist>
 
     </section>
 
@@ -1128,33 +1174,30 @@
       <para>The <emphasis>conversation context</emphasis> is provided by a 
       built-in context object for the built-in passivating scope type 
       <literal>@ConversationScoped</literal>. The conversation scope is 
-      active:</para>
+      active during all Servlet requests.</para>
       
-      <itemizedlist>
-        <listitem>
-          <para>during all standard lifecycle phases of any JSF faces or 
-          non-faces request.</para>
-        </listitem>
-        <!--listitem>
-          <para>when the disposer method or <literal>@PreDestroy</literal> 
-          callback of any bean with scope <literal>@RequestScoped</literal> 
-          is called in a JSF request.</para>
-        </listitem-->
-      </itemizedlist>
+      <para>An event with the <literal>ServletRequestEvent</literal> as the payload and with qualifier 
+      <literal>@Initialized(ConversationContext.class)</literal> is fired when the 
+      conversation context is initialized and an event with qualifier 
+      <literal>@Destroyed(ConversationContext.class)</literal> when the conversation context
+      is destroyed.</para>
 
       <para>The conversation context provides access to state associated with 
-      a particular <emphasis>conversation</emphasis>. Every JSF request has an
+      a particular <emphasis>conversation</emphasis>. Every Servlet request has an
       associated conversation. This association is managed automatically by
       the container according to the following rules:</para>
 
       <itemizedlist>
         <listitem>
-          <para>Any JSF request has exactly one associated conversation.</para>
+          <para>Any Servlet request has exactly one associated conversation.</para>
         </listitem>
         <listitem>
-          <para>The conversation associated with a JSF request is determined at 
-          the beginning of the restore view phase and does not change during the
-          request.</para>
+          <para>The conversation associated with a Servlet request is determined at 
+          the beginning of the request before calling any <literal>service()</literal>
+          method of any servlet in the web application, calling the
+          <literal>doFilter()</literal> method of any servlet filter in the web application
+          and before the container calls any <literal>ServletRequestListener</literal> 
+          or <literal>AsyncListener</literal> in the web application.</para>
         </listitem>
       </itemizedlist>
 
@@ -1179,14 +1222,22 @@
       identifier, which may be set by the application when the conversation
       is marked long-running, or generated by the container.</para>
 
-      <para>If the conversation associated with the current JSF request is in
-      the <emphasis>transient</emphasis> state at the end of a JSF request, it
+      <para>If the conversation associated with the current Servlet request is in
+      the <emphasis>transient</emphasis> state at the end of a Servlet request, it
       is destroyed, and the conversation context is also destroyed.</para>
 
-      <para>If the conversation associated with the current JSF request is in
-      the <emphasis>long-running</emphasis> state at the end of a JSF request,
-      it is not destroyed. Instead, it may be propagated to other requests
-      according to the following rules:</para>
+      <para>If the conversation associated with the current Servlet request is in
+      the <emphasis>long-running</emphasis> state at the end of a Servlet request,
+      it is not destroyed. The long-running conversation associated with a request 
+      may be propagated to any Servlet request via use of a GET request parameter 
+      named <literal>cid</literal> containing the unique identifier of the 
+      conversation. In this case, the application must manage this request 
+      parameter.</para>
+      
+      
+      <para>If the current Servlet request is a JSF request, and the conversation 
+      is in <emphasis>long-running</emphasis> state, it is propagated according 
+      to the following rules:</para>
 
       <itemizedlist>
         <listitem>
@@ -1203,22 +1254,13 @@
           any other subsequent request to the same URL. This is accomplished
           via use of a GET request parameter named <literal>cid</literal> 
           containing the unique identifier of the conversation.</para>
-          <!--  
-          <para><emphasis> (TBD: we are talking about the browser refresh button, 
-          define this much better.)</emphasis></para>
-          -->
-        </listitem>
-        <listitem>
-          <para>The long-running conversation associated with a request may
-          be propagated to any non-faces request via use of a GET request 
-          parameter named <literal>cid</literal> containing the unique 
-          identifier of the conversation. In this case, the application must
-          manage this request parameter.</para>
         </listitem>
       </itemizedlist>
       
-      <para>When no conversation is propagated to a JSF request, the request is 
-      associated with a new transient conversation.</para>
+      <para>When no conversation is propagated to a Servlet request, or if a 
+      GET request parameter named <literal>conversationPropagation</literal>
+      has the value <literal>none</literal> the request is associated with a
+      new transient conversation.</para>
 
       <para>All long-running conversations are scoped to a particular HTTP 
       servlet session and may not cross session boundaries.</para>
@@ -1234,7 +1276,7 @@
         </listitem>
         <listitem>
           <para>The container is permitted to arbitrarily destroy any long-running 
-          conversation that is associated with no current JSF request, in order to 
+          conversation that is associated with no current Servlet request, in order to 
           conserve resources.</para>
         </listitem>
       </itemizedlist>
@@ -1246,17 +1288,14 @@
       
       <para>If the propagated conversation cannot be restored, the container must 
       associate the request with a new transient conversation and throw an 
-      exception of type <literal>javax.enterprise.context.NonexistentConversationException</literal>
-      from the restore view phase of the JSF lifecycle. The application may handle
-      this exception using the JSF <literal>ExceptionHandler</literal>.</para>
+      exception of type 
+      <literal>javax.enterprise.context.NonexistentConversationException</literal>.</para>
       
       <para>The container ensures that a long-running conversation may be 
       associated with at most one request at a time, by blocking or rejecting 
       concurrent requests. If the container rejects a request, it must associate
       the request with a new transient conversation and throw an exception of type 
-      <literal>javax.enterprise.context.BusyConversationException</literal> from the restore 
-      view phase of the JSF lifecycle. The application may handle this exception 
-      using the JSF <literal>ExceptionHandler</literal>.</para>
+      <literal>javax.enterprise.context.BusyConversationException</literal>.</para>
 
     </section>
     
@@ -1325,6 +1364,24 @@
       exists, an <literal>IllegalArgumentException</literal> is thrown.</para>
 
     </section>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>The CDI 1.0 spec doesn't define when a 
+    context is "initialized" (however the concept is implied), however the CDI spec 
+    introduces lifecycle events that require an event to be fired when a context 
+    is initialized. Either we need to rewrite the definition of this feature to use 
+    the CDI 1.0 language or we need to define when a context is initialized.</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>What should the event type be for requests
+    initialized or destroyed due to an EJB remote invocation and a JMS MessageListener 
+    invocation?</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>What should the event type be for applications
+    initialized or destroyed when the application is not a web app?</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>The annotations for context lifecycle events
+    are in the new package <code>javax.enterprise.context.lifecycle</code>. Should they
+    be placed elsewhere (especially if we envision them being used for other purposes than
+    context lifecycle events?)</para>
     
   </section>
 
