@@ -1,0 +1,34 @@
+<preface id="preface">
+  <title>Foreward</title>
+  
+  <para>
+   Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dependency Injection
+   1.0 (JSR-299). A full changelog can be found in the issue tracker <ulink url="https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&amp;version=12315956">release notes for CDI 1.1</ulink>. 
+  </para>
+  
+  <para>
+   Major changes include:
+  </para>
+  
+  <itemizedlist>
+   <listitem><literal>@Disposes</literal> methods for producer fields</listitem>
+   <listitem>The <literal>CDI</literal> class, which provides programmatic access 
+   to CDI facilities from outside a managed bean</listitem>
+   <listitem>Pass the qualifiers an event was fired with to the <literal>ObserverMethod</literal></listitem>
+   <listitem>Ability to veto beans declaratively using <literal>@Veto</literal> and <literal>@Requires</literal></listitem>
+   <listitem>Ability to access the <literal>BeanManager</literal> from the <literal>ServletContext</literal></listitem>
+   <listitem>Conversations in Servlet requests</listitem>
+   <listitem>Application lifecycle events in Java EE</listitem>
+   <listitem>Injection of <literal>Bean</literal> metadata into bean instances</listitem>
+   <listitem>Programmatic access to a container provided <literal>Producer</literal>, <literal>InjectionTarget</literal>, <literal>AnnotatedType</literal></listitem>
+   <listitem>Ability to override attributes of a <literal>Bean</literal> via <literal>BeanAttributes</literal></listitem>
+   <listitem>Ability to process modules via <literal>ProcessModule</literal></listitem>
+   <listitem>Ability to wrap the <literal>InjectionPoint</literal></listitem>
+   <listitem>Ability to obtain <literal>Extension</literal> instances from <literal>BeanManager</literal></listitem>
+   <listitem>Injection of the <literal>ServletContext</literal></listitem>
+   <listitem>Access to <literal>beans.xml</literal> in <literal>ProcessModule</literal></listitem>
+   <listitem>Injection into enums</listitem>
+  </itemizedlist>
+
+  
+</preface>

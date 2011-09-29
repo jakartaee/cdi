@@ -4,6 +4,7 @@
 
 [
 <!ENTITY license                   SYSTEM "modules/license.xml">
+<!ENTITY preface                   SYSTEM "modules/preface.xml">
 <!ENTITY architecture              SYSTEM "modules/architecture.xml">
 <!ENTITY definition                SYSTEM "modules/definition.xml">
 <!ENTITY implementation            SYSTEM "modules/implementation.xml">
@@ -58,6 +59,7 @@
     <toc/>
     
     &license;
+    &preface;
     &architecture;
     &definition;
     &implementation;
