@@ -1214,16 +1214,25 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <title><literal>ProcessAnnotatedType</literal> event</title>
       
       <para>The container must fire an event for each Java class or interface it discovers
-      in a bean archive, before it reads the declared annotations.</para>
+      in a bean archive, and for annotated type added by 
+      <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>, before it reads the 
+      declared annotations.</para>
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessAnnotatedType&lt;X&gt;</literal>, 
-      where <literal>X</literal> is the class.</para>
+      where <literal>X</literal> is the class, for classes and interfaces discovered 
+      in a bean archive, or of type 
+      <literal>javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType&lt;X&gt;</literal>
+      for classes and interfaces added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>.</para>
       
       <programlisting><![CDATA[public interface ProcessAnnotatedType<X> {
     public AnnotatedType<X> getAnnotatedType();
     public void setAnnotatedType(AnnotatedType<X> type);
     public void veto();
+}]]></programlisting>
+
+      <programlisting><![CDATA[interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
+    public Extension getSource();
 }]]></programlisting>
 
     <itemizedlist>
@@ -1236,6 +1245,10 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     </listitem>
     <listitem>      
       <para><literal>veto()</literal> forces the container to ignore the type.</para>
+    </listitem>
+    <listitem>      
+      <para><literal>getSource()</literal> returns the <literal>Extension</literal> instance
+      that added the annotated type.</para>
     </listitem>
     </itemizedlist>
     
