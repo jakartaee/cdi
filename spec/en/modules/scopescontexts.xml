@@ -1202,7 +1202,7 @@
       <para>If the conversation associated with the current Servlet request is in
       the <emphasis>long-running</emphasis> state at the end of a Servlet request,
       it is not destroyed. The long-running conversation associated with a request 
-      may be propagated to any Servlet request via use of a GET request parameter 
+      may be propagated to any Servlet request via use of a request parameter 
       named <literal>cid</literal> containing the unique identifier of the 
       conversation. In this case, the application must manage this request 
       parameter.</para>
@@ -1225,13 +1225,13 @@
           navigation rule or JSF <literal>NavigationHandler</literal>) is
           automatically propagated to the resulting non-faces request, and to
           any other subsequent request to the same URL. This is accomplished
-          via use of a GET request parameter named <literal>cid</literal> 
+          via use of a request parameter named <literal>cid</literal> 
           containing the unique identifier of the conversation.</para>
         </listitem>
       </itemizedlist>
       
       <para>When no conversation is propagated to a Servlet request, or if a 
-      GET request parameter named <literal>conversationPropagation</literal>
+      request parameter named <literal>conversationPropagation</literal>
       has the value <literal>none</literal> the request is associated with a
       new transient conversation.</para>
 
