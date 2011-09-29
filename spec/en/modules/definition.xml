@@ -1168,11 +1168,15 @@ public @interface Model {}</programlisting>
     <itemizedlist>
       <listitem>
         <para>Definition errors&mdash;occur when a single bean definition
-        violates the rules of this specification</para>
+        violates the rules of this specification. If a definition error exists,
+        the container must throw a subclass of 
+        <literal>javax.enterprise.inject.spi.DefinitionException</literal>.</para>
       </listitem>
       <listitem>
         <para>Deployment problems&mdash;occur when there are problems resolving
-        dependencies, or inconsistent specialization, in a particular deployment</para>
+        dependencies, or inconsistent specialization, in a particular deployment.
+        If a deployment problem occurs, the container must throw a subclass of
+        <literal>javax.enterprise.inject.spi.DeploymentException</literal>.</para>
       </listitem>
       <listitem>
         <para>Exceptions&mdash;occur at runtime</para>
