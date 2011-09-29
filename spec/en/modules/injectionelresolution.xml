@@ -985,6 +985,27 @@ public @interface PayBy {
     on the bean the decorated type is injected into.</para>
     
   </section>
+  
+  <section id="beanmetadata">
+    <title>Bean metadata</title>
+    
+    <para>The interface <literal>Bean</literal> provides metadata about a bean.</para>
+    
+    <para>The container must provide a bean with scope <literal>@Dependent</literal>, bean 
+    type <literal>Bean</literal> and qualifier <literal>@Default</literal>, allowing 
+    any bean, to obtain the metadata which defines the bean. The built-in implementation must
+    be a passivation capable dependency, as defined in <xref linkend="passivationcapabledependency"/>.</para>
+    
+    <programlisting><![CDATA[</CDATA>@Named("Order") public class OrderProcessor {
+    
+    @Inject Bean<OrderProcessor> bean;
+    
+    public void getBeanName() {
+       return bean.getName();
+    }    
+    
+}]]></programlisting>
+  </section>
 
   </section>
   
