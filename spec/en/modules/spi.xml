@@ -344,10 +344,10 @@
       provides access to the <literal>BeanManager</literal> as well providing lookup of
       bean instances.</para> 
       
-      <programlisting>public abstract class CDI<T> implements Instance<T> {
+      <programlisting><![CDATA[public abstract class CDI<T> implements Instance<T> {
    public static <T> CDI<T> current() { ... }
    public abstract BeanManager getBeanManager();
-}</programlisting>
+}]]></programlisting>
       
       <para>A portable extension may obtain a reference to the current container by 
       calling <literal>CDI.current()</literal>.</para>
