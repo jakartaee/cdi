@@ -875,14 +875,12 @@
           <para>is not passivation capable,</para>
         </listitem>
         <listitem>
-          <para>has a non-transient injected field, bean constructor parameter 
-          or initializer method parameter that does not resolve to a passivation 
+          <para>has a non-transient injected field that does not resolve to a passivation
           capable dependency, or</para>
         </listitem>
         <listitem>
-          <para>has an interceptor or decorator with a non-transient injected field, 
-          bean constructor parameter or initializer method parameter that does not 
-          resolve to a passivation capable dependency,</para>
+          <para>has an interceptor or decorator with a non-transient injected field
+          that does not resolve to a passivation capable dependency,</para>
         </listitem>
       </itemizedlist> 
     
@@ -893,14 +891,12 @@
     
       <itemizedlist>
         <listitem>
-          <para>has a non-transient injected field, bean constructor parameter 
-          or initializer method parameter that does not resolve to a passivation 
-          capable dependency, or</para>
+          <para>has a non-transient injected field that does not resolve to a
+          passivation capable dependency, or</para>
         </listitem>
         <listitem>
-          <para>has an interceptor or decorator with a non-transient injected field, 
-          bean constructor parameter or initializer method parameter that does not 
-          resolve to a passivation capable dependency,</para>
+          <para>has an interceptor or decorator with a non-transient injected field
+          that does not resolve to a passivation capable dependency,</para>
         </listitem>
       </itemizedlist> 
     
@@ -936,15 +932,24 @@
       <para>then the container automatically detects the problem and treats it 
       as a deployment problem.</para>
     
-      <para>In some cases, the container is not able to determine whether a 
-      producer method or field is passivation capable. If a producer method or
-      field which declares a passivating scope returns an unserializable object 
-      at runtime, the container must throw an <literal>IllegalProductException</literal>. 
-      If a producer method or field of scope <literal>@Dependent</literal> returns 
-      an unserializable object for injection into an injection point that requires
-      a passivation capable dependency, the container must throw an 
-      <literal>IllegalProductException</literal></para>
-    
+      <para>In some cases, the container is not able to determine at deploy time
+      whether a producer method or field is passivation capable.</para>
+
+      <itemizedlist>
+          <listitem>
+              <para>If a producer method or field which declares a passivating scope
+              returns an unserializable object at runtime, the container must throw an
+              <literal>IllegalProductException</literal>.</para>
+          </listitem>
+          <listitem>
+              <para>If a producer method or field of scope <literal>@Dependent</literal> returns
+              an unserializable object for injection into an injection point that requires
+              a passivation capable dependency, the container must throw an
+              <literal>IllegalProductException</literal></para>
+          </listitem>
+      </itemizedlist>
+
+
       <para>For a custom implementation of <literal>Bean</literal>, the container 
       calls <literal>getInjectionPoints()</literal> to determine the injection 
       points, and <literal>InjectionPoint.isTransient()</literal> to determine 
