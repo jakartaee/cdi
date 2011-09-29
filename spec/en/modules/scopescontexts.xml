@@ -1038,6 +1038,31 @@
         </listitem>
       </itemizedlist>
       
+      <para>An event with qualifier <literal>@Initialized(RequestScoped.class)</literal>
+        is fired when the request context is initialized and an event with qualifier
+        <literal>@Destroyed(RequestScoped.class)</literal> when the request context
+        is destroyed. The event payload is:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
+          due to a servlet request, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
+          due to a web service invocation, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>???</literal> if the context is initialized or destroyed 
+          due to a EJB remote method invocation, asynchronous method invocation, 
+          timeout or message delivery, or</para>
+        </listitem>
+        <listitem>
+          <para>the <literal>???</literal> if the context is initialized or destroyed 
+          due to a message delivery to a <literal>MessageListener</literal>.</para>
+        </listitem>
+      </itemizedlist>
+      
     </section>
 
     <section id="sessioncontext">
@@ -1068,6 +1093,12 @@
       have been called, and at the very end of any request in which <literal>invalidate()</literal> 
       was called, after all filters and <literal>ServletRequestListener</literal>s
       have been called.</para>
+      
+      <para>An event with the <literal>HttpSessionEvent</literal> as payload and with 
+      qualifier <literal>@Initialized(SessionScoped.class)</literal> is fired when the 
+      session context is initialized and an event with qualifier 
+      <literal>@Destroyed(SessionScoped.class)</literal> when the session context
+      is destroyed.</para>
       
     </section>
 
@@ -1119,6 +1150,21 @@
       timeouts and message deliveries to message-driven beans that execute 
       within the same application. The application context is destroyed when 
       the application is shut down.</para>
+      
+      <para>An event with qualifier <literal>@Initialized(ApplicationScoped.class)</literal>
+      is fired when the application context is initialized and an event with qualifier 
+      <literal>@Destroyed(ApplicationScoped.class)</literal> is fired when the 
+      application is destroyed. The event payload is:</para>
+      
+      <itemizedlist>
+         <listitem>
+            <para>the <literal>ServletContextEvent</literal> if the application is a web application
+            deployed to a Servlet container, or</para>
+         </listitem>
+         <listitem>
+            <para>the <literal>???</literal> in ???</para>
+         </listitem>
+      </itemizedlist>
 
     </section>
 
@@ -1141,6 +1187,12 @@
           is called in a JSF request.</para>
         </listitem-->
       </itemizedlist>
+      
+      <para>An event with the <literal>FacesContext</literal> as the payload and with qualifier 
+      <literal>@Initialized(ConversationContext.class)</literal> is fired when the 
+      conversation context is initialized and an event with qualifier 
+      <literal>@Destroyed(ConversationContext.class)</literal> when the conversation context
+      is destroyed.</para>
 
       <para>The conversation context provides access to state associated with 
       a particular <emphasis>conversation</emphasis>. Every JSF request has an
@@ -1325,6 +1377,24 @@
       exists, an <literal>IllegalArgumentException</literal> is thrown.</para>
 
     </section>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>The CDI 1.0 spec doesn't define when a 
+    context is "initialized" (however the concept is implied), however the CDI spec 
+    introduces lifecycle events that require an event to be fired when a context 
+    is initialized. Either we need to rewrite the definition of this feature to use 
+    the CDI 1.0 language or we need to define when a context is initialized.</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>What should the event type be for requests
+    initialized or destroyed due to an EJB remote invocation and a JMS MessageListener 
+    invocation?</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>What should the event type be for applications
+    initialized or destroyed when the application is not a web app?</para>
+    
+    <para><emphasis>OPEN ISSUE: </emphasis>The annotations for context lifecycle events
+    are in the new package <code>javax.enterprise.context.lifecycle</code>. Should they
+    be placed elsewhere (especially if we envision them being used for other purposes than
+    context lifecycle events?)</para>
     
   </section>
 
