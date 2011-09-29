@@ -282,6 +282,11 @@ public class PaymentStrategyProducer implements Serializable {
     <para>Otherwise, if the producer field contains a null value, and the scope of
     the producer field is not <literal>@Dependent</literal>, the <literal>create()</literal> 
     method throws an <literal>IllegalProductException</literal>.</para>
+    
+    <para>When the <literal>destroy()</literal> method is called, and if there is
+    a disposer method for this producer field, the container must invoke the 
+    disposer method as defined by <xref linkend="methods"/>, passing the instance 
+    given to <literal>destroy()</literal> to the disposed parameter.</para>
         
   </section>
   

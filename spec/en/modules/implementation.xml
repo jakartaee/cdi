@@ -701,174 +701,6 @@ public class MockShop extends Shop {
 }</programlisting>
 
     </section>
-     
-    <section id="disposermethod">
-      <title>Disposer methods</title>
-      
-      <para>A disposer method allows the application to perform customized
-      cleanup of an object returned by a producer method.</para>
-      
-      <para>A disposer method must be a non-abstract method of a managed bean class 
-      or session bean class. A disposer method may be either static or non-static. 
-      If the bean is a session bean, the disposer method must be a business method 
-      of the EJB or a static method of the bean class.</para>
-      
-      <para>A bean may declare multiple disposer methods.</para>
-      
-    </section>
-    
-    <section>
-      <title>Disposed parameter of a disposer method</title>
-      
-      <para>Each disposer method must have exactly one <emphasis>disposed 
-      parameter</emphasis>, of the same type as the corresponding producer 
-      method return type. When searching for disposer methods for a producer 
-      method, the container considers the type and qualifiers of the disposed 
-      parameter. If a producer method declared by the same bean class is 
-      assignable to the disposed parameter, according to the rules of typesafe 
-      resolution defined in <xref linkend="typesaferesolution"/>, the 
-      container must call this method when destroying any instance returned 
-      by that producer method.</para>
-      
-      <para>A disposer method may resolve to multiple producer methods 
-      declared by the bean class, in which case the container must call 
-      it when destroying any instance returned by any of these producer 
-      methods.</para> 
-      
-    </section>
-    
-    <section>
-      <title>Declaring a disposer method</title>
-      
-      <para>A disposer method may be declared by annotating a parameter 
-      <literal>@javax.enterprise.inject.Disposes</literal>. That parameter is the 
-      disposed parameter. Qualifiers may be declared by annotating the disposed 
-      parameter:</para>
-      
-      <programlisting>public class UserDatabaseEntityManager {
-
-    @Produces @ConversationScoped @UserDatabase
-    public EntityManager create(EntityManagerFactory emf) {
-        return emf.createEntityManager();
-    }
-    
-    public void close(@Disposes @UserDatabase EntityManager em) {
-        em.close();
-    }
-
-}</programlisting>
-      
-      <para>If a method has more than one parameter annotated <literal>@Disposes</literal>, 
-      the container automatically detects the problem and treats it as a definition 
-      error.</para>
-      
-      <para>If a disposer method is annotated <literal>@Produces</literal> or 
-      <literal>@Inject</literal> or has a parameter annotated <literal>@Observes</literal>, 
-      the container automatically detects the problem and treats it as a definition 
-      error.</para>
-      
-      <para>If a non-static method of a session bean class has a parameter 
-      annotated <literal>@Disposes</literal>, and the method is not a business 
-      method of the session bean, the container automatically detects the problem 
-      and treats it as a definition error.</para>
-
-      <para>Interceptors and decorators may not declare disposer methods. If an
-      interceptor or decorator has a method annotated <literal>@Disposes</literal>,
-      the container automatically detects the problem and treats it as a definition 
-      error.</para>
-    
-    <!--
-    <section id="disposer.xml">
-      <title>Declaring a disposer method using XML</title>
-      
-      <para>For a bean defined in XML, a disposer method may be declared 
-      using the method name, the <literal>&lt;Disposes&gt;</literal> element,
-      and the parameter types of the method:</para>
-        
-      <programlisting><![CDATA[<myfwk:UserDatabaseEntityManager>
-       
-    <myfwk:create>
-        <Produces>
-            <ConversationScoped/>
-            <EntityManager>
-                <myapp:UserDatabase/>
-            </EntityManager>
-        </Produces>
-        <EntityManagerFactory/>
-    </myfwk:create>
-    
-    <myfwk:close>
-        <Disposes>
-            <EntityManager>
-                <myapp:UserDatabase/>
-            </EntityManager>
-        </Disposes>
-    </myfwk:close>
-    
-</mmyfwk:UserDatabaseEntityManager>]]></programlisting>
-
-      <para>When a disposer method is declared in XML, the container 
-      ignores qualifier annotations applied to the Java method parameters.</para>
-      
-      <para>If the bean class of a bean declared in XML does 
-      not have a method with the name and parameter types declared in XML, 
-      the container automatically detects the problem and treats it as 
-      a definition error.</para>
-
-    </section>
-    -->
-      
-      <para>In addition to the disposed parameter, a disposer method may declare 
-      additional parameters, which may also specify qualifiers. These additional
-      parameters are injection points.</para>
-      
-      <programlisting>public void close(@Disposes @UserDatabase EntityManager em, Logger log) { ... }</programlisting>
-      
-      <!-- 
-<programlisting><![CDATA[<myfwk:close>
-
-    <Disposes>
-        <EntityManager>
-            <myapp:UserDatabase/>
-        </EntityManager>
-    </Disposes>
-    
-    <myfwk:Log>
-        <myfwk:Logger/>
-    <myfwk:Log>
-    
-</myfwk:close>]]></programlisting>     
-      --> 
-
-    </section>
-    
-    <section>
-      <title>Disposer method resolution</title>
-      
-      <para>A disposer method is bound to a producer method if:</para>
-      
-      <itemizedlist>
-        <listitem>
-          <para>the producer method is declared by the same bean class as the 
-          disposer method, and</para>
-        </listitem>
-        <listitem>
-          <para>the producer method is assignable to the disposed parameter, 
-          according to the rules of typesafe resolution defined in 
-          <xref linkend="typesaferesolution"/> 
-          (using <xref linkend="assignableparameters"/>).</para>
-        </listitem>
-      </itemizedlist>
-      
-      <para>If there are multiple disposer methods for a single producer method, 
-      the container automatically detects the problem and treats it as a 
-      definition error.</para>
-      
-      <para>If there is no producer method declared by the bean class that is
-      assignable to the disposed parameter of a disposer method, the container 
-      automatically detects the problem and treats it as a definition error.</para>
-      
-    </section>
       
     <section id="producermethodname">
       <title>Default name for a producer method</title>
@@ -1041,6 +873,186 @@ public List&lt;Product&gt; products = ...;</programlisting>
     </section>
 
   </section>
+  
+  <section id="disposermethod">
+    <title>Disposer methods</title>
+      
+    <para>A disposer method allows the application to perform customized
+    cleanup of an object returned by a producer method or producer field.</para>
+      
+    <para>A disposer method must be a non-abstract method of a managed bean class 
+    or session bean class. A disposer method may be either static or non-static. 
+    If the bean is a session bean, the disposer method must be a business method 
+    of the EJB or a static method of the bean class.</para>
+      
+    <para>A bean may declare multiple disposer methods.</para>
+    
+    <section>
+      <title>Disposed parameter of a disposer method</title>
+      
+      <para>Each disposer method must have exactly one <emphasis>disposed 
+      parameter</emphasis>, of the same type as the corresponding producer 
+      method return type or producer field type. When searching for disposer
+      methods for a producer method or producer field the container considers
+      the type and qualifiers of the disposed parameter. If a producer method
+      or producer field declared by the same bean class is assignable to the 
+      disposed parameter, according to the rules of typesafe resolution defined
+      in <xref linkend="typesaferesolution"/>, the container must call this 
+      method when destroying any instance returned by that producer method or
+      producer field.</para>
+      
+      <para>A disposer method may resolve to multiple producer methods or 
+      producer fields declared by the bean class, in which case the container 
+      must call it when destroying any instance returned by any of these 
+      producer methods or producer fields.</para> 
+      
+    </section>
+    
+    <section>
+      <title>Declaring a disposer method</title>
+      
+      <para>A disposer method may be declared by annotating a parameter 
+      <literal>@javax.enterprise.inject.Disposes</literal>. That parameter is the 
+      disposed parameter. Qualifiers may be declared by annotating the disposed 
+      parameter:</para>
+      
+      <programlisting>public class UserDatabaseEntityManager {
+
+    @Produces @ConversationScoped @UserDatabase
+    public EntityManager create(EntityManagerFactory emf) {
+        return emf.createEntityManager();
+    }
+    
+    public void close(@Disposes @UserDatabase EntityManager em) {
+        em.close();
+    }
+
+}</programlisting>
+
+      <programlisting>public class Resources {
+    
+    @PersistenceContext
+    @Produces @UserDatabase
+    private EntityManager em;
+    
+    public void close(@Disposes @UserDatabase EntityManager em) {
+        em.close();
+    }
+
+}</programlisting>
+      
+      <para>If a method has more than one parameter annotated <literal>@Disposes</literal>, 
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a disposer method is annotated <literal>@Produces</literal> or 
+      <literal>@Inject</literal> or has a parameter annotated <literal>@Observes</literal>, 
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+      
+      <para>If a non-static method of a session bean class has a parameter 
+      annotated <literal>@Disposes</literal>, and the method is not a business 
+      method of the session bean, the container automatically detects the problem 
+      and treats it as a definition error.</para>
+
+      <para>Interceptors and decorators may not declare disposer methods. If an
+      interceptor or decorator has a method annotated <literal>@Disposes</literal>,
+      the container automatically detects the problem and treats it as a definition 
+      error.</para>
+    
+    <!--
+    <section id="disposer.xml">
+      <title>Declaring a disposer method using XML</title>
+      
+      <para>For a bean defined in XML, a disposer method may be declared 
+      using the method name, the <literal>&lt;Disposes&gt;</literal> element,
+      and the parameter types of the method:</para>
+        
+      <programlisting><![CDATA[<myfwk:UserDatabaseEntityManager>
+       
+    <myfwk:create>
+        <Produces>
+            <ConversationScoped/>
+            <EntityManager>
+                <myapp:UserDatabase/>
+            </EntityManager>
+        </Produces>
+        <EntityManagerFactory/>
+    </myfwk:create>
+    
+    <myfwk:close>
+        <Disposes>
+            <EntityManager>
+                <myapp:UserDatabase/>
+            </EntityManager>
+        </Disposes>
+    </myfwk:close>
+    
+</mmyfwk:UserDatabaseEntityManager>]]></programlisting>
+
+      <para>When a disposer method is declared in XML, the container 
+      ignores qualifier annotations applied to the Java method parameters.</para>
+      
+      <para>If the bean class of a bean declared in XML does 
+      not have a method with the name and parameter types declared in XML, 
+      the container automatically detects the problem and treats it as 
+      a definition error.</para>
+
+    </section>
+    -->
+   
+   <para>In addition to the disposed parameter, a disposer method may declare 
+   additional parameters, which may also specify qualifiers. These additional
+   parameters are injection points.</para>
+   
+   <programlisting>public void close(@Disposes @UserDatabase EntityManager em, Logger log) { ... }</programlisting>
+   
+   <!-- 
+<programlisting><![CDATA[<myfwk:close>
+
+    <Disposes>
+        <EntityManager>
+            <myapp:UserDatabase/>
+        </EntityManager>
+    </Disposes>
+    
+    <myfwk:Log>
+        <myfwk:Logger/>
+    <myfwk:Log>
+    
+</myfwk:close>]]></programlisting>     
+      --> 
+
+ </section>
+ 
+ <section>
+   <title>Disposer method resolution</title>
+   
+   <para>A disposer method is bound to a producer method or producer field if:</para>
+   
+   <itemizedlist>
+     <listitem>
+       <para>the producer method or producer field is declared by the same bean
+       class as the disposer method, and</para>
+     </listitem>
+     <listitem>
+       <para>the producer method or producer field is assignable to the disposed
+       parameter, according to the rules of typesafe resolution defined in 
+       <xref linkend="typesaferesolution"/> 
+       (using <xref linkend="assignableparameters"/>).</para>
+     </listitem>
+   </itemizedlist>
+   
+   <para>If there are multiple disposer methods for a single producer method or 
+   producer field, the container automatically detects the problem and treats it 
+   as a definition error.</para>
+   
+   <para>If there is no producer method or producer fielddeclared by the bean 
+   class that is assignable to the disposed parameter of a disposer method, 
+   the container automatically detects the problem and treats it as a definition
+   error.</para>
+   
+ </section>
   
   <section id="resources">
     <title>Resources</title>
