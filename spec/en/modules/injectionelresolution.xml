@@ -584,8 +584,11 @@ public @interface PayBy {
           parameters,</para>
         </listitem>
         <listitem>
-          <para>classes which are declared final or have non-private final 
-          methods,</para>
+          <para>classes which are declared final,</para>
+        </listitem>
+        <listitem>
+          <para>classes which have non-static, final methods with 
+          public, protected or default visibility,</para>
         </listitem>
         <listitem>
           <para>primitive types,</para>
