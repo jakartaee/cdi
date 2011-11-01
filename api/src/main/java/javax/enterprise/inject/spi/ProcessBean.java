@@ -63,7 +63,7 @@ public interface ProcessBean<X> {
      * 
      * @return the {@link javax.enterprise.inject.spi.Bean} object about to be registered
      */
-    public BeanAttributes<X> getBean();
+    public Bean<X> getBean();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
