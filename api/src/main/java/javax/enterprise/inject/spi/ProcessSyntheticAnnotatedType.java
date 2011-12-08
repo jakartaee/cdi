@@ -33,7 +33,7 @@ package javax.enterprise.inject.spi;
  * @see ProcessAnnotatedType
  * @param <X> The class being annotated
  */
-interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
+public interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
    /**
     * Get the extension instance which added the {@link AnnotatedType} for which this event is being
     * fired.
