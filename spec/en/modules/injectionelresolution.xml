@@ -212,56 +212,63 @@
     <title>Typesafe resolution</title>
 
     <para>The process of matching a bean to an injection point is called 
-    <emphasis>typesafe resolution</emphasis>. The container considers bean type and 
-    qualifiers when resolving a bean to be injected to an injection point. The type and 
-    qualifiers of the injection point are called the <emphasis>required type</emphasis> 
-    and <emphasis>required qualifiers</emphasis>.
-    Typesafe resolution usually occurs at application initialization time, 
-    allowing the container to warn the user if any enabled beans have unsatisfied 
+    <emphasis>typesafe resolution</emphasis>. Typesafe resolution usually
+    occurs at application initialization time, allowing the container
+    to warn the user if any enabled beans have unsatisfied
     or unresolvable ambiguous dependencies.</para>
+
+
+    <section id="injectioncandidates">
+      <title>Candidates for typesafe resolution</title>
+
+      <para>The container considers bean type and
+      qualifiers when resolving a bean to be injected to an injection point. The type and
+      qualifiers of the injection point are called the <emphasis>required type</emphasis>
+      and <emphasis>required qualifiers</emphasis>.</para>
     
-    <para>A bean is <emphasis>assignable</emphasis> to a given injection point if:</para>
+      <para>A bean is <emphasis>assignable</emphasis> to a given injection point if:</para>
     
-    <itemizedlist>
+      <itemizedlist>
     
-      <listitem>
-        <para>The bean has a bean type that matches the required type. For this purpose, 
-        primitive types are considered to match their corresponding wrapper types in 
-        <literal>java.lang</literal> and array types are considered to match only if 
-        their element types are identical. Parameterized and raw types are considered
-        to match if they are identical or if the bean type is <emphasis>assignable</emphasis> 
-        to the required type, as defined in <xref linkend="assignableparameters"/> or
-        <xref linkend="assignableparametersdec"/>.</para>
-      </listitem>
+        <listitem>
+          <para>The bean has a bean type that matches the required type. For this purpose,
+          primitive types are considered to match their corresponding wrapper types in
+          <literal>java.lang</literal> and array types are considered to match only if
+          their element types are identical. Parameterized and raw types are considered
+          to match if they are identical or if the bean type is <emphasis>assignable</emphasis>
+          to the required type, as defined in <xref linkend="assignableparameters"/> or
+          <xref linkend="assignableparametersdec"/>.</para>
+        </listitem>
           
-      <listitem>
-        <para>The bean has all the required qualifiers. If no required qualifiers were 
-        explicitly specified, the container assumes the required qualifier 
-        <literal>@Default</literal>. A bean has a required qualifier if it has a qualifier 
-        with (a) the same type and (b) the same annotation member value for each member 
-        which is not annotated <literal>@javax.enterprise.util.Nonbinding</literal>.</para>
-      </listitem>
+        <listitem>
+          <para>The bean has all the required qualifiers. If no required qualifiers were
+          explicitly specified, the container assumes the required qualifier
+          <literal>@Default</literal>. A bean has a required qualifier if it has a qualifier
+          with (a) the same type and (b) the same annotation member value for each member
+          which is not annotated <literal>@javax.enterprise.util.Nonbinding</literal>.</para>
+        </listitem>
     
-    </itemizedlist>
+      </itemizedlist>
 
-    <para>A bean is eligible for injection to a certain injection point if:</para>
+      <para>A bean is eligible for injection to a certain injection point if:</para>
 
-    <itemizedlist>
-      <listitem>
-        <para>it is available for injection in the module that contains the class that 
-        declares the injection point, and</para>
-      </listitem>
-      <listitem>
-        <para>it is assignable to the injection point (using
-        <xref linkend="assignableparameters"/>).</para>
-      </listitem>
-    </itemizedlist>
+      <itemizedlist>
+        <listitem>
+          <para>it is available for injection in the module that contains the class that
+          declares the injection point, and</para>
+        </listitem>
+        <listitem>
+          <para>it is assignable to the injection point (using
+          <xref linkend="assignableparameters"/> and <xref linkend="null"/>).</para>
+        </listitem>
+      </itemizedlist>
     
-    <para>For a custom implementation of the <literal>Bean</literal> interface defined in 
-    <xref linkend="bean"/>, the container calls <literal>getTypes()</literal> and 
-    <literal>getQualifiers()</literal> to determine the bean types and qualifiers.</para>
-    
-  <section id="ambigdependencies">
+      <para>For a custom implementation of the <literal>Bean</literal> interface defined in
+      <xref linkend="bean"/>, the container calls <literal>getTypes()</literal> and
+      <literal>getQualifiers()</literal> to determine the bean types and qualifiers.</para>
+    </section>
+
+      <section id="ambigdependencies">
     <title>Unsatisfied and ambiguous dependencies</title>
   
     <para>An <emphasis>unsatisfied dependency</emphasis> exists at an injection
@@ -1162,7 +1169,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
         <para>Identify a bean that has the required type and required qualifiers
         and is eligible for injection into the class into which the parent 
         <literal>Instance</literal> was injected, according to the rules of typesafe 
-        resolution, as defined in <xref linkend="typesaferesolution"/>, resolving 
+        resolution, as defined in <xref linkend="injectioncandidates"/>, resolving
         ambiguities according to <xref linkend="ambigdependencies"/>.</para>
       </listitem>
       
@@ -1188,7 +1195,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
         <para>Identify the set of beans that have the required type and required 
         qualifiers and are eligible for injection into the class into which the parent 
         <literal>Instance</literal> was injected, according to the rules of typesafe 
-        resolution, as defined in <xref linkend="typesaferesolution"/>.</para>
+        resolution, as defined in <xref linkend="injectioncandidates"/>.</para>
       </listitem>
       
       <listitem>
