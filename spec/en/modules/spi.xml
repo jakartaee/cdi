@@ -446,8 +446,8 @@
     have the given required type and qualifiers and are available for injection in the module
     or library containing the class into which the <literal>BeanManager</literal> was injected 
     or the Java EE component from whose JNDI environment namespace the <literal>BeanManager</literal> 
-    was obtained, according to the rules of typesafe resolution defined in 
-    <xref linkend="typesaferesolution"/>.</para>
+    was obtained, according to the rules for candidates of typesafe resolution defined in
+    <xref linkend="injectioncandidates"/>.</para>
     
     <programlisting><![CDATA[public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);]]></programlisting>
 
@@ -523,8 +523,24 @@
     
     <programlisting><![CDATA[public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);]]></programlisting>
 
-    <para>If the ambiguous dependency resolution rules fail, the container 
-    must throw an <literal>AmbiguousResolutionException</literal>.</para>
+    <para>If the <literal>beans</literal> parameter is
+    <itemizedlist>
+      <listitem>
+        <literal>null</literal>,
+      </listitem>
+      <listitem>
+        an empty Set,
+      </listitem>
+      <listitem>
+        or if no active bean can be found according to the rules
+        defined in <xref linkend="ambigdependencies"/>
+      </listitem>
+    </itemizedlist>
+    a value of <literal>null</literal> will be returned.</para>
+
+    <para>If the ambiguous dependency resolution resolves to more than a
+    single bean, the container must throw an
+    <literal>AmbiguousResolutionException</literal>.</para>
     
   </section>
   
