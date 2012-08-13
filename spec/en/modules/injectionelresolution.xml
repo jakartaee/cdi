@@ -389,10 +389,11 @@
     a value to a field or parameter of primitive or wrapper type.</para>
     
     <para>However, if an injection point of primitive type resolves to a bean 
-    that may have null values, such as a producer method with a non-primitive 
-    return type or a producer field with a non-primitive type, the container 
-    automatically detects the problem and treats it as a deployment problem.</para>
-    
+    that may have null values, such as a producer method with a non-primitive
+    return type or a producer field with a non-primitive type, the container
+    must inject the primitive types default Java value instead of the
+    null value.</para>
+
     <para>For a custom implementation of the <literal>Bean</literal> interface
     defined in <xref linkend="bean"/>, the container calls 
     <literal>isNullable()</literal> to determine whether the bean may have null 
