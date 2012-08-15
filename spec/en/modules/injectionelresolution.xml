@@ -391,8 +391,8 @@
     <para>However, if an injection point of primitive type resolves to a bean 
     that may have null values, such as a producer method with a non-primitive
     return type or a producer field with a non-primitive type, the container
-    must inject the primitive types default Java value instead of the
-    null value.</para>
+    must inject the primitive type's default value as defined by the Java 
+    Language Specification.</para>
 
     <para>For a custom implementation of the <literal>Bean</literal> interface
     defined in <xref linkend="bean"/>, the container calls 
