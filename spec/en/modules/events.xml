@@ -416,9 +416,9 @@ else {
       <title>Declaring an observer method</title>
       
       <para>An observer method may be declared by annotating a parameter 
-      <literal>@javax.enterprise.event.Observes</literal>. That parameter is the 
-      event parameter. The declared type of the parameter is the observed event 
-      type.</para>
+      <literal>@javax.enterprise.event.Observes</literal> of a default-access, public, 
+      protected or private method. That parameter is the event parameter. The declared type 
+      of the parameter is the observed event type.</para>
       
       <programlisting>public void afterLogin(@Observes LoggedInEvent event) { ... }</programlisting>
 
