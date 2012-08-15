@@ -523,24 +523,21 @@
     
     <programlisting><![CDATA[public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);]]></programlisting>
 
-    <para>If the <literal>beans</literal> parameter is
+    <para>If the ambiguous dependency resolution rules fail (as defined in <xref linkend="ambigdependencies"/>, the container 
+    must throw an <literal>AmbiguousResolutionException</literal>.</para>
+
+    <para><literal>BeanManager.resolve()</literal> must return null if:
     <itemizedlist>
       <listitem>
-        <literal>null</literal>,
+        null is passed to <literal>resolve()</literal>, or
       </listitem>
       <listitem>
-        an empty Set,
+        no beans are passed to <literal>resolve()</literal>, or
       </listitem>
       <listitem>
-        or if no active bean can be found according to the rules
-        defined in <xref linkend="ambigdependencies"/>
+        no bean is available for injection in the module (as defined in <xref linkend="intermoduleinjection" />) 
       </listitem>
     </itemizedlist>
-    a value of <literal>null</literal> will be returned.</para>
-
-    <para>If the ambiguous dependency resolution resolves to more than a
-    single bean, the container must throw an
-    <literal>AmbiguousResolutionException</literal>.</para>
     
   </section>
   
