@@ -48,8 +48,8 @@
     the container automatically detects the problem and treats it as a definition 
     error.</para>
     
-    <para>If a managed bean has a public field, it must have scope 
-    <literal>@Dependent</literal>. If a managed bean with a public field declares 
+    <para>If a managed bean has a non-static public field, it must have scope 
+    <literal>@Dependent</literal>. If a managed bean with a non-static public field declares 
     any scope other than <literal>@Dependent</literal>, the container automatically 
     detects the problem and treats it as a definition error.</para>
     
