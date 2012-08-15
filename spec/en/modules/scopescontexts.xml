@@ -750,8 +750,9 @@
       <itemizedlist>
       <listitem>
         <para>As defined by the EJB specification, all stateful session beans
-        are passivation capable. Stateless and singleton session beans are
-        not passivation capable.</para>
+        are passivation capable if and only if the all interceptors and 
+        decorators of the bean are serializable. Stateless and singleton session
+        beans are not passivation capable.</para>
       </listitem>
       <listitem>
         <para>A managed bean is passivation capable if and only if the bean
@@ -802,9 +803,6 @@
       <para>The container must guarantee that:</para>
     
       <itemizedlist>
-        <listitem>
-          <para>all session beans are passivation capable dependencies,</para>
-        </listitem>
         <listitem>
           <para>all beans with normal scope are passivation capable dependencies,</para>
         </listitem>
@@ -860,7 +858,7 @@
       validate that the bean truly is passivation capable and that, in addition, its
       dependencies are passivation capable.</para>
     
-      <para>If a managed bean which declares a passivating scope:</para>
+      <para>If a managed bean or stateful session bean which declares a passivating scope:</para>
     
       <itemizedlist>
         <listitem>
@@ -869,22 +867,6 @@
         <listitem>
           <para>has a non-transient injected field that does not resolve to a passivation
           capable dependency, or</para>
-        </listitem>
-        <listitem>
-          <para>has an interceptor or decorator with a non-transient injected field
-          that does not resolve to a passivation capable dependency,</para>
-        </listitem>
-      </itemizedlist> 
-    
-      <para>then the container automatically detects the problem and treats it 
-      as a deployment problem.</para>
-    
-      <para>If a stateful session bean:</para>
-    
-      <itemizedlist>
-        <listitem>
-          <para>has a non-transient injected field that does not resolve to a
-          passivation capable dependency, or</para>
         </listitem>
         <listitem>
           <para>has an interceptor or decorator with a non-transient injected field
