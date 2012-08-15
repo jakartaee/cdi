@@ -9,7 +9,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -29,16 +29,16 @@ import java.util.Arrays;
  * <p>
  * Supports inline instantiation of annotation type instances.
  * </p>
- * 
+ *
  * <p>
  * An instance of an annotation type may be obtained by subclassing <tt>AnnotationLiteral</tt>.
  * </p>
- * 
+ *
  * <pre>
  * public abstract class PayByQualifier extends AnnotationLiteral&lt;PayBy&gt; implements PayBy {
  * }
  * </pre>
- * 
+ *
  * <pre>
  * PayBy paybyCheque = new PayByQualifier() {
  *     public PaymentMethod value() {
@@ -46,15 +46,16 @@ import java.util.Arrays;
  *     }
  * };
  * </pre>
- * 
+ *
  * @author Pete Muir
  * @author Gavin King
- * 
+ * @author Marko Luksa
+ *
  * @param <T> the annotation type
- * 
+ *
  * @see javax.enterprise.inject.Instance#select(Annotation...)
  * @see javax.enterprise.event.Event#select(Annotation...)
- * 
+ *
  */
 public abstract class AnnotationLiteral<T extends Annotation> implements Annotation, Serializable {
 
@@ -104,7 +105,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
         if (annotationType == null) {
             Class<?> annotationLiteralSubclass = getAnnotationLiteralSubclass(this.getClass());
             if (annotationLiteralSubclass == null) {
-                throw new RuntimeException(getClass() + "is not a subclass of AnnotationLiteral");
+                throw new RuntimeException(getClass() + " is not a subclass of AnnotationLiteral");
             }
             annotationType = getTypeParameter(annotationLiteralSubclass);
             if (annotationType == null) {
@@ -120,8 +121,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
         string.append('@').append(annotationType().getName()).append('(');
         for (int i = 0; i < getMembers().length; i++) {
             string.append(getMembers()[i].getName()).append('=');
-            Object value = invoke(getMembers()[i], this);
-            assertMemberValueNotNull(getMembers()[i], this, value);
+            Object value = getMemberValue(getMembers()[i], this);
             if (value instanceof boolean[]) {
                 appendInBraces(string, Arrays.toString((boolean[]) value));
             } else if (value instanceof byte[]) {
@@ -178,10 +178,8 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
             Annotation that = (Annotation) other;
             if (this.annotationType().equals(that.annotationType())) {
                 for (Method member : getMembers()) {
-                    Object thisValue = invoke(member, this);
-                    assertMemberValueNotNull(member, this, thisValue);
-                    Object thatValue = invoke(member, that);
-                    assertMemberValueNotNull(member, this, thatValue);
+                    Object thisValue = getMemberValue(member, this);
+                    Object thatValue = getMemberValue(member, that);
                     if (thisValue instanceof byte[] && thatValue instanceof byte[]) {
                         if (!Arrays.equals((byte[]) thisValue, (byte[]) thatValue))
                             return false;
@@ -225,8 +223,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
         int hashCode = 0;
         for (Method member : getMembers()) {
             int memberNameHashCode = 127 * member.getName().hashCode();
-            Object value = invoke(member, this);
-            assertMemberValueNotNull(member, this, value);
+            Object value = getMemberValue(member, this);
             int memberValueHashCode;
             if (value instanceof boolean[]) {
                 memberValueHashCode = Arrays.hashCode((boolean[]) value);
@@ -252,6 +249,12 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
             hashCode += memberNameHashCode ^ memberValueHashCode;
         }
         return hashCode;
+    }
+
+    private static Object getMemberValue(Method member, Annotation instance) {
+        Object value = invoke(member, instance);
+        assertMemberValueNotNull(member, instance, value);
+        return value;
     }
 
     private static Object invoke(Method method, Object instance) {
