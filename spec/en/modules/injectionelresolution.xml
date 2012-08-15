@@ -388,11 +388,10 @@
     If necessary, the container performs boxing or unboxing when it injects 
     a value to a field or parameter of primitive or wrapper type.</para>
     
-    <para>However, if an injection point of primitive type resolves to a bean 
-    that may have null values, such as a producer method with a non-primitive
-    return type or a producer field with a non-primitive type, the container
-    must inject the primitive type's default value as defined by the Java 
-    Language Specification.</para>
+    <para>However, if an injection point of primitive type resolves to a 
+    producer method or producer field that returns a null value at runtime,
+    the container must inject the primitive type's default value as defined
+    by the Java Language Specification.</para>
 
     <para>For a custom implementation of the <literal>Bean</literal> interface
     defined in <xref linkend="bean"/>, the container calls 
