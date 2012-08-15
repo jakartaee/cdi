@@ -22,26 +22,28 @@ package javax.enterprise.inject.spi;
  * The container fires an event of this type for each enabled session bean, before registering the
  * {@link javax.enterprise.inject.spi.Bean} object.
  * </p>
+ * 
  * <p>
- * If any observer method of a {@code ProcessSessionBean} event throws an exception, the exception is treated as a definition
- * error by the container.
+ * If any observer method of a {@code ProcessSessionBean} event throws an exception, the exception
+ * is treated as a definition error by the container.
  * </p>
  * 
  * @author David Allen
  * @param <X>
  */
 public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
-    /**
-     * Returns the EJB name of the session bean.
-     * 
-     * @return the name of the EJB
-     */
-    public String getEjbName();
+   /**
+    * Returns the EJB name of the session bean.
+    * 
+    * @return the name of the EJB
+    */
+   public String getEjbName();
 
-    /**
-     * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the kind of session bean.
-     * 
-     * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
-     */
-    public SessionBeanType getSessionBeanType();
+   /**
+    * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the kind of session
+    * bean.
+    * 
+    * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
+    */
+   public SessionBeanType getSessionBeanType();
 }
