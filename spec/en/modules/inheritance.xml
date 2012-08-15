@@ -218,13 +218,11 @@
     </itemizedlist>
     -->
     
-      <para>If X is a generic type, and an injection point, producer method, producer field,
-      disposer method or observer method declared by X is inherited by Y, and the declared type of 
-      the injection point, producer method, producer field, disposed parameter or event parameter
-      contains type variables declared by X, the type of the injection point, producer method, 
-      producer field, disposed parameter or event parameter inherited in Y is the declared type, 
-      after substitution of actual type arguments declared by Y or any intermediate class that is 
-      a subclass of X and a superclass of Y.</para>
+      <para>If X is a generic type, and an injection point or observer method declared by X is 
+      inherited by Y, and the declared type of the injection point or event parameter
+      contains type variables declared by X, the type of the injection point or event parameter 
+      inherited in Y is the declared type, after substitution of actual type arguments declared
+      by Y or any intermediate class that is a subclass of X and a superclass of Y.</para>
       
       <para>For example, the bean <literal>DaoClient</literal> has an injection point
       of type <literal>Dao&lt;T&gt;</literal>.</para>
