@@ -84,6 +84,6 @@ public interface Context {
      * 
      * @return <tt>true</tt> if the context is active, or <tt>false</tt> otherwise.
      */
-    boolean isActive();
+    public boolean isActive();
 
 }
