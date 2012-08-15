@@ -63,6 +63,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private transient Class<T> annotationType;
     private transient Method[] members;
+    private transient Integer cachedHashCode;
 
     protected AnnotationLiteral() {
     }
@@ -174,6 +175,12 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     @Override
     public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
         if (other instanceof Annotation) {
             Annotation that = (Annotation) other;
             if (this.annotationType().equals(that.annotationType())) {
@@ -220,35 +227,38 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     @Override
     public int hashCode() {
-        int hashCode = 0;
-        for (Method member : getMembers()) {
-            int memberNameHashCode = 127 * member.getName().hashCode();
-            Object value = getMemberValue(member, this);
-            int memberValueHashCode;
-            if (value instanceof boolean[]) {
-                memberValueHashCode = Arrays.hashCode((boolean[]) value);
-            } else if (value instanceof short[]) {
-                memberValueHashCode = Arrays.hashCode((short[]) value);
-            } else if (value instanceof int[]) {
-                memberValueHashCode = Arrays.hashCode((int[]) value);
-            } else if (value instanceof long[]) {
-                memberValueHashCode = Arrays.hashCode((long[]) value);
-            } else if (value instanceof float[]) {
-                memberValueHashCode = Arrays.hashCode((float[]) value);
-            } else if (value instanceof double[]) {
-                memberValueHashCode = Arrays.hashCode((double[]) value);
-            } else if (value instanceof byte[]) {
-                memberValueHashCode = Arrays.hashCode((byte[]) value);
-            } else if (value instanceof char[]) {
-                memberValueHashCode = Arrays.hashCode((char[]) value);
-            } else if (value instanceof Object[]) {
-                memberValueHashCode = Arrays.hashCode((Object[]) value);
-            } else {
-                memberValueHashCode = value.hashCode();
+        if (cachedHashCode == null) {
+            int hashCode = 0;
+            for (Method member : getMembers()) {
+                int memberNameHashCode = 127 * member.getName().hashCode();
+                Object value = getMemberValue(member, this);
+                int memberValueHashCode;
+                if (value instanceof boolean[]) {
+                    memberValueHashCode = Arrays.hashCode((boolean[]) value);
+                } else if (value instanceof short[]) {
+                    memberValueHashCode = Arrays.hashCode((short[]) value);
+                } else if (value instanceof int[]) {
+                    memberValueHashCode = Arrays.hashCode((int[]) value);
+                } else if (value instanceof long[]) {
+                    memberValueHashCode = Arrays.hashCode((long[]) value);
+                } else if (value instanceof float[]) {
+                    memberValueHashCode = Arrays.hashCode((float[]) value);
+                } else if (value instanceof double[]) {
+                    memberValueHashCode = Arrays.hashCode((double[]) value);
+                } else if (value instanceof byte[]) {
+                    memberValueHashCode = Arrays.hashCode((byte[]) value);
+                } else if (value instanceof char[]) {
+                    memberValueHashCode = Arrays.hashCode((char[]) value);
+                } else if (value instanceof Object[]) {
+                    memberValueHashCode = Arrays.hashCode((Object[]) value);
+                } else {
+                    memberValueHashCode = value.hashCode();
+                }
+                hashCode += memberNameHashCode ^ memberValueHashCode;
             }
-            hashCode += memberNameHashCode ^ memberValueHashCode;
+            cachedHashCode = hashCode;
         }
-        return hashCode;
+        return cachedHashCode;
     }
 
     private static Object getMemberValue(Method member, Annotation instance) {
