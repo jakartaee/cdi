@@ -496,10 +496,11 @@ public class MockLoginActionBean extends LoginActionBean { ... }</programlisting
       </listitem>
     </itemizedlist>
     
-    <para>A producer method must be a non-abstract method of a managed bean class 
-    or session bean class. A producer method may be either static or non-static. 
-    If the bean is a session bean, the producer method must be either a business 
-    method of the EJB or a static method of the bean class.</para>
+    <para>A producer method must be a default-access, public, protected or private,
+    non-abstract method of a managed bean class or session bean class. A producer 
+    method may be either static or non-static. If the bean is a session bean, the 
+    producer method must be either a business method of the EJB or a static method
+    of the bean class.</para>
     
     <para>If a producer method sometimes returns a null value, then the 
     producer method must have scope <literal>@Dependent</literal>. If a 
@@ -729,10 +730,10 @@ public PaymentProcessor paymentProcessor() { ... }</programlisting>
     <para>A <emphasis>producer field</emphasis> is a slightly simpler alternative 
     to a producer method.</para>
     
-    <para>A producer field must be a field of a managed bean class or session 
-    bean class. A producer field may be either static or non-static. If the 
-    bean is a session bean, the producer field must be a static field of the 
-    bean class.</para>
+    <para>A producer field must be a a default-access, public, protected or private,
+    field of a managed bean class or session bean class. A producer field may be 
+    either static or non-static. If the bean is a session bean, the producer field 
+    must be a static field of the bean class.</para>
     
     <para>If a producer field sometimes contains a null value when accessed, 
     then the producer field must have scope <literal>@Dependent</literal>. If 
@@ -880,10 +881,11 @@ public List&lt;Product&gt; products = ...;</programlisting>
     <para>A disposer method allows the application to perform customized
     cleanup of an object returned by a producer method or producer field.</para>
       
-    <para>A disposer method must be a non-abstract method of a managed bean class 
-    or session bean class. A disposer method may be either static or non-static. 
-    If the bean is a session bean, the disposer method must be a business method 
-    of the EJB or a static method of the bean class.</para>
+    <para>A disposer method must be a a default-access, public, protected or private,
+    non-abstract method of a managed bean class or session bean class. A disposer 
+    method may be either static or non-static. If the bean is a session bean, the 
+    disposer method must be a business method of the EJB or a static method of the
+    bean class.</para>
       
     <para>A bean may declare multiple disposer methods.</para>
     
@@ -1511,7 +1513,8 @@ class Jms {
       <title>Bean constructors</title>
 
       <para>When the container instantiates a bean class, it calls the <emphasis>bean 
-      constructor</emphasis>. The bean constructor is a constructor of the bean class.</para>
+      constructor</emphasis>. The bean constructor is a default-access, public, protected
+      or private constructor of the bean class.</para>
       
       <para>The application may call bean constructors directly. However, if the 
       application directly instantiates the bean, no parameters are passed to the 
@@ -1693,11 +1696,12 @@ public class Order {
     <section>
       <title>Initializer methods</title>
 
-      <para>An <emphasis>initializer method</emphasis> is a non-abstract, non-static,
-      non-generic method of a bean class, a non-abstract, non-static method of an enum
-      or of any Java EE component class supporting injection. If the bean is a session 
-      bean, the initializer method is <emphasis>not</emphasis> required to be a 
-      business method of the session bean.</para>
+      <para>An <emphasis>initializer method</emphasis> is a default-access, public, 
+      protected or private, non-abstract, non-static, non-generic method of a bean
+      class, a non-abstract, non-static method of an enum or of any Java EE component
+      class supporting injection. If the bean is a session bean, the initializer 
+      method is <emphasis>not</emphasis> required to be a business method of the 
+      session bean.</para>
       
       <para>A bean class may declare multiple (or zero) initializer methods.</para>
 
