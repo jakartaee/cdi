@@ -142,6 +142,7 @@ public interface BeanManager {
      * 
      * @param <X> a common type of the beans
      * @param beans a set of {@linkplain Bean beans} of the given type
+     * @returns the resolved bean, or null if no bean could be resolved, or null if null or an empty set is passed
      * @throws AmbiguousResolutionException if the ambiguous dependency resolution rules fail
      */
     public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
