@@ -28,6 +28,12 @@ package javax.enterprise.inject.spi;
  * is treated as a definition error by the container.
  * </p>
  * 
+ * <p>
+ * Note that the type parameter of the super-interface of {@link ProcessSessionBean} is
+ * {@link Object} as {@link ProcessBean} allows you access to the {@link Bean}, which in turn allows
+ * you to instantiate an instance, which, for interface-view EJBs will not be an instance of X.
+ * </p>
+ * 
  * @author David Allen
  * @param <X>
  */
