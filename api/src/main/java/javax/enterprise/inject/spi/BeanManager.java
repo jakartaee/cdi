@@ -322,6 +322,28 @@ public interface BeanManager {
      * @throws IllegalArgumentException if there is a definition error associated with any injection point of the type
      */
     public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
+    
+    /**
+     * Obtains a {@link Producer} for the given {@link AnnotatedField}. The container ignores the annotations and types
+     * declared by the elements of the actual Java field and uses the metadata provided via the {@link Annotated} interface
+     * instead.
+     * 
+     * @param field the {@link AnnotatedField}
+     * @returns a container provided implementation of {@link Producer}
+     * @throws IllegalArgumentException if there is a definition error associated with the producer field
+     */
+    public Producer<?> createProducer(AnnotatedField<?> field);
+    
+    /**
+     * Obtains a {@link Producer} for the given {@link AnnotatedKetuod}. The container ignores the annotations and types
+     * declared by the elements of the actual Java method and uses the metadata provided via the {@link Annotated} interface
+     * instead.
+     * 
+     * @param method the {@link AnnotatedMethod}
+     * @returns a container provided implementation of {@link Producer}
+     * @throws IllegalArgumentException if there is a definition error associated with the producer method
+     */
+    public Producer<?> createProducer(AnnotatedMethod<?> method);
 
     /**
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
