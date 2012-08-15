@@ -15,7 +15,7 @@
         <para>A Java object&mdash;the <emphasis>event object</emphasis></para>
       </listitem>
       <listitem>
-        <para>A (possibly empty) set of instances of qualifier types&mdash;the 
+        <para>A set of instances of qualifier types&mdash;the 
         <emphasis>event qualifiers</emphasis></para>
       </listitem>
     </itemizedlist>
