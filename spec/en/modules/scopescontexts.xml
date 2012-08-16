@@ -1150,9 +1150,9 @@
       active during all Servlet requests.</para>
       
       <para>An event with the <literal>ServletRequestEvent</literal> as the payload and with qualifier 
-      <literal>@Initialized(ConversationContext.class)</literal> is fired when the 
+      <literal>@Initialized(ConversationScoped.class)</literal> is fired when the 
       conversation context is initialized and an event with qualifier 
-      <literal>@Destroyed(ConversationContext.class)</literal> when the conversation context
+      <literal>@Destroyed(ConversationScoped.class)</literal> when the conversation context
       is destroyed.</para>
 
       <para>The conversation context provides access to state associated with 
