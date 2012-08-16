@@ -35,8 +35,8 @@ public abstract class CDI<T> implements Instance<T> {
     * @throws IllegalStateException if no CDI provider is available
     * 
     */
-   public static <T> CDI<T> current() {
-      CDI<T> cdi = null;
+   public static CDI<Object> current() {
+      CDI<Object> cdi = null;
       if(providers == null) {
           synchronized (lock) {
               if(providers == null) {

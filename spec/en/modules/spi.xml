@@ -345,7 +345,7 @@
       bean instances.</para> 
       
       <programlisting><![CDATA[public abstract class CDI<T> implements Instance<T> {
-   public static <T> CDI<T> current() { ... }
+   public static CDI<Object> current() { ... }
    public abstract BeanManager getBeanManager();
 }]]></programlisting>
       
@@ -358,7 +358,7 @@
       available an IllegalStateException is thrown.</para>
       
       <programlisting><![CDATA[public interface CDIProvider {
-   public <T> CDI<T> getCDI();
+   public CDI<Object> getCDI();
 }]]></programlisting>
       
       <para>Java EE components may obtain an instance of <literal>BeanManager</literal> 
