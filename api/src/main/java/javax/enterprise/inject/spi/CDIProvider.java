@@ -13,6 +13,6 @@ public interface CDIProvider {
     * 
     * @return the CDI instance for the current container
     */
-   public <T> CDI<T> getCDI();
+   public CDI<Object> getCDI();
 
 }
