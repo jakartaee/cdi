@@ -946,7 +946,7 @@ public @interface PayBy {
         <para>The <literal>isDelegate()</literal> method returns <literal>true</literal>
         if the injection point is a decorator delegate injection point, and 
         <literal>false</literal> otherwise. If the injection point represents a dynamically 
-        obtained instance then <literal>isDelegate()</literal> return false.</para>
+        obtained instance then <literal>isDelegate()</literal> returns false.</para>
       </listitem>
       <listitem>
         <para>The <literal>isTransient()</literal> method returns <literal>true</literal> 
@@ -1019,7 +1019,7 @@ public @interface PayBy {
     <para>These beans are passivation capable dependencies, as defined in 
     <xref linkend="passivationcapabledependency"/>.</para>
     
-    <programlisting><![CDATA[</CDATA>@Named("Order") public class OrderProcessor {
+    <programlisting><![CDATA[@Named("Order") public class OrderProcessor {
     
     @Inject Bean<OrderProcessor> bean;
     
