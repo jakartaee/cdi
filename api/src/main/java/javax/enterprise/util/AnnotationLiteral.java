@@ -253,7 +253,10 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private static Object getMemberValue(Method member, Annotation instance) {
         Object value = invoke(member, instance);
-        assertMemberValueNotNull(member, instance, value);
+        if (value == null) {
+            throw new IllegalArgumentException("Annotation member value " + instance.getClass().getName() + "." + member.getName()
+                   + " must not be null");
+        }
         return value;
     }
 
@@ -271,13 +274,6 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
         } catch (InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
                     + method.getDeclaringClass(), e);
-        }
-    }
-
-    private static void assertMemberValueNotNull(Method member, Annotation instance, Object value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Annotation member " + instance.getClass().getName() + "." + member.getName()
-                    + " must not be null");
         }
     }
 
