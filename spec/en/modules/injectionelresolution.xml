@@ -1002,7 +1002,8 @@ public @interface PayBy {
     <para>The interfaces <literal>Bean</literal>, <literal>Interceptor</literal> and <literal>Decorator</literal>
     provide metadata about a bean.</para>
     
-    <para>The container must provide beans allowing bean instances obtain information about themselves:</para>
+    <para>The container must provide beans allowing a bean instance to obtain a <literal>Bean</literal>, 
+    <literal>Interceptor</literal> or <literal>Decorator</literal> instance containing its metadata:</para>
     
     <itemizedlist>
       <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Default</literal>
@@ -1012,19 +1013,37 @@ public @interface PayBy {
       <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Default</literal>
       and type <literal>Decorator</literal> which can be injected into any decorator instance</listitem>
     </itemizedlist>
-    
-    <para>Additionally, the container must provide beans allowing interceptors and decorators to obtain 
-    information about the beans they intercept and decorate:</para>
-    
-    <itemizedlist>
-      <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@???</literal>
-      and type <literal>Bean</literal> which can be injected into any decorator instance</listitem>
-      <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@???</literal>
-      and type <literal>Bean</literal> which can be injected into any interceptor instance</listitem>
-    </itemizedlist>
-     
+
     <para>These beans are passivation capable dependencies, as defined in 
     <xref linkend="passivationcapabledependency"/>.</para>
+   
+    <para>If an <literal>Interceptor</literal> instance is injected into a bean instance other than an 
+    interceptor instance, the container automatically detects the problem  and treats it as a definition
+    error.</para>
+
+    <para>If a <literal>Decorator</literal> instance is injected into a bean instance other than a 
+    decorator instance, the container automatically detects the problem  and treats it as a definition
+    error.</para>
+
+    <para>The injection of bean metadata is restricted. If:</para>
+
+    <itemizedlist>
+      <listitem>the injection point is a field, an initializer method parameter or a bean constructor then
+      the type parameter of the injected <literal>Bean</literal>, <literal>Interceptor</literal> or 
+      <literal>Decorator</literal> must be the same as the type declaring the injection point</listitem>
+      <listitem>the injection point is a producer method parameter then the type parameter of the injected
+      <literal>Bean</literal> must be the same as the producer method return type</listitem>
+      <listitem>the injection point is a disposer method parameter then the type parameter of the injected
+      <literal>Bean</literal> must be the same as the disposed parameter</listitem>
+    </itemizedlist>
+
+    <para>Otherwise, the container automatically detects the problem and treats it as a definition error.</para>
+    
+    <para>If a <literal>Bean</literal> instance is injected into a disposer method, it represents the producer
+    method to which the disposer method is bound.
+    
+    </para>
+
     
     <programlisting><![CDATA[@Named("Order") public class OrderProcessor {
     
