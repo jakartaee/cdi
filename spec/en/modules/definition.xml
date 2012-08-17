@@ -620,7 +620,10 @@ List&lt;Order&gt; getOrderSearchResults() { ... }</programlisting>
       <literal>@Retention(RUNTIME)</literal>. All scope types must also specify 
       the <literal>@javax.inject.Scope</literal> or 
       <literal>@javax.enterprise.context.NormalScope</literal>
-      meta-annotation. A scope type must not have any attributes.</para>
+      meta-annotation.</para>
+      
+      <para>A scope type must not have any attributes. If a scope type has attributes
+      non-portable behavior results.</para>
 
       <para>For example, the following annotation declares a "business process 
       scope":</para>
