@@ -995,7 +995,8 @@ public @interface PayBy {
     <para>The interfaces <literal>Bean</literal>, <literal>Interceptor</literal> and <literal>Decorator</literal>
     provide metadata about a bean.</para>
     
-    <para>The container must provide beans allowing bean instances obtain information about themselves:</para>
+    <para>The container must provide beans allowing a bean instance to obtain a <literal>Bean</literal>, 
+    <literal>Interceptor</literal> or <literal>Decorator</literal> instance containing its metadata:</para>
     
     <itemizedlist>
       <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Default</literal>
@@ -1005,19 +1006,27 @@ public @interface PayBy {
       <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Default</literal>
       and type <literal>Decorator</literal> which can be injected into any decorator instance</listitem>
     </itemizedlist>
-    
-    <para>Additionally, the container must provide beans allowing interceptors and decorators to obtain 
-    information about the beans they intercept and decorate:</para>
-    
-    <itemizedlist>
-      <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@???</literal>
-      and type <literal>Bean</literal> which can be injected into any decorator instance</listitem>
-      <listitem>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@???</literal>
-      and type <literal>Bean</literal> which can be injected into any interceptor instance</listitem>
-    </itemizedlist>
-     
+
     <para>These beans are passivation capable dependencies, as defined in 
     <xref linkend="passivationcapabledependency"/>.</para>
+   
+    <para>If an <literal>Interceptor</literal> instance is injected into a bean instance other than an 
+    interceptor instance, the container automatically detects the problem  and treats it as a definition
+    error.</para>
+
+    <para>If a <literal>Decorator</literal> instance is injected into a bean instance other than an 
+    decorator instance, the container automatically detects the problem  and treats it as a definition
+    error.</para>
+
+    <para>If the parameterized type of the injected <literal>Bean</literal>, <literal>Interceptor</literal> or 
+    <literal>Decorator</literal> is different to the type declaring the injection point, the container 
+    automatically detects the problem  and treats it as a definition error.</para>
+    
+    <para>If a <literal>Bean</literal> instance is injected into a disposer method, it represents the producer
+    method to which the disposer method is bound.
+    
+    </para>
+
     
     <programlisting><![CDATA[@Named("Order") public class OrderProcessor {
     
