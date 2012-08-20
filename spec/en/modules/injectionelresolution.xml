@@ -1014,7 +1014,7 @@ public @interface PayBy {
     interceptor instance, the container automatically detects the problem  and treats it as a definition
     error.</para>
 
-    <para>If a <literal>Decorator</literal> instance is injected into a bean instance other than an 
+    <para>If a <literal>Decorator</literal> instance is injected into a bean instance other than a 
     decorator instance, the container automatically detects the problem  and treats it as a definition
     error.</para>
 
