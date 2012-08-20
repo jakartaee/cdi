@@ -1018,9 +1018,20 @@ public @interface PayBy {
     decorator instance, the container automatically detects the problem  and treats it as a definition
     error.</para>
 
-    <para>If the parameterized type of the injected <literal>Bean</literal>, <literal>Interceptor</literal> or 
-    <literal>Decorator</literal> is different to the type declaring the injection point, the container 
-    automatically detects the problem  and treats it as a definition error.</para>
+    <para>The injection of bean metadata is restricted. If:</para>
+
+    <itemizedlist>
+      <listitem>the injection point is a field, an initializer method parameter or a bean constructor then
+      the parameterized type of the injected <literal>Bean</literal>, <literal>Interceptor</literal> or 
+      <literal>Decorator</literal> must be the same as the type declaring the injection point</listitem>
+      <listitem>the injection point is a producer method parater then the parameterized type of the injected
+      <literal>Bean</literal> must be the same as the producer method return type</listitem>
+      <listitem>the injection point is a disposer method parater then the parameterized type of the injected
+      <literal>Bean</literal> must be the same as the return type of the producer method to which the disposer
+      method is bound</listitem>
+    </itemizedlist>
+
+    <para>Otherwise, the container automatically detects the problem and treats it as a definition error.</para>
     
     <para>If a <literal>Bean</literal> instance is injected into a disposer method, it represents the producer
     method to which the disposer method is bound.
