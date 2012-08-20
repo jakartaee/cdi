@@ -1027,8 +1027,7 @@ public @interface PayBy {
       <listitem>the injection point is a producer method parameter then the type parameter of the injected
       <literal>Bean</literal> must be the same as the producer method return type</listitem>
       <listitem>the injection point is a disposer method parameter then the type parameter of the injected
-      <literal>Bean</literal> must be the same as the return type of the producer method to which the disposer
-      method is bound</listitem>
+      <literal>Bean</literal> must be the same as the disposed parameter</listitem>
     </itemizedlist>
 
     <para>Otherwise, the container automatically detects the problem and treats it as a definition error.</para>
