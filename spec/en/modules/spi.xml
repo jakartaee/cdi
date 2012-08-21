@@ -1200,6 +1200,16 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <literal>javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType&lt;X&gt;</literal>
       for classes and interfaces added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>.</para>
       
+      <para>The annotation <literal>@WithAnnotations</literal> may be applied to the event parameter.  
+      If the annotation is applied, the container must only deliver <literal>ProcessAnnotatedType</literal> 
+      events for types which contain at least one of the annotations specified. The annotation can 
+      appear on the type, on any field, method or construtor declared by the type, or on any parameter of any
+      method or constructor declared by the type. The annotation may be applied as a meta-annotation on any
+      annotation considered.</para>
+
+      <para>If the <literal>@WithAnnotations</literal> annotation is applied to any other event parameter, the
+      container automatically detects the problem and treats it as a definition error.</para>
+
       <programlisting><![CDATA[public interface ProcessAnnotatedType<X> {
     public AnnotatedType<X> getAnnotatedType();
     public void setAnnotatedType(AnnotatedType<X> type);
