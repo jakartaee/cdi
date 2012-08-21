@@ -1188,7 +1188,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
         <para>Identify a bean that has the required type and required qualifiers
         and is eligible for injection into the class into which the parent 
         <literal>Instance</literal> was injected, according to the rules of typesafe 
-        resolution, as defined in <xref linkend="injectioncandidates"/>, resolving
+        resolution, as defined in <xref linkend="performingtypesaferesolution"/>, resolving
         ambiguities according to <xref linkend="ambigdependencies"/>.</para>
       </listitem>
       
@@ -1214,7 +1214,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
         <para>Identify the set of beans that have the required type and required 
         qualifiers and are eligible for injection into the class into which the parent 
         <literal>Instance</literal> was injected, according to the rules of typesafe 
-        resolution, as defined in <xref linkend="injectioncandidates"/>.</para>
+        resolution, as defined in <xref linkend="performingtypesaferesolution"/>.</para>
       </listitem>
       
       <listitem>

@@ -526,7 +526,7 @@
     <para>If the ambiguous dependency resolution rules fail (as defined in <xref linkend="ambigdependencies"/>, the container 
     must throw an <literal>AmbiguousResolutionException</literal>.</para>
 
-    <para><literal>BeanManager.resolve()</literal> must return null if:
+    <para><literal>BeanManager.resolve()</literal> must return null if:</para>
     <itemizedlist>
       <listitem>
         null is passed to <literal>resolve()</literal>, or
@@ -535,7 +535,7 @@
         no beans are passed to <literal>resolve()</literal>, or
       </listitem>
       <listitem>
-        no bean is available for injection in the module (as defined in <xref linkend="intermoduleinjection" />) 
+        no bean is available for injection in the module (as defined in <xref linkend="selection" />) 
       </listitem>
     </itemizedlist>
     
