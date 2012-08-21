@@ -330,10 +330,12 @@ public interface BeanManager {
      * instead.
      * 
      * @param field the {@link AnnotatedField}
+     * @param declaringBean the bean declaring the producer field, used to obtain the contextual instance which receives the 
+     *        producer field access
      * @returns a container provided implementation of {@link Producer}
      * @throws IllegalArgumentException if there is a definition error associated with the producer field
      */
-    public Producer<?> createProducer(AnnotatedField<?> field);
+    public Producer<?> createProducer(AnnotatedField<?> field, Bean<?> declaringBean);
     
     /**
      * Obtains a {@link Producer} for the given {@link AnnotatedKetuod}. The container ignores the annotations and types
@@ -341,10 +343,12 @@ public interface BeanManager {
      * instead.
      * 
      * @param method the {@link AnnotatedMethod}
+     * @param declaringBean the bean declaring the producer method used to obtain the contextual instance which receives the 
+     *        producer method invocation
      * @returns a container provided implementation of {@link Producer}
      * @throws IllegalArgumentException if there is a definition error associated with the producer method
      */
-    public Producer<?> createProducer(AnnotatedMethod<?> method);
+    public Producer<?> createProducer(AnnotatedMethod<?> method, Bean<?> declaringBean);
 
     /**
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types

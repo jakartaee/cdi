@@ -758,8 +758,8 @@ public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stere
     throws an <literal>IllegalArgumentException</literal> if there is a definition 
     error associated with the producer method or field.</para>
     
-    <programlisting><![CDATA[public Producer<?> createProducer(AnnotatedField<?> field);
-public Producer<?> createProducer(AnnotatedMethod<?> method);]]></programlisting>
+    <programlisting><![CDATA[public Producer<?> createProducer(AnnotatedField<?> field, Bean<?> declaringBean);
+public Producer<?> createProducer(AnnotatedMethod<?> method, Bean<?> declaringBean);]]></programlisting>
 
   </section>
   
