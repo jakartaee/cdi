@@ -447,7 +447,7 @@
     or library containing the class into which the <literal>BeanManager</literal> was injected 
     or the Java EE component from whose JNDI environment namespace the <literal>BeanManager</literal> 
     was obtained, according to the rules for candidates of typesafe resolution defined in
-    <xref linkend="injectioncandidates"/>.</para>
+    <xref linkend="performingtypesaferesolution"/>.</para>
     
     <programlisting><![CDATA[public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);]]></programlisting>
 

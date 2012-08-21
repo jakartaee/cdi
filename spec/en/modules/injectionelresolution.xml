@@ -218,8 +218,8 @@
     or unresolvable ambiguous dependencies.</para>
 
 
-    <section id="injectioncandidates">
-      <title>Candidates for typesafe resolution</title>
+    <section id="performingtypesaferesolution">
+      <title>Performing typesafe resolution</title>
 
       <para>The container considers bean type and
       qualifiers when resolving a bean to be injected to an injection point. The type and
@@ -259,7 +259,7 @@
         </listitem>
         <listitem>
           <para>it is assignable to the injection point (using
-          <xref linkend="assignableparameters"/> and <xref linkend="null"/>).</para>
+          <xref linkend="assignableparameters"/>.</para>
         </listitem>
       </itemizedlist>
     
