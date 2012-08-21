@@ -981,8 +981,10 @@ public @interface PayBy {
     passivation capable dependency, as defined in <xref linkend="passivationcapabledependency"/>.</para>
     
     <para>If a bean that declares any scope other than <literal>@Dependent</literal> has an
-    injection point of type <literal>InjectionPoint</literal> and qualifier <literal>@Default</literal>,
-    the container automatically detects the problem and treats it as a definition error.</para>
+    injection point of type <literal>InjectionPoint</literal> and qualifier <literal>@Default</literal>, 
+    or a decorator with an injection point of type <literal>InjectionPoint</literal> and qualifier 
+    <literal>@Default</literal>, the container automatically detects the problem and treats it as a 
+    definition error.</para>
     
     <para>If a Java EE component class supporting injection that is not a bean has an 
     injection point of type <literal>InjectionPoint</literal> and qualifier <literal>@Default</literal>, 
