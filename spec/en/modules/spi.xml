@@ -350,9 +350,6 @@
       <para>Java EE components may obtain an instance of <literal>BeanManager</literal> 
       from JNDI by looking up the name <literal>java:comp/BeanManager</literal>.</para>
     
-      <para>Web components may obtain an instance of <literal>BeanManager</literal> 
-      by calling <literal>ServletContext.getAttribute("javax.enterprise.inject.spi.BeanManager")</literal>.</para>
-  
   </section>
     
     <section>

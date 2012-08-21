@@ -54,12 +54,6 @@ import javax.enterprise.inject.UnsatisfiedResolutionException;
  * </p>
  * 
  * <p>
- * Web components may obtain an instance of <tt>BeanManager</tt> by calling
- * {@link javax.servlet.ServletContext#getAttribute(String)} with <tt>javax.enterprise.inject.spi.BeanManager</tt> as the
- * attribute name.
- * </p>
- * 
- * <p>
  * Any operation of <tt>BeanManager</tt> may be called at any time during the execution of the application.
  * </p>
  * 
