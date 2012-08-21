@@ -676,13 +676,13 @@
       <listitem>
         <para>As defined by the EJB specification, all stateful session beans
         are passivation capable if and only if the all interceptors and 
-        decorators of the bean are serializable. Stateless and singleton session
+        decorators of the bean are passivation capable. Stateless and singleton session
         beans are not passivation capable.</para>
       </listitem>
       <listitem>
         <para>A managed bean is passivation capable if and only if the bean
         class is serializable and all interceptors and decorators of the bean
-        are serializable.</para>
+        are passivation capable.</para>
       </listitem>
       <listitem>
         <para>A producer method is passivation capable if and only if it never
