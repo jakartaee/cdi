@@ -819,8 +819,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
        </listitem>
     </itemizedlist>
     
-    <programlisting><![CDATA[public Bean<?> createBean(BeanAttributes attributes, Class<?> beanClass, 
-                          InjectionTarget<?> injectionTarget);]]></programlisting>
+    <programlisting><![CDATA[public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, 
+                          InjectionTarget<T> injectionTarget);]]></programlisting>
                           
     <para>The second version of the method also accepts:</para>
     
@@ -831,8 +831,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
        </listitem>
     </itemizedlist>
     
-    <programlisting><![CDATA[public Bean<?> createBean(BeanAttributes attributes, Class<?> beanClass, 
-                          Producer<?> producer);]]></programlisting>
+    <programlisting><![CDATA[public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, 
+                          Producer<T> producer);]]></programlisting>
     
   </section>
 
