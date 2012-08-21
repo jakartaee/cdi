@@ -371,6 +371,7 @@ public interface BeanManager {
     /**
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link InjectionTarget}.
      * 
+     * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
@@ -379,11 +380,12 @@ public interface BeanManager {
      *        {@link Bean#getInjectionPoints()}
      * @return a container provided implementation of {@link Bean}
      */
-    public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, InjectionTarget<?> injectionTarget);
+    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, InjectionTarget<T> injectionTarget);
 
     /**
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link Producer}.
      * 
+     * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
@@ -391,7 +393,7 @@ public interface BeanManager {
      *        value of {@link Bean#getInjectionPoints()}
      * @return a container provided implementation of {@link Bean}
      */
-    public Bean<?> createBean(BeanAttributes<?> attributes, Class<?> beanClass, Producer<?> producer);
+    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, Producer<T> producer);
 
     /**
      * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
