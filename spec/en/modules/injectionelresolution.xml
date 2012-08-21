@@ -988,8 +988,8 @@ public @interface PayBy {
     injection point of type <literal>InjectionPoint</literal> and qualifier <literal>@Default</literal>, 
     the container automatically detects the problem  and treats it as a definition error.</para>
     
-    <para>The <literal>InjectionPoint</literal> injected into a disposer method represents the producer
-    method for which the disposer method is being invoked.</para>
+    <para>The <literal>InjectionPoint</literal> injected into a disposer method must be the injection point 
+    which would be injected into the bound producer method.</para>
     
     <para>The <literal>InjectionPoint</literal> injected into a decorator represents the injection point
     on the bean the decorated type is injected into.</para>
