@@ -1311,13 +1311,16 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     <section>
       <title><literal>ProcessInjectionPoint</literal> event</title>
 
-      <para>The container must fire an event for every injection point of every Java EE component 
-      class supporting injection that may be instantiated by the container at runtime.</para>
+      <para>The container must fire an event for every injection point of every Java EE component
+      class supporting injection that may be instantiated by the container at runtime, including 
+      every managed bean declared using <literal>@ManagedBean</literal>, EJB session or 
+      message-driven bean, enabled bean, enabled interceptor or enabled decorator.</para>
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessInjectionPoint&lt;T, X&gt;</literal> where 
-      <literal>T</literal> is the bean class of the bean that declares the injection point, and 
-      <literal>X</literal> is the declared type of the injection point.</para>
+      <literal>T</literal> is the managed bean class, session bean class or Java EE component
+      class supporting injection, and <literal>X</literal> is the declared type of the 
+      injection point.</para>
       
       <programlisting><![CDATA[public interface ProcessInjectionPoint<T, X> {
     public InjectionPoint getInjectionPoint();
