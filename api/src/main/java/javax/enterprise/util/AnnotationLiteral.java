@@ -66,6 +66,11 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private transient Integer cachedHashCode;
 
     protected AnnotationLiteral() {
+        if (getMembers().length == 0) {
+            this.cachedHashCode = 0;
+        } else {
+            this.cachedHashCode = null;
+        }
     }
 
     private Method[] getMembers() {
@@ -227,7 +232,9 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     @Override
     public int hashCode() {
-        if (cachedHashCode == null) {
+        if (cachedHashCode != null) {
+            return cachedHashCode;
+        } else {
             int hashCode = 0;
             for (Method member : getMembers()) {
                 int memberNameHashCode = 127 * member.getName().hashCode();
@@ -256,9 +263,8 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
                 }
                 hashCode += memberNameHashCode ^ memberValueHashCode;
             }
-            cachedHashCode = hashCode;
+            return hashCode;
         }
-        return cachedHashCode;
     }
 
     private static Object getMemberValue(Method member, Annotation instance) {
