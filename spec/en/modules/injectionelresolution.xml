@@ -522,11 +522,26 @@
 
       <programlisting>@Inject @PayBy(CREDIT_CARD) PaymentProcessor paymentProcessor;</programlisting>
 
-      <para>The container calls the <literal>equals()</literal> method of the
-      annotation member value to compare values.</para>
+      <para>Annotation member values are compared using the rules defined by 
+      <literal>Annotation.equals()</literal>.</para>
 
-      <para>An annotation member may be excluded from consideration using the
-      <literal>@Nonbinding</literal> annotation.</para>
+      <para>When comparing array-valued members the order of the array matters. The
+      order of the array may be ignored by annotating the array-valued member with
+      <literal>@Unordered</literal>.</para>
+
+      <programlisting> @Qualifier
+@Retention(RUNTIME)
+@Target({ METHOD, FIELD, PARAMETER, TYPE })
+public @interface PayBy {
+     
+    @Unordered
+    PaymentMethod[] value();
+}</programlisting>
+
+      <para>Any annotation member, defined on the annotation, or transitivly on an 
+      annotation-valued member, or on an annotation contained in an array-valued 
+      member may be excluded from consideration using the <literal>@Nonbinding</literal>
+      annotation.</para>
       
       <programlisting>@Qualifier
 @Retention(RUNTIME)
@@ -536,11 +551,6 @@ public @interface PayBy {
     @Nonbinding String comment() default "";
 }</programlisting>
 
-      <para>Array-valued or annotation-valued members of a qualifier type should be 
-      annotated <literal>@Nonbinding</literal> in a portable application. If an
-      array-valued or annotation-valued member of a qualifier type is not annotated 
-      <literal>@Nonbinding</literal>, non-portable behavior results.</para>
-      
     </section>
 
     <section>
