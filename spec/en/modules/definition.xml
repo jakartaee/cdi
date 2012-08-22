@@ -687,9 +687,6 @@ public class Order { ... }</programlisting>
       <programlisting>@Named("currentOrder")
 public class Order { ... }</programlisting>
 
-      <para>If the <literal>@Named</literal> annotation does not specify the
-      <literal>value</literal> member, the EL name is defaulted.</para>
-      
     </section>
 
     <section id="defname">
@@ -710,6 +707,10 @@ public class Order { ... }</programlisting>
         explicitly specify an EL name.</para>
       </listitem>
       </itemizedlist>
+
+      <para>If a bean class or producer method or field of a bean declares a 
+      <literal>@Named</literal> annotation and no EL name is explicitly specified
+      the value of the <literal>value</literal> member is defaulted.</para>
       
       <para>The default name for a bean depends upon the bean implementation. 
       The rules for determining the default name for a bean are defined in 
@@ -857,7 +858,9 @@ public @interface Action {}</programlisting>
 
         <para>A stereotype may declare an empty <literal>@Named</literal> annotation,
         which specifies that every bean with the stereotype has a defaulted name when 
-        a name is not explicitly specified by the bean.</para>
+        a name is not explicitly specified by the bean. A <literal>@Named</literal> 
+        qualifer declared by a stereotype is not added to the qualifiers of a bean
+        with the stereotype.</para>
         
         <para>If a stereotype declares a non-empty <literal>@Named</literal>
         annotation, the container automatically detects the problem and treats it as 
