@@ -921,7 +921,7 @@ public @interface PayBy {
         point represents a dynamically obtained instance, the <literal>getType()</literal> and 
         <literal>getQualifiers()</literal> methods should return the required type (as defined
         by <literal>Instance.select()</literal>), and required qualifiers of the injection point
-        including any additional required qualifers (as defined by 
+        including any additional required qualifiers (as defined by 
         <literal>Instance.select()</literal>).</para>
       </listitem>
       <listitem>

@@ -865,7 +865,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     interfaces, thereby exposing the metadata to the container.</para>
     
     <para>In general, the behavior is as defined by the Java Language Specification, and
-    only deviations from the Java Lanaguage Specification are noted.</para>
+    only deviations from the Java Language Specification are noted.</para>
     
     <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedType</literal> 
     exposes the <literal>Class</literal> object and members.</para> 

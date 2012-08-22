@@ -730,7 +730,7 @@ public PaymentProcessor paymentProcessor() { ... }</programlisting>
     <para>A <emphasis>producer field</emphasis> is a slightly simpler alternative 
     to a producer method.</para>
     
-    <para>A producer field must be a a default-access, public, protected or private,
+    <para>A producer field must be a default-access, public, protected or private,
     field of a managed bean class or session bean class. A producer field may be 
     either static or non-static. If the bean is a session bean, the producer field 
     must be a static field of the bean class.</para>
@@ -881,7 +881,7 @@ public List&lt;Product&gt; products = ...;</programlisting>
     <para>A disposer method allows the application to perform customized
     cleanup of an object returned by a producer method or producer field.</para>
       
-    <para>A disposer method must be a a default-access, public, protected or private,
+    <para>A disposer method must be a default-access, public, protected or private,
     non-abstract method of a managed bean class or session bean class. A disposer 
     method may be either static or non-static. If the bean is a session bean, the 
     disposer method must be a business method of the EJB or a static method of the
@@ -1049,7 +1049,7 @@ public List&lt;Product&gt; products = ...;</programlisting>
    producer field, the container automatically detects the problem and treats it 
    as a definition error.</para>
    
-   <para>If there is no producer method or producer fielddeclared by the bean 
+   <para>If there is no producer method or producer field declared by the bean 
    class that is assignable to the disposed parameter of a disposer method, 
    the container automatically detects the problem and treats it as a definition
    error.</para>
