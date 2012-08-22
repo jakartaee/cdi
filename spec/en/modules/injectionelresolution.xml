@@ -99,10 +99,10 @@
    </alternatives>
 </beans>]]></programlisting>
 
-    <para>Each child <literal>&lt;class&gt;</literal> element must specify the name of an 
-    alternative bean class. If there is no class with the specified name, or if the class with 
-    the specified name is not an alternative bean class, the container automatically detects the 
-    problem and treats it as a deployment problem.</para>
+    <para>Each child <literal>&lt;class&gt;</literal> element must specify the name of a 
+    bean class of an alternative bean. If there is no bean whose bean class has the specified
+    name, or if the bean whose bean class has the specified name is not an alternative, the 
+    container automatically detects the problem and treats it as a deployment problem.</para>
     
     <para>Each child <literal>&lt;stereotype&gt;</literal> element must specify the name 
     of an <literal>@Alternative</literal> stereotype annotation. If there is no annotation with 

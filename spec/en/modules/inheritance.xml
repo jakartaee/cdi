@@ -366,9 +366,8 @@ public class MockAsynchronousService extends AsynchronousService {
       some bean type of Y, the container automatically detects the problem and 
       treats it as a definition error.</para>
       
-      <para>If Y has a name and X declares a name explicitly, using <literal>@Named</literal>, 
-      the container automatically detects the problem and treats it as a definition 
-      error.</para>
+      <para>If Y has a name and X declares a non-defaulted bean EL name, the container
+      automatically detects the problem and treats it as a definition error.</para>
       
       <para>For example, the following bean would have the inherited qualifiers 
       <literal>@Default</literal> and <literal>@Asynchronous</literal>:</para>
