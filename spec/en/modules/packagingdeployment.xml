@@ -44,13 +44,14 @@
       <listitem>
         <para>The <literal>WEB-INF/classes</literal> directory of a war is a bean 
         archive if there is a file named <literal>beans.xml</literal> in the 
-        <literal>WEB-INF</literal> directory or the 
-        <literal>WEB-INF/classes/META-INF</literal> of the war. If a war has a
-        file named <literal>beans.xml</literal> in both the
-        <literal>WEB-INF</literal> directory and the 
-        <literal>WEB-INF/classes/META-INF</literal>, then non-portable behavior
-        results. Portable applications must have a <literal>beans.xml</literal> file
-        in only one of the <literal>WEB-INF</literal> or the 
+        <literal>WEB-INF</literal> directory or in the 
+        <literal>WEB-INF/classes/META-INF</literal> directory of the war. If a 
+        war has a file named <literal>beans.xml</literal> in both the
+        <literal>WEB-INF</literal> directory and in the 
+        <literal>WEB-INF/classes/META-INF</literal> directory, then non-portable
+        behavior results. Portable applications must have a 
+        <literal>beans.xml</literal> file in only one of the 
+        <literal>WEB-INF</literal> or the 
         <literal>WEB-INF/classes/META-INF</literal> directories.
         </para>
       </listitem>
