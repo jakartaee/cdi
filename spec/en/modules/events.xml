@@ -712,7 +712,9 @@ else {
 
       <para>Any observer method called before completion of a transaction may call 
       <literal>setRollbackOnly()</literal> to force a transaction rollback. An observer 
-      method may not directly initiate, commit or rollback JTA transactions.</para>
+      method may not directly initiate, complete or abort JTA transactions. If an observer
+      method directly initiates, completes or aborts a JTA transaction, non-portable behavior
+      result.</para>
     
     <!--
     <section id="observermethodnotification">
