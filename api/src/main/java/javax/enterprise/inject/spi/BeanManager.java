@@ -332,7 +332,7 @@ public interface BeanManager {
      * @param <X> the bean class of the bean declaring the producer field
      * @param field the {@link AnnotatedField}
      * @param declaringBean the bean declaring the producer field, used to obtain the contextual instance which receives the 
-     *        producer field access
+     *        producer field access. May be null if the producer field is a static field.
      * @returns a container provided implementation of {@link Producer}
      * @throws IllegalArgumentException if there is a definition error associated with the producer field
      */
@@ -346,7 +346,7 @@ public interface BeanManager {
      * @param <X> the bean class of the bean declaring the producer method
      * @param method the {@link AnnotatedMethod}
      * @param declaringBean the bean declaring the producer method used to obtain the contextual instance which receives the 
-     *        producer method invocation
+     *        producer method invocation. May be null if the producer method is a static method.
      * @returns a container provided implementation of {@link Producer}
      * @throws IllegalArgumentException if there is a definition error associated with the producer method
      */
