@@ -346,17 +346,23 @@
       
       <programlisting><![CDATA[public abstract class CDI<T> implements Instance<T> {
    public static CDI<Object> current() { ... }
+   public static void setCDIProvider(CDIProvider provider);
    public abstract BeanManager getBeanManager();
 }]]></programlisting>
       
       <para>A portable extension may obtain a reference to the current container by 
       calling <literal>CDI.current()</literal>.</para>
       
-      <para> When <literal>CDI.current()</literal> is called, the first 
-      <literal>javax.enterprise.inject.spi.CDIProvider</literal> is loaded, and the 
-      <literal>CDIProvider.getCDI()</literal> method called. If no providers are
-      available an IllegalStateException is thrown.</para>
+      <para> When <literal>CDI.current()</literal> is called, <literal>getCDI()</literal>
+      method is called on 
+      <literal>javax.enterprise.inject.spi.CDIProvider</literal>.</para>
       
+      <para>The CDIProvider to use may set by the application or container using the
+      <literal>setCDIProvider()</literal> method. If the <literal>setCDIProvider()</literal>
+      has not been called, the first service provider of the service 
+      <literal>javax.enterprise.inject.spi.CDIProvider</literal> declared in META-INF/services
+      is used. If no provider is available an IllegalStateException is thrown.</para>
+
       <programlisting><![CDATA[public interface CDIProvider {
    public CDI<Object> getCDI();
 }]]></programlisting>
