@@ -1193,7 +1193,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     
     </section>
     
-    <section>
+    <section id="pm">
       <title><literal>ProcessModule</literal> event</title>
       
       <para>The container must fire an event for each bean deployment archive, before it processes 
