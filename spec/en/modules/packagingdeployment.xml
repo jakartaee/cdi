@@ -143,6 +143,11 @@
         <xref linkend="bbd"/>.</para>
       </listitem>
       <listitem>
+        <para>Next, the container must fire an event of type 
+        <literal>ProcessModule</literal> for every bean archive, as defined in
+        <xref linkend="pm"/>.</para>
+      </listitem>
+      <listitem>
         <para>Next, the container must perform bean discovery, and abort 
         initialization of the application if any definition errors exist, 
         as defined in <xref linkend="exceptions"/>. Additionally, for 
