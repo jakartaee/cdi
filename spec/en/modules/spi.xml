@@ -1561,9 +1561,9 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <title><literal>ProcessBean</literal> event</title>
       
       <para>The container must fire an event for each enabled bean, interceptor or decorator
-      deployed in a bean archive, before registering the <literal>Bean</literal> object. No 
-      event is fired for any <literal>@New</literal> qualified bean, defined in 
-      <xref linkend="new"/>.</para>
+      deployed in a bean archive, after firing the <literal>ProcessBeanAttributes</literal> for
+      the bean and before registering the <literal>Bean</literal> object. No event is fired for
+      any <literal>@New</literal> qualified bean, defined in <xref linkend="new"/>.</para>
       
       <para>The event object type in the package <literal>javax.enterprise.inject.spi</literal>
       depends upon what kind of bean was discovered:</para>
