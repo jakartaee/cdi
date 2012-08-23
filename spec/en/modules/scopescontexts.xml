@@ -932,6 +932,13 @@
     methods. The context does not propagate across remote method invocations or to 
     asynchronous processes such as JMS message listeners or EJB timer service 
     timeouts.</para>
+
+    
+    <para>Portable extensions are encourage to fire an event with qualifier 
+    <literal>@Initialized(X.class)</literal> when a custom context is initialized and an
+    event with qualifier <literal>@Initialized(X.class)<literal>when a custom contet is 
+    destroyed where X is the scope type associated with the context. A suitable event 
+    payload should be chosen.</para>
     
     <section>
       <title>Request context lifecycle</title>
