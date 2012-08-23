@@ -56,12 +56,6 @@
   In certain other cases&mdash;for example, Java EE component environment resources, 
   defined in <xref linkend="resources"/>&mdash;the developer provides only the 
   annotations and the bean implementation is provided by the container.</para>
-
-  <!--
-  <para>A bean implementation may be a Java class, an EJB session bean class, 
-  a producer method or field or a Java EE component environment resource, as 
-  specified in <xref linkend="implementation"/>.</para>
-  -->
   
   <para>The bean types and qualifiers of a bean determine where its instances will 
   be injected by the container, as defined in <xref linkend="injectionelresolution"/>.</para>
@@ -73,11 +67,6 @@
   runtime. Interceptors are defined by Java interceptors specification, and 
   interceptor bindings are specified in <xref linkend="interceptors"/>.
   Decorators are defined in <xref linkend="decorators"/>.</para>
-  
-  <!--  
-  <para>A bean implementation may produce or consume events. The event 
-  notification facility is specified in <xref linkend="events"/>.</para>
-  -->
   
   <section id="capabilities">
     <title>Functionality provided by the container to the bean</title>
@@ -154,7 +143,7 @@ public class BookShopBean
     a bean are defined in <xref linkend="managedbeantypes"/>, 
     <xref linkend="sessionbeantypes"/>, <xref linkend="producermethodtypes"/>,
     <xref linkend="producerfieldtypes"/> and <xref linkend="resourcetypes"/>.
-    <!--and <xref linkend="jmstypes"/>--></para>
+    </para>
     
     <para>All beans have the bean type <literal>java.lang.Object</literal>.</para>
     
@@ -349,8 +338,8 @@ public class Order { ... }</programlisting>
 public class Order { ... }</programlisting>
       
       <para>The default qualifier is also assumed for any injection point that does not 
-      explicitly declare a qualifier, <!--other than <literal>@Named</literal>--> as defined 
-      in <xref linkend="injectionpointdefaultqualifier"/>. The following declarations, in 
+      explicitly declare a qualifier, as defined in 
+      <xref linkend="injectionpointdefaultqualifier"/>. The following declarations, in 
       which the use of the <literal>@Inject</literal> annotation identifies the constructor
       parameter as an injection point, are equivalent:</para>
 
@@ -429,21 +418,6 @@ class SynchronousReliablePaymentProcessor
       
     </section>
 
-    <!--
-    <section id="qualifiertype.xml">
-      <title>Declaring the qualifiers of a bean using XML</title>
-
-      <para>If a bean is declared in <literal>beans.xml</literal>, 
-      qualifiers may be specified using the qualifier type names:</para>
-
-      <programlisting>&lt;myapp:SynchronousPaymentProcessor&gt;
-    &lt;myapp:Synchronous/&gt;
-    &lt;myapp:Reliable/&gt;
-&lt;/myapp:SynchronousPaymentProcessor&gt;</programlisting>
-            
-    </section>
-    -->
-
     <section>
       <title>Specifying qualifiers of an injected field</title>
 
@@ -462,21 +436,6 @@ class SynchronousReliablePaymentProcessor
       <programlisting>@Inject @All List&lt;Product&gt; catalog;</programlisting>
 
       <programlisting>@Inject @WishList List&lt;Product&gt; wishList;</programlisting>
-      
-      <!--
-      <para>For a bean defined in XML, the qualifiers of a field may be specified 
-      using XML:</para>
-      
-      <programlisting><![CDATA[<myapp:paymentProcessor>
-    <myapp:PaymentProcessor>
-        <myapp:Asynchronous/>
-        <myapp:Reliable/>
-    </myapp:PaymentProcessor>
-</myapp:paymentProcessor>]]></programlisting>
-
-      <para>When the qualifiers of a field are specified using XML, any qualifier 
-      annotations of the field are ignored.</para>
-      -->
       
     </section>
 
@@ -502,24 +461,6 @@ PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync,
                                      @Asynchronous PaymentProcessor async) {
     return isSynchronous() ? sync : async;
 }</programlisting>
-      
-      <!--
-      <para>For a bean defined in XML, the qualifiers of a method parameter 
-      may be specified using XML:</para>
-      
-      <programlisting><![CDATA[<myapp:getPaymentProcessor>
-    <Produces/>
-    <myapp:PaymentProcessor>
-        <myapp:Synchronous/>
-    </myapp:PaymentProcessor>
-    <myapp:PaymentProcessor>
-        <myapp:Asynchronous/>
-    </myapp:PaymentProcessor>
-</myapp:getPaymentProcessor>]]></programlisting>
-      
-      <para>When the qualifiers of a parameter are specified using XML, any
-      qualifier annotations of the parameter are ignored.</para>
-      -->
       
     </section>
     
@@ -674,26 +615,6 @@ public class Order { ... }</programlisting>
 
     </section>
 
-    <!--
-    <section id="scopetype.xml">
-      <title>Declaring the bean scope using XML</title>
-
-      <para>If the bean is declared in <literal>beans.xml</literal>, 
-      the scope may be specified using the scope annotation type name:</para>
-
-      <programlisting>&lt;myapp:ProductList&gt;
-    &lt;RequestScoped/&gt;
-&lt;/myapp:ProductList&gt;</programlisting>
-
-      <para>If more than one scope type is specified in XML, the container 
-      automatically detects the problem and treats it as a definition error.</para>
- 
-      <para>Alternatively, a scope type may be specified using a stereotype
-      declared in XML, as defined in <xref linkend="stereotypexml"/>.</para>
-      
-    </section>
-    -->
-
     <section>
       <title>Default scope</title>
 
@@ -753,14 +674,8 @@ public class Order { ... }</programlisting>
 
     <programlisting>&lt;h:outputText value="#{products.total}"/&gt;</programlisting>
       
-    <!--para>Resources and message destinations do not have EL names.</para-->
-
     <para>Bean EL names are used by the rules of EL name resolution defined in
     <xref linkend="nameresolution"/>.</para>
-    
-    <!--
-    <para><emphasis>Open issue: should a bean be allowed to have multiple EL names?</emphasis></para>
-    -->
     
     <section>
       <title>Declaring the bean EL name</title>
@@ -777,24 +692,6 @@ public class Order { ... }</programlisting>
       
     </section>
 
-    <!--
-    <section  id="name.xml">
-      <title>Declaring the bean EL name using XML</title>
-
-      <para>If the bean is declared in
-      <literal>beans.xml</literal>, the name may be 
-      specified using <literal>&lt;Named&gt;</literal>:</para>
-
-      <programlisting>&lt;myapp:ProductList&gt;
-    &lt;Named&gt;products&lt;/Named&gt;
-&lt;/myapp:ProductList&gt;</programlisting>
-
-      <para>If the <literal>&lt;Named&gt;</literal> element is empty,
-      the default name is assumed.</para>
-            
-    </section>
-    -->
-    
     <section id="defname">
       <title>Default bean EL names</title>
       
@@ -807,12 +704,6 @@ public class Order { ... }</programlisting>
         <literal>@Named</literal> annotation and no EL name is explicitly 
         specified by the <literal>value</literal> member.</para>
       </listitem>
-      <!--
-      <listitem>
-        <para>An empty <literal>&lt;Named&gt;</literal> element is specified 
-        by a bean defined in XML.</para>
-      </listitem>
-      -->
       <listitem>
         <para>A bean declares a stereotype that declares an empty 
         <literal>@Named</literal> annotation, and the bean does not 
@@ -862,9 +753,6 @@ public class MockOrder extends Order { ... }</programlisting>
       producer method or producer field with a stereotype that declares an
       <literal>@Alternative</literal> annotation.</para>
       
-      <!--para>If a bean is an alternative, all producer methods and fields of the 
-      bean are also alternatives.</para-->
-      
       <para>If an interceptor or decorator is an alternative, non-portable 
       behavior results.</para>
       
@@ -886,15 +774,6 @@ public class MockOrder extends Order { ... }</programlisting>
       <listitem>
         <para>a default scope, and</para>
       </listitem>
-      <!--
-      <listitem>
-        <para>a restriction upon the bean scope,</para>
-      </listitem>
-      <listitem>
-        <para>a requirement that the bean implement or extend a certain 
-        type, and</para>
-      </listitem>
-      -->
       <listitem>
         <para>a set of interceptor bindings.</para>
       </listitem>
@@ -1021,34 +900,6 @@ public @interface Mock {}</programlisting>
 
       </section>
       
-      <!--  
-      <section>
-        <title>Restricting bean scopes and types using a stereotype</title>
-
-        <para>If all actions are request scoped, we can make this restriction explicit:</para>
-      
-        <programlisting>@RequestScoped
-@Secure
-@Transactional
-@Stereotype(supportedScopes=RequestScoped.class)
-@Target(TYPE)
-@Retention(RUNTIME)
-public @interface Action {}</programlisting>
-
-        <para>We may even require that all actions extend some <literal>ActionBase</literal> 
-        class:</para>
-
-        <programlisting>@RequestScoped
-@Secure
-@Transactional
-@Stereotype(requiredTypes=ActionBase.class)
-@Target(TYPE)
-@Retention(RUNTIME)
-public @interface Action {}</programlisting>
-        
-      </section>
-      -->
-
       <section>
         <title>Stereotypes with additional stereotypes</title>
       
@@ -1065,12 +916,6 @@ public @interface AuditableAction {}</programlisting>
         by a second stereotype is inherited by all beans and other stereotypes 
         that declare the second stereotype.</para>
         
-        <!--
-        <para>Stereotypes declared <literal>@Target(METHOD)</literal> may not
-        be applied to stereotypes declared <literal>@Target({TYPE, METHOD})</literal>
-        or <literal>@Target(TYPE)</literal>.</para>
-        -->
-
         <para>Stereotypes declared <literal>@Target(TYPE)</literal> may not
         be applied to stereotypes declared <literal>@Target({TYPE, METHOD, FIELD})</literal>,
         <literal>@Target(METHOD)</literal>, <literal>@Target(FIELD)</literal>
@@ -1101,42 +946,6 @@ public class MockLoginAction extends LoginAction { ... }</programlisting>
 public class LoginAction { ... }</programlisting>
 
     </section>
-    
-    <!--
-    <section id="stereotypexml">
-      <title>Declaring the stereotypes for a bean using XML</title>
-      
-      <para>If the bean is declared in <literal>beans.xml</literal>, 
-      stereotypes may be declared using the stereotype annotation type name:</para>
-
-      <programlisting>&lt;myapp:LoginAction&gt;
-    &lt;myfwk:Action/&gt;
-&lt;/myapp:LoginAction&gt;</programlisting>
-
-    </section>
-    -->
-    
-    <!--
-    <section>
-      <title>Stereotype restrictions</title>
-      
-      <para>A stereotype may place certain restrictions upon the beans that
-      declare the stereotype.</para>
-      
-      <para>If a stereotype declares a <literal>requiredType</literal>, and the 
-      bean types do not include the type, the container automatically detects the 
-      problem and treats it as a definition error.</para>
-
-      <para>If a stereotype explicitly declares a set of scope types using
-      <literal>supportedScopes</literal>, and the bean scope is not in that
-      set, the container automatically detects the problem and treats it as 
-      a definition error.</para>
-      
-      <para>If a bean declares multiple stereotypes, it must satisfy every
-      restriction declared by every declared stereotype.</para>
-      
-    </section>
-    -->
     
     <section id="model">
       <title>Built-in stereotypes</title>

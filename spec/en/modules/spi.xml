@@ -21,15 +21,6 @@
     </listitem>
   </itemizedlist>
   
-  <!--
-  <para>Bean definitions provided by a portable extension may be associated
-  with a certain <emphasis>activity</emphasis>.</para>
-  -->
-  <!--
-  <para>Integration with portable extensions is enabled via the important SPI
-  interfaces <literal>Bean</literal> and <literal>BeanManager</literal>.</para>
-  -->
-  
   <section id="bean">
     <title>The <literal>Bean</literal> interface</title>
     
@@ -256,15 +247,15 @@
         <listitem>
           <para><literal>produce()</literal> calls the producer method on, 
           or accesses the producer field of, a contextual instance of the 
-          <!--most specialized bean that specializes the--> bean that declares 
-          the producer method, as defined in <xref linkend="methods"/>.</para>
+          bean that declares the producer method, as defined in 
+          <xref linkend="methods"/>.</para>
         </listitem>
        <listitem>
           <para><literal>dispose()</literal> calls the disposer method, if
-          any, on a contextual instance of the <!--most specialized bean that 
-          specializes the--> bean that declares the disposer method, as defined 
-          in <xref linkend="methods"/>, or performs any additional required
-          cleanup, if any, to destroy state associated with a resource.</para>
+          any, on a contextual instance of the bean that declares the disposer
+          method, as defined in <xref linkend="methods"/>, or performs any 
+          additional required cleanup, if any, to destroy state associated 
+          with a resource.</para>
         </listitem>
          <listitem>
           <para><literal>getInjectionPoints()</literal> returns the set of 
@@ -285,12 +276,6 @@
 }]]></programlisting>
       
       <itemizedlist>
-        <!--listitem>
-          <para><literal>produce()</literal> calls the constructor annotated 
-          <literal>@Inject</literal> if it exists, or the constructor with no 
-          parameters otherwise, as defined in 
-          <xref linkend="instantiation"/>.</para>
-        </listitem-->
         <listitem>
           <para><literal>inject()</literal> performs dependency injection upon the 
           given object. The container performs Java EE component environment 
@@ -309,11 +294,6 @@
           callback, if it exists, according to the semantics required by the Java 
           EE platform specification.</para>
         </listitem>
-        <!--listitem>
-          <para><literal>getInjectionPoints()</literal> returns the set of 
-          <literal>InjectionPoint</literal> objects representing all injected fields, 
-          bean constructor parameters and initializer method parameters.</para> 
-        </listitem-->   
       </itemizedlist>
       
   </section>
@@ -418,11 +398,6 @@
       passing an instance of <literal>InjectionPoint</literal> that represents the 
       injection point and the instance of <literal>CreationalContext</literal> that 
       was passed to <literal>Bean.create()</literal>.</para>
-
-      <!--
-      <para><emphasis>Open issue: exceptions if InjectionPoint is nonsense.</emphasis></para>
-      -->
-    
     </section>
     
     <section>
@@ -465,14 +440,6 @@
       
     <para>If an instance of an annotation that is not a qualifier type is given, an 
     <literal>IllegalArgumentException</literal> is thrown.</para>
-
-    <!--  
-    <para>If an instance of <literal>javax.enterprise.inject.New</literal> is 
-    passed to <literal>getBeans()</literal>, non-portable behavior results. Portable
-    applications should not pass qualifiers of type <literal>@New</literal> to
-    <literal>getBeans()</literal>.</para>
-    -->
-
   </section>
   
   <section>
@@ -490,18 +457,6 @@
     <para>The parameter is an EL name.</para>
     
   </section>
-  
-  <!--section>
-    <title>Obtaining the most specialized bean</title>
-    
-    <para>The method <literal>BeanManager.getMostSpecializedBean()</literal> returns 
-    the <literal>Bean</literal> object representing the most specialized enabled
-    bean that specializes the given bean, as defined in 
-    <xref linkend="mostspecialized"/>.</para>
-    
-    <programlisting><![CDATA[public <X> Bean<? extends X> getMostSpecializedBean(Bean<X> bean);]]></programlisting>
-
-  </section-->
   
   <section>
     <title>Obtaining a passivation capable bean by identifier</title>
@@ -669,21 +624,6 @@ public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stere
     
   </section>
   
-  <!--section>
-    <title>Discovering the enabled deployment types</title>
-    
-    <para>The method <literal>BeanManager.getEnabledDeploymentTypes()</literal> 
-    exposes the list of enabled deployment types, in order of lower to higher 
-    precedence, as defined by <xref linkend="enablement"/>.</para>
-    
-    <programlisting><![CDATA[public List<Class<? extends Annotation>> getEnabledDeploymentTypes();]]></programlisting>
-
-    <para>Portable extensions may use this method to inspect meta-annotations
-    that appear on the deployment types and thereby discover information about
-    the deployment.</para>
-    
-  </section-->
-    
   <section>
     <title>Obtaining the active <literal>Context</literal> for a scope</title>
     
@@ -745,8 +685,6 @@ public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stere
     
     <programlisting><![CDATA[public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);]]></programlisting>
     
-    <!-- TODO: createInjectionTarget(AnnotatedConstructor) -->
-
   </section>
   
   <section>
@@ -1230,11 +1168,6 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         <para><literal>getBeansXml()</literal> returns an input stream which can be used to read in the 
         <literal>beans.xml</literal> for this module.</para>
       </listitem>
-      <!--
-      <listitem>
-        <para><literal>addAnnotatedType()</literal></para>
-      </listitem>
-      -->
       </itemizedlist>
       
       <para>Any observer of this event is permitted to add classes to, or remove classes from, the 
@@ -1569,20 +1502,9 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       depends upon what kind of bean was discovered:</para>
       
       <itemizedlist>
-        <!--
         <listitem>
-          <para>For a decorator with bean class <literal>X</literal>, the container must
-          raise an event of type <literal>ProcessDecorator&lt;X&gt;</literal>.</para>
-        </listitem>
-        <listitem>
-          <para>For an interceptor with class <literal>X</literal>, the container must
-          raise an event of type <literal>ProcessInterceptor&lt;X&gt;</literal>.</para>
-        </listitem>
-        -->
-        <listitem>
-          <para>For a managed bean with bean class <literal>X</literal>, <!--that is not an
-          interceptor or decorator--> the container must raise an event of type 
-          <literal>ProcessManagedBean&lt;X&gt;</literal>.</para>
+          <para>For a managed bean with bean class <literal>X</literal>, the container must 
+          raise an event of type <literal>ProcessManagedBean&lt;X&gt;</literal>.</para>
         </listitem>
         <listitem>
           <para>For a session bean with bean class <literal>X</literal>, the container must 
@@ -1667,17 +1589,6 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }]]></programlisting>
       
-      <!--  
-      <programlisting><![CDATA[public interface ProcessDecorator<X> 
-        extends ProcessManagedBean<X> {
-    public Decorator<X> getBean();
-}]]></programlisting>
-    
-      <programlisting><![CDATA[public interface ProcessInterceptor<X> 
-        extends ProcessManagedBean<X> {
-    public Interceptor<X> getBean();
-}]]></programlisting>
-      -->
       <para>If any observer method of a <literal>ProcessBean</literal> event throws 
       an exception, the exception is treated as a definition error by the container.</para>
     
@@ -1721,140 +1632,6 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     </section>
     
   </section>
-  
-  <!--  
-  <section>
-    <title>Activities</title>
-    
-    <para>Bean definitions may be scoped to an <emphasis>activity</emphasis>.
-    This specification only provides a programmatic API for defining
-    activities, since this feature is intended for use with third-party
-    orchestration frameworks that integrate with the container.</para>
-    
-    <para>The method <literal>createActivity()</literal> creates a new child
-    activity of an activity and returns a <literal>BeanManager</literal>
-    for the activity:</para>
-    
-    <programlisting>public interface BeanManager {
-    public BeanManager createActivity();
-    ...
-}</programlisting>
-
-    <para>A child activity inherits all beans, interceptors, decorators, observers, 
-    and contexts defined by its direct and indirect parent activities:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>every bean belonging to a parent activity also belongs to the
-        child activity, is eligible for injection into other beans belonging
-        to the child activity and may be obtained by dynamic lookup via the 
-        child activity,</para>
-      </listitem>
-      <listitem>
-        <para>every interceptor and decorator belonging to a parent activity 
-        also belongs to the child activity and may be applied to any bean 
-        belonging to the child activity,</para>
-      </listitem>
-      <listitem>
-        <para>every observer belonging to a parent activity also belongs to 
-        the child activity and receives events fired via the child activity, 
-        and</para>
-      </listitem>
-      <listitem>
-        <para>every context object belonging to the parent activity also belongs 
-        to the child activity.</para>
-      </listitem>
-    </itemizedlist>
-    
-    <para>Beans and observers may be registered with an activity by calling
-    <literal>addBean()</literal> or <literal>addObserver()</literal> on the 
-    <literal>BeanManager</literal> object that represents the activity.</para>
-    
-    <para>Beans and observers registered with an activity are visible only to 
-    that activity and its children&mdash;they are never visible to direct or 
-    indirect parent activities, or to other children of the parent activity:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>a bean registered with the child activity is not available for 
-        injection into any bean registered with a parent activity,</para>
-      </listitem>
-      <listitem>
-        <para>a bean registered with a child activity is not available for 
-        injection into non-contextual objects,</para>
-      </listitem>
-      <listitem>
-        <para>a bean registered with a child activity may not be obtained
-        by dynamic lookup via the parent activity, and</para>
-      </listitem>
-      <listitem>
-        <para>an observer registered with the child activity does not receive
-        events fired via a parent activity.</para>
-      </listitem>
-    </itemizedlist>
-    
-    <para>If a bean registered with a child activity has the bean type and all
-    qualifiers of some injection point of some bean registered with a direct or 
-    indirect parent activity, the container automatically detects the problem and 
-    treats it as a deployment problem.</para>
-    
-    <para>The container is not required to support registration of an interceptor 
-    or decorator with a child activity. Portable extensions and applications should 
-    not depend upon the ability to register an interceptor or decorator with 
-    a child activity.</para>
-
-    <section>
-      <title>Current activity</title>
- 
-      <para>An activity may be associated with the current context for a normal 
-      scope by calling <literal>setCurrent()</literal>, passing the normal scope 
-      type:</para>
-     
-      <programlisting>public interface BeanManager {
-    public BeanManager setCurrent(Class&lt;? extends Annotation&gt; scopeType);
-    ...
-}</programlisting>
-
-      <para>If the given scope is not active when <literal>setCurrent()</literal> is 
-      called, a <literal>ContextNotActiveException</literal> is thrown. If the given 
-      scope type is not a normal scope, an <literal>IllegalArgumentException</literal>
-      is thrown.</para>
-    
-      <para>All EL evaluations (as defined <xref linkend="el"/>), all calls to 
-      any injected <literal>BeanManager</literal> object or <literal>BeanManager</literal> 
-      object obtained via JNDI lookup (as defined by <xref linkend="beanmanager"/>),
-      all calls to any injected <literal>Event</literal> object (as defined in
-      <xref linkend="eventinterface"/>) and all calls to any injected 
-      <literal>Instance</literal> object (as defined by <xref linkend="dynamiclookup"/>) 
-      are processed by the <emphasis>current activity</emphasis>:</para>
-      
-      <itemizedlist>
-        <listitem>
-          <para>If the root activity has no active normal scope such that the current 
-          context for that scope has an associated activity, the root activity is 
-          the current activity.</para>
-        </listitem>
-        <listitem>
-          <para>If the root activity has exactly one active normal scope such that the 
-          current context for that scope has an associated activity, that activity is 
-          the current activity.</para>
-        </listitem>
-        <listitem>
-          <para>Otherwise, there is no well-defined current activity, and the behavior
-          is undefined. Portable extensions and applications should not depend upon
-          the behavior of the container when two different current contexts have an 
-          associated activity.</para>
-        </listitem>
-      </itemizedlist>
-    
-      <para>A bean registered with an activity is only available to Unified EL 
-      expressions that are evaluated when that activity or one of its children is the 
-      current activity.</para>
-       
-    </section>
-    
-  </section>
-  -->
   
 </chapter>
 

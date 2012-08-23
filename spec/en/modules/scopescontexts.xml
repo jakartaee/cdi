@@ -305,69 +305,6 @@
     
     <para>The <literal>@Dependent</literal> scope is always active.</para>
     
-    <!--  
-    <section>
-      <title>Dependent scope lifecycle</title>
-    
-      <para>The <literal>@Dependent</literal> scope is active when:</para>
-    
-      <itemizedlist>
-        <listitem>
-          <para>
-            the container is creating a contextual instance of a bean, injecting 
-            its dependencies and creating its decorators, or
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            the container is injecting dependencies of a Java EE component class 
-            supporting injection, or
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            a contextual instance of a bean with scope <literal>@Dependent</literal> 
-            is created by the container to receive a producer method, producer field, 
-            disposer method or observer method invocation, or
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            an observer or disposer method is invoked, or
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            a Unified EL expression is evaluated, or
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <literal>Instance.get()</literal>, <literal>Instance.iterator().next()</literal> 
-            or <literal>BeanManager.getReference()</literal> is invoked upon an 
-            instance of <literal>Instance</literal> or <literal>BeanManager</literal> 
-            injected by the container into a bean or other Java EE component class 
-            supporting injection.
-          </para>
-        </listitem>
-      </itemizedlist>
-    </section>
-    -->
-      <!--
-      <para>The <literal>@Dependent</literal> scope is even active 
-      during invocation of interceptors and decorators of observer methods 
-      and interceptors and decorators of <literal>@PostConstruct</literal> 
-      and <literal>@PreDestroy</literal> callbacks.</para>
-      -->
-    
-      <!--
-      <para>The <literal>@Dependent</literal> scope is not active when 
-      <literal>Instance.get()</literal>, <literal>Instance.iterator()</literal> 
-      or <literal>BeanManager.getReference().next()</literal> is invoked upon an 
-      instance of <literal>Instance</literal> or <literal>BeanManager</literal> 
-      that was not injected by the container.</para>
-      -->    
-    
     <section id="dependentobjects">
       <title>Dependent objects</title>
             
@@ -396,13 +333,6 @@
         of the instance of <literal>Instance</literal>.</para>
       </listitem>
       </itemizedlist>
-      
-      <!--
-      <para>Dependent objects of a contextual instance are associated with the 
-      <literal>CreationalContext</literal> of the contextual instance. (The 
-      <literal>CreationalContext</literal> passed to <literal>Contextual.get()</literal>
-      when the contextual instance was created.)</para>
-      -->
       
     </section>
     
@@ -670,11 +600,6 @@
       
       </itemizedlist>
       
-      <!--  
-      <para>Normally, typesafe resolution results in exactly one bean, since
-      the container validated dependencies at initialization time.</para>
-      -->
-      
       <para>For certain combinations of scopes, the container is permitted
       to optimize the above procedure:</para>
       
@@ -769,12 +694,6 @@
       </listitem>
       </itemizedlist>
     
-      <!--
-      <para>A custom implementation of <literal>Bean</literal> is passivation
-      capable if <literal>isPassivationCapable()</literal> returns 
-      <literal>true</literal>.</para>
-      -->
-    
       <para>A custom implementation of <literal>Bean</literal> is passivation capable 
       if it implements the interface <literal>PassivationCapable</literal>. An
       implementation of <literal>Contextual</literal> that is not a bean is
@@ -811,8 +730,7 @@
           are passivation capable dependencies,</para>
         </listitem>
         <listitem>
-          <para>all resources <!--and message destinations--> are passivation capable 
-          dependencies, and</para>
+          <para>all resources are passivation capable dependencies, and</para>
         </listitem>
         <listitem>
           <para>the built-in beans of type <literal>Instance</literal>, 
@@ -950,11 +868,6 @@
         <listitem>
           <para>during any Java EE web service invocation,</para>
         </listitem>
-        <!--
-        <listitem>
-          <para>during any asynchronous observer method notification,</para>
-        </listitem>
-        -->
         <listitem>
           <para>during any remote method invocation of any EJB, during any asynchronous 
           method invocation of any EJB, during any call to an EJB timeout method and 
@@ -978,11 +891,6 @@
         <listitem>
           <para>after the web service invocation completes,</para>
         </listitem>
-        <!--
-        <listitem>
-          <para>after the asynchronous observer notification completes,</para>
-        </listitem>
-        -->
         <listitem>
           <para>after the EJB remote method invocation, asynchronous method invocation, 
           timeout or message delivery completes, or</para>
@@ -1035,11 +943,6 @@
           <literal>HttpSessionListener</literal>, <literal>AsyncListener</literal> 
           or <literal>ServletRequestListener</literal>.</para>
         </listitem>
-        <!--listitem>
-          <para>when the disposer method or <literal>@PreDestroy</literal> callback 
-          of any bean with scope <literal>@RequestScoped</literal> or 
-          <literal>@ConversationScoped</literal> is called during a servlet request.</para>
-        </listitem-->
       </itemizedlist>
 
       <para>The session context is shared between all servlet requests that occur in 
@@ -1076,11 +979,6 @@
         <listitem>
           <para>during any Java EE web service invocation, </para>
         </listitem>
-        <!--
-        <listitem>
-          <para>during any asynchronous observer method notification,</para>
-        </listitem>
-        -->
         <listitem>
           <para>during any remote method invocation of any EJB, during any 
           asynchronous method invocation of any EJB, during any call to an EJB 
@@ -1100,11 +998,10 @@
       </itemizedlist>
       
       <para>The application context is shared between all servlet requests,
-      <!--asynchronous observer method notifications,--> web service invocations, 
-      EJB remote method invocations, EJB asynchronous method invocations, EJB 
-      timeouts and message deliveries to message-driven beans that execute 
-      within the same application. The application context is destroyed when 
-      the application is shut down.</para>
+      web service invocations, EJB remote method invocations, EJB asynchronous
+      method invocations, EJB timeouts and message deliveries to message-driven
+      beans that execute within the same application. The application context is
+      destroyed when the application is shut down.</para>
       
       <para>An event with qualifier <literal>@Initialized(ApplicationScoped.class)</literal>
       is fired when the application context is initialized and an event with qualifier 

@@ -41,13 +41,6 @@ public @interface Transactional {}</programlisting>
 @Transactional
 public @interface DataAccess {}</programlisting>      
       
-        <!--
-        <programlisting><![CDATA[<myfwk:DataAccess>
-    <InterceptorBinding/>
-    <myfwk:Transactional/>
-</myfwk:DataAccess>]]></programlisting>
-       -->
-
         <para>Interceptor bindings are transitive&mdash;an interceptor binding declared
         by an interceptor binding type is inherited by all beans and other
         interceptor binding types that declare that interceptor binding type.</para>
@@ -82,86 +75,6 @@ public @interface Action {}</programlisting>
       
     </section>
      
-     <!-- 
-     <section>
-      <title>Interceptor implementation</title>
-    
-      <para>An <emphasis>interceptor</emphasis> is a managed bean with a
-      bean class that is also an interceptor class as defined by the EJB 
-      specification.</para>
-      
-      <para>An interceptor with scope <literal>@Dependent</literal> must
-      be serializable. If an interceptor has scope <literal>@Dependent</literal>
-      and is not serializable, the container automatically detects the problem and 
-      treats it as a definition error.</para>
-    
-      <para>An interceptor may be either a business method interceptor, a
-      lifecycle callback interceptor or both.</para>
-      
-    <section>
-      <title>Business method interceptors</title>
-      
-      <para>An interceptor method for business method invocations is a method
-      of an interceptor with return type <literal>Object</literal> and a single 
-      parameter of type <literal>javax.interceptor.InvocationContext</literal>, 
-      annotated <literal>@AroundInvoke</literal>.</para>
-      
-      <para>Interceptor methods for business method invocations are called by
-      the container when a business method is invoked.</para>
-      
-      <para>If an interceptor has an interceptor method for business method 
-      invocations, we describe it as a <emphasis>business method 
-      interceptor</emphasis>.</para>
-      
-    </section>
-    
-    <section>
-      <title>Lifecycle callback interceptors</title>
-     
-      <para>An interceptor method for a lifecycle callback is a method
-      of an interceptor bean class with return type 
-      <literal>void</literal> and a single parameter of type
-      <literal>javax.interceptor.InvocationContext</literal>, annotated
-      <literal>@PostConstruct</literal>, <literal>@PreDestroy</literal>,
-      <literal>@PrePassivate</literal> or <literal>@PostActivate</literal>.</para>
-      
-      <para>Interceptor methods for a lifecycle callbacks are called by
-      the container when the corresponding <literal>@PostConstruct</literal>, 
-      <literal>@PreDestroy</literal>, <literal>@PrePassivate</literal> or 
-      <literal>@PostActivate</literal> events occur.</para>
-      
-      <para>If an interceptor has an interceptor method for a lifecycle
-      callback, we describe it as a <emphasis>lifecycle callback 
-      interceptor</emphasis>.</para>
-      
-    </section>
-    
-    -->
-        
-        
-    <!--
-    <section id="interceptors.xml">
-      <title>Declaring an interceptor using XML</title>
-
-      <para>Additional interceptors may be declared in <literal>beans.xml</literal>,
-      using the interceptor bean class name and the <literal>&lt;Interceptor&gt;</literal> 
-      element:</para>
-      
-      <programlisting><![CDATA[<myfwk:TransactionInterceptor>
-    <Interceptor/>
-    <myfwk:Transactional/>
-</myfwk:TransactionInterceptor>]]></programlisting>
-
-      <para>When an interceptor is declared in XML, the container ignores 
-      any interceptor binding annotations applied to the interceptor class.</para>
-      
-      <para>If the interceptor bean class is already annotated 
-      <literal>@Interceptor</literal>, two different interceptors exist, 
-      with different interceptor bindings.</para>
-
-    </section>
-    -->
-
     <section id="declaringinterceptor">
       <title>Declaring the interceptor bindings of an interceptor</title>
       
@@ -240,56 +153,6 @@ public class ShoppingCart { ... }</programlisting>
       definition error.</para>
 
     </section>
-    <!--
-    <section id="interceptorbindingtype.xml">
-      <title>Binding an interceptor using XML</title>
-
-      <para>Class-level or method-level interceptor binding types may be applied 
-      to any bean declared in <literal>beans.xml</literal>.</para>
-      
-      <para>In the following example, the <literal>TransactionInterceptor</literal>
-      will be applied at the class level:</para>
-
-      <programlisting><![CDATA[<myapp:ShoppingCart>
-   <myfwk:Transactional/>
-</myapp:ShoppingCart>]]></programlisting>
-
-      <para>In this example, the <literal>TransactionInterceptor</literal>
-      will be applied at the method level:</para>
-
-      <programlisting><![CDATA[<myapp:ShoppingCart>
-   <myapp:placeOrder>
-       <myfwk:Transactional/>
-   </myapp:placeOrder>
-</myapp:ShoppingCart>]]></programlisting>
-      -->
-      <!-- 
-      <para>If any class-level interceptor binding type is specified in XML, the 
-      interceptor binding annotations appearing on the bean class are 
-      ignored. The class-level interceptor bindings for the bean include 
-      all interceptor bindings declared using XML, together with all interceptor 
-      bindings of all stereotypes declared by the bean.</para>
-      
-      <para>Otherwise, if no class-level interceptor binding types are specified 
-      in XML, the interceptor binding annotations that appear on the bean 
-      class are used. The class-level interceptor bindings for the bean include 
-      all interceptor bindings declared by annotating the bean class, 
-      together with all interceptor bindings of all stereotypes declared by the bean
-      .</para>
-            
-      <para>If any method-level interceptor binding type is specified in XML, the 
-      interceptor binding annotations appearing on that method are ignored. The 
-      method-level interceptor bindings for that method include only the interceptor 
-      bindings declared using XML.</para>
-      
-      <para>Otherwise, if no method-level interceptor binding types are specified 
-      in XML, the interceptor binding annotations that appear on that method are 
-      used. The method-level interceptor bindings for that method include all the 
-      interceptor bindings declared by annotating the method.</para>
-      -->
-      <!--  
-    </section>
-     -->
     
     <section id="enabledinterceptors">
       <title>Interceptor enablement and ordering</title>
@@ -484,33 +347,5 @@ public @interface Transactional {
       
     </section>
   
-    <!--
-    
-    <section id="interceptorinvocation">
-      <title>Interceptor invocation</title>
-      
-      <para>Whenever a business method or lifecycle callback is invoked on an instance 
-      of a bean with interceptors, the container intercepts the method invocation and 
-      invokes interceptors of the callback or business method.</para>
-      
-      <para>The container identifies the first interceptor in the interceptor stack for 
-      the method. If no such interceptor exists, the container starts processing the 
-      decorator stack, as defined in <xref linkend="decoratorinvocation"/>. Otherwise, 
-      the container builds an instance of <literal>javax.interceptor.InvocationContext</literal> 
-      and calls the appropriate interceptor method of the interceptor.</para>
-      
-      <para>When any interceptor is invoked by the container, it may in turn call 
-      <literal>InvocationContext.proceed()</literal>. The container then identifies the 
-      first interceptor in the interceptor stack for the method such that the interceptor 
-      has not previously been invoked during this business method or lifecycle callback 
-      invocation. If no such interceptor exists, the container starts processing the 
-      decorator stack. Otherwise, the container calls the appropriate interceptor method.</para>
-      
-      <para>Eventually, by recursion, the interceptor stack is exhausted of uninvoked
-      interceptors.</para>
-      
-    </section>
-    -->
-    
 </chapter>
 

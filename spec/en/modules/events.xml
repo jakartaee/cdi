@@ -57,37 +57,6 @@
     
     </section>
     
-    <!--
-    <section id="observer">
-      <title>The <literal>Observer</literal> interface</title>
-      
-      <para>An <emphasis>observer</emphasis> consumes events and allows the application 
-      to react to events that occur.</para>
-      
-      <para>Observers of events implement the interface 
-      <literal>javax.enterprise.event.Observer</literal> where <literal>T</literal> is
-      the observed event type.</para>
-      
-      <programlisting><![CDATA[public interface Observer<T> {
-      
-    public boolean notify(T event);
-    
-}]]></programlisting>
-
-      <para>If <literal>notify()</literal> returns <literal>true</literal>, the 
-      container may deregister the observer and stop sending event notifications to it. 
-      However, the container is permitted to call <literal>notify()</literal> even after 
-      a previous invocation of <literal>notify()</literal> has returned 
-      <literal>false</literal>.</para>
-      
-      <para>The container is permitted to call <literal>notify()</literal> concurrently. 
-      Implementations of <literal>Observer</literal> are not permitted to perform their 
-      own concurrency management. It is therefore recommended that observers be immutable 
-      objects.</para>
-
-    </section>
-    -->
-    
     <section id="observerresolution">
       <title>Observer resolution</title>
       
@@ -258,13 +227,6 @@ else {
       
       <para>In this example, the event sometimes has the qualifier <literal>@Admin</literal>,
       depending upon the value of <literal>user.isAdmin()</literal>.</para>
-
-      <!--
-      <para>The <literal>addObserver()</literal> method registers an observer:</para>
-      
-      <programlisting>loggedInEvent.addObserver( 
-    new Observer&lt;LoggedInEvent&gt;() { public boolean notify(LoggedInEvent user) { ... } } );</programlisting>
-      -->
       
       <section id="eventinterface">
         <title>The <literal>Event</literal> interface</title>
@@ -330,14 +292,6 @@ else {
       <para>If the runtime type of the event object contains a type variable, an 
       <literal>IllegalArgumentException</literal> is thrown.</para> 
       
-      <!--
-      <para>The method <literal>addObserver()</literal> registers the given observer
-      for events of the specified type and qualifiers.</para>
-      
-      <para>The method <literal>removeObserver()</literal> deregisters the given 
-      observer.</para>
-      -->
-      
       </section>
       
      <section>
@@ -376,15 +330,6 @@ else {
       
       <para>An observer method allows the application to receive and respond to event 
       notifications.</para>
-      
-      <!--
-      <para>An <emphasis>observer method</emphasis> is an observer defined via
-      annotations, instead of by explicitly implementing the <literal>Observer</literal> 
-      interface.</para>
-      
-      <para>Unlike regular observers, observer methods are automatically discovered
-      and registered by the container.</para>
-      -->
       
       <para>An observer method is a non-abstract method of a managed bean class or
       session bean class (or of an extension, as defined in <xref linkend="initevents"/>). 
@@ -445,76 +390,11 @@ else {
       the container automatically detects the problem and treats it as a definition 
       error.</para>
 
-    <!--
-    <section id="observer.xml">
-      <title>Declaring an observer method using XML</title>
-      
-      <para>For a beans defined in XML, an observer method may be declared 
-      using the method name, the <literal>&lt;Observes&gt;</literal> element,
-      and the parameter types of the method:</para>
-        
-      <programlisting><![CDATA[<myapp:afterLogin>
-    <Observes>
-        <myapp:LoggedInEvent/>
-    </Observes>
-</myapp:afterLogin>]]></programlisting>
-
-      <programlisting><![CDATA[<myapp:afterLogin>
-    <Observes>
-        <myapp:LoggedInEvent>
-            <myapp:Admin/>
-        </myapp:LoggedInEvent>
-    </Observes>
-</myapp:afterLogin>]]></programlisting>
-
-      <para>When an observer method is declared in XML, the container 
-      ignores qualifier annotations applied to the Java method parameters.</para>
-      
-      <para>If the bean class of a bean declared in XML does not have 
-      a method with parameters that match those declared in XML, 
-      the container automatically detects the problem and treats it as 
-      a definition error.</para>
-
-    </section>
-    -->
-      
       <para>In addition to the event parameter, observer methods may declare additional 
       parameters, which may declare qualifiers. These additional parameters are injection 
       points.</para>
       
       <programlisting>public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger log) { ... }</programlisting>
-    
-      <!--
-      <programlisting><![CDATA[<myapp:afterLogin>
-    
-    <Observes>
-        <myapp:LoggedInEvent/>
-    </Observes>
-    
-    <myapp:User>
-        <myapp:Manager/>
-    </myapp:User>
-    
-    <myfwk:Log>
-        <myfwk:Logger/>
-    </myfwk:Log>
-    
-</myapp:afterLogin>]]></programlisting>
-
-      <programlisting><![CDATA[<myapp:afterAdminLogin>
-    
-    <Observes>
-        <myapp:LoggedInEvent>
-            <myapp:Admin/>
-        </myapp:LoggedInEvent>
-    </Observes>
-    
-    <myfwk:Log>
-        <myfwk:Logger/>
-    </myfwk:Log>
-    
-</myapp:afterAdminLogin>]]></programlisting>
-      -->
       
     </section>
       
@@ -538,20 +418,6 @@ else {
       values of <literal>receive</literal>:</para>
       
       <programlisting>public enum Reception { IF_EXISTS, ALWAYS }</programlisting>
-
-      <!--
-      <para>Conditional observer methods may be declared in XML by adding a child <literal>&lt;IfExists&gt;</literal>
-      element to the <literal>&lt;Observes&gt;</literal> element.</para>
-      
-      <programlisting><![CDATA[<myapp:refreshOnDocumentUpdate>
-    <Observes>
-        <receive>IF_EXISTS</receive>
-        <myapp:Document>
-            <myapp:Updated/>
-        </myapp:Document>
-    </Observes>
-</myapp:refreshOnDocumentUpdate>]]></programlisting>
-      -->
           
     </section>
     
@@ -598,49 +464,8 @@ else {
       <literal>IN_PROGRESS</literal> for <literal>during</literal>:</para>
       
       <programlisting>void onDocumentUpdate(@Observes(during=AFTER_SUCCESS) @Updated Document doc) { ... }</programlisting>
- 
-      <!--
-      <programlisting><![CDATA[<myapp:onDocumentUpdate>
-    <Observes>
-        <during>AFTER_SUCCESS</during>
-        <myapp:Document>
-            <myapp:Updated/>
-        </myapp:Document>
-    </Observes>
-</myapp:onDocumentUpdate>]]></programlisting>
-      -->
                 
     </section>
-    
-    <!--
-    <section>
-      <title>Asynchronous observer methods</title>
-      
-      <para><emphasis>Asynchronous observer methods</emphasis> are observer methods which receive event 
-      notifications asynchronously.</para>
-      
-      <para>An asynchronous observer method may be declared by specifying <literal>receive=ASYNCHRONOUSLY</literal>.</para>
-
-      <programlisting>void onDocumentUpdate(@Observes(receive=ASYNCHRONOUSLY) @Updated Document doc) { ... }</programlisting>
-    -->
-      <!--
-      <programlisting><![CDATA[<myapp:onDocumentUpdate>
-    <Observes>
-        <Asynchronously/>
-        <myapp:Document>
-            <myapp:Updated/>
-        </myapp:Document>
-    </Observes>
-</myapp:onDocumentUpdate>]]></programlisting>
-      -->
-    <!--
-      <para>An asynchronous observer method may also be a transactional observer method. However, it may not 
-      be a before completion observer method or a conditional observer method. If an observer method is declared 
-      <literal>receive=ASYNCHRONOUSLY</literal> and <literal>during=BEFORE_COMPLETION</literal>, the container 
-      automatically detects the problem and treats it as a definition error.</para>
-      
-    </section>
-    -->
     
     </section>
     
@@ -655,14 +480,6 @@ else {
           observer resolution defined by <xref linkend="observerresolution"/>, 
           then,</para>
         </listitem>
-        <!--
-        <listitem>
-          <para>for each observer, call the <literal>notify()</literal> method of the 
-          <literal>Observer</literal> interface, passing the event object, and
-          deregistering the observer if <literal>notify()</literal> returns 
-          <literal>true</literal>.</para>
-        </listitem>
-        -->
         <listitem>
           <para>for each observer method, either invoke the observer method immediately, 
           or register the observer method for later invocation during the transaction 
@@ -673,13 +490,6 @@ else {
       <para>The container calls observer methods as defined in <xref linkend="observers"/>.</para>
       
       <itemizedlist>
-        <!--
-        <listitem>
-          <para>If the observer method is an asynchronous transactional observer method and there
-          is currently a JTA transaction in progress, the observer object calls the observer 
-          method asynchronously during the after transaction completion phase.</para>
-        </listitem>
-        -->
         <listitem>
           <para>If the observer method is a transactional observer method and there is currently 
           a JTA transaction in progress, the container calls the observer method during the 
@@ -690,22 +500,10 @@ else {
           active for the scope to which the bean declaring the observer method belongs, then
           the observer method should not be called.</para>
         </listitem>
-        <!--
-        <listitem>
-          <para>Otherwise, if the observer method is an asynchronous observer method, the container
-          calls the observer method asynchronously.</para>
-        </listitem>
-        -->
         <listitem>
           <para>Otherwise, the container calls the observer immediately.</para>
         </listitem>
       </itemizedlist>
-      
-      <!--
-      <para>Observers may throw exceptions. If an observer throws an exception, the 
-      exception aborts processing of the event. No other observers of that event will 
-      be called. The <literal>fireEvent()</literal> method rethrows the exception.</para>
-      -->
       
       <para>The order in which observer methods are called is not defined, and so portable 
       applications should not rely upon the order in which observers are called.</para> 
@@ -714,21 +512,6 @@ else {
       <literal>setRollbackOnly()</literal> to force a transaction rollback. An observer 
       method may not directly initiate, commit or rollback JTA transactions.</para>
     
-    <!--
-    <section id="observermethodnotification">
-      <title>Observer method notification</title>
-      
-      <para>For every observer method of every enabled bean, the container is responsible for 
-      providing and registering an implementation of the <literal>Observer</literal> interface 
-      that delegates event notifications to the observer method, by calling the observer method 
-      as defined in <xref linkend="observers"/>.</para>
-      -->
-      
-      <!--
-      <para>The container is not required to guarantee delivery of asynchronous events in the case 
-      of a server shutdown or failure.</para>
-      -->
-      
       <para>Observer methods may throw exceptions:</para>
       
       <itemizedlist>
@@ -765,14 +548,6 @@ else {
       when an observer method is invoked depend upon what kind of observer method it is.</para>
       
       <itemizedlist>
-        <!--
-        <listitem>
-          <para>If the observer method is an asynchronous observer method, it is called with no
-          active transaction, no client security context and with a new request context
-          that is destroyed when the observer method returns. The application context
-          is also active.</para>
-        </listitem>
-        -->
         <listitem>
           <para>If the observer method is a before completion transactional observer method, it 
           is called within the context of the transaction that is about to complete and with the 
@@ -797,80 +572,6 @@ else {
     </section>
 
     </section>
-    
-    <!-- 
-    <section>
-      <title>JMS event mappings</title>
-      
-      <para>An event type may be mapped to a JMS topic which acts as a bridge allowing 
-      the event to be distributed to other applications or processes.</para>
-      
-      <para>An <emphasis>event mapping</emphasis> is a special kind of observer method 
-      that is declared by an interface.</para>
-      
-      <programlisting>interface EventMappings {
-    void mapLoggedInEvent(@Observes LoggedInEvent event, @Events Topic eventTopic, ConnectionFactory cf);
-}</programlisting>
-      
-      <para>The parameter of type <literal>Topic</literal> resolves to a resource
-      that represents a JMS topic, called a <emphasis>mapped topic</emphasis>:</para>
-      
-      <programlisting>@Resource(lookup="java:global/env/jms/Events")
-@Produces @Events Topic eventTopic;</programlisting>
-   
-      <para>The parameter of type <literal>ConnectionFactory</literal> resolves to
-      resource that represents a JMS <literal>ConnectionFactory</literal> or 
-      <literal>TopicConnectionFactory</literal>, called the <emphasis>mapped 
-      connection factory</emphasis>:</para>
-      
-      <programlisting>@Resource(lookup="java:global/env/jms/ConnectionFactory")
-@Produces TopicConnectionFactory topicConnectionFactory;</programlisting>
-    -->
-      <!--
-      <programlisting>@Resource(lookup="java:global/env/jms/Events")
-@ConnectionFactory(@Resource(lookup="java:global/env/jms/ConnectionFactory"))
-@Produces @Events Topic eventTopic;</programlisting>
-      -->
-    <!--
-      <para>An event mapping may be specified as a member of any interface.</para>
-      
-      <para>The event parameter specifies the <emphasis>mapped event type and qualifiers</emphasis>.</para>
-      
-      <para>An event mapping may have multiple parameters that resolve to mapped 
-      topics.</para>
-      
-      <para>If an event mapping has more than one parameter that resolves to a JMS
-      <literal>ConnectionFactory</literal>, the container automatically detects the 
-      problem and treats it as a definition error.</para> 
-      
-      <para>The container uses the mapped connection factory to send messages to the 
-      mapped topics.</para>
-      
-      <para>All observers of mapped event types must be asynchronous observer methods. 
-      If an observer for a mapped event type is not an asynchronous observer method,
-      the container automatically detects the problem and treats it as a deployment 
-      problem.</para>
-      
-      <para>For every event mapping, the container must:</para>
-      
-      <itemizedlist>
-        <listitem>
-          <para>send a message containing the serialized event and its event qualifiers 
-          to every mapped topic whenever an event with the mapped event type and 
-          qualifiers is fired, and</para>
-        </listitem>
-        <listitem>
-          <para>monitor every mapped topic for messages containing events of that mapped 
-          event type and qualifiers and notify all local observers whenever a message 
-          containing an event is received.</para>
-        </listitem>
-      </itemizedlist>
-      
-      <para>Thus, events with the mapped event type and qualifiers are distributed to 
-      other processes which have the same event mapping.</para>
-      
-    </section>
-    -->
     
 </chapter>
 

@@ -24,17 +24,6 @@
     superclasses are not decorated types of the decorator. The decorator class may 
     be abstract.</para>
     
-    <!--
-    <para><emphasis>Alternative definition: the set of decorated types includes all 
-    interfaces implemented directly and indirectly by both the decorator bean
-    class and the declared type of the delegate.</emphasis></para>
-    -->
-        
-    <!--
-    <para><emphasis>Open issue: can we use decorators for introduction of new bean types?
-    (no, at least not for EJBs)</emphasis></para>
-    -->
-    
     <para>Decorators of a session bean must comply with the bean provider programming 
     restrictions defined by the EJB specification. Decorators of a stateful session 
     bean must comply with the rules for instance passivation and conversational state 
@@ -50,24 +39,7 @@
 class TimestampLogger implements Logger { ... }</programlisting>
 
     </section>
-    <!--
-    <section id="decorators.xml">
-      <title>Declaring a decorator using XML</title>
-      
-       <para>Additional decorators may be declared in <literal>beans.xml</literal>,
-       using the decorator bean class name and the <literal>&lt;Decorator&gt;</literal> 
-       element:</para>
-      
-       <programlisting><![CDATA[<myfwk:TimestampLogger>
-    <Decorator/>
-    ...
-</myfwk:TimestampLogger>]]></programlisting>
 
-       <para>If the decorator bean class is already annotated 
-       <literal>@Decorator</literal>, two different decorators exist.</para>
-
-    </section>
-    -->
     <section id="delegateattribute">
       <title>Decorator delegate injection points</title>
       
@@ -86,19 +58,6 @@ class TimestampLogger implements Logger {
     ...
 }</programlisting>
 
-      <!--
-      <programlisting><![CDATA[<myfwk:TimestampLogger>
-    <Decorator/>
-    <myfwk:logger>
-        <Decorates>
-            <myfwk:Logger>
-               <Any/>
-            </myfwk:Logger>
-        </Decorates>
-    </myfwk:logger>
-</myfwk:TimestampLogger>]]></programlisting>
-      -->
-
       <programlisting>@Decorator
 class TimestampLogger implements Logger {
     private Logger logger;
@@ -109,18 +68,6 @@ class TimestampLogger implements Logger {
     }
     ...
 }</programlisting>
-      <!--
-      <programlisting><![CDATA[<myfwk:TimestampLogger>
-    <Decorator/>
-    <myfwk:logger>
-        <Decorates>
-            <myfwk:Logger>
-                <myfwk:Debug/>
-            </myfwk:Logger>
-        </Decorates>
-    </myfwk:logger>
-</myfwk:TimestampLogger>]]></programlisting>
-      -->
       
       <para>A decorator must have exactly one delegate injection point. If a decorator 
       has more than one delegate injection point, or does not have a delegate injection 
@@ -217,11 +164,6 @@ class TimestampLogger implements Logger {
       <para>A decorator is said to be <emphasis>enabled</emphasis> if it is enabled 
       in at least one bean archive.</para>
             
-      <!--
-      <para><emphasis>Open issue: Is this the right thing? Would it be better to unify 
-      interceptors and decorators into a single stack, so that they can be interleaved?</emphasis></para>
-      -->
-      
     </section>
     
     <section id="decoratorresolution">

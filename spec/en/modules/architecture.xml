@@ -122,27 +122,6 @@
       </para>
     </section>
     
-    <!--
-    <section>
-      <title>Supported environments</title>
-      <para>
-          An application that takes advantage of these services may be designed to execute 
-          in either the Java EE 6, Java EE 5 or Java SE environments. If the application 
-          executes in a Java SE environment, the embeddable EJB Lite container provides 
-          Java EE services such as transaction management and persistence.
-      </para>
-      <para>
-          Any Java EE 5 compliant container may support these services. However, certain 
-          functionality defined by this specification is optional for Java EE 5
-          containers. This is the case only when explicitly noted in this specification.
-      </para>
-      <para>
-          Java EE 6 and embeddable EJB Lite containers must support all functionality
-          defined by this specification.
-      </para>
-    </section>
-    -->
-    
     <section>
       <title>Relationship to other specifications</title>
       
@@ -647,38 +626,6 @@ public class Permissions implements Serializable {
 }</programlisting>
     
   </section>
-  
-  <!--
-  <section>
-    <title>Programmatic lookup example</title>
-    
-    <para>Beans which my be injected may also be obtained by programmatic 
-    lookup.</para>
-    
-    <programlisting><![CDATA[public class VersionedData {
-    
-    @Inject @Any Instance<EntityManagerFactory> anyEntityManagerFactory;
-    @Inject @Any Instance<DataAccess<?,?>> anyDataAccess;
-    
-    public void purgeAllHistoricalVersions() {
-        for(EntityManagerFactory emf: anyEntityManagerFactory) {
-            for ( EntityType<?> e: emf.getMetamodel().getEntities() ) {
-                Class<DataAccess<?,?>> dac = getDataAccessClass( e.getJavaType() );
-                DataAccess<?,?> da = anyDataAccess.select(dac).get();
-                da.purgeHistoricalVersions();
-            }
-        }
-    }
-    
-    private <T> Class<DataAccess<T,?>> getDataAccessClass(Class<T> entityClass) { 
-        ... 
-    }
-    
-}]]></programlisting>
-
-    
-  </section>
-  -->
   
     <section>
       <title>Interceptor example</title>

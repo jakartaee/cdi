@@ -109,27 +109,6 @@
     the specified name, or the annotation is not an <literal>@Alternative</literal> stereotype, 
     the container automatically detects the problem and treats it as a deployment problem.</para>
     
-    <!--
-    <para><emphasis>Bean precedence</emphasis> defines a partial ordering of all enabled beans. 
-    The precedence of a bean is used by the container to resolve ambiguous dependencies 
-    and EL names, as specified in <xref linkend="ambigdependencies"/> and 
-    <xref linkend="ambignames"/>.</para>
-    
-    <para>A bean X has a higher precedence than a second bean Y if either:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>the first child element of <literal>&lt;alternatives&gt;</literal> that matches X 
-        is earlier than the first child element of <literal>&lt;alternatives&gt;</literal> that 
-        matches Y, or</para>
-      </listitem>
-      <listitem>
-        <para>some child element of <literal>&lt;alternatives&gt;</literal> matches X, but no 
-        child element of <literal>&lt;alternatives&gt;</literal> matches Y.</para>
-      </listitem>
-    </itemizedlist>
-    -->
-    
       <para>If the same type is listed twice under the <literal>&lt;alternatives&gt;</literal>
       element, the container automatically detects the problem and treats it as a 
       deployment problem.</para>
@@ -279,15 +258,6 @@
     <para>Note that an unsatisfied or ambiguous dependency cannot exist for a
     decorator delegate injection point, defined in 
     <xref linkend="delegateattribute"/>.</para>
-    
-    <!--
-    <para>When an ambiguous dependency exists, the container attempts to resolve
-    the ambiguity by examining the precedences of the matching beans, as 
-    defined in <xref linkend="enablement"/>. If there is exactly one
-    bean with a higher precedence than every other matching bean, the container 
-    will select this bean, and the ambiguous dependency is called 
-    <emphasis>resolvable</emphasis>.</para>
-    -->
     
     <para>When an ambiguous dependency exists, the container attempts to resolve
     the ambiguity. The container eliminates all eligible beans that are not 
@@ -775,11 +745,6 @@ public @interface PayBy {
         <listitem>
           <para>Otherwise, if the method is non-static, the container must:</para>
           <itemizedlist>
-            <!--listitem>
-              <para>Determine the most specialized enabled bean that specializes 
-              the bean which declares the method, as defined in 
-              <xref linkend="mostspecialized"/>.</para>
-            </listitem-->
             <listitem>
               <para>Obtain a contextual instance of the bean which declares the
               method, as defined by <xref linkend="contextualinstance"/>.</para>
@@ -817,11 +782,6 @@ public @interface PayBy {
         <para>Otherwise, if the producer field is non-static, the container
         must:</para>
         <itemizedlist>
-          <!--listitem>
-            <para>Determine the most specialized enabled bean that specializes the 
-            bean which declares the producer field, as defined in 
-            <xref linkend="mostspecialized"/>.</para>
-          </listitem-->
           <listitem>
             <para>Obtain an contextual instance of the bean which declares the 
             producer field, as defined by <xref linkend="contextualinstance"/>.</para>
@@ -851,11 +811,6 @@ public @interface PayBy {
       <listitem>
         <para>Otherwise, if the observer method is non-static, the container must:</para>
         <itemizedlist>
-          <!--listitem>
-            <para>Determine the most specialized enabled bean that specializes the bean 
-            which declares the observer method, as defined in 
-            <xref linkend="mostspecialized"/>.</para>
-          </listitem-->
           <listitem>
             <para>Obtain a contextual instance of the bean which declares the observer method
             according to <xref linkend="contextualinstance"/>. If this observer method is a 
@@ -1173,13 +1128,6 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
       to <literal>select()</literal>, an <literal>IllegalArgumentException</literal> 
       is thrown.</para>
       
-      <!--
-      <para>If an instance of <literal>javax.enterprise.inject.New</literal> is 
-      passed to <literal>select()</literal>, non-portable behavior results. Portable
-      applications should not pass qualifiers of type <literal>@New</literal> to
-      <literal>select()</literal>.</para>
-      -->
-
       <para>The <literal>get()</literal> method must:</para>
 
       <itemizedlist>
@@ -1269,8 +1217,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
       <section>
         <title>Using <literal>AnnotationLiteral</literal> and <literal>TypeLiteral</literal></title>
 
-        <para><literal>javax.enterprise.util.AnnotationLiteral</literal><!--, defined in
-        <xref linkend="annotationliteral"/>--> makes it easier to specify qualifiers when 
+        <para><literal>javax.enterprise.util.AnnotationLiteral</literal> makes it easier to specify qualifiers when 
         calling <literal>select()</literal>:</para>
         
         <programlisting><![CDATA[public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMethod) {
@@ -1286,8 +1233,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
     return anyPaymentProcessor.select(new SynchronousQualifier(), new PayByQualifier()).get();
 }]]></programlisting>
         
-        <para><literal>javax.enterprise.util.TypeLiteral</literal><!--, defined in 
-        <xref linkend="typeliteral"/>--> makes it easier to specify a parameterized type 
+        <para><literal>javax.enterprise.util.TypeLiteral</literal> makes it easier to specify a parameterized type 
         with actual type parameters when calling <literal>select()</literal>:</para>
         
        <programlisting><![CDATA[public PaymentProcessor<Cheque> getChequePaymentProcessor() {

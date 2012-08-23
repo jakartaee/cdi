@@ -12,24 +12,6 @@
   methods, lifecycle callback methods and non-static observer methods are inherited
   by beans from their superclasses.</para>
   
-  <!--
-  <para>Multiple beans may share the same implementation. The implementation of one 
-  bean may be shared by a second bean in two different ways:</para>
-  
-  <itemizedlist>
-    <listitem>
-      <para>The implementation of the second bean may extend the implementation of
-      the first bean using Java inheritance</para>
-    </listitem>
-    <listitem>
-      <para>The second bean may be declared to have the same implementation using XML</para>
-    </listitem>
-  </itemizedlist>
-  
-  <para>In either case, there are three possible reasons for reusing the implementation
-  of the first bean. Either:</para>
-  -->
-  
   <para>The implementation of a bean may be extended by the implementation of a second 
   bean. This specification recognizes two distinct scenarios in which this situation 
   occurs:</para>
@@ -83,29 +65,6 @@
     <para>A scope type explicitly declared by X and inherited by Y from X takes precedence over 
     default scopes of stereotypes declared or inherited by Y.</para>
     
-    <!--
-    <para>Suppose a class X is the bean class of a managed bean or session bean Y 
-    declared using XML.</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>If X is annotated with a qualifier type, stereotype or interceptor 
-        binding type Z then Y inherits the annotation if and only if Z declares the 
-        <literal>@Inherited</literal> meta-annotation and Y does not explicitly declare 
-        an annotation of type Z using XML.</para>
-      </listitem>
-      <listitem>
-        <para>If X is annotated with a scope type Z then Y 
-        inherits the annotation if and only if Z declares the <literal>@Inherited</literal> 
-        meta-annotation and Y does not explicitly declare a scope type using XML.</para>
-      </listitem>
-    </itemizedlist>
-    
-    <para>A scope type explicitly declared by and inherited from the 
-    class X takes precedence over default scopes declared by
-    stereotypes.</para>
-    -->
-        
     <para>For annotations defined by the application or third-party extensions, it is 
     recommended that:</para>
     
@@ -176,47 +135,11 @@
       </listitem>
       <listitem>
         <para>If X declares a non-static producer field <literal>x</literal> then Y does not 
-        inherit this field.<!-->unless Y is explicitly declared to specialize X.--></para>
+        inherit this field.</para>
         <para>(This behavior is different to what is defined in the Common Annotations for 
         the Java Platform specification.)</para>
       </listitem>
     </itemizedlist>
-    
-    <!--
-    <para>Suppose a class X is the bean class of a managed bean or session bean Y 
-    declared using XML.</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>If X declares an injected field <literal>x</literal> then Y inherits
-        <literal>x</literal>, unless Y explicitly declares <literal>x</literal> using XML.</para>
-      </listitem>
-      <listitem>
-        <para>If X declares an initializer method, <literal>@PostConstruct</literal> method 
-        or <literal>@PreDestroy</literal> method <literal>x()</literal> then Y inherits 
-        <literal>x()</literal>, unless Y explicitly declares <literal>x()</literal> using 
-        XML.</para>
-      </listitem>
-      <listitem>
-        <para>If X declares a non-static method <literal>x()</literal> annotated with an 
-        interceptor binding type Z then Y inherits the binding, unless Y explicitly declares 
-        <literal>x()</literal> using XML.</para>
-      </listitem>
-      <listitem>
-        <para>If X declares a non-static producer, disposer, or observer method <literal>x()</literal> 
-        then Y does not inherit this method, unless Y is explicitly declared to specialize X.</para>
-      </listitem>
-      <listitem>
-        <para>If X declares a non-static producer field <literal>x</literal> then Y does not 
-        inherit this method, unless Y is explicitly declared to specialize X.</para>
-      </listitem>
-      <listitem>
-        <para>If Y is a decorator and X declares a delegate injection point <literal>x</literal> then 
-        Y inherits <literal>x</literal>, unless Y explicitly declares a delegate injection point
-        using XML.</para>
-      </listitem>
-    </itemizedlist>
-    -->
     
       <para>If X is a generic type, and an injection point or observer method declared by X is 
       inherited by Y, and the declared type of the injection point or event parameter
@@ -247,8 +170,7 @@
     
     <para>If two beans both support a certain bean type, and share at least
     one qualifier, then they are both eligible for injection to any injection
-    point with that declared type and qualifier. <!--The container will choose the 
-    bean with the highest precedence.--></para>
+    point with that declared type and qualifier.</para>
     
     <para>Consider the following beans:</para>
     
@@ -303,12 +225,6 @@ public class MockAsynchronousService extends AsynchronousService {
       <listitem>
         <para>directly extend the bean class of the second bean, or</para>
       </listitem>
-      <!--
-      <listitem>
-        <para>declare the same bean class as the lower-precedence bean, 
-        in the case of a bean declared using XML, or</para>
-      </listitem>
-      -->
       <listitem>
         <para>directly override the producer method, in the case that 
         the second bean is a producer method, and then</para>
@@ -393,121 +309,7 @@ public class AsynchronousService implements Service{
     
     </section>
     
-    <!--section>
-      <title>Inconsistent specialization</title>
-      
-      <para>Suppose an enabled bean X directly specializes a second bean Y. If either:</para>
-      
-      <itemizedlist>
-        <listitem>
-          <para>there is another enabled bean that directly specializes Y, or</para>
-        </listitem>
-        <listitem>
-          <para>there is an injection point that matches Y and not X, according to the 
-          typesafe resolution algorithm defined in <xref linkend="typesaferesolution"/>,</para>
-        </listitem>
-      </itemizedlist>
-      
-      <para>we say that <emphasis>inconsistent specialization</emphasis> exists. 
-      The container automatically detects inconsistent specialization and treats 
-      it as a deployment problem.</para> 
-               
-    </section-->
-        
   </section>
-  
-  <!--
-  <section>
-    <title>Constraining stereotypes, qualifier types, scope types and interceptor 
-    binding types</title>
-    
-    <para>This specification defines the following annotation <emphasis>categories</emphasis>:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>stereotypes</para>
-      </listitem>
-      <listitem>
-        <para>qualifier types</para>
-      </listitem>
-      <listitem>
-        <para>scope types</para>
-      </listitem>
-      <listitem>
-        <para>interceptor binding types</para>
-      </listitem>
-    </itemizedlist>
-    
-    <para>Annotations belonging to a category may declare a set of <emphasis>requirements</emphasis>
-    that constrain the beans to which they apply.</para>
-    
-    <para>There are three kinds of requirements. An annotation may declare that any bean to which 
-    it applies:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>must implement or extend at least one type from a certain set of types, or</para>
-      </listitem>
-      <listitem>
-        <para>must declare or inherit at least one annotation from a certain set of annotations, or</para>
-      </listitem>
-      <listitem>
-        <para>must declare, inherit, inherit from a stereotype, or default to one annotation from
-        a set of annotations of a certain annotation category.</para>
-      </listitem>
-    </itemizedlist>
-    
-    <para>The annotation <literal>@javax.enterprise.inject.Requirement</literal> is used to define
-    a requirement.</para>
-    
-    <para>The following stereotype may only be applied to a bean class which extends 
-    <literal>AbstractAction</literal> or <literal>AbstractDao</literal>:</para>
-    
-    <programlisting>@Stereotype
-@Requirement({AbstractAction.class, AbstractDao.class})
-@Target(TYPE)
-@Retention(RUNTIME)
-public @interface Action {}</programlisting>
-    
-    <para>The following scope type may only be applied to JPA entities:</para>
-    
-    <programlisting>@Inherited
-@NormalScope
-@Requirement(Entity.class)
-@Target({TYPE, METHOD, FIELD})
-@Retention(RUNTIME)
-public @interface BusinessProcessScoped {} 
-</programlisting>
-
-    <para>The following stereotype may only be applied to a bean with the scope
-    <literal>RequestScoped</literal> or <literal>ApplicationScoped</literal>.</para>
-
-    <programlisting>@RequestScoped
-@Stereotype
-@Requirement(category=Scope.class, 
-    value={RequestScoped.class, ApplicationScoped.class})
-@Target(TYPE)
-@Retention(RUNTIME) 
-public @interface Action {} 
-    </programlisting>
-    
-    <para>Multiple requirements may be declared using the annotation 
-    <literal>@javax.enterprise.inject.Requirements</literal>.</para>
-    
-    <programlisting>@RequestScoped
-@Stereotype
-@Requirements({
-    @Requirement({AbstractAction.class, AbstractDao.class}),
-    @Requirement(category=Scope.class, 
-        value={RequestScoped.class, ApplicationScoped.class})
-})
-@Target(TYPE)
-@Retention(RUNTIME) 
-public @interface Action {} 
-    </programlisting>
-    
-  </section>
-  -->
   
 </chapter>
 

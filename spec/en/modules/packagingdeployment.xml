@@ -320,13 +320,6 @@
     and resolving ambiguities according to <xref linkend="ambignames"/>.</para>
     
     <itemizedlist>
-      <!--  
-      <listitem>
-        <para>If a name used in an EL expression resolves to more than one bean, the 
-        <literal>ELResolver</literal> must throw an 
-        <literal>AmbiguousResolutionException</literal>.</para>
-      </listitem>
-      -->
       <listitem>
         <para>If a name used in an EL expression does not resolve to any bean, the 
         <literal>ELResolver</literal> must return a null value.</para>
