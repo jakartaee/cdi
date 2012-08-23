@@ -319,9 +319,10 @@
     <section id="provider">
       <title>Obtaining a reference to the CDI container</title>
     
-      <para>Portable extensions sometimes interact directly with the container via 
-      programmatic API call. The abstract <literal>javax.enterprise.inject.spi.CDI</literal>
-      provides access to the <literal>BeanManager</literal> as well providing lookup of
+      <para>Portable extensions and other objects sometimes interact directly with the 
+      container via programmatic API call. The abstract 
+      <literal>javax.enterprise.inject.spi.CDI</literal> provides access to the
+      <literal>BeanManager</literal> as well providing lookup of
       bean instances.</para> 
       
       <programlisting><![CDATA[public abstract class CDI<T> implements Instance<T> {
@@ -330,8 +331,8 @@
    public abstract BeanManager getBeanManager();
 }]]></programlisting>
       
-      <para>A portable extension may obtain a reference to the current container by 
-      calling <literal>CDI.current()</literal>.</para>
+      <para>A portable extension or other object may obtain a reference to the current container 
+      by calling <literal>CDI.current()</literal>.</para>
       
       <para> When <literal>CDI.current()</literal> is called, <literal>getCDI()</literal>
       method is called on 
@@ -346,7 +347,10 @@
       <programlisting><![CDATA[public interface CDIProvider {
    public CDI<Object> getCDI();
 }]]></programlisting>
-      
+
+      <para>A Java EE container is required to provide a CDI provider that will allow access to the
+      current container for any Java EE application or Java EE module which contains enabled beans.</para>
+
       <para>Java EE components may obtain an instance of <literal>BeanManager</literal> 
       from JNDI by looking up the name <literal>java:comp/BeanManager</literal>.</para>
     
