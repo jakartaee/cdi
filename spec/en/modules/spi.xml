@@ -1196,7 +1196,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     <section id="pm">
       <title><literal>ProcessModule</literal> event</title>
       
-      <para>The container must fire an event for each bean deployment archive, before it processes 
+      <para>The container must fire an event for each bean archive, before it processes 
       the classes packaged in that module.</para>
     
       <para>The event object must be of type <literal>javax.enterprise.inject.spi.ProcessModule</literal>.</para>
