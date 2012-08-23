@@ -958,11 +958,14 @@
         <listitem>
           <para>during any remote method invocation of any EJB, during any asynchronous 
           method invocation of any EJB, during any call to an EJB timeout method and 
-          during message delivery to any EJB message-driven bean, and</para>
+          during message delivery to any EJB message-driven bean,</para>
         </listitem>
         <listitem>
           <para>during any message delivery to a <literal>MessageListener</literal> 
-          for a JMS topic or queue obtained from the Java EE component environment.</para>
+          for a JMS topic or queue obtained from the Java EE component environment, and</para>
+        </listitem>
+        <listitem>
+          <para>during <literal>@PostConstruct</literal> callback of any bean.</para>
         </listitem>
       </itemizedlist>
       
@@ -985,14 +988,18 @@
         -->
         <listitem>
           <para>after the EJB remote method invocation, asynchronous method invocation, 
-          timeout or message delivery completes, or</para>
+          timeout or message delivery completes, </para>
         </listitem>
         <listitem>
           <para>after the message delivery to the <literal>MessageListener</literal>
-          completes.</para>
+          completes, or</para>
+        </listitem>
+        <listitem>
+          <para>after the <literal>@PostConstruct</literal> callback completes, if it did not already exist
+          when the <literal>@PostConstruct</literal> callback occured.</para>
         </listitem>
       </itemizedlist>
-      
+
       <para>An event with qualifier <literal>@Initialized(RequestScoped.class)</literal>
         is fired when the request context is initialized and an event with qualifier
         <literal>@Destroyed(RequestScoped.class)</literal> when the request context
@@ -1090,12 +1097,15 @@
         <listitem>
           <para>during any message delivery to a <literal>MessageListener</literal> 
           for a JMS topic or queue obtained from the Java EE component environment, 
-          and</para>
+          </para>
         </listitem>
         <listitem>
           <para>when the disposer method or <literal>@PreDestroy</literal> 
           callback of any bean with any normal scope other than 
-          <literal>@ApplicationScoped</literal> is called.</para>
+          <literal>@ApplicationScoped</literal> is called, and</para>
+        </listitem>
+        <listitem>
+          <para>during <literal>@PostConstruct</literal> callback of any bean.</para>
         </listitem>
       </itemizedlist>
       
