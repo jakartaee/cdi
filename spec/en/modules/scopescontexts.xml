@@ -1000,9 +1000,6 @@
         </listitem>
       </itemizedlist>
 
-      <para>Note that a new request context is always created before the EJB remote method 
-            invocation, and it is always destroyed when the method completes.</para>
-      
       <para>An event with qualifier <literal>@Initialized(RequestScoped.class)</literal>
         is fired when the request context is initialized and an event with qualifier
         <literal>@Destroyed(RequestScoped.class)</literal> when the request context
