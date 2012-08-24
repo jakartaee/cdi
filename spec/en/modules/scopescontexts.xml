@@ -852,10 +852,10 @@
     timeouts.</para>
 
     
-    <para>Portable extensions are encourage to fire an event with qualifier 
-    <literal>@Initialized(X.class)</literal> when a custom context is initialized and an
-    event with qualifier <literal>@Initialized(X.class)<literal>when a custom contet is 
-    destroyed where X is the scope type associated with the context. A suitable event 
+    <para>Portable extensions are encouraged to fire an event with qualifier 
+    <literal>@Initialized(X.class)</literal> when a custom context is initialized, and an
+    event with qualifier <literal>@Destroyed(X.class)</literal> when a custom context is 
+    destroyed, where X is the scope type associated with the context. A suitable event 
     payload should be chosen.</para>
     
     <section>
