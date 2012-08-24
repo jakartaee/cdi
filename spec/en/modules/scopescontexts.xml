@@ -904,7 +904,7 @@
         </listitem>
         <listitem>
           <para>after the <literal>@PostConstruct</literal> callback completes, if it did not already exist
-          when the <literal>@PostConstruct</literal> callback occured.</para>
+          when the <literal>@PostConstruct</literal> callback occurred.</para>
         </listitem>
       </itemizedlist>
 
