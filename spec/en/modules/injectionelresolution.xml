@@ -101,7 +101,7 @@
 
     <para>Each child <literal>&lt;class&gt;</literal> element must specify the name of a 
     bean class of an alternative bean. If there is no bean whose bean class has the specified
-    name, or if the bean whose bean class has the specified name is not an alternative, the 
+    name, or if no bean whose bean class has the specified name is an alternative, the 
     container automatically detects the problem and treats it as a deployment problem.</para>
     
     <para>Each child <literal>&lt;stereotype&gt;</literal> element must specify the name 
