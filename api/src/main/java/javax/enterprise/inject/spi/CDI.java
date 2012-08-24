@@ -18,7 +18,8 @@ import java.util.regex.Pattern;
  */
 public abstract class CDI<T> implements Instance<T> {
 
-   protected static volatile Set<CDIProvider> providers = null;
+   protected static volatile Set<CDIProvider> discoveredProviders = null;
+   protected static volatile CDIProvider configuredProvider = null;
 
    private static final Object lock = new Object();
 
@@ -36,23 +37,51 @@ public abstract class CDI<T> implements Instance<T> {
     * 
     */
    public static CDI<Object> current() {
-      CDI<Object> cdi = null;
-      if(providers == null) {
-          synchronized (lock) {
-              if(providers == null) {
+      if (configuredProvider != null) {
+         return configuredProvider.getCDI();
+      } else {
+         
+         // Discover providers and cache
+         if (discoveredProviders == null) {
+            synchronized (lock) {
+               if (discoveredProviders == null) {
                   findAllProviders();
-              }
-          }
+               }
+            }
+         }
+         
+         CDI<Object> cdi = null;
+         for (CDIProvider provider : discoveredProviders) {
+            cdi = provider.getCDI();
+            if (cdi != null)
+               break;
+         }
+         if (cdi == null) {
+            throw new IllegalStateException("Unable to access CDI");
+         }
+         return cdi;
       }
-      for (CDIProvider provider : providers) {
-         cdi = provider.getCDI();
-         if (cdi != null)
-            break;
+   }
+
+   /**
+    * <p>
+    * Set the {@link CDIProvider} to use.
+    * </p>
+    * 
+    * <p>
+    * If a {@link CDIProvider} is set using this method, any provider specified as a service
+    * provider will not be used.
+    * </p>
+    * 
+    * @param provider the provider to use
+    * @throws IllegalStateException if the {@link CDIProvider} is already set
+    */
+   public static void setCDIProvider(CDIProvider provider) {
+      if (configuredProvider == null) {
+         configuredProvider = provider;
+      } else {
+         throw new IllegalStateException("CDIProvider has already been set");
       }
-      if (cdi == null) {
-         throw new IllegalStateException("Unable to access CDI");
-      }
-      return cdi;
    }
 
    // Helper methods
@@ -62,10 +91,10 @@ public abstract class CDI<T> implements Instance<T> {
       try {
          final ClassLoader loader = CDI.class.getClassLoader();
          final Enumeration<URL> resources;
-         if(loader != null) {
+         if (loader != null) {
             resources = loader.getResources("META-INF/services/" + CDIProvider.class.getName());
          } else {
-            //this should not happen unless the CDI api is on the boot class path
+            // this should not happen unless the CDI api is on the boot class path
             resources = ClassLoader.getSystemResources("META-INF/services/" + CDIProvider.class.getName());
          }
 
@@ -92,7 +121,7 @@ public abstract class CDI<T> implements Instance<T> {
       } catch (ClassNotFoundException e) {
          throw new IllegalStateException(e);
       }
-      CDI.providers = Collections.unmodifiableSet(providers);
+      CDI.discoveredProviders = Collections.unmodifiableSet(providers);
    }
 
    private static final Pattern nonCommentPattern = Pattern.compile("^([^#]+)");
