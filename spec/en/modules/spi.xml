@@ -540,6 +540,9 @@
     <para>If an instance of an annotation that is not a qualifier type is given, 
     an <literal>IllegalArgumentException</literal> is thrown.</para>
 
+    <para>If the runtime type of the event object is assignable to the type of a 
+    container lifecycle, <literal>IllegalArgumentException</literal> is thrown.</para>
+
   </section>
 
   <section>
@@ -981,9 +984,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     
     <para>Service providers may have observer methods, which may observe any event, including 
     any container lifecycle event, and obtain an injected <literal>BeanManager</literal> 
-    reference. If other beans are injected into service providers, non-portable behavior
-    results.</para>
-    
+    reference. If other beans are injected into an extension's observer methods, non-portable 
+    behavior results. An extension may use <literal>BeanManager.fireEvent()</literal> to 
+    deliver events to observer methods defined on extensions. The container is not required to
+    deliver events fired during application initializaton to observer methods defined on beans.</para>
+
     <para>The container instantiates a single instance of each extension at the beginning 
     of the application initialization process and maintains a reference to it until the 
     application shuts down. The container delivers event notifications to this instance by 
