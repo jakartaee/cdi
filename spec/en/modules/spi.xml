@@ -357,7 +357,7 @@
       method is called on 
       <literal>javax.enterprise.inject.spi.CDIProvider</literal>.</para>
       
-      <para>The CDIProvider to use may set by the application or container using the
+      <para>The CDIProvider to use may be set by the application or container using the
       <literal>setCDIProvider()</literal> method. If the <literal>setCDIProvider()</literal>
       has not been called, the first service provider of the service 
       <literal>javax.enterprise.inject.spi.CDIProvider</literal> declared in META-INF/services
