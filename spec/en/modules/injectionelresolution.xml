@@ -1120,6 +1120,9 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
       <programlisting>Instance&lt;AsynchronousPaymentProcessor&gt; async = anyPaymentProcessor.select( 
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );</programlisting>
 
+      <para>If an injection point of raw type <literal>Instance</literal> is defined, the container 
+      automatically detects the problem and treats it as a definiton error.</para>
+
       <para>If two instances of the same qualifier type are passed to 
       <literal>select()</literal>, an <literal>IllegalArgumentException</literal> 
       is thrown.</para>
