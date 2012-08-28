@@ -874,10 +874,6 @@
           during message delivery to any EJB message-driven bean,</para>
         </listitem>
         <listitem>
-          <para>during any message delivery to a <literal>MessageListener</literal> 
-          for a JMS topic or queue obtained from the Java EE component environment, and</para>
-        </listitem>
-        <listitem>
           <para>during <literal>@PostConstruct</literal> callback of any bean.</para>
         </listitem>
       </itemizedlist>
@@ -897,10 +893,6 @@
         <listitem>
           <para>after the EJB remote method invocation, asynchronous method invocation, 
           timeout or message delivery completes, </para>
-        </listitem>
-        <listitem>
-          <para>after the message delivery to the <literal>MessageListener</literal>
-          completes, or</para>
         </listitem>
         <listitem>
           <para>after the <literal>@PostConstruct</literal> callback completes, if it did not already exist
@@ -926,10 +918,6 @@
           <para>the <literal>???</literal> if the context is initialized or destroyed 
           due to a EJB remote method invocation, asynchronous method invocation, 
           timeout or message delivery, or</para>
-        </listitem>
-        <listitem>
-          <para>the <literal>???</literal> if the context is initialized or destroyed 
-          due to a message delivery to a <literal>MessageListener</literal>.</para>
         </listitem>
       </itemizedlist>
       
@@ -991,11 +979,6 @@
           asynchronous method invocation of any EJB, during any call to an EJB 
           timeout method and during message delivery to any EJB message-driven 
           bean,</para>
-        </listitem>
-        <listitem>
-          <para>during any message delivery to a <literal>MessageListener</literal> 
-          for a JMS topic or queue obtained from the Java EE component environment, 
-          </para>
         </listitem>
         <listitem>
           <para>when the disposer method or <literal>@PreDestroy</literal> 
