@@ -332,8 +332,13 @@
 }]]></programlisting>
       
       <para>A portable extension or other object may obtain a reference to the current container 
-      by calling <literal>CDI.current()</literal>.</para>
-      
+      by calling <literal>CDI.current()</literal>. <literal>CDI.getBeanManager()</literal> may be called
+      at any time after the container fires the <literal>BeforeBeanDiscovery</literal> container 
+      lifecycle event until the container fires the <literal>BeforeShutdown</literal> container
+      lifecycle event. Other methods on <literal>CDI</literal> may be called after the application 
+      initializion is completed until the application shutdown starts. If methods on
+      <literal>CDI</literal> are called at any other time, non-portable behavior results.</para>
+
       <para> When <literal>CDI.current()</literal> is called, <literal>getCDI()</literal>
       method is called on 
       <literal>javax.enterprise.inject.spi.CDIProvider</literal>.</para>
