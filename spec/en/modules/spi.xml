@@ -236,7 +236,10 @@
         <listitem>
           <para><literal>getInjectionPoints()</literal> returns the set of 
           <literal>InjectionPoint</literal> objects representing all injected fields, 
-          bean constructor parameters and initializer method parameters.</para> 
+          bean constructor parameters and initializer method parameters. The container 
+          must use the final value of this property when determing the injection points
+          for any producer method or field, or when performing dependency injection and
+          lifecyle callbacks on an instance of a type.</para> 
         </listitem>
       </itemizedlist>
       
