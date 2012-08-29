@@ -336,7 +336,7 @@
       at any time after the container fires the <literal>BeforeBeanDiscovery</literal> container 
       lifecycle event until the container fires the <literal>BeforeShutdown</literal> container
       lifecycle event. Other methods on <literal>CDI</literal> may be called after the application 
-      initializion is completed until the application shutdown starts. If methods on
+      initialization is completed until the application shutdown starts. If methods on
       <literal>CDI</literal> are called at any other time, non-portable behavior results.</para>
 
       <para> When <literal>CDI.current()</literal> is called, <literal>getCDI()</literal>
@@ -987,7 +987,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     reference. If other beans are injected into an extension's observer methods, non-portable 
     behavior results. An extension may use <literal>BeanManager.fireEvent()</literal> to 
     deliver events to observer methods defined on extensions. The container is not required to
-    deliver events fired during application initializaton to observer methods defined on beans.</para>
+    deliver events fired during application initialization to observer methods defined on beans.</para>
 
     <para>The container instantiates a single instance of each extension at the beginning 
     of the application initialization process and maintains a reference to it until the 
