@@ -295,6 +295,11 @@
           EE platform specification.</para>
         </listitem>
       </itemizedlist>
+
+      <para>Implementations of <literal>Producer</literal> and 
+      <literal>InjectionTarget</literal> must ensure that the set of injection points
+      returned by <literal>getInjectionPoints()</literal> are injected 
+      by <literal>produce()</literal> or <literal>inject()</literal>.</para>
       
   </section>
   
