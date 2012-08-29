@@ -343,7 +343,7 @@
       method is called on 
       <literal>javax.enterprise.inject.spi.CDIProvider</literal>.</para>
       
-      <para>The CDIProvider to use may be set by the application or container using the
+      <para>The <literal>CDIProvider</literal> to use may be set by the application or container using the
       <literal>setCDIProvider()</literal> method. If the <literal>setCDIProvider()</literal>
       has not been called, the first service provider of the service 
       <literal>javax.enterprise.inject.spi.CDIProvider</literal> declared in META-INF/services
@@ -1212,7 +1212,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <para>The annotation <literal>@WithAnnotations</literal> may be applied to the event parameter.  
       If the annotation is applied, the container must only deliver <literal>ProcessAnnotatedType</literal> 
       events for types which contain at least one of the annotations specified. The annotation can 
-      appear on the type, on any field, method or construtor declared by the type, or on any parameter of any
+      appear on the type, on any field, method or constructor declared by the type, or on any parameter of any
       method or constructor declared by the type. The annotation may be applied as a meta-annotation on any
       annotation considered.</para>
 
