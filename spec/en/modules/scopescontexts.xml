@@ -878,7 +878,7 @@
         <listitem>
           <para>during any remote method invocation of any EJB, during any asynchronous 
           method invocation of any EJB, during any call to an EJB timeout method and 
-          during message delivery to any EJB message-driven bean,</para>
+          during message delivery to any EJB message-driven bean, and</para>
         </listitem>
         <listitem>
           <para>during <literal>@PostConstruct</literal> callback of any bean.</para>
@@ -899,7 +899,7 @@
         </listitem>
         <listitem>
           <para>after the EJB remote method invocation, asynchronous method invocation, 
-          timeout or message delivery completes, </para>
+          timeout or message delivery completes, or</para>
         </listitem>
         <listitem>
           <para>after the <literal>@PostConstruct</literal> callback completes, if it did not already exist
@@ -924,7 +924,7 @@
         <listitem>
           <para>the <literal>???</literal> if the context is initialized or destroyed 
           due to a EJB remote method invocation, asynchronous method invocation, 
-          timeout or message delivery, or</para>
+          timeout or message delivery.</para>
         </listitem>
       </itemizedlist>
       
