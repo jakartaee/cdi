@@ -80,6 +80,10 @@
         <para>It does not implement 
         <literal>javax.enterprise.inject.spi.Extension</literal>.</para>
       </listitem>
+
+      <listitem>
+        <para>It is not annotated <literal>@Vetoed</literal>.</para>
+      </listitem>
       
       <listitem>
         <para>It has an appropriate constructor&mdash;either:</para>
@@ -188,8 +192,9 @@ public class MockLoginAction extends LoginAction { ... }</programlisting>
     <title>Session beans</title>
 
     <para>A <emphasis>session bean</emphasis> is a bean that is implemented by a 
-    session bean with an EJB 3.x client view. The basic lifecycle and semantics of 
-    EJB session beans are defined by the EJB specification.</para>
+    session bean with an EJB 3.x client view that is not annotated with 
+    <literal>@Vetoed</literal>. The basic lifecycle and semantics of EJB session 
+    beans are defined by the EJB specification.</para>
     
     <para>A stateless session bean must belong to the <literal>@Dependent</literal> 
     pseudo-scope. A singleton bean must belong to either the 
@@ -1146,21 +1151,12 @@ public class Order {
   </section>
   
   <section id="veto">
-    <title>Vetoing beans</title>
+    <title>Vetoing classes</title>
     
-    <para>Any class or package may be prevented from providing bean definitions by 
-    adding the <literal>@Veto</literal> annotation on the class or package.</para>
+    <para>Any class or package may be prevented from being considered by CDI by
+    adding the <literal>@Vetoed</literal> annotation on the class or package.</para>
     
-    <programlisting>@Veto
-    public class Order {
-    ...
- }</programlisting>
-    
-    <para>Any class or package may be prevented from providing bean definitions 
-    based on the availability of other classes by adding the 
-    <literal>@Requires</literal> annotation on the class or package.</para>
-    
-    <programlisting>@Requires({Customer.class, Supplier.class})
+    <programlisting>@Vetoed
     public class Order {
     ...
  }</programlisting>
