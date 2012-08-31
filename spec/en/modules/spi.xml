@@ -621,7 +621,7 @@
       <para>If an instance of an annotation that is not an interceptor binding type is 
       given, an <literal>IllegalArgumentException</literal> is thrown.</para>
 
-    </section>
+  </section>
 
   <section>
     <title>Determining if an annotation is a qualifier type, scope type, stereotype 
@@ -643,6 +643,25 @@ public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotatio
 public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);]]></programlisting>
     
   </section>
+
+  <section>
+    <title>Determining the hash code and equivalence of qualifiers and interceptor bindings</title>
+    
+    <para>A portable extension may determine if two qualifiers or two interceptor 
+    bindings are considered equivalent for the purposes of typesafe resolution, 
+    as defined in <xref linkend="performingtypesaferesolution" />.</para>
+    
+    <programlisting><![CDATA[public boolean areQualifiersEquivalent(Annotation qualifier1, Annotation qualifier2);
+public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, Annotation interceptorBinding2);]]></programlisting>
+
+    <para>A portable extension may determine the hash code of a qualifier or and
+    interceptor binding, ignoring any members annotated with <literal>@Nonbinding</literal>.</para>
+    
+    <programlisting><![CDATA[public int getQualifierHashCode(Annotation qualifier);
+public int getInterceptorBindingHashCode(Annotation interceptorBinding);]]></programlisting>
+    
+  </section>
+
   
   <section>
     <title>Obtaining the active <literal>Context</literal> for a scope</title>
