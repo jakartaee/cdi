@@ -541,7 +541,7 @@
     an <literal>IllegalArgumentException</literal> is thrown.</para>
 
     <para>If the runtime type of the event object is assignable to the type of a 
-    container lifecycle, <literal>IllegalArgumentException</literal> is thrown.</para>
+    container lifecycle event, <literal>IllegalArgumentException</literal> is thrown.</para>
 
   </section>
 
