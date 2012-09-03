@@ -15,8 +15,9 @@ import java.lang.annotation.Target;
  * <p>
  * If the {@link WithAnnotations} annotation is applied to a portable extension observer method,
  * then only {@link ProcessAnnotatedType} events for types which have at least one of the
- * annotations specified. The annotation can appear on the type, on any field, method or constructor
- * declared by the type, or on any parameter of any method or constructor declared by the type.
+ * annotations specified are observed. The annotation can appear on the type, on any field, method
+ * or constructor declared by the type, or on any parameter of any method or constructor declared by
+ * the type, or may be applied as a meta-annotation.
  * </p>
  * 
  * @author Pete Muir
