@@ -316,7 +316,7 @@ public class MockLoginActionBean extends LoginActionBean { ... }</programlisting
     <section id="sessionbeanname">
       <title>Default name for a session bean</title>
       
-      <para>The default name for a managed bean is the unqualified class 
+      <para>The default name for a session bean is the unqualified class 
       name of the session bean class, after converting the first character 
       to lower case.</para>
       
