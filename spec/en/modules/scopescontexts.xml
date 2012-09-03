@@ -354,15 +354,8 @@
         </listitem>
         <listitem>
           <para>all <literal>@Dependent</literal> scoped contextual instances 
-          injected into method parameters of an observer method of any container 
-          lifecycle event, as defined in <xref linkend="initevents"/>, is destroyed
-          after all observers of the <literal>BeforeShutdown</literal> event 
-          complete,</para>
-        </listitem>
-        <listitem>
-          <para>all <literal>@Dependent</literal> scoped contextual instances 
-          injected into method parameters of a disposer method or observer method 
-          of any other event are destroyed when the invocation completes,</para>
+          injected into method parameters of a disposer method or an observer method 
+          are destroyed when the invocation completes,</para>
         </listitem>
         <listitem>
           <para>any <literal>@Dependent</literal> scoped contextual instance 
