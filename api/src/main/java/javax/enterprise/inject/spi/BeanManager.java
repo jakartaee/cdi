@@ -309,6 +309,27 @@ public interface BeanManager {
      * @return the {@link AnnotatedType}
      */
     public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
+    
+    /**
+     * Obtain the {@link AnnotatedType} that may be used to read the annotations of the given class or interface 
+     * as defined during container initialization.
+     * 
+     * @param <T> the class or interface
+     * @param type the {@link java.lang.Class} object
+     * @param id the type identifier. If null, the fully qualifier class name of type is used
+     * @return the {@link AnnotatedType}
+     */
+    public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
+    
+    /**
+     * Obtain the {@link AnnotatedType}s that may be used to read the annotations of the given class or interface 
+     * as defined during container initialization.
+     * 
+     * @param <T> the class or interface
+     * @param type the {@link java.lang.Class} object
+     * @return the {@link AnnotatedType}s
+     */
+    public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 
     /**
      * Obtains an {@link InjectionTarget} for the given {@link AnnotatedType}. The container ignores the annotations and types
