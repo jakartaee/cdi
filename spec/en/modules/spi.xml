@@ -816,12 +816,13 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     <para>A portable extension may provide an alternative metadata source, such as 
     configuration by XML.</para>
     
-    <para>The interfaces <literal>AnnotatedType</literal>, <literal>AnnotatedField</literal>, 
-    <literal>AnnotatedMethod</literal>, <literal>AnnotatedConstructor</literal> and 
-    <literal>AnnotatedParameter</literal> in the package <literal>javax.enterprise.inject.spi</literal>
-    allow a portable extension to specify metadata that overrides the annotations that
-    exist on a bean class. The portable extension is responsible for implementing the 
-    interfaces, thereby exposing the metadata to the container.</para>
+    <para>The interfaces <literal>AnnotatedType</literal>, <literal>IdentifiedAnnotatedType</literal>,
+    <literal>AnnotatedField</literal>, <literal>AnnotatedMethod</literal>, 
+    <literal>AnnotatedConstructor</literal> and <literal>AnnotatedParameter</literal> in
+    the package <literal>javax.enterprise.inject.spi</literal> allow a portable 
+    extension to specify metadata that overrides the annotations that exist on a bean class. 
+    The portable extension is responsible for implementing the interfaces, thereby exposing
+    the metadata to the container.</para>
     
     <para>In general, the behavior is as defined by the Java Language Specification, and
     only deviations from the Java Language Specification are noted.</para>
@@ -857,6 +858,30 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         determine the type in the type hierarchy that declared the field.</para>
       </listitem>
     </itemizedlist>
+
+    <para>The interface <literal>javax.enterprise.inject.spi.IdentifiedAnnotatedType</literal> 
+    allows multiple annotated types, based on the same underlying type, to be defined.</para> 
+    
+    <programlisting><![CDATA[public interface IdentifiedAnnotatedType<X>
+        extends AnnotatedType<X> {
+    public String getId();
+}]]></programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para><literal>getId()</literal> returns the identifier for the type. 
+        The identifier returned should be unique.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>If an <literal>AnnotatedType</literal> is an instance of 
+    <literal>IdentifiedAnnotatedType</literal> then 
+    <literal>IdentifiedAnnotatedType.getId()</literal> is used to identify the annotated
+    type to the container, otherwise the fully qualified class name of 
+    <literal>AnnotatedType.getJavaClass()</literal> is used to identify the type.
+    <literal>AnnotatedType</literal>s discovered by the container use the fully 
+    qualified class name of <literal>AnnotatedType.getJavaClass()</literal> to identify
+    the type.</para>
     
     <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedField</literal> 
     exposes the <literal>Field</literal> object.</para>
@@ -1050,9 +1075,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         </listitem>
         <listitem>
           <para><literal>addAnnotatedType()</literal> adds a given <literal>AnnotatedType</literal>
-          to the set of types which will be scanned during bean discovery. More than one 
-          <literal>AnnotatedType</literal> may use the same base type, and the container must 
-          consider these as different types.</para>
+          to the set of types which will be scanned during bean discovery. If an 
+          <literal>AnnotatedType</literal> with the same identifier already exists in the set of 
+          types the container automatically detects the problem and treats it as a deployment problem.</para>
+          <para>Portable extensions are encouraged to add <literal>IdentifiedAnnotatedType</literal>s
+          in order to not accidentally conflict with discovered types.</para>
         </listitem>
       </itemizedlist>
     
