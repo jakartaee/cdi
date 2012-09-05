@@ -1096,6 +1096,8 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
     
     public boolean isUnsatisfied();
     public boolean isAmbiguous();
+
+    public void destroy(T instance);
       
 }]]></programlisting>
 
@@ -1193,6 +1195,15 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
       if there is more than one bean that has the required type and qualifiers and is 
       eligible for injection into the class into which the parent <literal>Instance</literal> 
       was injected, or <literal>false</literal> otherwise.</para>
+
+      <para>The method <literal>destroy()</literal> instructs the container to destroy the 
+      instance. The bean instance passed to <literal>destroy()</literal> should be a dependent
+      scoped bean instance, or a client proxy for a normal scoped bean. Applications are 
+      encouraged to always call <literal>destroy()</literal> when they no longer require an
+      instance obtained from <literal>Instance</literal>.</para>
+      
+      <para>OPEN ISSUE: If <literal>destroy()</literal> is called on an already destroyed instance,
+      should an <literal>IllegalStateException</literal> occur? Or nothing?</para>
       
       </section>
       
