@@ -139,6 +139,10 @@
     public <T> T get(Contextual<T> bean, CreationalContext<T> creationalContext);
 }]]></programlisting>
 
+    <programlisting><![CDATA[public interface AlterableContext {
+    public void destroy(Contextual<?> contextual);
+}]]></programlisting>
+
     <para>The method <literal>getScope()</literal> returns the scope type
     of the context object.</para>
 
@@ -184,6 +188,14 @@
     associated with a passivating scope it must ensure that the given instance of
     <literal>Contextual</literal> and the instance of 
     <literal>CreationalContext</literal>, if given, are serializable.</para>
+
+    <para>The <literal>destroy()</literal> method destroys an existing contextual 
+    instance, removing it from the context instance.</para>
+
+    <para>The <literal>AlterableContext</literal> interface was introduced in 
+    Contexts and Dependency Injection for Java EE 1.1 to allow bean instances to
+    be destroyed by the application. Extensions should implement 
+    <literal>AlterableContext</literal> instead of <literal>Context</literal>.</para>
              
     <para>The context object is responsible for destroying any contextual instance 
     it creates by passing the instance to the <literal>destroy()</literal> method 
@@ -196,6 +208,9 @@
     that it passed to <literal>Contextual.create()</literal> when it created the 
     instance.</para>
     
+    <para>OPEN ISSUE: What name should the <literal>AlterableContext</literal> interface
+    be given?</para>
+
   </section>
 
   <section id="normalscope">

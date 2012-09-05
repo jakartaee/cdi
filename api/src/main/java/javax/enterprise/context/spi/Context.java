@@ -28,6 +28,11 @@ import javax.enterprise.context.ContextNotActiveException;
  * </p>
  * 
  * <p>
+ * {@link AlterableContext} was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions 
+ * should implement {@link AlterableContext} instead of {@link Context}.
+ * </p>
+ * 
+ * <p>
  * The context object is responsible for creating and destroying contextual instances by calling operations of
  * {@link javax.enterprise.context.spi.Contextual}. In particular, the context object is responsible for destroying any
  * contextual instance it creates by passing the instance to
