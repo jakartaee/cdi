@@ -462,8 +462,8 @@ public class MockLoginActionBean extends LoginActionBean { ... }</programlisting
       <programlisting>public class OrderFactory {
 
    @Produces @ConversationScoped
-   public Order createCurrentOrder(@New(Order.class) Order order, @Selected Product product) {
-       order.setProduct(product);
+   public Order createCurrentOrder(Shop shop, @Selected Product product) {
+       Order order = new Order(product, shop);
        return order;
    }
 
@@ -1185,6 +1185,10 @@ public class Order {
   
     <section id="new">
       <title><literal>@New</literal> qualified beans</title>
+
+      <para><emphasis>The <literal>@New</literal> qualifier was deprecated in CDI 1.1. 
+      CDI applications are encouraged to inject <literal>@Dependent</literal> scoped beans
+      instead.</emphasis></para>
       
       <para>For each managed bean, and for each session bean, a second bean exists 
       which:</para>

@@ -88,8 +88,8 @@ import java.lang.annotation.Target;
  * 
  *     &#064;Produces
  *     &#064;ConversationScoped
- *     public Order createCurrentOrder(@New(Order.class) Order order, @Selected Product product) {
- *         order.setProduct(product);
+ *     public Order createCurrentOrder(Shop shop, @Selected Product product) {
+ *         Order order = new Order(product, shop);
  *         return order;
  *     }
  * 
