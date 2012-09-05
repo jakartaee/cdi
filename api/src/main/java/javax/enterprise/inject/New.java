@@ -27,11 +27,13 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.enterprise.context.Dependent;
 import javax.inject.Qualifier;
 
 /**
  * <p>
- * The built-in qualifier type.
+ * The {@link New} qualifier was deprecated in CDI 1.1. CDI applications are encouraged to inject {@link Dependent} scoped 
+ * beans instead.
  * </p>
  * 
  * <p>
