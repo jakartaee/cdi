@@ -711,7 +711,7 @@ public class Order { ... }</programlisting>
       </listitem>
       </itemizedlist>
       
-      <para>The default name for a bean depends upon the bean implementation. 
+      <para>The default name for a bean depends upon the kind of the bean.
       The rules for determining the default name for a bean are defined in 
       <xref linkend="managedbeanname"/>, <xref linkend="sessionbeanname"/>,
       <xref linkend="producermethodname"/> and 
