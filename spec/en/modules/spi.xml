@@ -872,11 +872,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     </itemizedlist>
 
     <para>If an <literal>AnnotatedType</literal> is an instance of 
-    <literal>IdentifiedAnnotateedType</literal> then 
+    <literal>IdentifiedAnnotatedType</literal> then 
     <literal>IdentifiedAnnotatedType.getId()</literal> is used to identify the annotated
     type to the container, otherwise the fully qualified class name of 
     <literal>AnnotatedType.getJavaClass()</literal> is used to identify the type.
-    <literal>AnnotatedTypes</literal>s discovered by the container use the fully 
+    <literal>AnnotatedType</literal>s discovered by the container use the fully 
     qualified class name of <literal>AnnotatedType.getJavaClass()</literal> to identify
     the type.</para>
     
