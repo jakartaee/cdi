@@ -1205,7 +1205,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <para>The container must fire an event for each Java class or interface it discovers
       in a bean archive, and for annotated type added by 
       <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>, except for those annotated with 
-      <literal>@Vetoed</literal>, before it processes the declared annotations.</para>
+      <literal>@Vetoed</literal>, before it processes the classes and interfaces.</para>
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessAnnotatedType&lt;X&gt;</literal>, 
