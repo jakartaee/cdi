@@ -238,7 +238,7 @@
         </listitem>
         <listitem>
           <para>it is assignable to the injection point (using
-          <xref linkend="assignableparameters"/>.</para>
+          <xref linkend="assignableparameters"/>).</para>
         </listitem>
       </itemizedlist>
     
