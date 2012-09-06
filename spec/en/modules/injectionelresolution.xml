@@ -247,7 +247,7 @@
       <literal>getQualifiers()</literal> to determine the bean types and qualifiers.</para>
     </section>
 
-      <section id="ambigdependencies">
+     <section id="ambigdependencies">
     <title>Unsatisfied and ambiguous dependencies</title>
   
     <para>An <emphasis>unsatisfied dependency</emphasis> exists at an injection
