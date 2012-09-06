@@ -661,6 +661,9 @@ public @interface PayBy {
     <para>The object injected by the container may not be a direct reference
     to a contextual instance of the bean. Instead, it is an injectable 
     reference, as defined by <xref linkend="injectableinstance"/>.</para>
+
+    <para>OPEN ISSUE: Should we support injection into portlets and portlet 
+    filters?</para>
     
     <section id="instantiation">
       <title>Injection using the bean constructor</title>
