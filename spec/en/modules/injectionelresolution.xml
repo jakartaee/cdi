@@ -29,12 +29,6 @@
   name and alternative declarations in <literal>beans.xml</literal>. This allows 
   bean developers to decouple type from implementation.</para>
   
-  <para>The container is required to support circularities in the bean dependency 
-  graph where at least one bean participating in every circular chain of 
-  dependencies has a normal scope, as defined in <xref linkend="normalscope"/>. 
-  The container is not required to support circular chains of dependencies where 
-  every bean participating in the chain has a pseudo-scope.</para>
-  
   <section id="selection">
     <title>Modularity</title>
     
@@ -527,8 +521,7 @@ public @interface PayBy {
         <para>The container may use a client proxy when creating beans 
         with circular dependencies. This is only necessary when the circular 
         dependencies are initialized via a managed bean constructor or producer 
-        method parameter. (Beans with scope <literal>@Dependent</literal> never 
-        have circular dependencies.)</para>
+        method parameter.</para>
       </listitem>
       
       <listitem>
@@ -549,6 +542,16 @@ public @interface PayBy {
     example, a particular container might instantiate exactly one client
     proxy object per bean. (However, this strategy is not required by this
     specification.)</para>
+
+    <para>The container is required to support circularities in the bean dependency 
+    graph where at least one bean participating in every circular chain of 
+    dependencies has a normal scope, as defined in <xref linkend="normalscope"/>. 
+    The container is not required to support circular chains of dependencies where 
+    every bean participating in the chain has a pseudo-scope. If a circular chain
+    of dependencies where every bean participating in the chain has a pseudo-scope
+    occurs, then the container automatically detects the problem and treats it as a
+    deployment problem.</para>
+
     
     <section id="unproxyable">
       <title>Unproxyable bean types</title>
