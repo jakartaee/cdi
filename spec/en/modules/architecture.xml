@@ -237,6 +237,22 @@
       and dependency injection model defined by this specification.</para>
         
     </section>
+
+    <section>
+      <title>Relationship to Bean Validation</title>
+        
+      <para>Bean Validation provides a unified way of declaring and defining constraints
+      on an object model, defines a runtime engine to validate objects and provides method
+      validation.</para>
+        
+      <para>The Bean Validation specification defines beans for Bean Validation managed 
+      objects including <literal>Validator</literal> and <literal>ValidatorFactory</literal>.
+      A number of Bean Validation managed instances, 
+      including <literal>ConstraintValidator</literal>s can take advantage of dependency 
+      injection. Bean Validation also provides support for method parameter validation
+      on any bean.</para>
+        
+    </section>
     
     </section>
     

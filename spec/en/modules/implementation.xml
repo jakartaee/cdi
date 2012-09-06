@@ -869,22 +869,12 @@ PaymentService paymentService;</programlisting>
       <itemizedlist>
         <listitem>
           <para>a bean with bean type <literal>javax.transaction.UserTransaction</literal>,
-          allowing injection of a reference to the JTA <literal>UserTransaction</literal>,</para>
+          allowing injection of a reference to the JTA <literal>UserTransaction</literal>, and</para>
         </listitem>
         <listitem>
           <para>a bean with bean type <literal>javax.security.Principal</literal>,
           allowing injection of a <literal>Principal</literal> representing the current
-          caller identity,</para>
-        </listitem>
-        <listitem>
-          <para>a bean with bean type <literal>javax.validation.ValidatorFactory</literal>,
-          allowing injection of the default Bean Validation <literal>ValidatorFactory</literal>,
-          and</para>
-        </listitem>
-        <listitem>
-          <para>a bean with bean type <literal>javax.validation.Validator</literal>,
-          allowing injection of a <literal>Validator</literal> for the default 
-           Bean Validation <literal>ValidatorFactory</literal>.</para>
+          caller identity.</para>
         </listitem>
       </itemizedlist>
       
