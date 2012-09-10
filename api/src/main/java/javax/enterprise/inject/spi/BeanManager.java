@@ -159,6 +159,7 @@ public interface BeanManager {
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      * @throws IllegalArgumentException if two instances of the same qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
+     * @throws IllegalArgumentException if the runtime type of the event object is assignable to the type of a container lifecycle event
      * @throws ObserverException if a notified observer throws a checked exception, it will be wrapped and 
      *         rethrown as an (unchecked) {@link ObserverException}
      */
