@@ -179,9 +179,9 @@
    </dependencies>
 
    <scm>
-      <connection>scm:git:git@github.com:pmuir/cdi.git</connection>
-      <url>scm:git:git@github.com:pmuir/cdi.git</url>
-      <developerConnection>scm:git:git@github.com:pmuir/cdi.git</developerConnection>  
+      <connection>scm:git:git@github.com:jboss/cdi.git</connection>
+      <url>scm:git:git@github.com:jboss/cdi.git</url>
+      <developerConnection>scm:git:git@github.com:jboss/cdi.git</developerConnection>  
    </scm>
 
    <profiles>
