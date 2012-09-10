@@ -290,7 +290,10 @@ else {
       <xref linkend="observernotification"/>.</para>
       
       <para>If the runtime type of the event object contains a type variable, an 
-      <literal>IllegalArgumentException</literal> is thrown.</para> 
+      <literal>IllegalArgumentException</literal> is thrown.</para>
+
+      <para>If the runtime type of the event object is assignable to the type of a container 
+      lifecycle event, <literal>IllegalArgumentException</literal> is thrown.</para>
       
       </section>
       
