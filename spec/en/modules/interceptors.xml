@@ -11,7 +11,9 @@
 
     <para>Interceptor bindings may be used to associate interceptors with any managed bean 
     that is not itself an interceptor or decorator or with any EJB session or message-driven 
-    bean. An interceptor instance is a dependent object of the object it intercepts.</para>
+    bean. Interceptors are not associated with the return value of a producer method or the 
+    current value of a producer field. An interceptor instance is a dependent object of the 
+    object it intercepts.</para>
 
     <section id="interceptorbindings">
       <title>Interceptor binding types</title>
