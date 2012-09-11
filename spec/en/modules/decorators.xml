@@ -12,8 +12,9 @@
   concerns for which interceptors are optimized.</para>
     
   <para>Decorators may be associated with any managed bean that is not itself an 
-  interceptor or decorator or with any EJB session bean. A decorator instance is
-  a dependent object of the object it decorates.</para>
+  interceptor or decorator or with any EJB session bean. Decorators are not applied
+  to the return value of a producer method or the current value of a producer field.
+  A decorator instance is a dependent object of the object it decorates.</para>
 
   <section id="decoratorbean">
     <title>Decorator beans</title>
