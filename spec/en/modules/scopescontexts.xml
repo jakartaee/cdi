@@ -844,6 +844,9 @@
     kinds of invocations, a portable extension may define a custom context object for 
     any or all of the built-in scopes. For example, a remoting framework might provide a 
     request context object for the built-in request scope.</para>
+
+    <para>OPEN ISSUE: The portlet spec is not part of Java EE, so can we really define portlet
+    rules in the CDI spec?</para>
     
     <para>The context associated with a built-in normal scope propagates across 
     local, synchronous Java method calls, including invocation of EJB local business 
