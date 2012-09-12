@@ -839,11 +839,14 @@
     interface for each of the built-in scopes.</para>
     
     <para>The built-in request and application context objects are active during servlet,
-    web service and EJB invocations, and the built in session and request context objects 
-    are active during servlet and web service invocations. For other kinds of invocations,
-    a portable extension may define a custom context object for any or all of the built-in
-    scopes. For example, a remoting framework might provide a request context object for 
-    the built-in request scope.</para>
+    portlet, web service and EJB invocations, and the built in session and request context
+    objects are active during servlet, portlet, and web service invocations. For other 
+    kinds of invocations, a portable extension may define a custom context object for 
+    any or all of the built-in scopes. For example, a remoting framework might provide a 
+    request context object for the built-in request scope.</para>
+
+    <para>OPEN ISSUE: The portlet spec is not part of Java EE, so can we really define portlet
+    rules in the CDI spec?</para>
     
     <para>The context associated with a built-in normal scope propagates across 
     local, synchronous Java method calls, including invocation of EJB local business 
@@ -876,6 +879,16 @@
           <para>during any Java EE web service invocation,</para>
         </listitem>
         <listitem>
+          <para> during the <literal>Portlet.processAction()</literal> method, the 
+          <literal>Portlet.render()</literal> method, the 
+          <literal>EventPortlet.processEvent()</literal> method or the 
+          <literal>ResourceServingPortlet.serveResource()</literal> method  of any portlet
+          in the web application and during the <literal>ActionFilter.doFilter()</literal>
+          method, the <literal>EventFilter.doFilter()</literal> method, the 
+          <literal>RenderFilter.doFilter()</literal> method, or the 
+          <literal>ResourceFilter.doFilter()</literal> method of any portlet filter,</para>
+        </listitem>
+        <listitem>
           <para>during any remote method invocation of any EJB, during any asynchronous 
           method invocation of any EJB, during any call to an EJB timeout method and 
           during message delivery to any EJB message-driven bean, and</para>
@@ -898,6 +911,17 @@
           <para>after the web service invocation completes,</para>
         </listitem>
         <listitem>
+          <para>at the end of the portlet request, after the 
+          <literal>Portlet.processAction()</literal> method, the 
+          <literal>Portlet.render()</literal> method, the 
+          <literal>EventPortlet.processEvent()</literal> method or the 
+          <literal>ResourceServingPortlet.serveResource()</literal> method and all 
+          <literal>ActionFilter.doFilter()</literal> methods, 
+          <literal>EventFilter.doFilter()</literal> methods, 
+          <literal>RenderFilter.doFilter()</literal> methods, and 
+          <literal>ResourceFilter.doFilter()</literal> methods,</para>
+        </listitem>
+        <listitem>
           <para>after the EJB remote method invocation, asynchronous method invocation, 
           timeout or message delivery completes if it did not already exist when the invocation 
           occurred, or</para>
@@ -916,11 +940,7 @@
       <itemizedlist>
         <listitem>
           <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
-          due to a servlet request, or</para>
-        </listitem>
-        <listitem>
-          <para>the <literal>ServletRequestEvent</literal> if the context is initialized or destroyed 
-          due to a web service invocation, or</para>
+          due to a servlet request, a web service invocation, or a portlet request, or</para>
         </listitem>
         <listitem>
           <para>the <literal>???</literal> if the context is initialized or destroyed 
@@ -928,6 +948,9 @@
           timeout or message delivery.</para>
         </listitem>
       </itemizedlist>
+
+      <para>OPEN ISSUE: Where should we specify JSF Portlet Bridge specific rules about
+      propagating the request context between the action request and render requests?</para>
       
     </section>
 
@@ -944,16 +967,41 @@
           web application, during the <literal>doFilter()</literal> method of any 
           servlet filter and when the container calls any 
           <literal>HttpSessionListener</literal>, <literal>AsyncListener</literal> 
-          or <literal>ServletRequestListener</literal>.</para>
+          or <literal>ServletRequestListener</literal>, or</para>
+        </listitem>
+        <listitem>
+          <para>during the <literal>Portlet.processAction()</literal> method, the 
+          <literal>Portlet.render()</literal> method, the 
+          <literal>EventPortlet.processEvent()</literal> method or the 
+          <literal>ResourceServingPortlet.serveResource()</literal> method  of any portlet
+          in the web application and during the <literal>ActionFilter.doFilter()</literal>
+          method, the <literal>EventFilter.doFilter()</literal> method, the 
+          <literal>RenderFilter.doFilter()</literal> method, or the 
+          <literal>ResourceFilter.doFilter()</literal> method of any portlet filter.
+          </para>
         </listitem>
       </itemizedlist>
 
       <para>The session context is shared between all servlet requests that occur in 
-      the same HTTP session. The session context is destroyed when the
-      <literal>HTTPSession</literal> times out, after all <literal>HttpSessionListener</literal>s 
-      have been called, and at the very end of any request in which <literal>invalidate()</literal> 
-      was called, after all filters and <literal>ServletRequestListener</literal>s
-      have been called.</para>
+      the same HTTP session, or for all portlet requests that occur in the same Portlet
+      session for the same portlet window.</para>
+      
+      <para>The session context is destroyed:</para> 
+      
+      <itemizedlist>
+        <listitem>
+          <para>when the <literal>HTTPSession</literal> times out, after all 
+          <literal>HttpSessionListener</literal>s have been called, and at the very end of
+          any request in which <literal>invalidate()</literal>  was called, after all 
+          filters and <literal>ServletRequestListener</literal>s have been called, or</para>
+       </listitem>
+       <listitem>
+         <para>when the <literal>PortletSession</literal> times out, after all 
+          <literal>HttpSessionListener</literal>s have been called, and at the very end of
+          any request in which <literal>invalidate()</literal>  was called, after all 
+          filters and <literal>ServletRequestListener</literal>s have been called, or</para> 
+       </listitem>
+     </itemizedlist>
       
       <para>An event with the <literal>HttpSessionEvent</literal> as payload and with 
       qualifier <literal>@Initialized(SessionScoped.class)</literal> is fired when the 
@@ -981,6 +1029,16 @@
         </listitem>
         <listitem>
           <para>during any Java EE web service invocation, </para>
+        </listitem>
+        <listitem>
+          <para> during the <literal>Portlet.processAction()</literal> method, the 
+          <literal>Portlet.render()</literal> method, the 
+          <literal>EventPortlet.processEvent()</literal> method or the 
+          <literal>ResourceServingPortlet.serveResource()</literal>method  of any portlet
+          in the web application and during the <literal>ActionFilter.doFilter()</literal>
+          method, the <literal>EventFilter.doFilter()</literal> method, the 
+          <literal>RenderFilter.doFilter()</literal> method, or the 
+          <literal>ResourceFilter.doFilter()</literal> method of any portlet filter,</para>
         </listitem>
         <listitem>
           <para>during any remote method invocation of any EJB, during any 
@@ -1012,7 +1070,7 @@
       <itemizedlist>
          <listitem>
             <para>the <literal>ServletContextEvent</literal> if the application is a web application
-            deployed to a Servlet container, or</para>
+            deployed to a Servlet container or a Portlet container, or</para>
          </listitem>
          <listitem>
             <para>the <literal>???</literal> in ???</para>
@@ -1027,31 +1085,46 @@
       <para>The <emphasis>conversation context</emphasis> is provided by a 
       built-in context object for the built-in passivating scope type 
       <literal>@ConversationScoped</literal>. The conversation scope is 
-      active during all Servlet requests.</para>
+      active during all servlet requests and all portlet requests.</para>
       
-      <para>An event with the <literal>ServletRequestEvent</literal> as the payload and with qualifier 
-      <literal>@Initialized(ConversationScoped.class)</literal> is fired when the 
-      conversation context is initialized and an event with qualifier 
-      <literal>@Destroyed(ConversationScoped.class)</literal> when the conversation context
-      is destroyed.</para>
+      <para>An event with the <literal>ServletRequestEvent</literal> as the payload
+      and with qualifier <literal>@Initialized(ConversationScoped.class)</literal> 
+      is fired when the  conversation context is initialized and an event with 
+      qualifier <literal>@Destroyed(ConversationScoped.class)</literal> when the 
+      conversation context is destroyed.</para>
 
       <para>The conversation context provides access to state associated with 
-      a particular <emphasis>conversation</emphasis>. Every Servlet request has an
-      associated conversation. This association is managed automatically by
-      the container according to the following rules:</para>
+      a particular <emphasis>conversation</emphasis>. Every servlet request and
+      every portlet request has an associated conversation. This association is
+      managed automatically by the container according to the following 
+      rules:</para>
 
       <itemizedlist>
         <listitem>
-          <para>Any Servlet request has exactly one associated conversation.</para>
+          <para>Any servlet request or portlet request has exactly one associated
+          conversation.</para>
         </listitem>
         <listitem>
-          <para>The conversation associated with a Servlet request is determined at 
+          <para>The conversation associated with a servlet request is determined at 
           the beginning of the request before calling any <literal>service()</literal>
           method of any servlet in the web application, calling the
           <literal>doFilter()</literal> method of any servlet filter in the web application
           and before the container calls any <literal>ServletRequestListener</literal> 
           or <literal>AsyncListener</literal> in the web application.</para>
         </listitem>
+        <listitem>
+          <para>The conversation associated with a portlet request is determined at 
+          the beginning of the request before calling any 
+          <literal>Portlet.processAction()</literal> method, 
+          <literal>Portlet.render()</literal> method, 
+          <literal>EventPortlet.processEvent()</literal> method or
+          <literal>ResourceServingPortlet.serveResource()</literal> method of any portlet
+          in the web application and during the <literal>ActionFilter.doFilter()</literal>
+          method, the <literal>EventFilter.doFilter()</literal> method, the 
+          <literal>RenderFilter.doFilter()</literal> method, or the 
+          <literal>ResourceFilter.doFilter()</literal> method of any portlet filter.</para>
+        </listitem>
+
       </itemizedlist>
 
       <para>Any conversation is in one of two states: <emphasis>transient</emphasis> 
@@ -1075,22 +1148,23 @@
       identifier, which may be set by the application when the conversation
       is marked long-running, or generated by the container.</para>
 
-      <para>If the conversation associated with the current Servlet request is in
-      the <emphasis>transient</emphasis> state at the end of a Servlet request, it
-      is destroyed, and the conversation context is also destroyed.</para>
+      <para>If the conversation associated with the current servlet request or the
+      current portlet request is in the <emphasis>transient</emphasis> state at 
+      the end of a servlet request or a portlet request, it is destroyed, and the
+      conversation context is also destroyed.</para>
 
-      <para>If the conversation associated with the current Servlet request is in
-      the <emphasis>long-running</emphasis> state at the end of a Servlet request,
-      it is not destroyed. The long-running conversation associated with a request 
-      may be propagated to any Servlet request via use of a request parameter 
-      named <literal>cid</literal> containing the unique identifier of the 
-      conversation. In this case, the application must manage this request 
-      parameter.</para>
+      <para>If the conversation associated with the current servlet request or the
+      current portlet request is in the <emphasis>long-running</emphasis> state at
+      the end of a servlet request or a portlet request, it is not destroyed. The 
+      long-running conversation associated with a request may be propagated to any
+      servlet request or to any portlet request via use of a request parameter named 
+      <literal>cid</literal> containing the unique identifier of the conversation. 
+      The application must manage this request parameter.</para>
       
       
-      <para>If the current Servlet request is a JSF request, and the conversation 
-      is in <emphasis>long-running</emphasis> state, it is propagated according 
-      to the following rules:</para>
+      <para>If the current servlet request or portlet request is a JSF request, and
+      the conversation is in <emphasis>long-running</emphasis> state, it is 
+      propagated according to the following rules:</para>
 
       <itemizedlist>
         <listitem>
@@ -1110,13 +1184,13 @@
         </listitem>
       </itemizedlist>
       
-      <para>When no conversation is propagated to a Servlet request, or if a 
-      request parameter named <literal>conversationPropagation</literal>
-      has the value <literal>none</literal> the request is associated with a
-      new transient conversation.</para>
+      <para>When no conversation is propagated to a servlet request or a portlet
+      request, or if a request parameter named 
+      <literal>conversationPropagation</literal> has the value <literal>none</literal>
+      the request is associated with a new transient conversation.</para>
 
       <para>All long-running conversations are scoped to a particular HTTP 
-      servlet session and may not cross session boundaries.</para>
+      servlet session or portlet session and may not cross session boundaries.</para>
       
       <para>In the following cases, a propagated long-running conversation cannot 
       be restored and reassociated with the request:</para>
@@ -1128,9 +1202,18 @@
           after the servlet <literal>service()</literal> method completes.</para>
         </listitem>
         <listitem>
+          <para>When the portlet session is invalidated, all long-running
+          conversation contexts created during the current session are destroyed, 
+          after any <literal>Portlet.processAction()</literal> method, 
+          <literal>Portlet.render()</literal> method, 
+          <literal>EventPortlet.processEvent()</literal> method or
+          <literal>ResourceServingPortlet.serveResource()</literal> method of any
+          portlet in the web application method completes.</para>
+        </listitem>
+        <listitem>
           <para>The container is permitted to arbitrarily destroy any long-running 
-          conversation that is associated with no current Servlet request, in order to 
-          conserve resources.</para>
+          conversation that is associated with no current servlet request or portlet
+          request, in order to conserve resources.</para>
         </listitem>
       </itemizedlist>
 
@@ -1149,6 +1232,9 @@
       concurrent requests. If the container rejects a request, it must associate
       the request with a new transient conversation and throw an exception of type 
       <literal>javax.enterprise.context.BusyConversationException</literal>.</para>
+
+      <para>OPEN ISSUE: Where should we specify JSF Portlet Bridge specific rules about
+      propagating transient conversations between the action request and render requests?</para>
 
     </section>
     
