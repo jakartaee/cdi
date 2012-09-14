@@ -969,6 +969,20 @@ public @interface PayBy {
       and type <literal>Decorator</literal> which can be injected into any decorator instance</listitem>
     </itemizedlist>
 
+    <para>Additionally, the container must provide beans allowing interceptors and decorators to obtain 
+    information about the beans they intercept and decorate:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Intercepted</literal> and
+        type <literal>Bean</literal> which can be injected into any interceptor instance, and</para>
+      </listitem>
+      <listitem>
+        <para>a bean with scope <literal>@Dependent</literal>, qualifier <literal>@Decorated</literal> and
+        type <literal>Bean</literal> which can be injected into any decorator instance.</para>
+      </listitem>
+    </itemizedlist>
+
     <para>These beans are passivation capable dependencies, as defined in 
     <xref linkend="passivationcapabledependency"/>.</para>
    
@@ -980,16 +994,41 @@ public @interface PayBy {
     decorator instance, the container automatically detects the problem  and treats it as a definition
     error.</para>
 
+    <para>If a <literal>Bean</literal> instance with qualifier <literal>@Intercepted</literal> is injected
+    into a bean instance other than an interceptor instance, the container automatically detects the 
+    problem  and treats it as a definition error.</para>
+
+     <para>If a <literal>Bean</literal> instance with qualifier <literal>@Decorated</literal> is injected
+    into a bean instance other than a decorator instance, the container automatically detects the 
+    problem and treats it as a definition error.</para>
+
     <para>The injection of bean metadata is restricted. If:</para>
 
     <itemizedlist>
-      <listitem>the injection point is a field, an initializer method parameter or a bean constructor then
-      the type parameter of the injected <literal>Bean</literal>, <literal>Interceptor</literal> or 
-      <literal>Decorator</literal> must be the same as the type declaring the injection point</listitem>
-      <listitem>the injection point is a producer method parameter then the type parameter of the injected
-      <literal>Bean</literal> must be the same as the producer method return type</listitem>
-      <listitem>the injection point is a disposer method parameter then the type parameter of the injected
-      <literal>Bean</literal> must be the same as the disposed parameter</listitem>
+      <listitem>
+        <para>the injection point is a field, an initializer method parameter or a bean constructor, with 
+        qualifier <literal>@Default</literal>, then the type parameter of the injected 
+        <literal>Bean</literal>, <literal>Interceptor</literal> or <literal>Decorator</literal> must be the
+        same as the type declaring the injection point, or</para>
+      </listitem>
+      <listitem>
+        <para>the injection point is a field, an initializer method parameter or a bean constructor of an
+        interceptor, with qualifier <literal>@Intercepted</literal>, then the type parameter of the injected 
+        <literal>Bean</literal> must be an unbounded wildcard, or</para>
+      </listitem>
+      <listitem>
+        <para>the injection point is a field, an initializer method parameter or a bean constructor of a
+        decorator, with qualifier <literal>@Decorated</literal>, then the type parameter of the injected 
+        <literal>Bean</literal> must be the same as the delegate type, or</para>
+      </listitem>
+      <listitem>
+        <para>the injection point is a producer method parameter then the type parameter of the injected
+        <literal>Bean</literal> must be the same as the producer method return type, or</para>
+      </listitem>
+      <listitem>
+        <para>the injection point is a disposer method parameter then the type parameter of the injected
+        <literal>Bean</literal> must be the same as the disposed parameter.</para>
+      </listitem>
     </itemizedlist>
 
     <para>Otherwise, the container automatically detects the problem and treats it as a definition error.</para>
