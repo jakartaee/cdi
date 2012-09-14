@@ -25,6 +25,9 @@
     for <literal>java.io.Serializable</literal>. The decorator bean class and its 
     superclasses are not decorated types of the decorator. The decorator class may 
     be abstract.</para>
+
+    <para>If the set of decorated types of a decorator is empty, the container 
+    automatically detects the problem and treats it as a definition error.</para>
     
     <para>Decorators of a session bean must comply with the bean provider programming 
     restrictions defined by the EJB specification. Decorators of a stateful session 
