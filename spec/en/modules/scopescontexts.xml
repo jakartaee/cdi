@@ -275,9 +275,9 @@
       </listitem>
       <listitem>
         <para>When a Unified EL expression in a JSF or JSP page that refers to 
-        the bean by its EL name is evaluated, at most one instance of the bean 
+        the bean by its bean name is evaluated, at most one instance of the bean 
         is instantiated. This instance exists to service just a single evaluation 
-        of the EL expression. It is reused if the bean EL name appears multiple 
+        of the EL expression. It is reused if the bean name appears multiple 
         times in the EL expression, but is never reused when the EL expression 
         is evaluated again, or when another EL expression is evaluated.</para>
       </listitem>
@@ -380,14 +380,14 @@
       <title>Dependent pseudo-scope and Unified EL</title>
       
       <para>Suppose a Unified EL expression in a JSF or JSP page refers to a bean with scope 
-      <literal>@Dependent</literal> by its EL name. Each time the EL expression is evaluated:</para>
+      <literal>@Dependent</literal> by its bean name. Each time the EL expression is evaluated:</para>
     
       <itemizedlist>
       <listitem>
         <para>the bean is instantiated at most once, and</para>
       </listitem>
       <listitem>
-        <para>the resulting instance is reused for every appearance of the EL name, 
+        <para>the resulting instance is reused for every appearance of the bean name, 
         and</para>
       </listitem>
       <listitem>

@@ -22,7 +22,7 @@
   <para>References to contextual instances may also be obtained by 
   programmatic lookup or by Unified EL expression evaluation.</para>
 
-  <para>In general, a bean type or bean EL name does not uniquely identify a
+  <para>In general, a bean type or bean name does not uniquely identify a
   bean. When resolving a bean at an injection point, the container considers 
   bean type, qualifiers and alternative declarations in <literal>beans.xml</literal>. 
   When resolving a name in an EL expression, the container considers the bean 
@@ -445,20 +445,20 @@ public @interface PayBy {
 
     <para>The process of matching a bean to a name used in EL is called 
     <emphasis>name resolution</emphasis>. Since there is no typing information 
-    available in EL, the container may consider only the EL name. Name resolution 
+    available in EL, the container may consider only the bean name. Name resolution 
     usually occurs at runtime, during EL expression evaluation.</para>
 
     <para>An EL name resolves to a bean if:</para>
     
     <itemizedlist>
-      <listitem>the bean has the given EL name, and</listitem>
+      <listitem>the bean has the given bean name, and</listitem>
       <listitem>the bean is available for injection in the war containing
       the JSP or JSF page with the EL expression.</listitem>
     </itemizedlist>
     
     <para>For a custom implementation of the <literal>Bean</literal> interface
     defined in <xref linkend="bean"/>, the container calls <literal>getName()</literal> 
-    to determine the bean EL name.</para>
+    to determine the bean name.</para>
     
     <section id="ambignames">
       <title>Ambiguous EL names</title>
@@ -477,13 +477,13 @@ public @interface PayBy {
       
       <itemizedlist>
         <listitem>
-          <para>the two beans have the same EL name and the name is not resolvable,
+          <para>the two beans have the same bean name and the name is not resolvable,
           or</para>
         </listitem>
         <listitem>
-          <para>the EL name of one bean is of the form <literal>x.y</literal>, 
-          where <literal>y</literal> is a valid bean EL name, and <literal>x</literal> 
-          is the EL name of the other bean,</para>
+          <para>the bean name of one bean is of the form <literal>x.y</literal>, 
+          where <literal>y</literal> is a valid bean name, and <literal>x</literal> 
+          is the bean name of the other bean,</para>
         </listitem>
       </itemizedlist>
       
@@ -1205,7 +1205,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
           <para>scope <literal>@Dependent</literal>,</para>
         </listitem>
         <listitem>
-          <para>no bean EL name, and</para>
+          <para>no bean name, and</para>
         </listitem>
         <listitem>
           <para>an implementation provided automatically by the container.</para>

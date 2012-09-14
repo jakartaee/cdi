@@ -130,7 +130,7 @@
       parameters, it must have a constructor annotated <literal>@Inject</literal>.
       No additional special annotations are required.</para>
 
-      <para>A bean class may specify a scope, name, stereotypes and/or 
+      <para>A bean class may specify a scope, bean name, stereotypes and/or 
       qualifiers:</para>
       
       <programlisting>@ConversationScoped @Default
@@ -175,14 +175,14 @@ public class MockLoginAction extends LoginAction { ... }</programlisting>
     </section>
     
     <section id="managedbeanname">
-      <title>Default name for a managed bean</title>
+      <title>Default bean name for a managed bean</title>
       
       <para>The default name for a managed bean is the unqualified class 
       name of the bean class, after converting the first 
       character to lower case.</para>
       
       <para>For example, if the bean class is named <literal>ProductList</literal>,
-      the default bean EL name is <literal>productList</literal>.</para>
+      the default bean name is <literal>productList</literal>.</para>
       
     </section>
 
@@ -275,7 +275,7 @@ class Shop { .. }</programlisting>
       <programlisting>@Stateless
 class PaymentProcessorImpl implements PaymentProcessor { ... }</programlisting>
 
-      <para>A bean class may also specify a scope, name, stereotypes and/or qualifiers:</para>
+      <para>A bean class may also specify a scope, bean name, stereotypes and/or qualifiers:</para>
       
       <programlisting>@ConversationScoped @Stateful @Default @Model
 public class ShoppingCart { ... }</programlisting>
@@ -319,14 +319,14 @@ public class MockLoginActionBean extends LoginActionBean { ... }</programlisting
     </section>
 
     <section id="sessionbeanname">
-      <title>Default name for a session bean</title>
+      <title>Default bean name for a session bean</title>
       
       <para>The default name for a session bean is the unqualified class 
       name of the session bean class, after converting the first character 
       to lower case.</para>
       
       <para>For example, if the bean class is named <literal>ProductList</literal>,
-      the default bean EL name is <literal>productList</literal>.</para>
+      the default bean name is <literal>productList</literal>.</para>
       
     </section>
 
@@ -433,7 +433,7 @@ public class MockLoginActionBean extends LoginActionBean { ... }</programlisting
    @Produces List&lt;Product&gt; getProducts() { ... }
 }</programlisting>
 
-      <para>A producer method may also specify scope, name, stereotypes and/or 
+      <para>A producer method may also specify scope, bean name, stereotypes and/or 
       qualifiers.</para>
     
       <programlisting>public class Shop {
@@ -505,7 +505,7 @@ public class MockShop extends Shop {
     </section>
       
     <section id="producermethodname">
-      <title>Default name for a producer method</title>
+      <title>Default bean name for a producer method</title>
     
       <para>The default name for a producer method is the method name,
       unless the method follows the JavaBeans property getter naming convention, 
@@ -605,7 +605,7 @@ public PaymentProcessor paymentProcessor() { ... }</programlisting>
    @Produces List&lt;Product&gt; products = ....;
 }</programlisting>
 
-      <para>A producer field may also specify scope, name, stereotypes and/or 
+      <para>A producer field may also specify scope, bean name, stereotypes and/or 
       qualifiers.</para>
     
       <programlisting>public class Shop {
@@ -629,7 +629,7 @@ public PaymentProcessor paymentProcessor() { ... }</programlisting>
     </section>
     
     <section id="producerfieldname">
-      <title>Default name for a producer field</title>
+      <title>Default bean name for a producer field</title>
     
       <para>The default name for a producer field is the field name.</para>
 
@@ -789,7 +789,7 @@ public List&lt;Product&gt; products = ...;</programlisting>
     <literal>@Dependent</literal>. Portable applications should not define resources
     with any scope other than <literal>@Dependent</literal>.</para>
     
-    <para>A resource may not have an EL name.</para>
+    <para>A resource may not have a bean name.</para>
     
     <section>
       <title>Declaring a resource</title>
@@ -841,7 +841,7 @@ PaymentService paymentService;</programlisting>
       <para>The bean type and qualifiers of the resource are determined by the producer 
       field declaration.</para>
       
-      <para>If the producer field declaration specifies an EL name, the container 
+      <para>If the producer field declaration specifies a bean name, the container 
       automatically detects the problem and treats it as a definition error.</para>
       
       <para>If the matching object in the Java EE component environment is not of the 
@@ -1220,7 +1220,7 @@ public class Order {
           where <literal>X</literal> is the bean class,</para> 
         </listitem>
         <listitem>
-          <para>has no bean EL name,</para>
+          <para>has no bean name,</para>
         </listitem> 
         <listitem>
           <para>has no stereotypes,</para>

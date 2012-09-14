@@ -329,7 +329,7 @@
     <title>Integration with Unified EL</title>
     
     <para>The container must provide a Unified EL <literal>ELResolver</literal> 
-    to the servlet engine and JSF implementation that resolves bean EL names
+    to the servlet engine and JSF implementation that resolves bean names
     using the rules of name resolution defined in <xref linkend="nameresolution"/>
     and resolving ambiguities according to <xref linkend="ambignames"/>.</para>
     

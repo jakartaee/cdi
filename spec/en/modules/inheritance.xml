@@ -36,7 +36,7 @@
   deployment.</para>
   
   <para>The bean developer may explicitly specify that the second bean specializes the 
-  first. Then the second bean inherits, and may not override, the qualifiers and name of 
+  first. Then the second bean inherits, and may not override, the qualifiers and bean name of 
   the first bean. The second bean is able to serve the same role in the system as the 
   first. In a particular deployment, only one of the two beans may fulfill that role.</para> 
   
@@ -93,7 +93,7 @@
    <para>However, in special circumstances, these recommendations may be ignored.</para>
    
    <para>Note that the <literal>@Named</literal> annotation is not declared <literal>@Inherited</literal>
-   and bean EL names are not inherited unless specialization is used.</para>
+   and bean names are not inherited unless specialization is used.</para>
     
   </section>
   
@@ -266,7 +266,7 @@ public class MockAsynchronousService extends AsynchronousService {
         </listitem>
       </itemizedlist>
       
-      <para>Then X will inherit the qualifiers and name of Y:</para>
+      <para>Then X will inherit the qualifiers and bean name of Y:</para>
     
       <itemizedlist>
         <listitem>
@@ -274,7 +274,7 @@ public class MockAsynchronousService extends AsynchronousService {
           qualifiers declared explicitly by X, and</para>
         </listitem>
         <listitem>
-          <para>if Y has a name, the name of X is the same as the name of Y.</para>
+          <para>if Y has a bean name, the bean name of X is the same as the bean name of Y.</para>
         </listitem>
       </itemizedlist>
       
@@ -282,7 +282,7 @@ public class MockAsynchronousService extends AsynchronousService {
       some bean type of Y, the container automatically detects the problem and 
       treats it as a definition error.</para>
       
-      <para>If Y has a name and X declares a name explicitly the container 
+      <para>If Y has a bean name and X declares a bean name explicitly the container 
       automatically detects the problem and treats it as a definition error.</para>
       
       <para>For example, the following bean would have the inherited qualifiers 
@@ -293,14 +293,14 @@ public class MockAsynchronousService extends AsynchronousService {
     ... 
 }</programlisting>
 
-      <para>If <literal>AsynchronousService</literal> declared a name:</para>
+      <para>If <literal>AsynchronousService</literal> declared a bean name:</para>
     
       <programlisting>@Default @Asynchronous @Named("asyncService")
 public class AsynchronousService implements Service{ 
     ... 
 }</programlisting>
 
-      <para>Then the name would also automatically be inherited by 
+      <para>Then the bean name would also automatically be inherited by 
       <literal>MockAsynchronousService</literal>.</para>
       
       <para>If an interceptor or decorator is annotated <literal>@Specializes</literal>, 

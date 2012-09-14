@@ -232,9 +232,9 @@
       interaction model that binds user interface components to objects accessible
       via Unified EL.</para>
         
-      <para>This specification allows any bean to be assigned a Unified EL name. 
-      Thus, a JSF application may take advantage of the sophisticated context 
-      and dependency injection model defined by this specification.</para>
+      <para>This specification allows any bean to be assigned a name. Thus, a JSF
+      application may take advantage of the sophisticated context and dependency 
+      injection model defined by this specification.</para>
         
     </section>
     
