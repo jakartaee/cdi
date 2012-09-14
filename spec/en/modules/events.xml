@@ -314,7 +314,7 @@ else {
           <para>scope <literal>@Dependent</literal>,</para>
         </listitem>
         <listitem>
-          <para>no bean EL name, and</para>
+          <para>no bean name, and</para>
         </listitem>
         <listitem>
           <para>an implementation provided automatically by the container.</para>

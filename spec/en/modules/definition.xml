@@ -34,7 +34,7 @@
     </listitem>
 
     <listitem>
-      <para>Optionally, a bean EL name</para>
+      <para>Optionally, a bean name</para>
     </listitem>
 
     <listitem>
@@ -88,7 +88,7 @@
     </listitem>
 
     <listitem>
-      <para>scoped resolution by name when used in a Unified EL expression,
+      <para>scoped resolution by bean name when used in a Unified EL expression,
       as defined by <xref linkend="nameresolution"/>,</para>
     </listitem>
 
@@ -651,36 +651,36 @@ public class Order { ... }</programlisting>
   </section>
 
   <section id="names">
-    <title>Bean EL names</title>
+    <title>Bean names</title>
 
-    <para>A bean may have a <emphasis>bean EL name</emphasis>. A bean with 
-    an EL name may be referred to by its name in Unified EL expressions. A 
-    valid bean EL name is a period-separated list of valid EL identifiers.</para>
+    <para>A bean may have a <emphasis>bean name</emphasis>. A bean with a name may be
+    referred to by its name in Unified EL expressions. A valid bean name is a 
+    period-separated list of valid EL identifiers.</para>
     
-    <para>The following strings are valid EL names:</para>
+    <para>The following strings are valid bean names:</para>
     
     <programlisting>org.mydomain.myapp.settings</programlisting>
     <programlisting>orderManager</programlisting>
     
-    <para>There is no relationship between the EL name of a session bean and 
-    the EJB name of the bean.</para>
+    <para>There is no relationship between the bean name of a session bean and the 
+    EJB name of the bean.</para>
 
     <para>Subject to the restrictions defined in <xref linkend="ambignames"/>, 
-    multiple beans may share the same EL name.</para>
+    multiple beans may share the same bean name.</para>
     
-    <para>Bean EL names allow the direct use of beans in JSP or JSF pages, as 
-    defined in <xref linkend="el"/>. For example, a bean with the name 
+    <para>Bean names allow the direct use of beans in JSP or JSF pages, as defined
+    in <xref linkend="el"/>. For example, a bean with the name 
     <literal>products</literal> could be used like this:</para>
 
     <programlisting>&lt;h:outputText value="#{products.total}"/&gt;</programlisting>
       
-    <para>Bean EL names are used by the rules of EL name resolution defined in
+    <para>Bean names are used by the rules of EL name resolution defined in
     <xref linkend="nameresolution"/>.</para>
     
     <section>
-      <title>Declaring the bean EL name</title>
+      <title>Declaring the bean name</title>
 
-      <para>To specify the EL name of a bean, the qualifier 
+      <para>To specify the name of a bean, the qualifier 
       <literal>@javax.inject.Named</literal> is applied to the bean class or 
       producer method or field. This bean is named <literal>currentOrder</literal>:</para>
 
@@ -690,21 +690,21 @@ public class Order { ... }</programlisting>
     </section>
 
     <section id="defname">
-      <title>Default bean EL names</title>
+      <title>Default bean names</title>
       
-      <para>In the following circumstances, a <emphasis>default EL name</emphasis> 
+      <para>In the following circumstances, a <emphasis>default name</emphasis> 
       must be assigned by the container:</para>
       
       <itemizedlist>
       <listitem>
         <para>A bean class or producer method or field of a bean declares a 
-        <literal>@Named</literal> annotation and no EL name is explicitly 
+        <literal>@Named</literal> annotation and no bean name is explicitly
         specified by the <literal>value</literal> member.</para>
       </listitem>
       <listitem>
         <para>A bean declares a stereotype that declares an empty 
         <literal>@Named</literal> annotation, and the bean does not 
-        explicitly specify an EL name.</para>
+        explicitly specify a bean name.</para>
       </listitem>
       </itemizedlist>
 
@@ -721,10 +721,10 @@ public class Order { ... }</programlisting>
     </section>
 
     <section>
-      <title>Beans with no EL name</title>
+      <title>Beans with no name</title>
       
       <para>If <literal>@Named</literal> is not declared by the bean, nor by 
-      its stereotypes, a bean has no EL name.</para>
+      its stereotypes, a bean has no name.</para>
 
       <para>If an interceptor or decorator has a name, non-portable behavior 
       results.</para>
@@ -784,7 +784,7 @@ public class MockOrder extends Order { ... }</programlisting>
     
     <itemizedlist>
       <listitem>
-        <para>all beans with the stereotype have defaulted bean EL names, 
+        <para>all beans with the stereotype have defaulted bean names, 
         or that</para>
       </listitem>
       <listitem>
@@ -866,7 +866,7 @@ public @interface Action {}</programlisting>
         annotation, the container automatically detects the problem and treats it as 
         a definition error.</para>
       
-        <para>We may specify that all actions have names:</para>
+        <para>We may specify that all actions have bean names:</para>
       
         <programlisting>@RequestScoped
 @Secure
