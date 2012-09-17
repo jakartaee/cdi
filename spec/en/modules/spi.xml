@@ -226,9 +226,12 @@
           <para><literal>produce()</literal> calls the constructor annotated 
           <literal>@Inject</literal> if it exists, or the constructor with no 
           parameters otherwise, as defined in <xref linkend="instantiation"/>,
-          and returns the resulting instance. If the class has interceptors, 
-          <literal>produce()</literal> is responsible for building the 
-          interceptors and decorators of the instance.</para>
+          and returns the resulting instance. If the class has interceptors or
+          decorators, <literal>produce()</literal> is responsible for building
+          the interceptors and decorators of the resulting instance. The 
+          container must support using the Java Reflection API to perform 
+          reflective operations on the fields, methods and constructors of 
+          the resulting instance.</para>
         </listitem>
        <listitem>
           <para><literal>dispose()</literal> does nothing.</para>

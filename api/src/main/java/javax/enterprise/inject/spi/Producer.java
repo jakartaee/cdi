@@ -36,12 +36,16 @@ public interface Producer<T> {
      * </p>
      * <p>
      * If the {@code Producer} represents a class, this will invoke the constructor annotated {@link javax.inject.Inject} if it
-     * exists, or the constructor with no parameters otherwise. If the class has interceptors, <tt>produce()</tt> is responsible
+     * exists, or the constructor with no parameters otherwise. If the class has interceptors or decorators, <tt>produce()</tt> is responsible
      * for building the interceptors and decorators of the instance.
      * </p>
      * <p>
      * If the {@code Producer} represents a producer field or method, this will invoke the producer method on, or access the
      * producer field of, a contextual instance of the bean that declares the producer.
+     * </p>
+     * <p>
+     * The produced instance can be reflectively operated on using the Java Reflection API, allowing access and operate on the 
+     * fields, methods and constructors of the produced instance.
      * </p>
      * 
      * @param ctx The {@link javax.enterprise.context.spi.CreationalContext} to use for the produced object
