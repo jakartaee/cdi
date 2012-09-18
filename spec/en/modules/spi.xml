@@ -42,7 +42,7 @@
         <para><literal>getTypes()</literal>, <literal>getQualifiers()</literal>, 
         <literal>getScope()</literal>, <literal>getName()</literal> and
         <literal>getStereotypes()</literal> must return the bean types, qualifiers, 
-        scope type, EL name and stereotypes of the bean, as defined in 
+        scope type, bean name and stereotypes of the bean, as defined in 
         <xref linkend="concepts"/>.</para>
       </listitem>
       <listitem>
@@ -458,10 +458,10 @@
     <title>Obtaining a <literal>Bean</literal> by name</title>
 
     <para>The method <literal>BeanManager.getBeans()</literal> which accepts a string
-    returns the set of beans which have the given EL name and are available for injection
+    returns the set of beans which have the given bean name and are available for injection
     in the module or library containing the class into which the <literal>BeanManager</literal> 
     was injected or the Java EE component from whose JNDI environment namespace the 
-    <literal>BeanManager</literal> was obtained, according to the rules of EL name resolution 
+    <literal>BeanManager</literal> was obtained, according to the rules of name resolution 
     defined in <xref linkend="nameresolution"/>.</para>
 
     <programlisting><![CDATA[public Set<Bean<?>> getBeans(String name);]]></programlisting>
