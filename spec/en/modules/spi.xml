@@ -839,16 +839,22 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
 
     <itemizedlist>
       <listitem>
-        <para><literal>getConstructors()</literal> returns all the constructors
-        declared for the type.</para>
+        <para><literal>getConstructors()</literal> returns all default-access, public, 
+        protected or private constructors declared for the type.</para>
       </listitem>
       <listitem>
-        <para><literal>getMethods()</literal> returns all the methods declared
-        on the type and those declared on any supertypes.</para>
+        <para><literal>getMethods()</literal> returns all default-access, public, 
+        protected or private methods declared on the type and those declared on 
+        any supertypes. The container should call 
+        <literal>AnnotatedMethod.getJavaMember().getDeclaringClass()</literal> to 
+        determine the type in the type hierarchy that declared the method.</para>
       </listitem>
       <listitem>
-        <para><literal>getFields()</literal> returns all the fields declared
-        on the type and those declared on any supertypes.</para>
+        <para><literal>getFields()</literal> returns all default-access, public, 
+        protected or private fields declared on the type and those declared on any
+        supertypes.  The container should call 
+        <literal>AnnotatedField.getJavaMember().getDeclaringClass()</literal> to 
+        determine the type in the type hierarchy that declared the field.</para>
       </listitem>
     </itemizedlist>
     
@@ -887,7 +893,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
 }]]></programlisting>
 
     <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedMemember</literal> 
-    exposes the <literal>Member</literal> object and the declaring type of the member.</para>
+    exposes the <literal>Member</literal> object and the <literal>AnnotatedType</literal>
+    that defines the member.</para>
 
     <programlisting><![CDATA[public interface AnnotatedMember<X> 
         extends Annotated {
@@ -898,6 +905,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
 
     <para>The interface <literal>javax.enterprise.inject.spi.AnnotatedCallable</literal> 
     exposes the parameters of an invokable object.</para>
+
+    <para>Contexts and Dependency Injection for Java EE 1.1 deprecated the method 
+    <literal>AnnotatedMember.isStatic</literal>. The container should instead call
+    <literal>AnnotatedMember.getJavaMember().getModifiers()</literal> to determine if
+    the member is static.</para>
 
     <programlisting><![CDATA[public interface AnnotatedCallable<X> 
         extends AnnotatedMember<X> {
