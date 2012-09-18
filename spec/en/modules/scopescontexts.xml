@@ -183,7 +183,7 @@
     <para>When the container calls <literal>get()</literal> for a context that is
     associated with a passivating scope it must ensure that the given instance of
     <literal>Contextual</literal> and the instance of 
-    <literal>CreationalContext</liteal>, if given, are serializable.</para>
+    <literal>CreationalContext</literal>, if given, are serializable.</para>
              
     <para>The context object is responsible for destroying any contextual instance 
     it creates by passing the instance to the <literal>destroy()</literal> method 
