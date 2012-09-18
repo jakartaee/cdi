@@ -35,7 +35,9 @@ import javax.enterprise.event.TransactionPhase;
  */
 public interface ObserverMethod<T> {
     /**
-     * Obtains the bean {@linkplain Class class} of the bean that declares the observer method.
+     * <p>
+     * Obtains the {@linkplain Class class} of the type that declares the observer method.
+     * </p>
      * 
      * @return the defining {@linkplain Class class}
      */
@@ -70,14 +72,28 @@ public interface ObserverMethod<T> {
     public TransactionPhase getTransactionPhase();
 
     /**
+     * <p>
      * Calls the observer method, passing the given event object.
+     * </p>
+     * 
+     * <p>
+     * The implementation of {@link #notify(Object)} for a custom observer method is responsible for
+     * deciding whether to call the method if the {@link #getReception()} returns {@link Reception#IF_EXISTS}. 
+     * </p>
      * 
      * @param event the event object
      */
     public void notify(T event);
     
     /**
+     * <p>
      * Calls the observer method, passing the given event object.
+     * </p>
+     * 
+     * <p>
+     * The implementation of {@link #notify(Object, Set)} for a custom observer method is responsible for
+     * deciding whether to call the method if the {@link #getReception()} returns {@link Reception#IF_EXISTS}. 
+     * </p>
      * 
      * @param event the event object
      * @param qualifiers the qualifiers with which the event was called

@@ -536,9 +536,9 @@ else {
     
       <para>For a custom implementation of the <literal>ObserverMethod</literal>
       interface defined in <xref linkend="observermethod"/>, the container must
-      call <literal>getReception()</literal> and <literal>getTransactionPhase()</literal>
-      to determine if the observer method is a conditional or transactional observer
-      method, and <literal>notify()</literal> to invoke the method.</para>
+      call <literal>getTransactionPhase()</literal> to determine if the observer
+      method is transactional observer method, and <literal>notify()</literal> 
+      to invoke the method.</para>
       
       <note>
          <para>CDI 1.1 implementations should call the <code>notify</code> method

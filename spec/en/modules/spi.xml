@@ -178,8 +178,8 @@
 
       <itemizedlist>
         <listitem>
-          <para><literal>getBeanClass()</literal> returns the bean class of the bean 
-          that declares the observer method.</para>
+          <para><literal>getBeanClass()</literal> returns the class of the type that declares the
+          observer method.</para>
         </listitem>
         <listitem>
           <para><literal>getObservedType()</literal> and <literal>getObservedQualifiers()</literal>
@@ -195,7 +195,7 @@
         </listitem>
         <listitem>
           <para><literal>notify()</literal> calls the observer method, as defined in
-          <xref linkend="observers"/>.</para>
+          <xref linkend="observernotification"/>.</para>
         </listitem>
       </itemizedlist>
       
