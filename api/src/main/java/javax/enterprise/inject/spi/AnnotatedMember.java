@@ -51,10 +51,10 @@ public interface AnnotatedMember<X> extends Annotated {
 
     /**
      * <p>
-     * Get the {@linkplain AnnotatedType type} which declares this member.
+     * Get the {@linkplain AnnotatedType type} which defines this member.
      * </p>
      * 
-     * @return the type which declares this member
+     * @return the type which defines this member
      */
     public AnnotatedType<X> getDeclaringType();
 }
