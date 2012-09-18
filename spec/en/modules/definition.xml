@@ -859,7 +859,7 @@ public @interface Action {}</programlisting>
         <para>A stereotype may declare an empty <literal>@Named</literal> annotation,
         which specifies that every bean with the stereotype has a defaulted name when 
         a name is not explicitly specified by the bean. A <literal>@Named</literal> 
-        qualifer declared by a stereotype is not added to the qualifiers of a bean
+        qualifier declared by a stereotype is not added to the qualifiers of a bean
         with the stereotype.</para>
         
         <para>If a stereotype declares a non-empty <literal>@Named</literal>
