@@ -919,6 +919,10 @@ PaymentService paymentService;</programlisting>
       constructor by the container; the returned object is not bound to any context; 
       no dependencies are injected by the container; and the lifecycle of the new 
       instance is not managed by the container.</para>
+
+      <para>There is no requirement for a bean class to declare a constructor
+      that accepts no parameters, except as defined in <xref linkend="unproxyable" />.
+      </para>
       
       <section>
         <title>Declaring a bean constructor</title>
