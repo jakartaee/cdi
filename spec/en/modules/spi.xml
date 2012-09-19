@@ -1208,17 +1208,35 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     <section id="pat">
       <title><literal>ProcessAnnotatedType</literal> event</title>
       
-      <para>The container must fire an event for each Java class or interface it discovers
-      in a bean archive, and for annotated type added by 
-      <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>, except for those annotated with 
-      <literal>@Vetoed</literal>, before it processes the classes and interfaces.</para>
+      <para>The container must fire an event, before it processes a type, for each:</para>
       
+      <itemizedlist>
+        <listitem>
+          <para>Java class, interface or annotation discovered in a bean archive,</para>
+        </listitem>
+        <listitem>
+          <para>Annotated type added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>,</para>
+        </listitem>
+        <listitem>
+          <para>Annotation added by <literal>BeforeBeanDiscovery.addInterceptorBinding()</literal>,
+          <literal>BeforeBeanDiscovery.addQualifier()</literal>, 
+          <literal>BeforeBeanDiscovery.addScope()</literal> or 
+          <literal>BeforeBeanDiscovery.addStereotype()</literal>.</para>
+        </listitem>
+      </itemizedlist>
+          
+      <para>An event is not fired for any type annotated with <literal>@Vetoed</literal>, or in a 
+      package annotated with <literal>@Vetoed</literal>.</para>
+
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessAnnotatedType&lt;X&gt;</literal>, 
-      where <literal>X</literal> is the class, for classes and interfaces discovered 
-      in a bean archive, or of type 
+      where <literal>X</literal> is the class, for types discovered  in a bean archive, or of type 
       <literal>javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType&lt;X&gt;</literal>
-      for classes and interfaces added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>.</para>
+      for types added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>, 
+      <literal>BeforeBeanDiscovery.addInterceptorBinding()</literal>,
+      <literal>BeforeBeanDiscovery.addQualifier()</literal>, 
+      <literal>BeforeBeanDiscovery.addScope()</literal> or 
+      <literal>BeforeBeanDiscovery.addStereotype()</literal>.</para>
       
       <para>The annotation <literal>@WithAnnotations</literal> may be applied to the event parameter.  
       If the annotation is applied, the container must only deliver <literal>ProcessAnnotatedType</literal> 
