@@ -1143,7 +1143,7 @@ public class Order {
   <section id="veto">
     <title>Vetoing types</title>
     
-    <para>Any class or package may be prevented from being considered by CDI by
+    <para>Any type or package may be prevented from being considered by CDI by
     adding the <literal>@Vetoed</literal> annotation on the type or package.</para>
     
     <programlisting>@Vetoed
