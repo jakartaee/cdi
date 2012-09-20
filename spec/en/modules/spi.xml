@@ -1213,7 +1213,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       
       <itemizedlist>
         <listitem>
-          <para>Java class, interface or annotation discovered in a bean archive,</para>
+          <para>Java class, interface, enum or annotation discovered in a bean archive,</para>
         </listitem>
         <listitem>
           <para>Annotated type added by <literal>BeforeBeanDiscovery.addAnnotatedType()</literal>,</para>
@@ -1340,10 +1340,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     <section id="pit">
       <title><literal>ProcessInjectionTarget</literal> event</title>
       
-      <para>The container must fire an event for every Java EE component class supporting 
-      injection that may be instantiated by the container at runtime, including every 
-      managed bean declared using <literal>@ManagedBean</literal>, EJB session or 
-      message-driven bean, enabled bean, enabled interceptor or enabled decorator.</para>
+      <para>The container must fire an event for every enum and every Java EE component
+      class supporting injection that may be instantiated by the container at runtime, 
+      including every managed bean declared using <literal>@ManagedBean</literal>, EJB
+      session or message-driven bean, enabled bean, enabled interceptor or enabled 
+      decorator.</para>
       
       <para>The event object must be of type 
       <literal>javax.enterprise.inject.spi.ProcessInjectionTarget&lt;X&gt;</literal>, 

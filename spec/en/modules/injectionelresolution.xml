@@ -266,12 +266,12 @@
     select this bean, and the ambiguous dependency is called 
     <emphasis>resolvable</emphasis>.</para>
 
-    <para>The container must validate all injection points of all enabled beans, all 
-    observer methods, all disposer methods and all other Java EE component classes 
-    supporting injection when the application is initialized to ensure that there 
-    are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or
-    unresolvable ambiguous dependency exists, the container automatically detects 
-    the problem and treats it as a deployment problem.</para>
+    <para>The container must validate all injection points of all enabled beans, all
+    enums, all observer methods, all disposer methods and all other Java EE component
+    classes supporting injection when the application is initialized to ensure that
+    there are no unsatisfied or unresolvable ambiguous dependencies. If an 
+    unsatisfied or unresolvable ambiguous dependency exists, the container 
+    automatically detects the problem and treats it as a deployment problem.</para>
     
     <para>For a custom implementation of the <literal>Bean</literal> interface
     defined in <xref linkend="bean"/>, the container calls 
@@ -609,16 +609,16 @@ public @interface PayBy {
         using <literal>@EJB</literal>),</para>
       </listitem>
       <listitem>
-        <para>non-contextual instances of managed beans,</para>
+        <para>non-contextual instances of managed beans, and</para>
       </listitem>
       <listitem>
         <para>instances of any other Java EE component class supporting 
-        injection, and</para>
-      </listitem>
-      <listitem>
-        <para>enums.</para>
+        injection.</para>
       </listitem>
     </itemizedlist>
+
+    <para>The container is also required to perform dependency injection at
+    application initialization for enums.</para>
     
     <para>A Java EE 5 container is not required to support injection for 
     non-contextual objects.</para>
@@ -646,8 +646,8 @@ public @interface PayBy {
       <title>Injection of fields and initializer methods</title>
 
       <para>When the container creates a new instance of a managed bean, session
-      bean, enum, or of any other Java EE component class supporting injection, the 
-      container must:</para>
+      bean, or of any other Java EE component class supporting injection, or 
+      injects an enum at application initialization the container must:</para>
       
       <itemizedlist>
         <listitem>
