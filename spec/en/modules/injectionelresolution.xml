@@ -550,37 +550,6 @@ public @interface PayBy {
     proxy object per bean. (However, this strategy is not required by this
     specification.)</para>
     
-    <section id="unproxyable">
-      <title>Unproxyable bean types</title>
-    
-      <para>Certain legal bean types cannot be proxied by the container:</para>
-    
-      <itemizedlist>
-        <listitem>
-          <para>classes which don't have a non-private constructor with no 
-          parameters,</para>
-        </listitem>
-        <listitem>
-          <para>classes which are declared final,</para>
-        </listitem>
-        <listitem>
-          <para>classes which have non-static, final methods with 
-          public, protected or default visibility,</para>
-        </listitem>
-        <listitem>
-          <para>primitive types,</para>
-        </listitem>
-        <listitem>
-          <para>and array types.</para>
-        </listitem>
-      </itemizedlist>
-    
-      <para>If an injection point whose declared type cannot be proxied by the 
-      container resolves to a bean with a normal scope, the container automatically 
-      detects the problem and treats it as a deployment problem.</para>
-    
-    </section>
-    
     <section>
       <title>Client proxy invocation</title>
       
