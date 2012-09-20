@@ -358,9 +358,9 @@ public class Order { ... }</programlisting>
     <section id="definingqualifiertypes">
       <title>Defining new qualifier types</title>
 
-      <para>A qualifier type is a Java annotation defined as
-      <literal>@Target({METHOD, FIELD, PARAMETER, TYPE})</literal> and
-      <literal>@Retention(RUNTIME)</literal>.</para>
+      <para>A qualifier type is a Java annotation defined as 
+      <literal>@Retention(RUNTIME)</literal>. Typically a qualifier type
+      is defined as <literal>@Target({METHOD, FIELD, PARAMETER, TYPE})</literal>.</para>
       
       <para>A qualifier type may be declared by specifying the 
       <literal>@javax.inject.Qualifier</literal> meta-annotation.</para>
@@ -557,9 +557,9 @@ List&lt;Order&gt; getOrderSearchResults() { ... }</programlisting>
       <title>Defining new scope types</title>
 
       <para>A scope type is a Java annotation defined as
-      <literal>@Target({TYPE, METHOD, FIELD})</literal> and
-      <literal>@Retention(RUNTIME)</literal>. All scope types must also specify 
-      the <literal>@javax.inject.Scope</literal> or 
+      <literal>@Retention(RUNTIME)</literal>. Typically a scope type is defined 
+      as <literal>@Target({TYPE, METHOD, FIELD})</literal>. All scope types must 
+      also specify the <literal>@javax.inject.Scope</literal> or 
       <literal>@javax.enterprise.context.NormalScope</literal>
       meta-annotation.</para>
       
@@ -797,10 +797,12 @@ public class MockOrder extends Order { ... }</programlisting>
     <section>
       <title>Defining new stereotypes</title>
       
-      <para>A bean stereotype is a Java annotation defined as
-      <literal>@Target({TYPE, METHOD, FIELD})</literal>, <literal>@Target(TYPE)</literal>,
-      <literal>@Target(METHOD)</literal>, <literal>@Target(FIELD)</literal> or 
-      <literal>@Target({METHOD, FIELD})</literal> and <literal>@Retention(RUNTIME)</literal>.</para>
+      <para>A bean stereotype is a Java annotation defined as 
+      <literal>@Retention(RUNTIME)</literal>. Typically a bean sterotype is
+      defined as <literal>@Target({TYPE, METHOD, FIELD})</literal>,
+      <literal>@Target(TYPE)</literal>, <literal>@Target(METHOD)</literal>,
+      <literal>@Target(FIELD)</literal> or 
+      <literal>@Target({METHOD, FIELD})</literal>.</para>
       
       <para>A stereotype may be declared by specifying the 
       <literal>@javax.enterprise.inject.Stereotype</literal> 

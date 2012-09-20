@@ -19,8 +19,9 @@
       <title>Interceptor binding types</title>
       
       <para>An <emphasis>interceptor binding type</emphasis> is a Java annotation 
-      defined as <literal>@Target({TYPE, METHOD})</literal> or <literal>@Target(TYPE)</literal>
-      and <literal>@Retention(RUNTIME)</literal>.</para> 
+      defined as <literal>@Retention(RUNTIME)</literal>. Typically an interceptor binding
+      is defined as <literal>@Target({TYPE, METHOD})</literal> or 
+      <literal>@Target(TYPE)</literal>.</para> 
       
       <para>An interceptor binding type may be declared by specifying the 
       <literal>@javax.interceptor.InterceptorBinding</literal> meta-annotation.</para>
