@@ -228,7 +228,8 @@
           parameters otherwise, as defined in <xref linkend="instantiation"/>,
           and returns the resulting instance. If the class has interceptors, 
           <literal>produce()</literal> is responsible for building the 
-          interceptors and decorators of the instance.</para>
+          interceptors and decorators of the instance. The instance returned
+          by produce may be a proxy.</para>
         </listitem>
        <listitem>
           <para><literal>dispose()</literal> does nothing.</para>
