@@ -83,7 +83,8 @@ public @interface Action {}</programlisting>
       
       <para>The interceptor bindings of an interceptor are specified by 
       annotating the interceptor class with the binding types and the 
-      <literal>@javax.interceptor.Interceptor</literal> annotation.</para>
+      <literal>@javax.interceptor.Interceptor</literal> annotation and 
+      are called the set of interceptor bindings for the interceptor.</para>
     
       <programlisting>@Transactional @Interceptor
 public class TransactionInterceptor {
@@ -111,7 +112,7 @@ public class TransactionInterceptor {
       interceptor for lifecycle callbacks declares an interceptor binding type 
       that not defined <literal>@Target(TYPE)</literal>, the container 
       automatically detects the problem and treats it as a definition error.</para>
-      
+
     </section>
        
     <section>
@@ -139,6 +140,24 @@ public class ShoppingCart { ... }</programlisting>
 
       <para>A bean class or method of a bean class may declare multiple interceptor 
       bindings.</para>
+  
+      <para>The set of interceptor bindings for a method are those declared at 
+      class level, including those declared on steroetypes, combined with those
+      declared at method level.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>An interceptor binding declared on a bean class replaces an 
+          interceptor binding of the same type declared by a stereotype that
+          is applied to the bean class.</para>
+        </listitem>
+        <listitem>
+          <para>An interceptor binding declared on a method replaces an 
+          interceptor binding of the same type declared, or inherited, 
+          at class level, or an interceptor binding of the same type 
+          declared by a stereotype that is applied to the bean class.</para>
+        </listitem>
+      </itemizedlist>
       
       <para>If the bean class of a managed bean declares or inherits a class 
       level interceptor binding or a stereotype with interceptor bindings,
@@ -147,7 +166,7 @@ public class ShoppingCart { ... }</programlisting>
       is declared final or has a non-static, non-private, final method, the 
       container automatically detects the problem and treats it as a definition 
       error.</para>
-      
+
       <para>If a non-static, non-private method of a bean class of a managed 
       bean declares a method level interceptor binding, neither the method 
       nor the bean class may be declared final. If a non-static, non-private, 
@@ -336,15 +355,12 @@ public @interface Transactional {
         application. If an array-valued or annotation-valued member of an interceptor 
         binding type is not annotated <literal>@Nonbinding</literal>, non-portable 
         behavior results.</para>
-      
-        <para>Interceptor bindings defined on methods may override the interceptor 
-        bindings defined on classes. If the set of interceptor bindings of a bean
-        or interceptor, including bindings inherited from stereotypes and other 
-        interceptor bindings, has two instances of a certain interceptor binding type
-        and the instances have different values of some annotation member, the bean 
-        or interceptor must override the inherited set by defining an annotation 
-        instance of its own, otherwise, the container automatically detects the problem
-        and treats it as a definition error.</para>
+
+        <para>If the set of interceptor bindings of a bean class or interceptor, including
+        bindings inherited from stereotypes and other interceptor bindings, has two
+        instances of a certain interceptor binding type and the instances have different
+        values of some annotation member, the container automatically detects the 
+        problem and treats it as a definition error.</para>
       
       </section>
       
