@@ -19,8 +19,9 @@
       <title>Interceptor binding types</title>
       
       <para>An <emphasis>interceptor binding type</emphasis> is a Java annotation 
-      defined as <literal>@Target({TYPE, METHOD})</literal> or <literal>@Target(TYPE)</literal>
-      and <literal>@Retention(RUNTIME)</literal>.</para> 
+      defined as <literal>@Retention(RUNTIME)</literal>. Typically an interceptor binding
+      is defined as <literal>@Target({TYPE, METHOD})</literal> or 
+      <literal>@Target(TYPE)</literal>.</para> 
       
       <para>An interceptor binding type may be declared by specifying the 
       <literal>@javax.interceptor.InterceptorBinding</literal> meta-annotation.</para>
@@ -108,7 +109,7 @@ public class TransactionInterceptor {
       <para>An interceptor for lifecycle callbacks may only declare interceptor
       binding types that are defined as <literal>@Target(TYPE)</literal>. If an
       interceptor for lifecycle callbacks declares an interceptor binding type 
-      that is defined <literal>@Target({TYPE, METHOD})</literal>, the container 
+      that not defined <literal>@Target(TYPE)</literal>, the container 
       automatically detects the problem and treats it as a definition error.</para>
       
     </section>
