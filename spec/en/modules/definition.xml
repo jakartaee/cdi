@@ -709,7 +709,7 @@ public class Order { ... }</programlisting>
       </itemizedlist>
 
       <para>If a bean class or producer method or field of a bean declares a 
-      <literal>@Named</literal> annotation and no EL name is explicitly specified
+      <literal>@Named</literal> annotation and no bean name is explicitly specified
       the value of the <literal>value</literal> member is defaulted.</para>
       
       <para>The default name for a bean depends upon the kind of the bean.
