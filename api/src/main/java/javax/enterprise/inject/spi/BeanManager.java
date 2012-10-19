@@ -32,6 +32,7 @@ import javax.enterprise.event.ObserverException;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
+import javax.enterprise.util.Nonbinding;
 
 /**
  * <p>
@@ -271,6 +272,44 @@ public interface BeanManager {
      * @return the set of meta-annotations
      */
     public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);
+    
+    /**
+     * Determine if two qualifiers are considered equivalent for the purposes of typesafe resolution,
+     * taking into account any members annotated with {@link Nonbinding}.
+     * 
+     * @param a1 a qualifier to check
+     * @param a2 a qualifier to check
+     * @return true if the two qualifiers are equivalent, otherwise false
+     */
+    public boolean areQualifiersEquivalent(Annotation qualifier1, Annotation qualifier2);
+    
+    /**
+     * Determine if two interceptor bindings are considered equivalent for the purposes of typesafe resolution,
+     * taking into account any members annotated with {@link Nonbinding}.
+     * 
+     * @param a1 an interceptor binding to check
+     * @param a2 an interceptor binding to check
+     * @return true if the two interceptor bindings are equivalent, otherwise false
+     */
+    public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, Annotation interceptorBinding2);
+    
+    /**
+     * Determine the hash code of a qualifier, using the JDK algorithm for determining an annotation hash code, 
+     * ignoring any members annotated with {@link Nonbinding}.
+     * 
+     * @param qualifier the qualifier to consider
+     * @return the hashCode for the qualifier
+     */
+    public int getQualifierHashCode(Annotation qualifier);
+    
+    /**
+     * Determine the hash code of an interceptor binding, using the JDK algorithm for determining an annotation
+     *  hash code, ignoring any members annotated with {@link Nonbinding}.
+     * 
+     * @param interceptorBinding the interceptor binding to consider
+     * @return the hashCode for the interceptor binding
+     */
+    public int getInterceptorBindingHashCode(Annotation interceptorBinding);
 
     /**
      * Obtains an active {@linkplain javax.enterprise.context.spi.Context context object} for the given
