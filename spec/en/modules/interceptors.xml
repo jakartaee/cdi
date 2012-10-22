@@ -142,7 +142,7 @@ public class ShoppingCart { ... }</programlisting>
       bindings.</para>
   
       <para>The set of interceptor bindings for a method are those declared at 
-      class level, including those declared on steroetypes, combined with those
+      class level, including those declared on stereotypes, combined with those
       declared at method level.</para>
 
       <itemizedlist>

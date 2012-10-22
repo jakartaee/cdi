@@ -798,7 +798,7 @@ public class MockOrder extends Order { ... }</programlisting>
       <title>Defining new stereotypes</title>
       
       <para>A bean stereotype is a Java annotation defined as 
-      <literal>@Retention(RUNTIME)</literal>. Typically a bean sterotype is
+      <literal>@Retention(RUNTIME)</literal>. Typically a bean stereotype is
       defined as <literal>@Target({TYPE, METHOD, FIELD})</literal>,
       <literal>@Target(TYPE)</literal>, <literal>@Target(METHOD)</literal>,
       <literal>@Target(FIELD)</literal> or 
