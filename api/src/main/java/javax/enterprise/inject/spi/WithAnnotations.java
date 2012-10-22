@@ -3,6 +3,7 @@ package javax.enterprise.inject.spi;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -27,6 +28,6 @@ import java.lang.annotation.Target;
 @Target(PARAMETER)
 public @interface WithAnnotations {
 
-   Class<?>[] value();
+   Class<? extends Annotation>[] value();
 
 }
