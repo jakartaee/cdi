@@ -1004,10 +1004,6 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       </listitem>
     </itemizedlist>
     
-    <para>If the <literal>Annotated</literal> represents a type, then the annotations returned
-    should include all annotations on the type and it's super types regardless of whether the
-    annotation is marked <literal>@Inherited</literal>.</para>
-    
     <para>The container must use the operations of <literal>Annotated</literal>
     and its subinterfaces to discover program element types and annotations. The container
     must not directly call the Java Reflection API. In particular, the container must:</para>
