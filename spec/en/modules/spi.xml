@@ -1511,15 +1511,15 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <para>If any observer method of a <literal>ProcessProducer</literal> event throws 
       an exception, the exception is treated as a definition error by the container.</para>
     
-      <para>For producer methods, the event must be of type <literal>ProcessProducerMethod</literal>.</para>
+      <para>For producer methods, the event must be of type <literal>ProcessProducerMethodBehavior</literal>.</para>
     
-      <programlisting><![CDATA[public interface ProcessProducerMethod<T, X> extends ProcessProducer<T, X> {
+      <programlisting><![CDATA[public interface ProcessProducerMethodBehavior<T, X> extends ProcessProducer<T, X> {
     public AnnotatedMethod<T> getAnnotatedMember();
 }]]></programlisting>
 
-      <para>For producer fields, the event must be of type <literal>ProcessProducerField</literal>.</para>
+      <para>For producer fields, the event must be of type <literal>ProcessProducerFieldBehavior</literal>.</para>
     
-      <programlisting><![CDATA[public interface ProcessProducerField<T, X> extends ProcessProducer<T, X> {
+      <programlisting><![CDATA[public interface ProcessProducerFieldBehavior<T, X> extends ProcessProducer<T, X> {
     public AnnotatedField<T> getAnnotatedMember();
     public void setInitializer(Initializer<X> producer);
 }]]></programlisting>
@@ -1534,7 +1534,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       <para>The interface <literal>Initializer</literal> lets a portable extension provide an initial
       value for a producer field.</para>
       
-      <programlisting><![CDATA[public interface Initilizer<X> {
+      <programlisting><![CDATA[public interface Initializer<X> {
     public X getInitialValue(AnnotatedField<?> field);
 }]]></programlisting>
 
@@ -1548,6 +1548,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         value to the field before the field is accessed by the container.</para>
       </listitem>
       </itemizedlist>
+
+      <para>OPEN ISSUE: is <literal>Initializer</literal> actually that useful?</para>
     
     </section>
     
