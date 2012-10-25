@@ -40,7 +40,7 @@
   the first bean. The second bean is able to serve the same role in the system as the 
   first. In a particular deployment, only one of the two beans may fulfill that role.</para> 
   
-  <section>
+  <section id="type-level-inheritence">
     <title>Inheritance of type-level metadata</title>
     
     <para>Suppose a class X is extended directly or indirectly by the bean class of a managed 

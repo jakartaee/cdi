@@ -887,6 +887,9 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
       </listitem>
     </itemizedlist>
 
+    <para>When determining annotations on a type, the container must only consider the
+    special inheritence rules defined for scope types in <xref linkend="type-level-inheritence" />.</para>
+
     <para>The interface <literal>javax.enterprise.inject.spi.IdentifiedAnnotatedType</literal> 
     allows multiple annotated types, based on the same underlying type, to be defined.</para> 
     
@@ -1003,7 +1006,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
         or <literal>false</literal> otherwise.</para>
       </listitem>
     </itemizedlist>
-    
+
     <para>The container must use the operations of <literal>Annotated</literal>
     and its subinterfaces to discover program element types and annotations. The container
     must not directly call the Java Reflection API. In particular, the container must:</para>
