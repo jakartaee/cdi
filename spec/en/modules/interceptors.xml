@@ -178,23 +178,91 @@ public class ShoppingCart { ... }</programlisting>
     
     <section id="enabledinterceptors">
       <title>Interceptor enablement and ordering</title>
+
+      <para>Interceptors may be enabled for an application, or enabled only for a particular
+      bean archive.</para>
+
+      <para>An interceptor may be enabled for the entire application by listing its 
+      class, along with a priority attribute, under the <literal>&lt;interceptors&gt;</literal>
+      element of the <literal>beans.xml</literal> file of the bean archive which contains
+      the interceptor class.</para>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <interceptors>
+      <class priority="100">org.mycompany.myfwk.TransactionInterceptor</class>
+      <class priority="200">org.mycompany.myfwk.LoggingInterceptor</class>
+   </interceptors>
+</beans>]]></programlisting>
+
+      <para>An interceptor may be enabled for a bean archive by listing its class under
+      the <literal>&lt;interceptors&gt;</literal> element of the 
+      <literal>beans.xml</literal> file of the bean archive.</para>
     
-      <para>By default, a bean archive has no enabled interceptors bound via interceptor 
-      bindings. An interceptor must be explicitly enabled by listing its class under the 
-      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal> 
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <interceptors>
+      <class>org.mycompany.myfwk.ValidationInterceptor</class>
+      <class>org.mycompany.myfwk.SecurityInterceptor</class>
+   </interceptors>
+</beans>]]></programlisting>
+
+      <para>An interceptor enabled for an application may be disabled for a bean 
+      archive by listing its class, along with a disabled flag, under the 
+      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal>
       file of the bean archive.</para>
     
       <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
    <interceptors>
-      <class>org.mycompany.myfwk.TransactionInterceptor</class>
-      <class>org.mycompany.myfwk.LoggingInterceptor</class>
+      <class enabled="false">org.mycompany.myfwk.TransactionInterceptor</class>
    </interceptors>
 </beans>]]></programlisting>
 
-      <para>The order of the interceptor declarations determines the interceptor 
-      ordering. Interceptors which occur earlier in the list are called first.</para>
+      <para>An interceptor may be given a default priority, but not enabled by listing
+      its class, along with a disabled flag and the priority attribute, under the 
+      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal>
+      file of the bean archive which contains the interceptor class.</para>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <interceptors>
+      <class enabled="false" priority="100">org.mycompany.myfwk.TransactionInterceptor</class>
+   </interceptors>
+</beans>]]></programlisting>
+
+      <para>An interceptor with a default priority may be enabled for a bean archive 
+      by listing its class, along with an enabled flag, under the 
+      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal>
+      file of the bean archive.</para>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <interceptors>
+      <class enabled="true">org.mycompany.myfwk.TransactionInterceptor</class>
+   </interceptors>
+</beans>]]></programlisting>
+
+      <para>OPEN ISSUE: Can other libraries disable interceptors and change the 
+      priority? If so, which one wins?</para>
+
+      <para>OPEN ISSUE: If a library defines an enabled or default priority interceptor,
+      can it be disabled or enabled for the entire application?</para>
+
+      <para>OPEN ISSUE: Should we add a way to specify the priority by annotation?</para>
+
+      <para>The priority of the interceptor declaration, defined in <xref linkend="priorities" />,
+      determines the default interceptor ordering for the application. The order of 
+      the interceptor declarations for a bean archive overrides the default interceptor
+      order. If the set of interceptors enabled for the application and the set of interceptors
+      enabled for a bean archive are disjoint, then the interceptors enabled for the bean
+      archive are given an incrementing priority starting at 1000. Interceptors which occur
+      earlier in the list are called first.</para>
       
       <para>Each child <literal>&lt;class&gt;</literal> element must specify the name
       of an interceptor class. If there is no class with the specified name, or if 
