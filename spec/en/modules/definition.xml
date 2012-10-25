@@ -1020,5 +1020,53 @@ public @interface Model {}</programlisting>
      
   </section>
 
+  <section id="priorities">
+    <title>Priority ordering</title>
+
+    <para>Interceptors and decorators are called in a defined order. The order is specified
+    using a integer priority. Lower priority interceptors and decorators are called first. The
+    order of more than one interceptor or decorator with the same priority is undefined.</para>
+
+    <para>It is recommended that a priority of:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>1 - 100</term>
+        <listitem>
+          <para>is reserved for interceptors and decorators defined by this specification or the 
+          Java EE platform specification</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>100 - 1000</term>
+        <listitem>
+          <para>is reserved for interceptors and decorators defined by extension libraries</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>1000 - 2000</term>
+        <listitem>
+          <para>is reserved for interceptors and decorators defined by applications</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>2000 - 3000</term>
+        <listitem>
+          <para>is reserved for interceptors and decorators defined by extension libraries</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>3000 - 3100</term>
+        <listitem>
+          <para>is reserved for interceptors and decorators defined by this specification or the 
+          Java EE platform specification</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>OPEN ISSUE: Is priority the right name for this?</para>
+
+  </section>
+
 </chapter>
 
