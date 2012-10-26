@@ -222,11 +222,10 @@ public class ShoppingCart { ... }</programlisting>
    </interceptors>
 </beans>]]></programlisting>
 
-      <para>An interceptor may be given a default priority, but not enabled for an
-      application by listing its class, along with a disabled flag and the priority
-      attribute, under the <literal>&lt;interceptors&gt;</literal> element of the 
-      <literal>beans.xml</literal> file of the bean archive which contains the 
-      interceptor class.</para>
+      <para>An interceptor may be given a default priority, but not enabled by listing
+      its class, along with a disabled flag and the priority attribute, under the 
+      <literal>&lt;interceptors&gt;</literal> element of the <literal>beans.xml</literal>
+      file of the bean archive which contains the interceptor class.</para>
 
       <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -255,10 +254,15 @@ public class ShoppingCart { ... }</programlisting>
       <para>OPEN ISSUE: If a library defines an enabled or default priority interceptor,
       can it be disabled or enabled for the entire application?</para>
 
+      <para>OPEN ISSUE: Should we add a way to specify the priority by annotation?</para>
+
       <para>The priority of the interceptor declaration, defined in <xref linkend="priorities" />,
       determines the default interceptor ordering for the application. The order of 
       the interceptor declarations for a bean archive overrides the default interceptor
-      order. Interceptors which occur earlier in the list are called first.</para>
+      order. If the set of interceptors enabled for the application and the set of interceptors
+      enabled for a bean archive are disjoint, then the first interceptor enabled for the bean
+      archive is given a priority of 1000. Interceptors which occur earlier in the list are 
+      called first.</para>
       
       <para>Each child <literal>&lt;class&gt;</literal> element must specify the name
       of an interceptor class. If there is no class with the specified name, or if 

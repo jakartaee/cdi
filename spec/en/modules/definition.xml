@@ -1031,32 +1031,32 @@ public @interface Model {}</programlisting>
 
     <variablelist>
       <varlistentry>
-        <term>1 - 100</term>
+        <term>0 - 99</term>
         <listitem>
           <para>is reserved for interceptors and decorators defined by this specification or the 
           Java EE platform specification</para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>100 - 1000</term>
+        <term>100 - 999</term>
         <listitem>
           <para>is reserved for interceptors and decorators defined by extension libraries</para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>1000 - 2000</term>
+        <term>1000 - 1999</term>
         <listitem>
           <para>is reserved for interceptors and decorators defined by applications</para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>2000 - 3000</term>
+        <term>2000 - 2999</term>
         <listitem>
           <para>is reserved for interceptors and decorators defined by extension libraries</para>
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>3000 - 3100</term>
+        <term>3000 - 3099</term>
         <listitem>
           <para>is reserved for interceptors and decorators defined by this specification or the 
           Java EE platform specification</para>

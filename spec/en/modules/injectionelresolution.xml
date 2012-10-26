@@ -221,6 +221,8 @@
       <para>OPEN ISSUE: If a library defines a selected or default priority alternative,
       can it be disabled or enabled for the entire application?</para>
 
+      <para>OPEN ISSUE: Should we add a way to specify the priority by annotation?</para>      
+
     <para>Each child <literal>&lt;class&gt;</literal> element must specify the name of a 
     bean class of an alternative bean. If there is no bean whose bean class has the specified
     name, or if no bean whose bean class has the specified name is an alternative, the 

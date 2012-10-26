@@ -180,11 +180,10 @@ class TimestampLogger implements Logger {
    </decorators>
 </beans>]]></programlisting>
 
-      <para>A decorator may be given a default priority, but not enabled for an
-      application by listing its class, along with a disabled flag and the priority
-      attribute, under the <literal>&lt;decorators&gt;</literal> element of the 
-      <literal>beans.xml</literal> file of the bean archive which contains the 
-      decorator class.</para>
+      <para>A decorator may be given a default priority, but not enabled by listing 
+      its class, along with a disabled flag and the priority attribute, under the 
+      <literal>&lt;decorators&gt;</literal> element of the <literal>beans.xml</literal>
+      file of the bean archive which contains the decorator class.</para>
 
       <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -213,10 +212,15 @@ class TimestampLogger implements Logger {
       <para>OPEN ISSUE: If a library defines an enabled or default priority decorator,
       can it be disabled or enabled for the entire application?</para>
 
+      <para>OPEN ISSUE: Should we add a way to specify the priority by annotation?</para>      
+
       <para>The priority of the decorator declaration, defined in <xref linkend="priorities" />,
-      determines the default decoraotr ordering for the application. The order of 
+      determines the default decorator ordering for the application. The order of 
       the decorator declarations for a bean archive overrides the default decorator
-      order. Decorators which occur earlier in the list are called first.</para>
+      order. If the set of decorators enabled for the application and the set of decorators 
+      enabled for a bean archive are disjoint, then the first decorator enabled for the bean
+      archive is given a priority of 1000. Decorators which occur earlier in the list are 
+      called first.</para>
 
       <para>By default, a bean archive has no enabled decorators. A decorator must be 
       explicitly enabled by listing its bean class under the 
