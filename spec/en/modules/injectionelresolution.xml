@@ -68,36 +68,160 @@
     
     <section>
       <title>Declaring selected alternatives for a bean archive</title>
-    
-    <para>By default, a bean archive has no selected alternatives. An alternative must be 
-    explicitly declared using the <literal>&lt;alternatives&gt;</literal> element of the 
-    <literal>beans.xml</literal> file of the bean archive. The 
-    <literal>&lt;alternatives&gt;</literal> element contains a list of bean classes and 
-    stereotypes. An alternative is selected for the bean archive if either:</para>
-    
-    <itemizedlist>
-      <listitem>
-        <para>the alternative is a managed bean or session bean and the bean class of the
-        bean is listed,</para>
-      </listitem>
-      <listitem>
-        <para>the alternative is a producer method, field or resource, and the bean class 
-        that declares the method or field is listed, or</para>
-      </listitem>
-      <listitem>
-        <para>any <literal>@Alternative</literal> stereotype of the alternative is listed.</para>
-      </listitem>
-    </itemizedlist>
-    
-    <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+
+      <para>Alternatives may be selected for an application, or selected only for a 
+      particular bean archive.</para>
+
+      <para>An alternative may be selected for an application using the 
+      <literal>&lt;alternatives&gt;</literal> element of the 
+      <literal>beans.xml</literal> file of the bean archive that declares the 
+      alternative. The <literal>&lt;alternatives&gt;</literal> element contains a list 
+      of bean classes and stereotypes, along with a priority attribute. An alternative 
+      is selected for the entire application if either:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the alternative is a managed bean or session bean and the bean class of the
+          bean is listed, along with a priority attribute, or</para>
+        </listitem>
+        <listitem>
+          <para>the alternative is a producer method, field or resource, and the bean class 
+          that declares the method or field is listed, along with a priority attribute,
+          or</para>
+        </listitem>
+        <listitem>
+          <para>any <literal>@Alternative</literal> stereotype of the alternative is listed,
+          along with a priority attribute.</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
    <alternatives>
-      <class>org.mycompany.myfwk.InMemoryDatabase</class>
-      <stereotype>org.mycompany.myfwk.Mock</stereotype>
+      <class priority="1000">org.mycompany.myfwk.InMemoryDatabase</class>
+      <stereotype priority="100">org.mycompany.myfwk.Mock</stereotype>
+   </alternatives>
+</beans>]]></programlisting>
+
+      <para>An alternative may be selected for a bean archive using the 
+      <literal>&lt;alternatives&gt;</literal> element of the 
+      <literal>beans.xml</literal> file of the bean archive. The 
+      <literal>&lt;alternatives&gt;</literal> element contains a list of bean classes and
+      stereotypes, along with a priority attribute. An alternative is selected for the 
+      bean archive if either:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the alternative is a managed bean or session bean and the bean class of the
+          bean is listed, or</para>
+        </listitem>
+        <listitem>
+          <para>the alternative is a producer method, field or resource, and the bean class 
+          that declares the method or field is listed, or</para>
+        </listitem>
+        <listitem>
+          <para>any <literal>@Alternative</literal> stereotype of the alternative is listed.</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <alternatives>
       <stereotype>org.mycompany.site.Australian</stereotype>
    </alternatives>
 </beans>]]></programlisting>
+
+      <para>An alternative selected for an application may be deselected for a bean archive using
+      the <literal>&lt;alternatives&gt;</literal> element of the <literal>beans.xml</literal> 
+      file of the bean archive. The <literal>&lt;alternatives&gt;</literal> element contains a
+      list  of bean classes and stereotypes, along with a disabled flag. An alternative is 
+      not selected for the bean archive if either:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the alternative is a managed bean or session bean and the bean class of the
+          bean is listed, along with a disabled flag, or</para>
+        </listitem>
+        <listitem>
+          <para>the alternative is a producer method, field or resource, and the bean class 
+          that declares the method or field is listed, along with a disabled flag, or</para>
+        </listitem>
+        <listitem>
+          <para>any <literal>@Alternative</literal> stereotype of the alternative is listed,
+          along with a disabled flag.</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <alternatives>
+      <stereotype enabled="false">org.mycompany.myfwk.Mock</stereotype>
+   </alternatives>
+</beans>]]></programlisting>
+
+      <para>An alternative may be given a default priority, but not selected for an
+      application using the <literal>&lt;alternatives&gt;</literal> element of the 
+      <literal>beans.xml</literal> file of the bean archive. The 
+      <literal>&lt;alternatives&gt;</literal> element contains a list of bean classes and
+      stereotypes, along with a disabled flag and a priority attribute. An alternative is
+      selected for the bean archive if either:</para>
+
+            
+      <itemizedlist>
+        <listitem>
+          <para>the alternative is a managed bean or session bean and the bean class of the
+          bean is listed, along with a disabled flag and a priority attribute, or</para>
+        </listitem>
+        <listitem>
+          <para>the alternative is a producer method, field or resource, and the bean class 
+          that declares the method or field is listed, along with a disabled flag and a 
+          priority attribute, or</para>
+        </listitem>
+        <listitem>
+          <para>any <literal>@Alternative</literal> stereotype of the alternative is listed,
+          along with a disabled flag and a priority attribute.</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting><![CDATA[<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <alternatives>
+      <class priority="1000" enabled="false">org.mycompany.myfwk.InMemoryDatabase</class>
+   </alternatives>
+</beans>]]></programlisting>
+
+      <para>An alternative with a default priotity may be selected for a bean archive using
+      the <literal>&lt;alternatives&gt;</literal> element of the <literal>beans.xml</literal> 
+      file of the bean archive. The <literal>&lt;alternatives&gt;</literal> element contains a
+      list of bean classes and stereotypes, along with an enabled flag. An alternative is 
+      selected for the bean archive if either:</para>
+      
+      <itemizedlist>
+        <listitem>
+          <para>the alternative is a managed bean or session bean and the bean class of the
+          bean is listed, along with an enabled flag, or</para>
+        </listitem>
+        <listitem>
+          <para>the alternative is a producer method, field or resource, and the bean class 
+          that declares the method or field is listed, along with an enabled flag, or</para>
+        </listitem>
+        <listitem>
+          <para>any <literal>@Alternative</literal> stereotype of the alternative is listed,
+          along with an enabled flag.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>OPEN ISSUE: Can other libraries deselect alternatives and change the 
+      priority? If so, which one wins?</para>
+
+      <para>OPEN ISSUE: If a library defines a selected or default priority alternative,
+      can it be disabled or enabled for the entire application?</para>
+
+      <para>OPEN ISSUE: Should we add a way to specify the priority by annotation?</para>      
 
     <para>Each child <literal>&lt;class&gt;</literal> element must specify the name of a 
     bean class of an alternative bean. If there is no bean whose bean class has the specified
@@ -264,7 +388,9 @@
     alternatives, except for producer methods and fields of beans that are 
     alternatives. If there is exactly one bean remaining, the container will 
     select this bean, and the ambiguous dependency is called 
-    <emphasis>resolvable</emphasis>.</para>
+    <emphasis>resolvable</emphasis>. If all the beans left are alternatives with a
+    priority, then the container will select the alternative with the highest priority,
+    and the ambiguous dependency is called <emphasis>resolvable</emphasis>.</para>
 
     <para>The container must validate all injection points of all enabled beans, all
     enums, all observer methods, all disposer methods and all other Java EE component
@@ -469,7 +595,9 @@ public @interface PayBy {
       beans that are not alternatives, except for producer methods and fields of 
       beans that are alternatives. If there is exactly one bean remaining, the 
       container will select this bean, and the ambiguous EL name is called 
-      <emphasis>resolvable</emphasis>.</para>
+      <emphasis>resolvable</emphasis>. If all the beans left are alternatives with a
+      priority, then the container will select the alternative with the highest priority,
+      and the ambiguous dependency is called <emphasis>resolvable</emphasis>.</para>
       
       <para>All unresolvable ambiguous EL names are detected by the container when
       the application is initialized. Suppose two beans are both available for 
