@@ -138,7 +138,7 @@ class TimestampLogger implements Logger {
     <section id="enableddecorators">
       <title>Decorator enablement and ordering</title>
 
-      <para>Decorators may be enalbed for an application, or enabled only for a
+      <para>Decorators may be enabled for an application, or enabled only for a
       particular bean archive.</para>
 
        <para>A decorator may be enabled for the entire application by listing its 

@@ -194,7 +194,7 @@
    </alternatives>
 </beans>]]></programlisting>
 
-      <para>An alternative with a default priotity may be selected for a bean archive using
+      <para>An alternative with a default priority may be selected for a bean archive using
       the <literal>&lt;alternatives&gt;</literal> element of the <literal>beans.xml</literal> 
       file of the bean archive. The <literal>&lt;alternatives&gt;</literal> element contains a
       list of bean classes and stereotypes, along with an enabled flag. An alternative is 

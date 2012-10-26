@@ -888,7 +888,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     </itemizedlist>
 
     <para>When determining annotations on a type, the container must only consider the
-    special inheritence rules defined for scope types in <xref linkend="type-level-inheritence" />.</para>
+    special inheritance rules defined for scope types in <xref linkend="type-level-inheritance" />.</para>
 
     <para>The interface <literal>javax.enterprise.inject.spi.IdentifiedAnnotatedType</literal> 
     allows multiple annotated types, based on the same underlying type, to be defined.</para> 
