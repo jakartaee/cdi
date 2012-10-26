@@ -8,26 +8,52 @@
  
   <section>
     <title>Major changes</title>
+
+    <section>
+      <title>1.1 Early Draft Review</title>
   
-    <itemizedlist>
-      <listitem><literal>@Disposes</literal> methods for producer fields</listitem>
-      <listitem>The <literal>CDI</literal> class, which provides programmatic access 
-      to CDI facilities from outside a managed bean</listitem>
-      <listitem>Pass the qualifiers an event was fired with to the <literal>ObserverMethod</literal></listitem>
-      <listitem>Ability to veto beans declaratively using <literal>@Veto</literal> and <literal>@Requires</literal></listitem>
-      <listitem>Ability to access the <literal>BeanManager</literal> from the <literal>ServletContext</literal></listitem>
-      <listitem>Conversations in Servlet requests</listitem>
-      <listitem>Application lifecycle events in Java EE</listitem>
-      <listitem>Injection of <literal>Bean</literal> metadata into bean instances</listitem>
-      <listitem>Programmatic access to a container provided <literal>Producer</literal>, <literal>InjectionTarget</literal>, <literal>AnnotatedType</literal></listitem>
-      <listitem>Ability to override attributes of a <literal>Bean</literal> via <literal>BeanAttributes</literal></listitem>
-      <listitem>Ability to process modules via <literal>ProcessModule</literal></listitem>
-      <listitem>Ability to wrap the <literal>InjectionPoint</literal></listitem>
-      <listitem>Ability to obtain <literal>Extension</literal> instances from <literal>BeanManager</literal></listitem>
-      <listitem>Injection of the <literal>ServletContext</literal></listitem>
-      <listitem>Access to <literal>beans.xml</literal> in <literal>ProcessModule</literal></listitem>
-      <listitem>Injection into enums</listitem>
-    </itemizedlist>
+       <itemizedlist>
+        <listitem><literal>@Disposes</literal> methods for producer fields</listitem>
+        <listitem>The <literal>CDI</literal> class, which provides programmatic access 
+        to CDI facilities from outside a managed bean</listitem>
+        <listitem>Pass the qualifiers an event was fired with to the <literal>ObserverMethod</literal></listitem>
+        <listitem>Ability to veto beans declaratively using <literal>@Veto</literal> and <literal>@Requires</literal></listitem>
+        <listitem>Ability to access the <literal>BeanManager</literal> from the <literal>ServletContext</literal></listitem>
+        <listitem>Conversations in Servlet requests</listitem>
+        <listitem>Application lifecycle events in Java EE</listitem>
+        <listitem>Injection of <literal>Bean</literal> metadata into bean instances</listitem>
+        <listitem>Programmatic access to a container provided <literal>Producer</literal>, <literal>InjectionTarget</literal>, <literal>AnnotatedType</literal></listitem>
+        <listitem>Ability to override attributes of a <literal>Bean</literal> via <literal>BeanAttributes</literal></listitem>
+        <listitem>Ability to process modules via <literal>ProcessModule</literal></listitem>
+        <listitem>Ability to wrap the <literal>InjectionPoint</literal></listitem>
+        <listitem>Ability to obtain <literal>Extension</literal> instances from <literal>BeanManager</literal></listitem>
+        <listitem>Injection of the <literal>ServletContext</literal></listitem>
+        <listitem>Access to <literal>beans.xml</literal> in <literal>ProcessModule</literal></listitem>
+        <listitem>Injection into enums</listitem>
+      </itemizedlist>
+
+    </section>
+
+    <section>
+      <title>1.1 Public Review Draft</title>
+
+      <itemizedlist>
+        <listitem><literal>ProcessAnnotatedType</literal> fired for annotations</listitem>
+        <listitem>Moved all Bean Validation integration to Bean Validation Specification as Bean Validation 1.1 PRD</listitem>
+        <listitem>Clarify what beans are available during container lifecycle events</listitem>
+        <listitem>Honor <literal>WEB-INF/classes/META-INF/beans.xml</literal> to activate <literal>WEB-INF/classes</literal> a bean archive</listitem>
+        <listitem>Global ordering and enablement of interceptors and decorators</listitem>
+        <listitem>Global selection of alternatives</listitem>
+        <listitem>@New deprecated</listitem>
+        <listitem>JMS MessageListener removed as not available in Java EE</listitem>
+        <listitem>Support for unmanaged instances via <literal>Instance.destroy()</literal></listitem>
+        <listitem>Clarify interceptors and decorators must be implemented using proxying</listitem>        
+        <listitem>Allow multiple annotated types per Java class</listitem>        
+        <listitem>Allow Extensions to specify the annotations that they are interested in</listitem>        
+
+      </itemizedlist>
+
+    </section>
 
   </section>
 
@@ -39,7 +65,15 @@
 
     <section>
       <title>Bean visibility</title>
-      <para>TODO</para>
+      <para>The CDI 1.0 specification clearly states that <emphasis>only</emphasis> beans whose bean class is accessible (using standard classloader visibility rules) can be injected into another bean. For example, if you have a bean A in WAR, assuming standard Java EE classloader structure, it wouldn't be available for injection in bean B, in an EJB modiule. This generally makes sense, as the type is not visible either.</para>
+      <para>CDI also offers two options to replace bean implementations transparently, without explicitly selecting that implementation (either by type or using a qualifier) - alternatives and specialization. In this case, it is less clear that the bean class of the specializing bean, or the bean class selected alternative, must be visible.</para>
+      <para>The CDI EG is still debating this issue, including whether to offer a backwards incompatible mode here.</para>
+    </section>
+
+    
+    <section>
+      <title><literal>@ApplicationScoped</literal> beans shared between all EAR modules</title>
+      <para>CDI implementations have not consistently shared <literal>@ApplicationScoped</literal> beans accross all modules of an EAR. This issue heavily relates to <emphasis>Bean visibility</emphasis>. The CDI 1.1 specification will clearly state how <literal>@ApplicationScoped</literal> are shared.</para>
     </section>
 
     <section>
