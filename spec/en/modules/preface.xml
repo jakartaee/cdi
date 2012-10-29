@@ -39,7 +39,7 @@
 
       <itemizedlist>
         <listitem><literal>ProcessAnnotatedType</literal> fired for annotations</listitem>
-        <listitem>Moved all Bean Validation integration to Bean Validation Specification as Bean Validation 1.1 PRD</listitem>
+        <listitem>Moved all Bean Validation integration to Bean Validation Specification as Bean Validation 1.1 Public Review Draft</listitem>
         <listitem>Clarify what beans are available during container lifecycle events</listitem>
         <listitem>Honor <literal>WEB-INF/classes/META-INF/beans.xml</literal> to activate <literal>WEB-INF/classes</literal> a bean archive</listitem>
         <listitem>Global ordering and enablement of interceptors and decorators</listitem>
@@ -65,7 +65,7 @@
 
     <section>
       <title>Bean visibility</title>
-      <para>The CDI 1.0 specification clearly states that <emphasis>only</emphasis> beans whose bean class is accessible (using standard classloader visibility rules) can be injected into another bean. For example, if you have a bean A in WAR, assuming standard Java EE classloader structure, it wouldn't be available for injection in bean B, in an EJB modiule. This generally makes sense, as the type is not visible either.</para>
+      <para>The CDI 1.0 specification clearly states that <emphasis>only</emphasis> beans whose bean class is accessible (using standard classloader visibility rules) can be injected into another bean. For example, if you have a bean A in WAR, assuming standard Java EE classloader structure, it wouldn't be available for injection in bean B, in an EJB module. This generally makes sense, as the type is not visible either.</para>
       <para>CDI also offers two options to replace bean implementations transparently, without explicitly selecting that implementation (either by type or using a qualifier) - alternatives and specialization. In this case, it is less clear that the bean class of the specializing bean, or the bean class selected alternative, must be visible.</para>
       <para>The CDI EG is still debating this issue, including whether to offer a backwards incompatible mode here.</para>
     </section>
@@ -73,7 +73,7 @@
     
     <section>
       <title><literal>@ApplicationScoped</literal> beans shared between all EAR modules</title>
-      <para>CDI implementations have not consistently shared <literal>@ApplicationScoped</literal> beans accross all modules of an EAR. This issue heavily relates to <emphasis>Bean visibility</emphasis>. The CDI 1.1 specification will clearly state how <literal>@ApplicationScoped</literal> are shared.</para>
+      <para>CDI implementations have not consistently shared <literal>@ApplicationScoped</literal> beans across all modules of an EAR. This issue heavily relates to <emphasis>Bean visibility</emphasis>. The CDI 1.1 specification will clearly state how <literal>@ApplicationScoped</literal> are shared.</para>
     </section>
 
     <section>
