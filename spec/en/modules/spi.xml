@@ -642,6 +642,14 @@ public boolean isNormalScope(Class<? extends Annotation> scopeType);
 public boolean isPassivatingScope(Class<? extends Annotation> scopeType);
 public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotation> qualifierType);
 public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);]]></programlisting>
+
+    <para>A portable extension may obtain a view of the transitive closure of annotations
+    inherited from stereotypes.</para>
+
+    <programlisting><![CDATA[
+
+public AnnotatedElement resolveStereotypes(Annotated annotated);
+public AnnotatedElement resolveStereotypes(AnnotatedElement annotations);]]></programlisting>
     
   </section>
 
