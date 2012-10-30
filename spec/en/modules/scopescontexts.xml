@@ -173,9 +173,6 @@
       </listitem>
     </itemizedlist>
     
-    <para>If the context object is inactive, the <literal>get()</literal> method
-    must throw a <literal>ContextNotActiveException</literal>.</para>
-
     <para>The <literal>get()</literal> method may not return a null value unless 
     no <literal>CreationalContext</literal> is given, or 
     <literal>Contextual.create()</literal> returns a null value.</para>
@@ -184,18 +181,24 @@
     the given contextual type unless a <literal>CreationalContext</literal> is 
     given.</para>
 
-    <para>When the container calls <literal>get()</literal> for a context that is
-    associated with a passivating scope it must ensure that the given instance of
-    <literal>Contextual</literal> and the instance of 
-    <literal>CreationalContext</literal>, if given, are serializable.</para>
-
     <para>The <literal>destroy()</literal> method destroys an existing contextual 
     instance, removing it from the context instance.</para>
 
     <para>The <literal>AlterableContext</literal> interface was introduced in 
     Contexts and Dependency Injection for Java EE 1.1 to allow bean instances to
-    be destroyed by the application. Extensions should implement 
-    <literal>AlterableContext</literal> instead of <literal>Context</literal>.</para>
+    be destroyed by the application. Extensions providing context implementations 
+    for normal scopes should implement <literal>AlterableContext</literal> instead
+    of <literal>Context</literal>.</para>
+
+    <para>If the context object is inactive, the <literal>get()</literal> and 
+    <literal>destroy()</literal> methods must throw a 
+    <literal>ContextNotActiveException</literal>.</para>
+
+    <para>When the container calls <literal>get()</literal> or 
+    <literal>destroy()</literal> for a context that is associated with a passivating
+    scope it must ensure that the given instance of <literal>Contextual</literal> 
+    and the instance of <literal>CreationalContext</literal>, if given, are 
+    serializable.</para>
              
     <para>The context object is responsible for destroying any contextual instance 
     it creates by passing the instance to the <literal>destroy()</literal> method 

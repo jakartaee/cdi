@@ -1,5 +1,7 @@
 package javax.enterprise.context.spi;
 
+import javax.enterprise.context.ContextNotActiveException;
+
 /**
  * <p>
  * Provides an operation for obtaining and destroying contextual instances with a particular scope of any contextual type. Any
@@ -37,6 +39,7 @@ public interface AlterableContext extends Context {
      * </p>
      * 
      * @param contextual the contextual type
+     * @throws ContextNotActiveException if the context is not active
      */
     public void destroy(Contextual<?> contextual);
 
