@@ -38,9 +38,9 @@
     managed bean. The basic lifecycle and semantics of managed beans are defined 
     by the Managed Beans specification.</para>
     
-    <para>If the bean class of a managed bean is annotated with both the 
-    <literal>@Interceptor</literal> and <literal>@Decorator</literal> stereotypes, 
-    the container automatically detects the problem and treats it as a definition 
+    <para>If the bean class of a managed bean is annotated with both 
+    <literal>@Interceptor</literal> and <literal>@Decorator</literal>, the 
+    container automatically detects the problem and treats it as a definition 
     error.</para>
     
     <para>If a managed bean has a non-static public field, it must have scope 
