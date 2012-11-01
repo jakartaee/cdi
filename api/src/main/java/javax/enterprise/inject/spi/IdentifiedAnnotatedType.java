@@ -18,6 +18,6 @@ public interface IdentifiedAnnotatedType<X> extends AnnotatedType<X> {
    /**
     * The {@link AnnotatedType} identifier
     */
-   public String getID();
+   public String getId();
 
 }
