@@ -491,16 +491,11 @@
     If necessary, the container performs boxing or unboxing when it injects 
     a value to a field or parameter of primitive or wrapper type.</para>
     
-    <para>However, if an injection point of primitive type resolves to a 
-    producer method or producer field that returns a null value at runtime,
-    the container must inject the primitive type's default value as defined
-    by the Java Language Specification.</para>
+    <para>If an injection point of primitive type resolves to a producer 
+    method or producer field that returns a null value at runtime, the 
+    container must inject the primitive type's default value as defined by 
+    the Java Language Specification.</para>
 
-    <para>For a custom implementation of the <literal>Bean</literal> interface
-    defined in <xref linkend="bean"/>, the container calls 
-    <literal>isNullable()</literal> to determine whether the bean may have null 
-    values.</para>
-    
   </section>
   
     <section id="qualifierannotationmembers">
