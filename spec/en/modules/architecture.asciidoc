@@ -1,0 +1,566 @@
+[[architecture]]
+
+== Architecture
+
+This specification defines a powerful set of complementary services that help improve the structure of application code.
+
+* A well-defined lifecycle for stateful objects bound to _lifecycle contexts_, where the set of contexts is extensible
+* A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration
+* Support for Java EE modularity and the Java EE component architecturethe modular structure of a Java EE application is taken into account when resolving dependencies between Java EE components
+* Integration with the Unified Expression Language (EL), allowing any contextual object to be used directly within a JSF or JSP page
+* The ability to _decorate_ injected objects
+* The ability to associate interceptors to objects via typesafe _interceptor bindings_
+* An _event notification_ model
+* A web _conversation context_ in addition to the three standard web contexts defined by the Java Servlets specification
+* An SPI allowing _portable extensions_ to integrate cleanly with the container
+
+
+The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events. Various kinds of objects are injectable, including EJB 3 session beans, managed beans and Java EE resources. We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_. Contextual instances may be injected into other objects by the dependency injection service.
+
+To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
+
+The use of these services significantly simplifies the task of creating Java EE applications by integrating the Java EE web tier with Java EE enterprise services. In particular, EJB components may be used as JSF managed beans, thus integrating the programming models of EJB and JSF.
+
+It's even possible to integrate with third-party frameworks. A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
+
+An application that takes advantage of these services may be designed to execute in either the Java EE environment or the Java SE environment. If the application uses Java EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the EJB specification.
+
+=== Contracts
+
+This specification defines the responsibilities of:
+
+* the application developer who uses these services, and
+* the vendor who implements the functionality defined by this specification and provides a runtime environment in which the application executes.
+
+
+This runtime environment is called the _container_. For example, the container might be a Java EE container or an embeddable EJB container.
+
+<<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decoratorbean>> and <<observermethods>> define the programming model for Java EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
+
+<<injectionelresolution>>, <<contexts>>, <<lifecycle>>, <<decorators>>, <<events>> and <<interceptorresolution>> define the semantics and behavior of the services, the responsibilities of the container implementation and the APIs used by the application to interact directly with the container.
+
+<<packagingdeployment>> defines how Java EE applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
+
+<<spi>>, <<contextual>> and <<context>> define an SPI that allows portable extensions to integrate with the container.
+
+=== Relationship to other specifications
+
+An application developer creates container-managed components such as JavaBeans, EJBs or servlets and then provides additional metadata that declares additional behavior defined by this specification. These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Java EE platform technologies.
+
+In addition, this specification defines an SPI that allows alternative, non-platform technologies to integrate with the container and the Java EE environment, for example, alternative web presentation technologies.
+
+==== Relationship to the Java EE platform specification
+
+In the Java EE 6 environment, all _component classes supporting injection_, as defined by the Java EE 6 platform specification, may inject beans via the dependency injection service.
+
+The Java EE platform specification defines a facility for injecting _resources_ that exist in the _Java EE component environment_. Resources are identified by string-based names. This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
+
+==== Relationship to EJB
+
+EJB defines a programming model for application components that access transactional resources in a multi-user environment. EJB allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the EJB container at runtime.
+
+EJB components may be stateful, but are not by nature contextual. References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
+
+This specification enhances the EJB component model with contextual lifecycle management.
+
+Any session bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context. The container automatically creates the instance when it is needed by a client. When the context ends, the container automatically destroys the instance.
+
+Message-driven and entity beans are by nature non-contextual objects and may not be injected into other objects.
+
+The container performs dependency injection on all session and message-driven bean instances, even those which are not contextual instances.
+
+==== Relationship to managed beans
+
+The Managed Beans specification defines the basic programming model for application components managed by the Java EE container.
+
+As defined by this specification, most Java classes, including all JavaBeans, are managed beans.
+
+This specification defines contextual lifecycle management and dependency injection as generic services applicable to all managed beans.
+
+Any managed bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context. The container automatically creates the instance when it is needed by a client. When the context ends, the container automatically destroys the instance.
+
+The container performs dependency injection on all managed bean instances, even those which are not contextual instances.
+
+==== Relationship to Dependency Injection for Java
+
+The Dependency Injection for Java specification defines a set of annotations for the declaring injected fields, methods and constructors of a bean. The dependency injection service makes use of these annotations.
+
+==== Relationship to Java Interceptors
+
+The Java Interceptors specification defines the basic programming model and semantics for interceptors. This specification enhances that model by providing the ability to associate interceptors with beans using typesafe interceptor bindings.
+
+==== Relationship to JSF
+
+JavaServer Faces is a web-tier presentation framework that provides a component model for graphical user interface components and an event-driven interaction model that binds user interface components to objects accessible via Unified EL.
+
+This specification allows any bean to be assigned a name. Thus, a JSF application may take advantage of the sophisticated context and dependency injection model defined by this specification.
+
+==== Relationship to Bean Validation
+
+Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
+
+The Bean Validation specification defines beans for Bean Validation managed objects including +Validator+ and +ValidatorFactory+. A number of Bean Validation managed instances, including ++ConstraintValidator++ s can take advantage of dependency injection. Bean Validation also provides support for method parameter validation on any bean.
+
+=== Introductory examples
+
+The following examples demonstrate the use of lifecycle contexts and dependency injection.
+
+==== JSF example
+
+The following JSF page defines a login prompt for a web application:
+
+----
+<f:view>
+    <h:form>
+        <h:panelGrid columns="2" rendered="#{!login.loggedIn}">
+            <h:outputLabel for="username">Username:</h:outputLabel>
+            <h:inputText id="username" value="#{credentials.username}"/>
+            <h:outputLabel for="password">Password:</h:outputLabel>
+            <h:inputText id="password" value="#{credentials.password}"/>
+        </h:panelGrid>
+        <h:commandButton value="Login" action="#{login.login}" rendered="#{!login.loggedIn}"/>
+        <h:commandButton value="Logout" action="#{login.logout}" rendered="#{login.loggedIn}"/>
+    </h:form>
+</f:view>
+----
+
+The Unified EL expressions in this page refer to beans named +credentials+ and +login+.
+
+The +Credentials+ bean has a lifecycle that is bound to the JSF request:
+
+----
+@Model
+public class Credentials {
+	
+    private String username;
+    private String password;
+    
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+    
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    
+}
+----
+
+The +@Model+ annotation defined in <<model>> is a _stereotype_ that identifies the +Credentials+ bean as a model object in an MVC architecture.
+
+The +Login+ bean has a lifecycle that is bound to the HTTP session:
+
+----
+@SessionScoped @Model
+public class Login implements Serializable {
+
+    @Inject Credentials credentials;
+    @Inject @Users EntityManager userDatabase;
+    
+    private CriteriaQuery<User> query;
+    private Parameter<String> usernameParam;
+    private Parameter<String> passwordParam;
+    
+    private User user;
+    
+    @Inject
+    void initQuery(@Users EntityManagerFactory emf) {
+        CriteriaBuilder cb = emf.getCriteriaBuilder();
+        usernameParam = cb.parameter(String.class);
+        passwordParam = cb.parameter(String.class);
+        query = cb.createQuery(User.class);
+        Root<User> u = query.from(User.class);
+        query.select(u);
+        query.where( cb.equal(u.get(User_.username), usernameParam), 
+                     cb.equal(u.get(User_.password), passwordParam) );
+    }
+
+    public void login() {
+    	
+        List<User> results = userDatabase.createQuery(query)
+            .setParameter(usernameParam, credentials.getUsername())
+            .setParameter(passwordParam, credentials.getPassword())
+            .getResultList();
+        
+        if ( !results.isEmpty() ) {
+            user = results.get(0);
+        }
+        
+    }
+    
+    public void logout() {
+        user = null;
+    }
+    
+    public boolean isLoggedIn() {
+        return user!=null;
+    }
+    
+    @Produces @LoggedIn User getCurrentUser() {
+        if (user==null) {
+            throw new NotLoggedInException();
+        }
+        else {
+            return user;
+        }
+    }
+
+}
+----
+
+The +@SessionScoped+ annotation defined in <<builtinscopes>> is a _scope type_ that specifies the lifecycle of instances of +Login+. Managed beans with this scope must be serializable.
+
+The +@Inject+ annotation defined by the Dependency Injection for Java specification identifies an _injected field_ which is initialized by the container when the bean is instantiated, or an _initializer method_ which is called by the container after the bean is instantiated, with injected parameters.
+
+The +@Users+ annotation is a qualifier type defined by the application:
+
+----
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface Users {}
+----
+
+The +@LoggedIn+ annotation is another qualifier type defined by the application:
+
+----
+@Qualifier
+@Retention(RUNTIME)
+@Target({METHOD, FIELD, PARAMETER, TYPE})
+public @interface LoggedIn {}
+----
+
+The +@Produces+ annotation defined in <<declaringproducermethod>> identifies the method +getCurrentUser()+ as a _producer method_, which will be called whenever another bean in the system needs the currently logged-in user, for example, whenever the +user+ attribute of the +DocumentEditor+ class is injected by the container:
+
+----
+@Model
+public class DocumentEditor {
+
+    @Inject Document document;
+    @Inject @LoggedIn User currentUser;
+    @Inject @Documents EntityManager docDatabase;
+    
+    public void save() {
+        document.setCreatedBy(currentUser);
+        em.persist(document);
+    }
+    
+}
+----
+
+The +@Documents+ annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which JPA persistence unit is required.
+
+When the login form is submitted, JSF assigns the entered username and password to an instance of the +Credentials+ bean that is automatically instantiated by the container. Next, JSF calls the +login()+ method of an instance of +Login+ that is automatically instantiated by the container. This instance continues to exist for and be available to other requests in the same HTTP session, and provides the +User+ object representing the current user to any other bean that requires it (for example, +DocumentEditor+). If the producer method is called before the +login()+ method initializes the user object, it throws a +NotLoggedInException+.
+
+==== EJB example
+
+Alternatively, we could write our +Login+ bean to take advantage of the functionality defined by EJB:
+
+----
+@Stateful @SessionScoped @Model
+public class Login {
+
+    @Inject Credentials credentials;
+    @Inject @Users EntityManager userDatabase;
+    
+    ...
+    
+    private User user;
+    
+    @Inject
+    void initQuery(@Users EntityManagerFactory emf) {
+       ...
+    }
+    
+    @TransactionAttribute(REQUIRES_NEW) 
+    @RolesAllowed("guest")
+    public void login() {
+        ...
+    }
+    
+    public void logout() {
+        user = null;
+    }
+    
+    public boolean isLoggedIn() {
+        return user!=null;
+    }
+    
+    @RolesAllowed("user")
+    @Produces @LoggedIn User getCurrentUser() {
+        ...
+    }
+
+}
+----
+
+The EJB +@Stateful+ annotation specifies that this bean is an EJB stateful session bean. The EJB +@TransactionAttribute+ and +@RolesAllowed+ annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
+
+==== Java EE component environment example
+
+In the previous examples, we injected container-managed persistence contexts using qualifier types. We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Java EE component environment in Java code.
+
+----
+public class Databases {
+    
+    @Produces @PersistenceContext(unitName="UserData")
+    @Users EntityManager userDatabaseEntityManager;
+    
+    @Produces @PersistenceUnit(unitName="UserData")
+    @Users EntityManagerFactory userDatabaseEntityManagerFactory;
+    
+    @Produces @PersistenceContext(unitName="DocumentData")
+    @Documents EntityManager docDatabaseEntityManager;
+    
+}
+----
+
+The JPA +@PersistenceContext+ and +@PersistenceUnit+ annotations identify the JPA persistence unit.
+
+==== Event example
+
+Beans may raise events. For example, our +Login+ class could raise events when a user logs in or out.
+
+----
+@SessionScoped @Model
+public class Login implements Serializable {
+
+    @Inject Credentials credentials;
+    @Inject @Users EntityManager userDatabase;
+    
+    @Inject @LoggedIn Event<User> userLoggedInEvent;
+    @Inject @LoggedOut Event<User> userLoggedOutEvent;
+    
+    ...
+
+    private User user;
+    
+    @Inject
+    void initQuery(@Users EntityManagerFactory emf) {
+       ...
+    }
+    
+    public void login() {
+    	
+        List<User> results = ... ;
+        
+        if ( !results.isEmpty() ) {
+            user = results.get(0);
+            userLoggedInEvent.fire(user);
+        }
+        
+    }
+    
+    public void logout() {
+        userLoggedOutEvent.fire(user);
+        user = null;
+    }
+    
+    public boolean isLoggedIn() {
+        return user!=null;
+    }
+    
+    @Produces @LoggedIn User getCurrentUser() {
+        ...
+    }
+
+}
+----
+
+The method +fire()+ of the built-in bean of type +Event+ defined in <<eventinterface>> allows the application to fire events. Events consist of an _event object_ in this case the +User+ and event qualifiers. Event qualifierssuch as +@LoggedIn+ and +@LoggedOut+ allow event consumers to specify which events of a certain type they are interested in.
+
+Other beans may observe these events and use them to synchronize their internal state, with no coupling to the bean producing the events:
+
+----
+@SessionScoped
+public class Permissions implements Serializable {
+
+    @Produces
+    private Set<Permission> permissions = new HashSet<Permission>();
+    
+    @Inject @Users EntityManager userDatabase;
+    Parameter<String> usernameParam;
+    CriteriaQuery<Permission> query;
+    
+    @Inject
+    void initQuery(@Users EntityManagerFactory emf) {
+        CriteriaBuilder cb = emf.getCriteriaBuilder();
+        usernameParam = cb.parameter(String.class);
+        query = cb.createQuery(Permission.class);
+        Root<Permission> p = query.from(Permission.class);
+        query.select(p);
+        query.where( cb.equal(p.get(Permission_.user).get(User_.username), 
+                     usernameParam) );
+    }
+
+    void onLogin(@Observes @LoggedIn User user) {
+        permissions = new HashSet<Permission>( userDatabase.createQuery(query)
+            .setParameter(usernameParam, user.getUsername())
+            .getResultList() );
+    }
+    
+    void onLogout(@Observes @LoggedOut User user {
+        permissions.clear();
+    }
+    
+
+}
+----
+
+The +@Produces+ annotation applied to a field identifies the field as a producer field, as defined in <<producerfield>>, a kind of shortcut version of a producer method. This producer field allows the permissions of the current user to be injected to an injection point of type +Set<Permission>+.
+
+The +@Observes+ annotation defined in <<observes>> identifies the method with the annotated parameter as an _observer method_ that is called by the container whenever an event matching the type and qualifiers of the annotated parameter is fired.
+
+==== Injection point metadata example
+
+It is possible to implement generic beans that introspect the injection point to which they belong. This makes it possible to implement injection for ++Logger++ s, for example.
+
+----
+class Loggers {
+    
+    @Produces Logger getLogger(InjectionPoint injectionPoint) {
+        return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getSimpleName() );
+    }
+    
+}
+----
+
+The +InjectionPoint+ interface defined in <<injectionpoint>>, provides metadata about the injection point to the object being injected into it.
+
+Then this class will have a +Logger+ named +"Permissions"+ injected:
+
+----
+@SessionScoped
+public class Permissions implements Serializable {
+
+    @Inject Logger log;
+ 
+    ...
+    
+}
+----
+
+==== Interceptor example
+
+_Interceptors_ allow common, cross-cutting concerns to be applied to beans via custom annotations. Interceptor types may be individually enabled or disabled at deployment time.
+
+The +AuthorizationInterceptor+ class defines a custom authorization check:
+
+----
+@Secure @Interceptor 
+public class AuthorizationInterceptor {
+    
+    @Inject @LoggedIn User user;
+    @Inject Logger log;
+    
+    @AroundInvoke 
+    public Object authorize(InvocationContext ic) throws Exception {
+        try {
+            if ( !user.isBanned() ) {
+                log.fine("Authorized");
+                return ic.proceed();
+            }
+            else {
+                log.fine("Not authorized");
+                throw new NotAuthorizedException();
+            }
+        }
+        catch (NotAuthenticatedException nae) {
+            log.fine("Not authenticated");
+            throw nae;
+        }
+    }
+    
+}
+----
+
+The +@Interceptor+ annotation, defined in <<declaringinterceptor>>, identifies the +AuthorizationInterceptor+ class as an interceptor. The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <<interceptorbindings>>.
+
+----
+@Inherited
+@InterceptorBinding
+@Target({TYPE, METHOD})
+@Retention(RUNTIME)
+public @interface Secure {}
+----
+
+The +@Secure+ annotation is used to apply the interceptor to a bean:
+
+----
+@Model
+public class DocumentEditor {
+
+    @Inject Document document;
+    @Inject @LoggedIn User user;
+    @Inject @Documents EntityManager em;
+    
+    @Secure
+    public void save() {
+        document.setCreatedBy(currentUser);
+        em.persist(document);
+    }
+    
+}
+----
+
+When the +save()+ method is invoked, the +authorize()+ method of the interceptor will be called. The invocation will proceed to the +DocumentEditor+ class only if the authorization check is successful.
+
+==== Decorator example
+
+_Decorators_ are similar to interceptors, but apply only to beans of a particular Java interface. Like interceptors, decorators may be easily enabled or disabled at deployment time. Unlike interceptors, decorators are aware of the semantics of the intercepted method.
+
+For example, the +DataAccess+ interface might be implemented by many beans:
+
+----
+public interface DataAccess<T, V> {
+      
+    public V getId(T object);
+    public T load(V id);
+    public void save(T object);
+    public void delete(T object);
+    
+    public Class<T> getDataType();
+      
+}
+----
+
+The +DataAccessAuthorizationDecorator+ class defines the authorization checks:
+
+----
+@Decorator 
+public abstract class DataAccessAuthorizationDecorator<T, V> implements DataAccess<T, V> {
+    
+    @Inject @Delegate DataAccess<T, V> delegate;
+    
+    @Inject Logger log;
+    @Inject Set<Permission> permissions;
+    
+    public void save(T object) {
+        authorize(SecureAction.SAVE, object);
+        delegate.save(object);
+    }
+      
+    public void delete(T object) {
+        authorize(SecureAction.DELETE, object);
+        delegate.delete(object);
+    }
+    
+    private void authorize(SecureAction action, T object) {
+        V id = delegate.getId(object);
+        Class<T> type = delegate.getDataType();
+        if ( permissions.contains( new Permission(action, type, id) ) ) {
+            log.fine("Authorized for " + action);
+        }
+        else {
+            log.fine("Not authorized for " + action);
+            throw new NotAuthorizedException(action);
+        }
+    }
+    
+}
+----
+
+The +@Decorator+ annotation defined in <<decoratorannotation>> identifies the +DataAccessAuthorizationDecorator+ class as a decorator. The +@Delegate+ annotation defined in <<delegateattribute>> identifies the _delegate_, which the decorator uses to delegate method calls to the container. The decorator applies to any bean that implements +DataAccess+.
+
+The decorator intercepts invocations just like an interceptor. However, unlike an interceptor, the decorator contains functionality that is specific to the semantics of the method being called.
+
+Decorators may be declared abstract, relieving the developer of the responsibility of implementing all methods of the decorated interface. If a decorator does not implement a method of a decorated interface, the decorator will simply not be called when that method is invoked upon the decorated bean.
+
