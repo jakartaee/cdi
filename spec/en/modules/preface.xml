@@ -45,7 +45,7 @@
         <listitem>Global ordering and enablement of interceptors and decorators</listitem>
         <listitem>Global selection of alternatives</listitem>
         <listitem>@New deprecated</listitem>
-        <listitem>JMS MessageListener removed as not available in Java EE</listitem>
+        <listitem>JMS <literal>MessageListener</literal> removed as not available in Java EE</listitem>
         <listitem>Support for unmanaged instances via <literal>Instance.destroy()</literal></listitem>
         <listitem>Clarify interceptors and decorators must be implemented using proxying</listitem>        
         <listitem>Allow multiple annotated types per Java class</listitem>        
