@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="servicehandler">
+  <title>Service Handler bindings</title>
+  <para><emphasis>Service Handler Bindings</emphasis> are used to allow the declaration of
+    interfaces and abstract classes as implemented beans. Any call to an abstract method on the
+    interface or abstract class will be forwarded to the invocation layer for processing. This
+    specification defines a typesafe mechanism for associating service handlers to abstract classes
+    and interfaces using <emphasis>service handler bindings</emphasis>.</para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>A <emphasis>Service Handler</emphasis> is different from a
+            <emphasis>Decorator</emphasis> so that the interface is unknown at runtime. </para>
+      </listitem>
+      <listitem>
+        <para>A <emphasis>Service Handler</emphasis> is different from an
+            <emphasis>Interceptor</emphasis> so that the implementation of the method is provided
+          instead of cross-cutting concerns.</para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <section id="servicehandlerbindings">
+    <title>Service Handler binding types</title>
+    <para>A <emphasis>service handler binding type</emphasis> is a Java annotation defined as
+        <literal>@Target(TYPE)</literal> and <literal>@Retention(RUNTIME)</literal>.</para>
+    <para>An service handler binding type may be declared by specifying the
+        <literal>@javax.servicehandler.ServiceHandlerBinding</literal> meta-annotation.</para>
+    <programlisting>@Inherited
+@ServiceHandlerBinding
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface QueryService {}</programlisting>
+  </section>
+  <section id="declaringinterceptor">
+    <title>Declaring the service handler binding of a service handler</title>
+    <para>The service handler binding of a service handler is specified by annotating the service
+      handler class with the binding type and the
+        <literal>@javax.servicehandler.ServiceHandler</literal> annotation.</para>
+    <para>
+      <programlisting>@Retention(RUNTIME)
+@Target({METHOD})
+@interface Query {   
+     String value();   
+}</programlisting>
+    </para>
+    <programlisting>@QueryService @ServiceHandler
+public class QueryServiceHandler {
+
+   @Inject    
+   javax.persistence.EntityManager em;     
+
+   @AroundInvoke 
+   public Object handleQueryInvocation(InvocationContext ctx) throws Exception {
+      return em.createQuery(ctx.getMethod().getAnnotation(Query.class).value()).getResultList();
+   }
+
+}</programlisting>
+  </section>
+  <section id="bindingservicehandlertobean">
+    <title>Binding a service handler to a bean</title>
+    <para>A service handler binding may be declared by annotating a interface or an abstract class,
+      with the service handler binding type.</para>
+    <para>In the following example, the <literal>QueryServiceHandler</literal> will be applied to
+      all abstract methods of the abstract class or interface:</para>
+    <programlisting>@QueryService
+public interface ProductDAO{
+
+     @Query("SELECT obj FROM Product obj")
+     List&lt;Product> getAllProducts();
+
+}</programlisting>
+    <para>An abstract class or interface may not define multiple service handlers. Failure to do so
+      should result in a definition error. </para>
+    <para>Interceptors and decorators are called before service handlers. </para>
+    <para>If an implementation is provided to a Service Handler annotated interface and this
+      implementation is not abstract, then the Service Handler bean should not be registered on
+      deployment time.</para>
+    <para/>
+  </section>
+  <section id="servicehandlerresolution">
+    <title>Service Handler resolution</title>
+    <para>Service Handler resolution follows the same strategy as described in <xref
+        linkend="interceptorresolution"/></para>
+  </section>
+</chapter>
