@@ -17,7 +17,7 @@
         </listitem>
         <listitem>
             <para>Support for Java EE modularity and the Java EE component 
-            architecture&mdash;the modular structure of a Java EE application is 
+            architecture&#151;the modular structure of a Java EE application is
             taken into account when resolving dependencies between Java EE components</para>
         </listitem>
         <listitem>
@@ -556,9 +556,9 @@ public class Login implements Serializable {
     <para>The method <literal>fire()</literal> of the built-in bean of type 
     <literal>Event</literal> defined in <xref linkend="eventinterface"/> 
     allows the application to fire events. Events consist of an <emphasis>event 
-    object</emphasis>&mdash;in this case the <literal>User</literal>&mdash;and 
-    event qualifiers. Event qualifiers&mdash;such as <literal>@LoggedIn</literal> and
-    <literal>@LoggedOut</literal>&mdash;allow event consumers to specify which 
+    object</emphasis>&#151;in this case the <literal>User</literal>&#151;and
+    event qualifiers. Event qualifiers&#151;such as <literal>@LoggedIn</literal> and
+    <literal>@LoggedOut</literal>&#151;allow event consumers to specify which
     events of a certain type they are interested in.</para>
 
     <para>Other beans may observe these events and use them to synchronize their internal 

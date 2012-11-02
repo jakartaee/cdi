@@ -86,7 +86,7 @@
       </listitem>
       
       <listitem>
-        <para>It has an appropriate constructor&mdash;either:</para>
+        <para>It has an appropriate constructor&#151;either:</para>
         <itemizedlist>
           <listitem>
             <para>the class has a constructor with no parameters, or</para>
@@ -1233,8 +1233,8 @@ public class Order {
       <para>This bean is called the <emphasis><literal>@New</literal> qualified 
       bean</emphasis> for the class <literal>X</literal>.</para>
       
-      <para>Note that this second bean exists&mdash;and may be enabled and available 
-      for injection&mdash;even if the first bean is disabled, as defined by 
+      <para>Note that this second bean exists&#151;and may be enabled and available
+      for injection&#151;even if the first bean is disabled, as defined by
       <xref linkend="enablement"/>, or if the bean class is deployed outside of a 
       bean archive, as defined in <xref linkend="beanarchive"/>, and is therefore not 
       discovered during the bean discovery process defined in 
