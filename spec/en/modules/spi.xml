@@ -1079,9 +1079,11 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);]]></pr
     
       <programlisting><![CDATA[public interface BeforeBeanDiscovery {
     public void addQualifier(Class<? extends Annotation> qualifier);
+    public void addQualifier(AnnotatedType<? extends Annotation> qualifier);
     public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
     public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
+    public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType, Annotation... bindingTypeDef);
     public void addAnnotatedType(AnnotatedType<?> type);
 }]]></programlisting>
 
