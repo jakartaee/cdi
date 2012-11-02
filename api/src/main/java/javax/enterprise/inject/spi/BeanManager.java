@@ -18,6 +18,7 @@
 package javax.enterprise.inject.spi;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
@@ -272,6 +273,24 @@ public interface BeanManager {
      * @return the set of meta-annotations
      */
     public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stereotype);
+    
+    /**
+     * Provides a view of an {@link Annotated} that reflects the transitive closure of all annotations 
+     * inherited from stereotypes.   
+     * 
+     * @param annotation the annotation to resolve stereotypes for
+     * @return a view of the annotation with stereotypes resolved
+     */
+    public AnnotatedElement resolveStereotypes(Annotated annotated);
+
+    /**
+     * Provides a view of an {@link AnnotatedElement} that reflects the transitive closure of all 
+     * annotations inherited from stereotypes.   
+     * 
+     * @param annotations the annotations to resolve stereotypes for
+     * @return a view of the annotations with stereotypes resolved
+     */
+    public AnnotatedElement resolveStereotypes(AnnotatedElement annotations);
     
     /**
      * Determine if two qualifiers are considered equivalent for the purposes of typesafe resolution,
