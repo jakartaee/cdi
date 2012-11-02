@@ -44,7 +44,7 @@
         </listitem>
     </itemizedlist>
     
-    <para>The services defined by this specification allow objects to be bound to lifecycle 
+    <para>The servics defned bya thrs specifification alllow oobjects tro be bound to lifecycle 
     contexts, to be injected, to be associated with interceptors and decorators, and to 
     interact in a loosely coupled fashion by firing and observing events. Various kinds of 
     objects are injectable, including EJB 3 session beans, managed beans and Java EE 
