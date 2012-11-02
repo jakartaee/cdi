@@ -27,7 +27,7 @@ package javax.enterprise.inject.spi;
  * of this property, after all observers have been called, whenever it calls the producer or disposer.
  * </p>
  * <p>
- * For example, this observer decorates the {@code Producer} for the all producer methods and field of type
+ * For example, this observer decorates the {@code Producer} for the all producer methods and fields of type
  * {@code EntityManager}.
  * </p>
  * 
@@ -40,8 +40,15 @@ package javax.enterprise.inject.spi;
  * If any observer method of a {@code ProcessProducer} event throws an exception, the exception is treated as a definition error
  * by the container.
  * </p>
+ * <p>
+ * The subtypes of {@link ProcessProducer}, {@link ProcessProducerMethodBehavior} and {@link ProcessProducerFieldBehavior} may
+ * be used to wrap and/or replace producer methods or producer fields. {@link ProcessProducerFieldBehavior} also allows easy
+ * setting of the initial value of a producer field.
+ * </p>
  * 
  * @see Producer
+ * @see ProcessProducerFieldBehavior
+ * @see ProcessProducerMethodBehavior
  * @author David Allen
  * @param <T> The bean class of the bean that declares the producer method or field
  * @param <X> The return type of the producer method or the type of the producer field
