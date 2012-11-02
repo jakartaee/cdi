@@ -53,8 +53,8 @@
   writing business logic in Java code. The developer then defines the remaining 
   attributes by explicitly annotating the bean class, or by allowing them to be 
   defaulted by the container, as specified in <xref linkend="implementation"/>. 
-  In certain other cases&mdash;for example, Java EE component environment resources, 
-  defined in <xref linkend="resources"/>&mdash;the developer provides only the 
+  In certain other cases&#151;for example, Java EE component environment resources,
+  defined in <xref linkend="resources"/>&#151;the developer provides only the
   annotations and the bean implementation is provided by the container.</para>
   
   <para>The bean types and qualifiers of a bean determine where its instances will 
@@ -263,7 +263,7 @@ public class BookShop
     implementations. One approach would be for the client to explicitly specify
     the class that implements the <literal>PaymentProcessor</literal> interface.
     However, this approach creates a hard dependence between client and 
-    implementation&mdash;exactly what use of the interface was designed to avoid!</para>
+    implementation&#151;exactly what use of the interface was designed to avoid!</para>
 
     <para>A <emphasis>qualifier type</emphasis> represents some client-visible semantic 
     associated with a type that is satisfied by some implementations of the type (and 
@@ -917,7 +917,7 @@ public @interface Mock {}</programlisting>
 @Retention(RUNTIME)
 public @interface AuditableAction {}</programlisting>      
       
-        <para>Stereotype declarations are transitive&mdash;a stereotype declared
+        <para>Stereotype declarations are transitive&#151;a stereotype declared
         by a second stereotype is inherited by all beans and other stereotypes 
         that declare the second stereotype.</para>
         
@@ -984,19 +984,19 @@ public @interface Model {}</programlisting>
     
     <itemizedlist>
       <listitem>
-        <para>Definition errors&mdash;occur when a single bean definition
+        <para>Definition errors&#151;occur when a single bean definition
         violates the rules of this specification. If a definition error exists,
         the container must throw a subclass of 
         <literal>javax.enterprise.inject.spi.DefinitionException</literal>.</para>
       </listitem>
       <listitem>
-        <para>Deployment problems&mdash;occur when there are problems resolving
+        <para>Deployment problems&#151;occur when there are problems resolving
         dependencies, or inconsistent specialization, in a particular deployment.
         If a deployment problem occurs, the container must throw a subclass of
         <literal>javax.enterprise.inject.spi.DeploymentException</literal>.</para>
       </listitem>
       <listitem>
-        <para>Exceptions&mdash;occur at runtime</para>
+        <para>Exceptions&#151;occur at runtime</para>
       </listitem>
     </itemizedlist>
     

@@ -12,10 +12,10 @@
     
     <itemizedlist>
       <listitem>
-        <para>A Java object&mdash;the <emphasis>event object</emphasis></para>
+        <para>A Java object&#151;the <emphasis>event object</emphasis></para>
       </listitem>
       <listitem>
-        <para>A set of instances of qualifier types&mdash;the 
+        <para>A set of instances of qualifier types&#151;the
         <emphasis>event qualifiers</emphasis></para>
       </listitem>
     </itemizedlist>
@@ -25,8 +25,8 @@
     events it observes.</para>
     
     <para>An <emphasis>observer method</emphasis> acts as event consumer, observing events 
-    of a specific type&mdash;the <emphasis>observed event type</emphasis>&mdash;with a 
-    specific set of qualifiers&mdash;the <emphasis>observed event qualifiers</emphasis>. 
+    of a specific type&#151;the <emphasis>observed event type</emphasis>&#151;with a
+    specific set of qualifiers&#151;the <emphasis>observed event qualifiers</emphasis>.
     An observer  method will be notified of an event if the event object is assignable to
     the observed event type, and if all the observed event qualifiers are event qualifiers 
     of the event.</para>

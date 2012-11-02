@@ -44,7 +44,7 @@ public @interface Transactional {}</programlisting>
 @Transactional
 public @interface DataAccess {}</programlisting>      
       
-        <para>Interceptor bindings are transitive&mdash;an interceptor binding declared
+        <para>Interceptor bindings are transitive&#151;an interceptor binding declared
         by an interceptor binding type is inherited by all beans and other
         interceptor binding types that declare that interceptor binding type.</para>
 
