@@ -1,0 +1,203 @@
+[[inheritance]]
+
+== Inheritance and specialization
+
+A bean may inherit type-level metadata and members from its superclasses.
+
+Inheritance of type-level metadata by beans from their superclasses is controlled via use of the Java +@Inherited+ meta-annotation. Type-level metadata is never inherited from interfaces implemented by a bean.
+
+Member-level metadata is not inherited. However, injected fields, initializer methods, lifecycle callback methods and non-static observer methods are inherited by beans from their superclasses.
+
+The implementation of a bean may be extended by the implementation of a second bean. This specification recognizes two distinct scenarios in which this situation occurs:
+
+* The second bean _specializes_ the first bean in certain deployment scenarios. In these deployments, the second bean completely replaces the first, fulfilling the same role in the system.
+* The second bean is simply reusing the Java implementation, and otherwise bears no relation to the first bean. The first bean may not even have been designed for use as a contextual object.
+
+
+The two cases are quite dissimilar.
+
+By default, Java implementation reuse is assumed. In this case, the two beans have different roles in the system, and may both be available in a particular deployment.
+
+The bean developer may explicitly specify that the second bean specializes the first. Then the second bean inherits, and may not override, the qualifiers and bean name of the first bean. The second bean is able to serve the same role in the system as the first. In a particular deployment, only one of the two beans may fulfill that role.
+
+[[type-level-inheritance]]
+
+=== Inheritance of type-level metadata
+
+Suppose a class X is extended directly or indirectly by the bean class of a managed bean or session bean Y.
+
+* If X is annotated with a qualifier type, stereotype or interceptor binding type Z then Y inherits the annotation if and only if Z declares the +@Inherited+ meta-annotation and neither Y nor any intermediate class that is a subclass of X and a superclass of Y declares an annotation of type Z.
+(This behavior is defined by the Java Language Specification.)
+* If X is annotated with a scope type Z then Y inherits the annotation if and only if Z declares the +@Inherited+ meta-annotation and neither Y nor any intermediate class that is a subclass of X and a superclass of Y declares a scope type.
+(This behavior is different to what is defined in the Java Language Specification.)
+
+
+A scope type explicitly declared by X and inherited by Y from X takes precedence over default scopes of stereotypes declared or inherited by Y.
+
+For annotations defined by the application or third-party extensions, it is recommended that:
+
+* scope types should be declared +@Inherited+,
+* qualifier types should not be declared +@Inherited+,
+* interceptor binding types should be declared +@Inherited+, and
+* stereotypes may be declared +@Inherited+, depending upon the semantics of the stereotype.
+
+
+All scope types, qualifier types, and interceptor binding types defined by this specification adhere to these recommendations.
+
+The stereotypes defined by this specification are not declared +@Inherited+.
+
+However, in special circumstances, these recommendations may be ignored.
+
+Note that the +@Named+ annotation is not declared +@Inherited+ and bean names are not inherited unless specialization is used.
+
+=== Inheritance of member-level metadata
+
+Suppose a class X is extended directly or indirectly by the bean class of a managed bean or session bean Y.
+
+* If X declares an injected field +x+ then Y inherits +x+.
+(This behavior is defined by the Common Annotations for the Java Platform specification.)
+* If X declares an initializer, non-static observer, +@PostConstruct+ or +@PreDestroy+ method +x()+ then Y inherits +x()+ if and only if neither Y nor any intermediate class that is a subclass of X and a superclass of Y overrides the method +x()+.
+(This behavior is defined by the Common Annotations for the Java Platform specification.)
+* If X declares a non-static method +x()+ annotated with an interceptor binding type Z then Y inherits the binding if and only if neither Y nor any intermediate class that is a subclass of X and a superclass of Y overrides the method +x()+.
+(This behavior is defined by the Common Annotations for the Java Platform specification.)
+* If X declares a non-static producer or disposer method +x()+ then Y does not inherit this method. 
+
+//////////////////////////////////////
+
+//////////////////////////////////////
+
+
+(This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
+* If X declares a non-static producer field +x+ then Y does not inherit this field.
+(This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
+
+
+If X is a generic type, and an injection point or observer method declared by X is inherited by Y, and the declared type of the injection point or event parameter contains type variables declared by X, the type of the injection point or event parameter inherited in Y is the declared type, after substitution of actual type arguments declared by Y or any intermediate class that is a subclass of X and a superclass of Y.
+
+For example, the bean +DaoClient+ has an injection point of type +Dao<T>+.
+
+----
+public class DaoClient<T> {
+	
+    @Inject Dao<T> dao;
+    ...
+
+}
+----
+
+This injection point is inherited by +UserDaoClient+, but the type of the inherited injection point is +Dao<User>+.
+
+----
+public class UserDaoClient 
+        extends DaoClient<User> { ... }
+----
+
+[[specialization]]
+
+=== Specialization
+
+If two beans both support a certain bean type, and share at least one qualifier, then they are both eligible for injection to any injection point with that declared type and qualifier.
+
+Consider the following beans:
+
+----
+@Default @Asynchronous 
+public class AsynchronousService implements Service { 
+    ... 
+}
+----
+
+----
+@Alternative 
+public class MockAsynchronousService extends AsynchronousService { 
+    ... 
+}
+----
+
+Suppose that the +MockAsynchronousService+ alternative is declared in the +beans.xml+ file of some bean archive, as defined in <<selection>>:
+
+----
+<beans xmlns="http://java.sun.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+   <alternatives>
+      <class>org.mycompany.mock.MockAsynchronousService</class>
+   </alternatives>
+</beans>
+----
+
+Then, according to the rules of <<ambigdependencies>>, the following ambiguous dependency is resolvable, and so the attribute will receive an instance of +MockAsynchronousService+:
+
+----
+@Inject Service service;
+----
+
+However, the following attribute will receive an instance of +AsynchronousService+, even though +MockAsynchronousService+ is a selected alternative, because +MockAsynchronousService+ does not have the qualifier +@Asynchronous+:
+
+----
+@Inject @Asynchronous Service service;
+----
+
+This is a useful behavior in some circumstances, however, it is not always what is intended by the developer.
+
+The only way one bean can completely override a second bean at all injection points is if it implements all the bean types and declares all the qualifiers of the second bean. However, if the second bean declares a producer method or observer method, then even this is not enough to ensure that the second bean is never called!
+
+To help prevent developer error, the first bean may:
+
+* directly extend the bean class of the second bean, or
+* directly override the producer method, in the case that the second bean is a producer method, and then
+
+
+explicitly declare that it _specializes_ the second bean.
+
+----
+@Alternative @Specializes
+public class MockAsynchronousService extends AsynchronousService { 
+    ... 
+}
+----
+
+When an enabled bean, as defined in <<enablement>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container. Even if the second bean defines a producer or observer method, the method will never be called.
+
+==== Direct and indirect specialization
+
+The annotation +@javax.enterprise.inject.Specializes+ is used to indicate that one bean _directly specializes_ another bean, as defined in <<specializemanagedbean>>, <<specializesessionbean>> and <<specializeproducermethod>>.
+
+Formally, a bean X is said to _specialize_ another bean Y if either:
+
+* X directly specializes Y, or
+* a bean Z exists, such that X directly specializes Z and Z specializes Y.
+
+
+Then X will inherit the qualifiers and bean name of Y:
+
+* the qualifiers of X include all qualifiers of Y, together with all qualifiers declared explicitly by X, and
+* if Y has a bean name, the bean name of X is the same as the bean name of Y.
+
+
+Furthermore, X must have all the bean types of Y. If X does not have some bean type of Y, the container automatically detects the problem and treats it as a definition error.
+
+If Y has a bean name and X declares a bean name explicitly the container automatically detects the problem and treats it as a definition error.
+
+For example, the following bean would have the inherited qualifiers +@Default+ and +@Asynchronous+:
+
+----
+@Mock @Specializes
+public class MockAsynchronousService extends AsynchronousService { 
+    ... 
+}
+----
+
+If +AsynchronousService+ declared a bean name:
+
+----
+@Default @Asynchronous @Named("asyncService")
+public class AsynchronousService implements Service{ 
+    ... 
+}
+----
+
+Then the bean name would also automatically be inherited by +MockAsynchronousService+.
+
+If an interceptor or decorator is annotated +@Specializes+, non-portable behavior results.
+

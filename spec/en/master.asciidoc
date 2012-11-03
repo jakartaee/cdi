@@ -1,0 +1,32 @@
+= Contexts and Dependency Injection for the Java EE platform
+
+include::modules/license.asciidoc[]
+
+:leveloffset: 1
+
+include::modules/preface.asciidoc[]
+
+include::modules/architecture.asciidoc[]
+
+include::modules/definition.asciidoc[]
+
+include::modules/implementation.asciidoc[]
+
+include::modules/injectionelresolution.asciidoc[]
+
+include::modules/scopescontexts.asciidoc[]
+
+include::modules/lifecycle.asciidoc[]
+
+include::modules/decorators.asciidoc[]
+
+include::modules/interceptors.asciidoc[]
+
+include::modules/events.asciidoc[]
+
+include::modules/spi.asciidoc[]
+
+include::modules/packagingdeployment.asciidoc[]
+
+:leveloffset: 0
+
