@@ -762,5 +762,11 @@ It is recommended that a priority of:
 1000 - 1999:: is reserved for interceptors and decorators defined by applications
 2000 - 2999:: is reserved for interceptors and decorators defined by extension libraries
 3000 - 3099:: is reserved for interceptors and decorators defined by this specification or the Java EE platform specification
-OPEN ISSUE: Is priority the right name for this?
+
+[IMPORTANT]
+.OPEN ISSUE
+============
+Is priority the right name for this?
+
+============
 

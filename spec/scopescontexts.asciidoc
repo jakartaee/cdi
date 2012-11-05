@@ -117,7 +117,12 @@ The context object is responsible for destroying any contextual instance it crea
 
 The context object must pass the same instance of +CreationalContext+ to +Contextual.destroy()+ that it passed to +Contextual.create()+ when it created the instance.
 
-OPEN ISSUE: What name should the +AlterableContext+ interface be given?
+[IMPORTANT]
+.OPEN ISSUE
+============
+What name should the +AlterableContext+ interface be given?
+
+============
 
 [[normalscope]]
 
@@ -543,7 +548,17 @@ If +begin()+ is called, and the current conversation is already marked long-runn
 
 If +begin()+ is called with an explicit conversation identifier, and a long-running conversation with that identifier already exists, an +IllegalArgumentException+ is thrown.
 
-_OPEN ISSUE:_  The CDI 1.0 spec doesn't define when a context is "initialized" (however the concept is implied), however the CDI spec introduces lifecycle events that require an event to be fired when a context is initialized. Either we need to rewrite the definition of this feature to use the CDI 1.0 language or we need to define when a context is initialized.
+[IMPORTANT]
+.OPEN ISSUE
+============
+The CDI 1.0 spec doesn't define when a context is "initialized" (however the concept is implied), however the CDI spec introduces lifecycle events that require an event to be fired when a context is initialized. Either we need to rewrite the definition of this feature to use the CDI 1.0 language or we need to define when a context is initialized.
 
-_OPEN ISSUE:_  What should the event type be for applications initialized or destroyed when the application is not a web app?
+============
+
+[IMPORTANT]
+.OPEN ISSUE
+============
+What should the event type be for applications initialized or destroyed when the application is not a web app?
+
+============
 

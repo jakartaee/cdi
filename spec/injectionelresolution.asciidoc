@@ -111,11 +111,26 @@ An alternative with a default priority may be selected for a bean archive using 
 * any +@Alternative+ stereotype of the alternative is listed, along with an enabled flag.
 
 
-OPEN ISSUE: Can other libraries deselect alternatives and change the priority? If so, which one wins?
+[IMPORTANT]
+.OPEN ISSUE
+============
+Can other libraries deselect alternatives and change the priority? If so, which one wins?
 
-OPEN ISSUE: If a library defines a selected or default priority alternative, can it be disabled or enabled for the entire application?
+============
 
-OPEN ISSUE: Should we add a way to specify the priority by annotation?
+[IMPORTANT]
+.OPEN ISSUE
+============
+If a library defines a selected or default priority alternative, can it be disabled or enabled for the entire application?
+
+============
+
+[IMPORTANT]
+.OPEN ISSUE
+============
+Should we add a way to specify the priority by annotation?
+
+============
 
 Each child +<class>+ element must specify the name of a bean class of an alternative bean. If there is no bean whose bean class has the specified name, or if no bean whose bean class has the specified name is an alternative, the container automatically detects the problem and treats it as a deployment problem.
 
@@ -712,7 +727,12 @@ The method +isAmbiguous()+ returns +true+ if there is more than one bean that ha
 
 The method +destroy()+ instructs the container to destroy the instance. The bean instance passed to +destroy()+ should be a dependent scoped bean instance, or a client proxy for a normal scoped bean. Applications are encouraged to always call +destroy()+ when they no longer require an instance obtained from +Instance+.
 
-OPEN ISSUE: If +destroy()+ is called on an already destroyed instance, should an +IllegalStateException+ occur? Or nothing?
+[IMPORTANT]
+.OPEN ISSUE
+============
+If +destroy()+ is called on an already destroyed instance, should an +IllegalStateException+ occur? Or nothing?
+
+============
 
 ==== The built-in +Instance+
 

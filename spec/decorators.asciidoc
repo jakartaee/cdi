@@ -165,12 +165,26 @@ A decorator with a default priority may be enabled for a bean archive by listing
    </decorators>
 </beans>
 ----
+[IMPORTANT]
+.OPEN ISSUE
+============
+Can other libraries disable decorators and change the priority? If so, which one wins?
 
-OPEN ISSUE: Can other libraries disable decorators and change the priority? If so, which one wins?
+============
 
-OPEN ISSUE: If a library defines an enabled or default priority decorator, can it be disabled or enabled for the entire application?
+[IMPORTANT]
+.OPEN ISSUE
+============
+If a library defines an enabled or default priority decorator, can it be disabled or enabled for the entire application?
 
-OPEN ISSUE: Should we add a way to specify the priority by annotation?
+============
+
+[IMPORTANT]
+.OPEN ISSUE
+============
+Should we add a way to specify the priority by annotation?
+
+============
 
 The priority of the decorator declaration, defined in <<priorities>>, determines the default decorator ordering for the application. The order of the decorator declarations for a bean archive overrides the default decorator order. If the set of decorators enabled for the application and the set of decorators enabled for a bean archive are disjoint, then the first decorator enabled for the bean archive is given a priority of 1000. Decorators which occur earlier in the list are called first.
 
