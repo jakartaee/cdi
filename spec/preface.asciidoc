@@ -82,12 +82,34 @@ Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dep
 
 ==== 1.1 Early Draft Review
 
-* +@Disposes+  methods for producer fields* The +CDI+  class, which provides programmatic access 
-        to CDI facilities from outside a managed bean* Pass the qualifiers an event was fired with to the +ObserverMethod+* Ability to veto beans declaratively using +@Veto+  and +@Requires+* Ability to access the +BeanManager+  from the +ServletContext+* Conversations in Servlet requests* Application lifecycle events in Java EE* Injection of +Bean+  metadata into bean instances* Programmatic access to a container provided +Producer+, +InjectionTarget+, +AnnotatedType+* Ability to override attributes of a +Bean+  via +BeanAttributes+* Ability to process modules via +ProcessModule+* Ability to wrap the +InjectionPoint+* Ability to obtain +Extension+  instances from +BeanManager+* Injection of the +ServletContext+* Access to +beans.xml+  in +ProcessModule+* Injection into enums
+* +@Disposes+  methods for producer fields* The +CDI+  class, which provides programmatic access to CDI facilities from outside a managed bean* Pass the qualifiers an event was fired with to the +ObserverMethod+
+* Ability to veto beans declaratively using +@Veto+  and +@Requires+
+* Ability to access the +BeanManager+  from the +ServletContext+
+* Conversations in Servlet requests* Application lifecycle events in Java EE
+* Injection of +Bean+  metadata into bean instances
+* Programmatic access to a container provided +Producer+, +InjectionTarget+, +AnnotatedType+
+* Ability to override attributes of a +Bean+  via +BeanAttributes+
+* Ability to process modules via +ProcessModule+
+* Ability to wrap the +InjectionPoint+
+* Ability to obtain +Extension+  instances from +BeanManager+
+* Injection of the +ServletContext+
+* Access to +beans.xml+  in +ProcessModule+
+* Injection into enums
 
 ==== 1.1 Public Review Draft
 
-* +ProcessAnnotatedType+  fired for annotations* Moved all Bean Validation integration to Bean Validation Specification as Bean Validation 1.1 Public Review Draft* Clarify what beans are available during container lifecycle events* Honor +WEB-INF/classes/META-INF/beans.xml+  to activate +WEB-INF/classes+  a bean archive* Global ordering and enablement of interceptors and decorators* Global selection of alternatives* @New deprecated* JMS +MessageListener+  removed as not available in Java EE* Support for unmanaged instances via +Instance.destroy()+* Clarify interceptors and decorators must be implemented using proxying* Allow multiple annotated types per Java class* Allow Extensions to specify the annotations that they are interested in
+* +ProcessAnnotatedType+  fired for annotations
+* Moved all Bean Validation integration to Bean Validation Specification as Bean Validation 1.1 Public Review Draft
+* Clarify what beans are available during container lifecycle events
+* Honor +WEB-INF/classes/META-INF/beans.xml+  to activate +WEB-INF/classes+  a bean archive
+* Global ordering and enablement of interceptors and decorators
+* Global selection of alternatives
+* @New deprecated
+* JMS +MessageListener+  removed as not available in Java EE
+* Support for unmanaged instances via +Instance.destroy()+
+* Clarify interceptors and decorators must be implemented using proxying
+* Allow multiple annotated types per Java class
+* Allow Extensions to specify the annotations that they are interested in
 
 === Open issues
 
