@@ -14,6 +14,7 @@ An _interceptor binding type_ is a Java annotation defined as +@Retention(RUNTIM
 
 An interceptor binding type may be declared by specifying the +@javax.interceptor.InterceptorBinding+ meta-annotation.
 
+[source, java]
 ----
 @Inherited
 @InterceptorBinding
@@ -26,6 +27,7 @@ public @interface Transactional {}
 
 An interceptor binding type may declare other interceptor bindings.
 
+[source, java]
 ----
 @Inherited
 @InterceptorBinding
@@ -45,6 +47,7 @@ Interceptor binding types declared +@Target(TYPE)+ may not be applied to interce
 
 Interceptor bindings may be applied to a stereotype by annotating the stereotype annotation:
 
+[source, java]
 ----
 @Transactional
 @Secure
@@ -65,6 +68,7 @@ If a stereotype declares interceptor bindings, it must be defined as +@Target(TY
 
 The interceptor bindings of an interceptor are specified by annotating the interceptor class with the binding types and the +@javax.interceptor.Interceptor+ annotation and are called the set of interceptor bindings for the interceptor.
 
+[source, java]
 ----
 @Transactional @Interceptor
 public class TransactionInterceptor {
@@ -91,6 +95,7 @@ An interceptor binding may be declared by annotating the bean class, or a method
 
 In the following example, the +TransactionInterceptor+ will be applied at the class level, and therefore applies to all business methods of the class:
 
+[source, java]
 ----
 @Transactional
 public class ShoppingCart { ... }
@@ -98,6 +103,7 @@ public class ShoppingCart { ... }
 
 In this example, the +TransactionInterceptor+ will be applied at the method level:
 
+[source, java]
 ----
 public class ShoppingCart {
 
@@ -127,6 +133,7 @@ Interceptors may be enabled for an application, or enabled only for a particular
 
 An interceptor may be enabled for the entire application by listing its class, along with a priority attribute, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive which contains the interceptor class.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -140,6 +147,7 @@ An interceptor may be enabled for the entire application by listing its class, a
 
 An interceptor may be enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -153,6 +161,7 @@ An interceptor may be enabled for a bean archive by listing its class under the 
 
 An interceptor enabled for an application may be disabled for a bean archive by listing its class, along with a disabled flag, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -165,6 +174,7 @@ An interceptor enabled for an application may be disabled for a bean archive by 
 
 An interceptor may be given a default priority, but not enabled by listing its class, along with a disabled flag and the priority attribute, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive which contains the interceptor class.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -177,6 +187,7 @@ An interceptor may be given a default priority, but not enabled by listing its c
 
 An interceptor with a default priority may be enabled for a bean archive by listing its class, along with an enabled flag, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -228,6 +239,7 @@ For a custom implementation of the +Interceptor+ interface defined in <<intercep
 
 An interceptor class may specify multiple interceptor bindings.
 
+[source, java]
 ----
 @Transactional @Secure @Interceptor
 public class TransactionalSecurityInterceptor {
@@ -240,6 +252,7 @@ public class TransactionalSecurityInterceptor {
 
 This interceptor will be bound to all methods of this bean:
 
+[source, java]
 ----
 @Transactional @Secure
 public class ShoppingCart { ... }
@@ -247,6 +260,7 @@ public class ShoppingCart { ... }
 
 The interceptor will also be bound to the +placeOrder()+ method of this bean:
 
+[source, java]
 ----
 @Transactional
 public class ShoppingCart {
@@ -259,6 +273,7 @@ public class ShoppingCart {
 
 However, it will not be bound to the +placeOrder()+ method of this bean, since the +@Secure+ interceptor binding does not appear:
 
+[source, java]
 ----
 @Transactional
 public class ShoppingCart {
@@ -274,6 +289,7 @@ public class ShoppingCart {
 
 Interceptor binding types may have annotation members.
 
+[source, java]
 ----
 @Inherited
 @InterceptorBinding
@@ -286,6 +302,7 @@ public @interface Transactional {
 
 Any interceptor with that interceptor binding type must select a member value:
 
+[source, java]
 ----
 @Transactional(requiresNew=true) @Interceptor
 public class RequiresNewTransactionInterceptor {
@@ -298,6 +315,7 @@ public class RequiresNewTransactionInterceptor {
 
 The +RequiresNewTransactionInterceptor+ applies to this bean:
 
+[source, java]
 ----
 @Transactional(requiresNew=true)
 public class ShoppingCart { ... }
@@ -305,6 +323,7 @@ public class ShoppingCart { ... }
 
 But not to this bean:
 
+[source, java]
 ----
 @Transactional
 public class ShoppingCart { ... }
@@ -314,6 +333,7 @@ Annotation member values are compared using +equals()+.
 
 An annotation member may be excluded from consideration using the +@Nonbinding+ annotation.
 
+[source, java]
 ----
 @Inherited
 @InterceptorBinding

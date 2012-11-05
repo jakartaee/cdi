@@ -58,10 +58,12 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 A managed bean with a constructor that takes no parameters does not require any special annotations. The following classes are beans:
 
+[source, java]
 ----
 public class Shop { .. }
 ----
 
+[source, java]
 ----
 class PaymentProcessorImpl implements PaymentProcessor { ... }
 ----
@@ -70,6 +72,7 @@ If the managed bean does not have a constructor that takes no parameters, it mus
 
 A bean class may specify a scope, bean name, stereotypes and/or qualifiers:
 
+[source, java]
 ----
 @ConversationScoped @Default
 public class ShoppingCart { ... }
@@ -77,11 +80,13 @@ public class ShoppingCart { ... }
 
 A managed bean may extend another managed bean:
 
+[source, java]
 ----
 @Named("loginAction")
 public class LoginAction { ... }
 ----
 
+[source, java]
 ----
 @Mock
 @Named("loginAction")
@@ -100,10 +105,12 @@ If the bean class of X does not directly extend the bean class of another manage
 
 For example, +MockLoginAction+ directly specializes +LoginAction+:
 
+[source, java]
 ----
 public class LoginAction { ... }
 ----
 
+[source, java]
 ----
 @Mock @Specializes
 public class MockLoginAction extends LoginAction { ... }
@@ -155,11 +162,13 @@ Remote interfaces are not included in the set of bean types.
 
 A session bean does not require any special annotations apart from the component-defining annotation (or XML declaration) required by the EJB specification. The following EJBs are beans:
 
+[source, java]
 ----
 @Singleton
 class Shop { .. }
 ----
 
+[source, java]
 ----
 @Stateless
 class PaymentProcessorImpl implements PaymentProcessor { ... }
@@ -167,6 +176,7 @@ class PaymentProcessorImpl implements PaymentProcessor { ... }
 
 A bean class may also specify a scope, bean name, stereotypes and/or qualifiers:
 
+[source, java]
 ----
 @ConversationScoped @Stateful @Default @Model
 public class ShoppingCart { ... }
@@ -174,12 +184,14 @@ public class ShoppingCart { ... }
 
 A session bean class may extend another bean class:
 
+[source, java]
 ----
 @Stateless
 @Named("loginAction")
 public class LoginActionImpl implements LoginAction { ... }
 ----
 
+[source, java]
 ----
 @Stateless
 @Mock
@@ -197,11 +209,13 @@ If the bean class of X does not directly extend the bean class of another sessio
 
 For example, +MockLoginActionBean+ directly specializes +LoginActionBean+:
 
+[source, java]
 ----
 @Stateless
 public class LoginActionBean implements LoginAction { ... }
 ----
 
+[source, java]
 ----
 @Stateless @Mock @Specializes
 public class MockLoginActionBean extends LoginActionBean { ... }
@@ -261,6 +275,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 A producer method may be declared by annotating a method with the +@javax.enterprise.inject.Produces+ annotation.
 
+[source, java]
 ----
 public class Shop {
    @Produces PaymentProcessor getPaymentProcessor() { ... }
@@ -270,6 +285,7 @@ public class Shop {
 
 A producer method may also specify scope, bean name, stereotypes and/or qualifiers.
 
+[source, java]
 ----
 public class Shop {
    @Produces @ApplicationScoped @Catalog @Named("catalog") 
@@ -285,6 +301,7 @@ Interceptors and decorators may not declare producer methods. If an interceptor 
 
 A producer method may have any number of parameters. All producer method parameters are injection points.
 
+[source, java]
 ----
 public class OrderFactory {
 
@@ -305,6 +322,7 @@ If a producer method X is annotated +@Specializes+, then it must be non-static a
 
 If the method is static or does not directly override another producer method, the container automatically detects the problem and treats it as a definition error.
 
+[source, java]
 ----
 @Mock
 public class MockShop extends Shop {
@@ -334,6 +352,7 @@ The default name for a producer method is the method name, unless the method fol
 
 For example, this producer method is named +products+:
 
+[source, java]
 ----
 @Produces @Named
 public List<Product> getProducts() { ... }
@@ -341,6 +360,7 @@ public List<Product> getProducts() { ... }
 
 This producer method is named +paymentProcessor+:
 
+[source, java]
 ----
 @Produces @Named
 public PaymentProcessor paymentProcessor() { ... }
@@ -385,6 +405,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 A producer field may be declared by annotating a field with the +@javax.enterprise.inject.Produces+ annotation.
 
+[source, java]
 ----
 public class Shop {
    @Produces PaymentProcessor paymentProcessor = ....;
@@ -394,6 +415,7 @@ public class Shop {
 
 A producer field may also specify scope, bean name, stereotypes and/or qualifiers.
 
+[source, java]
 ----
 public class Shop {
    @Produces @ApplicationScoped @Catalog @Named("catalog") 
@@ -415,6 +437,7 @@ The default name for a producer field is the field name.
 
 For example, this producer field is named +products+:
 
+[source, java]
 ----
 @Produces @Named
 public List<Product> products = ...;
@@ -440,6 +463,7 @@ A disposer method may resolve to multiple producer methods or producer fields de
 
 A disposer method may be declared by annotating a parameter +@javax.enterprise.inject.Disposes+. That parameter is the disposed parameter. Qualifiers may be declared by annotating the disposed parameter:
 
+[source, java]
 ----
 public class UserDatabaseEntityManager {
 
@@ -455,6 +479,7 @@ public class UserDatabaseEntityManager {
 }
 ----
 
+[source, java]
 ----
 public class Resources {
     
@@ -479,6 +504,7 @@ Interceptors and decorators may not declare disposer methods. If an interceptor 
 
 In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify qualifiers. These additional parameters are injection points.
 
+[source, java]
 ----
 public void close(@Disposes @UserDatabase EntityManager em, Logger log) { ... }
 ----
@@ -503,18 +529,22 @@ A _resource_ is a bean that represents a reference to a resource, persistence co
 
 By declaring a resource, we enable an object from the Java EE component environment to be injected by a specifying only its type and qualifiers at the injection point. For example, if +@CustomerDatabase+ is a qualifier:
 
+[source, java]
 ----
 @Inject @CustomerDatabase Datasource customerData;
 ----
 
+[source, java]
 ----
 @Inject @CustomerDatabase EntityManager customerDatabaseEntityManager;
 ----
 
+[source, java]
 ----
 @Inject @CustomerDatabase EntityManagerFactory customerDatabaseEntityManagerFactory;
 ----
 
+[source, java]
 ----
 @Inject PaymentService remotePaymentService;
 ----
@@ -536,26 +566,31 @@ A resource may be declared by specifying a Java EE component environment injecti
 
 The injection annotation specifies the metadata needed to obtain the resource, entity manager, entity manager factory, remote EJB instance or web service reference from the component environment.
 
+[source, java]
 ----
 @Produces @WebServiceRef(lookup="java:app/service/PaymentService")
 PaymentService paymentService;
 ----
 
+[source, java]
 ----
 @Produces @EJB(ejbLink="../their.jar#PaymentService")
 PaymentService paymentService;
 ----
 
+[source, java]
 ----
 @Produces @Resource(lookup="java:global/env/jdbc/CustomerDatasource")
 @CustomerDatabase Datasource customerDatabase;
 ----
 
+[source, java]
 ----
 @Produces @PersistenceContext(unitName="CustomerDatabase")
 @CustomerDatabase EntityManager customerDatabasePersistenceContext;
 ----
 
+[source, java]
 ----
 @Produces @PersistenceUnit(unitName="CustomerDatabase")
 @CustomerDatabase EntityManagerFactory customerDatabasePersistenceUnit;
@@ -602,6 +637,7 @@ The application may call bean constructors directly. However, if the application
 
 The bean constructor may be identified by annotating the constructor +@Inject+.
 
+[source, java]
 ----
 @SessionScoped
 public class ShoppingCart implements Serializable {
@@ -624,6 +660,7 @@ public class ShoppingCart implements Serializable {
 }
 ----
 
+[source, java]
 ----
 @ConversationScoped
 public class Order {
@@ -667,6 +704,7 @@ An _injected field_ is a non-static, non-final field of a bean class, a non-stat
 
 An injected field may be declared by annotating the field +@javax.inject.Inject+.
 
+[source, java]
 ----
 @ConversationScoped
 public class Order {
@@ -695,6 +733,7 @@ The application may call initializer methods directly, but then no parameters wi
 
 An initializer method may be declared by annotating the method +@javax.inject.Inject+.
 
+[source, java]
 ----
 @ConversationScoped
 public class Order {
@@ -729,6 +768,7 @@ If an injection point declares no qualifier, the injection point has exactly one
 
 The following are equivalent:
 
+[source, java]
 ----
 @ConversationScoped
 public class Order {
@@ -745,6 +785,7 @@ public class Order {
 }
 ----
 
+[source, java]
 ----
 @ConversationScoped
 public class Order {
@@ -763,6 +804,7 @@ public class Order {
 
 The following definitions are equivalent:
 
+[source, java]
 ----
 public class Payment {
 
@@ -775,6 +817,7 @@ public class Payment {
 }
 ----
 
+[source, java]
 ----
 public class Payment {
 
@@ -789,10 +832,12 @@ public class Payment {
 
 Finally, the following are equivalent:
 
+[source, java]
 ----
 @Inject Order order;
 ----
 
+[source, java]
 ----
 @Inject @Default Order order;
 ----
@@ -803,6 +848,7 @@ Finally, the following are equivalent:
 
 Any type or package may be prevented from being considered by CDI by adding the +@Vetoed+ annotation on the type or package.
 
+[source, java]
 ----
 @Vetoed
     public class Order {
@@ -816,6 +862,7 @@ The use of +@Named+ as an injection point qualifier is not recommended, except i
 
 If an injected field declares a +@Named+ annotation that does not specify the +value+ member, the name of the field is assumed. For example, the following field has the qualifier +@Named("paymentService")+:
 
+[source, java]
 ----
 @Inject @Named PaymentService paymentService;
 ----
@@ -853,6 +900,7 @@ Note that this second bean exists - and may be enabled and available for injecti
 
 This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
 
+[source, java]
 ----
 @Produces @ConversationScoped 
 @Special Order getSpecialOrder(@New(Order.class) Order order) {
@@ -863,6 +911,7 @@ This allows the application to obtain a new instance of a bean which is not boun
 
 When the qualifier +@New+ is specified at an injection point and no +value+ member is explicitly specified, the container defaults the +value+ to the declared type of the injection point. So the following injection point has qualifier +@New(Order.class)+:
 
+[source, java]
 ----
 @Produces @ConversationScoped 
 @Special Order getSpecialOrder(@New Order order) { ... }

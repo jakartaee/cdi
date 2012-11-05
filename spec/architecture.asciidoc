@@ -109,6 +109,7 @@ The following examples demonstrate the use of lifecycle contexts and dependency 
 
 The following JSF page defines a login prompt for a web application:
 
+[source, xml]
 ----
 <f:view>
     <h:form>
@@ -128,6 +129,7 @@ The Unified EL expressions in this page refer to beans named +credentials+ and +
 
 The +Credentials+ bean has a lifecycle that is bound to the JSF request:
 
+[source, java]
 ----
 @Model
 public class Credentials {
@@ -148,6 +150,7 @@ The +@Model+ annotation defined in <<model>> is a _stereotype_ that identifies t
 
 The +Login+ bean has a lifecycle that is bound to the HTTP session:
 
+[source, java]
 ----
 @SessionScoped @Model
 public class Login implements Serializable {
@@ -212,6 +215,7 @@ The +@Inject+ annotation defined by the Dependency Injection for Java specificat
 
 The +@Users+ annotation is a qualifier type defined by the application:
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -221,6 +225,7 @@ public @interface Users {}
 
 The +@LoggedIn+ annotation is another qualifier type defined by the application:
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -230,6 +235,7 @@ public @interface LoggedIn {}
 
 The +@Produces+ annotation defined in <<declaringproducermethod>> identifies the method +getCurrentUser()+ as a _producer method_, which will be called whenever another bean in the system needs the currently logged-in user, for example, whenever the +user+ attribute of the +DocumentEditor+ class is injected by the container:
 
+[source, java]
 ----
 @Model
 public class DocumentEditor {
@@ -254,6 +260,7 @@ When the login form is submitted, JSF assigns the entered username and password 
 
 Alternatively, we could write our +Login+ bean to take advantage of the functionality defined by EJB:
 
+[source, java]
 ----
 @Stateful @SessionScoped @Model
 public class Login {
@@ -298,6 +305,7 @@ The EJB +@Stateful+ annotation specifies that this bean is an EJB stateful sessi
 
 In the previous examples, we injected container-managed persistence contexts using qualifier types. We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Java EE component environment in Java code.
 
+[source, java]
 ----
 public class Databases {
     
@@ -319,6 +327,7 @@ The JPA +@PersistenceContext+ and +@PersistenceUnit+ annotations identify the JP
 
 Beans may raise events. For example, our +Login+ class could raise events when a user logs in or out.
 
+[source, java]
 ----
 @SessionScoped @Model
 public class Login implements Serializable {
@@ -369,6 +378,7 @@ The method +fire()+ of the built-in bean of type +Event+ defined in <<eventinter
 
 Other beans may observe these events and use them to synchronize their internal state, with no coupling to the bean producing the events:
 
+[source, java]
 ----
 @SessionScoped
 public class Permissions implements Serializable {
@@ -413,6 +423,7 @@ The +@Observes+ annotation defined in <<observes>> identifies the method with th
 
 It is possible to implement generic beans that introspect the injection point to which they belong. This makes it possible to implement injection for ++Logger++ s, for example.
 
+[source, java]
 ----
 class Loggers {
     
@@ -427,6 +438,7 @@ The +InjectionPoint+ interface defined in <<injectionpoint>>, provides metadata 
 
 Then this class will have a +Logger+ named +"Permissions"+ injected:
 
+[source, java]
 ----
 @SessionScoped
 public class Permissions implements Serializable {
@@ -444,6 +456,7 @@ _Interceptors_ allow common, cross-cutting concerns to be applied to beans via c
 
 The +AuthorizationInterceptor+ class defines a custom authorization check:
 
+[source, java]
 ----
 @Secure @Interceptor 
 public class AuthorizationInterceptor {
@@ -474,6 +487,7 @@ public class AuthorizationInterceptor {
 
 The +@Interceptor+ annotation, defined in <<declaringinterceptor>>, identifies the +AuthorizationInterceptor+ class as an interceptor. The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <<interceptorbindings>>.
 
+[source, java]
 ----
 @Inherited
 @InterceptorBinding
@@ -484,6 +498,7 @@ public @interface Secure {}
 
 The +@Secure+ annotation is used to apply the interceptor to a bean:
 
+[source, java]
 ----
 @Model
 public class DocumentEditor {
@@ -509,6 +524,7 @@ _Decorators_ are similar to interceptors, but apply only to beans of a particula
 
 For example, the +DataAccess+ interface might be implemented by many beans:
 
+[source, java]
 ----
 public interface DataAccess<T, V> {
       
@@ -524,6 +540,7 @@ public interface DataAccess<T, V> {
 
 The +DataAccessAuthorizationDecorator+ class defines the authorization checks:
 
+[source, java]
 ----
 @Decorator 
 public abstract class DataAccessAuthorizationDecorator<T, V> implements DataAccess<T, V> {

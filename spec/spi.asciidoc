@@ -16,6 +16,7 @@ A portable extension may integrate with the container by:
 
 The +BeanAttributes+ interface exposes the basic attributes of a bean.
 
+[source, java]
 ----
 public interface BeanAttributes<T> {
     public Set<Type> getTypes();
@@ -35,6 +36,7 @@ public interface BeanAttributes<T> {
 
 The interface +javax.enterprise.inject.spi.Bean+ defines everything the container needs to manage instances of a certain bean.
 
+[source, java]
 ----
 public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
     public Class<?> getBeanClass();
@@ -58,6 +60,7 @@ A portable extension may add support for new kinds of beans beyond those defined
 
 The +Bean+ object for a decorator must implement the interface +javax.enterprise.inject.spi.Decorator+.
 
+[source, java]
 ----
 public interface Decorator<T> extends Bean<T> {
     public Set<Type> getDecoratedTypes();
@@ -78,6 +81,7 @@ An instance of +Decorator+ exists for every enabled decorator.
 
 The +Bean+ object for an interceptor must implement +javax.enterprise.inject.spi.Interceptor+.
 
+[source, java]
 ----
 public interface Interceptor<T> extends Bean<T> {
     public Set<Annotation> getInterceptorBindings();
@@ -93,6 +97,7 @@ public interface Interceptor<T> extends Bean<T> {
 
 An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout method or business method.
 
+[source, java]
 ----
 public enum InterceptionType { 
     AROUND_INVOKE, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
@@ -107,6 +112,7 @@ An instance of +Interceptor+ exists for every enabled interceptor.
 
 The interface +javax.enterprise.inject.spi.ObserverMethod+ defines everything the container needs to know about an observer method.
 
+[source, java]
 ----
 public interface ObserverMethod<T> {
     public Class<?> getBeanClass();
@@ -134,6 +140,7 @@ An instance of +ObserverMethod+ exists for every observer method of every enable
 
 The interface +javax.enterprise.inject.spi.Producer+ provides a generic operation for producing an instance of a type.
 
+[source, java]
 ----
 public interface Producer<T> {
     public T produce(CreationalContext<T> ctx);
@@ -158,6 +165,7 @@ For a +Producer+ that represents a producer method or field:
 
 The subinterface +javax.enterprise.inject.spi.InjectionTarget+ provides operations for performing dependency injection and lifecycle callbacks on an instance of a type.
 
+[source, java]
 ----
 public interface InjectionTarget<T> {
         extends Producer<T>
@@ -182,6 +190,7 @@ The interface +javax.enterprise.inject.spi.BeanManager+ provides operations for 
 
 The container provides a built-in bean with bean type +BeanManager+, scope +@Dependent+ and qualifier +@Default+. The built-in implementation must be a passivation capable dependency, as defined in <<passivationcapabledependency>>. Thus, any bean may obtain an instance of +BeanManager+ by injecting it:
 
+[source, java]
 ----
 @Inject BeanManager manager;
 ----
@@ -194,6 +203,7 @@ Any operation of +BeanManager+ may be called at any time during the execution of
 
 Portable extensions and other objects sometimes interact directly with the container via programmatic API call. The abstract +javax.enterprise.inject.spi.CDI+ provides access to the +BeanManager+ as well providing lookup of bean instances.
 
+[source, java]
 ----
 public abstract class CDI<T> implements Instance<T> {
    public static CDI<Object> current() { ... }
@@ -208,6 +218,7 @@ When +CDI.current()+ is called, +getCDI()+ method is called on +javax.enterprise
 
 The +CDIProvider+ to use may be set by the application or container using the +setCDIProvider()+ method. If the +setCDIProvider()+ has not been called, the first service provider of the service +javax.enterprise.inject.spi.CDIProvider+ declared in META-INF/services is used. If no provider is available an +IllegalStateException+ is thrown.
 
+[source, java]
 ----
 public interface CDIProvider {
    public CDI<Object> getCDI();
@@ -222,6 +233,7 @@ Java EE components may obtain an instance of +BeanManager+ from JNDI by looking 
 
 The method +BeanManager.getReference()+ returns a contextual reference for a given bean and bean type, as defined in <<contextualreference>>.
 
+[source, java]
 ----
 public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
 ----
@@ -234,6 +246,7 @@ If the given type is not a bean type of the given bean, an +IllegalArgumentExcep
 
 The method +BeanManager.getInjectableReference()+ returns an injectable reference for a given injection point, as defined in <<injectableinstance>>.
 
+[source, java]
 ----
 public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 ----
@@ -250,6 +263,7 @@ Implementations of +Bean+ usually maintain a reference to an instance of +BeanMa
 
 An instance of +CreationalContext+ for a certain instance of +Contextual+ may be obtained by calling +BeanManager.createCreationalContext()+.
 
+[source, java]
 ----
 public <T> CreationalContext<T> createCreationalContext(Contextual<T> contextual);
 ----
@@ -260,6 +274,7 @@ An instance of +CreationalContext+ for a non-contextual object may be obtained b
 
 The method +BeanManager.getBeans()+ returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules for candidates of typesafe resolution defined in <<performingtypesaferesolution>>.
 
+[source, java]
 ----
 public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
 ----
@@ -278,6 +293,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 The method +BeanManager.getBeans()+ which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules of name resolution defined in <<nameresolution>>.
 
+[source, java]
 ----
 public Set<Bean<?>> getBeans(String name);
 ----
@@ -288,6 +304,7 @@ The parameter is a bean name.
 
 The method +BeanManager.getPassivationCapableBean()+ returns the +PassivationCapable+ bean with the given identifier (see <<passivationcapable>>).
 
+[source, java]
 ----
 public Bean<?> getPassivationCapableBean(String id);
 ----
@@ -296,6 +313,7 @@ public Bean<?> getPassivationCapableBean(String id);
 
 The method +BeanManager.resolve()+ applies the ambiguous dependency resolution rules defined in <<ambigdependencies>> to a set of ++Bean++ s.
 
+[source, java]
 ----
 public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
 ----
@@ -316,6 +334,7 @@ If the ambiguous dependency resolution rules fail (as defined in <<ambigdependen
 
 The +BeanManager.validate()+ operation validates an injection point and throws an +InjectionException+ if there is a deployment problem (for example, an unsatisfied or unresolvable ambiguous dependency) associated with the injection point.
 
+[source, java]
 ----
 public void validate(InjectionPoint injectionPoint);
 ----
@@ -324,6 +343,7 @@ public void validate(InjectionPoint injectionPoint);
 
 The method +BeanManager.fireEvent()+ fires an event and notifies observers, according to <<observernotification>>.
 
+[source, java]
 ----
 public void fireEvent(Object event, Annotation... qualifiers);
 ----
@@ -342,6 +362,7 @@ If the runtime type of the event object is assignable to the type of a container
 
 The method +BeanManager.resolveObserverMethods()+ resolves observer methods for an event according to the rules of observer resolution defined in <<observerresolution>>.
 
+[source, java]
 ----
 public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);
 ----
@@ -358,6 +379,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 The method +BeanManager.resolveDecorators()+ returns the ordered list of decorators for a set of bean types and a set of qualifiers and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<decoratorresolution>>.
 
+[source, java]
 ----
 List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 ----
@@ -374,6 +396,7 @@ If the set of bean types is empty, an +IllegalArgumentException+ is thrown.
 
 The method +BeanManager.resolveInterceptors()+ returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<interceptorresolution>>.
 
+[source, java]
 ----
 List<Interceptor<?>> resolveInterceptors(InterceptionType type, 
                                          Annotation... interceptorBindings);
@@ -389,6 +412,7 @@ If an instance of an annotation that is not an interceptor binding type is given
 
 A portable extension may test an annotation to determine if it is a qualifier type, scope type, stereotype or interceptor binding type, obtain the set of meta-annotations declared by a stereotype or interceptor binding type, or determine if a scope type is a normal or passivating scope.
 
+[source, java]
 ----
 public boolean isScope(Class<? extends Annotation> annotationType);
 public boolean isQualifier(Class<? extends Annotation> annotationType);
@@ -405,6 +429,7 @@ public Set<Annotation> getStereotypeDefinition(Class<? extends Annotation> stere
 
 A portable extension may determine if two qualifiers or two interceptor bindings are considered equivalent for the purposes of typesafe resolution, as defined in <<performingtypesaferesolution>>.
 
+[source, java]
 ----
 public boolean areQualifiersEquivalent(Annotation qualifier1, Annotation qualifier2);
 public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, Annotation interceptorBinding2);
@@ -412,6 +437,7 @@ public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, 
 
 A portable extension may determine the hash code of a qualifier or and interceptor binding, ignoring any members annotated with +@Nonbinding+.
 
+[source, java]
 ----
 public int getQualifierHashCode(Annotation qualifier);
 public int getInterceptorBindingHashCode(Annotation interceptorBinding);
@@ -421,6 +447,7 @@ public int getInterceptorBindingHashCode(Annotation interceptorBinding);
 
 The method +BeanManager.getContext()+ retrieves an active context object associated with the a given scope, as defined in <<activecontext>>.
 
+[source, java]
 ----
 public Context getContext(Class<? extends Annotation> scopeType);
 ----
@@ -429,6 +456,7 @@ public Context getContext(Class<? extends Annotation> scopeType);
 
 The method +BeanManager.getELResolver()+ returns the +javax.el.ELResolver+ specified in <<el>>.
 
+[source, java]
 ----
 public ELResolver getELResolver();
 ----
@@ -437,6 +465,7 @@ public ELResolver getELResolver();
 
 The method +BeanManager.wrapExpressionFactory()+ returns a wrapper +javax.el.ExpressionFactory+ that delegates +MethodExpression+ and +ValueExpression+ creation to the given +ExpressionFactory+. When a Unified EL expression is evaluated using a +MethodExpression+ or +ValueExpression+ returned by the wrapper +ExpressionFactory+, the rules defined in <<dependentscopeel>> are enforced by the container.
 
+[source, java]
 ----
 public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 ----
@@ -449,6 +478,7 @@ The methods +BeanManager.getAnnotatedType()+ and +BeanManager.getAnnotatedTypes(
 
 The method +BeanManager.getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered by or added to the container during container initialization.
 
+[source, java]
 ----
 public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
 public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
@@ -459,6 +489,7 @@ public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 
 The method +BeanManager.createInjectionTarget()+ returns a container provided implementation of +InjectionTarget+ for a given +AnnotatedType+ or throws an +IllegalArgumentException+ if there is a definition error associated with any injection point of the type.
 
+[source, java]
 ----
 public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
 ----
@@ -467,6 +498,7 @@ public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
 
 The method +BeanManager.createProducer()+ returns a container provided implementation of +Producer+ for a given +AnnotatedMethod+ or +AnnotatedField+ or throws an +IllegalArgumentException+ if there is a definition error associated with the producer method or field.
 
+[source, java]
 ----
 public <X> Producer<?> createProducer(AnnotatedField<? super X> field, Bean<X> declaringBean);
 public <X> Producer<?> createProducer(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
@@ -476,6 +508,7 @@ public <X> Producer<?> createProducer(AnnotatedMethod<? super X> method, Bean<X>
 
 The method +BeanManager.createInjectionPoint()+ returns a container provided implementation of +InjectionPoint+ for a given +AnnotatedField+ or +AnnotatedParameter+ or throws an +IllegalArgumentException+ if there is a definition error associated with the injection point.
 
+[source, java]
 ----
 public InjectionPoint createInjectionPoint(AnnotatedField<?> field);
 public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
@@ -485,6 +518,7 @@ public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
 
 The method +BeanManager.createBeanAttributes()+ returns a container provided implementation of +BeanAttributes+ by reading the annotations of a given +AnnotatedType+ or +AnnotatedMember+, according to the rules define in <<concepts>>, or throws an +IllegalArgumentException+ if there is a definition error associated with the declared bean attributes.
 
+[source, java]
 ----
 public <T> BeanAttributes<T> createBeanAttributes(AnnotatedType<T> type);
 public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
@@ -503,6 +537,7 @@ The first version of the method also accepts:
 * an +InjectionTarget+, which is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of +Bean.getInjectionPoints()+.
 
 
+[source, java]
 ----
 public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, 
                           InjectionTarget<T> injectionTarget);
@@ -513,6 +548,7 @@ The second version of the method also accepts:
 * a +Producer+, which is used to create and destroy instances of the bean, and which determines the return value of +Bean.getInjectionPoints()+.
 
 
+[source, java]
 ----
 public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, 
                           Producer<T> producer);
@@ -522,6 +558,7 @@ public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass,
 
 The method +BeanManager.getExtensions()+ returns the container's instance of an +Extension+ class declared in +META-INF/services+, or throws an +IllegalArgumentException+ if the container has no instance of the given class.
 
+[source, java]
 ----
 public <T extends Extension> T getExtension(Class<T> extensionClass);
 ----
@@ -536,6 +573,7 @@ In general, the behavior is as defined by the Java Language Specification, and o
 
 The interface +javax.enterprise.inject.spi.AnnotatedType+ exposes the +Class+ object and members.
 
+[source, java]
 ----
 public interface AnnotatedType<X>
         extends Annotated {
@@ -555,6 +593,7 @@ When determining annotations on a type, the container must only consider the spe
 
 The interface +javax.enterprise.inject.spi.IdentifiedAnnotatedType+ allows multiple annotated types, based on the same underlying type, to be defined.
 
+[source, java]
 ----
 public interface IdentifiedAnnotatedType<X>
         extends AnnotatedType<X> {
@@ -569,6 +608,7 @@ If an +AnnotatedType+ is an instance of +IdentifiedAnnotatedType+ then +Identifi
 
 The interface +javax.enterprise.inject.spi.AnnotatedField+ exposes the +Field+ object.
 
+[source, java]
 ----
 public interface AnnotatedField<X> 
         extends AnnotatedMember<X> {    
@@ -578,6 +618,7 @@ public interface AnnotatedField<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedMethod+ exposes the +Method+ object.
 
+[source, java]
 ----
 public interface AnnotatedMethod<X> 
         extends AnnotatedCallable<X> {
@@ -587,6 +628,7 @@ public interface AnnotatedMethod<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedConstructor+ exposes the +Constuctor+ object.
 
+[source, java]
 ----
 public interface AnnotatedConstructor<X> 
         extends AnnotatedCallable<X> {
@@ -596,6 +638,7 @@ public interface AnnotatedConstructor<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedParameter+ exposes the +position+ of the parameter object and the declaring program element.
 
+[source, java]
 ----
 public interface AnnotatedParameter<X> 
         extends Annotated {
@@ -606,6 +649,7 @@ public interface AnnotatedParameter<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedMemember+ exposes the +Member+ object and the +AnnotatedType+ that defines the member.
 
+[source, java]
 ----
 public interface AnnotatedMember<X> 
         extends Annotated {
@@ -619,6 +663,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedCallable+ exposes the parame
 
 Contexts and Dependency Injection for Java EE 1.1 deprecated the method +AnnotatedMember.isStatic+. The container should instead call +AnnotatedMember.getJavaMember().getModifiers()+ to determine if the member is static.
 
+[source, java]
 ----
 public interface AnnotatedCallable<X> 
         extends AnnotatedMember<X> {
@@ -628,6 +673,7 @@ public interface AnnotatedCallable<X>
 
 The interface +javax.enterprise.inject.spi.Annotated+ exposes the overriding annotations and type declarations.
 
+[source, java]
 ----
 public interface Annotated {
     public Type getBaseType();
@@ -662,6 +708,7 @@ During the application initialization process, the container fires a series of e
 
 Observer methods of these events must belong to _extensions_. An extension is a service provider of the service +javax.enterprise.inject.spi.Extension+ declared in +META-INF/services+.
 
+[source, java]
 ----
 public interface Extension {}
 ----
@@ -678,6 +725,7 @@ For each service provider, the container must provide a bean of scope +@Applicat
 
 The container must fire an event before it begins the bean discovery process. The event object must be of type +javax.enterprise.inject.spi.BeforeBeanDiscovery+:
 
+[source, java]
 ----
 public interface BeforeBeanDiscovery {
     public void addQualifier(Class<? extends Annotation> qualifier);
@@ -696,6 +744,7 @@ public interface BeforeBeanDiscovery {
 Portable extensions are encouraged to add ++IdentifiedAnnotatedType++ s in order to not accidentally conflict with discovered types.
 
 
+[source, java]
 ----
 void beforeBeanDiscovery(@Observes BeforeBeanDiscovery event) { ... }
 ----
@@ -710,6 +759,7 @@ The container must fire a second event when it has fully completed the bean disc
 
 The event object must be of type +javax.enterprise.inject.spi.AfterBeanDiscovery+:
 
+[source, java]
 ----
 public interface AfterBeanDiscovery {
     public void addDefinitionError(Throwable t);
@@ -727,6 +777,7 @@ public interface AfterBeanDiscovery {
 
 A portable extension may take advantage of this event to register beans, interceptors, decorators, observer methods and custom context objects with the container.
 
+[source, java]
 ----
 void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager) { ... }
 ----
@@ -741,6 +792,7 @@ The container must fire a third event after it has validated that there are no d
 
 The event object must be of type +javax.enterprise.inject.spi.AfterDeploymentValidation+:
 
+[source, java]
 ----
 public interface AfterDeploymentValidation {
     public void addDeploymentProblem(Throwable t);
@@ -750,6 +802,7 @@ public interface AfterDeploymentValidation {
 * +addDeploymentProblem()+ registers a deployment problem with the container, causing the container to abort deployment after all observers have been notified.
 
 
+[source, java]
 ----
 void afterDeploymentValidation(@Observes AfterDeploymentValidation event, BeanManager manager) { ... }
 ----
@@ -766,10 +819,12 @@ The container must fire a final event after it has finished processing requests 
 
 The event object must be of type +javax.enterprise.inject.spi.BeforeShutdown+:
 
+[source, java]
 ----
 public interface BeforeShutdown {}
 ----
 
+[source, java]
 ----
 void beforeShutdown(@Observes BeforeShutdown event, BeanManager manager) { ... }
 ----
@@ -784,6 +839,7 @@ The container must fire an event for each bean archive, before it processes the 
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessModule+.
 
+[source, java]
 ----
 public interface ProcessModule {
     public Set<Class<?>> getAlternatives();
@@ -824,6 +880,7 @@ The annotation +@WithAnnotations+ may be applied to the event parameter. If the 
 
 If the +@WithAnnotations+ annotation is applied to any other event parameter, the container automatically detects the problem and treats it as a definition error.
 
+[source, java]
 ----
 public interface ProcessAnnotatedType<X> {
     public AnnotatedType<X> getAnnotatedType();
@@ -832,6 +889,7 @@ public interface ProcessAnnotatedType<X> {
 }
 ----
 
+[source, java]
 ----
 interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
     public Extension getSource();
@@ -848,6 +906,7 @@ Any observer of this event is permitted to wrap and/or replace the +AnnotatedTyp
 
 For example, the following observer decorates the +AnnotatedType+ for every class that is discovered by the container.
 
+[source, java]
 ----
 <T> void decorateAnnotatedType(@Observes ProcessAnnotatedType<T> pat) {
     pat.setAnnotatedType( decorate( pat.getAnnotatedType() ) );
@@ -862,6 +921,7 @@ The container must fire an event for every injection point of every Java EE comp
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the managed bean class, session bean class or Java EE component class supporting injection, and +X+ is the declared type of the injection point.
 
+[source, java]
 ----
 public interface ProcessInjectionPoint<T, X> {
     public InjectionPoint getInjectionPoint();
@@ -887,6 +947,7 @@ The container must fire an event for every enum and every Java EE component clas
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the managed bean class, session bean class or Java EE component class supporting injection.
 
+[source, java]
 ----
 public interface ProcessInjectionTarget<X> {
     public AnnotatedType<X> getAnnotatedType();
@@ -906,6 +967,7 @@ Any observer of this event is permitted to wrap and/or replace the +InjectionTar
 
 For example, this observer decorates the +InjectionTarget+ for all servlets.
 
+[source, java]
 ----
 <T extends Servlet> void decorateServlet(@Observes ProcessInjectionTarget<T> pit) {
     pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
@@ -922,6 +984,7 @@ The container must fire an event for each producer method or field of each enabl
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessProducer<T, X>+, where +T+ is the bean class of the bean that declares the producer method or field and +X+ is the return type of the producer method or the type of the producer field.
 
+[source, java]
 ----
 public interface ProcessProducer<T, X> {
     public AnnotatedMember<T> getAnnotatedMember();
@@ -941,6 +1004,7 @@ Any observer of this event is permitted to wrap and/or replace the +Producer+. T
 
 For example, this observer decorates the +Producer+ for all producer methods and fields of type +EntityManager+.
 
+[source, java]
 ----
 void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
     pit.setProducer( decorate( pp.getProducer() ) );
@@ -951,6 +1015,7 @@ If any observer method of a +ProcessProducer+ event throws an exception, the exc
 
 For producer methods, the event must be of type +ProcessProducerMethod+.
 
+[source, java]
 ----
 public interface ProcessProducerMethod<T, X> extends ProcessProducer<T, X> {
     public AnnotatedMethod<T> getAnnotatedMember();
@@ -959,6 +1024,7 @@ public interface ProcessProducerMethod<T, X> extends ProcessProducer<T, X> {
 
 For producer fields, the event must be of type +ProcessProducerField+.
 
+[source, java]
 ----
 public interface ProcessProducerField<T, X> extends ProcessProducer<T, X> {
     public AnnotatedField<T> getAnnotatedMember();
@@ -971,6 +1037,7 @@ public interface ProcessProducerField<T, X> extends ProcessProducer<T, X> {
 
 The interface +Initializer+ lets a portable extension provide an initial value for a producer field.
 
+[source, java]
 ----
 public interface Initilizer<X> {
     public X getInitialValue(AnnotatedField<?> field);
@@ -988,6 +1055,7 @@ The event object must be of type +javax.enterprise.inject.spi.ProcessBeanAttribu
 
 Resources are considered to be producer fields.
 
+[source, java]
 ----
 public interface ProcessBeanAttributes<T> {
     public Annotated getAnnotated();
@@ -1027,6 +1095,7 @@ Resources are considered to be producer fields.
 
 The interface +javax.enterprise.inject.spi.ProcessBean+ is a supertype of all these event types:
 
+[source, java]
 ----
 public interface ProcessBean<X> {
     public Annotated getAnnotated();
@@ -1040,6 +1109,7 @@ public interface ProcessBean<X> {
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
+[source, java]
 ----
 public interface ProcessSessionBean<X> 
         extends ProcessManagedBean<Object> {
@@ -1052,10 +1122,12 @@ public interface ProcessSessionBean<X>
 * +getSessionBeanType()+ returns a +javax.enterprise.inject.spi.SessionBeanType+ representing the kind of session bean.
 
 
+[source, java]
 ----
 public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }
 ----
 
+[source, java]
 ----
 public interface ProcessManagedBean<X> 
         extends ProcessBean<X> {
@@ -1063,6 +1135,7 @@ public interface ProcessManagedBean<X>
 }
 ----
 
+[source, java]
 ----
 public interface ProcessProducerMethod<T, X> 
         extends ProcessBean<X> {
@@ -1071,6 +1144,7 @@ public interface ProcessProducerMethod<T, X>
 }
 ----
 
+[source, java]
 ----
 public interface ProcessProducerField<T, X> 
         extends ProcessBean<X> {
@@ -1089,6 +1163,7 @@ The container must fire an event for each observer method of each enabled bean, 
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessObserverMethod<T, X>+, where +T+ is the bean class of the bean that declares the observer method and +X+ is the observed event type of the observer method.
 
+[source, java]
 ----
 public interface ProcessObserverMethod<T, X> {
     public AnnotatedParameter<T> getAnnotatedEventParameter();

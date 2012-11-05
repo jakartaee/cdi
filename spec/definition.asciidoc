@@ -44,6 +44,7 @@ A bean is provided by the container with the following capabilities:
 
 A bean type defines a client-visible type of the bean. A bean may have multiple bean types. For example, the following bean has four bean types:
 
+[source, java]
 ----
 public class BookShop
         extends Business
@@ -56,6 +57,7 @@ The bean types are +BookShop+, +Business+, +Shop<Book>+ and +Object+.
 
 Meanwhile, this session bean has only the local interfaces +BookShop+ and +Auditable+, along with +Object+, as bean types, since the bean class is not a client-visible type.
 
+[source, java]
 ----
 @Stateful 
 public class BookShopBean 
@@ -92,6 +94,7 @@ Note that certain additional restrictions are specified in <<unproxyable>> for b
 
 The bean types of a bean may be restricted by annotating the bean class or producer method or field with the annotation +@javax.enterprise.inject.Typed+.
 
+[source, java]
 ----
 @Typed(Shop.class)
 public class BookShop
@@ -111,18 +114,21 @@ If a bean class or producer method or field specifies a +@Typed+ annotation, and
 
 A client of a bean may typecast its contextual reference to a bean to any bean type of the bean which is a Java interface. However, the client may not in general typecast its contextual reference to an arbitrary concrete bean type of the bean. For example, if our managed bean was injected to the following field:
 
+[source, java]
 ----
 @Inject Business biz;
 ----
 
 Then the following typecast is legal:
 
+[source, java]
 ----
 Shop<Book> bookShop = (Shop<Book>) biz;
 ----
 
 However, the following typecast is not legal and might result in an exception at runtime:
 
+[source, java]
 ----
 BookShop bookShop = (BookShop) biz;
 ----
@@ -133,6 +139,7 @@ BookShop bookShop = (BookShop) biz;
 
 For a given bean type, there may be multiple beans which implement the type. For example, an application may have two implementations of the interface +PaymentProcessor+:
 
+[source, java]
 ----
 class SynchronousPaymentProcessor 
         implements PaymentProcessor { 
@@ -140,6 +147,7 @@ class SynchronousPaymentProcessor
 }
 ----
 
+[source, java]
 ----
 class AsynchronousPaymentProcessor 
         implements PaymentProcessor { 
@@ -151,6 +159,7 @@ A client that needs a +PaymentProcessor+ that processes payments synchronously n
 
 A _qualifier type_ represents some client-visible semantic associated with a type that is satisfied by some implementations of the type (and not by others). For example, we could introduce qualifier types representing synchronicity and asynchronicity. In Java code, qualifier types are represented by annotations.
 
+[source, java]
 ----
 @Synchronous
 class SynchronousPaymentProcessor 
@@ -159,6 +168,7 @@ class SynchronousPaymentProcessor
 }
 ----
 
+[source, java]
 ----
 @Asynchronous
 class AsynchronousPaymentProcessor 
@@ -169,12 +179,14 @@ class AsynchronousPaymentProcessor
 
 Finally, qualifier types are applied to injection points to distinguish which implementation is required by the client. For example, when the container encounters the following injected field, an instance of +SynchronousPaymentProcessor+ will be injected:
 
+[source, java]
 ----
 @Inject @Synchronous PaymentProcessor paymentProcessor;
 ----
 
 But in this case, an instance of +AsynchronousPaymentProcessor+ will be injected:
 
+[source, java]
 ----
 @Inject @Asynchronous PaymentProcessor paymentProcessor;
 ----
@@ -197,11 +209,13 @@ If a bean does not explicitly declare a qualifier other than +@Named+, the bean 
 
 The following declarations are equivalent:
 
+[source, java]
 ----
 @Default
 public class Order { ... }
 ----
 
+[source, java]
 ----
 public class Order { ... }
 ----
@@ -210,6 +224,7 @@ Both declarations result in a bean with two qualifiers: +@Any+ and +@Default+.
 
 The following declaration results in a bean with three qualifiers: +@Any+, +@Default+ and +@Named("ord")+.
 
+[source, java]
 ----
 @Named("ord")
 public class Order { ... }
@@ -217,6 +232,7 @@ public class Order { ... }
 
 The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injectionpointdefaultqualifier>>. The following declarations, in which the use of the +@Inject+ annotation identifies the constructor parameter as an injection point, are equivalent:
 
+[source, java]
 ----
 public class Order {
     @Inject
@@ -224,6 +240,7 @@ public class Order {
 }
 ----
 
+[source, java]
 ----
 public class Order {
     @Inject
@@ -239,6 +256,7 @@ A qualifier type is a Java annotation defined as +@Retention(RUNTIME)+. Typicall
 
 A qualifier type may be declared by specifying the +@javax.inject.Qualifier+ meta-annotation.
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -246,6 +264,7 @@ A qualifier type may be declared by specifying the +@javax.inject.Qualifier+ met
 public @interface Synchronous {}
 ----
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -255,6 +274,7 @@ public @interface Asynchronous {}
 
 A qualifier type may define annotation members.
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -268,6 +288,7 @@ public @interface PayBy {
 
 The qualifiers of a bean are declared by annotating the bean class or producer method or field with the qualifier types.
 
+[source, java]
 ----
 @LDAP 
 class LdapAuthenticator 
@@ -276,6 +297,7 @@ class LdapAuthenticator
 }
 ----
 
+[source, java]
 ----
 public class Shop {
 
@@ -290,6 +312,7 @@ public class Shop {
 
 Any bean may declare multiple qualifier types.
 
+[source, java]
 ----
 @Synchronous @Reliable
 class SynchronousReliablePaymentProcessor 
@@ -302,20 +325,24 @@ class SynchronousReliablePaymentProcessor
 
 Qualifier types may be applied to injected fields (see <<injectedfields>>) to determine the bean that is injected, according to the rules of typesafe resolution defined in <<typesaferesolution>>.
 
+[source, java]
 ----
 @Inject @LDAP Authenticator authenticator;
 ----
 
 A bean may only be injected to an injection point if it has all the qualifiers of the injection point.
 
+[source, java]
 ----
 @Inject @Synchronous @Reliable PaymentProcessor paymentProcessor;
 ----
 
+[source, java]
 ----
 @Inject @All List<Product> catalog;
 ----
 
+[source, java]
 ----
 @Inject @WishList List<Product> wishList;
 ----
@@ -326,6 +353,7 @@ Qualifier types may be applied to parameters of producer methods, initializer me
 
 For example, when the container encounters the following producer method, an instance of +SynchronousPaymentProcessor+ will be passed to the first parameter and an instance of +AsynchronousPaymentProcessor+ will be passed to the second parameter:
 
+[source, java]
 ----
 @Produces
 PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync, 
@@ -355,12 +383,14 @@ All beans have a scope. The scope of a bean determines the lifecycle of its inst
 
 For example, an object that represents the current user is represented by a session scoped object:
 
+[source, java]
 ----
 @Produces @SessionScoped User getCurrentUser() { ... }
 ----
 
 An object that represents an order is represented by a conversation scoped object:
 
+[source, java]
 ----
 @ConversationScoped 
 public class Order { ... }
@@ -368,6 +398,7 @@ public class Order { ... }
 
 A list that contains the results of a search screen might be represented by a request scoped object:
 
+[source, java]
 ----
 @Produces @RequestScoped @Named("orders") 
 List<Order> getOrderSearchResults() { ... }
@@ -396,6 +427,7 @@ A scope type must not have any attributes. If a scope type has attributes non-po
 
 For example, the following annotation declares a "business process scope":
 
+[source, java]
 ----
 @Inherited
 @NormalScope
@@ -412,6 +444,7 @@ The scope of a bean is defined by annotating the bean class or producer method o
 
 A bean class or producer method or field may specify at most one scope type annotation. If a bean class or producer method or field specifies multiple scope type annotations, the container automatically detects the problem and treats it as a definition error.
 
+[source, java]
 ----
 public class Shop {
 
@@ -426,6 +459,7 @@ public class Shop {
 
 Likewise, a bean with the custom business process scope may be declared by annotating it with the +@BusinessProcessScoped+ annotation:
 
+[source, java]
 ----
 @BusinessProcessScoped
 public class Order { ... }
@@ -468,6 +502,7 @@ Subject to the restrictions defined in <<ambignames>>, multiple beans may share 
 
 Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
 
+[source, xml]
 ----
 <h:outputText value="#{products.total}"/>
 ----
@@ -478,6 +513,7 @@ Bean names are used by the rules of EL name resolution defined in <<nameresoluti
 
 To specify the name of a bean, the qualifier +@javax.inject.Named+ is applied to the bean class or producer method or field. This bean is named +currentOrder+:
 
+[source, java]
 ----
 @Named("currentOrder")
 public class Order { ... }
@@ -513,6 +549,7 @@ An _alternative_ is a bean that must be explicitly declared in the +beans.xml+ f
 
 An alternative may be declared by annotating the bean class or producer method or field with the +@Alternative+ annotation.
 
+[source, java]
 ----
 @Alternative
 public class MockOrder extends Order { ... }
@@ -548,6 +585,7 @@ A bean stereotype is a Java annotation defined as +@Retention(RUNTIME)+. Typical
 
 A stereotype may be declared by specifying the +@javax.enterprise.inject.Stereotype+ meta-annotation.
 
+[source, java]
 ----
 @Stereotype
 @Target(TYPE)
@@ -561,6 +599,7 @@ The default scope of a stereotype is defined by annotating the stereotype with a
 
 For example, the following stereotype might be used to identify action classes in a web application:
 
+[source, java]
 ----
 @RequestScoped
 @Stereotype
@@ -577,6 +616,7 @@ The interceptor bindings of a stereotype are defined by annotating the stereotyp
 
 We may specify interceptor bindings that apply to all actions:
 
+[source, java]
 ----
 @RequestScoped
 @Secure
@@ -595,6 +635,7 @@ If a stereotype declares a non-empty +@Named+ annotation, the container automati
 
 We may specify that all actions have bean names:
 
+[source, java]
 ----
 @RequestScoped
 @Secure
@@ -616,6 +657,7 @@ A stereotype may declare an +@Alternative+ annotation, which specifies that ever
 
 We may specify that all mock objects are alternatives:
 
+[source, java]
 ----
 @Alternative
 @Stereotype
@@ -628,6 +670,7 @@ public @interface Mock {}
 
 A stereotype may declare other stereotypes.
 
+[source, java]
 ----
 @Auditable
 @Action
@@ -647,6 +690,7 @@ Stereotypes declared +@Target(TYPE)+ may not be applied to stereotypes declared 
 
 Stereotype annotations may be applied to a bean class or producer method or field.
 
+[source, java]
 ----
 @Action
 public class LoginAction { ... }
@@ -654,6 +698,7 @@ public class LoginAction { ... }
 
 The default scope declared by the stereotype may be overridden by the bean:
 
+[source, java]
 ----
 @Mock @ApplicationScoped @Action
 public class MockLoginAction extends LoginAction { ... }
@@ -661,6 +706,7 @@ public class MockLoginAction extends LoginAction { ... }
 
 Multiple stereotypes may be applied to the same bean:
 
+[source, java]
 ----
 @Dao @Action
 public class LoginAction { ... }
@@ -672,6 +718,7 @@ public class LoginAction { ... }
 
 The built-in stereotype +@javax.enterprise.inject.Model+ is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
 
+[source, java]
 ----
 @Named
 @RequestScoped

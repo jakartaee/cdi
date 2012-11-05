@@ -24,6 +24,7 @@ Decorators of a session bean must comply with the bean provider programming rest
 
 A decorator is declared by annotating the bean class with the +@javax.decorator.Decorator+ stereotype.
 
+[source, java]
 ----
 @Decorator
 class TimestampLogger implements Logger { ... }
@@ -37,6 +38,7 @@ All decorators have a _delegate injection point_. A delegate injection point is 
 
 The delegate injection point must be declared by annotating the injection point with the annotation +@javax.decorator.Delegate+:
 
+[source, java]
 ----
 @Decorator
 class TimestampLogger implements Logger {
@@ -45,6 +47,7 @@ class TimestampLogger implements Logger {
 }
 ----
 
+[source, java]
 ----
 @Decorator
 class TimestampLogger implements Logger {
@@ -66,6 +69,7 @@ If a bean class that is not a decorator has an injection point annotated +@Deleg
 
 The container must inject a _delegate_ object to the delegate injection point. The delegate object implements the delegate type and delegates method invocations to remaining uninvoked decorators and eventually to the bean. When the container calls a decorator during business method interception, the decorator may invoke any method of the delegate object.
 
+[source, java]
 ----
 @Decorator 
 class TimestampLogger implements Logger { 
@@ -98,6 +102,7 @@ Decorators may be enabled for an application, or enabled only for a particular b
 
 A decorator may be enabled for the entire application by listing its class, along with a priority attribute, under the +<decorators>+ element of the +beans.xml+ file of the bean archive which contains the decorator class.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -111,6 +116,7 @@ A decorator may be enabled for the entire application by listing its class, alon
 
 A decorator may be enabled for a bean archive by listing its class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -123,6 +129,7 @@ A decorator may be enabled for a bean archive by listing its class under the +<d
 
 A decorator enabled for an application may be disabled for a bean archive by listing its class, along with an enabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -135,6 +142,7 @@ A decorator enabled for an application may be disabled for a bean archive by lis
 
 A decorator may be given a default priority, but not enabled by listing its class, along with a disabled flag and the priority attribute, under the +<decorators>+ element of the +beans.xml+ file of the bean archive which contains the decorator class.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -147,6 +155,7 @@ A decorator may be given a default priority, but not enabled by listing its clas
 
 A decorator with a default priority may be enabled for a bean archive by listing its class, along with an enabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -167,6 +176,7 @@ The priority of the decorator declaration, defined in <<priorities>>, determines
 
 By default, a bean archive has no enabled decorators. A decorator must be explicitly enabled by listing its bean class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

@@ -63,6 +63,7 @@ A parameterized event type is considered assignable to a parameterized observed 
 
 As usual, the qualifier type may have annotation members:
 
+[source, java]
 ----
 @Qualifier
 @Target(PARAMETER)
@@ -74,6 +75,7 @@ public @interface Role {
 
 Consider the following event:
 
+[source, java]
 ----
 public void login() {
     final User user = ...;
@@ -84,6 +86,7 @@ public void login() {
 
 Where +RoleQualifier+ is an implementation of the qualifier type +Role+:
 
+[source, java]
 ----
 public abstract class RoleQualifier 
         extends AnnotationLiteral<Role> 
@@ -92,12 +95,14 @@ public abstract class RoleQualifier
 
 Then the following observer method will always be notified of the event:
 
+[source, java]
 ----
 public void afterLogin(@Observes LoggedInEvent event) { ... }
 ----
 
 Whereas this observer method may or may not be notified, depending upon the value of +user.getRole()+:
 
+[source, java]
 ----
 public void afterAdminLogin(@Observes @Role("admin") LoggedInEvent event) { ... }
 ----
@@ -108,22 +113,26 @@ As usual, the container uses +equals()+ to compare event qualifier type member v
 
 An event parameter may have multiple qualifiers.
 
+[source, java]
 ----
 public void afterDocumentUpdatedByAdmin(@Observes @Updated @ByAdmin Document doc) { ... }
 ----
 
 Then this observer method will only be notified if all the observed event qualifiers are specified when the event is fired:
 
+[source, java]
 ----
 documentEvent.fire( document, new UpdatedQualifier() {}, new ByAdminQualifier() {} );
 ----
 
 Other, less specific, observers will also be notified of this event:
 
+[source, java]
 ----
 public void afterDocumentUpdated(@Observes @Updated Document doc) { ... }
 ----
 
+[source, java]
 ----
 public void afterDocumentEvent(@Observes Document doc) { ... }
 ----
@@ -132,12 +141,14 @@ public void afterDocumentEvent(@Observes Document doc) { ... }
 
 Beans fire events via an instance of the +javax.enterprise.event.Event+ interface, which may be injected:
 
+[source, java]
 ----
 @Inject @Any Event<LoggedInEvent> loggedInEvent;
 ----
 
 The method +fire()+ accepts an event object:
 
+[source, java]
 ----
 public void login() {
     ...
@@ -147,12 +158,14 @@ public void login() {
 
 Any combination of qualifiers may be specified at the injection point:
 
+[source, java]
 ----
 @Inject @Admin Event<LoggedInEvent> adminLoggedInEvent;
 ----
 
 Or, the +@Any+ qualifier may be used, allowing the application to specify qualifiers dynamically:
 
+[source, java]
 ----
 @Inject @Any Event<LoggedInEvent> loggedInEvent;
 ...
@@ -173,6 +186,7 @@ In this example, the event sometimes has the qualifier +@Admin+, depending upon 
 
 The +Event+ interface provides a method for firing events with a specified combination of type and qualifiers:
 
+[source, java]
 ----
 public interface Event<T> {
       
@@ -193,6 +207,7 @@ For an injected +Event+:
 
 For example, this injected +Event+ has specified type +LoggedInEvent+ and specified qualifier +@Any+:
 
+[source, java]
 ----
 @Inject @Any Event<LoggedInEvent> any;
 ----
@@ -201,6 +216,7 @@ The +select()+ method returns a child +Event+ for a given specified type and add
 
 For example, this child +Event+ has required type +AdminLoggedInEvent+ and additional specified qualifier +@Admin+:
 
+[source, java]
 ----
 Event<AdminLoggedInEvent> admin = any.select( 
             AdminLoggedInEvent.class, 
@@ -260,6 +276,7 @@ The event parameter type may contain a type variable or wildcard.
 
 An observer method may be declared by annotating a parameter +@javax.enterprise.event.Observes+ of a default-access, public, protected or private method. That parameter is the event parameter. The declared type of the parameter is the observed event type.
 
+[source, java]
 ----
 public void afterLogin(@Observes LoggedInEvent event) { ... }
 ----
@@ -268,6 +285,7 @@ If a method has more than one parameter annotated +@Observes+, the container aut
 
 Observed event qualifiers may be declared by annotating the event parameter:
 
+[source, java]
 ----
 public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 ----
@@ -280,6 +298,7 @@ Interceptors and decorators may not declare observer methods. If an interceptor 
 
 In addition to the event parameter, observer methods may declare additional parameters, which may declare qualifiers. These additional parameters are injection points.
 
+[source, java]
 ----
 public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger log) { ... }
 ----
@@ -290,6 +309,7 @@ A _conditional observer method_ is an observer method which is notified of an ev
 
 A conditional observer method may be declared by specifying +receive=IF_EXISTS+.
 
+[source, java]
 ----
 public void refreshOnDocumentUpdate(@Observes(receive=IF_EXISTS) @Updated Document doc) { ... }
 ----
@@ -298,6 +318,7 @@ Beans with scope +@Dependent+ may not have conditional observer methods. If a be
 
 The enumeration +javax.enterprise.event.Reception+ identifies the possible values of +receive+:
 
+[source, java]
 ----
 public enum Reception { IF_EXISTS, ALWAYS }
 ----
@@ -314,6 +335,7 @@ _Transactional observer methods_ are observer methods which receive event notifi
 
 The enumeration +javax.enterprise.event.TransactionPhase+ identifies the kind of transactional observer method:
 
+[source, java]
 ----
 public enum TransactionPhase {
     IN_PROGRESS,
@@ -326,6 +348,7 @@ public enum TransactionPhase {
 
 A transactional observer method may be declared by specifying any value other than +IN_PROGRESS+ for +during+:
 
+[source, java]
 ----
 void onDocumentUpdate(@Observes(during=AFTER_SUCCESS) @Updated Document doc) { ... }
 ----

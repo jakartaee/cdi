@@ -17,6 +17,7 @@ The context implementation collaborates with the container via the +Context+ and
 
 The interface +javax.enterprise.context.spi.Contextual+ defines operations to create and destroy contextual instances of a certain type. Any implementation of +Contextual+ is called a _contextual type_. In particular, the +Bean+ interface defined in <<bean>> extends +Contextual+, so all beans are contextual types.
 
+[source, java]
 ----
 public interface Contextual<T> {
     public T create(CreationalContext<T> creationalContext);
@@ -42,6 +43,7 @@ The container and portable extensions may define implementations of the +Context
 
 The interface +javax.enterprise.context.spi.CreationalContext+ provides operations that are used by the +Contextual+ implementation during instance creation and destruction.
 
+[source, java]
 ----
 public interface CreationalContext<T> {
     public void push(T incompleteInstance);
@@ -71,6 +73,7 @@ The context object is responsible for creating and destroying contextual instanc
 
 The +Context+ interface is called by the container and may be called by portable extensions. It should not be called directly by the application.
 
+[source, java]
 ----
 public interface Context {
     public Class<? extends Annotation> getScope();
@@ -80,6 +83,7 @@ public interface Context {
 }
 ----
 
+[source, java]
 ----
 public interface AlterableContext {
     public void destroy(Contextual<?> contextual);
@@ -319,6 +323,7 @@ A bean is called _passivation capable_ if the container is able to temporarily t
 
 A custom implementation of +Bean+ is passivation capable if it implements the interface +PassivationCapable+. An implementation of +Contextual+ that is not a bean is passivation capable if it implements both +PassivationCapable+ and +Serializable+.
 
+[source, java]
 ----
 public interface PassivationCapable {
     public String getId();
@@ -509,6 +514,7 @@ The container ensures that a long-running conversation may be associated with at
 
 The container provides a built-in bean with bean type +Conversation+, scope +@RequestScoped+, and qualifier +@Default+, named +javax.enterprise.context.conversation+.
 
+[source, java]
 ----
 public interface Conversation {
    public void begin();

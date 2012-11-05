@@ -16,6 +16,7 @@ If the application requires more control over instantiation of a contextual inst
 
 In the following example, a producer method returns instances of other beans:
 
+[source, java]
 ----
 @SessionScoped
 public class PaymentStrategyProducer implements Serializable {
@@ -44,6 +45,7 @@ In this case, any object returned by the producer method has already had its dep
 
 But in this example, the returned objects are not contextual instances:
 
+[source, java]
 ----
 @SessionScoped
 public class PaymentStrategyProducer implements Serializable {

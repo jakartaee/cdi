@@ -38,6 +38,7 @@ An alternative may be selected for an application using the +<alternatives>+ ele
 * any +@Alternative+ stereotype of the alternative is listed, along with a priority attribute.
 
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,6 +57,7 @@ An alternative may be selected for a bean archive using the +<alternatives>+ ele
 * any +@Alternative+ stereotype of the alternative is listed.
 
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -73,6 +75,7 @@ An alternative selected for an application may be deselected for a bean archive 
 * any +@Alternative+ stereotype of the alternative is listed, along with a disabled flag.
 
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,6 +93,7 @@ An alternative may be given a default priority, but not selected for an applicat
 * any +@Alternative+ stereotype of the alternative is listed, along with a disabled flag and a priority attribute.
 
 
+[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -216,12 +220,14 @@ A parameterized bean type is considered assignable to a parameterized required t
 
 For example, +Dao+ is eligible for injection to any injection point of type +@Default Dao<Order>+, +@Default Dao<User>+, +@Default Dao<?>+, +@Default Dao<? extends Persistent>+ or +@Default Dao<X extends Persistent>+ where +X+ is a type variable.
 
+[source, java]
 ----
 public class Dao<T extends Persistent> { ... }
 ----
 
 Furthermore, +UserDao+ is eligible for injection to any injection point of type +@Default Dao<User>+, +@Default Dao<?>+, +@Default Dao<? extends Persistent>+ or +@Default Dao<? extends User>+.
 
+[source, java]
 ----
 public class UserDao extends Dao<User> { ... }
 ----
@@ -242,22 +248,26 @@ If an injection point of primitive type resolves to a producer method or produce
 
 Qualifier types may have annotation members.
 
+[source, java]
 ----
 @PayBy(CHEQUE) class ChequePaymentProcessor implements PaymentProcessor { ... }
 ----
 
+[source, java]
 ----
 @PayBy(CREDIT_CARD) class CreditCardPaymentProcessor implements PaymentProcessor { ... }
 ----
 
 Then only +ChequePaymentProcessor+ is a candidate for injection to the following attribute:
 
+[source, java]
 ----
 @Inject @PayBy(CHEQUE) PaymentProcessor paymentProcessor;
 ----
 
 On the other hand, only +CreditCardPaymentProcessor+ is a candidate for injection to this attribute:
 
+[source, java]
 ----
 @Inject @PayBy(CREDIT_CARD) PaymentProcessor paymentProcessor;
 ----
@@ -266,6 +276,7 @@ The container calls the +equals()+ method of the annotation member value to comp
 
 An annotation member may be excluded from consideration using the +@Nonbinding+ annotation.
 
+[source, java]
 ----
 @Qualifier
 @Retention(RUNTIME)
@@ -282,20 +293,24 @@ Array-valued or annotation-valued members of a qualifier type should be annotate
 
 A bean class or producer method or field may declare multiple qualifiers.
 
+[source, java]
 ----
 @Synchronous @PayBy(CHEQUE) class ChequePaymentProcessor implements PaymentProcessor { ... }
 ----
 
 Then +ChequePaymentProcessor+ would be considered a candidate for injection into any of the following attributes:
 
+[source, java]
 ----
 @Inject @PayBy(CHEQUE) PaymentProcessor paymentProcessor;
 ----
 
+[source, java]
 ----
 @Inject @Synchronous PaymentProcessor paymentProcessor;
 ----
 
+[source, java]
 ----
 @Inject @Synchronous @PayBy(CHEQUE) PaymentProcessor paymentProcessor;
 ----
@@ -472,6 +487,7 @@ The interface +javax.enterprise.inject.spi.InjectionPoint+ provides access to me
 * an instance obtained dynamically using +Instance.get()+.
 
 
+[source, java]
 ----
 public interface InjectionPoint {
     public Type getType();
@@ -494,6 +510,7 @@ public interface InjectionPoint {
 
 Occasionally, a component with scope +@Dependent+ needs to access metadata relating to the object into which it is injected. For example, the following producer method creates injectable ++Logger++ s. The log category of a +Logger+ depends upon the class of the object into which it is injected:
 
+[source, java]
 ----
 @Produces Logger createLogger(InjectionPoint injectionPoint) {
     return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );    
@@ -552,6 +569,7 @@ Otherwise, the container automatically detects the problem and treats it as a de
 
 If a +Bean+ instance is injected into a disposer method, it represents the producer method to which the disposer method is bound.
 
+[source, java]
 ----
 @Named("Order") public class OrderProcessor {
     
@@ -575,24 +593,28 @@ In certain situations, injection is not the most convenient way to obtain a cont
 
 In these situations, an instance of the +javax.enterprise.inject.Instance+ interface may be injected:
 
+[source, java]
 ----
 @Inject Instance<PaymentProcessor> paymentProcessor;
 ----
 
 The method +get()+ returns a contextual reference:
 
+[source, java]
 ----
 PaymentProcessor pp = paymentProcessor.get();
 ----
 
 Any combination of qualifiers may be specified at the injection point:
 
+[source, java]
 ----
 @Inject @PayBy(CHEQUE) Instance<PaymentProcessor> chequePaymentProcessor;
 ----
 
 Or, the +@Any+ qualifier may be used, allowing the application to specify qualifiers dynamically:
 
+[source, java]
 ----
 @Inject @Any Instance<PaymentProcessor> anyPaymentProcessor;
 ...
@@ -605,12 +627,14 @@ In this example, the returned bean has qualifier +@Synchronous+ or +@Asynchronou
 
 Finally, the +@New+ qualifier may be used, allowing the application to obtain a +@New+ qualified bean, as defined in <<new>>:
 
+[source, java]
 ----
 @Inject @New(ChequePaymentProcessor.class) Instance<PaymentProcessor> chequePaymentProcessor;
 ----
 
 It's even possible to iterate over a set of beans:
 
+[source, java]
 ----
 @Inject @Any Instance<PaymentProcessor> anyPaymentProcessor;
 ...
@@ -624,6 +648,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
 
 The +Instance+ interface provides a method for obtaining instances of beans with a specified combination of required type and qualifiers, and inherits the ability to iterate beans with that combination of required type and qualifiers from +java.lang.Iterable+:
 
+[source, java]
 ----
 public interface Instance<T> extends Iterable<T>, Provider<T> {
       
@@ -647,6 +672,7 @@ For an injected +Instance+:
 
 For example, this injected +Instance+ has required type +PaymentProcessor+ and required qualifier +@Any+:
 
+[source, java]
 ----
 @Inject @Any Instance<PaymentProcessor> anyPaymentProcessor;
 ----
@@ -655,6 +681,7 @@ The +select()+ method returns a child +Instance+ for a given required type and a
 
 For example, this child +Instance+ has required type +AsynchronousPaymentProcessor+ and additional required qualifier +@Asynchronous+:
 
+[source, java]
 ----
 Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select( 
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );
@@ -704,6 +731,7 @@ The built-in implementation must be a passivation capable dependency, as defined
 
 +javax.enterprise.util.AnnotationLiteral+ makes it easier to specify qualifiers when calling +select()+:
 
+[source, java]
 ----
 public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMethod) {
     
@@ -721,6 +749,7 @@ public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMeth
 
 +javax.enterprise.util.TypeLiteral+ makes it easier to specify a parameterized type with actual type parameters when calling +select()+:
 
+[source, java]
 ----
 public PaymentProcessor<Cheque> getChequePaymentProcessor() {
     PaymentProcessor<Cheque> pp = anyPaymentProcessor
