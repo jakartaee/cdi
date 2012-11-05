@@ -6,13 +6,13 @@ Beans may produce and consume events. This facility allows beans to interact in 
 
 An event comprises:
 
-* A Java objectthe _event object_
-* A set of instances of qualifier typesthe _event qualifiers_
+* A Java object - the _event object_
+* A set of instances of qualifier types - the _event qualifiers_
 
 
 The event object acts as a payload, to propagate state from producer to consumer. The event qualifiers act as topic selectors, allowing the consumer to narrow the set of events it observes.
 
-An _observer method_ acts as event consumer, observing events of a specific typethe _observed event type_ with a specific set of qualifiersthe _observed event qualifiers_. An observer method will be notified of an event if the event object is assignable to the observed event type, and if all the observed event qualifiers are event qualifiers of the event.
+An _observer method_ acts as event consumer, observing events of a specific type - the _observed event type_  - with a specific set of qualifiers - the _observed event qualifiers_. An observer method will be notified of an event if the event object is assignable to the observed event type, and if all the observed event qualifiers are event qualifiers of the event.
 
 === Event types and qualifier types
 

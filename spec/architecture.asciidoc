@@ -6,7 +6,7 @@ This specification defines a powerful set of complementary services that help im
 
 * A well-defined lifecycle for stateful objects bound to _lifecycle contexts_, where the set of contexts is extensible
 * A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration
-* Support for Java EE modularity and the Java EE component architecturethe modular structure of a Java EE application is taken into account when resolving dependencies between Java EE components
+* Support for Java EE modularity and the Java EE component architecture - the modular structure of a Java EE application is taken into account when resolving dependencies between Java EE components
 * Integration with the Unified Expression Language (EL), allowing any contextual object to be used directly within a JSF or JSP page
 * The ability to _decorate_ injected objects
 * The ability to associate interceptors to objects via typesafe _interceptor bindings_
@@ -365,7 +365,7 @@ public class Login implements Serializable {
 }
 ----
 
-The method +fire()+ of the built-in bean of type +Event+ defined in <<eventinterface>> allows the application to fire events. Events consist of an _event object_ in this case the +User+ and event qualifiers. Event qualifierssuch as +@LoggedIn+ and +@LoggedOut+ allow event consumers to specify which events of a certain type they are interested in.
+The method +fire()+ of the built-in bean of type +Event+ defined in <<eventinterface>> allows the application to fire events. Events consist of an _event object_ - in this case the +User+ - and event qualifiers. Event qualifier - such as +@LoggedIn+ and +@LoggedOut+ - allow event consumers to specify which events of a certain type they are interested in.
 
 Other beans may observe these events and use them to synchronize their internal state, with no coupling to the bean producing the events:
 

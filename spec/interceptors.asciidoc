@@ -35,7 +35,7 @@ An interceptor binding type may declare other interceptor bindings.
 public @interface DataAccess {}
 ----
 
-Interceptor bindings are transitivean interceptor binding declared by an interceptor binding type is inherited by all beans and other interceptor binding types that declare that interceptor binding type.
+Interceptor bindings are transitive - an interceptor binding declared by an interceptor binding type is inherited by all beans and other interceptor binding types that declare that interceptor binding type.
 
 Interceptor binding types declared +@Target(TYPE)+ may not be applied to interceptor binding types declared +@Target({TYPE, METHOD})+.
 

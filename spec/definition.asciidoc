@@ -18,7 +18,7 @@ A bean comprises the following attributes:
 
 Furthermore, a bean may or may not be an alternative.
 
-In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other casesfor example, Java EE component environment resources, defined in <<resources>> the developer provides only the annotations and the bean implementation is provided by the container.
+In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other cases - for example, Java EE component environment resources, defined in <<resources>>  - the developer provides only the annotations and the bean implementation is provided by the container.
 
 The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injectionelresolution>>.
 
@@ -147,7 +147,7 @@ class AsynchronousPaymentProcessor
 }
 ----
 
-A client that needs a +PaymentProcessor+ that processes payments synchronously needs some way to distinguish between the two different implementations. One approach would be for the client to explicitly specify the class that implements the +PaymentProcessor+ interface. However, this approach creates a hard dependence between client and implementationexactly what use of the interface was designed to avoid!
+A client that needs a +PaymentProcessor+ that processes payments synchronously needs some way to distinguish between the two different implementations. One approach would be for the client to explicitly specify the class that implements the +PaymentProcessor+ interface. However, this approach creates a hard dependence between client and implementation - exactly what use of the interface was designed to avoid!
 
 A _qualifier type_ represents some client-visible semantic associated with a type that is satisfied by some implementations of the type (and not by others). For example, we could introduce qualifier types representing synchronicity and asynchronicity. In Java code, qualifier types are represented by annotations.
 
@@ -637,7 +637,7 @@ A stereotype may declare other stereotypes.
 public @interface AuditableAction {}
 ----
 
-Stereotype declarations are transitivea stereotype declared by a second stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
+Stereotype declarations are transitive - a stereotype declared by a second stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
 
 Stereotypes declared +@Target(TYPE)+ may not be applied to stereotypes declared +@Target({TYPE, METHOD, FIELD})+, +@Target(METHOD)+, +@Target(FIELD)+ or +@Target({METHOD, FIELD})+.
 
@@ -689,9 +689,9 @@ In addition, the special-purpose +@Interceptor+ and +@Decorator+ stereotypes are
 
 When the application violates a rule defined by this specification, the container automatically detects the problem. There are three kinds of problem:
 
-* Definition errorsoccur when a single bean definition violates the rules of this specification. If a definition error exists, the container must throw a subclass of +javax.enterprise.inject.spi.DefinitionException+.
-* Deployment problemsoccur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment. If a deployment problem occurs, the container must throw a subclass of +javax.enterprise.inject.spi.DeploymentException+.
-* Exceptionsoccur at runtime
+* Definition errors - occur when a single bean definition violates the rules of this specification. If a definition error exists, the container must throw a subclass of +javax.enterprise.inject.spi.DefinitionException+.
+* Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment. If a deployment problem occurs, the container must throw a subclass of +javax.enterprise.inject.spi.DeploymentException+.
+* Exceptions - occur at runtime
 
 
 Definition errors are _developer errors_. They may be detected by tooling at development time, and are also detected by the container at initialization time. If a definition error exists in a deployment, initialization will be aborted by the container.

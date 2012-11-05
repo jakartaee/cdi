@@ -37,7 +37,7 @@ A top-level Java class is a managed bean if it is defined to be a managed bean b
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in +ejb-jar.xml+.
 * It does not implement +javax.enterprise.inject.spi.Extension+.
 * It is not annotated +@Vetoed+.
-* It has an appropriate constructoreither:
+* It has an appropriate constructor - either:
 * the class has a constructor with no parameters, or
 * the class declares a constructor annotated +@Inject+.
 
@@ -849,7 +849,7 @@ However, this second bean:
 
 This bean is called the _@New qualified bean_ for the class +X+.
 
-Note that this second bean existsand may be enabled and available for injectioneven if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<beanarchive>>, and is therefore not discovered during the bean discovery process defined in <<packagingdeployment>>. The container discovers +@New+ qualified beans by inspecting injection points of other enabled beans.
+Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<beanarchive>>, and is therefore not discovered during the bean discovery process defined in <<packagingdeployment>>. The container discovers +@New+ qualified beans by inspecting injection points of other enabled beans.
 
 This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
 
