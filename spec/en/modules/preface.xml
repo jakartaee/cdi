@@ -17,7 +17,7 @@
         <listitem>The <literal>CDI</literal> class, which provides programmatic access 
         to CDI facilities from outside a managed bean</listitem>
         <listitem>Pass the qualifiers an event was fired with to the <literal>ObserverMethod</literal></listitem>
-        <listitem>Ability to veto beans declaratively using <literal>@Veto</literal> and <literal>@Requires</literal></listitem>
+        <listitem>Ability to veto beans declaratively using <literal>@Vetoed</literal></listitem>
         <listitem>Ability to access the <literal>BeanManager</literal> from the <literal>ServletContext</literal></listitem>
         <listitem>Conversations in Servlet requests</listitem>
         <listitem>Application lifecycle events in Java EE</listitem>
