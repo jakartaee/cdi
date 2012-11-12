@@ -234,6 +234,9 @@ public class MockLoginAction extends LoginAction { ... }</programlisting>
           bean.</para>
         </listitem>
       </itemizedlist>
+
+      <para>The session bean is not required to have an EJB remove method in order
+      for the container to destroy it.</para>
       
       <para>If the application directly calls an EJB remove method of a contextual 
       instance of a session bean that is a stateful session bean and declares any 
@@ -246,7 +249,7 @@ public class MockLoginAction extends LoginAction { ... }</programlisting>
       the container. Furthermore, the container ignores the instance instead of 
       destroying it when <literal>Contextual.destroy()</literal> is called, as 
       defined in <xref linkend="statefullifecycle"/>.</para>
-      
+
     </section>
    
     <section id="sessionbeantypes">
