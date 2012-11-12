@@ -405,8 +405,9 @@ public class ShoppingCart { ... }</programlisting>
         <programlisting>@Transactional
 public class ShoppingCart { ... }</programlisting>
 
-        <para>Annotation member values are compared using <literal>equals()</literal>.</para>
-      
+        <para>Annotation member values are compared using the rules defined by 
+        <literal>Annotation.equals()</literal>.</para>
+
         <para>An annotation member may be excluded from consideration using the
         <literal>@Nonbinding</literal> annotation.</para>
       
@@ -418,11 +419,6 @@ public @interface Transactional {
    @Nonbinding boolean requiresNew() default false;
 }</programlisting>
 
-        <para>Array-valued or annotation-valued members of an interceptor binding 
-        type should be annotated <literal>@Nonbinding</literal> in a portable 
-        application. If an array-valued or annotation-valued member of an interceptor 
-        binding type is not annotated <literal>@Nonbinding</literal>, non-portable 
-        behavior results.</para>
 
         <para>If the set of interceptor bindings of a bean class or interceptor, including
         bindings inherited from stereotypes and other interceptor bindings, has two
