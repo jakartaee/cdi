@@ -34,11 +34,11 @@
     <section>
       <title>Event types and qualifier types</title>
       
-      <para>An event object is an instance of a concrete Java class with no type
-      variables. The <emphasis>event types</emphasis> of the event include all 
+      <para>An event object is an instance of a concrete Java class with no unresolvable 
+      type variables. The <emphasis>event types</emphasis> of the event include all 
       superclasses and interfaces of the runtime class of the event object.</para>
       
-      <para>An event type may not contain a type variable.</para>
+      <para>An event type may not contain an unresolvable type variable.</para>
             
       <para>An event qualifier type is just an ordinary qualifier type as specified in 
       <xref linkend="definingqualifiertypes"/>, typically defined as 
@@ -68,7 +68,7 @@
           <para>The observer method belongs to an enabled bean.</para>
         </listitem>
         <listitem>
-          <para>The event object is assignable to the observed event type, taking type 
+          <para>An event type is assignable to the observed event type, taking type 
           parameters into consideration.</para>
         </listitem>
         <listitem>
@@ -84,8 +84,8 @@
         </listitem>
       </itemizedlist>
       
-      <para>If the runtime type of the event object contains a type variable, the 
-      container must throw an <literal>IllegalArgumentException</literal>.</para>
+      <para>If the runtime type of the event object contains an unresolvable type variable, 
+      the container must throw an <literal>IllegalArgumentException</literal>.</para>
       
       <para>For a custom implementation of the <literal>ObserverMethod</literal>
       interface defined in <xref linkend="observermethod"/>, the container must
@@ -282,10 +282,12 @@ else {
 
       <para>The method <literal>fire()</literal> fires an event with the specified
       qualifiers and notifies observers, as defined by 
-      <xref linkend="observernotification"/>.</para>
+      <xref linkend="observernotification"/>. If the container is unable to resolve the
+      parameterized type of the event object, it uses the specified type to infer the 
+      parameterized type of the event types.</para>
       
-      <para>If the runtime type of the event object contains a type variable, an 
-      <literal>IllegalArgumentException</literal> is thrown.</para>
+      <para>If the runtime type of the event object contains an unresolvavle type variable,
+      an <literal>IllegalArgumentException</literal> is thrown.</para>
 
       <para>If the runtime type of the event object is assignable to the type of a container 
       lifecycle event, <literal>IllegalArgumentException</literal> is thrown.</para>
