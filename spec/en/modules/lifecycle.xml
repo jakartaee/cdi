@@ -144,12 +144,8 @@ public class PaymentStrategyProducer implements Serializable {
         occurs.</para>
       </listitem>
       <listitem>
-        <para>Invocations of message listener methods of message-driven
-        beans during message delivery are business method invocations.</para>
-      </listitem>
-	  <listitem>
         <para>Invocations of methods declared by java.lang.Object are not 
-	     business method invocations.</para>
+        business method invocations.</para>
       </listitem>
     </itemizedlist>
     
@@ -165,6 +161,9 @@ public class PaymentStrategyProducer implements Serializable {
         and asynchronicity, as defined by the EJB specification.</para>
       </listitem>
     </itemizedlist>
+
+    <para>Additionally, invocations of message listener methods of message-driven
+    beans during message delivery are passed through method interceptors.</para>
     
     <para>Otherwise, the invocation is treated as a normal Java method call 
     and is not intercepted by the container.</para>
