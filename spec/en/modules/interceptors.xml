@@ -273,9 +273,10 @@ public class ShoppingCart { ... }</programlisting>
       element, the container automatically detects the problem and treats it as a 
       deployment problem.</para>
       
-      <para>Interceptors declared using <literal>@Interceptors</literal> or in 
-      <literal>ejb-jar.xml</literal> are called before interceptors declared using 
-      interceptor bindings.</para>
+      <para>Interceptors declared using interceptor bindings are called after interceptors
+      declared using <literal>@Interceptors</literal> or in <literal>ejb-jar.xml</literal>
+      and before any around-invoke or lifecycle event callback methods declared on the 
+      target class or any superclass of the target class.</para>
       
       <para>Interceptors are called before decorators.</para>
     
