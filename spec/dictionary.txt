@@ -13,7 +13,6 @@ declaratively
 decorator
 decorators
 DoD
-doesn&#8217;t
 EE
 EG
 EJB
@@ -101,4 +100,3 @@ unproxyable
 unserializable
 username
 wildcard
-wouldn&#8217;t
