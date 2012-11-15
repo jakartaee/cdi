@@ -18,7 +18,7 @@ TARGET=target
 MASTER=cdi-spec.asciidoc
 
 OUTPUT_FORMATS=("xml" "epub" "pdf")
-OUTPUT_CMDS=("asciidoc -b docbook -o \${output_filename} \$MASTER" "a2x -f epub -D \$dir \$MASTER" "a2x --dblatex-opts \"-P latex.output.revhistory=0\" -D \$dir \$MASTER")
+OUTPUT_CMDS=("asciidoc -b docbook -o \${output_filename} \$MASTER" "a2x -f epub -D \$dir \$MASTER" "a2x --dblatex-opts \"-s custom-asciidoc-dblatex.sty -P latex.output.revhistory=0\" --backend-opts \"-f docbook45.conf\" -D \$dir \$MASTER")
 
 echo "** Building spec"
 
@@ -31,7 +31,7 @@ dir=$TARGET/$output_format
 mkdir -p $dir
 
 echo "**** Processing $MASTER > $TARGET/cdi-spec.html"
-asciidoc -n -b html5 -a toc2 -a pygments -o $TARGET/cdi-spec.html $MASTER
+asciidoc -n -b html5 -a toc2 -a pygments -f html5.conf -o $TARGET/cdi-spec.html $MASTER
 
 for ((i=0; i < ${#OUTPUT_FORMATS[@]}; i++))
 do

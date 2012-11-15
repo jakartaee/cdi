@@ -1,0 +1,51 @@
+%%
+%% This style is derived from the docbook one.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{asciidoc}[2008/06/05 AsciiDoc DocBook Style]
+%% Just use the original package and pass the options.
+\RequirePackageWithOptions{docbook}
+
+% Sidebar is a boxed minipage that can contain verbatim.
+% Changed shadow box to double box.
+\renewenvironment{sidebar}[1][0.95\textwidth]{
+  \hspace{0mm}\newline%
+  \noindent\begin{Sbox}\begin{minipage}{#1}%
+  \setlength\parskip{\medskipamount}%
+}{
+  \end{minipage}\end{Sbox}\doublebox{\TheSbox}%
+}
+
+% For DocBook literallayout elements, see `./dblatex/dblatex-readme.txt`.
+\usepackage{alltt}
+
+% Set custom colors
+\definecolor{code}{gray}{0}
+\definecolor{canvas}{gray}{0.96}
+\definecolor{comment}{rgb}{0, 0.456, 0}
+\definecolor{keyword}{rgb}{0.5, 0, 0.5}
+
+% JavaScript is not part of the listings package...
+% but thankfully this page shows how to add it:
+% http://lenaherrmann.net/2010/05/20/javascript-syntax-highlighting-in-the-latex-listings-package
+
+\lstdefinelanguage{javascript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, for, in, while, do, else, case, break},
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s][\color{blue}\ttfamily]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]"
+} 
+
+% Parameters for formatting code (affects all code listings)
+\lstset{
+  backgroundcolor=\color{canvas},
+  basicstyle=\ttfamily\small\color{code},
+  commentstyle=\color{comment},
+  identifierstyle=\color{black},
+  keywordstyle=\color{keyword}\bfseries,
+  ndkeywordstyle=\color{keyword}\bfseries,
+  stringstyle=\color{blue}\ttfamily
+}
