@@ -151,7 +151,7 @@ public interface Producer<T> {
 
 For a +Producer+ that represents a class:
 
-* +produce()+ calls the constructor annotated +@Inject+ if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors, +produce()+ is responsible for building the interceptors and decorators of the instance. The instance returned by produce may be a proxy.
+* +produce()+ calls the constructor annotated +@Inject+ if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors, +produce()+ is responsible for building the interceptors and decorators of the instance. The instance returned by +produce()+ may be a proxy.
 * +dispose()+ does nothing.
 * +getInjectionPoints()+ returns the set of +InjectionPoint+ objects representing all injected fields, bean constructor parameters and initializer method parameters.
 
@@ -356,7 +356,7 @@ If two instances of the same qualifier type are given, an +IllegalArgumentExcept
 
 If an instance of an annotation that is not a qualifier type is given, an +IllegalArgumentException+ is thrown.
 
-If the runtime type of the event object is assignable to the type of a container lifecycle event, +IllegalArgumentException+ is thrown.
+If the runtime type of the event object is assignable to the type of a container lifecycle event, an +IllegalArgumentException+ is thrown.
 
 ==== Observer method resolution
 

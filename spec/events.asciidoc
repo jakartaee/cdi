@@ -233,7 +233,7 @@ The method +fire()+ fires an event with the specified qualifiers and notifies ob
 
 If the runtime type of the event object contains an unresolvabvle type variable, an +IllegalArgumentException+ is thrown.
 
-If the runtime type of the event object is assignable to the type of a container lifecycle event, +IllegalArgumentException+ is thrown.
+If the runtime type of the event object is assignable to the type of a container lifecycle event, an +IllegalArgumentException+ is thrown.
 
 ==== The built-in +Event+
 

@@ -127,7 +127,7 @@ A decorator may be enabled for a bean archive by listing its class under the +<d
 </beans>
 ----
 
-A decorator enabled for an application may be disabled for a bean archive by listing its class, along with an enabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
+A decorator enabled for an application may be disabled for a bean archive by listing its class, along with a disabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
 [source, xml]
 ----
