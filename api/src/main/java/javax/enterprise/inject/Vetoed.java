@@ -13,7 +13,10 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * When placed on package, all beans in the package are prevented from being installed.
+ * When placed on package, all beans in the package are prevented from being 
+ * installed. If packages are split across jars, non-portable behavior results.
+ * An application can prevent packages being split across jars by sealing the
+ * package.
  * </p>
  * 
  * <p>
@@ -21,6 +24,8 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * @author Stuart Douglas
+ * 
+ * @see <a href="http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing">The Extension Mechanism Architecture</a>
  * 
  */
 @Target({ ElementType.TYPE, ElementType.PACKAGE })

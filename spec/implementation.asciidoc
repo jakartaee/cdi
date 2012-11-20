@@ -36,7 +36,7 @@ A top-level Java class is a managed bean if it is defined to be a managed bean b
 * It is a concrete class, or is annotated +@Decorator+.
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in +ejb-jar.xml+.
 * It does not implement +javax.enterprise.inject.spi.Extension+.
-* It is not annotated +@Vetoed+.
+* It is not annotated +@Vetoed+ or in a package annotated +Vetoed+.
 * It has an appropriate constructor - either:
 * the class has a constructor with no parameters, or
 * the class declares a constructor annotated +@Inject+.
@@ -128,7 +128,7 @@ For example, if the bean class is named +ProductList+, the default bean name is 
 
 === Session beans
 
-A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
+A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+ or in a package annotated +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
 
 A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error. A stateful session bean may have any scope.
 
@@ -846,7 +846,7 @@ Finally, the following are equivalent:
 
 === Vetoing types
 
-Any type or package may be prevented from being considered by CDI by adding the +@Vetoed+ annotation on the type or package.
+Any type or package may be prevented from being considered by CDI by adding the +@Vetoed+ annotation on the type or package. If packages are split across jars, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
 
 [source, java]
 ----
