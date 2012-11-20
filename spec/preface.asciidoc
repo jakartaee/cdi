@@ -190,7 +190,6 @@ Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dep
 * Ability to obtain +Extension+  instances from +BeanManager+
 * Injection of the +ServletContext+
 * Access to +beans.xml+  in +ProcessModule+
-* Injection into enums
 
 ==== 1.1 Public Review Draft
 

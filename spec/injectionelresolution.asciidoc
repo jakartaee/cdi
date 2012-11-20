@@ -4,8 +4,8 @@
 
 The container injects references to contextual instances to the following kinds of _injection point_:
 
-* Any injected field of a bean class or enum
-* Any parameter of a bean constructor, bean initializer method, enum initializer method, producer method or disposer method
+* Any injected field of a bean class
+* Any parameter of a bean constructor, bean initializer method, producer method or disposer method
 * Any parameter of an observer method, except for the event parameter
 
 
@@ -208,7 +208,7 @@ Note that an unsatisfied or ambiguous dependency cannot exist for a decorator de
 
 When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
 
-The container must validate all injection points of all enabled beans, all enums, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
+The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getInjectionPoints()+ to determine the set of injection points.
 
@@ -408,12 +408,9 @@ The container is also required to perform dependency injection whenever it insta
 * non-contextual instances of managed beans, and
 * instances of any other Java EE component class supporting injection.
 
-
-The container is also required to perform dependency injection at application initialization for enums.
-
 A Java EE 5 container is not required to support injection for non-contextual objects.
 
-The container interacts with instances of beans, enums and other Java EE component classes supporting injection by calling methods and getting and setting field values.
+The container interacts with instances of beans and other Java EE component classes supporting injection by calling methods and getting and setting field values.
 
 The object injected by the container may not be a direct reference to a contextual instance of the bean. Instead, it is an injectable reference, as defined by <<injectableinstance>>.
 
@@ -427,7 +424,7 @@ When the container instantiates a managed bean or session bean with a constructo
 
 ==== Injection of fields and initializer methods
 
-When the container creates a new instance of a managed bean, session bean, or of any other Java EE component class supporting injection, or injects an enum at application initialization the container must:
+When the container creates a new instance of a managed bean, session bean, or of any other Java EE component class supporting injection the container must:
 
 * Initialize the values of all injected fields. The container sets the value of each injected field to an injectable reference.
 * Call all initializer methods, passing an injectable reference to each parameter.
@@ -444,7 +441,7 @@ The container must ensure that:
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean, enum or of any Java EE component class supporting injection, the container destroys all dependent objects, as defined in <<dependentdestruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
+When the container destroys an instance of a bean or of any Java EE component class supporting injection, the container destroys all dependent objects, as defined in <<dependentdestruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
 
 [[methods]]
 
