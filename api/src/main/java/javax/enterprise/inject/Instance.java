@@ -187,7 +187,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
     /**
      * <p>
      * On {@link #destroy(Object)} being called, the container destroys the instance if the active context object for the scope
-     * type of the bean supports destroying bean instances. All built in contexts support destroying bean instances.
+     * type of the bean supports destroying bean instances. All normal scoped built-in contexts support destroying bean instances.
      * </p>
      * 
      * <p>
