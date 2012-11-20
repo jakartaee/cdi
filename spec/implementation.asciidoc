@@ -699,7 +699,7 @@ A bean constructor may have any number of parameters. All parameters of a bean c
 
 === Injected fields
 
-An _injected field_ is a non-static, non-final field of a bean class, a non-static, non-final field of an enum, or of any Java EE component class supporting injection.
+An _injected field_ is a non-static, non-final field of a bean class or of any Java EE component class supporting injection.
 
 ==== Declaring an injected field
 
@@ -720,7 +720,7 @@ If an injected field is annotated +@Produces+, the container automatically detec
 
 === Initializer methods
 
-An _initializer method_ is a default-access, public, protected or private, non-abstract, non-static, non-generic method of a bean class, a non-abstract, non-static method of an enum or of any Java EE component class supporting injection. If the bean is a session bean, the initializer method is _not_ required to be a business method of the session bean.
+An _initializer method_ is a default-access, public, protected or private, non-abstract, non-static, non-generic method of a bean class or of any Java EE component class supporting injection. If the bean is a session bean, the initializer method is _not_ required to be a business method of the session bean.
 
 A bean class may declare multiple (or zero) initializer methods.
 
