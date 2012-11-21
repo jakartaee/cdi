@@ -225,7 +225,7 @@ Each child +<class>+ element must specify the name of an interceptor class. If t
 
 If the same class is listed twice under the +<interceptors>+ element, the container automatically detects the problem and treats it as a deployment problem.
 
-Interceptors declared using +@Interceptors+ or in +ejb-jar.xml+ are called before interceptors declared using interceptor bindings.
+Interceptors declared using interceptor bindings are called after interceptors declared using +@Interceptors+ or in +ejb-jar.xml+ and before any around-invoke or lifecycle event callback methods declared on the target class or any superclass of the target class.
 
 Interceptors are called before decorators.
 
