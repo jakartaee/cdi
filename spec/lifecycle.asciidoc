@@ -89,7 +89,6 @@ When the container invokes a method of a bean, the invocation may or may not be 
 * Invocation of lifecycle callbacks by the container are not business method invocations, but are intercepted by interceptors for lifecycle callbacks.
 * Invocation of EJB timer service timeouts by the container are not business method invocations, but are intercepted by interceptors for EJB timeouts.
 * Invocations of interceptors and decorator methods during method or lifecycle callback interception are not business method invocations, and therefore no recursive interception occurs.
-* Invocations of message listener methods of message-driven beans during message delivery are business method invocations.
 * Invocations of methods declared by java.lang.Object are not business method invocations.
 
 
@@ -98,6 +97,7 @@ If, and only if, an invocation is a business method invocation:
 * it passes through method interceptors and decorators, and
 * in the case of a session bean, it is subject to EJB services such as declarative transaction management, concurrency, security and asynchronicity, as defined by the EJB specification.
 
+Additionally, invocations of message listener methods of message-driven beans during message delivery are passed through method interceptors.
 
 Otherwise, the invocation is treated as a normal Java method call and is not intercepted by the container.
 
