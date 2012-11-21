@@ -16,9 +16,9 @@ An _observer method_ acts as event consumer, observing events of a specific type
 
 === Event types and qualifier types
 
-An event object is an instance of a concrete Java class with no type variables. The _event types_ of the event include all superclasses and interfaces of the runtime class of the event object.
+An event object is an instance of a concrete Java class with no unresolvable type variables. The _event types_ of the event include all superclasses and interfaces of the runtime class of the event object.
 
-An event type may not contain a type variable.
+An event type may not contain an unresolvable type variable.
 
 An event qualifier type is just an ordinary qualifier type as specified in <<definingqualifiertypes>>, typically defined as +@Target({METHOD, FIELD, PARAMETER, TYPE})+ or +@Target({FIELD, PARAMETER})+.
 
@@ -37,12 +37,12 @@ Observer resolution usually occurs at runtime.
 An event is delivered to an observer method if:
 
 * The observer method belongs to an enabled bean.
-* The event object is assignable to the observed event type, taking type parameters into consideration.
+* An event type is assignable to the observed event type, taking type parameters into consideration.
 * The observer method has no event qualifiers or has a subset of the event qualifiers. An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
 * Either the event is not a container lifecycle event, as defined in <<initevents>>, or the observer method belongs to an extension.
 
 
-If the runtime type of the event object contains a type variable, the container must throw an +IllegalArgumentException+.
+If the runtime type of the event object contains an unresolvable type variable, the container must throw an +IllegalArgumentException+.
 
 For a custom implementation of the +ObserverMethod+ interface defined in <<observermethod>>, the container must call +getObservedType()+ and +getObservedQualifiers()+ to determine the observed event type and qualifiers.
 
@@ -229,9 +229,9 @@ If two instances of the same qualifier type are passed to +select()+, an +Illega
 
 If an instance of an annotation that is not a qualifier type is passed to +select()+, an +IllegalArgumentException+ is thrown.
 
-The method +fire()+ fires an event with the specified qualifiers and notifies observers, as defined by <<observernotification>>.
+The method +fire()+ fires an event with the specified qualifiers and notifies observers, as defined by <<observernotification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
 
-If the runtime type of the event object contains a type variable, an +IllegalArgumentException+ is thrown.
+If the runtime type of the event object contains an unresolvabvle type variable, an +IllegalArgumentException+ is thrown.
 
 If the runtime type of the event object is assignable to the type of a container lifecycle event, +IllegalArgumentException+ is thrown.
 
