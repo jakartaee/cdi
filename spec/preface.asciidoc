@@ -179,7 +179,7 @@ Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dep
 * +@Disposes+  methods for producer fields
 * The +CDI+ class, which provides programmatic access to CDI facilities from outside a managed bean
 * Pass the qualifiers an event was fired with to the +ObserverMethod+
-* Ability to veto beans declaratively using +@Veto+  and +@Requires+
+* Ability to veto beans declaratively using +@Vetoed+
 * Conversations in Servlet requests* Application lifecycle events in Java EE
 * Injection of +Bean+  metadata into bean instances
 * Programmatic access to a container provided +Producer+, +InjectionTarget+, +AnnotatedType+
