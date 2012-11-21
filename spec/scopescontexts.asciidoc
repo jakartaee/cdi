@@ -101,17 +101,17 @@ The +get()+ method obtains contextual instances of the contextual type represent
 * if a +CreationalContext+ is given, create a new instance of the given contextual type by calling +Contextual.create()+, passing the given +CreationalContext+, and return the new instance.
 
 
-If the context object is inactive, the +get()+ method must throw a +ContextNotActiveException+.
-
 The +get()+ method may not return a null value unless no +CreationalContext+ is given, or +Contextual.create()+ returns a null value.
 
 The +get()+ method may not create a new instance of the given contextual type unless a +CreationalContext+ is given.
 
-When the container calls +get()+ for a context that is associated with a passivating scope it must ensure that the given instance of +Contextual+ and the instance of +CreationalContext+, if given, are serializable.
-
 The +destroy()+ method destroys an existing contextual instance, removing it from the context instance.
 
-The +AlterableContext+ interface was introduced in Contexts and Dependency Injection for Java EE 1.1 to allow bean instances to be destroyed by the application. Extensions should implement +AlterableContext+ instead of +Context+.
+The +AlterableContext+ interface was introduced in Contexts and Dependency Injection for Java EE 1.1 to allow bean instances to be destroyed by the application. Extensions providing context implementations for normal scopes should implement +AlterableContext+ instead of +Context+.
+
+If the context object is inactive, the +get()+ and +destroy()+ methods must throw a +ContextNotActiveException+.
+
+When the container calls +get()+ or +destroy()+ for a context that is associated with a passivating scope it must ensure that the given instance of +Contextual+  and the instance of +CreationalContext+, if given, are serializable.
 
 The context object is responsible for destroying any contextual instance it creates by passing the instance to the +destroy()+ method of the +Contextual+ object representing the contextual type. A destroyed instance must not subsequently be returned by the +get()+ method.
 
