@@ -369,7 +369,7 @@ For example, the built-in session and conversation scopes defined in <<builtinco
 
 For every bean which declares a passivating scope, the container must validate that the bean truly is passivation capable and that, in addition, its dependencies are passivation capable.
 
-If a managed bean or stateful session bean which declares a passivating scope:
+If a managed bean which declares a passivating scope, a stateful session bean which declares a passivating scope, or a built-in bean:
 
 * is not passivation capable,
 * has a non-transient injected field that does not resolve to a passivation capable dependency, or
