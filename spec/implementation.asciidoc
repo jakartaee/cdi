@@ -145,6 +145,7 @@ If a session bean is a stateful session bean:
 * If the scope is +@Dependent+, the application _may_ call any EJB remove method of a contextual instance of the session bean.
 * Otherwise, the application _may not_ directly call any EJB remove method of any contextual instance of the session bean.
 
+The session bean is not required to have an EJB remove method in order for the container to destroy it.
 
 If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and declares any scope other than +@Dependent+, an +UnsupportedOperationException+ is thrown.
 
