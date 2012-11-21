@@ -725,7 +725,7 @@ The method +isUnsatisfied()+ returns +true+ if there is no bean that has the req
 
 The method +isAmbiguous()+ returns +true+ if there is more than one bean that has the required type and qualifiers and is eligible for injection into the class into which the parent +Instance+ was injected, or +false+ otherwise.
 
-The method +destroy()+ instructs the container to destroy the instance. The bean instance passed to +destroy()+ should be a dependent scoped bean instance, or a client proxy for a normal scoped bean. Applications are encouraged to always call +destroy()+ when they no longer require an instance obtained from +Instance+.
+The method +destroy()+ instructs the container to destroy the instance. The bean instance passed to +destroy()+ should be a dependent scoped bean instance, or a client proxy for a normal scoped bean. Applications are encouraged to always call +destroy()+ when they no longer require an instance obtained from +Instance+. All built-in normal scoped contexts support destroying bean instances. An +UnsupportedOperationException+ is thrown if the active context object for the scope type of the bean does not support destroying bean instances.
 
 [IMPORTANT]
 .OPEN ISSUE
