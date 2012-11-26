@@ -40,12 +40,6 @@ public interface ProcessModule {
     public List<Class<?>> getDecorators();
 
     /**
-     * @return an iterator over <code>AnnotatedType</code> objects representing the Java classes and interfaces in the
-     *         bean archive
-     */
-    public Iterator<AnnotatedType<?>> getAnnotatedTypes();
-
-    /**
      * @return an input stream which can be used to read in the <code>beans.xml</code> for this module
      */
     public InputStream getBeansXml();

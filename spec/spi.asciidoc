@@ -845,7 +845,6 @@ public interface ProcessModule {
     public Set<Class<?>> getAlternatives();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
-    public Iterator<AnnotatedType<?>> getAnnotatedTypes();
     public InputStream getBeansXml();
 }
 ----
@@ -853,7 +852,6 @@ public interface ProcessModule {
 * +getAlternatives()+ returns the set of enabled alternatives of the bean deployment archive.
 * +getInterceptors()+ returns the list of enabled interceptors of the bean deployment archive.
 * +getDecorators()+ returns the list of enabled decorators of the bean deployment archive.
-* +getAnnotatedTypes()+ returns an iterator over +AnnotatedType+ objects representing the Java classes and interfaces in the bean archive.
 * +getBeansXml()+ returns an input stream which can be used to read in the +beans.xml+ for this module.
 
 
