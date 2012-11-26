@@ -382,11 +382,6 @@ Observer methods may throw exceptions:
 
 For a custom implementation of the +ObserverMethod+ interface defined in <<observermethod>>, the container must call +getTransactionPhase()+ to determine if the observer method is transactional observer method, and +notify()+ to invoke the method.
 
-[NOTE]
-====
-CDI 1.1 implementations should call the +notify+ method which takes both the event object and the event qualifiers only. The +notify+ method which takes only the event object is retained only for backwards compatibility.
-====
-
 ==== Observer method invocation context
 
 The transaction context, client security context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.

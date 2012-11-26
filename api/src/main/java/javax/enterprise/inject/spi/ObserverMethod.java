@@ -85,18 +85,4 @@ public interface ObserverMethod<T> {
      */
     public void notify(T event);
     
-    /**
-     * <p>
-     * Calls the observer method, passing the given event object.
-     * </p>
-     * 
-     * <p>
-     * The implementation of {@link #notify(Object, Set)} for a custom observer method is responsible for
-     * deciding whether to call the method if the {@link #getReception()} returns {@link Reception#IF_EXISTS}. 
-     * </p>
-     * 
-     * @param event the event object
-     * @param qualifiers the qualifiers with which the event was called
-     */
-    public void notify(T event, Set<Annotation> qualifiers);
 }
