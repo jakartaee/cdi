@@ -25,9 +25,9 @@ import java.util.Set;
 public interface ProcessModule {
 
     /**
-     * @return the set of enabled alternatives of the bean deployment archive
+     * @return the list of enabled alternatives of the bean deployment archive
      */
-    public Set<Class<?>> getAlternatives();
+    public List<Class<?>> getAlternatives();
 
     /**
      * @return the list of enabled interceptors of the bean deployment archive.

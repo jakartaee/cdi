@@ -842,7 +842,7 @@ The event object must be of type +javax.enterprise.inject.spi.ProcessModule+.
 [source, java]
 ----
 public interface ProcessModule {
-    public Set<Class<?>> getAlternatives();
+    public List<Class<?>> getAlternatives();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
     public Iterator<AnnotatedType<?>> getAnnotatedTypes();
