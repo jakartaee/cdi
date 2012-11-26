@@ -390,7 +390,7 @@ If a producer method or field of scope +@Dependent+ returns an unserializable ob
 
 For a custom implementation of +Bean+, the container calls +getInjectionPoints()+ to determine the injection points, and +InjectionPoint.isTransient()+ to determine whether the injection point is a transient field.
 
-If a bean which declares a passivating scope type, or any stateful session bean, has a decorator or interceptor which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
+If a managed bean or a stateful session bean which declares a passivating scope type, has a decorator or interceptor which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
 
 [[builtincontexts]]
 
