@@ -46,6 +46,19 @@ public interface BeforeBeanDiscovery {
      * @param qualifier The annotation to treat as a qualifier
      */
     public void addQualifier(Class<? extends Annotation> qualifier);
+    
+    /**
+     * <p>
+     * Declares an annotation type as a {@linkplain javax.inject.Qualifier} qualifier type.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation a qualifier without adding {@link Qualifier} to it.
+     * </p>
+     * 
+     * @param qualifier The annotation to treat as a qualifier
+     */
+    public void addQualifier(AnnotatedType<? extends Annotation> qualifier);
 
     /**
      * <p>
@@ -83,6 +96,19 @@ public interface BeforeBeanDiscovery {
      */
     public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
 
+    /**
+     * <p>
+     * Declares an annotation type as an {@linkplain Interceptor interceptor} binding type.
+     * </p>
+     * 
+     * <p>
+     * This is only required if you wish to make an annotation an interceptor binding type without adding {@link InterceptorBinding} to it.
+     * </p>
+     * 
+     * @param bindingType The annotation type to treat as an interceptor binding type
+     */
+    public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
+    
     /**
      * <p>
      * Declares an annotation type as an {@linkplain Interceptor interceptor} binding type, and specifies its meta-annotations.
