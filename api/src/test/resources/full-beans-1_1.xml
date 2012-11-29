@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+      http://xmlns.jcp.org/xml/ns/javaee 
+      ../../main/resources/beans_1_1.xsd" version="1.1" bean-discovery-mode="annotated">
+      
+    <!--  This test descriptor has all elements present in the CDI 1.1 schema -->
+    
+    <scan>
+       <exclude name="com.acme.Foo">
+          <if-class-available name="com.acme.Bar"/>
+          <if-system-property name="acme.baz" value="qux"/>
+       </exclude>
+       <exclude name="com.acme.corge.*"></exclude>
+       <exclude name="com.acme.grault.**"></exclude>
+    </scan>
+    
+    <alternatives></alternatives>
+    
+    <decorators></decorators>
+    
+    <interceptors></interceptors>
+    
+</beans>

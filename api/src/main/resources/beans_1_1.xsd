@@ -79,6 +79,7 @@
             <xs:element ref="javaee:interceptors" />
             <xs:element ref="javaee:decorators" />
             <xs:element ref="javaee:alternatives" />
+            <xs:element ref="javaee:scan" />
             <xs:any namespace="##other" processContents="lax"/>
          </xs:choice>
          <xs:attribute name="version" default="1.1">
@@ -94,7 +95,7 @@
                </xs:restriction>
             </xs:simpleType>   
          </xs:attribute>
-         <xs:attribute name="bean-discovery-mode" default="annotated">
+         <xs:attribute name="bean-discovery-mode" use="required">
             <xs:annotation>
                 <xs:documentation>
                    It is strongly recommended you use "annotated". 
@@ -133,6 +134,80 @@
                </xs:restriction>
             </xs:simpleType>
          </xs:attribute>
+      </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="scan">
+      <xs:annotation>
+         <xs:documentation>
+         
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="exclude">
+                <xs:annotation>
+                   <xs:documentation>
+                      
+                   </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                      <xs:choice maxOccurs="unbounded" minOccurs="0">
+                         <xs:element name="if-class-available">
+                            <xs:annotation>
+                               <xs:documentation>
+                               
+                               </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                   <xs:annotation>
+                                      <xs:documentation>
+                               
+                                      </xs:documentation>
+                                   </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                         </xs:element>
+                         <xs:element name="if-system-property">
+                            <xs:annotation>
+                               <xs:documentation>
+                               
+                               </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                   <xs:annotation>
+                                      <xs:documentation>
+                               
+                                      </xs:documentation>
+                                   </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="value" type="xs:string" use="optional">
+                                   <xs:annotation>
+                                      <xs:documentation>
+                               
+                                      </xs:documentation>
+                                   </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                         </xs:element>
+                      </xs:choice>
+                   <xs:attribute name="name" use="required">
+                      <xs:annotation>
+                         <xs:documentation>
+                         
+                         </xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                           <xs:pattern value="([a-zA-Z_$][a-zA-Z\d_$]*\.)*([a-zA-Z_$][a-zA-Z\d_$]*|\*|\*\*)" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                   </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+         </xs:sequence>
       </xs:complexType>
    </xs:element>
 
