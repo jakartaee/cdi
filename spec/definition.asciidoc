@@ -20,7 +20,7 @@ Furthermore, a bean may or may not be an alternative.
 
 In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other cases - for example, Java EE component environment resources, defined in <<resources>>  - the developer provides only the annotations and the bean implementation is provided by the container.
 
-The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injectionelresolution>>.
+The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_el_resolution>>.
 
 The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators. The interceptor bindings of a bean determine which interceptors will be applied at runtime. The bean types and qualifiers of a bean determine which decorators will be applied at runtime. Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>. Decorators are defined in <<decorators>>.
 
@@ -31,14 +31,14 @@ The bean developer may also create interceptors and/or decorators or reuse exist
 A bean is provided by the container with the following capabilities:
 
 * transparent creation and destruction and scoping to a particular context, specified in <<contexts>> and <<lifecycle>>,
-* scoped resolution by bean type and qualifier annotation type when injected into a Java-based client, as defined by <<typesaferesolution>>,
-* scoped resolution by bean name when used in a Unified EL expression, as defined by <<nameresolution>>,
-* lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injectionelresolution>>,
+* scoped resolution by bean type and qualifier annotation type when injected into a Java-based client, as defined by <<typesafe_resolution>>,
+* scoped resolution by bean name when used in a Unified EL expression, as defined by <<name_resolution>>,
+* lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_el_resolution>>,
 * method interception, callback interception, and decoration, as defined in <<interceptors>> and <<decorators>>, and
 * event notification, as defined in <<events>>.
 
 
-[[beantypes]]
+[[bean_types]]
 
 === Bean types
 
@@ -67,13 +67,13 @@ public class BookShopBean
 }
 ----
 
-The rules for determining the (unrestricted) set of bean types for a bean are defined in <<managedbeantypes>>, <<sessionbeantypes>>, <<producermethodtypes>>, <<producerfieldtypes>> and <<resourcetypes>>.
+The rules for determining the (unrestricted) set of bean types for a bean are defined in <<managed_bean_types>>, <<session_bean_types>>, <<producer_method_types>>, <<producer_field_types>> and <<resource_types>>.
 
 All beans have the bean type +java.lang.Object+.
 
-The bean types of a bean are used by the rules of typesafe resolution defined in <<typesaferesolution>>.
+The bean types of a bean are used by the rules of typesafe resolution defined in <<typesafe_resolution>>.
 
-[[legalbeantypes]]
+[[legal_bean_types]]
 
 ==== Legal bean types
 
@@ -88,7 +88,9 @@ Almost any Java type may be a bean type of a bean:
 
 A type variable is not a legal bean type. A parameterized type that contains a wildcard type parameter is not a legal bean type.
 
-Note that certain additional restrictions are specified in <<unproxyable>> for beans with a normal scope, as defined in <<normalscope>>.
+Note that certain additional restrictions are specified in <<unproxyable>> for beans with a normal scope, as defined in <<normal_scope>>.
+
+[[restricting_bean_types]]
 
 ==== Restricting the bean types of a bean
 
@@ -109,6 +111,8 @@ When a +@Typed+ annotation is explicitly specified, only the types whose classes
 In the example, the bean has a two bean types: +Shop<Book>+ and +Object+.
 
 If a bean class or producer method or field specifies a +@Typed+ annotation, and the +value+ member specifies a class which does not correspond to a type in the unrestricted set of bean types of a bean, the container automatically detects the problem and treats it as a definition error.
+
+[[typecasting_between_bean_types]]
 
 ==== Typecasting between bean types
 
@@ -191,13 +195,13 @@ But in this case, an instance of +AsynchronousPaymentProcessor+ will be injected
 @Inject @Asynchronous PaymentProcessor paymentProcessor;
 ----
 
-The container inspects the qualifier annotations and type of the injected attribute to determine the bean instance to be injected, according to the rules of typesafe resolution defined in <<typesaferesolution>>.
+The container inspects the qualifier annotations and type of the injected attribute to determine the bean instance to be injected, according to the rules of typesafe resolution defined in <<typesafe_resolution>>.
 
 An injection point may even specify multiple qualifiers.
 
 Qualifier types are also used as event selectors by event consumers, as defined in <<events>>, and to bind decorators to beans, as specified in <<decorators>>.
 
-[[builtinqualifiers]]
+[[builtin_qualifiers]]
 
 ==== Built-in qualifier types
 
@@ -230,7 +234,7 @@ The following declaration results in a bean with three qualifiers: +@Any+, +@Def
 public class Order { ... }
 ----
 
-The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injectionpointdefaultqualifier>>. The following declarations, in which the use of the +@Inject+ annotation identifies the constructor parameter as an injection point, are equivalent:
+The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injection_point_default_qualifier>>. The following declarations, in which the use of the +@Inject+ annotation identifies the constructor parameter as an injection point, are equivalent:
 
 [source, java]
 ----
@@ -248,7 +252,7 @@ public class Order {
 }
 ----
 
-[[definingqualifiertypes]]
+[[defining_qualifier_types]]
 
 ==== Defining new qualifier types
 
@@ -283,6 +287,8 @@ public @interface PayBy {
     PaymentMethod value();
 }
 ----
+
+[[declaring_bean_qualifiers]]
 
 ==== Declaring the qualifiers of a bean
 
@@ -321,9 +327,11 @@ class SynchronousReliablePaymentProcessor
 }
 ----
 
+[[injected_field_qualifiers]]
+
 ==== Specifying qualifiers of an injected field
 
-Qualifier types may be applied to injected fields (see <<injectedfields>>) to determine the bean that is injected, according to the rules of typesafe resolution defined in <<typesaferesolution>>.
+Qualifier types may be applied to injected fields (see <<injected_fields>>) to determine the bean that is injected, according to the rules of typesafe resolution defined in <<typesafe_resolution>>.
 
 [source, java]
 ----
@@ -347,9 +355,11 @@ A bean may only be injected to an injection point if it has all the qualifiers o
 @Inject @WishList List<Product> wishList;
 ----
 
+[[method_constructor_parameter_qualifiers]]
+
 ==== Specifying qualifiers of a method or constructor parameter
 
-Qualifier types may be applied to parameters of producer methods, initializer methods, disposer methods, observer methods or bean constructors (see <<implementation>>) to determine the bean instance that is passed when the method is called by the container. The container uses the rules of typesafe resolution defined in <<typesaferesolution>> to determine values for these parameters.
+Qualifier types may be applied to parameters of producer methods, initializer methods, disposer methods, observer methods or bean constructors (see <<implementation>>) to determine the bean instance that is passed when the method is called by the container. The container uses the rules of typesafe resolution defined in <<typesafe_resolution>> to determine values for these parameters.
 
 For example, when the container encounters the following producer method, an instance of +SynchronousPaymentProcessor+ will be passed to the first parameter and an instance of +AsynchronousPaymentProcessor+ will be passed to the second parameter:
 
@@ -406,18 +416,20 @@ List<Order> getOrderSearchResults() { ... }
 
 The set of scope types is extensible.
 
-[[builtinscopes]]
+[[builtin_scopes]]
 
 ==== Built-in scope types
 
 There are five standard scope types defined by this specification, all defined in the package +javax.enterprise.context+.
 
-* The +@RequestScoped+, +@ApplicationScoped+ and +@SessionScoped+ annotations defined in <<builtincontexts>> represent the standard scopes defined by the Java Servlets specification.
-* The +@ConversationScoped+ annotation represents the conversation scope defined in <<conversationcontext>>.
-* Finally, there is a +@Dependent+ pseudo-scope for dependent objects, as defined in <<dependentcontext>>.
+* The +@RequestScoped+, +@ApplicationScoped+ and +@SessionScoped+ annotations defined in <<builtin_contexts>> represent the standard scopes defined by the Java Servlets specification.
+* The +@ConversationScoped+ annotation represents the conversation scope defined in <<conversation_context>>.
+* Finally, there is a +@Dependent+ pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
 
 If an interceptor or decorator has any scope other than +@Dependent+, non-portable behavior results.
+
+[[defining_new_scope_type]]
 
 ==== Defining new scope types
 
@@ -437,6 +449,8 @@ public @interface BusinessProcessScoped {}
 ----
 
 Custom scopes are normally defined by portable extensions, which must also provide a _context object_, as defined in <<context>>, that implements the custom scope.
+
+[[declaring_bean_scope]]
 
 ==== Declaring the bean scope
 
@@ -465,7 +479,9 @@ Likewise, a bean with the custom business process scope may be declared by annot
 public class Order { ... }
 ----
 
-Alternatively, a scope type may be specified using a stereotype annotation, as defined in <<declaringstereotypes>>.
+Alternatively, a scope type may be specified using a stereotype annotation, as defined in <<declaring_stereotypes>>.
+
+[[default_scope]]
 
 ==== Default scope
 
@@ -498,7 +514,7 @@ orderManager
 
 There is no relationship between the bean name of a session bean and the EJB name of the bean.
 
-Subject to the restrictions defined in <<ambignames>>, multiple beans may share the same bean name.
+Subject to the restrictions defined in <<ambig_names>>, multiple beans may share the same bean name.
 
 Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
 
@@ -507,7 +523,9 @@ Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el
 <h:outputText value="#{products.total}"/>
 ----
 
-Bean names are used by the rules of EL name resolution defined in <<nameresolution>>.
+Bean names are used by the rules of EL name resolution defined in <<name_resolution>>.
+
+[[declaring_bean_name]]
 
 ==== Declaring the bean name
 
@@ -519,7 +537,7 @@ To specify the name of a bean, the qualifier +@javax.inject.Named+ is applied to
 public class Order { ... }
 ----
 
-[[defname]]
+[[default_name]]
 
 ==== Default bean names
 
@@ -531,7 +549,9 @@ In the following circumstances, a _default name_ must be assigned by the contain
 
 If a bean class or producer method or field of a bean declares a +@Named+ annotation and no bean name is explicitly specified the value of the +value+ member is defaulted.
 
-The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managedbeanname>>, <<sessionbeanname>>, <<producermethodname>> and <<producerfieldname>>.
+The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<session_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
+
+[[beans_with_no_name]]
 
 ==== Beans with no name
 
@@ -544,6 +564,8 @@ If an interceptor or decorator has a name, non-portable behavior results.
 === Alternatives
 
 An _alternative_ is a bean that must be explicitly declared in the +beans.xml+ file if it should be available for lookup, injection or EL resolution.
+
+[[declaring_alternative]]
 
 ==== Declaring an alternative
 
@@ -579,6 +601,8 @@ A stereotype may also specify that:
 
 A bean may declare zero, one or multiple stereotypes.
 
+[[defining_new_stereotype]]
+
 ==== Defining new stereotypes
 
 A bean stereotype is a Java annotation defined as +@Retention(RUNTIME)+. Typically a bean stereotype is defined as +@Target({TYPE, METHOD, FIELD})+, +@Target(TYPE)+, +@Target(METHOD)+, +@Target(FIELD)+ or +@Target({METHOD, FIELD})+.
@@ -592,6 +616,8 @@ A stereotype may be declared by specifying the +@javax.enterprise.inject.Stereot
 @Retention(RUNTIME)
 public @interface Action {}
 ----
+
+[[stereotype_default_scope]]
 
 ===== Declaring the default scope for a stereotype
 
@@ -610,9 +636,11 @@ public @interface Action {}
 
 Then actions would have scope +@RequestScoped+ unless the scope is explicitly specified by the bean.
 
+[[specify_stereotype_interceptor_bindings]]
+
 ===== Specifying interceptor bindings for a stereotype
 
-The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types. A stereotype may declare zero, one or multiple interceptor bindings, as defined in <<stereotypeinterceptorbindings>>.
+The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types. A stereotype may declare zero, one or multiple interceptor bindings, as defined in <<stereotype_interceptor_bindings>>.
 
 We may specify interceptor bindings that apply to all actions:
 
@@ -626,6 +654,8 @@ We may specify interceptor bindings that apply to all actions:
 @Retention(RUNTIME)
 public @interface Action {}
 ----
+
+[[named_stereotype]]
 
 ===== Declaring a +@Named+ stereotype
 
@@ -651,6 +681,8 @@ A stereotype should not declare any qualifier annotation other than +@Named+. If
 
 A stereotype should not be annotated +@Typed+. If a stereotype is annotated +@Typed+, non-portable behavior results.
 
+[[alternative_stereotype]]
+
 ===== Declaring an +@Alternative+ stereotype
 
 A stereotype may declare an +@Alternative+ annotation, which specifies that every bean with the stereotype is an alternative.
@@ -665,6 +697,8 @@ We may specify that all mock objects are alternatives:
 @Retention(RUNTIME)
 public @interface Mock {}
 ----
+
+[[stereotypes_with_additional_stereotypes]]
 
 ===== Stereotypes with additional stereotypes
 
@@ -684,7 +718,7 @@ Stereotype declarations are transitive - a stereotype declared by a second stere
 
 Stereotypes declared +@Target(TYPE)+ may not be applied to stereotypes declared +@Target({TYPE, METHOD, FIELD})+, +@Target(METHOD)+, +@Target(FIELD)+ or +@Target({METHOD, FIELD})+.
 
-[[declaringstereotypes]]
+[[declaring_stereotypes]]
 
 ==== Declaring the stereotypes for a bean
 
@@ -712,7 +746,7 @@ Multiple stereotypes may be applied to the same bean:
 public class LoginAction { ... }
 ----
 
-[[model]]
+[[builtin_stereotypes]]
 
 ==== Built-in stereotypes
 
@@ -728,7 +762,7 @@ The built-in stereotype +@javax.enterprise.inject.Model+ is intended for use wit
 public @interface Model {}
 ----
 
-In addition, the special-purpose +@Interceptor+ and +@Decorator+ stereotypes are defined in <<declaringinterceptor>> and <<decoratorannotation>>.
+In addition, the special-purpose +@Interceptor+ and +@Decorator+ stereotypes are defined in <<declaring_interceptor>> and <<decorator_annotation>>.
 
 [[exceptions]]
 

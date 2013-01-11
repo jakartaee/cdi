@@ -8,7 +8,7 @@ Decorators are superficially similar to interceptors, but because they directly 
 
 Decorators may be associated with any managed bean that is not itself an interceptor or decorator, with any EJB session bean or with any built-in bean other than the built-in bean with type +BeanManager+ and qualifier +@Default+. Decorators are not applied to the return value of a producer method or the current value of a producer field. A decorator instance is a dependent object of the object it decorates.
 
-[[decoratorbean]]
+[[decorator_bean]]
 
 === Decorator beans
 
@@ -18,7 +18,7 @@ If the set of decorated types of a decorator is empty, the container automatical
 
 Decorators of a session bean must comply with the bean provider programming restrictions defined by the EJB specification. Decorators of a stateful session bean must comply with the rules for instance passivation and conversational state defined by the EJB specification.
 
-[[decoratorannotation]]
+[[decorator_annotation]]
 
 ==== Declaring a decorator
 
@@ -30,7 +30,7 @@ A decorator is declared by annotating the bean class with the +@javax.decorator.
 class TimestampLogger implements Logger { ... }
 ----
 
-[[delegateattribute]]
+[[delegate_attribute]]
 
 ==== Decorator delegate injection points
 
@@ -84,6 +84,8 @@ class TimestampLogger implements Logger {
 
 If a decorator invokes the delegate object at any other time, the invoked method throws an +IllegalStateException+.
 
+[[decorated_types]]
+
 ==== Decorated types of a decorator
 
 The delegate type of a decorator must implement or extend every decorated type (with exactly the same type parameters). If the delegate type does not implement or extend a decorated type of the decorator (or specifies different type parameters), the container automatically detects the problem and treats it as a definition error.
@@ -94,7 +96,7 @@ A decorator may be an abstract Java class, and is not required to implement ever
 
 The decorator intercepts every method which is declared by a decorated type of the decorator and is implemented by the bean class of the decorator.
 
-[[enableddecorators]]
+[[enabled_decorators]]
 
 === Decorator enablement and ordering
 
@@ -212,13 +214,13 @@ Decorators are called after interceptors.
 
 A decorator is said to be _enabled_ if it is enabled in at least one bean archive.
 
-[[decoratorresolution]]
+[[decorator_resolution]]
 
 === Decorator resolution
 
 The process of matching decorators to a certain bean is called _decorator resolution_. A decorator is bound to a bean if:
 
-* The bean is assignable to the delegate injection point according to the rules defined in <<typesaferesolution>> (using <<assignableparametersdec>>).
+* The bean is assignable to the delegate injection point according to the rules defined in <<typesafe_resolution>> (using <<delegate_assignable_parameters>>).
 * The decorator is enabled in the bean archive containing the bean.
 
 
@@ -228,11 +230,11 @@ If a decorator matches a managed bean with a non-static, non-private, final meth
 
 For a custom implementation of the +Decorator+ interface defined in <<decorator>>, the container calls +getDelegateType()+, +getDelegateQualifiers()+ and +getDecoratedTypes()+ to determine the delegate type and qualifiers and decorated types of the decorator.
 
-[[assignableparametersdec]]
+[[delegate_assignable_parameters]]
 
 ==== Assignability of raw and parameterized types for delegate injection points
 
-Decorator delegate injection points have a special set of rules for determining assignability of raw and parameterized types, as an exception to <<assignableparameters>>.
+Decorator delegate injection points have a special set of rules for determining assignability of raw and parameterized types, as an exception to <<assignable_parameters>>.
 
 A raw bean type is considered assignable to a parameterized delegate type if the raw types are identical and all type parameters of the delegate type are either unbounded type variables or +java.lang.Object+.
 
@@ -245,7 +247,7 @@ A parameterized bean type is considered assignable to a parameterized delegate t
 * the delegate type parameter is a type variable, the bean type parameter is an actual type, and the actual type is assignable to the upper bound, if any, of the type variable.
 
 
-[[decoratorinvocation]]
+[[decorator_invocation]]
 
 === Decorator invocation
 
