@@ -1,12 +1,9 @@
 :numbered!:
 ["preface",sectnum="0"]
-[[preface]]
 
 == Preface
 
-
 === Evaluation license
-[[license]]
 
 ....
 

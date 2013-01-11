@@ -14,7 +14,7 @@ All containers must support managed beans, producer methods and producer fields.
 
 A portable extension may provide other kinds of beans by implementing the interface +Bean+ defined in <<bean>>.
 
-[[managedbeans]]
+[[managed_beans]]
 
 === Managed beans
 
@@ -26,7 +26,7 @@ If a managed bean has a non-static public field, it must have scope +@Dependent+
 
 If the managed bean class is a generic type, it must have scope +@Dependent+. If a managed bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
 
-[[whatclassesarebeans]]
+[[what_classes_are_beans]]
 
 ==== Which Java classes are managed beans?
 
@@ -46,13 +46,15 @@ A top-level Java class is a managed bean if it is defined to be a managed bean b
 
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
-[[managedbeantypes]]
+[[managed_bean_types]]
 
 ==== Bean types of a managed bean
 
 The unrestricted set of bean types for a managed bean contains the bean class, every superclass and all interfaces it implements directly or indirectly.
 
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
+
+[[declaring_managed_bean]]
 
 ==== Declaring a managed bean
 
@@ -95,7 +97,7 @@ public class MockLoginAction extends LoginAction { ... }
 
 The second bean is a "mock object" that overrides the implementation of +LoginAction+ when running in an embedded EJB Lite based integration testing environment.
 
-[[specializemanagedbean]]
+[[specialize_managed_bean]]
 
 ==== Specializing a managed bean
 
@@ -116,7 +118,7 @@ public class LoginAction { ... }
 public class MockLoginAction extends LoginAction { ... }
 ----
 
-[[managedbeanname]]
+[[managed_bean_name]]
 
 ==== Default bean name for a managed bean
 
@@ -124,7 +126,7 @@ The default name for a managed bean is the unqualified class name of the bean cl
 
 For example, if the bean class is named +ProductList+, the default bean name is +productList+.
 
-[[sessionbeans]]
+[[session_beans]]
 
 === Session beans
 
@@ -138,6 +140,8 @@ If the bean class of a session bean is annotated +@Interceptor+ or +@Decorator+,
 
 If the session bean class is a generic type, it must have scope +@Dependent+. If a session bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
 
+[[session_bean_ejb_remove_method]]
+
 ==== EJB remove methods of session beans
 
 If a session bean is a stateful session bean:
@@ -149,15 +153,17 @@ The session bean is not required to have an EJB remove method in order for the c
 
 If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and declares any scope other than +@Dependent+, an +UnsupportedOperationException+ is thrown.
 
-If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and has scope +@Dependent+ then no parameters are passed to the method by the container. Furthermore, the container ignores the instance instead of destroying it when +Contextual.destroy()+ is called, as defined in <<statefullifecycle>>.
+If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and has scope +@Dependent+ then no parameters are passed to the method by the container. Furthermore, the container ignores the instance instead of destroying it when +Contextual.destroy()+ is called, as defined in <<stateful_lifecycle>>.
 
-[[sessionbeantypes]]
+[[session_bean_types]]
 
 ==== Bean types of a session bean
 
 The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces. If the session bean has a bean class local view, the unrestricted set of bean types contains the bean class and all superclasses. In addition, +java.lang.Object+ is a bean type of every session bean.
 
 Remote interfaces are not included in the set of bean types.
+
+[[declaring_session_bean]]
 
 ==== Declaring a session bean
 
@@ -200,7 +206,7 @@ public class LoginActionImpl implements LoginAction { ... }
 public class MockLoginActionImpl extends LoginActionImpl { ... }
 ----
 
-[[specializesessionbean]]
+[[specialize_session_bean]]
 
 ==== Specializing a session bean
 
@@ -222,7 +228,7 @@ public class LoginActionBean implements LoginAction { ... }
 public class MockLoginActionBean extends LoginActionBean { ... }
 ----
 
-[[sessionbeanname]]
+[[session_bean_name]]
 
 ==== Default bean name for a session bean
 
@@ -230,7 +236,7 @@ The default name for a session bean is the unqualified class name of the session
 
 For example, if the bean class is named +ProductList+, the default bean name is +productList+.
 
-[[producermethod]]
+[[producer_method]]
 
 === Producer methods
 
@@ -243,7 +249,7 @@ A _producer method_ acts as a source of objects to be injected, where:
 
 A producer method must be a default-access, public, protected or private, non-abstract method of a managed bean class or session bean class. A producer method may be either static or non-static. If the bean is a session bean, the producer method must be either a business method of the EJB or a static method of the bean class.
 
-If a producer method sometimes returns a null value, then the producer method must have scope +@Dependent+. If a producer method returns a null value at runtime, and the producer method declares any other scope, an +IllegalProductException+ is thrown by the container. This restriction allows the container to use a client proxy, as defined in <<clientproxies>>.
+If a producer method sometimes returns a null value, then the producer method must have scope +@Dependent+. If a producer method returns a null value at runtime, and the producer method declares any other scope, an +IllegalProductException+ is thrown by the container. This restriction allows the container to use a client proxy, as defined in <<client_proxies>>.
 
 If the producer method return type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
@@ -257,7 +263,7 @@ The application may call producer methods directly. However, if the application 
 
 A bean may declare multiple producer methods.
 
-[[producermethodtypes]]
+[[producer_method_types]]
 
 ==== Bean types of a producer method
 
@@ -270,7 +276,7 @@ The bean types of a producer method depend upon the method return type:
 
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
 
-[[declaringproducermethod]]
+[[declaring_producer_method]]
 
 ==== Declaring a producer method
 
@@ -315,7 +321,7 @@ public class OrderFactory {
 }
 ----
 
-[[specializeproducermethod]]
+[[specialize_producer_method]]
 
 ==== Specializing a producer method
 
@@ -345,7 +351,7 @@ public class MockShop extends Shop {
 }
 ----
 
-[[producermethodname]]
+[[producer_method_name]]
 
 ==== Default bean name for a producer method
 
@@ -367,7 +373,7 @@ This producer method is named +paymentProcessor+:
 public PaymentProcessor paymentProcessor() { ... }
 ----
 
-[[producerfield]]
+[[producer_field]]
 
 === Producer fields
 
@@ -375,7 +381,7 @@ A _producer field_ is a slightly simpler alternative to a producer method.
 
 A producer field must be a default-access, public, protected or private, field of a managed bean class or session bean class. A producer field may be either static or non-static. If the bean is a session bean, the producer field must be a static field of the bean class.
 
-If a producer field sometimes contains a null value when accessed, then the producer field must have scope +@Dependent+. If a producer field contains a null value at runtime, and the producer field declares any other scope, an +IllegalProductException+ is thrown by the container. This restriction allows the container to use a client proxy, as defined in <<clientproxies>>.
+If a producer field sometimes contains a null value when accessed, then the producer field must have scope +@Dependent+. If a producer field contains a null value at runtime, and the producer field declares any other scope, an +IllegalProductException+ is thrown by the container. This restriction allows the container to use a client proxy, as defined in <<client_proxies>>.
 
 If the producer field type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
@@ -389,7 +395,7 @@ The application may access producer fields directly. However, if the application
 
 A bean may declare multiple producer fields.
 
-[[producerfieldtypes]]
+[[producer_field_types]]
 
 ==== Bean types of a producer field
 
@@ -401,6 +407,8 @@ The bean types of a producer field depend upon the field type:
 
 
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
+
+[[declaring_producer_field]]
 
 ==== Declaring a producer field
 
@@ -430,7 +438,7 @@ If a non-static field of a session bean class is annotated +@Produces+, the cont
 
 Interceptors and decorators may not declare producer fields. If an interceptor or decorator has a field annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
 
-[[producerfieldname]]
+[[producer_field_name]]
 
 ==== Default bean name for a producer field
 
@@ -444,7 +452,7 @@ For example, this producer field is named +products+:
 public List<Product> products = ...;
 ----
 
-[[disposermethod]]
+[[disposer_method]]
 
 === Disposer methods
 
@@ -454,11 +462,15 @@ A disposer method must be a default-access, public, protected or private, non-ab
 
 A bean may declare multiple disposer methods.
 
+[[disposer_method_disposed_parameter]]
+
 ==== Disposed parameter of a disposer method
 
-Each disposer method must have exactly one _disposed parameter_, of the same type as the corresponding producer method return type or producer field type. When searching for disposer methods for a producer method or producer field the container considers the type and qualifiers of the disposed parameter. If a producer method or producer field declared by the same bean class is assignable to the disposed parameter, according to the rules of typesafe resolution defined in <<typesaferesolution>>, the container must call this method when destroying any instance returned by that producer method or producer field.
+Each disposer method must have exactly one _disposed parameter_, of the same type as the corresponding producer method return type or producer field type. When searching for disposer methods for a producer method or producer field the container considers the type and qualifiers of the disposed parameter. If a producer method or producer field declared by the same bean class is assignable to the disposed parameter, according to the rules of typesafe resolution defined in <<typesafe_resolution>>, the container must call this method when destroying any instance returned by that producer method or producer field.
 
 A disposer method may resolve to multiple producer methods or producer fields declared by the bean class, in which case the container must call it when destroying any instance returned by any of these producer methods or producer fields.
+
+[[declaring_disposer_method]]
 
 ==== Declaring a disposer method
 
@@ -510,12 +522,14 @@ In addition to the disposed parameter, a disposer method may declare additional 
 public void close(@Disposes @UserDatabase EntityManager em, Logger log) { ... }
 ----
 
+[[disposer_method_resolution]]
+
 ==== Disposer method resolution
 
 A disposer method is bound to a producer method or producer field if:
 
 * the producer method or producer field is declared by the same bean class as the disposer method, and
-* the producer method or producer field is assignable to the disposed parameter, according to the rules of typesafe resolution defined in <<typesaferesolution>> (using <<assignableparameters>>).
+* the producer method or producer field is assignable to the disposed parameter, according to the rules of typesafe resolution defined in <<typesafe_resolution>> (using <<assignable_parameters>>).
 
 
 If there are multiple disposer methods for a single producer method or producer field, the container automatically detects the problem and treats it as a definition error.
@@ -553,6 +567,8 @@ By declaring a resource, we enable an object from the Java EE component environm
 The container is not required to support resources with scope other than +@Dependent+. Portable applications should not define resources with any scope other than +@Dependent+.
 
 A resource may not have a bean name.
+
+[[declaring_resource]]
 
 ==== Declaring a resource
 
@@ -603,11 +619,13 @@ If the producer field declaration specifies a bean name, the container automatic
 
 If the matching object in the Java EE component environment is not of the same type as the producer field declaration, the container automatically detects the problem and treats it as a definition error.
 
-[[resourcetypes]]
+[[resource_types]]
 
 ==== Bean types of a resource
 
-The unrestricted set of bean types of a resource is determined by the declared type of the producer field, as specified by <<producerfieldtypes>>.
+The unrestricted set of bean types of a resource is determined by the declared type of the producer field, as specified by <<producer_field_types>>.
+
+[[additional_builtin_beans]]
 
 === Additional built-in beans
 
@@ -624,15 +642,19 @@ A servlet container must provide the following built-in beans, all of which have
 * a bean with bean type +javax.servlet.ServletContext+, allowing injection of a reference to the +ServletContext+,
 
 
-These beans are passivation capable dependencies, as defined in <<passivationcapabledependency>>.
+These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
 
 If a Java EE component class has an injection point of type +UserTransaction+ and qualifier +@Default+, and may not validly make use of the JTA +UserTransaction+ according to the Java EE platform specification, the container automatically detects the problem and treats it as a definition error.
+
+[[bean_constructors]]
 
 === Bean constructors
 
 When the container instantiates a bean class, it calls the _bean constructor_. The bean constructor is a default-access, public, protected or private constructor of the bean class.
 
 The application may call bean constructors directly. However, if the application directly instantiates the bean, no parameters are passed to the constructor by the container; the returned object is not bound to any context; no dependencies are injected by the container; and the lifecycle of the new instance is not managed by the container.
+
+[[declaring_bean_constructor]]
 
 ==== Declaring a bean constructor
 
@@ -695,11 +717,13 @@ If a bean constructor has a parameter annotated +@Disposes+, or +@Observes+, the
 
 A bean constructor may have any number of parameters. All parameters of a bean constructor are injection points.
 
-[[injectedfields]]
+[[injected_fields]]
 
 === Injected fields
 
 An _injected field_ is a non-static, non-final field of a bean class or of any Java EE component class supporting injection.
+
+[[declaring_injected_field]]
 
 ==== Declaring an injected field
 
@@ -718,6 +742,8 @@ public class Order {
 
 If an injected field is annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
 
+[[initializer_methods]]
+
 === Initializer methods
 
 An _initializer method_ is a default-access, public, protected or private, non-abstract, non-static, non-generic method of a bean class or of any Java EE component class supporting injection. If the bean is a session bean, the initializer method is _not_ required to be a business method of the session bean.
@@ -728,7 +754,7 @@ Method interceptors are never called when the container calls an initializer met
 
 The application may call initializer methods directly, but then no parameters will be passed to the method by the container.
 
-[[declaringinitializer]]
+[[declaring_initializer]]
 
 ==== Declaring an initializer method
 
@@ -761,7 +787,7 @@ If an initializer method is annotated +@Produces+, has a parameter annotated +@D
 
 An initializer method may have any number of parameters. All initializer method parameters are injection points.
 
-[[injectionpointdefaultqualifier]]
+[[injection_point_default_qualifier]]
 
 === The default qualifier at injection points
 
@@ -857,6 +883,8 @@ Any type or package may be prevented from being considered by CDI by adding the 
  }
 ----
 
+[[named_at_injection_point]]
+
 === The qualifier +@Named+ at injection points
 
 The use of +@Named+ as an injection point qualifier is not recommended, except in the case of integration with legacy code that uses string-based names to identify beans.
@@ -897,7 +925,7 @@ However, this second bean:
 
 This bean is called the _@New qualified bean_ for the class +X+.
 
-Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<beanarchive>>, and is therefore not discovered during the bean discovery process defined in <<packagingdeployment>>. The container discovers +@New+ qualified beans by inspecting injection points of other enabled beans.
+Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>. The container discovers +@New+ qualified beans by inspecting injection points of other enabled beans.
 
 This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
 
