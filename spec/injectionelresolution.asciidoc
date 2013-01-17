@@ -1,4 +1,4 @@
-[[injectionelresolution]]
+[[injection_el_resolution]]
 
 == Dependency injection, lookup and EL
 
@@ -13,19 +13,21 @@ References to contextual instances may also be obtained by programmatic lookup o
 
 In general, a bean type or bean name does not uniquely identify a bean. When resolving a bean at an injection point, the container considers bean type, qualifiers and alternative declarations in +beans.xml+. When resolving a name in an EL expression, the container considers the bean name and alternative declarations in +beans.xml+. This allows bean developers to decouple type from implementation.
 
-The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normalscope>>. The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
+The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>. The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
 
 [[selection]]
 
 === Modularity
 
-Beans and their clients may be deployed in _modules_ in a module architecture such as the Java EE environment. In a module architecture, certain modules are considered _bean archives_. In the Java EE module architecture, any Java EE module or library is a module. The Java EE module or library is a bean archive if it contains a +beans.xml+ file, as defined in <<beanarchive>>.
+Beans and their clients may be deployed in _modules_ in a module architecture such as the Java EE environment. In a module architecture, certain modules are considered _bean archives_. In the Java EE module architecture, any Java EE module or library is a module. The Java EE module or library is a bean archive if it contains a +beans.xml+ file, as defined in <<bean_archive>>.
 
 A bean packaged in a certain module is available for injection, lookup and EL resolution to classes and JSP/JSF pages packaged in some other module if and only if the bean class of the bean is required to be _accessible_ to the other module by the class accessibility requirements of the module architecture. In the Java EE module architecture, a bean class is accessible in a module if and only if it is required to be accessible according to the class loading requirements defined by the Java EE platform specification.
 
 Note that, in some Java EE implementations, a bean class might be accessible to some other class even when this is not required by the Java EE platform specification. For the purposes of this specification, a class is not considered accessible to another class unless accessibility is explicitly required by the Java EE platform specification.
 
 An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ in that bean archive. An alternative is never available for injection, lookup or EL resolution in a module that is not a bean archive.
+
+[[declaring_selected_alternatives]]
 
 ==== Declaring selected alternatives for a bean archive
 
@@ -156,9 +158,13 @@ Otherwise, the bean is said to be disabled.
 
 Note that <<new>> defines a special rule that determines whether a +@New+ qualified bean is enabled or disabled. This rule applies as only to +@New+ qualified beans, as an exception to the normal rule defined here.
 
+[[inconsistent_specialization]]
+
 ==== Inconsistent specialization
 
 Suppose an enabled bean X specializes a second bean Y. If there is another enabled bean that specializes Y we say that _inconsistent specialization_ exists. The container automatically detects inconsistent specialization and treats it as a deployment problem.
+
+[[inter_module_injection]]
 
 ==== Inter-module injection
 
@@ -172,13 +178,13 @@ A bean is _available for injection_ in a certain module if:
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getBeanClass()+ to determine the bean class of the bean and +InjectionPoint.getMember()+ and then +Member.getDeclaringClass()+ to determine the class that declares an injection point.
 
-[[typesaferesolution]]
+[[typesafe_resolution]]
 
 === Typesafe resolution
 
 The process of matching a bean to an injection point is called _typesafe resolution_. Typesafe resolution usually occurs at application initialization time, allowing the container to warn the user if any enabled beans have unsatisfied or unresolvable ambiguous dependencies.
 
-[[performingtypesaferesolution]]
+[[performing_typesafe_resolution]]
 
 ==== Performing typesafe resolution
 
@@ -186,25 +192,25 @@ The container considers bean type and qualifiers when resolving a bean to be inj
 
 A bean is _assignable_ to a given injection point if:
 
-* The bean has a bean type that matches the required type. For this purpose, primitive types are considered to match their corresponding wrapper types in +java.lang+ and array types are considered to match only if their element types are identical. Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignableparameters>> or <<assignableparametersdec>>.
+* The bean has a bean type that matches the required type. For this purpose, primitive types are considered to match their corresponding wrapper types in +java.lang+ and array types are considered to match only if their element types are identical. Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignable_parameters>> or <<delegate_assignable_parameters>>.
 * The bean has all the required qualifiers. If no required qualifiers were explicitly specified, the container assumes the required qualifier +@Default+. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
 
 
 A bean is eligible for injection to a certain injection point if:
 
 * it is available for injection in the module that contains the class that declares the injection point, and
-* it is assignable to the injection point (using <<assignableparameters>>).
+* it is assignable to the injection point (using <<assignable_parameters>>).
 
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getTypes()+ and +getQualifiers()+ to determine the bean types and qualifiers.
 
-[[ambigdependencies]]
+[[unsatisfied_and_ambig_dependencies]]
 
 ==== Unsatisfied and ambiguous dependencies
 
 An _unsatisfied dependency_ exists at an injection point when no bean is eligible for injection to the injection point. An _ambiguous dependency_ exists at an injection point when multiple beans are eligible for injection to the injection point.
 
-Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegateattribute>>.
+Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
 
 When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
 
@@ -212,13 +218,15 @@ The container must validate all injection points of all enabled beans, all enums
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getInjectionPoints()+ to determine the set of injection points.
 
+[[legal_injection_point_types]]
+
 ==== Legal injection point types
 
-Any legal bean type, as defined in <<legalbeantypes>> may be the required type of an injection point. Furthermore, the required type of an injection point may contain a wildcard type parameter. However, a type variable is not a legal injection point type.
+Any legal bean type, as defined in <<legal_bean_types>> may be the required type of an injection point. Furthermore, the required type of an injection point may contain a wildcard type parameter. However, a type variable is not a legal injection point type.
 
 If an injection point type is a type variable, the container automatically detects the problem and treats it as a definition error.
 
-[[assignableparameters]]
+[[assignable_parameters]]
 
 ==== Assignability of raw and parameterized types
 
@@ -247,7 +255,7 @@ Furthermore, +UserDao+ is eligible for injection to any injection point of type 
 public class UserDao extends Dao<User> { ... }
 ----
 
-Note that a special set of rules, defined in <<assignableparametersdec>>, apply if and only if the injection point is a decorator delegate injection point.
+Note that a special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
 
 [[null]]
 
@@ -257,7 +265,7 @@ For the purposes of typesafe resolution and dependency injection, primitive type
 
 If an injection point of primitive type resolves to a producer method or producer field that returns a null value at runtime, the container must inject the primitive type's default value as defined by the Java Language Specification.
 
-[[qualifierannotationmembers]]
+[[qualifier_annotation_members]]
 
 ==== Qualifier annotations with members
 
@@ -304,6 +312,8 @@ public @interface PayBy {
 
 Array-valued or annotation-valued members of a qualifier type should be annotated +@Nonbinding+ in a portable application. If an array-valued or annotation-valued member of a qualifier type is not annotated +@Nonbinding+, non-portable behavior results.
 
+[[multiple_qualifiers]]
+
 ==== Multiple qualifiers
 
 A bean class or producer method or field may declare multiple qualifiers.
@@ -332,7 +342,7 @@ Then +ChequePaymentProcessor+ would be considered a candidate for injection into
 
 A bean must declare _all_ of the qualifiers that are specified at the injection point to be considered a candidate for injection.
 
-[[nameresolution]]
+[[name_resolution]]
 
 === EL name resolution
 
@@ -345,7 +355,7 @@ An EL name resolves to a bean if:
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getName()+ to determine the bean name.
 
-[[ambignames]]
+[[ambig_names]]
 
 ==== Ambiguous EL names
 
@@ -359,34 +369,36 @@ All unresolvable ambiguous EL names are detected by the container when the appli
 
 the container automatically detects the problem and treats it as a deployment problem.
 
-[[clientproxies]]
+[[client_proxies]]
 
 === Client proxies
 
-An injected reference, or reference obtained by programmatic lookup, is usually a _contextual reference_ as defined by <<contextualreference>>.
+An injected reference, or reference obtained by programmatic lookup, is usually a _contextual reference_ as defined by <<contextual_reference>>.
 
-A contextual reference to a bean with a normal scope, as defined in <<normalscope>>, is not a direct reference to a contextual instance of the bean (the object returned by +Contextual.create()+). Instead, the contextual reference is a _client proxy_ object. A client proxy implements/extends some or all of the bean types of the bean and delegates all method calls to the current instance (as defined in <<normalscope>>) of the bean.
+A contextual reference to a bean with a normal scope, as defined in <<normal_scope>>, is not a direct reference to a contextual instance of the bean (the object returned by +Contextual.create()+). Instead, the contextual reference is a _client proxy_ object. A client proxy implements/extends some or all of the bean types of the bean and delegates all method calls to the current instance (as defined in <<normal_scope>>) of the bean.
 
 There are a number of reasons for this indirection:
 
 * The container must guarantee that when any valid injected reference to a bean of normal scope is invoked, the invocation is always processed by the current instance of the injected bean. In certain scenarios, for example if a request scoped bean is injected into a session scoped bean, or into a servlet, this rule requires an indirect reference. (Note that the +@Dependent+ pseudo-scope is not a normal scope.)
 * The container may use a client proxy when creating beans with circular dependencies. This is only necessary when the circular dependencies are initialized via a managed bean constructor or producer method parameter. (Beans with scope +@Dependent+ never have circular dependencies.)
-* Finally, client proxies may be passivated, even when the bean itself may not be. Therefore the container must use a client proxy whenever a bean with normal scope is injected into a bean with a passivating scope, as defined in <<passivatingscope>>. (On the other hand, beans with scope +@Dependent+ must be serialized along with their client.)
+* Finally, client proxies may be passivated, even when the bean itself may not be. Therefore the container must use a client proxy whenever a bean with normal scope is injected into a bean with a passivating scope, as defined in <<passivating_scope>>. (On the other hand, beans with scope +@Dependent+ must be serialized along with their client.)
 
 
 Client proxies are never required for a bean whose scope is a pseudo-scope such as +@Dependent+.
 
 Client proxies may be shared between multiple injection points. For example, a particular container might instantiate exactly one client proxy object per bean. (However, this strategy is not required by this specification.)
 
+[[client_proxy_invocation]]
+
 ==== Client proxy invocation
 
 Every time a method of the bean is invoked upon a client proxy, the client proxy must:
 
-* obtain a contextual instance of the bean, as defined in <<contextualinstance>>, and
+* obtain a contextual instance of the bean, as defined in <<contextual_instance>>, and
 * invoke the method upon this instance.
 
 
-If the scope is not active, as specified in <<activecontext>>, the client proxy rethrows the +ContextNotActiveException+ or +IllegalStateException+.
+If the scope is not active, as specified in <<active_context>>, the client proxy rethrows the +ContextNotActiveException+ or +IllegalStateException+.
 
 The behavior of all methods declared by +java.lang.Object+, except for +toString()+, is undefined for a client proxy. Portable applications should not invoke any method declared by +java.lang.Object+, except for +toString()+, on a client proxy.
 
@@ -394,7 +406,7 @@ The behavior of all methods declared by +java.lang.Object+, except for +toString
 
 === Dependency injection
 
-From time to time the container instantiates beans and other Java EE component classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextualinstance>>.
+From time to time the container instantiates beans and other Java EE component classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
 
 The container is required to perform dependency injection whenever it creates one of the following contextual objects:
 
@@ -415,7 +427,7 @@ A Java EE 5 container is not required to support injection for non-contextual ob
 
 The container interacts with instances of beans, enums and other Java EE component classes supporting injection by calling methods and getting and setting field values.
 
-The object injected by the container may not be a direct reference to a contextual instance of the bean. Instead, it is an injectable reference, as defined by <<injectableinstance>>.
+The object injected by the container may not be a direct reference to a contextual instance of the bean. Instead, it is an injectable reference, as defined by <<injectable_reference>>.
 
 [[instantiation]]
 
@@ -423,7 +435,7 @@ The object injected by the container may not be a direct reference to a contextu
 
 When the container instantiates a managed bean or session bean with a constructor annotated +@Inject+, the container calls this constructor, passing an injectable reference to each parameter. If there is no constructor annotated +@Inject+, the container calls the constructor with no parameters.
 
-[[fieldsinitializermethods]]
+[[fields_initializer_methods]]
 
 ==== Injection of fields and initializer methods
 
@@ -440,13 +452,13 @@ The container must ensure that:
 * Any servlet +init()+ method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
 
 
-[[destruction]]
+[[dependent_objects_destruction]]
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean, enum or of any Java EE component class supporting injection, the container destroys all dependent objects, as defined in <<dependentdestruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
+When the container destroys an instance of a bean, enum or of any Java EE component class supporting injection, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
 
-[[methods]]
+[[producer_or_disposer_methods_invocation]]
 
 ==== Invocation of producer or disposer methods
 
@@ -454,15 +466,15 @@ When the container calls a producer or disposer method, the behavior depends upo
 
 * If the method is static, the container must invoke the method.
 * Otherwise, if the method is non-static, the container must:
-* Obtain a contextual instance of the bean which declares the method, as defined by <<contextualinstance>>.
-* Invoke the method upon this instance, as a business method invocation, as defined in <<bizmethod>>.
+* Obtain a contextual instance of the bean which declares the method, as defined by <<contextual_instance>>.
+* Invoke the method upon this instance, as a business method invocation, as defined in <<biz_method>>.
 
 
 
 
-The container passes an injectable reference to each injected method parameter. The container is also responsible for destroying dependent objects created during this invocation, as defined in <<dependentdestruction>>.
+The container passes an injectable reference to each injected method parameter. The container is also responsible for destroying dependent objects created during this invocation, as defined in <<dependent_destruction>>.
 
-[[fields]]
+[[producer_fields_access]]
 
 ==== Access to producer field values
 
@@ -470,29 +482,29 @@ When the container accesses the value of a producer field, the value depends upo
 
 * If the producer field is static, the container must access the field value.
 * Otherwise, if the producer field is non-static, the container must:
-* Obtain an contextual instance of the bean which declares the producer field, as defined by <<contextualinstance>>.
+* Obtain an contextual instance of the bean which declares the producer field, as defined by <<contextual_instance>>.
 * Access the field value of this instance.
 
 
 
 
-[[observers]]
+[[observers_method_invocation]]
 
 ==== Invocation of observer methods
 
-When the container calls an observer method (defined in <<observermethods>>), the behavior depends upon whether the method is static or non-static:
+When the container calls an observer method (defined in <<observer_methods>>), the behavior depends upon whether the method is static or non-static:
 
 * If the observer method is static, the container must invoke the method.
 * Otherwise, if the observer method is non-static, the container must:
-* Obtain a contextual instance of the bean which declares the observer method according to <<contextualinstance>>. If this observer method is a conditional observer method, obtain the contextual instance that already exists, only if the scope of the bean that declares the observer method is currently active, without creating a new contextual instance.
-* Invoke the observer method on the resulting instance, if any, as a business method invocation, as defined in <<bizmethod>>.
+* Obtain a contextual instance of the bean which declares the observer method according to <<contextual_instance>>. If this observer method is a conditional observer method, obtain the contextual instance that already exists, only if the scope of the bean that declares the observer method is currently active, without creating a new contextual instance.
+* Invoke the observer method on the resulting instance, if any, as a business method invocation, as defined in <<biz_method>>.
 
 
 
 
-The container must pass the event object to the event parameter and an injectable instance to each injected method parameter. The container is also responsible for destroying dependent objects created during this invocation, as defined in <<dependentdestruction>>.
+The container must pass the event object to the event parameter and an injectable instance to each injected method parameter. The container is also responsible for destroying dependent objects created during this invocation, as defined in <<dependent_destruction>>.
 
-[[injectionpoint]]
+[[injection_point]]
 
 ==== Injection point metadata
 
@@ -532,7 +544,7 @@ Occasionally, a component with scope +@Dependent+ needs to access metadata relat
 }
 ----
 
-The container must provide a bean with scope +@Dependent+, bean type +InjectionPoint+ and qualifier +@Default+, allowing dependent objects, as defined in <<dependentobjects>>, to obtain information about the injection point to which they belong. The built-in implementation must be a passivation capable dependency, as defined in <<passivationcapabledependency>>.
+The container must provide a bean with scope +@Dependent+, bean type +InjectionPoint+ and qualifier +@Default+, allowing dependent objects, as defined in <<dependent_objects>>, to obtain information about the injection point to which they belong. The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 
 If a bean that declares any scope other than +@Dependent+ has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
@@ -542,7 +554,7 @@ The +InjectionPoint+ injected into a disposer method represents the producer met
 
 The +InjectionPoint+ injected into a decorator represents the injection point on the bean the decorated type is injected into.
 
-[[beanmetadata]]
+[[bean_metadata]]
 
 ==== Bean metadata
 
@@ -561,7 +573,7 @@ Additionally, the container must provide beans allowing interceptors and decorat
 * a bean with scope +@Dependent+, qualifier +@Decorated+ and type +Bean+ which can be injected into any decorator instance.
 
 
-These beans are passivation capable dependencies, as defined in <<passivationcapabledependency>>.
+These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
 
 If an +Interceptor+ instance is injected into a bean instance other than an interceptor instance, the container automatically detects the problem and treats it as a definition error.
 
@@ -596,6 +608,8 @@ If a +Bean+ instance is injected into a disposer method, it represents the produ
     
 }
 ----
+
+[[programmatic_lookup]]
 
 === Programmatic lookup
 
@@ -657,7 +671,7 @@ for (PaymentProcessor pp: anyPaymentProcessor) pp.test();
 
 ----
 
-[[dynamiclookup]]
+[[dynamic_lookup]]
 
 ==== The +Instance+ interface
 
@@ -710,15 +724,15 @@ If an instance of an annotation that is not a qualifier type is passed to +selec
 
 The +get()+ method must:
 
-* Identify a bean that has the required type and required qualifiers and is eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performingtypesaferesolution>>, resolving ambiguities according to <<ambigdependencies>>.
+* Identify a bean that has the required type and required qualifiers and is eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * If typesafe resolution results in an unsatisfied dependency, throw an +UnsatisfiedResolutionException+. If typesafe resolution results in an unresolvable ambiguous dependency, throw an +AmbiguousResolutionException+.
-* Otherwise, obtain a contextual reference for the bean and the required type, as defined in <<contextualreference>>.
+* Otherwise, obtain a contextual reference for the bean and the required type, as defined in <<contextual_reference>>.
 
 
 The +iterator()+ method must:
 
-* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performingtypesaferesolution>>.
-* Return an +Iterator+, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextualreference>>.
+* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>.
+* Return an +Iterator+, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
 
 The method +isUnsatisfied()+ returns +true+ if there is no bean that has the required type and qualifiers and is eligible for injection into the class into which the parent +Instance+ was injected, or +false+ otherwise.
@@ -734,6 +748,8 @@ If +destroy()+ is called on an already destroyed instance, should an +IllegalSta
 
 ============
 
+[[builtin_instance]]
+
 ==== The built-in +Instance+
 
 The container must provide a built-in bean with:
@@ -745,7 +761,9 @@ The container must provide a built-in bean with:
 * an implementation provided automatically by the container.
 
 
-The built-in implementation must be a passivation capable dependency, as defined in <<passivationcapabledependency>>.
+The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
+
+[[annotationliteral_typeliteral]]
 
 ==== Using +AnnotationLiteral+ and +TypeLiteral+
 

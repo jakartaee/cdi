@@ -20,7 +20,7 @@ By default, Java implementation reuse is assumed. In this case, the two beans ha
 
 The bean developer may explicitly specify that the second bean specializes the first. Then the second bean inherits, and may not override, the qualifiers and bean name of the first bean. The second bean is able to serve the same role in the system as the first. In a particular deployment, only one of the two beans may fulfill that role.
 
-[[type-level-inheritance]]
+[[type_level_inheritance]]
 
 === Inheritance of type-level metadata
 
@@ -49,6 +49,8 @@ The stereotypes defined by this specification are not declared +@Inherited+.
 However, in special circumstances, these recommendations may be ignored.
 
 Note that the +@Named+ annotation is not declared +@Inherited+ and bean names are not inherited unless specialization is used.
+
+[[member_level_inheritance]]
 
 === Inheritance of member-level metadata
 
@@ -131,7 +133,7 @@ Suppose that the +MockAsynchronousService+ alternative is declared in the +beans
 </beans>
 ----
 
-Then, according to the rules of <<ambigdependencies>>, the following ambiguous dependency is resolvable, and so the attribute will receive an instance of +MockAsynchronousService+:
+Then, according to the rules of <<unsatisfied_and_ambig_dependencies>>, the following ambiguous dependency is resolvable, and so the attribute will receive an instance of +MockAsynchronousService+:
 
 [source, java]
 ----
@@ -167,9 +169,11 @@ public class MockAsynchronousService extends AsynchronousService {
 
 When an enabled bean, as defined in <<enablement>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container. Even if the second bean defines a producer or observer method, the method will never be called.
 
+[[direct_and_indirect_specialization]]
+
 ==== Direct and indirect specialization
 
-The annotation +@javax.enterprise.inject.Specializes+ is used to indicate that one bean _directly specializes_ another bean, as defined in <<specializemanagedbean>>, <<specializesessionbean>> and <<specializeproducermethod>>.
+The annotation +@javax.enterprise.inject.Specializes+ is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>>, <<specialize_session_bean>> and <<specialize_producer_method>>.
 
 Formally, a bean X is said to _specialize_ another bean Y if either:
 

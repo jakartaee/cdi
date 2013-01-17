@@ -6,11 +6,13 @@ The lifecycle of a contextual instance of a bean is managed by the context objec
 
 Every bean in the system is represented by an instance of the +Bean+ interface defined in <<bean>>. This interface is a subtype of +Contextual+. To create and destroy contextual instances, the context object calls the +create()+ and +destroy()+ operations defined by the interface +Contextual+, as defined in <<contextual>>.
 
+[[bean_instantiation_restriction]]
+
 === Restriction upon bean instantiation
 
 The managed bean and EJB specifications place very few programming restrictions upon the bean class of a bean. In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass. Therefore, bean classes are easy to instantiate and unit test.
 
-However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextualinstance>>. Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
+However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextual_instance>>. Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
 
 If the application requires more control over instantiation of a contextual instance, a producer method or field may be used. Any Java object may be returned by a producer method or field. It is not required that the returned object be a contextual reference for a bean. However, if the object is not a contextual reference for another bean, the object will be contextual instance of the producer method bean, and therefore available for injection into other objects and use in EL expressions, but the other capabilities listed in <<capabilities>> will not be available to the object.
 
@@ -70,13 +72,13 @@ public class PaymentStrategyProducer implements Serializable {
 
 In this case, any object returned by the producer method will not have any dependencies injected by the container, receives no lifecycle callbacks or event notifications and does not have interceptors or decorators.
 
-[[bizmethod]]
+[[biz_method]]
 
 === Container invocations and interception
 
 When the application invokes:
 
-* a method of a bean via a contextual reference to the bean, as defined in <<contextualreference>>, or
+* a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, or
 * a business method of a session bean via an EJB remote or local reference,
 
 
@@ -101,19 +103,23 @@ Additionally, invocations of message listener methods of message-driven beans du
 
 Otherwise, the invocation is treated as a normal Java method call and is not intercepted by the container.
 
+[[contextual_instance_lifecycle]]
+
 === Lifecycle of contextual instances
 
 The actual mechanics of bean creation and destruction varies according to what kind of bean is being created or destroyed.
 
 [[managedbeanlifecycle]]
 
+[[managed_bean_lifecycle]]
+
 ==== Lifecycle of managed beans
 
-When the +create()+ method of the +Bean+ object that represents a managed bean is called, the container obtains an instance of the bean, as defined by the Managed Beans specification, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fieldsinitializermethods>>.
+When the +create()+ method of the +Bean+ object that represents a managed bean is called, the container obtains an instance of the bean, as defined by the Managed Beans specification, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
 
-When the +destroy()+ method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<destruction>>.
+When the +destroy()+ method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<dependent_objects_destruction>>.
 
-[[statefullifecycle]]
+[[stateful_lifecycle]]
 
 ==== Lifecycle of stateful session beans
 
@@ -125,7 +131,7 @@ When the +destroy()+ method is called, and if the underlying EJB was not already
 
 Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
 
-[[statelesslifecycle]]
+[[stateless_lifecycle]]
 
 ==== Lifecycle of stateless session and singleton beans
 
@@ -137,31 +143,31 @@ When the +destroy()+ method is called, the container simply discards this intern
 
 Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
 
-[[producermethodlifecycle]]
+[[producer_method_lifecycle]]
 
 ==== Lifecycle of producer methods
 
-When the +create()+ method of a +Bean+ object that represents a producer method is called, the container must invoke the producer method as defined by <<methods>>. The return value of the producer method, after method interception completes, is the new contextual instance to be returned by +Bean.create()+.
+When the +create()+ method of a +Bean+ object that represents a producer method is called, the container must invoke the producer method as defined by <<producer_or_disposer_methods_invocation>>. The return value of the producer method, after method interception completes, is the new contextual instance to be returned by +Bean.create()+.
 
 If the producer method returns a null value and the producer method bean has the scope +@Dependent+, the +create()+ method returns a null value.
 
 Otherwise, if the producer method returns a null value, and the scope of the producer method is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
 
-When the +destroy()+ method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<methods>>, passing the instance given to +destroy()+ to the disposed parameter. Finally, the container destroys dependent objects, as defined in <<destruction>>.
+When the +destroy()+ method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter. Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
 
-[[producerfieldlifecycle]]
+[[producer_field_lifecycle]]
 
 ==== Lifecycle of producer fields
 
-When the +create()+ method of a +Bean+ object that represents a producer field is called, the container must access the producer field as defined by <<fields>> to obtain the current value of the field. The value of the producer field is the new contextual instance to be returned by +Bean.create()+.
+When the +create()+ method of a +Bean+ object that represents a producer field is called, the container must access the producer field as defined by <<producer_fields_access>> to obtain the current value of the field. The value of the producer field is the new contextual instance to be returned by +Bean.create()+.
 
 If the producer field contains a null value and the producer field bean has the scope +@Dependent+, the +create()+ method returns a null value.
 
 Otherwise, if the producer field contains a null value, and the scope of the producer field is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
 
-When the +destroy()+ method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<methods>>, passing the instance given to +destroy()+ to the disposed parameter.
+When the +destroy()+ method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter.
 
-[[resourcelifecycle]]
+[[resource_lifecycle]]
 
 ==== Lifecycle of resources
 
@@ -175,5 +181,5 @@ References to EJBs and web services are always dependent scoped and a new instan
 
 For an entity manager associated with a resource definition, it must behave as though it were injected directly using +@PersistencContext+.
 
-When the +destroy()+ method of a bean which represents a remote stateful EJB reference is called, the container will _not_ automatically destroy the EJB reference. The application must explicitly call the method annotated +@Remove+. This behavior differs to that specified in <<statefullifecycle>> for beans which represent a local stateful EJB reference
+When the +destroy()+ method of a bean which represents a remote stateful EJB reference is called, the container will _not_ automatically destroy the EJB reference. The application must explicitly call the method annotated +@Remove+. This behavior differs to that specified in <<stateful_lifecycle>> for beans which represent a local stateful EJB reference
 
