@@ -497,6 +497,7 @@ The interface +javax.enterprise.inject.spi.InjectionPoint+ provides access to me
 
 * an injected field or a parameter of a bean constructor, initializer method, producer method, disposer method or observer method, or
 * an instance obtained dynamically using +Instance.get()+.
+* an event obtained dynamically using +Event.select()+.
 
 
 [source, java]
@@ -513,7 +514,7 @@ public interface InjectionPoint {
 ----
 
 * The +getBean()+ method returns the +Bean+ object representing the bean that defines the injection point. If the injection point does not belong to a bean, +getBean()+ returns a null value. If the injection point represents a dynamically obtained instance, the +getBean()+ method should return the +Bean+ object representing the bean that defines the +Instance+ injection point.
-* The +getType()+ and +getQualifiers()+ methods return the required type and required qualifiers of the injection point. If the injection point represents a dynamically obtained instance, the +getType()+ and +getQualifiers()+ methods should return the required type (as defined by +Instance.select()+), and required qualifiers of the injection point including any additional required qualifiers (as defined by +Instance.select()+).
+* The +getType()+ and +getQualifiers()+ methods return the required type and required qualifiers of the injection point. If the injection point represents a dynamically obtained instance, the +getType()+ and +getQualifiers()+ methods should return the required type (as defined by +Instance.select()+ and +Event.select()+), and required qualifiers of the injection point including any additional required qualifiers (as defined by +Instance.select()+ and +Event.select()+).
 * The +getMember()+ method returns the +Field+ object in the case of field injection, the +Method+ object in the case of method parameter injection, or the +Constructor+ object in the case of constructor parameter injection. If the injection point represents a dynamically obtained instance, the +getMember()+ method returns the +Field+ object representing the field that defines the +Instance+ injection point in the case of field injection, the +Method+ object representing the method that defines the +Instance+ injection point in the case of method parameter injection, or the +Constructor+ object representing the constructor that defines the +Instance+ injection point in the case of constructor parameter injection.
 * The +getAnnotated()+ method returns an instance of +javax.enterprise.inject.spi.AnnotatedField+ or +javax.enterprise.inject.spi.AnnotatedParameter+, depending upon whether the injection point is an injected field or a constructor/method parameter. If the injection point represents a dynamically obtained instance, then the +getAnnotated()+ method returns an instance of +javax.enterprise.inject.spi.AnnotatedField+ or +javax.enterprise.inject.spi.AnnotatedParameter+ representing the +Instance+ injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
 * The +isDelegate()+ method returns +true+ if the injection point is a decorator delegate injection point, and +false+ otherwise. If the injection point represents a dynamically obtained instance then +isDelegate()+ returns false.
