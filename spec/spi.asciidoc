@@ -508,15 +508,9 @@ public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFacto
 
 The method +BeanManager.createAnnotatedType()+ returns an +AnnotatedType+ that may be used to read the annotations of the given Java class or interface.
 
-The methods +BeanManager.getAnnotatedType()+ and +BeanManager.getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization.
-
-The method +BeanManager.getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered by or added to the container during container initialization.
-
 [source, java]
 ----
 public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
-public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
-public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 ----
 
 [[bm_obtain_injectiontarget]]
@@ -816,6 +810,8 @@ public interface AfterBeanDiscovery {
     public void addBean(Bean<?> bean);
     public void addObserverMethod(ObserverMethod<?> observerMethod);
     public void addContext(Context context);
+    public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
+    public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 }
 ----
 
@@ -823,6 +819,7 @@ public interface AfterBeanDiscovery {
 * +addBean()+ fires an event of type +ProcessBean+ containing the given +Bean+ and then registers the +Bean+ with the container, thereby making it available for injection into other beans. The given +Bean+ may implement +Interceptor+ or +Decorator+.
 * +addObserverMethod()+ fires an event of type +ProcessObserverMethod+ containing the given +ObserverMethod+ and then registers the +ObserverMethod+ with the container, thereby making it available for event notifications.
 * +addContext()+ registers a custom +Context+ object with the container.
+* +getAnnotatedType()+ and +getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization.
 
 
 A portable extension may take advantage of this event to register beans, interceptors, decorators, observer methods and custom context objects with the container.
