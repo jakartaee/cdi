@@ -193,6 +193,7 @@ Additionally, the container must ensure that:
 
 * all dependent objects of a non-contextual instance of a bean or other Java EE component class are destroyed when the instance is destroyed by the container,
 * all +@Dependent+ scoped contextual instances injected into method parameters of a disposer method or an observer method are destroyed when the invocation completes,
+* all +@Dependent+ scoped contextual instances injected into method or constructor parameters that are annotated with +@TransientReference+ are destroyed when the invocation completes,
 * any +@Dependent+ scoped contextual instance created to receive a producer method, producer field, disposer method or observer method invocation is destroyed when the invocation completes, and
 * all +@Dependent+ scoped contextual instances created during evaluation of a Unified EL expression in a JSP or JSF page are destroyed when the evaluation completes.
 
@@ -384,9 +385,9 @@ For every bean which declares a passivating scope, the container must validate t
 If a managed bean which declares a passivating scope, a stateful session bean which declares a passivating scope, or a built-in bean:
 
 * is not passivation capable,
-* has a non-transient injected field that does not resolve to a passivation capable dependency, or
+* has a non-transient injected field, bean constructor parameter or initializer method parameter which is not annotated with +@TransientReference+ and that resolves to a dependent scoped bean that is not a passivation capable dependency, or
+* has a non-transient injected field, bean constructor parameter or initializer method parameter that resolves to a bean that is not a dependent scoped bean and that is not a passivation capable dependency, or
 * has an interceptor or decorator with a non-transient injected field that does not resolve to a passivation capable dependency,
-
 
 then the container automatically detects the problem and treats it as a deployment problem.
 
