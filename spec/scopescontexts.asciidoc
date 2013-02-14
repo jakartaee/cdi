@@ -490,7 +490,7 @@ An event with qualifier +@Initialized(ConversationScoped.class)+ is fired when t
 The conversation context provides access to state associated with a particular _conversation_. Every Servlet request has an associated conversation. This association is managed automatically by the container according to the following rules:
 
 * Any Servlet request has exactly one associated conversation.
-* The conversation associated with a Servlet request is determined at the beginning of the request before calling any +service()+ method of any servlet in the web application, calling the +doFilter()+ method of any servlet filter in the web application and before the container calls any +ServletRequestListener+ or +AsyncListener+ in the web application.
+* The container provides a filter with the name "CDI Conversation Filter", which may be mapped in +web.xml+, allowing the user alter when the conversation is associated with the servlet request. If this filter is not mapped in any +web.xml+ in the application, the conversation associated with a Servlet request is determined at the beginning of the request before calling any +service()+ method of any servlet in the web application, calling the +doFilter()+ method of any servlet filter in the web application and before the container calls any +ServletRequestListener+ or +AsyncListener+ in the web application.
 
 
 Any conversation is in one of two states: _transient_ or _long-running_.
