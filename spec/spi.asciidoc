@@ -25,13 +25,12 @@ public interface BeanAttributes<T> {
     public String getName();
     public Set<Class<? extends Annotation>> getStereotypes();
     public boolean isAlternative();
-    public boolean isNullable();
 }
 ----
 
 * +getTypes()+, +getQualifiers()+, +getScope()+, +getName()+ and +getStereotypes()+ must return the bean types, qualifiers, scope type, bean name and stereotypes of the bean, as defined in <<concepts>>.
 * +isAlternative()+ must return +true+ if the bean is an alternative, and +false+ otherwise.
-* +isNullable()+ must return +true+ if the method +Bean.create()+ sometimes returns a null value, and +false+ otherwise, as defined in <<null>>.
+* +isNullable()+ is deprecated in CDI 1.1 and should be ignored by the container.
 
 
 The interface +javax.enterprise.inject.spi.Bean+ defines everything the container needs to manage instances of a certain bean.
@@ -41,6 +40,7 @@ The interface +javax.enterprise.inject.spi.Bean+ defines everything the containe
 public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
     public Class<?> getBeanClass();
     public Set<InjectionPoint> getInjectionPoints();
+    public boolean isNullable();
 }
 ----
 
@@ -572,7 +572,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 The method +BeanManager.createBean()+ returns a container provided implementation of +Bean+. The method accepts:
 
-* a +BeanAttributes+, which determines the bean types, qualifiers, scope, name and stereotypes of the returned +Bean+, and the return values of +isAlternative()+ and +isNullable()+, and
+* a +BeanAttributes+, which determines the bean types, qualifiers, scope, name and stereotypes of the returned +Bean+, and the return values of +isAlternative()+, and
 * a class, which determines the return value of +Bean.getClass()+.
 
 
