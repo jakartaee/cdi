@@ -48,5 +48,20 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
      * @return the set of {@linkplain javax.enterprise.inject.spi.InjectionPoint injection points} of the bean
      */
     public Set<InjectionPoint> getInjectionPoints();
+    
+    /**
+     * <p>
+     * Determines if {@link javax.enterprise.context.spi.Contextual#create(CreationalContext)}
+     * sometimes return a null value.
+     * </p>
+     * 
+     * <p>
+     * As of CDI 1.1 this method is deprecated and can safely always return false.
+     * </p>
+     * 
+     * @return <tt>true</tt> if the {@code create()} method may return a null value, and
+     *         <tt>false</tt> otherwise
+     */
+    public boolean isNullable();
 
 }
