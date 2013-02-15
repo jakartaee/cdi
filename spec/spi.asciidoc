@@ -1059,39 +1059,6 @@ void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
 
 If any observer method of a +ProcessProducer+ event throws an exception, the exception is treated as a definition error by the container.
 
-For producer methods, the event must be of type +ProcessProducerMethod+.
-
-[source, java]
-----
-public interface ProcessProducerMethod<T, X> extends ProcessProducer<T, X> {
-    public AnnotatedMethod<T> getAnnotatedMember();
-}
-----
-
-For producer fields, the event must be of type +ProcessProducerField+.
-
-[source, java]
-----
-public interface ProcessProducerField<T, X> extends ProcessProducer<T, X> {
-    public AnnotatedField<T> getAnnotatedMember();
-    public void setInitializer(Initializer<X> producer);
-}
-----
-
-* +setInitializer()+ sets the +Initializer+ object that will be used by the container to obtain the initial value of the producer field.
-
-
-The interface +Initializer+ lets a portable extension provide an initial value for a producer field.
-
-[source, java]
-----
-public interface Initilizer<X> {
-    public X getInitialValue(AnnotatedField<?> field);
-}
-----
-
-* +getInitialValue()+ returns the initial value of the producer field. If the producer field is non-static, the container must inject this value to the producer field when it performs Java EE component environment injection upon an instance of the bean that declares the producer field. The container must use this value as the value of the producer field, whether static or non-static, unless the application explicitly assigns a value to the field before the field is accessed by the container.
-
 [[pba]]
 
 ==== +ProcessBeanAttributes+ event
