@@ -16,17 +16,46 @@
    -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-   elementFormDefault="qualified" targetNamespace="http://java.sun.com/xml/ns/javaee"
-   xmlns:javaee="http://java.sun.com/xml/ns/javaee" version="1.1">
+   elementFormDefault="qualified" targetNamespace="http://xmlns.jcp.org/xml/ns/javaee"
+   xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" version="1.1">
 
    <xs:annotation>
       <xs:documentation>
+         <![CDATA[[
          Contexts and Dependency Injection (CDI) defines
          a set of complementary services that help improve the structure
          of application code. beans.xml is used to enable CDI services
          for the current bean archive as well as to enable named
          interceptors, decorators and alternatives for the current bean
          archive.
+         
+
+         This is the XML Schema for the beans.xml deployment
+         descriptor for CDI 1.1.  The deployment descriptor must be named
+         "META-INF/beans.xml" or "WEB-INF/beans.xml" in a war file.
+         All application deployment descriptors may indicate
+         the application schema by using the Java EE namespace:
+
+         http://xmlns.jcp.org/xml/ns/javaee
+
+         and may indicate the version of the schema by
+         using the version element as shown below:
+
+         <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
+         version="1.1">
+            ...
+         </beans>
+
+        The deployment descriptor may indicate the published version of
+        the schema using the xsi:schemaLocation attribute for the Java EE
+        namespace with the following location:
+
+        http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd
+
+     ]]>
       </xs:documentation>
    </xs:annotation>
 
