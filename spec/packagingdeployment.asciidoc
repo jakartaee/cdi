@@ -103,7 +103,7 @@ For each enabled bean, the container must search the class for observer methods,
 * create an +ObserverMethod+ object, as defined in <<observer_method>> and fire an event of type +ProcessObserverMethod+, as defined in <<pom>>.
 
 
-The container determines which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, taking into account any +<alternatives>+, +<interceptors>+ and +<decorators>+ declarations in the +beans.xml+ files, and registers the +Bean+ and +ObserverMethod+ objects:
+The container determines which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and registers the +Bean+ and +ObserverMethod+ objects:
 
 * For each enabled bean that is not an interceptor or decorator, the container registers an instance of the +Bean+ interface defined in <<bean>>.
 * For each enabled interceptor, the container registers an instance of the +Interceptor+ interface defined in <<interceptor>>.
