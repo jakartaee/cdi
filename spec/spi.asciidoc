@@ -50,7 +50,7 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
 
 Note that implementations of +Bean+ must also implement the inherited operations defined by the +Contextual+ interface defined in <<contextual>>.
 
-An instance of +Bean+ exists for every enabled bean.
+An instance of +Bean+ must exist for every enabled bean.
 
 A portable extension may add support for new kinds of beans beyond those defined by the this specification (managed beans, session beans, producer methods, producer fields and resources) by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<abd>>.
 
@@ -131,7 +131,7 @@ public interface ObserverMethod<T> {
 * +notify()+ calls the observer method, as defined in <<observer_notification>>.
 
 
-An instance of +ObserverMethod+ exists for every observer method of every enabled bean.
+An instance of +ObserverMethod+ must exist for every observer method of every enabled bean.
 
 [[injectiontarget]]
 
@@ -805,7 +805,7 @@ If any observer method of the +BeforeBeanDiscovery+ event throws an exception, t
 
 ==== +AfterBeanDiscovery+ event
 
-The container must fire a second event when it has fully completed the bean discovery process, validated that there are no definition errors relating to the discovered beans, and registered +Bean+ and +ObserverMethod+ objects for the discovered beans, but before detecting deployment problems.
+The container must fire a second event when it has fully completed the bean discovery process, validated that there are no definition errors relating to the discovered beans, and registered +Bean+ and +ObserverMethod+ objects for the discovered beans.
 
 The event object must be of type +javax.enterprise.inject.spi.AfterBeanDiscovery+:
 
@@ -833,6 +833,32 @@ void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager)
 ----
 
 If any observer method of the +AfterBeanDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
+
+[[bdv]]
+
+==== +BeforeDeploymentValidation+ event
+
+The container must fire a third event before detecting deployment problems.
+
+The event object must be of type +javax.enterprise.inject.spi.BeforeDeploymentValidation+.
+
+[source, java]
+----
+public interface BeforeDeploymentValidation {
+    public List<Class<?>> getAlternatives();
+    public List<Class<?>> getInterceptors();
+    public List<Class<?>> getDecorators();
+}
+----
+
+* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not includued in the list.
+* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not includued in the list.
+* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not includued in the list.
+
+Any observer of this event is permitted to add classes to, or remove classes from, the set of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +BeforDeploymentValidation+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
+
+If any observer method of a +BeforeDeploymentValidation+ event throws an exception, the exception is treated as a deployment problem by the container.
+
 
 [[adv]]
 
@@ -880,34 +906,6 @@ void beforeShutdown(@Observes BeforeShutdown event, BeanManager manager) { ... }
 ----
 
 If any observer method of the +BeforeShutdown+ event throws an exception, the exception is ignored by the container.
-
-[[pm]]
-
-==== +ProcessModule+ event
-
-The container must fire an event for each bean archive, before it processes the classes packaged in that module.
-
-The event object must be of type +javax.enterprise.inject.spi.ProcessModule+.
-
-[source, java]
-----
-public interface ProcessModule {
-    public List<Class<?>> getAlternatives();
-    public List<Class<?>> getInterceptors();
-    public List<Class<?>> getDecorators();
-    public InputStream getBeansXml();
-}
-----
-
-* +getAlternatives()+ returns the set of enabled alternatives of the bean deployment archive.
-* +getInterceptors()+ returns the list of enabled interceptors of the bean deployment archive.
-* +getDecorators()+ returns the list of enabled decorators of the bean deployment archive.
-* +getBeansXml()+ returns an input stream which can be used to read in the +beans.xml+ for this module.
-
-
-Any observer of this event is permitted to add classes to, or remove classes from, the set of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers have been called, to determine the enabled alternatives, interceptors, and decorators for the bean deployment archive. The initial values of these collections is determined by reading the +beans.xml+ file of the bean deployment archive.
-
-If any observer method of a +ProcessModule+ event throws an exception, the exception is treated as a deployment problem by the container.
 
 [[pat]]
 
@@ -965,7 +963,7 @@ If any observer method of a +ProcessAnnotatedType+ event throws an exception, th
 
 ==== +ProcessInjectionPoint+ event
 
-The container must fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, enabled bean, enabled interceptor or enabled decorator.
+The container must fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, bean, interceptor or decorator.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the managed bean class, session bean class or Java EE component class supporting injection, and +X+ is the declared type of the injection point.
 
@@ -991,7 +989,7 @@ If any observer method of a +ProcessInjectionPoint+ event throws an exception, t
 
 ==== +ProcessInjectionTarget+ event
 
-The container must fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, enabled bean, enabled interceptor or enabled decorator.
+The container must fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, bean, interceptor or decorator.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the managed bean class, session bean class or Java EE component class supporting injection.
 
@@ -1028,7 +1026,7 @@ If any observer method of a +ProcessInjectionTarget+ event throws an exception, 
 
 ==== +ProcessProducer+ event
 
-The container must fire an event for each producer method or field of each enabled bean, including resources.
+The container must fire an event for each producer method or field of each bean, including resources.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessProducer<T, X>+, where +T+ is the bean class of the bean that declares the producer method or field and +X+ is the return type of the producer method or the type of the producer field.
 
@@ -1098,7 +1096,7 @@ public interface Initilizer<X> {
 
 ==== +ProcessBeanAttributes+ event
 
-The container must fire an event for each enabled bean, interceptor or decorator deployed in a bean archive, before registering the +Bean+ object. No event is fired for any +@New+ qualified bean, defined in <<new>>.
+The container must fire an event for each bean, interceptor or decorator deployed in a bean archive, before registering the +Bean+ object. No event is fired for any +@New+ qualified bean, defined in <<new>>.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessBeanAttributes<T>+ where +T+ is the bean class of the managed bean or session bean, the return type of the producer method, or the type of the producer field.
 
@@ -1130,7 +1128,7 @@ If any observer method of a +ProcessBeanAttributes+ event throws an exception, t
 
 ==== +ProcessBean+ event
 
-The container must fire an event for each enabled bean, interceptor or decorator deployed in a bean archive, after firing the +ProcessBeanAttributes+ for the bean and before registering the +Bean+ object. No event is fired for any +@New+ qualified bean, defined in <<new>>.
+The container must fire an event for each bean, interceptor or decorator deployed in a bean archive, after firing the +ProcessBeanAttributes+ for the bean and before registering the +Bean+ object. No event is fired for any +@New+ qualified bean, defined in <<new>>.
 
 The event object type in the package +javax.enterprise.inject.spi+ depends upon what kind of bean was discovered:
 
@@ -1208,7 +1206,7 @@ If any observer method of a +ProcessBean+ event throws an exception, the excepti
 
 ==== +ProcessObserverMethod+ event
 
-The container must fire an event for each observer method of each enabled bean, before registering the +ObserverMethod+ object.
+The container must fire an event for each observer method of each bean, before registering the +ObserverMethod+ object.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessObserverMethod<T, X>+, where +T+ is the bean class of the bean that declares the observer method and +X+ is the observed event type of the observer method.
 

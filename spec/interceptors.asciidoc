@@ -2,46 +2,13 @@
 
 == Interceptor bindings
 
-Managed beans and EJB session and message-driven beans support interception. _Interceptors_ are used to separate cross-cutting concerns from business logic. The Java Interceptors specification defines the basic programming model and semantics. This specification defines a typesafe mechanism for associating interceptors to beans using _interceptor bindings_.
-
-Interceptor bindings may be used to associate interceptors with any managed bean that is not itself an interceptor or decorator or with any EJB session or message-driven bean. Interceptors are not associated with the return value of a producer method or the current value of a producer field. An interceptor instance is a dependent object of the object it intercepts.
+Managed beans and EJB session and message-driven beans support interception. _Interceptors_ are used to separate cross-cutting concerns from business logic. The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes. This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
 
 [[interceptor_bindings]]
 
 === Interceptor binding types
 
-An _interceptor binding type_ is a Java annotation defined as +@Retention(RUNTIME)+. Typically an interceptor binding is defined as +@Target({TYPE, METHOD})+ or +@Target(TYPE)+.
-
-An interceptor binding type may be declared by specifying the +@javax.interceptor.InterceptorBinding+ meta-annotation.
-
-[source, java]
-----
-@Inherited
-@InterceptorBinding
-@Target({TYPE, METHOD})
-@Retention(RUNTIME)
-public @interface Transactional {}
-----
-
-[[interceptor_binding_with_additional_interceptor_bindings]]
-
-==== Interceptor binding types with additional interceptor bindings
-
-An interceptor binding type may declare other interceptor bindings.
-
-[source, java]
-----
-@Inherited
-@InterceptorBinding
-@Target({TYPE, METHOD})
-@Retention(RUNTIME)
-@Transactional
-public @interface DataAccess {}
-----
-
-Interceptor bindings are transitive - an interceptor binding declared by an interceptor binding type is inherited by all beans and other interceptor binding types that declare that interceptor binding type.
-
-Interceptor binding types declared +@Target(TYPE)+ may not be applied to interceptor binding types declared +@Target({TYPE, METHOD})+.
+This specification extends the Java Interceptors specification and allows interceptor bindings to be applied to CDI stereotypes.
 
 [[stereotype_interceptor_bindings]]
 
@@ -68,304 +35,67 @@ If a stereotype declares interceptor bindings, it must be defined as +@Target(TY
 
 === Declaring the interceptor bindings of an interceptor
 
-The interceptor bindings of an interceptor are specified by annotating the interceptor class with the binding types and the +@javax.interceptor.Interceptor+ annotation and are called the set of interceptor bindings for the interceptor.
+This specification extends the Java Interceptors specification and defines how the container must behave if a definition error is encountered.
 
-[source, java]
-----
-@Transactional @Interceptor
-public class TransactionInterceptor {
-
-   @AroundInvoke 
-   public Object manageTransaction(InvocationContext ctx) throws Exception { ... }
-
-}
-----
-
-An interceptor class may declare multiple interceptor bindings.
-
-Multiple interceptors may declare the same interceptor bindings.
-
-If an interceptor does not declare an +@Interceptor+ annotation, it must be bound to beans using +@Interceptors+ or +ejb-jar.xml+.
-
-All interceptors declared using +@Interceptor+ should specify at least one interceptor binding. If an interceptor declared using +@Interceptor+ does not declare any interceptor binding, non-portable behavior results.
-
-An interceptor for lifecycle callbacks may only declare interceptor binding types that are defined as +@Target(TYPE)+. If an interceptor for lifecycle callbacks declares an interceptor binding type that not defined +@Target(TYPE)+, the container automatically detects the problem and treats it as a definition error.
+If an interceptor for lifecycle callbacks declares an interceptor binding type that not defined +@Target(TYPE)+, the container automatically detects the problem and treats it as a definition error.
 
 [[binding_interceptor_to_bean]]
 
 === Binding an interceptor to a bean
 
-An interceptor binding may be declared by annotating the bean class, or a method of the bean class, with the interceptor binding type.
+This specification extends the Java Interceptors specification and defines:
 
-In the following example, the +TransactionInterceptor+ will be applied at the class level, and therefore applies to all business methods of the class:
+* how the container must behave if a definition error is encountered, and
+* how interceptors are bound using stereotypes.
 
-[source, java]
-----
-@Transactional
-public class ShoppingCart { ... }
-----
+The set of interceptor bindings for a method are those declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
 
-In this example, the +TransactionInterceptor+ will be applied at the method level:
+If a managed bean has a class-level interceptor binding and is declared final or has a non-static, non-private, final method, the container automatically detects the problem and treats it as a definition error.
 
-[source, java]
-----
-public class ShoppingCart {
-
-   @Transactional 
-   public void placeOrder() { ... }
-
-}
-----
-
-A bean class or method of a bean class may declare multiple interceptor bindings.
-
-The set of interceptor bindings for a method are those declared at class level, including those declared on stereotypes, combined with those declared at method level.
-
-* An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
-* An interceptor binding declared on a method replaces an interceptor binding of the same type declared, or inherited, at class level, or an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
-
-
-If the bean class of a managed bean declares or inherits a class level interceptor binding or a stereotype with interceptor bindings, it must not be declared final, or have any non-static, non-private, final methods. If a managed bean has a class-level interceptor binding and is declared final or has a non-static, non-private, final method, the container automatically detects the problem and treats it as a definition error.
-
-If a non-static, non-private method of a bean class of a managed bean declares a method level interceptor binding, neither the method nor the bean class may be declared final. If a non-static, non-private, final method of a managed bean has a method level interceptor binding, the container automatically detects the problem and treats it as a definition error.
+If a non-static, non-private, final method of a managed bean has a method level interceptor binding, the container automatically detects the problem and treats it as a definition error.
 
 [[enabled_interceptors]]
 
 === Interceptor enablement and ordering
 
-Interceptors may be enabled for an application, or enabled only for a particular bean archive.
+This specification extends the Java Interceptors specification and defines:
 
-An interceptor may be enabled for the entire application by listing its class, along with a priority attribute, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive which contains the interceptor class.
+* support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
+* the ability to override the interceptor order using the portable extension SPI, defined in <<bdv>>.
 
-[source, xml]
+An interceptor may be explicitly enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
+
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
    <interceptors>
-      <class priority="100">org.mycompany.myfwk.TransactionInterceptor</class>
-      <class priority="200">org.mycompany.myfwk.LoggingInterceptor</class>
+      <class>org.mycompany.myfwk.TransactionInterceptor</class>
+      <class>org.mycompany.myfwk.LoggingInterceptor</class>
    </interceptors>
-</beans>
+</beans>]]>
 ----
 
-An interceptor may be enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <interceptors>
-      <class>org.mycompany.myfwk.ValidationInterceptor</class>
-      <class>org.mycompany.myfwk.SecurityInterceptor</class>
-   </interceptors>
-</beans>
-----
-
-An interceptor enabled for an application may be disabled for a bean archive by listing its class, along with a disabled flag, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <interceptors>
-      <class enabled="false">org.mycompany.myfwk.TransactionInterceptor</class>
-   </interceptors>
-</beans>
-----
-
-An interceptor may be given a default priority, but not enabled by listing its class, along with a disabled flag and the priority attribute, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive which contains the interceptor class.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <interceptors>
-      <class enabled="false" priority="100">org.mycompany.myfwk.TransactionInterceptor</class>
-   </interceptors>
-</beans>
-----
-
-An interceptor with a default priority may be enabled for a bean archive by listing its class, along with an enabled flag, under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <interceptors>
-      <class enabled="true">org.mycompany.myfwk.TransactionInterceptor</class>
-   </interceptors>
-</beans>
-----
-
-[IMPORTANT]
-.OPEN ISSUE
-=====================================================================
-Can other libraries disable interceptors and change the priority? If so, which one wins?
-
-=====================================================================
-
-[IMPORTANT]
-.OPEN ISSUE
-=====================================================================
-If a library defines an enabled or default priority interceptor, can it be disabled or enabled for the entire application?
-
-=====================================================================
-
-[IMPORTANT]
-.OPEN ISSUE
-=====================================================================
-Should we add a way to specify the priority by annotation?
-
-=====================================================================
-
-The priority of the interceptor declaration, defined in <<priorities>>, determines the default interceptor ordering for the application. The order of the interceptor declarations for a bean archive overrides the default interceptor order. If the set of interceptors enabled for the application and the set of interceptors enabled for a bean archive are disjoint, then the interceptors enabled for the bean archive are given an incrementing priority starting at 1000. Interceptors which occur earlier in the list are called first.
+The order of the interceptor declarations determines the interceptor ordering. Interceptors which occur earlier in the list are called first.
 
 Each child +<class>+ element must specify the name of an interceptor class. If there is no class with the specified name, or if the class with the specified name is not an interceptor class, the container automatically detects the problem and treats it as a deployment problem.
 
 If the same class is listed twice under the +<interceptors>+ element, the container automatically detects the problem and treats it as a deployment problem.
 
-Interceptors declared using interceptor bindings are called after interceptors declared using +@Interceptors+ or in +ejb-jar.xml+ and before any around-invoke or lifecycle event callback methods declared on the target class or any superclass of the target class.
+Interceptors declared using +@Interceptors+, declared in +ejb-jar.xml+ or enabled using +@Priority+ are called before interceptors enabled using +beans.xml+.
 
-Interceptors are called before decorators.
-
-An interceptor is said to be _enabled_ if it is enabled in at least one bean archive.
+An interceptor is said to be *enabled* if it is enabled in at least one bean archive or has the +@Priority+ annotation.
 
 [[interceptor_resolution]]
 
 === Interceptor resolution
 
-The process of matching interceptors to a certain lifecycle callback method, EJB timeout method or business method of a certain bean is called _interceptor resolution_.
+This specification extends the Java Interceptors specification and defines:
 
-For a lifecycle callback method, the interceptor bindings include the interceptor bindings declared or inherited by the bean at the class level, including, recursively, interceptor bindings declared as meta-annotations of other interceptor bindings and stereotypes.
+* the effect of applying +@Nonbinding+ to an interceptor binding member, and
+* how the interceptor bindings of a custom implementation of the +Interceptor+ interface are determined.
 
-For a business method or EJB timeout method, the interceptor bindings include the interceptor bindings declared or inherited by the bean at the class level, including, recursively, interceptor bindings declared as meta-annotations of other interceptor bindings and stereotypes, together with all interceptor bindings declared at the method level, including, recursively, interceptor bindings declared as meta-annotations of other interceptor bindings.
-
-An interceptor is bound to a method if:
-
-* The method has all the interceptor bindings of the interceptor. A method has an interceptor binding of an interceptor if it has an interceptor binding with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
-* The interceptor intercepts the given kind of lifecycle callback or business method.
-* The interceptor is enabled in the bean archive containing the bean.
-
+If any interceptor binding has a member annotated +@javax.enterprise.util.Nonbinding+, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
 
 For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container calls +getInterceptorBindings()+ to determine the interceptor bindings of the interceptor and +intercepts()+ to determine if the interceptor intercepts a given kind of lifecycle callback, EJB timeout or business method.
-
-[[interceptor_with_multiple_bindings]]
-
-==== Interceptors with multiple bindings
-
-An interceptor class may specify multiple interceptor bindings.
-
-[source, java]
-----
-@Transactional @Secure @Interceptor
-public class TransactionalSecurityInterceptor {
-
-   @AroundInvoke 
-   public Object aroundInvoke(InvocationContext context) throws Exception { ... }
-
-}
-----
-
-This interceptor will be bound to all methods of this bean:
-
-[source, java]
-----
-@Transactional @Secure
-public class ShoppingCart { ... }
-----
-
-The interceptor will also be bound to the +placeOrder()+ method of this bean:
-
-[source, java]
-----
-@Transactional
-public class ShoppingCart {
-
-   @Secure
-   public void placeOrder() { ... }
- 
-}
-----
-
-However, it will not be bound to the +placeOrder()+ method of this bean, since the +@Secure+ interceptor binding does not appear:
-
-[source, java]
-----
-@Transactional
-public class ShoppingCart {
-
-   public void placeOrder() { ... }
- 
-}
-----
-
-[[interceptor_binding_members]]
-
-==== Interceptor binding types with members
-
-Interceptor binding types may have annotation members.
-
-[source, java]
-----
-@Inherited
-@InterceptorBinding
-@Target({TYPE, METHOD})
-@Retention(RUNTIME)
-public @interface Transactional {
-   boolean requiresNew() default false;
-}
-----
-
-Any interceptor with that interceptor binding type must select a member value:
-
-[source, java]
-----
-@Transactional(requiresNew=true) @Interceptor
-public class RequiresNewTransactionInterceptor {
-
-   @AroundInvoke 
-   public Object manageTransaction(InvocationContext ctx) throws Exception { ... }
-
-}
-----
-
-The +RequiresNewTransactionInterceptor+ applies to this bean:
-
-[source, java]
-----
-@Transactional(requiresNew=true)
-public class ShoppingCart { ... }
-----
-
-But not to this bean:
-
-[source, java]
-----
-@Transactional
-public class ShoppingCart { ... }
-----
-
-Annotation member values are compared using +equals()+.
-
-An annotation member may be excluded from consideration using the +@Nonbinding+ annotation.
-
-[source, java]
-----
-@Inherited
-@InterceptorBinding
-@Target({TYPE, METHOD})
-@Retention(RUNTIME)
-public @interface Transactional {
-   @Nonbinding boolean requiresNew() default false;
-}
-----
-
-Array-valued or annotation-valued members of an interceptor binding type should be annotated +@Nonbinding+ in a portable application. If an array-valued or annotation-valued member of an interceptor binding type is not annotated +@Nonbinding+, non-portable behavior results.
-
-If the set of interceptor bindings of a bean class or interceptor, including bindings inherited from stereotypes and other interceptor bindings, has two instances of a certain interceptor binding type and the instances have different values of some annotation member, the container automatically detects the problem and treats it as a definition error.
 
