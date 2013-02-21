@@ -61,7 +61,7 @@ If a non-static, non-private, final method of a managed bean has a method level 
 This specification extends the Java Interceptors specification and defines:
 
 * support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
-* the ability to override the interceptor order using the portable extension SPI, defined in <<bdv>>.
+* the ability to override the interceptor order using the portable extension SPI, defined in <<atd>>.
 
 An interceptor may be explicitly enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 

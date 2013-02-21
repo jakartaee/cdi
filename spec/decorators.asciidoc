@@ -104,7 +104,7 @@ This specification defines two methods of enabling and ordering decorators. The 
 
 Decorators are called after interceptors.
 
-A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<bdv>>.
+A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<atd>>.
 
 [[enabled_decorators_priority]]
 
