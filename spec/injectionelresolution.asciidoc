@@ -11,7 +11,7 @@ The container injects references to contextual instances to the following kinds 
 
 References to contextual instances may also be obtained by programmatic lookup or by Unified EL expression evaluation.
 
-In general, a bean type or bean name does not uniquely identify a bean. When resolving a bean at an injection point, the container considers bean type, qualifiers and alternative declarations in +beans.xml+. When resolving a name in an EL expression, the container considers the bean name and alternative declarations in +beans.xml+. This allows bean developers to decouple type from implementation.
+In general, a bean type or bean name does not uniquely identify a bean. When resolving a bean at an injection point, the container considers bean type, qualifiers and selected alternatives. When resolving a name in an EL expression, the container considers the bean name and selected alternatives. This allows bean developers to decouple type from implementation.
 
 The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>. The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
 
@@ -31,108 +31,36 @@ An alternative is not available for injection, lookup or EL resolution to classe
 
 ==== Declaring selected alternatives for a bean archive
 
-Alternatives may be selected for an application, or selected only for a particular bean archive.
+This specification defines two methods of selecting alternatives. The +@Priority+ annotation, introduced in Contexts and Dependency Injection 1.1 allows an alternative to be selected for an entire application. Contexts and Dependency Injection 1.0 allowed only for an alternative to be selected for a bean archive.
 
-An alternative may be selected for an application using the +<alternatives>+ element of the +beans.xml+ file of the bean archive that declares the alternative. The +<alternatives>+ element contains a list of bean classes and stereotypes, along with a priority attribute. An alternative is selected for the entire application if either:
+[[declaring_selected_alternatives_application]]
 
-* the alternative is a managed bean or session bean and the bean class of the bean is listed, along with a priority attribute, or
-* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, along with a priority attribute, or
-* any +@Alternative+ stereotype of the alternative is listed, along with a priority attribute.
+==== Declaring selected alternatives for an application 
+
+An alternative may be given a priority for the application by placing the +@Priority+ annotation on either the bean class of the alternative.
+
+[[declaring_selected_alternatives_bean_archive]]
+
+==== Declaring selected alternatives for a bean archive
 
 
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <alternatives>
-      <class priority="1000">org.mycompany.myfwk.InMemoryDatabase</class>
-      <stereotype priority="100">org.mycompany.myfwk.Mock</stereotype>
-   </alternatives>
-</beans>
-----
+An alternative may be explicitly declared using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
 
-An alternative may be selected for a bean archive using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes, along with a priority attribute. An alternative is selected for the bean archive if either:
-
-* the alternative is a managed bean or session bean and the bean class of the bean is listed, or
+* the alternative is a managed bean or session bean and the bean class of the bean is listed,
 * the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
 * any +@Alternative+ stereotype of the alternative is listed.
 
-
-[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
    <alternatives>
+      <class>org.mycompany.myfwk.InMemoryDatabase</class>
+      <stereotype>org.mycompany.myfwk.Mock</stereotype>
       <stereotype>org.mycompany.site.Australian</stereotype>
    </alternatives>
 </beans>
 ----
-
-An alternative selected for an application may be deselected for a bean archive using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes, along with a disabled flag. An alternative is not selected for the bean archive if either:
-
-* the alternative is a managed bean or session bean and the bean class of the bean is listed, along with a disabled flag, or
-* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, along with a disabled flag, or
-* any +@Alternative+ stereotype of the alternative is listed, along with a disabled flag.
-
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <alternatives>
-      <stereotype enabled="false">org.mycompany.myfwk.Mock</stereotype>
-   </alternatives>
-</beans>
-----
-
-An alternative may be given a default priority, but not selected for an application using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes, along with a disabled flag and a priority attribute. An alternative is selected for the bean archive if either:
-
-* the alternative is a managed bean or session bean and the bean class of the bean is listed, along with a disabled flag and a priority attribute, or
-* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, along with a disabled flag and a priority attribute, or
-* any +@Alternative+ stereotype of the alternative is listed, along with a disabled flag and a priority attribute.
-
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <alternatives>
-      <class priority="1000" enabled="false">org.mycompany.myfwk.InMemoryDatabase</class>
-   </alternatives>
-</beans>
-----
-
-An alternative with a default priority may be selected for a bean archive using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes, along with an enabled flag. An alternative is selected for the bean archive if either:
-
-* the alternative is a managed bean or session bean and the bean class of the bean is listed, along with an enabled flag, or
-* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, along with an enabled flag, or
-* any +@Alternative+ stereotype of the alternative is listed, along with an enabled flag.
-
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-Can other libraries deselect alternatives and change the priority? If so, which one wins?
-
-============
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-If a library defines a selected or default priority alternative, can it be disabled or enabled for the entire application?
-
-============
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-Should we add a way to specify the priority by annotation?
-
-============
 
 Each child +<class>+ element must specify the name of a bean class of an alternative bean. If there is no bean whose bean class has the specified name, or if no bean whose bean class has the specified name is an alternative, the container automatically detects the problem and treats it as a deployment problem.
 
@@ -151,7 +79,7 @@ A bean is said to be _enabled_ if:
 * it is deployed in a bean archive, and
 * it is not a producer method or field of a disabled bean, and
 * it is not specialized by any other enabled bean, as defined in <<specialization>>, and either
-* it is not an alternative, or it is a selected alternative of at least one bean archive.
+* it is not an alternative, or it is a selected alternative of at least one bean archive or the application.
 
 
 Otherwise, the bean is said to be disabled.
@@ -212,7 +140,7 @@ An _unsatisfied dependency_ exists at an injection point when no bean is eligibl
 
 Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
 
-When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
+When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
 
 The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
@@ -361,7 +289,7 @@ For a custom implementation of the +Bean+ interface defined in <<bean>>, the con
 
 ==== Ambiguous EL names
 
-An _ambiguous EL name_ exists in an EL expression when an EL name resolves to multiple beans. When an ambiguous EL name exists, the container attempts to resolve the ambiguity. The container eliminates all beans that are not alternatives, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous EL name is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
+An _ambiguous EL name_ exists in an EL expression when an EL name resolves to multiple beans. When an ambiguous EL name exists, the container attempts to resolve the ambiguity. The container eliminates all beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous EL name is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
 
 All unresolvable ambiguous EL names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain war, and either:
 

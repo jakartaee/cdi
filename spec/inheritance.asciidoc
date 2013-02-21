@@ -120,17 +120,14 @@ public class MockAsynchronousService extends AsynchronousService {
 }
 ----
 
-Suppose that the +MockAsynchronousService+ alternative is declared in the +beans.xml+ file of some bean archive, as defined in <<selection>>:
+Suppose that the +MockAsynchronousService+ alternative is selected, as defined in <<selection>>:
 
-[source, xml]
+[source, java]
 ----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <alternatives>
-      <class>org.mycompany.mock.MockAsynchronousService</class>
-   </alternatives>
-</beans>
+@Alternative @Priority(APPLICATION+100)
+public class MockAsynchronousService extends AsynchronousService { 
+    ... 
+}
 ----
 
 Then, according to the rules of <<unsatisfied_and_ambig_dependencies>>, the following ambiguous dependency is resolvable, and so the attribute will receive an instance of +MockAsynchronousService+:

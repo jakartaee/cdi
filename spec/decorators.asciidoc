@@ -26,7 +26,7 @@ A decorator is declared by annotating the bean class with the +@javax.decorator.
 
 [source, java]
 ----
-@Decorator
+@Decorator @Priority(APPLICATION)
 class TimestampLogger implements Logger { ... }
 ----
 
@@ -40,7 +40,7 @@ The delegate injection point must be declared by annotating the injection point 
 
 [source, java]
 ----
-@Decorator
+@Decorator @Priority(APPLICATION)
 class TimestampLogger implements Logger {
     @Inject @Delegate @Any Logger logger;
     ...
@@ -49,7 +49,7 @@ class TimestampLogger implements Logger {
 
 [source, java]
 ----
-@Decorator
+@Decorator @Priority(APPLICATION)
 class TimestampLogger implements Logger {
     private Logger logger;
     
@@ -71,7 +71,7 @@ The container must inject a _delegate_ object to the delegate injection point. T
 
 [source, java]
 ----
-@Decorator 
+@Decorator @Priority(APPLICATION)
 class TimestampLogger implements Logger { 
     @Inject @Delegate @Any Logger logger; 
  
@@ -100,99 +100,35 @@ The decorator intercepts every method which is declared by a decorated type of t
 
 === Decorator enablement and ordering
 
-Decorators may be enabled for an application, or enabled only for a particular bean archive.
+This specification defines two methods of enabling and ordering decorators. The +@Priority+ annotation, introduced in Contexts and Dependency Injection 1.1 allows a decorator to be enabled and ordered for an entire application. Contexts and Dependency Injection 1.0 allowed only for a decorator to be enabled and ordered for a bean archive.
 
-A decorator may be enabled for the entire application by listing its class, along with a priority attribute, under the +<decorators>+ element of the +beans.xml+ file of the bean archive which contains the decorator class.
+Decorators are called after interceptors.
 
-[source, xml]
+A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<bdv>>.
+
+[[enabled_decorators_priority]]
+
+==== Decorator enablement and ordering for an application
+
+
+A decorator may be enabled for the entire application by applying the +@Priority+ annotation, along with a priority value, on the decorator class. Decorators with the smaller priority values are called first. The order of more than one decorator with the same priority is undefined.
+
 ----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <decorators>
-      <class priority="100">org.mycompany.myfwk.TimestampLogger</class>
-      <class priority="200">org.mycompany.myfwk.IdentityLogger</class>
-   </decorators>
-</beans>
-----
+@Decorator @Priority(APPLICATION)
+class TimestampLogger implements Logger {
 
-A decorator may be enabled for a bean archive by listing its class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <decorators>
-      <class>org.mycompany.myfwk.OrderingDecorator</class>
-   </decorators>
-</beans>
+   ...
+}
 ----
 
-A decorator enabled for an application may be disabled for a bean archive by listing its class, along with a disabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
+The priority value ranges defined in the Java Interceptors specification section 5.5 should be used when defining decorator priorities.
 
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <decorators>
-      <class enabled="false">org.mycompany.myfwk.TimestampLogger</class>
-   </decorators>
-</beans>
-----
+[[enabled_decorators_bean_archive]]
 
-A decorator may be given a default priority, but not enabled by listing its class, along with a disabled flag and the priority attribute, under the +<decorators>+ element of the +beans.xml+ file of the bean archive which contains the decorator class.
+==== Decorator enablement and ordering for a bean archive
 
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <decorators>
-      <class enabled="false" priority="100">org.mycompany.myfwk.TimestampLogger</class>
-   </decorators>
-</beans>
-----
+A decorator may be  explicitly enabled by listing its bean class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
-A decorator with a default priority may be enabled for a bean archive by listing its class, along with an enabled flag, under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
-----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
-   <decorators>
-      <class enabled="true">org.mycompany.myfwk.TimestampLogger</class>
-   </decorators>
-</beans>
-----
-[IMPORTANT]
-.OPEN ISSUE
-============
-Can other libraries disable decorators and change the priority? If so, which one wins?
-
-============
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-If a library defines an enabled or default priority decorator, can it be disabled or enabled for the entire application?
-
-============
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-Should we add a way to specify the priority by annotation?
-
-============
-
-The priority of the decorator declaration, defined in <<priorities>>, determines the default decorator ordering for the application. The order of the decorator declarations for a bean archive overrides the default decorator order. If the set of decorators enabled for the application and the set of decorators enabled for a bean archive are disjoint, then the first decorator enabled for the bean archive is given a priority of 1000. Decorators which occur earlier in the list are called first.
-
-By default, a bean archive has no enabled decorators. A decorator must be explicitly enabled by listing its bean class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
-
-[source, xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -210,9 +146,6 @@ Each child +<class>+ element must specify the name of a decorator bean class. If
 
 If the same class is listed twice under the +<decorators>+ element, the container automatically detects the problem and treats it as a deployment problem.
 
-Decorators are called after interceptors.
-
-A decorator is said to be _enabled_ if it is enabled in at least one bean archive.
 
 [[decorator_resolution]]
 
