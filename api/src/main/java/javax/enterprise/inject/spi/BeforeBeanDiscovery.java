@@ -130,4 +130,25 @@ public interface BeforeBeanDiscovery {
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      */
     public void addAnnotatedType(AnnotatedType<?> type);
+    
+    /**
+     * <p>
+     * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set of types which will be scanned during bean
+     * discovery.
+     * </p>
+     * 
+     * <p>
+     * This method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
+     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify 
+     * the type.
+     * </p> 
+     * 
+     * <p>
+     * {@link AfterBeanDiscovery#getAnnotatedType(Class, String)} and {@link AfterBeanDiscovery#getAnnotatedTypes(Class)}
+     * allows annotated types to be obtained by identifier.
+     * </p>
+     * 
+     * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
+     */
+    public void addAnnotatedType(AnnotatedType<?> type, String id);
 }

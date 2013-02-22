@@ -508,15 +508,9 @@ public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFacto
 
 The method +BeanManager.createAnnotatedType()+ returns an +AnnotatedType+ that may be used to read the annotations of the given Java class or interface.
 
-The methods +BeanManager.getAnnotatedType()+ and +BeanManager.getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization.
-
-The method +BeanManager.getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered by or added to the container during container initialization.
-
 [source, java]
 ----
 public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
-public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
-public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 ----
 
 [[bm_obtain_injectiontarget]]
@@ -615,7 +609,7 @@ public <T extends Extension> T getExtension(Class<T> extensionClass);
 
 A portable extension may provide an alternative metadata source, such as configuration by XML.
 
-The interfaces +AnnotatedType+, +IdentifiedAnnotatedType+, +AnnotatedField+, +AnnotatedMethod+, +AnnotatedConstructor+ and +AnnotatedParameter+ in the package +javax.enterprise.inject.spi+ allow a portable extension to specify metadata that overrides the annotations that exist on a bean class. The portable extension is responsible for implementing the interfaces, thereby exposing the metadata to the container.
+The interfaces +AnnotatedType+, +AnnotatedField+, +AnnotatedMethod+, +AnnotatedConstructor+ and +AnnotatedParameter+ in the package +javax.enterprise.inject.spi+ allow a portable extension to specify metadata that overrides the annotations that exist on a bean class. The portable extension is responsible for implementing the interfaces, thereby exposing the metadata to the container.
 
 In general, the behavior is as defined by the Java Language Specification, and only deviations from the Java Language Specification are noted.
 
@@ -638,21 +632,6 @@ public interface AnnotatedType<X>
 
 
 When determining annotations on a type, the container must only consider the special inheritance rules defined for scope types in <<type_level_inheritance>>.
-
-The interface +javax.enterprise.inject.spi.IdentifiedAnnotatedType+ allows multiple annotated types, based on the same underlying type, to be defined.
-
-[source, java]
-----
-public interface IdentifiedAnnotatedType<X>
-        extends AnnotatedType<X> {
-    public String getId();
-}
-----
-
-* +getId()+ returns the identifier for the type. The identifier returned should be unique.
-
-
-If an +AnnotatedType+ is an instance of +IdentifiedAnnotatedType+ then +IdentifiedAnnotatedType.getId()+ is used to identify the annotated type to the container, otherwise the fully qualified class name of +AnnotatedType.getJavaClass()+ is used to identify the type. ++AnnotatedType++ s discovered by the container use the fully qualified class name of +AnnotatedType.getJavaClass()+ to identify the type.
 
 The interface +javax.enterprise.inject.spi.AnnotatedField+ exposes the +Field+ object.
 
@@ -783,6 +762,7 @@ public interface BeforeBeanDiscovery {
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
     public void addAnnotatedType(AnnotatedType<?> type);
+    public void addAnnotatedType(AnnotatedType<?> type, String id);
 }
 ----
 
@@ -790,8 +770,7 @@ public interface BeforeBeanDiscovery {
 * +addScope()+ declares an annotation type as a scope type.
 * +addStereotype()+ declares an annotation type as a stereotype, and specifies its meta-annotations.
 * +addInterceptorBinding()+ declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
-* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery. If an +AnnotatedType+ with the same identifier already exists in the set of types the container automatically detects the problem and treats it as a deployment problem.
-Portable extensions are encouraged to add ++IdentifiedAnnotatedType++ s in order to not accidentally conflict with discovered types.
+* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an optional identifier. An +AnnotatedType+ added by the container uses the fully qualified class name of +AnnotatedType.getJavaClass()+ prepended with +cdi-+. If an +AnnotatedType+ with the same identifier already exists in the set of types non-portable behavior results, and the container is permitted to define a non-portable mode in whch it assigns a container generated id to a type.
 
 
 [source, java]
@@ -816,6 +795,8 @@ public interface AfterBeanDiscovery {
     public void addBean(Bean<?> bean);
     public void addObserverMethod(ObserverMethod<?> observerMethod);
     public void addContext(Context context);
+    public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
+    public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 }
 ----
 
@@ -823,6 +804,7 @@ public interface AfterBeanDiscovery {
 * +addBean()+ fires an event of type +ProcessBean+ containing the given +Bean+ and then registers the +Bean+ with the container, thereby making it available for injection into other beans. The given +Bean+ may implement +Interceptor+ or +Decorator+.
 * +addObserverMethod()+ fires an event of type +ProcessObserverMethod+ containing the given +ObserverMethod+ and then registers the +ObserverMethod+ with the container, thereby making it available for event notifications.
 * +addContext()+ registers a custom +Context+ object with the container.
+* +getAnnotatedType()+ and +getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization. If the +id+ passed is null, the container should substitute the container generated id.
 
 
 A portable extension may take advantage of this event to register beans, interceptors, decorators, observer methods and custom context objects with the container.
