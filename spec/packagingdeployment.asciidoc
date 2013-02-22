@@ -83,7 +83,52 @@ When an application is stopped, the container performs the following steps:
 
 The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) and session beans in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
 
-For each Java class or interface deployed in a bean archive, the container must:
+Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the bean archive as children of the +<scan>+ element. By default an exclude filter is active. If the exclude filter definition contains:
+
+* a child element named +<if-class-available>+ with a +name+ attribute, and the classloader for the bean archive can load a class for that name, or
+* a child element named +<if-class-not-available>+ with a +name+ attribute, and the classloader for the bean archive cannot load a class for that name, or
+* a child element named +<if-system-property>+ with a +name+ attribute, and there is no system property defined for that name, or
+* a child element named +<if-system-property>+ with a +name+ attribute and a +value+ attribute, and there is no system property defined for that name with that value.
+
+For each Java class, interface or enum deployed in a bean archive, the container discovers the type only if there is no active exclude filter for which:
+
+* the fully qualified name of the class name matches the value of the name attribute of the exclude filter, or
+* the package name of the class name matches the value of the name attribute with a suffix ".\*" of the exclude filter, or
+* the package name of the class name starts with the value of the name attribute with a suffix ".\*\*" of the exclude filter.
+
+Consider the follow +beans.xml+ file:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://java.sun.com/xml/ns/javaee" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="
+          http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+
+    <scan>
+        <exclude name="com.acme.rest.*" />
+
+        <exclude name="com.acme.faces.**">
+            <if-class-available name="!javax.faces.context.FacesContext"/>
+        </exclude>
+
+        <exclude name="com.acme.verbose.*">
+            <if-system-property name="verbosity" value="low"/>
+        </exclude>
+
+        <exclude name="com.acme.ejb.**">
+            <if-class-available name="javax.enterprise.inject.Model"/>
+            <weld:if-system-property name="exclude-ejbs"/>
+        </exclude>
+    </scan>
+
+</beans>
+----
+
+The first exclude filter will exclude all classes in +com.acme.rest+ package. The second exclude filter will exclude all classes in the +com.acme.faces+ package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the +com.acme.verbose+ package if the system property +verbosity+ has the value +low+. The fourth exclude filter will exclude all classes in the +com.acme.ejb+ package, and any subpackages if the system property +exclude-ejbs+ is set (with any value).
+
+For each discovered type, the container must:
 
 * create an +AnnotatedType+ representing the type and fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>, and then
 * inspect the type metadata to determine if it is a bean or other Java EE component class supporting injection, and then
@@ -109,7 +154,6 @@ The container determines which alternatives, interceptors and decorators are ena
 * For each enabled interceptor, the container registers an instance of the +Interceptor+ interface defined in <<interceptor>>.
 * For each enabled decorator, the container registers an instance of the +Decorator+ interface defined in <<decorator>>.
 * For each observer method of every enabled bean, the container registers an instance of the +ObserverMethod+ interface defined in <<observer_method>>.
-
 
 [[el]]
 
