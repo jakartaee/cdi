@@ -31,7 +31,7 @@ dir=$TARGET/$output_format
 mkdir -p $dir
 
 echo "**** Processing $MASTER > $TARGET/cdi-spec.html"
-asciidoc -n -b html5 -a toc2 -a pygments -f html5.conf -o $TARGET/cdi-spec.html $MASTER
+asciidoc -n -b html5 -a toc2 -a toclevels=3 -a pygments -f html5.conf -o $TARGET/cdi-spec.html $MASTER
 
 for ((i=0; i < ${#OUTPUT_FORMATS[@]}; i++))
 do
