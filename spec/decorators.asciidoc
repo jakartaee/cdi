@@ -224,9 +224,7 @@ The process of matching decorators to a certain bean is called _decorator resolu
 * The decorator is enabled in the bean archive containing the bean.
 
 
-If a decorator matches a managed bean, and the managed bean class is declared final, the container automatically detects the problem and treats it as a deployment problem.
-
-If a decorator matches a managed bean with a non-static, non-private, final method, and the decorator also implements that method, the container automatically detects the problem and treats it as a deployment problem.
+If a decorator matches a managed bean, the managed bean class must be a proxyable bean type, as defined in <<unproxyable>>.
 
 For a custom implementation of the +Decorator+ interface defined in <<decorator>>, the container calls +getDelegateType()+, +getDelegateQualifiers()+ and +getDecoratedTypes()+ to determine the delegate type and qualifiers and decorated types of the decorator.
 

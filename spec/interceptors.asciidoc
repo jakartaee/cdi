@@ -50,9 +50,7 @@ This specification extends the Java Interceptors specification and defines:
 
 The set of interceptor bindings for a method are those declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
 
-If a managed bean has a class-level interceptor binding and is declared final or has a non-static, non-private, final method, the container automatically detects the problem and treats it as a definition error.
-
-If a non-static, non-private, final method of a managed bean has a method level interceptor binding, the container automatically detects the problem and treats it as a definition error.
+If a managed bean has a class-level or method-level interceptor binding, the managed bean must be a proxyable bean type, as defined in <<unproxyable>>.
 
 [[enabled_interceptors]]
 
