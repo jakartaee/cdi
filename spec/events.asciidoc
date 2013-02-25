@@ -240,7 +240,7 @@ If an instance of an annotation that is not a qualifier type is passed to +selec
 
 The method +fire()+ fires an event with the specified qualifiers and notifies observers, as defined by <<observer_notification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
 
-If the runtime type of the event object contains an unresolvabvle type variable, an +IllegalArgumentException+ is thrown.
+If the runtime type of the event object contains an unresolvable type variable, an +IllegalArgumentException+ is thrown.
 
 If the runtime type of the event object is assignable to the type of a container lifecycle event, an +IllegalArgumentException+ is thrown.
 

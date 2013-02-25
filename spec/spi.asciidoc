@@ -770,7 +770,7 @@ public interface BeforeBeanDiscovery {
 * +addScope()+ declares an annotation type as a scope type.
 * +addStereotype()+ declares an annotation type as a stereotype, and specifies its meta-annotations.
 * +addInterceptorBinding()+ declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
-* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an optional identifier. An +AnnotatedType+ added by the container uses the fully qualified class name of +AnnotatedType.getJavaClass()+ prepended with +cdi-+. If an +AnnotatedType+ with the same identifier already exists in the set of types non-portable behavior results, and the container is permitted to define a non-portable mode in whch it assigns a container generated id to a type.
+* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an optional identifier. An +AnnotatedType+ added by the container uses the fully qualified class name of +AnnotatedType.getJavaClass()+ prepended with +cdi-+. If an +AnnotatedType+ with the same identifier already exists in the set of types non-portable behavior results, and the container is permitted to define a non-portable mode in which it assigns a container generated id to a type.
 
 
 [source, java]
@@ -833,9 +833,9 @@ public interface BeforeDeploymentValidation {
 }
 ----
 
-* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not includued in the list.
-* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not includued in the list.
-* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not includued in the list.
+* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not included in the list.
+* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
+* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
 
 Any observer of this event is permitted to add classes to, or remove classes from, the set of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +BeforDeploymentValidation+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
 
