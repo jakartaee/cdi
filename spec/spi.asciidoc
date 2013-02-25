@@ -335,13 +335,10 @@ If the ambiguous dependency resolution rules fail (as defined in <<unsatisfied_a
 
 +BeanManager.resolve()+ must return null if:
 
-* 
-        null is passed to +resolve()+, or
-      * 
-        no beans are passed to +resolve()+, or
-      * 
-        no bean is available for injection in the module (as defined in <<selection>>) 
-      
+* null is passed to +resolve()+, or
+* no beans are passed to +resolve()+, or
+* no bean is available for injection in the module (as defined in <<selection>>) 
+
 [[bm_validate_ip]]
 
 ==== Validating an injection point
