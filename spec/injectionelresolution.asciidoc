@@ -584,12 +584,9 @@ The injection of bean metadata is restricted. If:
 * the injection point is a field, an initializer method parameter or a bean constructor of an interceptor, with qualifier +@Intercepted+, then the type parameter of the injected +Bean+ must be an unbounded wildcard, or
 * the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier +@Decorated+, then the type parameter of the injected +Bean+ must be the same as the delegate type, or
 * the injection point is a producer method parameter then the type parameter of the injected +Bean+ must be the same as the producer method return type, or
-* the injection point is a disposer method parameter then the type parameter of the injected +Bean+ must be the same as the disposed parameter.
-
+* the injection point is a disposer method parameter then no +Bean+ instance can be injected, as a disposer method may resolve to more than one producer method.
 
 Otherwise, the container automatically detects the problem and treats it as a definition error.
-
-If a +Bean+ instance is injected into a disposer method, it represents the producer method to which the disposer method is bound.
 
 [source, java]
 ----
