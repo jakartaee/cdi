@@ -1,12 +1,11 @@
 package javax.enterprise.inject.spi;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
  * <p>
- * This event type is thrown by the container before the deployment validation process begins. If any observer method of the
- * {@code BeforeDeploymentValidation} event throws an exception, the exception is treated as a definition error by the container.
+ * This event type is thrown by the container after type discovery is complete. If any observer method of the
+ * {@code AfterTypeDiscovery} event throws an exception, the exception is treated as a definition error by the container.
  * </p>
  * <p>
  * Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of
@@ -16,7 +15,7 @@ import java.util.List;
  * 
  * @author Pete Muir
  */
-public interface BeforeDeploymentValidation {
+public interface AfterTypeDiscovery {
 
     /**
      * @return the ordered list of enabled alternatives of the bean deployment archive
@@ -32,5 +31,13 @@ public interface BeforeDeploymentValidation {
      * @return the ordered list of enabled decorators of the bean deployment archive
      */
     public List<Class<?>> getDecorators();
+    
+    /**
+     * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set of types which will be scanned during bean
+     * discovery.
+     * 
+     * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
+     */
+    public void addAnnotatedType(AnnotatedType<?> type);
 
 }

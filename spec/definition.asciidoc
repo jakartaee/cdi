@@ -496,6 +496,35 @@ The _default scope_ for a bean which does not explicitly declare a scope depends
 
 If a bean explicitly declares a scope, any default scopes declared by stereotypes are ignored.
 
+[[bean_defining_annotations]]
+
+=== Bean defining annotations
+
+A bean may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>.
+
+Any scope type, which has an associated context (as defined in <<contexts>>), is a bean defining annotation. Any bean which has scope type is said to have a bean defining annotation. For example, this dependent scoped bean has a bean defining annotation:
+
+[source,java]
+----
+@Dependent
+public class BookShop
+        extends Business
+        implements Shop<Book> {
+    ...
+}
+----
+
+whilst this dependent scoped bean does not have a bean defining annotation:
+
+[source,java]
+----
+public class CoffeeShop
+        extends Business
+        implements Shop<Coffee> {
+    ...
+}
+----
+
 [[names]]
 
 === Bean names
@@ -563,7 +592,7 @@ If an interceptor or decorator has a name, non-portable behavior results.
 
 === Alternatives
 
-An _alternative_ is a bean that must be explicitly declared in the +beans.xml+ file if it should be available for lookup, injection or EL resolution.
+An _alternative_ is a bean that must be explicitly selected if it should be available for lookup, injection or EL resolution.
 
 [[declaring_alternative]]
 
@@ -782,25 +811,4 @@ Deployment problems are detected by the container at initialization time. If a d
 The container is permitted to define a non-portable mode, for use at development time, in which some definition errors and deployment problems do not cause application initialization to abort.
 
 Exceptions represent problems that may not be detected until they actually occur at runtime. All exceptions defined by this specification are unchecked exceptions. All exceptions defined by this specification may be safely caught and handled by the application.
-
-[[priorities]]
-
-=== Priority ordering
-
-Interceptors and decorators are called in a defined order. The order is specified using a integer priority. Lower priority interceptors and decorators are called first. The order of more than one interceptor or decorator with the same priority is undefined.
-
-It is recommended that a priority of:
-
-0 - 99:: is reserved for interceptors and decorators defined by this specification or the Java EE platform specification
-100 - 999:: is reserved for interceptors and decorators defined by extension libraries
-1000 - 1999:: is reserved for interceptors and decorators defined by applications
-2000 - 2999:: is reserved for interceptors and decorators defined by extension libraries
-3000 - 3099:: is reserved for interceptors and decorators defined by this specification or the Java EE platform specification
-
-[IMPORTANT]
-.OPEN ISSUE
-============
-Is priority the right name for this?
-
-============
 
