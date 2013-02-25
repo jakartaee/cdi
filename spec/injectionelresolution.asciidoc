@@ -255,7 +255,7 @@ Furthermore, +UserDao+ is eligible for injection to any injection point of type 
 public class UserDao extends Dao<User> { ... }
 ----
 
-A raw bean type is considered assignable to a parameterized required type if the raw types are identical.
+A raw bean type is considered assignable to a parameterized required type if the raw types are identical and all type parameters of the bean type are either unbounded type variables or java.lang.Object.
 
 Note that a special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
 
