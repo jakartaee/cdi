@@ -550,8 +550,6 @@ If a bean that declares any scope other than +@Dependent+ has an injection point
 
 If a Java EE component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
-The +InjectionPoint+ injected into a disposer method represents the producer method for which the disposer method is being invoked.
-
 The +InjectionPoint+ injected into a decorator represents the injection point on the bean the decorated type is injected into.
 
 [[bean_metadata]]
