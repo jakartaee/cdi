@@ -262,6 +262,23 @@ If typesafe resolution results in an unsatisfied dependency, the container must 
 
 Implementations of +Bean+ usually maintain a reference to an instance of +BeanManager+. When the +Bean+ implementation performs dependency injection, it must obtain the contextual instances to inject by calling +BeanManager.getInjectableReference()+, passing an instance of +InjectionPoint+ that represents the injection point and the instance of +CreationalContext+ that was passed to +Bean.create()+.
 
+[[bm_obtain_unmanaged_instance]]
+
+==== Obtaining an unmanaged instance
+
+An unmanaged instance can be obtained and injected from an +InjectionTarget+, however the +InjectionTarget+ interface is designed to work on contextual instances. A helper class, +Unmanaged+ provides a set of methods optimised for working with unmanaged instances.
+
+For example:
+
+[[source,java]]
+----
+Unmanaged unmanagedFoo = new Unmanaged(Foo.class);
+UnmanagedInstance fooInstance = unManagedFoo.newInstance();
+Foo foo = fooInstance.produce().inject().postConstruct();
+// Use the foo instance
+fooInstance.preDestroy().dispose();
+----
+
 [[bm_obtain_creationalcontext]]
 
 ==== Obtaining a +CreationalContext+
