@@ -536,6 +536,14 @@ If there are multiple disposer methods for a single producer method or producer 
 
 If there is no producer method or producer field declared by the bean class that is assignable to the disposed parameter of a disposer method, the container automatically detects the problem and treats it as a definition error.
 
+[[javaee_components]]
+
+=== Java EE components
+
+Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are an exception.
+
+The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using +@Inject+, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field. It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods. It is safe to annotate Java EE components with +@Vetoed+ to prevent them being considered beans.
+
 [[resources]]
 
 === Resources
