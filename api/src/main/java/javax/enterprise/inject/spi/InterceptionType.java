@@ -37,6 +37,11 @@ public enum InterceptionType {
      * Intercepts a timeout
      */
     AROUND_TIMEOUT,
+    
+    /**
+     * Intercepts a constructor invocation
+     */
+    AROUND_CONSTRUCT,
 
     /**
      * Intercepts bean construction
