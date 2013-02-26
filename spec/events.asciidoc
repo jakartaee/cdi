@@ -383,7 +383,7 @@ When an event is fired by the application, the container must:
 The container calls observer methods as defined in <<observers_method_invocation>>.
 
 * If the observer method is a transactional observer method and there is currently a JTA transaction in progress, the container calls the observer method during the appropriate transaction completion phase.
-* If the observer method is a conditional observer method and there is no context active for the scope to which the bean declaring the observer method belongs, then the observer method should not be called.
+* If there is no context active for the scope to which the bean declaring the observer method belongs, then the observer method should not be called.
 * Otherwise, the container calls the observer immediately.
 
 
