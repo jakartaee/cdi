@@ -549,10 +549,6 @@ If a bean that declares any scope other than +@Dependent+ has an injection point
 
 If a Java EE component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
-The +InjectionPoint+ injected into a disposer method represents the producer method for which the disposer method is being invoked.
-
-The +InjectionPoint+ injected into a decorator represents the injection point on the bean the decorated type is injected into.
-
 [[bean_metadata]]
 
 ==== Bean metadata
@@ -588,12 +584,9 @@ The injection of bean metadata is restricted. If:
 * the injection point is a field, an initializer method parameter or a bean constructor of an interceptor, with qualifier +@Intercepted+, then the type parameter of the injected +Bean+ must be an unbounded wildcard, or
 * the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier +@Decorated+, then the type parameter of the injected +Bean+ must be the same as the delegate type, or
 * the injection point is a producer method parameter then the type parameter of the injected +Bean+ must be the same as the producer method return type, or
-* the injection point is a disposer method parameter then the type parameter of the injected +Bean+ must be the same as the disposed parameter.
-
+* the injection point is a disposer method parameter then no +Bean+ instance can be injected, as a disposer method may resolve to more than one producer method.
 
 Otherwise, the container automatically detects the problem and treats it as a definition error.
-
-If a +Bean+ instance is injected into a disposer method, it represents the producer method to which the disposer method is bound.
 
 [source, java]
 ----
