@@ -530,24 +530,43 @@ public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
 
 ==== Obtaining an +InjectionTarget+ for a class
 
-The method +BeanManager.createInjectionTarget()+ returns a container provided implementation of +InjectionTarget+ for a given +AnnotatedType+ or throws an +IllegalArgumentException+ if there is a definition error associated with any injection point of the type.
+The method +BeanManager.getInjectionTargetFactory()+ returns a factory capable of creating container provided implementations of +InjectionTarget+ for a given +AnnotatedType+ or throws an +IllegalArgumentException+ if there is a definition error associated with any injection point of the type.
 
 [source, java]
 ----
-public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
+public <T> InjectionTargetFactory<T> getInjectionTargetFactory(AnnotatedType<T> type);
+----
+
+[source, java]
+----
+public interface InjectionTargetFactory<T> {
+
+    public InjectionTarget<T> createInjectionTarget(Bean<T> bean);
+
+}
 ----
 
 [[bm_obtain_producer]]
 
 ==== Obtaining a +Producer+ for a field or method
 
-The method +BeanManager.createProducer()+ returns a container provided implementation of +Producer+ for a given +AnnotatedMethod+ or +AnnotatedField+ or throws an +IllegalArgumentException+ if there is a definition error associated with the producer method or field.
+The method +BeanManager.getProducerFactory()+ returns a factory capable of creating container provided implementations of +Producer+ for a given +AnnotatedMethod+ or +AnnotatedField+ or throws an +IllegalArgumentException+ if there is a definition error associated with the producer method or field.
 
 [source, java]
 ----
-public <X> Producer<?> createProducer(AnnotatedField<? super X> field, Bean<X> declaringBean);
-public <X> Producer<?> createProducer(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
+public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedField<? super X> field);
+public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedMethod<? super X> method);
 ----
+
+[source, java]
+----
+public interface ProducerFactory<X> {
+
+    public Producer<?> createProducer(Bean<X> bean);
+
+}
+----
+
 
 [[bm_obtain_injectionpoint]]
 
@@ -575,28 +594,26 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 [[bm_obtain_bean]]
 
-==== Obtaining a +Bean+
+==== Obtaining a +Bean+, +Interceptor+ or +Decorator+
 
-The method +BeanManager.createBean()+ returns a container provided implementation of +Bean+. The method accepts:
+The method +BeanManager.createBean()+ returns a container provided implementation of +Bean+. The methods accept:
 
 * a +BeanAttributes+, which determines the bean types, qualifiers, scope, name and stereotypes of the returned +Bean+, and the return values of +isAlternative()+, and
 * a class, which determines the return value of +Bean.getClass()+.
-
-
-The first version of the method also accepts:
-
-* an +InjectionTarget+, which is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of +Bean.getInjectionPoints()+.
+* an +InjectionTargetFactory+, which is used to obtain an +InjectionTarget+. The +InjectionTarget+ is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of +Bean.getInjectionPoints()+.
 
 
 [source, java]
 ----
 public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, 
-                          InjectionTarget<T> injectionTarget);
+                          InjectionTargetFactory<T> injectionTargetFactory);
 ----
 
-The second version of the method also accepts:
+A second version of the method is provided to create a +Bean+ from a producer. The method accepts:
 
-* a +Producer+, which is used to create and destroy instances of the bean, and which determines the return value of +Bean.getInjectionPoints()+.
+* a +BeanAttributes+, which determines the bean types, qualifiers, scope, name and stereotypes of the returned +Bean+, and the return values of +isAlternative()+, and
+* a class, which determines the return value of +Bean.getClass()+.
+* a +ProducerFactory+, which is used to obtain a +Producer+. The +Producer+ is used to create and destroy instances of the bean, and which determines the return value of +Bean.getInjectionPoints()+.
 
 
 [source, java]
