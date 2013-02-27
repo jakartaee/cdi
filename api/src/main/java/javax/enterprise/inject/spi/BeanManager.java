@@ -384,32 +384,48 @@ public interface BeanManager {
     public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
     
     /**
-     * Obtains a {@link Producer} for the given {@link AnnotatedField}. The container ignores the annotations and types
-     * declared by the elements of the actual Java field and uses the metadata provided via the {@link Annotated} interface
-     * instead.
+     * <p>
+     * An implementation of {@link InjectionTargetFactory} that provides container created {@link InjectionTarget} 
+     * instances.
+     * </p>
      * 
-     * @param <X> the bean class of the bean declaring the producer field
-     * @param field the {@link AnnotatedField}
-     * @param declaringBean the bean declaring the producer field, used to obtain the contextual instance which receives the 
-     *        producer field access. May be null if the producer field is a static field.
-     * @returns a container provided implementation of {@link Producer}
-     * @throws IllegalArgumentException if there is a definition error associated with the producer field
+     * <p>
+     * This factory can be wrapped to add behavior to container created injection targets.
+     * </p>
+     * 
+     * @return an {@link InjectionTargetFactory}
      */
-    public <X> Producer<?> createProducer(AnnotatedField<? super X> field, Bean<X> declaringBean);
+    public <T> InjectionTargetFactory<T> getInjectionTargetFactory(AnnotatedType<T> annotatedType);
     
     /**
-     * Obtains a {@link Producer} for the given {@link AnnotatedKetuod}. The container ignores the annotations and types
-     * declared by the elements of the actual Java method and uses the metadata provided via the {@link Annotated} interface
-     * instead.
+     * <p>
+     * An implementation of {@link ProducerFactory} that provides container created {@link Producer} 
+     * instances for the given field.
+     * </p>
      * 
-     * @param <X> the bean class of the bean declaring the producer method
-     * @param method the {@link AnnotatedMethod}
-     * @param declaringBean the bean declaring the producer method used to obtain the contextual instance which receives the 
-     *        producer method invocation. May be null if the producer method is a static method.
-     * @returns a container provided implementation of {@link Producer}
-     * @throws IllegalArgumentException if there is a definition error associated with the producer method
+     * <p>
+     * This factory can be wrapped to add behavior to container created producers.
+     * </p>
+     * 
+     * @param field the field to create the producer factory for
+     * @return the producer factory for the field
      */
-    public <X> Producer<?> createProducer(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
+    public <X> ProducerFactory<X> getProducerFactory(AnnotatedField<? super X> field);
+    
+    /**
+     * <p>
+     * An implementation of {@link ProducerFactory} that provides container created {@link Producer} 
+     * instances for the given method.
+     * </p>
+     * 
+     * <p>
+     * This factory can be wrapped to add behavior to container created producers.
+     * </p>
+     * 
+     * @param method the method to create the producer factory for
+     * @return the producer factory for the method
+     */
+    public <X> ProducerFactory<X> getProducerFactory(AnnotatedMethod<? super X> method);
 
     /**
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
@@ -434,31 +450,45 @@ public interface BeanManager {
     public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> type);
 
     /**
+     * <p>
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link InjectionTarget}.
+     * </p>
+     * 
+     * <p>
+     * The {@link InjectionTarget} creates and destroys instances of the bean, performs dependency injection and lifecycle 
+     * callbacks, and determines the return value of {@link Bean#getInjectionPoints()}. The {@link InjectionTarget} is
+     * obtained from the {@link InjectionTargetFactory}. {@link #getInjectionTargetFactory()} allows use of a container
+     * created {@link InjectionTarget}.
+     * </p>
      * 
      * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
-     * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
-     * @param injectionTarget an {@link InjectionTarget}, which is used to create and destroy instances of the bean, to perform
-     *        dependency injection and lifecycle callbacks, and which determines the return value of
-     *        {@link Bean#getInjectionPoints()}
+     * @param beanClass a class, which determines the return value of {@link Bean#getBeanClass()}
+     * @param injectionTargetFactory an {@link InjectionTargetFactory}, used to obtain an {@link InjectionTarget}
      * @return a container provided implementation of {@link Bean}
      */
-    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, InjectionTarget<T> injectionTarget);
+    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, InjectionTargetFactory<T> injectionTargetFactory);
 
     /**
+     * <p>
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link Producer}.
+     * </p>
+     * 
+     * <p>
+     * The {@link Producer} creates and destroys instances of the decorator, and determines the return value of 
+     * {@link Bean#getInjectionPoints()}. The {@link Producer} is obtained from the {@link ProducerFactory}. {@link #getProducerFactory()} 
+     * allows use of a container created {@link Producer}.
+     * </p>
      * 
      * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
-     * @param producer a Producer, which is used to create and destroy instances of the bean, and which determines the return
-     *        value of {@link Bean#getInjectionPoints()}
+     * @param producerFactory a {@link ProducerFactory}, used to obtain a {@link Producer}
      * @return a container provided implementation of {@link Bean}
      */
-    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, Producer<T> producer);
+    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, ProducerFactory<T> producerFactory);
 
     /**
      * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
