@@ -30,7 +30,7 @@ An _implicit bean archive_ is an archive:
 * which contains one or more beans with a bean defining annotation, and,
 * does not contain a +beans.xml+ with the +bean-discovery-mode+ of +none+.
 
-When determing which archives are bean archives, the container must consider:
+When determining which archives are bean archives, the container must consider:
 
 * Library jars, EJB jars or application client jars
 * The +WEB-INF/classes+ directory of a war
@@ -75,7 +75,7 @@ When an application is started, the container performs the following steps:
 
 * First, the container must search for service providers for the service +javax.enterprise.inject.spi.Extension+ defined in <<init_events>>, instantiate a single instance of each service provider, and search the service provider class for observer methods of initialization events.
 * Next, the container must fire an event of type +BeforeBeanDiscovery+, as defined in <<bbd>>.
-* Next, the container must perform type discovery. Additionally, for everytype discovered the container must fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>.
+* Next, the container must perform type discovery. Additionally, for every type discovered the container must fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>.
 * Next, the container must fire an event of type +AfterTypeDiscovery+, as defined in <<atd>>.
 * Next, the container must perform bean discovery, and abort initialization of the application if any definition errors exist, as defined in <<exceptions>>. Additionally, for every Java EE component class supporting injection that may be instantiated by the container at runtime, the container must create an +InjectionTarget+ for the class, as defined in <<injectiontarget>>, and fire an event of type +ProcessInjectionTarget+, as defined in <<pit>>.
 * Next, the container must fire an event of type +AfterBeanDiscovery+, as defined in <<abd>>, and abort initialization of the application if any observer registers a definition error.

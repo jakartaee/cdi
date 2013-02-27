@@ -266,7 +266,7 @@ Implementations of +Bean+ usually maintain a reference to an instance of +BeanMa
 
 ==== Obtaining an unmanaged instance
 
-An unmanaged instance can be obtained and injected from an +InjectionTarget+, however the +InjectionTarget+ interface is designed to work on contextual instances. A helper class, +Unmanaged+ provides a set of methods optimised for working with unmanaged instances.
+An unmanaged instance can be obtained and injected from an +InjectionTarget+, however the +InjectionTarget+ interface is designed to work on contextual instances. A helper class, +Unmanaged+ provides a set of methods optimized for working with unmanaged instances.
 
 For example:
 
@@ -809,9 +809,9 @@ public interface AfterTypeDiscovery {
 }
 ----
 
-* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not includued in the list.
-* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not includued in the list.
-* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not includued in the list.
+* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not included in the list.
+* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
+* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
 * +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery. If an +AnnotatedType+ with the same identifier already exists in the set of types the container automatically detects the problem and treats it as a deployment problem.
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
@@ -1121,7 +1121,7 @@ public interface ProcessBeanAttributes<T> {
 * +veto()+ forces the container to ignore the bean.
 
 
-Any observer of this event is permitted to wrap and/or replace the +BeanAttributes+. The container must use the final value of this property, after all observers have been called, to manage instances of the bean. Changes to +BeanAttributes+ are _not_ propagated to the annotated type from which the bean definiton was created.
+Any observer of this event is permitted to wrap and/or replace the +BeanAttributes+. The container must use the final value of this property, after all observers have been called, to manage instances of the bean. Changes to +BeanAttributes+ are _not_ propagated to the annotated type from which the bean definition was created.
 
 Any bean which has its bean attributes altered must have it's definition validated during deployment validation.
 
