@@ -7,7 +7,7 @@
 
 ....
 
-Copyright 2009 Red Hat Middleware LLC.
+Copyright 2013 Red Hat, Inc.
 
 All rights reserved.
 
@@ -167,9 +167,13 @@ writing and signed by an authorized representative of each party.
 
 === Foreword
 
-Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dependency Injection 1.0 (JSR-299). A full changelog can be found in the issue tracker link:$$https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&version=12315956$$[release notes for CDI 1.1].
+Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dependency Injection 1.0 (JSR-299). A full changelog can be found in the link:$$https://issues.jboss.org/sr/jira.issueviews:searchrequest-printable/12314424/SearchRequest-12314424.html?tempMax=1000$$[issue tracker].
 
-=== Major changes
+=== Major changes 
+
+This section requires updates for 1.1 Final Draft.
+
+////
 
 ==== 1.1 Early Draft Review
 
@@ -243,6 +247,8 @@ CDI 1.0 will scan all classes in a jar with +beans.xml+. We plan to add a syntax
 CDI 1.0 requires the type used for observer resolution to be based on the runtime type of the event object. Unfortunately, the JDK erases generic type information about objects that we need to allow firing of many events with parameterized types. CDI 1.0 also completely ignores the generic type of the injected event object, which does typically contain the needed type information. We therefore intend to change the event observer resolution rules to allow the generic type of the event object to be taken into account if the runtime event object does not contain sufficient information.
 
 Note that this may seem like a backwards incompatible change, however CDI 1.0 is essentially unimplementable today - examples in the spec do not work as described.
+
+////
 
 :numbered:
 
