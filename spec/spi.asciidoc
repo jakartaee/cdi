@@ -863,7 +863,6 @@ void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager)
 
 If any observer method of the +AfterBeanDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
 
-<<<<<<< HEAD
 [[bdv]]
 
 ==== +BeforeDeploymentValidation+ event
@@ -888,9 +887,6 @@ public interface BeforeDeploymentValidation {
 Any observer of this event is permitted to add classes to, or remove classes from, the set of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +BeforDeploymentValidation+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
 
 If any observer method of a +BeforeDeploymentValidation+ event throws an exception, the exception is treated as a deployment problem by the container.
-
-=======
->>>>>>> CDI-3 add event between type discovery and bean discovery
 
 [[adv]]
 

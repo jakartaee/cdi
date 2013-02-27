@@ -17,8 +17,8 @@ DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 TARGET=target
 MASTER=cdi-spec.asciidoc
 
-#OUTPUT_FORMATS=("xml" "epub" "pdf")
-OUTPUT_FORMATS=("xml")
+OUTPUT_FORMATS=("xml" "epub" "pdf")
+#OUTPUT_FORMATS=("xml")
 OUTPUT_CMDS=("asciidoc -b docbook -o \${output_filename} \$MASTER" "a2x -f epub -D \$dir \$MASTER" "a2x --dblatex-opts \"-s custom-asciidoc-dblatex.sty -P latex.output.revhistory=0\" --backend-opts \"-f docbook45.conf\" -D \$dir \$MASTER")
 
 echo "** Building spec"
