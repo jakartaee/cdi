@@ -83,6 +83,7 @@ subinterface
 subinterfaces
 sublicense
 sublicensees
+subpackages
 subparagraph
 subtype
 superclass
