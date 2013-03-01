@@ -33,9 +33,9 @@ public interface ProducerFactory<X> {
     /**
      * Create a new producer for a bean.
      * 
-     * @param bean the bean to create the producer for
+     * @param bean the bean to create the producer for, or null if creating a non-contextual object
      * @return the producer
      */
-    public Producer<?> createProducer(Bean<X> bean);
+    public <T> Producer<T> createProducer(Bean<T> bean);
     
 }

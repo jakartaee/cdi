@@ -372,9 +372,15 @@ public interface BeanManager {
     public <T> AnnotatedType<T> createAnnotatedType(Class<T> type);
 
     /**
+     * <p>
      * Obtains an {@link InjectionTarget} for the given {@link AnnotatedType}. The container ignores the annotations and types
      * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
      * instead.
+     * </p>
+     * 
+     * <p>
+     * This method is deprecated from CDI 1.1 and {@link #getInjectionTargetFactory(AnnotatedType)} should be used instead.
+     * </p>
      * 
      * @param <T> the type
      * @param type the {@link AnnotatedType}
@@ -408,9 +414,10 @@ public interface BeanManager {
      * </p>
      * 
      * @param field the field to create the producer factory for
+     * @param declaringBean the bean declaring the producer. May be null if the producer is static or the declaring object is non-contextual  
      * @return the producer factory for the field
      */
-    public <X> ProducerFactory<X> getProducerFactory(AnnotatedField<? super X> field);
+    public <X> ProducerFactory<X> getProducerFactory(AnnotatedField<? super X> field, Bean<X> declaringBean);
     
     /**
      * <p>
@@ -423,9 +430,10 @@ public interface BeanManager {
      * </p>
      * 
      * @param method the method to create the producer factory for
+     * @param declaringBean the bean declaring the producer. May be null if the producer is static or the declaring object is non-contextual
      * @return the producer factory for the method
      */
-    public <X> ProducerFactory<X> getProducerFactory(AnnotatedMethod<? super X> method);
+    public <X> ProducerFactory<X> getProducerFactory(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
 
     /**
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
@@ -482,13 +490,14 @@ public interface BeanManager {
      * </p>
      * 
      * @param <T> the type
+     * @param <X> the type of the declaring bean
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
      * @param producerFactory a {@link ProducerFactory}, used to obtain a {@link Producer}
      * @return a container provided implementation of {@link Bean}
      */
-    public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, ProducerFactory<T> producerFactory);
+    public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass, ProducerFactory<X> producerFactory);
 
     /**
      * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
