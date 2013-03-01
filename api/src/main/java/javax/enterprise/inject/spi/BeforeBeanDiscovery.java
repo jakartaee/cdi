@@ -126,8 +126,14 @@ public interface BeforeBeanDiscovery {
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
 
     /**
+     * <p>
      * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set of types which will be scanned during bean
      * discovery.
+     * </p>
+     * 
+     * <p>
+     * This method is deprecated from CDI 1.1 and {@link #addAnnotatedType(AnnotatedType, String)} should be used instead.
+     * </p>
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      */
