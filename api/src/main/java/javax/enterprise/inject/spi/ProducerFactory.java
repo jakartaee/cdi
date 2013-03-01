@@ -26,7 +26,7 @@ package javax.enterprise.inject.spi;
  * </pre>
  * 
  * @author Pete Muir
- *
+ * @since 1.1
  */
 public interface ProducerFactory<X> {
 

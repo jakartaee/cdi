@@ -46,6 +46,7 @@ import javax.inject.Qualifier;
  * </pre>
  * 
  * @author Pete Muir
+ * @since 1.1
  */
 
 @Target({ PARAMETER, FIELD })

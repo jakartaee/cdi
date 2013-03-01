@@ -19,7 +19,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * </p>
  * 
  * @author Pete Muir
- * @see Destroyed
+ * @see Initialized
+ * @since 1.1
+ * 
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })

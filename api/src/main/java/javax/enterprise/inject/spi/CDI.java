@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Provides access to the current container.
  * 
  * @author Pete Muir
- * 
+ * @since 1.1
  */
 public abstract class CDI<T> implements Instance<T> {
 

@@ -32,6 +32,7 @@ package javax.enterprise.inject.spi;
  * @see AnnotatedType
  * @see ProcessAnnotatedType
  * @param <X> The class being annotated
+ * @since 1.1
  */
 public interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
    /**

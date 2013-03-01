@@ -19,7 +19,6 @@ package javax.enterprise.inject;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
@@ -46,6 +45,7 @@ import javax.inject.Qualifier;
  * </pre>
  * 
  * @author Pete Muir
+ * @since 1.1
  */
 
 @Target({ PARAMETER, FIELD })

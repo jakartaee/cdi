@@ -22,9 +22,11 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * @author Pete Muir
- * 
+ * @since 1.1
  */
 public class DefinitionException extends RuntimeException {
+
+   private static final long serialVersionUID = -2699170549782567339L;
 
    public DefinitionException(String message, Throwable t) {
       super(message, t);

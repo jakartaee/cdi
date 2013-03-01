@@ -302,6 +302,7 @@ public interface BeanManager {
      * @param a1 a qualifier to check
      * @param a2 a qualifier to check
      * @return true if the two qualifiers are equivalent, otherwise false
+     * @since 1.1
      */
     public boolean areQualifiersEquivalent(Annotation qualifier1, Annotation qualifier2);
     
@@ -312,6 +313,7 @@ public interface BeanManager {
      * @param a1 an interceptor binding to check
      * @param a2 an interceptor binding to check
      * @return true if the two interceptor bindings are equivalent, otherwise false
+     * @since 1.1
      */
     public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, Annotation interceptorBinding2);
     
@@ -321,6 +323,7 @@ public interface BeanManager {
      * 
      * @param qualifier the qualifier to consider
      * @return the hashCode for the qualifier
+     * @since 1.1
      */
     public int getQualifierHashCode(Annotation qualifier);
     
@@ -330,6 +333,7 @@ public interface BeanManager {
      * 
      * @param interceptorBinding the interceptor binding to consider
      * @return the hashCode for the interceptor binding
+     * @since 1.1
      */
     public int getInterceptorBindingHashCode(Annotation interceptorBinding);
 
@@ -393,7 +397,9 @@ public interface BeanManager {
      * This factory can be wrapped to add behavior to container created injection targets.
      * </p>
      * 
+     * @param annotatedType the annotated type to create the injection target factory for
      * @return an {@link InjectionTargetFactory}
+     * @since 1.1
      */
     public <T> InjectionTargetFactory<T> getInjectionTargetFactory(AnnotatedType<T> annotatedType);
     
@@ -409,6 +415,7 @@ public interface BeanManager {
      * 
      * @param field the field to create the producer factory for
      * @return the producer factory for the field
+     * @since 1.1
      */
     public <X> ProducerFactory<X> getProducerFactory(AnnotatedField<? super X> field);
     
@@ -424,6 +431,7 @@ public interface BeanManager {
      * 
      * @param method the method to create the producer factory for
      * @return the producer factory for the method
+     * @since 1.1
      */
     public <X> ProducerFactory<X> getProducerFactory(AnnotatedMethod<? super X> method);
 
@@ -434,7 +442,8 @@ public interface BeanManager {
      * 
      * @param <T> the type
      * @param type the {@link AnnotatedType}
-     * @return a container probided implementation of {@link InjectionTarget}
+     * @return a container provided implementation of {@link InjectionTarget}
+     * @since 1.1
      */
     public <T> BeanAttributes<T> createBeanAttributes(AnnotatedType<T> type);
 
@@ -445,7 +454,8 @@ public interface BeanManager {
      * 
      * @param <T> the type
      * @param type the {@link AnnotatedType}
-     * @return a container probided implementation of {@link InjectionTarget}
+     * @return a container provided implementation of {@link InjectionTarget}
+     * @since 1.1
      */
     public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> type);
 
@@ -467,6 +477,7 @@ public interface BeanManager {
      * @param beanClass a class, which determines the return value of {@link Bean#getBeanClass()}
      * @param injectionTargetFactory an {@link InjectionTargetFactory}, used to obtain an {@link InjectionTarget}
      * @return a container provided implementation of {@link Bean}
+     * @since 1.1
      */
     public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, InjectionTargetFactory<T> injectionTargetFactory);
 
@@ -487,6 +498,7 @@ public interface BeanManager {
      * @param beanClass a class, which determines the return value of {@link Bean#getClass()}
      * @param producerFactory a {@link ProducerFactory}, used to obtain a {@link Producer}
      * @return a container provided implementation of {@link Bean}
+     * @since 1.1
      */
     public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, ProducerFactory<T> producerFactory);
 
@@ -496,6 +508,7 @@ public interface BeanManager {
      * @param field the {@link AnnotatedField} defining the injection point
      * @return the container provided {@link InjectionPoint}
      * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     * @since 1.1
      */
     public InjectionPoint createInjectionPoint(AnnotatedField<?> field);
 
@@ -505,6 +518,7 @@ public interface BeanManager {
      * @param parameter the {@link AnnotatedParameter} defining the injection point
      * @return the container provided {@link InjectionPoint}
      * @throws IllegalArgumentException if there is a definition error associated with the injection point
+     * @since 1.1
      */
     public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
 
@@ -515,6 +529,7 @@ public interface BeanManager {
      * @param extensionClass the type of the extension class
      * @return the extension instance
      * @throws IllegalArgumentException if the container has no instance of the given class
+     * @since 1.1
      */
     public <T extends Extension> T getExtension(Class<T> extensionClass);
 

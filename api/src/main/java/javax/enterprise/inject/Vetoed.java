@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * @author Stuart Douglas
- * 
+ * @since 1.1
  * @see <a href="http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing">The Extension Mechanism Architecture</a>
  * 
  */

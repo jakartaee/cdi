@@ -26,7 +26,6 @@ import java.lang.annotation.Target;
  * 
  * @author Pete Muir
  * @since 1.1
- * 
  */
 @Retention(RUNTIME)
 @Target(PARAMETER)

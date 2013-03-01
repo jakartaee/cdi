@@ -21,9 +21,12 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * @author Pete Muir
+ * @since 1.1
  * 
  */
 public class DeploymentException extends RuntimeException {
+
+   private static final long serialVersionUID = 2604707587772339984L;
 
    public DeploymentException(String message, Throwable t) {
       super(message, t);

@@ -14,6 +14,7 @@ import java.util.List;
  * </p>
  * 
  * @author Pete Muir
+ * @since 1.1
  */
 public interface AfterTypeDiscovery {
 

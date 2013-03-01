@@ -5,6 +5,7 @@ package javax.enterprise.inject.spi;
  * Interface implemented by a CDI provider to provide access to the current container
  * 
  * @author Pete Muir
+ * @since 1.1
  */
 public interface CDIProvider {
 
