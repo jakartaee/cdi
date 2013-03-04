@@ -839,7 +839,7 @@ void afterTypeDiscovery(@Observes AfterTypeDiscovery event) { ... }
 ----
 
 
-If any observer method of a +AfterTypeDiscovery+ event throws an exception, the exception is treated as a deployment problem by the container.
+If any observer method of a +AfterTypeDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
 
 
 [[abd]]
