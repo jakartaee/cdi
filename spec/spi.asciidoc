@@ -272,10 +272,10 @@ For example:
 
 [[source,java]]
 ----
-Unmanaged unmanagedFoo = new Unmanaged(Foo.class);
-UnmanagedInstance fooInstance = unManagedFoo.newInstance();
-Foo foo = fooInstance.produce().inject().postConstruct();
-// Use the foo instance
+Unmanaged<Foo> unmanagedFoo = new Unmanaged<Foo>(Foo.class);
+UnmanagedInstance<Foo> fooInstance = unmanagedFoo.newInstance();
+Foo foo = fooInstance.produce().inject().postConstruct().get();
+... // Use the foo instance
 fooInstance.preDestroy().dispose();
 ----
 

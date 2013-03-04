@@ -9,9 +9,9 @@ import javax.enterprise.context.spi.CreationalContext;
  * </p>
  * 
  * <pre>
- * Unmanaged unmanagedFoo = new Unmanaged(Foo.class);
- * UnmanagedInstance fooInstance = unManagedFoo.newInstance();
- * Foo foo = fooInstance.produce().inject().postConstruct();
+ * Unmanaged&lt;Foo&gt; unmanagedFoo = new Unmanaged&lt;Foo&gt;(Foo.class);
+ * UnmanagedInstance&lt;Foo&gt; fooInstance = unmanagedFoo.newInstance();
+ * Foo foo = fooInstance.produce().inject().postConstruct().get();
  * ... // Use the foo instance
  * fooInstance.preDestroy().dispose();
  * </pre>
