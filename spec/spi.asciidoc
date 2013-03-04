@@ -30,8 +30,6 @@ public interface BeanAttributes<T> {
 
 * +getTypes()+, +getQualifiers()+, +getScope()+, +getName()+ and +getStereotypes()+ must return the bean types, qualifiers, scope type, bean name and stereotypes of the bean, as defined in <<concepts>>.
 * +isAlternative()+ must return +true+ if the bean is an alternative, and +false+ otherwise.
-* +isNullable()+ is deprecated in CDI 1.1 and should be ignored by the container.
-
 
 The interface +javax.enterprise.inject.spi.Bean+ defines everything the container needs to manage instances of a certain bean.
 
@@ -46,7 +44,7 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
 
 * +getBeanClass()+ returns the bean class of the managed bean or session bean or of the bean that declares the producer method or field.
 * +getInjectionPoints()+ returns a set of +InjectionPoint+ objects, defined in <<injection_point>>, representing injection points of the bean, that will be validated by the container at initialization time.
-
+* +isNullable()+ is deprecated in CDI 1.1 and should be ignored by the container.
 
 Note that implementations of +Bean+ must also implement the inherited operations defined by the +Contextual+ interface defined in <<contextual>>.
 
