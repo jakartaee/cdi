@@ -833,7 +833,7 @@ public interface AfterTypeDiscovery {
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
 
-Any observer of this event is permitted to add classes to, or remove classes from, the set of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +AfterTypeDiscovery+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
+Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives,list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +AfterTypeDiscovery+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
 
 [source, java]
 ----
@@ -965,7 +965,7 @@ as defined in <<bean_discovery>>
 
 An event is not fired for any type annotated with +@Vetoed+, or in a package annotated with +@Vetoed+.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessAnnotatedType<X>+, where +X+ is the class, for types discovered in a bean archive, or of type +javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType<X>+ for types added by +BeforeBeanDiscovery.addAnnotatedType()+ or +BeforeTypeDiscovery.addAnnotatedType()+.
+The event object must be of type +javax.enterprise.inject.spi.ProcessAnnotatedType<X>+, where +X+ is the class, for types discovered in a bean archive, or of type +javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType<X>+ for types added by +BeforeBeanDiscovery.addAnnotatedType()+ or +AfterTypeDiscovery.addAnnotatedType()+.
 
 The annotation +@WithAnnotations+ may be applied to the event parameter. If the annotation is applied, the container must only deliver +ProcessAnnotatedType+ events for types which contain at least one of the annotations specified. The annotation can appear on the annotated type, or on any member, or any parameter of any member of the annotated type, as defined in <<alternative_metadata_sources>>. The annotation may be applied as a meta-annotation on any annotation considered.
 
