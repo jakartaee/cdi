@@ -102,12 +102,14 @@ The container automatically discovers managed beans (according to the rules of <
 
 Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the bean archive as children of the +<scan>+ element. By default an exclude filter is active. If the exclude filter definition contains:
 
-* a child element named +<if-class-available>+ with a +name+ attribute, and the classloader for the bean archive can load a class for that name, or
-* a child element named +<if-class-not-available>+ with a +name+ attribute, and the classloader for the bean archive cannot load a class for that name, or
+* a child element named +<if-class-available>+ with a +name+ attribute, and the classloader for the bean archive can not load a class for that name, or
+* a child element named +<if-class-not-available>+ with a +name+ attribute, and the classloader for the bean archive can load a class for that name, or
 * a child element named +<if-system-property>+ with a +name+ attribute, and there is no system property defined for that name, or
 * a child element named +<if-system-property>+ with a +name+ attribute and a +value+ attribute, and there is no system property defined for that name with that value.
 
-If
+then the filter is inactive.
+
+If the filter is active, and:
 
 * the fully qualified name of the type being discovered matches the value of the name attribute of the exclude filter, or
 * the package name of the type being discovered matches the value of the name attribute with a suffix ".*" of the exclude filter, or
