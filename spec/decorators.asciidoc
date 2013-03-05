@@ -102,7 +102,7 @@ The decorator intercepts every method which is declared by a decorated type of t
 
 This specification defines two methods of enabling and ordering decorators. The +@Priority+ annotation, introduced in Contexts and Dependency Injection 1.1 allows a decorator to be enabled and ordered for an entire application. Contexts and Dependency Injection 1.0 allowed only for a decorator to be enabled and ordered for a bean archive.
 
-Decorators are called after interceptors.
+Decorators are called after interceptors. Decorators enabled using +@Priority+ are called before decorators enabled using +beans.xml+.
 
 A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<atd>>.
 
