@@ -391,7 +391,11 @@ If a managed bean which declares a passivating scope, a stateful session bean wh
 
 then the container automatically detects the problem and treats it as a deployment problem.
 
-If a producer method declares a passivating scope and has a return type that is declared final and does not implement or extend +Serializable+ then the container automatically detects the problem and treats it as a deployment problem.
+If a producer method declares a passivating scope and:
+* has a return type that is declared final and does not implement or extend +Serializable+, or,
+* has a parameter that is not annotated with +@TransientReference+ or does not resolve to a passivation capable dependency
+
+then the container automatically detects the problem and treats it as a deployment problem.
 
 If a producer method declares a passivating scope and doesn't only return +Serializable+ types at runtime, then the container must throw an +IllegalProductException+.
 
