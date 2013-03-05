@@ -110,8 +110,8 @@ Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the b
 If
 
 * the fully qualified name of the type being discovered matches the value of the name attribute of the exclude filter, or
-* the package name of the type being discovered matches the value of the name attribute with a suffix ".\*" of the exclude filter, or
-* the package name of the type being discovered starts with the value of the name attribute with a suffix ".\*\*" of the exclude filter
+* the package name of the type being discovered matches the value of the name attribute with a suffix ".*" of the exclude filter, or
+* the package name of the type being discovered starts with the value of the name attribute with a suffix ".**" of the exclude filter
 
 then we say that the type is excluded from discovery.
 
