@@ -80,7 +80,7 @@ Each child +<class>+ element must specify the name of an interceptor class. If t
 
 If the same class is listed twice under the +<interceptors>+ element, the container automatically detects the problem and treats it as a deployment problem.
 
-Interceptors declared using +@Interceptors+, declared in +ejb-jar.xml+ or enabled using +@Priority+ are called before interceptors enabled using +beans.xml+.
+Interceptors enabled using +@Priority+ are called before interceptors enabled using +beans.xml+.
 
 An interceptor is said to be *enabled* if it is enabled in at least one bean archive or has the +@Priority+ annotation.
 
