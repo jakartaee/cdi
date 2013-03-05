@@ -798,7 +798,7 @@ public interface BeforeBeanDiscovery {
 * +addScope()+ declares an annotation type as a scope type.
 * +addStereotype()+ declares an annotation type as a stereotype, and specifies its meta-annotations.
 * +addInterceptorBinding()+ declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
-* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an optional identifier. The id of an +AnnotatedType+ added by the container is not defined.
+* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an optional identifier.
 
 
 [source, java]
@@ -820,14 +820,14 @@ public interface AfterTypeDiscovery {
     public List<Class<?>> getAlternatives();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
-    public void addAnnotatedType(AnnotatedType<?> type);    
+    public void addAnnotatedType(AnnotatedType<?> type, String id);    
 }
 ----
 
 * +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not included in the list.
 * +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
 * +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
-* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery. If an +AnnotatedType+ with the same identifier already exists in the set of types the container automatically detects the problem and treats it as a deployment problem.
+* +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an identifier.
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
 
@@ -866,7 +866,7 @@ public interface AfterBeanDiscovery {
 * +addBean()+ fires an event of type +ProcessBean+ containing the given +Bean+ and then registers the +Bean+ with the container, thereby making it available for injection into other beans. The given +Bean+ may implement +Interceptor+ or +Decorator+.
 * +addObserverMethod()+ fires an event of type +ProcessObserverMethod+ containing the given +ObserverMethod+ and then registers the +ObserverMethod+ with the container, thereby making it available for event notifications.
 * +addContext()+ registers a custom +Context+ object with the container.
-* +getAnnotatedType()+ and +getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization. If the +id+ passed is null, the container should substitute the container generated id.
+* +getAnnotatedType()+ and +getAnnotatedTypes()+ returns the ++AnnotatedType++ s discovered or added during container initialization. The id of an +AnnotatedType+ added by the container is not defined. If the +id+ passed is null, the container should substitute the container generated id.
 
 
 A portable extension may take advantage of this event to register beans, interceptors, decorators, observer methods and custom context objects with the container.
