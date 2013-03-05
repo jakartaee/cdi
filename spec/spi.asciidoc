@@ -544,26 +544,30 @@ public interface InjectionTargetFactory<T> {
 }
 ----
 
+Null should be passed to +InjectionTargetFactory.createInjectionTarget()+ to create a non-contextual injection target. The method +BeanManager.createInjectionTarget()+ is deprecated since version 1.1 of Contexts and Dependency Injection.
+
 [[bm_obtain_producer]]
 
 ==== Obtaining a +Producer+ for a field or method
 
-The method +BeanManager.getProducerFactory()+ returns a factory capable of creating container provided implementations of +Producer+ for a given +AnnotatedMethod+ or +AnnotatedField+ or throws an +IllegalArgumentException+ if there is a definition error associated with the producer method or field.
+The method +BeanManager.getProducerFactory()+ returns a factory capable of creating container provided implementations of +Producer+ for a given +AnnotatedMethod+ or +AnnotatedField+, and declaring bean, or throws an +IllegalArgumentException+ if there is a definition error associated with the producer method or field.
 
 [source, java]
 ----
-public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedField<? super X> field);
-public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedMethod<? super X> method);
+public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedField<? super X> field, Bean<X> declaringBean);
+public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
 ----
 
 [source, java]
 ----
 public interface ProducerFactory<X> {
 
-    public Producer<?> createProducer(Bean<X> bean);
+    public <T> Producer<T> createProducer(Bean<T> bean);
 
 }
 ----
+
+Null should be passed to +ProducerFactory.createProducer()+ to create a producer of non-contextual objects.
 
 
 [[bm_obtain_injectionpoint]]
@@ -592,7 +596,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 [[bm_obtain_bean]]
 
-==== Obtaining a +Bean+, +Interceptor+ or +Decorator+
+==== Obtaining a +Bean+
 
 The method +BeanManager.createBean()+ returns a container provided implementation of +Bean+. The methods accept:
 
@@ -616,8 +620,8 @@ A second version of the method is provided to create a +Bean+ from a producer. T
 
 [source, java]
 ----
-public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<?> beanClass, 
-                          Producer<T> producer);
+public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass, 
+                          ProducerFactory<X> producer);
 ----
 
 [[bm_obtain_extension]]

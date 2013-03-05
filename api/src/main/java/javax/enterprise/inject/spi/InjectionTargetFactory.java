@@ -35,7 +35,7 @@ public interface InjectionTargetFactory<T> {
     /**
      * Create a new injection target for a bean.
      * 
-     * @param bean the bean to create the injection target for
+     * @param bean the bean to create the injection target for, or null if creating a non-contextual object
      * @return the injection target
      */
     public InjectionTarget<T> createInjectionTarget(Bean<T> bean);
