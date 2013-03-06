@@ -29,19 +29,19 @@ An alternative is not available for injection, lookup or EL resolution to classe
 
 [[declaring_selected_alternatives]]
 
-==== Declaring selected alternatives for a bean archive
+==== Declaring selected alternatives
 
 This specification defines two methods of selecting alternatives. The +@Priority+ annotation, introduced in Contexts and Dependency Injection 1.1 allows an alternative to be selected for an entire application. Contexts and Dependency Injection 1.0 allowed only for an alternative to be selected for a bean archive.
 
 [[declaring_selected_alternatives_application]]
 
-==== Declaring selected alternatives for an application 
+===== Declaring selected alternatives for an application 
 
 An alternative may be given a priority for the application by placing the +@Priority+ annotation on either the bean class of the alternative.
 
 [[declaring_selected_alternatives_bean_archive]]
 
-==== Declaring selected alternatives for a bean archive
+===== Declaring selected alternatives for a bean archive
 
 
 An alternative may be explicitly declared using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
