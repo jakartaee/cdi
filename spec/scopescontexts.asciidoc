@@ -394,7 +394,8 @@ then the container automatically detects the problem and treats it as a deployme
 If a producer method declares a passivating scope and:
 
 * has a return type that is declared final and does not implement or extend +Serializable+, or,
-* has a parameter that is not annotated with +@TransientReference+ and does not resolve to a passivation capable dependency
+* has a parameter which is not annotated with +@TransientReference+ and that resolves to a dependent scoped bean that is not a passivation capable dependency, or
+* has a parameter that resolves to a bean that is not a dependent scoped bean and that is not a passivation capable dependency
 
 then the container automatically detects the problem and treats it as a deployment problem.
 
