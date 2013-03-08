@@ -71,7 +71,7 @@ An interceptor may be explicitly enabled for a bean archive by listing its class
       <class>org.mycompany.myfwk.TransactionInterceptor</class>
       <class>org.mycompany.myfwk.LoggingInterceptor</class>
    </interceptors>
-</beans>]]>
+</beans>
 ----
 
 The order of the interceptor declarations determines the interceptor ordering. Interceptors which occur earlier in the list are called first.
