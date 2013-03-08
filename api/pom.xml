@@ -75,9 +75,9 @@
    <properties>
       <atinject.api.version>1</atinject.api.version>
       <ejb.api.version>1.0.0.CR2</ejb.api.version>
-      <jsr250.api.version>1.0</jsr250.api.version>
+      <javax.annotation.api.version>1.0.0.Alpha1</javax.annotation.api.version>
       <uel.api.version>2.2</uel.api.version>
-      <interceptor.api.version>1.0.0.Beta1</interceptor.api.version>
+      <interceptor.api.version>1.0.0.Alpha1</interceptor.api.version>
    </properties>
 
    <!-- Configure all dependencies (e.g. testing)-->
@@ -92,9 +92,9 @@
          </dependency>
 
          <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>jsr250-api</artifactId>
-            <version>${jsr250.api.version}</version>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+            <version>${javax.annotation.api.version}</version>
          </dependency>
 
          <dependency>
@@ -135,7 +135,7 @@
          -->
          <dependency>
             <groupId>org.jboss.spec.javax.interceptor</groupId>
-            <artifactId>jboss-interceptors-api_1.1_spec</artifactId>
+            <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
             <version>${interceptor.api.version}</version>
          </dependency>
 
@@ -156,12 +156,12 @@
 
       <dependency>
          <groupId>org.jboss.spec.javax.interceptor</groupId>
-         <artifactId>jboss-interceptors-api_1.1_spec</artifactId>
+         <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
       </dependency>
 
       <dependency>
-         <groupId>javax.annotation</groupId>
-         <artifactId>jsr250-api</artifactId>
+         <groupId>org.jboss.spec.javax.annotation</groupId>
+         <artifactId>jboss-annotations-api_1.2_spec</artifactId>
       </dependency>
 
       <dependency>
