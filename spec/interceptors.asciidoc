@@ -63,10 +63,11 @@ This specification extends the Java Interceptors specification and defines:
 
 An interceptor may be explicitly enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 
+[source,xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"">
    <interceptors>
       <class>org.mycompany.myfwk.TransactionInterceptor</class>
       <class>org.mycompany.myfwk.LoggingInterceptor</class>

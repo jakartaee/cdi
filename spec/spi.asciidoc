@@ -268,7 +268,7 @@ An unmanaged instance can be obtained and injected from an +InjectionTarget+, ho
 
 For example:
 
-[[source,java]]
+[source,java]
 ----
 Unmanaged<Foo> unmanagedFoo = new Unmanaged<Foo>(Foo.class);
 UnmanagedInstance<Foo> fooInstance = unmanagedFoo.newInstance();

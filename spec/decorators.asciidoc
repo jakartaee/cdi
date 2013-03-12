@@ -113,6 +113,7 @@ A decorator is said to be *enabled* if it is enabled in at least one bean archiv
 
 A decorator may be enabled for the entire application by applying the +@Priority+ annotation, along with a priority value, on the decorator class. Decorators with the smaller priority values are called first. The order of more than one decorator with the same priority is undefined.
 
+[source,java]
 ----
 @Decorator @Priority(APPLICATION)
 class TimestampLogger implements Logger {
@@ -129,10 +130,11 @@ The priority value ranges defined in the Java Interceptors specification section
 
 A decorator may be  explicitly enabled by listing its bean class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
 
+[source,xml]
 ----
 <beans xmlns="http://java.sun.com/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
+       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
    <decorators>
       <class>org.mycompany.myfwk.TimestampLogger</class>
       <class>org.mycompany.myfwk.IdentityLogger</class>
