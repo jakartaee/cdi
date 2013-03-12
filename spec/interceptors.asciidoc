@@ -45,8 +45,11 @@ If an interceptor for lifecycle callbacks declares an interceptor binding type t
 
 This specification extends the Java Interceptors specification and defines:
 
+* additional restrictions about the type of bean to which an interceptor can be bound, and
 * how the container must behave if a definition error is encountered, and
 * how interceptors are bound using stereotypes.
+
+Interceptor bindings may be used to associate interceptors with any managed bean that is not a decorator
 
 The set of interceptor bindings for a method are those declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
 
