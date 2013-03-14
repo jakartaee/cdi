@@ -139,7 +139,7 @@ public class Unmanaged<T> {
 	    }
 	    if (disposed) {
 		throw new IllegalStateException(
-			"Trying to call preDestroy() on already disposed instance");
+			"Trying to call postConstruct() on already disposed instance");
 	    }
 	    injectionTarget.postConstruct(instance);
 	    return this;
