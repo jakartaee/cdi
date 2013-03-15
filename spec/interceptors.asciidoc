@@ -72,8 +72,8 @@ An interceptor may be explicitly enabled for a bean archive by listing its class
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"">
    <interceptors>
-      <class>org.mycompany.myfwk.TransactionInterceptor</class>
-      <class>org.mycompany.myfwk.LoggingInterceptor</class>
+      <class>com.acme.myfwk.TransactionInterceptor</class>
+      <class>com.acme.myfwk.LoggingInterceptor</class>
    </interceptors>
 </beans>]]>
 ----

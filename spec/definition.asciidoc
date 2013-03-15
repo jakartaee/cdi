@@ -534,7 +534,7 @@ A bean may have a _bean name_. A bean with a name may be referred to by its name
 The following strings are valid bean names:
 
 ----
-org.mydomain.myapp.settings
+com.acme.settings
 ----
 
 ----

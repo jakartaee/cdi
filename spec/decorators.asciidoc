@@ -136,8 +136,8 @@ A decorator may be  explicitly enabled by listing its bean class under the +<dec
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
    <decorators>
-      <class>org.mycompany.myfwk.TimestampLogger</class>
-      <class>org.mycompany.myfwk.IdentityLogger</class>
+      <class>com.acme.myfwk.TimestampLogger</class>
+      <class>com.acme.myfwk.IdentityLogger</class>
    </decorators>
 </beans>
 ----

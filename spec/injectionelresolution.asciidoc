@@ -56,9 +56,9 @@ An alternative may be explicitly declared using the +<alternatives>+ element of 
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
    <alternatives>
-      <class>org.mycompany.myfwk.InMemoryDatabase</class>
-      <stereotype>org.mycompany.myfwk.Mock</stereotype>
-      <stereotype>org.mycompany.site.Australian</stereotype>
+      <class>com.acme.myfwk.InMemoryDatabase</class>
+      <stereotype>com.acme.myfwk.Mock</stereotype>
+      <stereotype>com.acme.site.Australian</stereotype>
    </alternatives>
 </beans>
 ----
