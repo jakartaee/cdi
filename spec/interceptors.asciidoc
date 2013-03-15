@@ -51,7 +51,7 @@ This specification extends the Java Interceptors specification and defines:
 
 Interceptor bindings may be used to associate interceptors with any managed bean that is not a decorator
 
-The set of interceptor bindings for a method are those declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
+The set of interceptor bindings for a method declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
 
 If a managed bean has a class-level or method-level interceptor binding, the managed bean must be a proxyable bean type, as defined in <<unproxyable>>.
 
