@@ -40,7 +40,7 @@ public class Unmanaged<T> {
     public Unmanaged(BeanManager manager, Class<T> clazz) {
 	this.beanManager = manager;
 	AnnotatedType<T> type = manager.createAnnotatedType(clazz);
-	this.injectionTarget = manager.createInjectionTarget(type);
+	this.injectionTarget = manager.getInjectionTargetFactory(type).createInjectionTarget(null);
     }
 
     /**
