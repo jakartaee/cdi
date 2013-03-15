@@ -25,7 +25,7 @@ An _explicit bean archive_ is an archive which contains a +beans.xml+ file:
 * with no version number, or,
 * that is an empty file.
 
-An _implicit bean archive_ is an archive:
+An _implicit bean archive_ is any other archive:
 
 * which contains one or more beans with a bean defining annotation, or one or more session beans, and,
 * does not contain a +beans.xml+ with the +bean-discovery-mode+ of +none+.
