@@ -140,7 +140,7 @@
    <xs:element name="scan">
       <xs:annotation>
          <xs:documentation>
-         
+            <![CDATA[The <scan> element allows exclusion of classes and packages from consideration. Various filters may be applied, and may be conditionally activated.]]>
          </xs:documentation>
       </xs:annotation>
       <xs:complexType>
@@ -148,7 +148,7 @@
             <xs:element name="exclude">
                 <xs:annotation>
                    <xs:documentation>
-                      
+                      <![CDATA[The exclude filter allows exclusion of classes and packages through the use of Ant-style glob matches. For example, <exclude name="com.acme.**"> would exclude all classes and subpackages of com.acme.]]> 
                    </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
@@ -156,14 +156,30 @@
                          <xs:element name="if-class-available">
                             <xs:annotation>
                                <xs:documentation>
-                               
+                                  <![CDATA[Activates the filter only if the class specified can be loaded.]]>
                                </xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
                                 <xs:attribute name="name" type="xs:string" use="required">
                                    <xs:annotation>
                                       <xs:documentation>
-                               
+                                         <![CDATA[If the named class can be loaded then, then the filter will be activated.]]>
+                                      </xs:documentation>
+                                   </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                         </xs:element>
+                         <xs:element name="if-class-not-available">
+                            <xs:annotation>
+                               <xs:documentation>
+                                  <![CDATA[Activates the filter only if the class specified cannot be loaded.]]>
+                               </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                   <xs:annotation>
+                                      <xs:documentation>
+                                         <![CDATA[If the named class cannot be loaded then, then the filter will be activated.]]>
                                       </xs:documentation>
                                    </xs:annotation>
                                 </xs:attribute>
@@ -172,21 +188,21 @@
                          <xs:element name="if-system-property">
                             <xs:annotation>
                                <xs:documentation>
-                               
+                                  <![CDATA[If both name and value are specified, then the named system property must be set, and have the specified value for the filter to be activated. If only the name is specified, then the named system property must be set for the filter to be activated.]]>
                                </xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
                                 <xs:attribute name="name" type="xs:string" use="required">
                                    <xs:annotation>
                                       <xs:documentation>
-                               
+                                         <![CDATA[The name of the system property that must be set for the filter to be active.]]>
                                       </xs:documentation>
                                    </xs:annotation>
                                 </xs:attribute>
                                 <xs:attribute name="value" type="xs:string" use="optional">
                                    <xs:annotation>
                                       <xs:documentation>
-                               
+                                         <![CDATA[Optional. The value that the system property must have for the filter to be active.]]>
                                       </xs:documentation>
                                    </xs:annotation>
                                 </xs:attribute>
@@ -196,7 +212,7 @@
                    <xs:attribute name="name" use="required">
                       <xs:annotation>
                          <xs:documentation>
-                         
+                            <![CDATA[The name of the class or package to exclude. Ant-style glob matches are supported. For example, <exclude name="com.acme.**"> would exclude all classes and subpackages of com.acme.]]>
                          </xs:documentation>
                       </xs:annotation>
                       <xs:simpleType>
