@@ -70,10 +70,6 @@ public interface BeanManager {
      * Obtains a contextual reference for a certain {@linkplain Bean bean} and a certain bean type of the bean.
      * </p>
      * 
-     * <p>
-     * Non-portable behavior results if called during application initialization.
-     * </p>
-     * 
      * @param bean the {@link Bean} object representing the bean
      * @param beanType a bean type that must be implemented by any client proxy that is returned
      * @param ctx a {@link javax.enterprise.context.spi.CreationalContext} that may be used to destroy any object with scope
@@ -87,10 +83,6 @@ public interface BeanManager {
     /**
      * <p> 
      * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
-     * </p>
-     * 
-     * <p>
-     * Non-portable behavior results if called during application initialization.
      * </p>
      * 
      * @param ij the target injection point
