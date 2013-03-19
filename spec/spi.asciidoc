@@ -262,9 +262,9 @@ Implementations of +Bean+ usually maintain a reference to an instance of +BeanMa
 
 [[bm_obtain_unmanaged_instance]]
 
-==== Obtaining an unmanaged instance
+==== Obtaining non-contextual instance
 
-An unmanaged instance can be obtained and injected from an +InjectionTarget+, however the +InjectionTarget+ interface is designed to work on contextual instances. A helper class, +Unmanaged+ provides a set of methods optimized for working with unmanaged instances.
+A non-contextual instance can be obtained and injected from an +InjectionTarget+, however the +InjectionTarget+ interface is designed to work on contextual instances. A helper class, +Unmanaged+ provides a set of methods optimized for working with non-contextual instances.
 
 For example:
 

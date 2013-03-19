@@ -79,6 +79,7 @@ In this case, any object returned by the producer method will not have any depen
 When the application invokes:
 
 * a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, or
+* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  +InjectionTarget.produce()+ or +UnmanagedInstance.produce()+), or
 * a business method of a session bean via an EJB remote or local reference,
 
 
