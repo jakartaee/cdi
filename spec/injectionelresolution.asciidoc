@@ -52,9 +52,9 @@ An alternative may be explicitly declared using the +<alternatives>+ element of 
 
 [source,xml]
 ----
-<beans xmlns="http://java.sun.com/xml/ns/javaee"
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
    <alternatives>
       <class>com.acme.myfwk.InMemoryDatabase</class>
       <stereotype>com.acme.myfwk.Mock</stereotype>

@@ -122,7 +122,7 @@ For example, consider the follow +beans.xml+ file:
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://java.sun.com/xml/ns/javaee">
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee">
 
     <scan>
         <exclude name="com.acme.rest.*" />
