@@ -31,7 +31,7 @@ An alternative is not available for injection, lookup or EL resolution to classe
 
 ==== Declaring selected alternatives
 
-This specification defines two methods of selecting alternatives. The +@Priority+ annotation, introduced in Contexts and Dependency Injection 1.1 allows an alternative to be selected for an entire application. Contexts and Dependency Injection 1.0 allowed only for an alternative to be selected for a bean archive.
+This specification defines two methods of selecting alternatives. From Contexts and Dependency Injection 1.1 onwards the +@Priority+ annotation allows an alternative to be selected for an entire application. Contexts and Dependency Injection 1.0 allowed only for an alternative to be selected for a bean archive.
 
 [[declaring_selected_alternatives_application]]
 
