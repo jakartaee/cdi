@@ -155,7 +155,7 @@ public interface BeanManager {
      * 
      * @param <X> a common type of the beans
      * @param beans a set of {@linkplain Bean beans} of the given type
-     * @returns the resolved bean, or null if no bean could be resolved, or null if null or an empty set is passed
+     * @returns the resolved bean, or null if null or an empty set is passed
      * @throws AmbiguousResolutionException if the ambiguous dependency resolution rules fail
      * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation} event is fired
      */
