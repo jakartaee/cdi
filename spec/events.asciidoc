@@ -316,6 +316,41 @@ In addition to the event parameter, observer methods may declare additional para
 public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger log) { ... }
 ----
 
+[[event_metadata]]
+
+==== The +EventMetadata+ interface
+
+The interface +javax.enterprise.inject.spi.EventMetadata+ contains everything the container knows an observed event. 
+
+[source, java]
+----
+public interface EventMetadata
+{
+   public Set<Annotation> getQualifiers();
+   public InjectionPoint getInjectionPoint();
+   public Type getResolvedType();
+}
+----
+
+* +getQualifiers()+ returns the set of qualifiers that was fired with the corresponding event.
+* +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
+* +getResolvedType()+ Returns the resolved event +Type+.
+
+An instance of +EventMetadata+ must exist for every observed event payload, and the observer method that observes said payload, but only if the observer method specifies +EventMetadata+ be injected as a method parameter.
+
+[[obtaining_event_metadata]]
+
+==== Obtaining +EventMetadata+ in an observer method
+
+In addition to the observed event payload and additional injected parameters, observer methods may declare a parameter of the type +EventMetadata+. This additional parameter will be supplied by the container, and can be used to obtain additional information about the observed event payload such as the qualifiers it was fired with, the +InjectionPoint+ from which it was fired (if any), and the resolved event +Type+.
+
+[source, java]
+----
+public void afterLogin(@Observes LoggedInEvent event, EventMetadata metadata) { ... }
+----
+
+If a method has more than one un-qualified parameter of type +EventMetadata+, the container automatically detects the problem and treats it as a definition error.
+
 [[conditional_observer_methods]]
 
 ==== Conditional observer methods
