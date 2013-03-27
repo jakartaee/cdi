@@ -349,6 +349,7 @@ The container must guarantee that:
 
 * all beans with normal scope are passivation capable dependencies,
 * all passivation capable beans with scope +@Dependent+ are passivation capable dependencies,
+* all session beans are passivation capable dependencies,
 * all resources are passivation capable dependencies, and
 * the built-in beans of type +Instance+, +Event+, +InjectionPoint+ and +BeanManager+ are passivation capable dependencies.
 
