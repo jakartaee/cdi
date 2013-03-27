@@ -438,8 +438,8 @@ The request context is destroyed:
 
 An event with qualifier +@Initialized(RequestScoped.class)+ is fired when the request context is initialized and an event with qualifier +@Destroyed(RequestScoped.class)+ when the request context is destroyed. The event payload is:
 
-* the +ServletRequestEvent+ if the context is initialized or destroyed due to a servlet request, or
-* the +ServletRequestEvent+ if the context is initialized or destroyed due to a web service invocation, or
+* the +ServletRequest+ if the context is initialized or destroyed due to a servlet request, or
+* the +ServletRequest+ if the context is initialized or destroyed due to a web service invocation, or
 * any +java.lang.Object+ for other types of request.
 
 
@@ -454,7 +454,7 @@ The _session context_ is provided by a built-in context object for the built-in 
 
 The session context is shared between all servlet requests that occur in the same HTTP session. The session context is destroyed when the +HTTPSession+ times out, after all ++HttpSessionListener++ s have been called, and at the very end of any request in which +invalidate()+ was called, after all filters and ++ServletRequestListener++ s have been called.
 
-An event with the +HttpSessionEvent+ as payload and with qualifier +@Initialized(SessionScoped.class)+ is fired when the session context is initialized and an event with qualifier +@Destroyed(SessionScoped.class)+ when the session context is destroyed.
+An event with the +HttpSession+ as payload and with qualifier +@Initialized(SessionScoped.class)+ is fired when the session context is initialized and an event with qualifier +@Destroyed(SessionScoped.class)+ when the session context is destroyed.
 
 [[application_context]]
 
@@ -473,7 +473,7 @@ The application context is shared between all servlet requests, web service invo
 
 An event with qualifier +@Initialized(ApplicationScoped.class)+ is fired when the application context is initialized and an event with qualifier +@Destroyed(ApplicationScoped.class)+ is fired when the application is destroyed. The event payload is:
 
-* the +ServletContextEvent+ if the application is a web application deployed to a Servlet container, or
+* the +ServletContext+ if the application is a web application deployed to a Servlet container, or
 * any +java.lang.Object+ for other types of application.
 
 
@@ -486,7 +486,7 @@ The _conversation context_ is provided by a built-in context object for the buil
 An event with qualifier +@Initialized(ConversationScoped.class)+ is fired when the conversation context is initialized and an event with qualifier +@Destroyed(ConversationScoped.class)+ is fired when the conversation is destroyed. The event payload is:
 
 * the conversation id if the conversation context is destroyed and is not associated with a current Servlet request, or
-* the +ServletRequestEvent+ if the application is a web application deployed to a Servlet container, or
+* the +ServletRequest+ if the application is a web application deployed to a Servlet container, or
 * any +java.lang.Object+ for other types of application.
 
 
