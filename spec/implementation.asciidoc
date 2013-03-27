@@ -41,10 +41,9 @@ A top-level Java class is a managed bean if it is defined to be a managed bean b
 * the class has a constructor with no parameters, or
 * the class declares a constructor annotated +@Inject+.
 
-
-
-
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
+
+If packages annotated +@Vetoed+ are split across jars, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
 
 [[managed_bean_types]]
 
@@ -139,6 +138,8 @@ When a contextual instance of a session bean is obtained via the dependency inje
 If the bean class of a session bean is annotated +@Interceptor+ or +@Decorator+, the container automatically detects the problem and treats it as a definition error.
 
 If the session bean class is a generic type, it must have scope +@Dependent+. If a session bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+
+If packages annotated +@Vetoed+ are split across jars, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
 
 [[session_bean_ejb_remove_method]]
 
@@ -875,20 +876,6 @@ Finally, the following are equivalent:
 [source, java]
 ----
 @Inject @Default Order order;
-----
-
-[[veto]]
-
-=== Vetoing types
-
-Any type or package may be prevented from being considered by CDI by adding the +@Vetoed+ annotation on the type or package. If packages are split across jars, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
-
-[source, java]
-----
-@Vetoed
-    public class Order {
-    ...
- }
 ----
 
 [[named_at_injection_point]]
