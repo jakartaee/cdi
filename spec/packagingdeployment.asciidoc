@@ -156,10 +156,7 @@ First the container must discover types. The container discovers:
 
 that is not excluded from discovery.
 
-Then, container must create an +AnnotatedType+ representing the type and fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>, for:
-
-* every type discovered
-* each Java class, interface or enum that must be delivered to a +ProcessAnnotatedType+ observer, where the event parameter is annotated with +@WithAnnotations+.
+Then, container must create an +AnnotatedType+ representing the type and fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>, for every type discovered.
 
 If an extension calls +BeforeBeanDiscovery.addAnnotatedType()+ or +AfterTypeDiscovery.addAnnotatedType()+, the type passed must be added to the set of discovered types.
 
