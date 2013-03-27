@@ -476,6 +476,8 @@ The container must provide a bean with scope +@Dependent+, bean type +InjectionP
 
 If a bean that declares any scope other than +@Dependent+ has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
+If a disposer method has an injection point of type +InjectionPoint+ and qualifier +Default+, the container automatically detects the problema nd treats it as a definition error.
+
 If a Java EE component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
 [[bean_metadata]]
@@ -513,7 +515,7 @@ The injection of bean metadata is restricted. If:
 * the injection point is a field, an initializer method parameter or a bean constructor of an interceptor, with qualifier +@Intercepted+, then the type parameter of the injected +Bean+ must be an unbounded wildcard, or
 * the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier +@Decorated+, then the type parameter of the injected +Bean+ must be the same as the delegate type, or
 * the injection point is a producer method parameter then the type parameter of the injected +Bean+ must be the same as the producer method return type, or
-* the injection point is a disposer method parameter then no +Bean+ instance can be injected, as a disposer method may resolve to more than one producer method.
+* the injection point is a parameter of a disposer method then the container automatically detects the problem and treats it as a definition error.
 
 Otherwise, the container automatically detects the problem and treats it as a definition error.
 
