@@ -21,16 +21,20 @@ Bean classes of enabled beans must be deployed in _bean archives_.
 
 A bean archive has a _bean discovery mode_ of +all+, +annotated+ or +none+. A bean archive which contains a +beans.xml+ file with no version has a default bean discovery mode of +all+. A bean archive which contains a +beans.xml+ file with version 1.1 (or later) must specify the +bean-discovey-mode+ attribute. The default value for the attribute is +annotated+.
 
+An archive which:
+
+* contains a +beans.xml+ file with the +bean-discovery-mode+ of +none+, or,
+* contains an extension and no +beans.xml+ file
+
+is not a bean archive.
+
 An _explicit bean archive_ is an archive which contains a +beans.xml+ file:
 
 * with a version number of +1.1+ (or later), with the +bean-discovery-mode+ of +all+, or,
 * with no version number, or,
 * that is an empty file.
 
-An _implicit bean archive_ is any other archive:
-
-* which contains one or more beans with a bean defining annotation, or one or more session beans, and,
-* does not contain a +beans.xml+ with the +bean-discovery-mode+ of +none+.
+An _implicit bean archive_ is any other archive which contains one or more beans with a bean defining annotation, or one or more session beans.
 
 When determining which archives are bean archives, the container must consider:
 
