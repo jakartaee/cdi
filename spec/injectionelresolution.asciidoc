@@ -25,7 +25,7 @@ A bean packaged in a certain module is available for injection, lookup and EL re
 
 Note that, in some Java EE implementations, a bean class might be accessible to some other class even when this is not required by the Java EE platform specification. For the purposes of this specification, a class is not considered accessible to another class unless accessibility is explicitly required by the Java EE platform specification.
 
-An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ in that bean archive. An alternative is never available for injection, lookup or EL resolution in a module that is not a bean archive.
+An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
 
 [[declaring_selected_alternatives]]
 
@@ -37,7 +37,7 @@ This specification defines two methods of selecting alternatives. From Contexts 
 
 ===== Declaring selected alternatives for an application 
 
-An alternative may be given a priority for the application by placing the +@Priority+ annotation on either the bean class of the alternative.
+An alternative may be given a priority for the application by placing the +@Priority+ annotation on the bean class of a managed bean, session bean, producer method or producer field annotated with the +@Alternative+ annotation.
 
 [[declaring_selected_alternatives_bean_archive]]
 
@@ -101,7 +101,7 @@ A bean is _available for injection_ in a certain module if:
 
 * the bean is not an interceptor or decorator,
 * the bean is enabled,
-* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive, and
+* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive, or the bean is a selected alternative of the application,  and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
 
@@ -141,7 +141,10 @@ An _unsatisfied dependency_ exists at an injection point when no bean is eligibl
 
 Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
 
-When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
+When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If:
+
+* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
+* all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with priorities, with other priority values. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 
 The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
@@ -290,7 +293,10 @@ For a custom implementation of the +Bean+ interface defined in <<bean>>, the con
 
 ==== Ambiguous EL names
 
-An _ambiguous EL name_ exists in an EL expression when an EL name resolves to multiple beans. When an ambiguous EL name exists, the container attempts to resolve the ambiguity. The container eliminates all beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If there is exactly one bean remaining, the container will select this bean, and the ambiguous EL name is called _resolvable_. If all the beans left are alternatives with a priority, then the container will select the alternative with the highest priority, and the ambiguous dependency is called _resolvable_.
+An _ambiguous EL name_ exists in an EL expression when an EL name resolves to multiple beans. When an ambiguous EL name exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive, except for producer methods and fields of beans that are alternatives. If:
+
+* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
+* all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with priorities, with other priority values. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 
 All unresolvable ambiguous EL names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain war, and either:
 
