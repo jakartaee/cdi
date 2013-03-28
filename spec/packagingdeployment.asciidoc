@@ -165,8 +165,7 @@ Then, for every type in the set of discovered types, the container must:
 * if the class is a managed bean, session bean, or other Java EE component class supporting injection, create an +InjectionTarget+ for the class, as defined in <<injectiontarget>>, and fire an event of type +ProcessInjectionTarget+, as defined in <<pit>>, and then
 * if the class is an enabled bean, interceptor or decorator, create a +Bean+ object that implements the rules defined in <<managed_bean_lifecycle>>, <<stateful_lifecycle>> or <<stateless_lifecycle>>, and fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
 
-
-For each enabled bean, the container must search the class for producer methods and fields, including resources, and for each producer method or field:
+The container determines which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>. For each enabled bean, the container must search the class for producer methods and fields, including resources, and for each producer method or field:
 
 * create a +Producer+, as defined in <<injectiontarget>>, and fire an event of type +ProcessProducer+, as defined in <<pp>>, and then
 * if the producer method or field is enabled, create a +Bean+ object that implements the rules defined in <<producer_method_lifecycle>>, <<producer_field_lifecycle>> or <<resource_lifecycle>>, and fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
@@ -175,7 +174,7 @@ For each enabled bean, the container must search the class for observer methods,
 
 * create an +ObserverMethod+ object, as defined in <<observer_method>> and fire an event of type +ProcessObserverMethod+, as defined in <<pom>>.
 
-The container determines which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and registers the +Bean+ and +ObserverMethod+ objects:
+Then, the container registers the +Bean+ and +ObserverMethod+ objects:
 
 * For each enabled bean that is not an interceptor or decorator, the container registers an instance of the +Bean+ interface defined in <<bean>>.
 * For each enabled interceptor, the container registers an instance of the +Interceptor+ interface defined in <<interceptor>>.
