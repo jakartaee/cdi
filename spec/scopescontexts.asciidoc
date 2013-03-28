@@ -339,6 +339,20 @@ public interface PassivationCapable {
 
 The +getId()+ method must return a value that uniquely identifies the instance of +Bean+ or +Contextual+. It is recommended that the string contain the package name of the class that implements +Bean+ or +Contextual+.
 
+[[passivation_capable_injection_points]]
+
+==== Passivation capable injection points
+
+We call an injection point of a bean _passivation capable_ if the injection point is:
+
+* a transient field, or
+* a non-transient field which is annotated with +@TransientReference+, or
+* a non-transient field which resolves to a bean that is a passivation capable bean, or
+* a bean constructor parameter which is annotated with +@TransientReference+, or
+* a bean constructor parameter which resolves to a bean that is a passivation capable bean, or
+* a method parameter which is annotated with +@TransientReference+, or
+* a method parameter which resolves to to a bean that is a passivation capable bean,
+
 [[passivation_capable_dependency]]
 
 ==== Passivation capable dependencies
@@ -379,17 +393,15 @@ For every bean which declares a passivating scope, the container must validate t
 If a managed bean which declares a passivating scope, a stateful session bean which declares a passivating scope, or a built-in bean:
 
 * is not passivation capable,
-* has a non-transient injected field, bean constructor parameter or initializer method parameter which is not annotated with +@TransientReference+ and that resolves to a dependent scoped bean that is not a passivation capable dependency, or
-* has a non-transient injected field, bean constructor parameter or initializer method parameter that resolves to a bean that is not a dependent scoped bean and that is not a passivation capable dependency, or
-* has an interceptor or decorator with a non-transient injected field that does not resolve to a passivation capable dependency,
+* has an injection point that is not passivation capable,
+* has an interceptor or decorator with an injection point that is not passivation capable
 
 then the container automatically detects the problem and treats it as a deployment problem.
 
 If a producer method declares a passivating scope and:
 
 * has a return type that is declared final and does not implement or extend +Serializable+, or,
-* has a parameter which is not annotated with +@TransientReference+ and that resolves to a dependent scoped bean that is not a passivation capable dependency, or
-* has a parameter that resolves to a bean that is not a dependent scoped bean and that is not a passivation capable dependency
+* has an injection point that is not passivation capable
 
 then the container automatically detects the problem and treats it as a deployment problem.
 
