@@ -369,7 +369,7 @@ The container must guarantee that:
 * the built-in beans of type +Instance+, +Event+, +InjectionPoint+ and +BeanManager+ are passivation capable dependencies.
 
 
-A custom implementation of +Bean+ is a passivation capable dependency if it implements +PassivationCapable+ or if +getScope()+ returns a normal scope type.
+A custom implementation of +Bean+ is a passivation capable dependency if it implements +PassivationCapable+.
 
 [[passivating_scopes]]
 
