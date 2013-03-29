@@ -52,7 +52,7 @@ An instance of +Bean+ must exist for every enabled bean.
 
 A portable extension may add support for new kinds of beans beyond those defined by the this specification (managed beans, session beans, producer methods, producer fields and resources) by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<abd>>.
 
-Custom implmentations of +Bean+ are encouraged to implement +PassivationCapable+ and may be required to in later revisions of this specification.
+Custom implementations of +Bean+ are encouraged to implement +PassivationCapable+ and may be required to in later revisions of this specification.
 
 [[decorator]]
 
