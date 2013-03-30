@@ -972,7 +972,7 @@ interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
 * +getSource()+ returns the +Extension+ instance that added the annotated type.
 
 
-Any observer of this event is permitted to wrap and/or replace the +AnnotatedType+. The container must use the final value of this property, after all observers have been called, as the only source of types and annotations for the the program elements.
+Any observer of this event is permitted to wrap and/or replace the +AnnotatedType+. The container must use the final value of this property, after all observers have been called, as the only source of types and annotations for the program elements.
 
 For example, the following observer decorates the +AnnotatedType+ for every class that is discovered by the container.
 

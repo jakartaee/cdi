@@ -350,7 +350,7 @@ We call an injection point of a bean _passivation capable_ if the injection poin
 * a bean constructor parameter which is annotated with +@TransientReference+, or
 * a bean constructor parameter which resolves to a bean that is a passivation capable dependency, or
 * a method parameter which is annotated with +@TransientReference+, or
-* a method parameter which resolves to to a bean that is a passivation capable dependency.
+* a method parameter which resolves to a bean that is a passivation capable dependency.
 
 [[passivation_capable_dependency]]
 
