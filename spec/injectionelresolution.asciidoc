@@ -144,10 +144,10 @@ An _unsatisfied dependency_ exists at an injection point when no bean is eligibl
 
 Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
 
-When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives. If:
+When an ambiguous dependency exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives. If:
 
-* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
-* all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
+* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
+* all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for alternatives with the highest priority and producer methods and fields of alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
 
 The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
