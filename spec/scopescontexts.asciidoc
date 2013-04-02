@@ -395,6 +395,7 @@ If a managed bean which declares a passivating scope, a stateful session bean wh
 
 * is not passivation capable,
 * has an injection point that is not passivation capable,
+* has an interceptor or decorator that is not passivation capable
 * has an interceptor or decorator with an injection point that is not passivation capable
 
 then the container automatically detects the problem and treats it as a deployment problem.
