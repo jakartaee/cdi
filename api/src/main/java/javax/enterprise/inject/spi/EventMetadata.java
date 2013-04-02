@@ -21,24 +21,35 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+import javax.enterprise.event.Observes;
+
 /**
- * Provides meta-information about an observed event payload, and may represent metadata for events fired with either of
- * {@link javax.enterprise.event.Event} or {@link BeanManager#fireEvent(Object, Annotation...)}.
  * <p>
- * Instances of this class can be retrieved as a parameter of an {@literal @}{@link javax.enterprise.event.Observes}
- * method.
+ * Provides access to metadata about an observed event payload. The metadata may be for events fired with either of
+ * {@link javax.enterprise.event.Event} or {@link BeanManager#fireEvent(Object, Annotation...)}.
+ * </p>
+ * <p>
+ * {@link EventMetadata} may only be injected into an observer method. For example:
+ * </p>
+ * 
+ * <pre>
+ * public void afterLogin(&#064;Observes LoggedInEvent event, EventMetadata eventMetadata) { ... }
+ * </pre>
+ * 
+ * @see Observes
  * 
  * @author Lincoln Baxter, III
+ * @author Pete Muir
  */
 public interface EventMetadata
 {
    /**
-    * Returns the {@link Set} of qualifiers with which the corresponding event payload was fired.
+    * Get the qualifiers for which event payload was fired.
     */
    public Set<Annotation> getQualifiers();
 
    /**
-    * Returns the {@link InjectionPoint} from which the event payload was fired, or <code>null</code> if it was fired
+    * Get the {@link InjectionPoint} from which the event fired, or <code>null</code> if it was fired
     * from {@link BeanManager#fireEvent(Object, Annotation...)};
     */
    public InjectionPoint getInjectionPoint();

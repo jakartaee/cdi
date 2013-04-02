@@ -320,7 +320,7 @@ public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger
 
 ==== The +EventMetadata+ interface
 
-The interface +javax.enterprise.inject.spi.EventMetadata+ contains everything the container knows an observed event. 
+The interface +javax.enterprise.inject.spi.EventMetadata+ provides access to metadata about an observed event. 
 
 [source, java]
 ----
@@ -332,11 +332,13 @@ public interface EventMetadata
 }
 ----
 
-* +getQualifiers()+ returns the set of qualifiers that was fired with the corresponding event.
+* +getQualifiers()+ returns the set of qualifiers with which the event was fired.
 * +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
-* +getResolvedType()+ Returns the resolved event +Type+.
+* +getResolvedType()+ returns the resolved event +Type+.
 
-An instance of +EventMetadata+ must exist for every observed event payload, and the observer method that observes said payload, but only if the observer method specifies +EventMetadata+ be injected as a method parameter.
+The container must provide a bean with scope +@Dependent+, bean type +EventMetadata+ and qualifier +@Default+, allowing observer methods to obtain information about the events they observe.
+
+If an injection point which is not a parameter of an observer method with type +EventMetadata+ and qualifier +@Default+ exists, the container automatically detects the problem and treats it as a definition error.
 
 [[obtaining_event_metadata]]
 
