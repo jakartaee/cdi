@@ -37,7 +37,10 @@ This specification defines two methods of selecting alternatives. From Contexts 
 
 ===== Declaring selected alternatives for an application 
 
-An alternative may be given a priority for the application by placing the +@Priority+ annotation on the bean class of a managed bean, session bean, producer method or producer field annotated with the +@Alternative+ annotation.
+An alternative may be given a priority for the application:
+
+* by placing the +@Priority+ annotation on the bean class of a managed bean or session bean, or
+* by placing the +@Priority+ annotation on the bean class that declares the producer method, field or resource.
 
 [[declaring_selected_alternatives_bean_archive]]
 
