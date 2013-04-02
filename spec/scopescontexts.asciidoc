@@ -319,10 +319,10 @@ The temporary transfer of the state of an idle object held in memory to some for
 
 A bean is called _passivation capable_ if the container is able to temporarily transfer the state of any idle instance to secondary storage.
 
-* As defined by the EJB specification, all stateful session beans are passivation capable if:
+* As defined by the EJB specification, a stateful session beans is passivation capable if:
 ** interceptors and decorators of the bean are passivation capable, and,
 ** the stateful session bean does not have the +passivationCapable+ flag set to +false+.
-* As defined by the EJB specification, stateless and singleton session beans are not passivation capable.
+* As defined by the EJB specification, a stateless session bean or a singleton session bean is not passivation capable.
 * A managed bean is passivation capable if and only if the bean class is serializable and all interceptors and decorators of the bean are passivation capable.
 * A producer method is passivation capable if and only if it never returns a value which is not passivation capable at runtime.
 * A producer field is passivation capable if and only if it never refers to a value which is not passivation capable at runtime.
@@ -364,7 +364,7 @@ The container must guarantee that:
 * all passivation capable beans with scope +@Dependent+ are passivation capable dependencies,
 * all stateless session beans are passivation capable dependencies,
 * all singleton beans are passivation capable dependencies,
-* all stateful session beans which do not have the +passivationCapable+ flag set to +false+  are passivation capable dependencies,
+* all passivation capable stateful session beans are passivation capable dependencies,
 * all resources are passivation capable dependencies, and 
 * the built-in beans of type +Instance+, +Event+, +InjectionPoint+ and +BeanManager+ are passivation capable dependencies.
 
