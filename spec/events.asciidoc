@@ -324,11 +324,10 @@ The interface +javax.enterprise.inject.spi.EventMetadata+ provides access to met
 
 [source, java]
 ----
-public interface EventMetadata
-{
-   public Set<Annotation> getQualifiers();
-   public InjectionPoint getInjectionPoint();
-   public Type getResolvedType();
+public interface EventMetadata {
+    public Set<Annotation> getQualifiers();
+    public InjectionPoint getInjectionPoint();
+    public Type getResolvedType();
 }
 ----
 
