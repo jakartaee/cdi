@@ -1,13 +1,15 @@
 package javax.enterprise.context.spi;
 
+import javax.enterprise.context.ContextNotActiveException;
+
 /**
  * <p>
  * Provides an operation for obtaining and destroying contextual instances with a particular scope of any contextual type. Any
- *  instance of {@code Context} is called a context object.
+ * instance of {@code Context} is called a context object.
  * </p>
  * 
  * <p>
- * {@link AlterableContext} was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions 
+ * {@link AlterableContext} was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions
  * should implement {@link AlterableContext} instead of {@link Context}.
  * </p>
  * 
@@ -30,7 +32,7 @@ package javax.enterprise.context.spi;
  * @since 1.1
  */
 public interface AlterableContext extends Context {
-   
+
     /**
      * <p>
      * Destroy the existing contextual instance. If there is no existing instance, no action is taken.

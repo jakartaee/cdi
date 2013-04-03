@@ -33,13 +33,18 @@ import javax.inject.Qualifier;
  * </p>
  * 
  * <pre>
- * &#064;Decorator 
- * class TimestampLogger implements Logger { 
- *    &#064;Inject &#064;Delegate &#064;Any Logger logger;
- *    
- *    &#064;Inject &#064;Decorated Bean&lt;Logger&gt; bean;
+ * &#064;Decorator
+ * class TimestampLogger implements Logger {
+ *     &#064;Inject
+ *     &#064;Delegate
+ *     &#064;Any
+ *     Logger logger;
  * 
- *    void log(String message) {
+ *     &#064;Inject
+ *     &#064;Decorated
+ *     Bean&lt;Logger&gt; bean;
+ * 
+ *     void log(String message) {
  *       ...
  *    }
  * }

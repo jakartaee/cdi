@@ -37,7 +37,7 @@ public enum InterceptionType {
      * Intercepts a timeout
      */
     AROUND_TIMEOUT,
-    
+
     /**
      * Intercepts a constructor invocation
      */

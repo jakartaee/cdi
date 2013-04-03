@@ -46,7 +46,7 @@ public interface BeforeBeanDiscovery {
      * @param qualifier The annotation to treat as a qualifier
      */
     public void addQualifier(Class<? extends Annotation> qualifier);
-    
+
     /**
      * <p>
      * Declares an annotation type as a {@linkplain javax.inject.Qualifier} qualifier type.
@@ -67,8 +67,8 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This is only required if you wish to make an annotation a scope type without adding the {@link NormalScope} 
-     * or {@link Scope} annotations to it. You can also use this method to override an existing normal scope definition.
+     * This is only required if you wish to make an annotation a scope type without adding the {@link NormalScope} or
+     * {@link Scope} annotations to it. You can also use this method to override an existing normal scope definition.
      * </p>
      * 
      * @see AfterBeanDiscovery#addContext(javax.enterprise.context.spi.Context)
@@ -87,8 +87,8 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This is only required if you wish to make an annotation a stereotype without adding {@link Stereotype} to it.
-     * You can also use this method to override an existing stereotype definition. 
+     * This is only required if you wish to make an annotation a stereotype without adding {@link Stereotype} to it. You can
+     * also use this method to override an existing stereotype definition.
      * </p>
      * 
      * @param stereotype The annotation type to treat as a {@linkplain javax.enterprise.inject.Stereotype stereotype}
@@ -103,20 +103,22 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This is only required if you wish to make an annotation an interceptor binding type without adding {@link InterceptorBinding} to it.
+     * This is only required if you wish to make an annotation an interceptor binding type without adding
+     * {@link InterceptorBinding} to it.
      * </p>
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
      */
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
-    
+
     /**
      * <p>
      * Declares an annotation type as an {@linkplain Interceptor interceptor} binding type, and specifies its meta-annotations.
      * </p>
      * 
      * <p>
-     * This is only required if you wish to make an annotation an interceptor binding type without adding {@link InterceptorBinding} to it.
+     * This is only required if you wish to make an annotation an interceptor binding type without adding
+     * {@link InterceptorBinding} to it.
      * </p>
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
@@ -138,7 +140,7 @@ public interface BeforeBeanDiscovery {
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      */
     public void addAnnotatedType(AnnotatedType<?> type);
-    
+
     /**
      * <p>
      * Adds a given {@link javax.enterprise.inject.spi.AnnotatedType} to the set of types which will be scanned during bean
@@ -147,13 +149,13 @@ public interface BeforeBeanDiscovery {
      * 
      * <p>
      * This method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
-     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify 
-     * the type.
-     * </p> 
+     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
+     * type.
+     * </p>
      * 
      * <p>
-     * {@link AfterBeanDiscovery#getAnnotatedType(Class, String)} and {@link AfterBeanDiscovery#getAnnotatedTypes(Class)}
-     * allows annotated types to be obtained by identifier.
+     * {@link AfterBeanDiscovery#getAnnotatedType(Class, String)} and {@link AfterBeanDiscovery#getAnnotatedTypes(Class)} allows
+     * annotated types to be obtained by identifier.
      * </p>
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning

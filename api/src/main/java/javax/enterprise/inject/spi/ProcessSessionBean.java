@@ -24,32 +24,31 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * <p>
- * If any observer method of a {@code ProcessSessionBean} event throws an exception, the exception
- * is treated as a definition error by the container.
+ * If any observer method of a {@code ProcessSessionBean} event throws an exception, the exception is treated as a definition
+ * error by the container.
  * </p>
  * 
  * <p>
- * Note that the type parameter of the super-interface of {@link ProcessSessionBean} is
- * {@link Object} as {@link ProcessBean} allows you access to the {@link Bean}, which in turn allows
- * you to instantiate an instance, which, for interface-view EJBs will not be an instance of X.
+ * Note that the type parameter of the super-interface of {@link ProcessSessionBean} is {@link Object} as {@link ProcessBean}
+ * allows you access to the {@link Bean}, which in turn allows you to instantiate an instance, which, for interface-view EJBs
+ * will not be an instance of X.
  * </p>
  * 
  * @author David Allen
  * @param <X>
  */
 public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
-   /**
-    * Returns the EJB name of the session bean.
-    * 
-    * @return the name of the EJB
-    */
-   public String getEjbName();
+    /**
+     * Returns the EJB name of the session bean.
+     * 
+     * @return the name of the EJB
+     */
+    public String getEjbName();
 
-   /**
-    * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the kind of session
-    * bean.
-    * 
-    * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
-    */
-   public SessionBeanType getSessionBeanType();
+    /**
+     * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the kind of session bean.
+     * 
+     * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
+     */
+    public SessionBeanType getSessionBeanType();
 }

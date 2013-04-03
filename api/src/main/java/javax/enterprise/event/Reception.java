@@ -42,8 +42,8 @@ public enum Reception {
      * already exists.
      * </p>
      * <p>
-     * If there is no active context for the scope to which the bean declaring this observer method belongs, then the 
-     * observer method is not called.
+     * If there is no active context for the scope to which the bean declaring this observer method belongs, then the observer
+     * method is not called.
      * </p>
      */
     IF_EXISTS,

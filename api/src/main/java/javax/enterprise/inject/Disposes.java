@@ -26,23 +26,22 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Identifies the disposed parameter of a disposer method. May be applied to a parameter of a method
- * of a bean class.
+ * Identifies the disposed parameter of a disposer method. May be applied to a parameter of a method of a bean class.
  * </p>
  * 
  * <pre>
  * public class UserDatabaseEntityManager {
  * 
- *    &#064;Produces
- *    &#064;ConversationScoped
- *    &#064;UserDatabase
- *    public EntityManager create(EntityManagerFactory emf) {
- *       return emf.createEntityManager();
- *    }
+ *     &#064;Produces
+ *     &#064;ConversationScoped
+ *     &#064;UserDatabase
+ *     public EntityManager create(EntityManagerFactory emf) {
+ *         return emf.createEntityManager();
+ *     }
  * 
- *    public void close(@Disposes @UserDatabase EntityManager em) {
- *       em.close();
- *    }
+ *     public void close(@Disposes @UserDatabase EntityManager em) {
+ *         em.close();
+ *     }
  * 
  * }
  * </pre>
@@ -50,14 +49,14 @@ import java.lang.annotation.Target;
  * <pre>
  * public class Resources {
  * 
- *    &#064;PersistenceContext
- *    &#064;Produces
- *    &#064;UserDatabase
- *    private EntityManager em;
+ *     &#064;PersistenceContext
+ *     &#064;Produces
+ *     &#064;UserDatabase
+ *     private EntityManager em;
  * 
- *    public void close(@Disposes @UserDatabase EntityManager em) {
- *       em.close();
- *    }
+ *     public void close(@Disposes @UserDatabase EntityManager em) {
+ *         em.close();
+ *     }
  * 
  * }
  * </pre>
@@ -68,9 +67,9 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * A disposer method must be a non-abstract method of a managed bean class or session bean class. A
- * disposer method may be either static or non-static. If the bean is a session bean, the disposer
- * method must be a business method of the EJB or a static method of the bean class.
+ * A disposer method must be a non-abstract method of a managed bean class or session bean class. A disposer method may be
+ * either static or non-static. If the bean is a session bean, the disposer method must be a business method of the EJB or a
+ * static method of the bean class.
  * </p>
  * 
  * <p>
@@ -78,17 +77,16 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * Each disposer method must have exactly one disposed parameter, of the same type as the
- * corresponding producer method or producer field return type. When searching for disposer methods
- * for a producer method or producer field, the container considers the type and qualifiers of the
- * disposed parameter. If a disposed parameter resolves to a producer method or producer field
- * declared by the same bean class, the container must call this method when destroying any instance
- * returned by that producer method or producer field.
+ * Each disposer method must have exactly one disposed parameter, of the same type as the corresponding producer method or
+ * producer field return type. When searching for disposer methods for a producer method or producer field, the container
+ * considers the type and qualifiers of the disposed parameter. If a disposed parameter resolves to a producer method or
+ * producer field declared by the same bean class, the container must call this method when destroying any instance returned by
+ * that producer method or producer field.
  * </p>
  * 
  * <p>
- * In addition to the disposed parameter, a disposer method may declare additional parameters, which
- * may also specify qualifiers. These additional parameters are injection points.
+ * In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify
+ * qualifiers. These additional parameters are injection points.
  * </p>
  * 
  * <pre>
@@ -96,9 +94,8 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * <p>
- * A disposer method may resolve to multiple producer methods or producer fields declared by the
- * bean class, in which case the container must call it when destroying any instance returned by any
- * of these producer methods or producer fields.
+ * A disposer method may resolve to multiple producer methods or producer fields declared by the bean class, in which case the
+ * container must call it when destroying any instance returned by any of these producer methods or producer fields.
  * </p>
  * 
  * <p>

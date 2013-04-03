@@ -8,15 +8,12 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * Veto the processing of the class. Any beans or observer methods defined by this class will not be
- * installed.
+ * Veto the processing of the class. Any beans or observer methods defined by this class will not be installed.
  * </p>
  * 
  * <p>
- * When placed on package, all beans in the package are prevented from being 
- * installed. If packages are split across jars, non-portable behavior results.
- * An application can prevent packages being split across jars by sealing the
- * package.
+ * When placed on package, all beans in the package are prevented from being installed. If packages are split across jars,
+ * non-portable behavior results. An application can prevent packages being split across jars by sealing the package.
  * </p>
  * 
  * <p>
@@ -25,7 +22,8 @@ import java.lang.annotation.Target;
  * 
  * @author Stuart Douglas
  * @since 1.1
- * @see <a href="http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing">The Extension Mechanism Architecture</a>
+ * @see <a href="http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing">The Extension Mechanism
+ *      Architecture</a>
  * 
  */
 @Target({ ElementType.TYPE, ElementType.PACKAGE })

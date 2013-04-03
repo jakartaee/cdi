@@ -26,15 +26,15 @@ import java.lang.annotation.Target;
 
 /**
  * <p>
- * If a parameter annotated with <tt>&#064;TransientReference</tt> resolves to a dependent scoped bean, then
- *  the bean will be destroyed after the invocation completes.
+ * If a parameter annotated with <tt>&#064;TransientReference</tt> resolves to a dependent scoped bean, then the bean will be
+ * destroyed after the invocation completes.
  * </p>
  * 
  * <pre>
  * public class OrderManager {
  * 
  *     &#064;Inject 
- *     public OrderManager(&#064;TransientReference Order order) {
+ *     public OrderManager(@TransientReference Order order) {
  *        ...
  *    
  *     }

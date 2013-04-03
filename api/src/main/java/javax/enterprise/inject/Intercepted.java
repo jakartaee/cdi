@@ -40,7 +40,7 @@ import javax.inject.Qualifier;
  * 
  *    &#064;AroundInvoke 
  *    public Object manageTransaction(InvocationContext ctx) throws Exception { ... }
- *
+ * 
  * }
  * </pre>
  * 

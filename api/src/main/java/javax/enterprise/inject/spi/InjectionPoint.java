@@ -30,14 +30,14 @@ import javax.enterprise.inject.Instance;
  * Provides access to metadata about an injection point. May represent an {@linkplain javax.inject.Inject injected field} or a
  * parameter of a {@linkplain javax.inject.Inject bean constructor}, {@linkplain javax.inject.Inject initializer method},
  * {@linkplain javax.enterprise.inject.Produces producer method}, {@linkplain javax.enterprise.inject.Disposes disposer method},
- * {@linkplain javax.enterprise.event.Observes observer method}, an instance obtained dynamically using {@link Instance#get()} or
- * an event obtained dynamically using {@link Event#select()}.
+ * {@linkplain javax.enterprise.event.Observes observer method}, an instance obtained dynamically using {@link Instance#get()}
+ * or an event obtained dynamically using {@link Event#select()}.
  * </p>
  * 
  * <p>
- * If the injection point is a dynamically selected reference obtained then the metadata obtain reflects the injection point of 
- * the {@link Instance} or {@link Event}, with the required type and any additional required qualifers defined by 
- * {@linkplain Instance Instance.select()} or {@linkplain Event Event.fire()}. 
+ * If the injection point is a dynamically selected reference obtained then the metadata obtain reflects the injection point of
+ * the {@link Instance} or {@link Event}, with the required type and any additional required qualifers defined by
+ * {@linkplain Instance Instance.select()} or {@linkplain Event Event.fire()}.
  * </p>
  * 
  * <p>

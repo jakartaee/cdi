@@ -29,16 +29,16 @@ import java.util.Arrays;
  * <p>
  * Supports inline instantiation of annotation type instances.
  * </p>
- *
+ * 
  * <p>
  * An instance of an annotation type may be obtained by subclassing <tt>AnnotationLiteral</tt>.
  * </p>
- *
+ * 
  * <pre>
  * public abstract class PayByQualifier extends AnnotationLiteral&lt;PayBy&gt; implements PayBy {
  * }
  * </pre>
- *
+ * 
  * <pre>
  * PayBy paybyCheque = new PayByQualifier() {
  *     public PaymentMethod value() {
@@ -46,16 +46,16 @@ import java.util.Arrays;
  *     }
  * };
  * </pre>
- *
+ * 
  * @author Pete Muir
  * @author Gavin King
  * @author Marko Luksa
- *
+ * 
  * @param <T> the annotation type
- *
+ * 
  * @see javax.enterprise.inject.Instance#select(Annotation...)
  * @see javax.enterprise.event.Event#select(Annotation...)
- *
+ * 
  */
 public abstract class AnnotationLiteral<T extends Annotation> implements Annotation, Serializable {
 
@@ -270,8 +270,8 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private static Object getMemberValue(Method member, Annotation instance) {
         Object value = invoke(member, instance);
         if (value == null) {
-            throw new IllegalArgumentException("Annotation member value " + instance.getClass().getName() + "." + member.getName()
-                   + " must not be null");
+            throw new IllegalArgumentException("Annotation member value " + instance.getClass().getName() + "."
+                    + member.getName() + " must not be null");
         }
         return value;
     }

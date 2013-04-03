@@ -183,11 +183,12 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
      */
     public boolean isAmbiguous();
-    
+
     /**
      * <p>
      * On {@link #destroy(Object)} being called, the container destroys the instance if the active context object for the scope
-     * type of the bean supports destroying bean instances. All normal scoped built-in contexts support destroying bean instances.
+     * type of the bean supports destroying bean instances. All normal scoped built-in contexts support destroying bean
+     * instances.
      * </p>
      * 
      * <p>
@@ -198,8 +199,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * 
      * @since 1.1
      * @param instance the instance to destroy
-     * @throws UnsupportedOperationException if the active context object for the scope type of the bean does not support destroying
-     *         bean instances
+     * @throws UnsupportedOperationException if the active context object for the scope type of the bean does not support
+     *         destroying bean instances
      */
     public void destroy(T instance);
 

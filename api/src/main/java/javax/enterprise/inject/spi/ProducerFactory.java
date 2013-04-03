@@ -6,9 +6,8 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * <p>
- * The {@link ProducerFactory} obtained from {@link BeanManager#getProducerFactory()} is 
- * capable of providing container created producers. This factory can be wrapped to add behavior
- * to container created producers.  
+ * The {@link ProducerFactory} obtained from {@link BeanManager#getProducerFactory()} is capable of providing container created
+ * producers. This factory can be wrapped to add behavior to container created producers.
  * </p>
  * 
  * <p>
@@ -18,9 +17,9 @@ package javax.enterprise.inject.spi;
  * <pre>
  * BeanAttributes&lt;MyBean&gt; myBeanAttributes = beanManager.createBeanAttributes(myBeanAnnotatedFieldField);
  * beanManager.createBean(myBeanAttributes, MyBean.class, new ProducerFactory() {
- *
- *     public <T> Producer<T> createProducer(Bean<T> bean) {
- *         return new WrappingProducer<T>(beanManager.getProducerFactory(myBeanAnnotatedField).createProducer(bean));
+ * 
+ *     public &lt;T&gt; Producer&lt;T&gt; createProducer(Bean&lt;T&gt; bean) {
+ *         return new WrappingProducer&lt;T&gt;(beanManager.getProducerFactory(myBeanAnnotatedField).createProducer(bean));
  *     }
  * });
  * </pre>
@@ -37,5 +36,5 @@ public interface ProducerFactory<X> {
      * @return the producer
      */
     public <T> Producer<T> createProducer(Bean<T> bean);
-    
+
 }

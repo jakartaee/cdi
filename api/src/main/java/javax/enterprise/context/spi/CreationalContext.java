@@ -31,7 +31,7 @@ public interface CreationalContext<T> {
     /**
      * Registers an incompletely initialized contextual instance the with the container. A contextual instance is considered
      * incompletely initialized until it is returned by
-     * {@link javax.enterprise.context.spi.Contextual#create(CreationalContext)}.
+     * {@link javax.enterprise.context.spi.Contextual#create(CreationalContext)} .
      * 
      * @param incompleteInstance the incompletely initialized instance
      */

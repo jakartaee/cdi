@@ -77,10 +77,10 @@ public interface AfterBeanDiscovery {
      * @param context The custom context to add to the deployment
      */
     public void addContext(Context context);
-    
+
     /**
-     * Obtain the {@link AnnotatedType} that may be used to read the annotations of the given class or interface 
-     * as defined during container initialization.
+     * Obtain the {@link AnnotatedType} that may be used to read the annotations of the given class or interface as defined
+     * during container initialization.
      * 
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
@@ -89,10 +89,10 @@ public interface AfterBeanDiscovery {
      * @since 1.1
      */
     public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
-    
+
     /**
-     * Obtain the {@link AnnotatedType}s that may be used to read the annotations of the given class or interface 
-     * as defined during container initialization.
+     * Obtain the {@link AnnotatedType}s that may be used to read the annotations of the given class or interface as defined
+     * during container initialization.
      * 
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object

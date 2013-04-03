@@ -1,15 +1,13 @@
 package javax.enterprise.inject.spi;
 
-
 /**
  * <p>
  * An {@link InjectionTargetFactory} can create an {@link InjectionTarget} for a given bean.
  * </p>
  * 
  * <p>
- * The {@link InjectionTargetFactory} obtained from {@link BeanManager#getInjectionTargetFactory()} is 
- * capable of providing container created injection targets. This factory can be wrapped to add behavior
- * to container created injection targets.  
+ * The {@link InjectionTargetFactory} obtained from {@link BeanManager#getInjectionTargetFactory()} is capable of providing
+ * container created injection targets. This factory can be wrapped to add behavior to container created injection targets.
  * </p>
  * 
  * <p>
@@ -19,16 +17,17 @@ package javax.enterprise.inject.spi;
  * <pre>
  * BeanAttributes&lt;MyBean&gt; myBeanAttributes = beanManager.createBeanAttributes(myBeanAnnotatedType);
  * beanManager.createBean(myBeanAttributes, MyBean.class, new InjectionTargetFactory() {
- *
- *     public <T> InjectionTarget<T> createInjectionTarget(Bean<T> bean) {
- *         return new WrappingInjectionTarget<T>(beanManager.getInjectionTargetFactory(myBeanAnnotatedType).createInjectionTarget(bean));
+ * 
+ *     public &lt;T&gt; InjectionTarget&lt;T&gt; createInjectionTarget(Bean&lt;T&gt; bean) {
+ *         return new WrappingInjectionTarget&lt;T&gt;(beanManager.getInjectionTargetFactory(myBeanAnnotatedType).createInjectionTarget(
+ *                 bean));
  *     }
  * });
  * </pre>
  * 
  * @author Pete Muir
  * @since 1.1
- *
+ * 
  */
 public interface InjectionTargetFactory<T> {
 
@@ -39,5 +38,5 @@ public interface InjectionTargetFactory<T> {
      * @return the injection target
      */
     public InjectionTarget<T> createInjectionTarget(Bean<T> bean);
-    
+
 }

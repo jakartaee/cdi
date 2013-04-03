@@ -93,8 +93,8 @@ public interface Event<T> {
      * 
      * @param event the event object
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
-     * @throws ObserverException if a notified observer throws a checked exception, it will be wrapped and 
-     *         rethrown as an (unchecked) {@link ObserverException}
+     * @throws ObserverException if a notified observer throws a checked exception, it will be wrapped and rethrown as an
+     *         (unchecked) {@link ObserverException}
      */
     public void fire(T event);
 
