@@ -327,13 +327,13 @@ The interface +javax.enterprise.inject.spi.EventMetadata+ provides access to met
 public interface EventMetadata {
     public Set<Annotation> getQualifiers();
     public InjectionPoint getInjectionPoint();
-    public Type getResolvedType();
+    public Type getdType();
 }
 ----
 
 * +getQualifiers()+ returns the set of qualifiers with which the event was fired.
 * +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
-* +getResolvedType()+ returns the resolved event +Type+.
+* +getType()+ returns the type representing runtime class of the event object with type variables resolved.
 
 The container must provide a bean with scope +@Dependent+, bean type +EventMetadata+ and qualifier +@Default+, allowing observer methods to obtain information about the events they observe.
 

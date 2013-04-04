@@ -54,7 +54,7 @@ public interface EventMetadata {
     public InjectionPoint getInjectionPoint();
 
     /**
-     * Returns the resolved event {@link Type}.
+     * Get the type representing runtime class of the event object with type variables resolved.
      */
     public Type getType();
 }
