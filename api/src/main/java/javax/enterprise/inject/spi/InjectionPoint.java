@@ -22,22 +22,20 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Type;
 import java.util.Set;
 
-import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
 
 /**
  * <p>
  * Provides access to metadata about an injection point. May represent an {@linkplain javax.inject.Inject injected field} or a
  * parameter of a {@linkplain javax.inject.Inject bean constructor}, {@linkplain javax.inject.Inject initializer method},
- * {@linkplain javax.enterprise.inject.Produces producer method}, {@linkplain javax.enterprise.inject.Disposes disposer method},
- * {@linkplain javax.enterprise.event.Observes observer method}, an instance obtained dynamically using {@link Instance#get()}
- * or an event obtained dynamically using {@link Event#select()}.
+ * {@linkplain javax.enterprise.inject.Produces producer method}, {@linkplain javax.enterprise.inject.Disposes disposer method}
+ * or {@linkplain javax.enterprise.event.Observes observer method}.
  * </p>
  * 
  * <p>
  * If the injection point is a dynamically selected reference obtained then the metadata obtain reflects the injection point of
- * the {@link Instance} or {@link Event}, with the required type and any additional required qualifers defined by
- * {@linkplain Instance Instance.select()} or {@linkplain Event Event.fire()}.
+ * the {@link Instance}, with the required type and any additional required qualifers defined by {@linkplain Instance
+ * Instance.select()}.
  * </p>
  * 
  * <p>
