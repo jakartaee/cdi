@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 
 /**
@@ -40,6 +41,7 @@ import javax.enterprise.event.Observes;
  * 
  * @author Lincoln Baxter, III
  * @author Pete Muir
+ * @since 1.1
  */
 public interface EventMetadata {
     /**
@@ -48,8 +50,8 @@ public interface EventMetadata {
     public Set<Annotation> getQualifiers();
 
     /**
-     * Get the {@link InjectionPoint} from which the event fired, or <code>null</code> if it was fired from
-     * {@link BeanManager#fireEvent(Object, Annotation...)};
+     * Get the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event, or
+     * <code>null</code> if it was fired from {@link BeanManager#fireEvent(Object, Annotation...)};
      */
     public InjectionPoint getInjectionPoint();
 
