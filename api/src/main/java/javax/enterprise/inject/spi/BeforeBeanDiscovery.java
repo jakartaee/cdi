@@ -57,7 +57,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * @param qualifier The annotation to treat as a qualifier
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public void addQualifier(AnnotatedType<? extends Annotation> qualifier);
 
@@ -123,7 +123,7 @@ public interface BeforeBeanDiscovery {
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
      * @param bindingTypeDef An optional list of annotations defining the {@linkplain Interceptor interceptor}
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
 
@@ -134,7 +134,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This method is deprecated from CDI 1.1 and {@link #addAnnotatedType(AnnotatedType, String)} should be used instead.
+     * This method is deprecated from CDI 1.2-SNAPSHOT and {@link #addAnnotatedType(AnnotatedType, String)} should be used instead.
      * </p>
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
@@ -160,7 +160,7 @@ public interface BeforeBeanDiscovery {
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      * @param id The id of the annotated type
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public void addAnnotatedType(AnnotatedType<?> type, String id);
 }

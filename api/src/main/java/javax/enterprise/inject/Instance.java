@@ -197,7 +197,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * </p>
      * 
      * 
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      * @param instance the instance to destroy
      * @throws UnsupportedOperationException if the active context object for the scope type of the bean does not support
      *         destroying bean instances

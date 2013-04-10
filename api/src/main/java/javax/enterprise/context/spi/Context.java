@@ -28,7 +28,7 @@ import javax.enterprise.context.ContextNotActiveException;
  * </p>
  * 
  * <p>
- * {@link AlterableContext} was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions
+ * {@link AlterableContext} was introduced in CDI 1.2-SNAPSHOT to allow bean instances to be destroyed by the application. Extensions
  * should implement {@link AlterableContext} instead of {@link Context}.
  * </p>
  * 

@@ -32,7 +32,7 @@ import javax.inject.Qualifier;
 
 /**
  * <p>
- * The {@link New} qualifier was deprecated in CDI 1.1. CDI applications are encouraged to inject {@link Dependent} scoped beans
+ * The {@link New} qualifier was deprecated in CDI 1.2-SNAPSHOT. CDI applications are encouraged to inject {@link Dependent} scoped beans
  * instead.
  * </p>
  * 

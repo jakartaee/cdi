@@ -47,7 +47,7 @@ public interface ProcessProducerField<T, X> extends ProcessBean<X> {
      * the producer field return type found on a disposal method.
      * 
      * @return the disposal method's {@link javax.enterprise.inject.spi.AnnotatedParameter}
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }

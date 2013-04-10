@@ -41,7 +41,7 @@ import javax.enterprise.event.Observes;
  * 
  * @author Lincoln Baxter, III
  * @author Pete Muir
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  */
 public interface EventMetadata {
     /**

@@ -8,7 +8,7 @@ import java.util.Set;
  * The BeanAttributes interface exposes the basic attributes of a bean.
  * 
  * @author Pete Muir
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  * @param <T> the class of the bean instance
  */
 public interface BeanAttributes<T> {

@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * @author Pete Muir
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  */
 @Retention(RUNTIME)
 @Target(PARAMETER)

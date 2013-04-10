@@ -86,7 +86,7 @@ public interface AfterBeanDiscovery {
      * @param type the {@link java.lang.Class} object
      * @param id the type identifier. If null, the fully qualifier class name of type is used
      * @return the {@link AnnotatedType}
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
 
@@ -97,7 +97,7 @@ public interface AfterBeanDiscovery {
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
      * @return the {@link AnnotatedType}s
-     * @since 1.1
+     * @since 1.2-SNAPSHOT
      */
     public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
 

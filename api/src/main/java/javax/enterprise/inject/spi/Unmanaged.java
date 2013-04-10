@@ -24,7 +24,7 @@ import javax.enterprise.context.spi.CreationalContext;
  * </p>
  * 
  * @author Pete Muir
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  */
 public class Unmanaged<T> {
 

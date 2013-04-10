@@ -19,7 +19,7 @@ import javax.enterprise.inject.Instance;
  * Provides access to the current container.
  * 
  * @author Pete Muir
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  */
 public abstract class CDI<T> implements Instance<T> {
 

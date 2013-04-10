@@ -20,7 +20,7 @@ import javax.inject.Qualifier;
  * 
  * @author Pete Muir
  * @see Initialized
- * @since 1.1
+ * @since 1.2-SNAPSHOT
  * 
  */
 @Qualifier
