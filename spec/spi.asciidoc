@@ -166,8 +166,8 @@ The subinterface +javax.enterprise.inject.spi.InjectionTarget+ provides operatio
 
 [source, java]
 ----
-public interface InjectionTarget<T> {
-        extends Producer<T>
+public interface InjectionTarget<T>
+        extends Producer<T> {
     public void inject(T instance, CreationalContext<T> ctx);
     public void postConstruct(T instance);
     public void preDestroy(T instance);
@@ -474,7 +474,7 @@ public boolean areQualifiersEquivalent(Annotation qualifier1, Annotation qualifi
 public boolean areInterceptorBindingsEquivalent(Annotation interceptorBinding1, Annotation interceptorBinding2);
 ----
 
-A portable extension may determine the hash code of a qualifier or and interceptor binding, ignoring any members annotated with +@Nonbinding+.
+A portable extension may determine the hash code of a qualifier or interceptor binding, ignoring any members annotated with +@Nonbinding+.
 
 [source, java]
 ----
@@ -486,7 +486,7 @@ public int getInterceptorBindingHashCode(Annotation interceptorBinding);
 
 ==== Obtaining the active +Context+ for a scope
 
-The method +BeanManager.getContext()+ retrieves an active context object associated with the a given scope, as defined in <<active_context>>.
+The method +BeanManager.getContext()+ retrieves an active context object associated with the given scope, as defined in <<active_context>>.
 
 [source, java]
 ----
@@ -588,7 +588,7 @@ public InjectionPoint createInjectionPoint(AnnotatedParameter<?> parameter);
 
 ==== Obtaining a +BeanAttributes+
 
-The method +BeanManager.createBeanAttributes()+ returns a container provided implementation of +BeanAttributes+ by reading the annotations of a given +AnnotatedType+ or +AnnotatedMember+, according to the rules define in <<concepts>>, or throws an +IllegalArgumentException+ if there is a definition error associated with the declared bean attributes.
+The method +BeanManager.createBeanAttributes()+ returns a container provided implementation of +BeanAttributes+ by reading the annotations of a given +AnnotatedType+ or +AnnotatedMember+, according to the rules defined in <<concepts>>, or throws an +IllegalArgumentException+ if there is a definition error associated with the declared bean attributes.
 
 [source, java]
 ----
@@ -722,7 +722,7 @@ public interface AnnotatedMember<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedCallable+ exposes the parameters of an invokable object.
 
-Contexts and Dependency Injection for Java EE 1.1 deprecated the method +AnnotatedMember.isStatic+. The container should instead call +AnnotatedMember.getJavaMember().getModifiers()+ to determine if the member is static.
+Contexts and Dependency Injection for Java EE 1.1 deprecated the method +AnnotatedMember.isStatic()+. The container should instead call +AnnotatedMember.getJavaMember().getModifiers()+ to determine if the member is static.
 
 [source, java]
 ----
@@ -830,14 +830,14 @@ public interface AfterTypeDiscovery {
 }
 ----
 
-* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternative enabled for a bean archive are not included in the list.
+* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternatives enabled for a bean archive are not included in the list.
 * +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
 * +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
 * +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an identifier.
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
 
-Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives,list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +AfterTypeDiscovery+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections is defined by the +@Priority+ annotation.
+Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of interceptors or list of decorators. The container must use the final values of these collections, after all observers of +AfterTypeDiscovery+ have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application. The initial values of these collections are defined by the +@Priority+ annotation.
 
 [source, java]
 ----

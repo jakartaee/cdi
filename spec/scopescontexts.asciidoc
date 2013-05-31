@@ -85,7 +85,7 @@ public interface Context {
 
 [source, java]
 ----
-public interface AlterableContext {
+public interface AlterableContext extends Context {
     public void destroy(Contextual<?> contextual);
 }
 ----
