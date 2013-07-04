@@ -30,20 +30,18 @@ package javax.enterprise.inject.spi;
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen
- * @param <T> The type of the event being observed
- * @param <X> The bean type containing the observer method
+ * @param <T> The type the bean class of the bean that declares the observer method
+ * @param <X> The observed event type of the observer method
  * 
  */
-// These parameters are the wrong way according to the spec, however Oracle/JCP
-// compatibility rules require us to
-// keep the wrong ordering
 public interface ProcessObserverMethod<T, X> {
+
     /**
-     * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
+     * The {@link AnnotatedParameter} representing the event parameter.
      * 
-     * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method
+     * @return the {@link AnnotatedParameter} representing the event parameter
      */
-    public AnnotatedMethod<X> getAnnotatedMethod();
+    public AnnotatedParameter<T> getAnnotatedEventParameter();
 
     /**
      * The {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to invoke the observer
@@ -52,7 +50,7 @@ public interface ProcessObserverMethod<T, X> {
      * @return the {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to call the
      *         observer method
      */
-    public ObserverMethod<T> getObserverMethod();
+    public ObserverMethod<X> getObserverMethod();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
