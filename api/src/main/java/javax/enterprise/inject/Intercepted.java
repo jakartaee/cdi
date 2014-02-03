@@ -33,7 +33,7 @@ import javax.inject.Qualifier;
  * </p>
  * 
  * <pre>
- * &#064;Transactional @&#064;Interceptor
+ * &#064;Transactional &#064;Interceptor
  * public class TransactionInterceptor {
  * 
  *    &#064;Inject &#064;Intercepted Bean&lt;?&gt; bean;
