@@ -172,7 +172,7 @@ A parameterized bean type is considered assignable to a parameterized required t
 * the required type parameter and the bean type parameter are actual types with identical raw type, and, if the type is parameterized, the bean type parameter is assignable to the required type parameter according to these rules, or
 * the required type parameter is a wildcard, the bean type parameter is an actual type and the actual type is assignable to the upper bound, if any, of the wildcard and assignable from the lower bound, if any, of the wildcard, or
 * the required type parameter is a wildcard, the bean type parameter is a type variable and the upper bound of the type variable is assignable to or assignable from the upper bound, if any, of the wildcard and assignable from the lower bound, if any, of the wildcard, or
-* the required type parameter is an actual type, the bean type parameter is a type variable and the actual type is assignable from the upper bound, if any, of the type variable, or
+* the required type parameter is an actual type, the bean type parameter is a type variable and the actual type is assignable to the upper bound, if any, of the type variable, or
 * the required type parameter and the bean type parameter are both type variables and the upper bound of the required type parameter is assignable to the upper bound, if any, of the bean type parameter.
 
 
