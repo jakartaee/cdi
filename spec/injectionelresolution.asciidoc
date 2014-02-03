@@ -287,8 +287,8 @@ The process of matching a bean to a name used in EL is called _name resolution_.
 
 An EL name resolves to a bean if:
 
-* the bean has the given bean name, and* the bean is available for injection in the war containing
-      the JSP or JSF page with the EL expression.
+* the bean has the given bean name, and
+* the bean is available for injection in the war containing the JSP or JSF page with the EL expression.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getName()+ to determine the bean name.
 
@@ -497,10 +497,9 @@ The interfaces +Bean+, +Interceptor+ and +Decorator+ provide metadata about a be
 
 The container must provide beans allowing a bean instance to obtain a +Bean+, +Interceptor+ or +Decorator+ instance containing its metadata:
 
-* a bean with scope +@Dependent+, qualifier +@Default+ 
-      and type +Bean+  which can be injected into any bean instance* a bean with scope +@Dependent+, qualifier +@Default+ 
-      and type +Interceptor+  which can be injected into any interceptor instance* a bean with scope +@Dependent+, qualifier +@Default+ 
-      and type +Decorator+  which can be injected into any decorator instance
+* a bean with scope +@Dependent+, qualifier +@Default+ and type +Bean+  which can be injected into any bean instance
+* a bean with scope +@Dependent+, qualifier +@Default+ and type +Interceptor+  which can be injected into any interceptor instance
+* a bean with scope +@Dependent+, qualifier +@Default+ and type +Decorator+  which can be injected into any decorator instance
 
 Additionally, the container must provide beans allowing interceptors and decorators to obtain information about the beans they intercept and decorate:
 
