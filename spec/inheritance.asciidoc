@@ -63,7 +63,6 @@ Suppose a class X is extended directly or indirectly by the bean class of a mana
 * If X declares a non-static method +x()+ annotated with an interceptor binding type Z then Y inherits the binding if and only if neither Y nor any intermediate class that is a subclass of X and a superclass of Y overrides the method +x()+.
 (This behavior is defined by the Common Annotations for the Java Platform specification.)
 * If X declares a non-static producer or disposer method +x()+ then Y does not inherit this method. 
-
 (This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
 * If X declares a non-static producer field +x+ then Y does not inherit this field.
 (This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
