@@ -38,8 +38,8 @@ A top-level Java class is a managed bean if it is defined to be a managed bean b
 * It does not implement +javax.enterprise.inject.spi.Extension+.
 * It is not annotated +@Vetoed+ or in a package annotated +@Vetoed+.
 * It has an appropriate constructor - either:
-* the class has a constructor with no parameters, or
-* the class declares a constructor annotated +@Inject+.
+** the class has a constructor with no parameters, or
+** the class declares a constructor annotated +@Inject+.
 
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
