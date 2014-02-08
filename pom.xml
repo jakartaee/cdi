@@ -67,7 +67,6 @@
 
 
     <properties>
-
         <asciidoctor.version>0.1.4</asciidoctor.version>
         <preface>preface</preface>
     </properties>
@@ -122,7 +121,7 @@
         <profile>
             <id>redhat</id>
             <properties>
-                <preface>preface-als2</preface>
+                <preface>preface-asl2</preface>
             </properties>
         </profile>
     </profiles>
