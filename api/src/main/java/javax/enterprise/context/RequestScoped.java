@@ -42,8 +42,7 @@ import java.lang.annotation.Target;
  * <li>during any Java EE web service invocation,</li>
  * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
  * an EJB timeout method and during message delivery to any EJB message-driven bean, and</li>
- * <li>during any message delivery to a MessageListener for a JMS topic or queue obtained from the Java EE component
- * environment.</li>
+ * <li>during <tt>@PostConstruct</tt> callback of any bean.</li>
  * </ul>
  * 
  * <p>
@@ -54,12 +53,27 @@ import java.lang.annotation.Target;
  * <li>at the end of the servlet request, after the <tt>service()</tt> method, all <tt>doFilter()</tt> methods, and all
  * <tt>requestDestroyed()</tt> and <tt>onComplete()</tt> notifications return,</li>
  * <li>after the web service invocation completes,</li>
- * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes, or</li>
- * <li>after the message delivery to the <tt>MessageListener</tt> completes.</li>
+ * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it 
+ * did not already exist when the invocation occurred, or</li>
+ * <li>after the <tt>@PostConstruct</tt> callback completes, if it did not already exist when the <tt>@PostConstruct</tt> 
+ * callback occurred.</li>
+ * </ul>
+ * 
+ * <p>
+ * An event with qualifier <tt>@Initialized(RequestScoped.class)</tt> is fired when the request context is initialized and an
+ * event 
+ * with qualifier <tt>@Destroyed(RequestScoped.class)</tt> when the request context is destroyed. The event payload is:
+ * </p>
+ * 
+ * <ul>
+ * <li>the <tt>ServletRequest</tt> if the context is initialized or destroyed due to a servlet request, or</li>
+ * <li>the <tt>ServletRequest</tt> if the context is initialized or destroyed due to a web service invocation, or</li>
+ * <li>any <tt>java.lang.Object</tt> for other types of request.</li>
  * </ul>
  * 
  * @author Gavin King
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  */
 
 @Target({ TYPE, METHOD, FIELD })
