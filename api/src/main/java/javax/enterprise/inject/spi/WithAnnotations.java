@@ -16,11 +16,10 @@ import java.lang.annotation.Target;
  * <p>
  * If the {@link WithAnnotations} annotation is applied to a portable extension observer method, then only
  * {@link ProcessAnnotatedType} events for types which have at least one of the annotations specified are observed. The
- * annotation can appear on the type, or any of it's supertypes, on any field, method or constructor declared by the type, or
- * any of its supertypes, or on any parameter of any method or constructor declared by the type, or any of it's supertypes or
- * may be applied as a meta-annotation.
- * </p>
- * 
+ * annotation can appear on the annotated type, or on any member, or any parameter of any member of the annotated type, as defined 
+ * by the Java Language Specification. When determining annotations on a type, the container must only consider the special inheritance 
+ * rules defined for scope types. The annotation may be applied as a meta-annotation on any annotation considered.
+ *
  * @author Pete Muir
  * @since 1.2-SNAPSHOT
  */
