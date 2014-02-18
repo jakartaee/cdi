@@ -74,10 +74,10 @@
 
 	<properties>
 		<atinject.api.version>1</atinject.api.version>
-		<ejb.api.version>1.0.0.CR2</ejb.api.version>
-		<jsr250.api.version>1.0</jsr250.api.version>
-		<uel.api.version>2.2</uel.api.version>
-		<interceptor.api.version>1.0.0.Beta1</interceptor.api.version>
+		<ejb.api.version>3.2</ejb.api.version>
+		<annotation.api.version>1.2</annotation.api.version>
+		<uel.api.version>3.0.0</uel.api.version>
+		<interceptor.api.version>1.2</interceptor.api.version>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -93,8 +93,8 @@
 
 			<dependency>
 				<groupId>javax.annotation</groupId>
-				<artifactId>jsr250-api</artifactId>
-				<version>${jsr250.api.version}</version>
+				<artifactId>javax.annotation-api</artifactId>
+				<version>${annotation.api.version}</version>
 			</dependency>
 
 			<dependency>
@@ -105,33 +105,19 @@
 
 			<dependency>
 				<groupId>javax.el</groupId>
-				<artifactId>el-api</artifactId>
+				<artifactId>javax.el-api</artifactId>
 				<version>${uel.api.version}</version>
 			</dependency>
 
-			<!-- TODO replace with javax.ejb:ejb-api:3.1 once the JCP/Sun publish 
-				this -->
 			<dependency>
-				<groupId>org.jboss.spec.javax.ejb</groupId>
-				<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+				<groupId>javax.ejb</groupId>
+				<artifactId>javax.ejb-api</artifactId>
 				<version>${ejb.api.version}</version>
-				<exclusions>
-					<exclusion>
-						<artifactId>jboss-transaction-api_1.2-SNAPSHOT_spec</artifactId>
-						<groupId>org.jboss.spec.javax.transaction</groupId>
-					</exclusion>
-					<exclusion>
-						<artifactId>jaxrpc-api</artifactId>
-						<groupId>javax.xml</groupId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 
-			<!-- TODO replace with javax.interceptor:interceptor-api:3.1 once the 
-				JCP/Sun publish this -->
 			<dependency>
-				<groupId>org.jboss.spec.javax.interceptor</groupId>
-				<artifactId>jboss-interceptors-api_1.2-SNAPSHOT_spec</artifactId>
+				<groupId>javax.interceptor</groupId>
+				<artifactId>javax.interceptor-api</artifactId>
 				<version>${interceptor.api.version}</version>
 			</dependency>
 
@@ -141,23 +127,23 @@
 	<dependencies>
 		<dependency>
 			<groupId>javax.el</groupId>
-			<artifactId>el-api</artifactId>
+			<artifactId>javax.el-api</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.jboss.spec.javax.ejb</groupId>
-			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
 			<optional>true</optional>
 		</dependency>
 
 		<dependency>
-			<groupId>org.jboss.spec.javax.interceptor</groupId>
-			<artifactId>jboss-interceptors-api_1.2-SNAPSHOT_spec</artifactId>
+			<groupId>javax.interceptor</groupId>
+			<artifactId>javax.interceptor-api</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
+			<artifactId>javax.annotation-api</artifactId>
 		</dependency>
 
 		<dependency>
