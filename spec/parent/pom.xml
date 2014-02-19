@@ -3,80 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>javax.enterprise</groupId>
-    <artifactId>cdi-specification</artifactId>
+    <artifactId>cdi-specification-documentation-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.2-SNAPSHOT</version>
 
-    <name>CDI Specification documentation</name>
-    <description>Specification for CDI (Contexts and Dependency Injection for Java EE)</description>
-
-    <url>http://www.seamframework.org/Weld</url>
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <distribution>repo</distribution>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-        </license>
-    </licenses>
-
-    <ciManagement>
-        <system>Hudson</system>
-        <url>http://hudson.jboss.org</url>
-    </ciManagement>
-
-    <issueManagement>
-        <system>JIRA</system>
-        <url>http://jira.jboss.org/browse/CDI</url>
-    </issueManagement>
-
-    <organization>
-        <name>JBoss by Red Hat, Inc.</name>
-        <url>http://jboss.org</url>
-    </organization>
-
-    <inceptionYear>2008</inceptionYear>
-
-    <developers>
-        <developer>
-            <name>Pete Muir</name>
-            <id>pmuir</id>
-            <organization>Red Hat Inc.</organization>
-            <roles>
-                <role>Specfication Lead</role>
-            </roles>
-            <email>pmuir@redhat.com</email>
-        </developer>
-
-        <developer>
-            <name>Shane Bryzak</name>
-            <organization>Red Hat Inc.</organization>
-        </developer>
-
-        <developer>
-            <name>David Allen</name>
-        </developer>
-
-        <developer>
-            <name>Nicklas Karlsson</name>
-        </developer>
-
-        <developer>
-            <name>George Gastaldi</name>
-        </developer>
-    </developers>
+    <name>Parent for CDI Specification documentation</name>
+    <description>Parent of Specification for CDI (Contexts and Dependency Injection for Java EE)</description>
 
 
     <properties>
         <asciidoctor.version>0.1.4</asciidoctor.version>
-        <preface>preface</preface>
     </properties>
-
-
-    <scm>
-        <connection>scm:git:git@github.com:jboss/cdi.git</connection>
-        <url>scm:git:git@github.com:jboss/cdi.git</url>
-        <developerConnection>scm:git:git@github.com:jboss/cdi.git</developerConnection>
-    </scm>
 
     <profiles>
         <profile>
@@ -118,19 +55,13 @@
                 </pluginRepository>
             </pluginRepositories>
         </profile>
-        <profile>
-            <id>redhat</id>
-            <properties>
-                <preface>preface-asl2</preface>
-            </properties>
-        </profile>
     </profiles>
 
     <build>
         <resources>
             <resource>
-                <directory>spec</directory>
-                <targetPath>${basedir}/target/filtered-spec</targetPath>
+                <directory>../src/main/doc</directory>
+                <targetPath>${basedir}/target/filtered</targetPath>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -150,7 +81,6 @@
                 </executions>
                 <configuration>
                     <encoding>UTF-8</encoding>
-
                 </configuration>
             </plugin>
             <plugin>
@@ -164,25 +94,20 @@
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
-
                         <configuration>
-
                             <backend>docbook45</backend>
                             <doctype>book</doctype>
 
                             <templateEngine>slim</templateEngine>
                             <headerFooter>true</headerFooter>
                             <compact>false</compact>
-                            <outputDirectory>${basedir}/target/docbook/en-US</outputDirectory>
-
+                            <outputDirectory>target/docbook/en-US</outputDirectory>
                             <attributes>
                                 <numbered>true</numbered>
                                 <docinfo>true</docinfo>
                                 <experimental>true</experimental>
                                 <toc>true</toc>
                             </attributes>
-
-
                         </configuration>
                     </execution>
                     <execution>
@@ -194,8 +119,7 @@
                         <configuration>
                             <sourceHighlighter>highlightjs</sourceHighlighter>
                             <backend>html5</backend>
-
-
+                            <outputDirectory>target/publish/html</outputDirectory>
                             <sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
                             <attributes>
                                 <toc2>left</toc2>
@@ -206,8 +130,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>${basedir}/target/filtered-spec</sourceDirectory>
-              </configuration>
+                    <sourceDirectory>target/filtered</sourceDirectory>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -238,10 +162,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>${project.basedir}/target/docbook</sourceDirectory>
+                    <sourceDirectory>target/docbook</sourceDirectory>
+                    <baseOutputDirectory>target/publish</baseOutputDirectory>
                     <sourceDocumentName>cdi-spec.xml</sourceDocumentName>
-                    <!--<masterTranslation>en-US</masterTranslation>
-                    <imageResource>
+                    <ignoreTranslations>true</ignoreTranslations>
+                    <!--<imageResource>
                         <directory>${project.basedir}/target/docbook/en-US</directory>
                         <includes>
                             <include>images/*.png</include>
