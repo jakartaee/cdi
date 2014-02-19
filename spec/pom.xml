@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>javax.enterprise</groupId>
+    <artifactId>cdi-specification-documentation</artifactId>
+    <packaging>pom</packaging>
+    <version>1.2-SNAPSHOT</version>
+
+    <name>CDI Specification documentation</name>
+    <description>Specification for CDI (Contexts and Dependency Injection for Java EE)</description>
+
+    <modules>
+        <module>jcp</module>
+        <module>asl2</module>
+    </modules>
+
+    <build>
+        <defaultGoal>clean package</defaultGoal>
+    </build>
+
+
+</project>
