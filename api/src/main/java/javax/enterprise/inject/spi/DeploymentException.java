@@ -20,7 +20,7 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * @author Pete Muir
- * @since 1.2-SNAPSHOT
+ * @since 1.1
  * 
  */
 public class DeploymentException extends RuntimeException {
