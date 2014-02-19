@@ -20,7 +20,7 @@ import javax.inject.Qualifier;
  * 
  * @author Pete Muir
  * @see Destroyed
- * @since 1.2-SNAPSHOT
+ * @since 1.1
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })

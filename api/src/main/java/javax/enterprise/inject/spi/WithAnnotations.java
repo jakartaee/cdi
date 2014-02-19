@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * The annotation may be applied as a meta-annotation on any annotation considered.
  *
  * @author Pete Muir
- * @since 1.2-SNAPSHOT
+ * @since 1.1
  */
 @Retention(RUNTIME)
 @Target(PARAMETER)

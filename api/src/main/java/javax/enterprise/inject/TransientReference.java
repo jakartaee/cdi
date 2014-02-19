@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * @author Pete Muir
- * @since 1.2-SNAPSHOT
+ * @since 1.1
  */
 
 @Target(PARAMETER)
