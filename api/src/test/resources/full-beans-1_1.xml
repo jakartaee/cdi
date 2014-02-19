@@ -3,9 +3,9 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="
       http://xmlns.jcp.org/xml/ns/javaee 
-      ../../main/resources/beans_1.2-SNAPSHOT.xsd" version="1.2-SNAPSHOT" bean-discovery-mode="annotated">
+      ../../main/resources/beans_1_1.xsd" version="1.1" bean-discovery-mode="annotated">
       
-    <!--  This test descriptor has all elements present in the CDI 1.2-SNAPSHOT schema -->
+    <!--  This test descriptor has all elements present in the CDI 1.1 schema -->
     
     <scan>
        <exclude name="com.acme.Foo">

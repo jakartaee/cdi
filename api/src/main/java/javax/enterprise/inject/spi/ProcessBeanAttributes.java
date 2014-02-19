@@ -17,7 +17,7 @@ import javax.enterprise.inject.New;
  * 
  * @author Pete Muir
  * @param <T> The class of the bean
- * @since 1.2-SNAPSHOT
+ * @since 1.1
  */
 public interface ProcessBeanAttributes<T> {
 
