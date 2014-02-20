@@ -92,6 +92,8 @@ public interface AlterableContext extends Context {
 
 The method +getScope()+ returns the scope type of the context object.
 
+A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<abd>>.
+
 At a particular point in the execution of the program a context object may be _active_ with respect to the current thread. When a context object is active the +isActive()+ method returns +true+. Otherwise, we say that the context object is _inactive_ and the +isActive()+ method returns +false+.
 
 The +get()+ method obtains contextual instances of the contextual type represented by the given instance of +Contextual+. The +get()+ method may either:
