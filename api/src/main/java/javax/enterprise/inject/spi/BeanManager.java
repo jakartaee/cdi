@@ -55,7 +55,9 @@ import javax.enterprise.util.Nonbinding;
  * </p>
  * 
  * <p>
- * Any operation of <tt>BeanManager</tt> may be called at any time during the execution of the application.
+ * Most operations of <tt>BeanManager</tt> may be called at any time during the execution of the application.
+ * Note that - in order to prevent random behaviour - some BeanManager operations must not be called 
+ * before the AfterDeploymentValidation phase.
  * </p>
  * 
  * @author Gavin King
