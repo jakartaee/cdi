@@ -422,7 +422,8 @@ The set of scope types is extensible.
 
 There are five standard scope types defined by this specification, all defined in the package +javax.enterprise.context+.
 
-* The +@RequestScoped+, +@ApplicationScoped+ and +@SessionScoped+ annotations defined in <<builtin_contexts>> represent the standard scopes defined by the Java Servlets specification.
+* The +@RequestScoped+, +@ApplicationScoped+ and +@SessionScoped+ annotations defined in <<builtin_contexts>> are inspired by the standard scopes defined by the Java Servlets specification.
+However their corresponding scope lifecycle is a super set of Java Servlets standard scopes lifecycle (i.e. they are not limited to them). Any specification or third party portable extension is allowed to activate them when needed so they don't require Java Servlets to be used.
 * The +@ConversationScoped+ annotation represents the conversation scope defined in <<conversation_context>>.
 * Finally, there is a +@Dependent+ pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
