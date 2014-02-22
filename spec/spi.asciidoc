@@ -630,7 +630,7 @@ public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClas
 
 ==== Obtaining the instance of an +Extension+
 
-The method +BeanManager.getExtensions()+ returns the container's instance of an +Extension+ class declared in +META-INF/services+, or throws an +IllegalArgumentException+ if the container has no instance of the given class.
+The method +BeanManager.getExtension()+ returns the container's instance of an +Extension+ class declared in +META-INF/services+, or throws an +IllegalArgumentException+ if the container has no instance of the given class.
 
 [source, java]
 ----
