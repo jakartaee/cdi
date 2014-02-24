@@ -84,8 +84,7 @@ Consider the following event:
 ----
 public void login() {
     final User user = ...;
-    loggedInEvent.fire( new LoggedInEvent(user), 
-            new RoleQualifier() { public String value() { return user.getRole(); } );
+    loggedInEvent.select(new RoleQualifier() { public String value() { return user.getRole(); } }).fire(new LoggedInEvent(user));
 }
 ----
 
