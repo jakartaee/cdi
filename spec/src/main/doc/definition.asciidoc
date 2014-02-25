@@ -500,9 +500,17 @@ If a bean explicitly declares a scope, any default scopes declared by stereotype
 
 === Bean defining annotations
 
-A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>.
+A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>. A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
 
-Any scope type is a bean defining annotation. If a scope type is declared on a bean class, then the bean class is said to have a bean defining annotation. For example, this dependent scoped bean has a bean defining annotation:
+The set of bean defining annotations contains :
+
+* `@ApplicationScoped`, `@SessionScoped`, `@ConversationScoped` and `@RequestScoped` annotations,  
+* all others normal scope types,
+* `@Interceptor` and `@Decorator` annotations,
+* all stereotypes annotations (i.e. annotations annotated with `@Stereotype`),
+* and the `@Dependent` scope annotation.
+
+If one of these annotations is declared on a bean class, then the bean class is said to have a bean defining annotation. For example, this dependent scoped bean has a bean defining annotation:
 
 [source,java]
 ----
@@ -524,6 +532,8 @@ public class CoffeeShop
     ...
 }
 ----
+
+Note that to ensure compatibility with other JSR-330 implementations, all pseudo-scopes annotations except `@Dependent` *are not* bean defining annotations. However a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
 [[names]]
 
