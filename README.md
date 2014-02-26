@@ -1,4 +1,4 @@
-# Check out the [wiki](https://github.com/jboss/cdi/wiki) for more info on CDI 1.1
+# Check out the [cdi-spec.org](http://cdi-spec.org) for more info on CDI 1.1
 
 Sources in GIT
 ====
