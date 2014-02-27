@@ -1,10 +1,3 @@
-:numbered!:
-["preface",sectnum="0"]
-
-== Preface
-
-=== Evaluation license
-
 ....
 
 Specification: JSR-346 Contexts and Dependency Injection for the Java EE platform (CDI) ("Specification")
@@ -68,32 +61,3 @@ The Specification is subject to U.S. export control laws and may be subject to e
 This Agreement is the parties' entire agreement relating to its subject matter. It supersedes all prior or contemporaneous oral or written communications, proposals, conditions, representations and warranties and prevails over any conflicting or additional terms of any quote, order,  acknowledgment, or other communication between the parties relating to its subject matter during the term of this Agreement. No modification to this Agreement will be binding, unless in writing and signed by an authorized representative of each party.
 
 ....
-
-=== Foreword
-
-Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dependency Injection 1.0 (JSR-299). A full changelog can be found in the link:$$https://issues.jboss.org/sr/jira.issueviews:searchrequest-printable/12314424/SearchRequest-12314424.html?tempMax=1000$$[issue tracker].
-
-=== Major changes 
-
-These major changes have been introduced for CDI 1.1:
-
-* Add global enablement of interceptors (see the Java Interceptors Specification 1.2), global enablement of decorators (see <<enabled_decorators_priority>>) and alternatives (see <<unsatisfied_and_ambig_dependencies>>) using the +@Priority+ annotation
-* Add support for +@AroundConstruct+ lifecycle callback for constructors (see the Java Interceptors Specification 1.2)
-* Allow binding interceptors to constructors
-* Moved interceptor binding to interceptors spec, allowing for reuse by other specifications
-* Support decorators on built in beans (see <<decorators>>)
-* Add +EventMetadata+ (see <<event_metadata>>) to allow inspection of event metadata
-* Add +@Vetoed+ annotation allowing easy programmatic disablement of classes (see <<what_classes_are_beans>>
-* Many improvements for passivation capable beans, including +@TransientReference+ allowing instances to be retained only for use within the invoked method or constructor (see <<passivation_capable_injection_points>> and <<passivating_scope>>)
-* Add scope activation and destruction callback events (see <<builtin_contexts>>)
-* Add +AlterableContext+ allowing bean instances to be explicitly destroyed (see <<context>>)
-* Add automatic enablement of CDI for beans with a scope annotation, and EJBs, in Java EE (see <<bean_discovery>>)
-* Add class exclusion filters to +beans.xml+ to prevent scanning of classes and packages (see <<bean_discovery>>)
-* Add +Unmanaged+ allowing easy access to non-contexutal instances of beans (see <<bm_obtain_unmanaged_instance>>)
-* Add +CDI+ allowing easy accesss to the current CDI container (see <<provider>>)
-* Add +AfterTypeDiscovery+ event, allowing extensions to register additional types after type discovery (see <<atd>>)
-* Add +@WithAnnotations+ as a way of improving extension loading performance (see <<pat>>)
-* Many minor improvements to portable extensions (see <<spi>>)
-
-:numbered:
-

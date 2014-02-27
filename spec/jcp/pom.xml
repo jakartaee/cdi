@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>javax.enterprise</groupId>
-        <artifactId>cdi-specification-documentation-parent</artifactId>
+        <artifactId>cdi-spec-doc-parent</artifactId>
         <version>1.2-SNAPSHOT</version>
         <relativePath>../parent</relativePath>
     </parent>
 
-    <artifactId>cdi-specification-documentation-for-jcp</artifactId>
+    <artifactId>cdi-spec-doc-jcp</artifactId>
     <packaging>pom</packaging>
 
     <name>CDI Specification documentation for the jcp</name>
