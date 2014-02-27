@@ -1,7 +1,7 @@
 = Contexts and Dependency Injection for the Java EE platform
 :doctype: book
 
-include::preface-${license}.asciidoc[]
+include::preface.asciidoc[]
 
 include::architecture.asciidoc[]
 

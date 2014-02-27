@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>javax.enterprise</groupId>
-    <artifactId>cdi-specification-documentation-parent</artifactId>
+    <artifactId>cdi-spec-doc-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.2-SNAPSHOT</version>
 

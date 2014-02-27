@@ -1,23 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-  
-    <parent>
-        <groupId>javax.enterprise</groupId>
-        <artifactId>cdi-spec</artifactId>
-        <version>1.2-SNAPSHOT</version>
-    </parent>
 
-    <artifactId>cdi-spec-doc</artifactId>
+    <groupId>javax.enterprise</groupId>
+    <artifactId>cdi-spec</artifactId>
     <packaging>pom</packaging>
+    <version>1.2-SNAPSHOT</version>
 
-  
-    <description>CDI Specification documentation</description>
+    <description>Parent module for CDI Specification</description>
 
     <modules>
-        <module>parent</module>
-        <module>jcp</module>
-        <module>asl2</module>
+        <module>spec</module>
+        <module>api</module>
     </modules>
 
     <build>
