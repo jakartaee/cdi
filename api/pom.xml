@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jboss.weld</groupId>
 		<artifactId>weld-parent</artifactId>
-		<version>21</version>
+		<version>26</version>
 		<relativePath />
 	</parent>
 
@@ -16,7 +16,7 @@
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java EE)</description>
 
-	<url>http://www.seamframework.org/Weld</url>
+	<url>http://cdi-spec.org</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -46,36 +46,60 @@
 		<developer>
 			<name>Pete Muir</name>
 			<id>pmuir</id>
+			<timezone>GMT</timezone>
 			<organization>Red Hat Inc.</organization>
 			<roles>
 				<role>Specfication Lead</role>
 			</roles>
-			<email>pmuir@redhat.com</email>
+			<email>pmuir[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
-			<name>Shane Bryzak</name>
+			<name>Antoine Sabot-Durand</name>
+			<id>asabotdu</id>
+			<timezone>CET</timezone>
 			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>Specfication co-lead</role>
+			</roles>
+			<email>asd[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
-			<name>David Allen</name>
+			<name>Mark Struberg</name>
+			<id>mstruberg</id>
+			<timezone>CET</timezone>
+			<roles>
+				<role>Implementation developer</role>
+			</roles>
+			<email>struberg[at]yahoo[dot]de</email>
 		</developer>
 
 		<developer>
-			<name>Nicklas Karlsson</name>
+			<name>Jozef Hartinger</name>
+			<id>jhartinger</id>
+			<timezone>CET</timezone>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>RI tech lead</role>
+			</roles>
+			<email>jhartinger[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
-			<name>George Gastaldi</name>
+			<name>Martin Kouba</name>
+			<id>mkouba</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK tech lead</role>
+			</roles>
+			<email>mkouba[at]redhat[dot]com</email>
 		</developer>
 	</developers>
 
 
 	<properties>
 		<atinject.api.version>1</atinject.api.version>
-		<ejb.api.version>3.2</ejb.api.version>
-		<annotation.api.version>1.2</annotation.api.version>
 		<uel.api.version>3.0.0</uel.api.version>
 		<interceptor.api.version>1.2</interceptor.api.version>
 	</properties>
@@ -92,12 +116,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>javax.annotation</groupId>
-				<artifactId>javax.annotation-api</artifactId>
-				<version>${annotation.api.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>javax.inject</groupId>
 				<artifactId>javax.inject</artifactId>
 				<version>${atinject.api.version}</version>
@@ -107,12 +125,6 @@
 				<groupId>javax.el</groupId>
 				<artifactId>javax.el-api</artifactId>
 				<version>${uel.api.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.ejb</groupId>
-				<artifactId>javax.ejb-api</artifactId>
-				<version>${ejb.api.version}</version>
 			</dependency>
 
 			<dependency>
@@ -131,19 +143,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.ejb</groupId>
-			<artifactId>javax.ejb-api</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
 			<groupId>javax.interceptor</groupId>
 			<artifactId>javax.interceptor-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
 		</dependency>
 
 		<dependency>
