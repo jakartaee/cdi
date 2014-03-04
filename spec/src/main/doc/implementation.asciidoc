@@ -160,7 +160,7 @@ If the application directly calls an EJB remove method of a contextual instance 
 
 ==== Bean types of a session bean
 
-The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces. If the session bean has a bean class local view, the unrestricted set of bean types contains the bean class and all superclasses. In addition, +java.lang.Object+ is a bean type of every session bean.
+The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces. If the session bean has a no-interface view, the unrestricted set of bean types contains the bean class and all superclasses. In addition, +java.lang.Object+ is a bean type of every session bean.
 
 Remote interfaces are not included in the set of bean types.
 
