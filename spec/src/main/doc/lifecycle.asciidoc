@@ -134,7 +134,7 @@ Note that the container performs additional work when the underlying EJB is crea
 
 [[stateless_lifecycle]]
 
-==== Lifecycle of stateless session and singleton beans
+==== Lifecycle of stateless session and singleton session beans
 
 When the +create()+ method of a +Bean+ object that represents a stateless session or singleton session bean is called, the container creates and returns a container-specific internal local reference to the session bean. This reference is not directly exposed to the application.
 

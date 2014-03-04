@@ -131,7 +131,7 @@ For example, if the bean class is named +ProductList+, the default bean name is 
 
 A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+ or in a package annotated +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
 
-A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error. A stateful session bean may have any scope.
+A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton session bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error. A stateful session bean may have any scope.
 
 When a contextual instance of a session bean is obtained via the dependency injection service, the behavior of +SessionContext.getInvokedBusinessInterface()+ is specific to the container implementation. Portable applications should not rely upon the value returned by this method.
 
