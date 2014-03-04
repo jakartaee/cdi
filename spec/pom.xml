@@ -15,7 +15,6 @@
     <description>CDI Specification documentation</description>
 
     <modules>
-        <module>parent</module>
         <module>jcp</module>
         <module>asl2</module>
     </modules>
