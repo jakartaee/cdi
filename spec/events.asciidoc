@@ -28,121 +28,6 @@ Every event has the qualifier +@javax.enterprise.inject.Any+, even if it does no
 
 Any Java type may be an observed event type.
 
-[[observer_resolution]]
-
-=== Observer resolution
-
-The process of matching an event to its observer methods is called _observer resolution_. The container considers event type and qualifiers when resolving observers.
-
-Observer resolution usually occurs at runtime.
-
-An event is delivered to an observer method if:
-
-* The observer method belongs to an enabled bean.
-* An event type is assignable to the observed event type, taking type parameters into consideration.
-* The observer method has no event qualifiers or has a subset of the event qualifiers. An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
-* Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
-
-
-If the runtime type of the event object contains an unresolvable type variable, the container must throw an +IllegalArgumentException+.
-
-For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getObservedType()+ and +getObservedQualifiers()+ to determine the observed event type and qualifiers.
-
-[[observers_assignability]]
-
-==== Assignability of type variables, raw and parameterized types
-
-An event type is considered assignable to a type variable if the event type is assignable to the upper bound, if any.
-
-A parameterized event type is considered assignable to a raw observed event type if the raw types are identical.
-
-A parameterized event type is considered assignable to a parameterized observed event type if they have identical raw type and for each parameter:
-
-* the observed event type parameter is an actual type with identical raw type to the event type parameter, and, if the type is parameterized, the event type parameter is assignable to the observed event type parameter according to these rules, or
-* the observed event type parameter is a wildcard and the event type parameter is assignable to the upper bound, if any, of the wildcard and assignable from the lower bound, if any, of the wildcard, or
-* the observed event type parameter is a type variable and the event type parameter is assignable to the upper bound, if any, of the type variable.
-
-[[event_qualifier_types_with_members]]
-
-==== Event qualifier types with members
-
-As usual, the qualifier type may have annotation members:
-
-[source, java]
-----
-@Qualifier
-@Target(PARAMETER)
-@Retention(RUNTIME)
-public @interface Role {
-    String value();
-}
-----
-
-Consider the following event:
-
-[source, java]
-----
-public void login() {
-    final User user = ...;
-    loggedInEvent.select(new RoleQualifier() { public String value() { return user.getRole(); } }).fire(new LoggedInEvent(user));
-}
-----
-
-Where +RoleQualifier+ is an implementation of the qualifier type +Role+:
-
-[source, java]
-----
-public abstract class RoleQualifier 
-        extends AnnotationLiteral<Role> 
-        implements Role {}
-----
-
-Then the following observer method will always be notified of the event:
-
-[source, java]
-----
-public void afterLogin(@Observes LoggedInEvent event) { ... }
-----
-
-Whereas this observer method may or may not be notified, depending upon the value of +user.getRole()+:
-
-[source, java]
-----
-public void afterAdminLogin(@Observes @Role("admin") LoggedInEvent event) { ... }
-----
-
-As usual, the container uses +equals()+ to compare event qualifier type member values.
-
-[[multiple_event_qualifiers]]
-
-==== Multiple event qualifiers
-
-An event parameter may have multiple qualifiers.
-
-[source, java]
-----
-public void afterDocumentUpdatedByAdmin(@Observes @Updated @ByAdmin Document doc) { ... }
-----
-
-Then this observer method will only be notified if all the observed event qualifiers are specified when the event is fired:
-
-[source, java]
-----
-documentEvent.fire( document, new UpdatedQualifier() {}, new ByAdminQualifier() {} );
-----
-
-Other, less specific, observers will also be notified of this event:
-
-[source, java]
-----
-public void afterDocumentUpdated(@Observes @Updated Document doc) { ... }
-----
-
-[source, java]
-----
-public void afterDocumentEvent(@Observes Document doc) { ... }
-----
-
 [[firing_events]]
 
 === Firing events
@@ -259,6 +144,125 @@ The container must provide a built-in bean with:
 If an injection point of raw type +Event+ is defined, the container automatically detects the problem and treats it as a definition error.
 
 The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
+
+[[observer_resolution]]
+
+=== Observer resolution
+
+The process of matching an event to its observer methods is called _observer resolution_. The container considers event type and qualifiers when resolving observers.
+
+Observer resolution usually occurs at runtime.
+
+An event is delivered to an observer method if:
+
+* The observer method belongs to an enabled bean.
+* An event type is assignable to the observed event type, taking type parameters into consideration.
+* The observer method has no event qualifiers or has a subset of the event qualifiers. An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
+* Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
+
+
+If the runtime type of the event object contains an unresolvable type variable, the container must throw an +IllegalArgumentException+.
+
+For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getObservedType()+ and +getObservedQualifiers()+ to determine the observed event type and qualifiers.
+
+[[observers_assignability]]
+
+==== Assignability of type variables, raw and parameterized types
+
+An event type is considered assignable to a type variable if the event type is assignable to the upper bound, if any.
+
+A parameterized event type is considered assignable to a raw observed event type if the raw types are identical.
+
+A parameterized event type is considered assignable to a parameterized observed event type if they have identical raw type and for each parameter:
+
+* the observed event type parameter is an actual type with identical raw type to the event type parameter, and, if the type is parameterized, the event type parameter is assignable to the observed event type parameter according to these rules, or
+* the observed event type parameter is a wildcard and the event type parameter is assignable to the upper bound, if any, of the wildcard and assignable from the lower bound, if any, of the wildcard, or
+* the observed event type parameter is a type variable and the event type parameter is assignable to the upper bound, if any, of the type variable.
+
+[[event_qualifier_types_with_members]]
+
+==== Event qualifier types with members
+
+As usual, the qualifier type may have annotation members:
+
+[source, java]
+----
+@Qualifier
+@Target(PARAMETER)
+@Retention(RUNTIME)
+public @interface Role {
+    String value();
+}
+----
+
+Consider the following event:
+
+[source, java]
+----
+@Inject @Any Event<LoggedInEvent> loggedInEvent;
+...
+public void login() {
+    final User user = ...;
+    loggedInEvent.select(new RoleQualifier() { public String value() { return user.getRole(); } }).fire(new LoggedInEvent(user));
+}
+----
+
+Where +RoleQualifier+ is an implementation of the qualifier type +Role+:
+
+[source, java]
+----
+public abstract class RoleQualifier 
+        extends AnnotationLiteral<Role> 
+        implements Role {}
+----
+
+Then the following observer method will always be notified of the event:
+
+[source, java]
+----
+public void afterLogin(@Observes LoggedInEvent event) { ... }
+----
+
+Whereas this observer method may or may not be notified, depending upon the value of +user.getRole()+:
+
+[source, java]
+----
+public void afterAdminLogin(@Observes @Role("admin") LoggedInEvent event) { ... }
+----
+
+As usual, the container uses +equals()+ to compare event qualifier type member values.
+
+[[multiple_event_qualifiers]]
+
+==== Multiple event qualifiers
+
+An event parameter may have multiple qualifiers.
+
+[source, java]
+----
+public void afterDocumentUpdatedByAdmin(@Observes @Updated @ByAdmin Document doc) { ... }
+----
+
+Then this observer method will only be notified if all the observed event qualifiers are specified when the event is fired:
+
+[source, java]
+----
+@Inject @Any Event<Document> documentEvent;
+...
+documentEvent.select(new UpdatedQualifier(), new ByAdminQualifier()).fire(document);
+----
+
+Other, less specific, observers will also be notified of this event:
+
+[source, java]
+----
+public void afterDocumentUpdated(@Observes @Updated Document doc) { ... }
+----
+
+[source, java]
+----
+public void afterDocumentEvent(@Observes Document doc) { ... }
+----
 
 [[observer_methods]]
 
