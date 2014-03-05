@@ -569,8 +569,8 @@ The method +BeanManager.getProducerFactory()+ returns a factory capable of creat
 
 [source, java]
 ----
-public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedField<? super X> field, Bean<X> declaringBean);
-public <X> ProducerFactory<? super X> getProducerFactory(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
+public <X> ProducerFactory<X> getProducerFactory(AnnotatedField<? super X> field, Bean<X> declaringBean);
+public <X> ProducerFactory<X> getProducerFactory(AnnotatedMethod<? super X> method, Bean<X> declaringBean);
 ----
 
 [source, java]
