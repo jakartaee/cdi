@@ -226,7 +226,7 @@ public class LoginActionBean implements LoginAction { ... }
 [source, java]
 ----
 @Stateless @Mock @Specializes
-public class MockLoginActionBean extends LoginActionBean { ... }
+public class MockLoginActionBean extends LoginActionBean implements LoginAction { ... }
 ----
 
 [[session_bean_name]]
