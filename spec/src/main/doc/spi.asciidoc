@@ -100,7 +100,7 @@ An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout met
 [source, java]
 ----
 public enum InterceptionType { 
-    AROUND_INVOKE, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
+    AROUND_INVOKE, AROUND_CONSTRUCT, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
 }
 ----
 
