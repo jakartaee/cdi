@@ -551,7 +551,7 @@ The instance used by the container to service an invocation of a Java EE compone
 
 A _resource_ is a bean that represents a reference to a resource, persistence context, persistence unit, remote EJB or web service in the Java EE component environment.
 
-By declaring a resource, we enable an object from the Java EE component environment to be injected by a specifying only its type and qualifiers at the injection point. For example, if +@CustomerDatabase+ is a qualifier:
+By declaring a resource, we enable an object from the Java EE component environment to be injected by specifying only its type and qualifiers at the injection point. For example, if +@CustomerDatabase+ is a qualifier:
 
 [source, java]
 ----
