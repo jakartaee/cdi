@@ -152,7 +152,7 @@ The first exclude filter will exclude all classes in +com.acme.rest+ package. Th
 
 First the container must discover types. The container discovers:
 
-* each Java class, interface or enum deployed in an explicit bean archive, and
+* each Java class, interface (that is not an annotation) or enum deployed in an explicit bean archive, and
 * each Java class with a bean defining annotation in an implicit bean archive.
 * each session bean
 
