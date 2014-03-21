@@ -32,11 +32,11 @@ import java.lang.annotation.Target;
  * Specifies that a bean is request scoped.
  * <p/>
  * While <tt>RequestScoped</tt> must be associated to the built-in request context required by the spec, third parties extensions are
- * allowed to also bind it to their own context. Behavior described bellow is only related to the built-in Request Context.
+ * allowed to also bind it to their own context. Behavior described below is only related to the built-in Request Context.
  * </p>
  * 
  * <p>
- * The request context is active:
+ * The request scope is active:
  * </p>
  * 
  * <ul>
