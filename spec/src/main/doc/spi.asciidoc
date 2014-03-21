@@ -935,7 +935,7 @@ If any observer method of the +BeforeShutdown+ event throws an exception, the ex
 
 ==== +ProcessAnnotatedType+ event
 
-The container must fire an event, before it processes a type, for every Java class, interface (that is not an annotation) or enum discovered
+The container must fire an event, before it processes a type, for every Java class, interface (excluding annotation type) or enum discovered
 
 as defined in <<bean_discovery>>
 
