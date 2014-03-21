@@ -437,7 +437,7 @@ Portable extensions are encouraged to fire an event with qualifier +@Initialized
 
 ==== Request context lifecycle
 
-The _request context_ is provided by a built-in context object for the built-in scope type +@RequestScoped+. The request context is active:
+The _request context_ is provided by a built-in context object for the built-in scope type +@RequestScoped+. The request scope is active:
 
 * during the +service()+ method of any servlet in the web application, during the +doFilter()+ method of any servlet filter and when the container calls any +ServletRequestListener+ or +AsyncListener+,
 * during any Java EE web service invocation,
