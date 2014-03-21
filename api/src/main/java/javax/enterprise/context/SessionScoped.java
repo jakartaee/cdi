@@ -31,26 +31,45 @@ import java.lang.annotation.Target;
  * <p>
  * Specifies that a bean is session scoped.
  * </p>
- * 
+ * <p>
+ * While <tt>SessionScoped</tt> must be associated to the built-in session context required by the spec, 
+ * third parties extensions are
+ * allowed to also bind it to their own context. Behavior described below is only related to the built-in Session Context.
+ * </p>
  * <p>
  * The session scope is active:
  * </p>
  * 
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet in the web application, during the doFilter() method of any servlet
- * filter and when the container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
+ * <li>during the <tt>service()</tt> method of any servlet in the web application,
+ * <li>during the doFilter() method of any servlet filter, and</li>
+ * <li>when the container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
  * <tt>ServletRequestListener</tt>.</li>
  * </ul>
  * 
  * <p>
- * The session context is shared between all servlet requests that occur in the same HTTP session. The session context is
- * destroyed when the HTTPSession times out, after all <tt>HttpSessionListeners</tt> have been called, and at the very end of
- * any request in which <tt>invalidate()</tt> was called, after all filters and <tt>ServletRequestListeners</tt> have been
- * called.
+ * The session context is shared between all servlet requests that occur in the same HTTP session.
  * </p>
+ * <p>
+ * The session context is destroyed:
+ * </p>
+ *
+ * <ul>
+ * <li>when the HTTPSession times out, after all <tt>HttpSessionListeners</tt> have been called, or</li>
+ * <li>at the very end of
+ * any request in which <tt>invalidate()</tt> was called, after all filters and <tt>ServletRequestListeners</tt> have been
+ * called.</Li>
+ * </ul>
+ *
+ * <p>
+ * An event with qualifier <tt>@Initialized(SessionScoped.class)</tt> is fired when the session context is initialized and an
+ * event 
+ * with qualifier <tt>@Destroyed(SessionScoped.class)</tt> when the session context is destroyed. The events payload is
+ * the <tt>HttpSession</tt> 
  * 
  * @author Gavin King
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  */
 
 @Target({ TYPE, METHOD, FIELD })
