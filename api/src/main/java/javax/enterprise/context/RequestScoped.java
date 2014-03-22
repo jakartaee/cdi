@@ -32,8 +32,9 @@ import java.lang.annotation.Target;
  * Specifies that a bean is request scoped.
  * </p>
  * <p>
- * While <tt>RequestScoped</tt> must be associated to the built-in request context required by the spec, third parties extensions are
- * allowed to also bind it to their own context. Behavior described below is only related to the built-in Request Context.
+ * While <tt>RequestScoped</tt> must be associated with the built-in request context required by the specification,
+ * third-party extensions are
+ * allowed to also associate it with their own context. Behavior described below is only related to the built-in request context.
  * </p>
  * 
  * <p>
@@ -66,7 +67,7 @@ import java.lang.annotation.Target;
  * <p>
  * An event with qualifier <tt>@Initialized(RequestScoped.class)</tt> is fired when the request context is initialized and an
  * event 
- * with qualifier <tt>@Destroyed(RequestScoped.class)</tt> when the request context is destroyed. The events payload is:
+ * with qualifier <tt>@Destroyed(RequestScoped.class)</tt> when the request context is destroyed. The event payload is:
  * </p>
  * 
  * <ul>
