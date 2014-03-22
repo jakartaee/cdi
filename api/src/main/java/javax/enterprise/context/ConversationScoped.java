@@ -31,25 +31,43 @@ import java.lang.annotation.Target;
  * <p>
  * Specifies that a bean is conversation scoped.
  * </p>
- * 
+ *  <p>
+ * While <tt>ConversationScoped</tt> must be associated with the built-in conversation context required by the specification, 
+ * third-party extensions are
+ * allowed to also associate it with their own context. Behavior described below is only related to the built-in conversation context.
+ * </p>
  * <p>
  * The conversation scope is active:
  * </p>
- * 
  * <ul>
- * <li>during all standard lifecycle phases of any Servlet request.</li>
+ * <li>during all Servlet requests.</li>
+ * </ul>
+ * <p>
+ * An event with qualifier <tt>@Initialized(ConversationScoped.class)</tt> is fired when the conversation context is initialized
+ * and an event with qualifier <tt>@Destroyed(ConversationScoped.class)</tt> is fired when the conversation is destroyed.
+ * The event payload is:
+ * </p>
+ * <ul>
+ * <li>the conversation id if the conversation context is destroyed and is not associated with a current Servlet request, or</li>
+ * <li>the <tt>ServletRequest</tt> if the application is a web application deployed to a Servlet container, or</li>
+ * <li>any <tt>java.lang.Object</tt> for other types of application.</li>
  * </ul>
  * 
  * <p>
- * The conversation context provides access to state associated with a particular conversation. Every Servlet request has an
- * associated conversation. This association is managed automatically by the container according to the following rules:
+ * The conversation context provides access to state associated with a particular <em>conversation</em>. Every Servlet request
+ * has an associated conversation. This association is managed automatically by the container according to the following rules:
  * </p>
  * 
  * <ul>
  * <li>Any Servlet request has exactly one associated conversation.</li>
- * <li>The conversation associated with a Servlet request is determined at the beginning of the request and does not change
- * during the request.</li>
+ * <li>The container provides a filter with the name "CDI Conversation Filter", which may be mapped in <tt>web.xml</tt>,
+ * allowing the user alter when the conversation is associated with the servlet request. If this filter is not mapped in any
+ * <tt>web.xml</tt> in the application, the conversation associated with a Servlet request is determined at the beginning of the
+ * request before calling any <tt>service()</tt> method of any servlet in the web application, calling the <tt>doFilter()</tt>
+ * method of any servlet filter in the web application and before the container calls any <tt>ServletRequestListener</tt> or
+ * <tt>AsyncListener</tt> in the web application.</li>
  * </ul>
+ * <p>
  * 
  * <p>
  * Any conversation is in one of two states: <em>transient</em> or <em>long-running</em>.
@@ -67,15 +85,15 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <p>
- * If the conversation associated with the current Servlet request is in the transient state at the end of a Servlet request, it
- * is destroyed, and the conversation context is also destroyed.
+ * If the conversation associated with the current Servlet request is in the <em>transient</em> state at the end of a Servlet
+ * request, it is destroyed, and the conversation context is also destroyed.
  * </p>
  * 
  * <p>
- * If the conversation associated with the current Servlet request is in the long-running state at the end of a Servlet request,
- * it is not destroyed. The long-running conversation associated with a request may be propagated to any Servlet request via use
- * of a GET request parameter named <tt>cid</tt> containing the unique identifier of the conversation. In this case, the
- * application must manage this request parameter.
+ * If the conversation associated with the current Servlet request is in the <em>long-running</em> state at the end of a Servlet
+ * request, it is not destroyed. The long-running conversation associated with a request may be propagated to any Servlet
+ * request via use of a request parameter named <tt>cid</tt> containing the unique identifier of the conversation. In this
+ * case, the application must manage this request parameter.
  * </p>
  * 
  * <p>
@@ -87,15 +105,16 @@ import java.lang.annotation.Target;
  * <li>The long-running conversation context associated with a request that renders a JSF view is automatically propagated to
  * any faces request (JSF form submission) that originates from that rendered page.</li>
  * <li>The long-running conversation context associated with a request that results in a JSF redirect (a redirect resulting from
- * a navigation rule or JSF NavigationHandler) is automatically propagated to the resulting non-faces request, and to any other
- * subsequent request to the same URL. This is accomplished via use of a GET request parameter named <tt>cid</tt> containing the
+ * a navigation rule or JSF <tt>NavigationHandler</tt>) is automatically propagated to the resulting non-faces request, and to any other
+ * subsequent request to the same URL. This is accomplished via use of a request parameter named <tt>cid</tt> containing the
  * unique identifier of the conversation.</li>
  * </ul>
  * 
  * <p>
- * When no conversation is propagated to a Servlet request, the request is associated with a new transient conversation. All
- * long-running conversations are scoped to a particular HTTP servlet session and may not cross session boundaries. In the
- * following cases, a propagated long-running conversation cannot be restored and reassociated with the request:
+ * When no conversation is propagated to a Servlet request, or if a request parameter named <tt>conversationPropagation</tt> has
+ * the value <tt>none</tt> the request is associated with a new transient conversation.
+ * All long-running conversations are scoped to a particular HTTP servlet session and may not cross session boundaries.
+ * In the following cases, a propagated long-running conversation cannot be restored and re-associated with the request:
  * </p>
  * 
  * <ul>
@@ -111,6 +130,7 @@ import java.lang.annotation.Target;
  * 
  * @author Gavin King
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  */
 
 @Target({ TYPE, METHOD, FIELD })
