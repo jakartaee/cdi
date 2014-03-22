@@ -148,7 +148,7 @@ For example, consider the follow +beans.xml+ file:
 </beans>
 ----
 
-The first exclude filter will exclude all classes in +com.acme.rest+ package. The second exclude filter will exclude all classes in the +com.acme.faces+ package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the +com.acme.verbose+ package if the system property +verbosity+ has the value +low+. The fourth exclude filter will exclude all classes in the +com.acme.ejb+ package, and any subpackages if the system property +exclude-ejbs+ is set (with any value).
+The first exclude filter will exclude all classes in +com.acme.rest+ package. The second exclude filter will exclude all classes in the +com.acme.faces+ package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the +com.acme.verbose+ package if the system property +verbosity+ has the value +low+. The fourth exclude filter will exclude all classes in the +com.acme.ejb+ package, and any subpackages if the system property +exclude-ejbs+ is set (with any value) and at the same time, the +javax.enterprise.inject.Model+ class is available to the classloader.
 
 First the container must discover types. The container discovers:
 
