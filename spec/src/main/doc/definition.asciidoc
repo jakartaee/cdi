@@ -85,8 +85,11 @@ Almost any Java type may be a bean type of a bean:
 * A bean type may be a primitive type. Primitive types are considered to be identical to their corresponding wrapper types in +java.lang+.
 * A bean type may be a raw type.
 
+However, some Java types are not legal bean types :
 
-A type variable is not a legal bean type. A parameterized type that contains a wildcard type parameter is not a legal bean type.
+* A type variable is not a legal bean type.
+* A parameterized type that contains a wildcard type parameter is not a legal bean type.
+* An array type whose component type is not a legal bean type.
 
 Note that certain additional restrictions are specified in <<unproxyable>> for beans with a normal scope, as defined in <<normal_scope>>.
 
