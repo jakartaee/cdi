@@ -31,7 +31,12 @@ import java.lang.annotation.Target;
  * <p>
  * Specifies that a bean is application scoped.
  * </p>
- * 
+ * <p>
+ * While <tt>ApplicationScoped</tt> must be associated with the built-in application context required by the specification, 
+ * third-party extensions are
+ * allowed to also associate it with their own context. Behavior described below is only related to the built-in application context.
+ * </p>
+ *
  * <p>
  * The application scope is active:
  * </p>
@@ -43,20 +48,34 @@ import java.lang.annotation.Target;
  * <li>during any Java EE web service invocation,</li>
  * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
  * an EJB timeout method and during message delivery to any EJB message-driven bean,</li>
- * <li>during any message delivery to a <tt>MessageListener</tt> for a JMS topic or queue obtained from the Java EE component
- * environment, and</li>
  * <li>when the disposer method or <tt>@PreDestroy</tt> callback of any bean with any normal scope other than
- * <tt>@ApplicationScoped</tt> is called.</li>
+ * <tt>@ApplicationScoped</tt> is called, and</li>
+ * <li>during <tt>@PostConstruct</tt> callback of any bean.</li>
  * </ul>
  * 
  * <p>
  * The application context is shared between all servlet requests, web service invocations, EJB remote method invocations, EJB
  * asynchronous method invocations, EJB timeouts and message deliveries to message-driven beans that execute within the same
- * application. The application context is destroyed when the application is shut down.
+ * application.
  * </p>
+ * <p>
+ * The application context is destroyed when the application is shut down.    
+ * </p>
+ * 
+ * <p>
+  * An event with qualifier <tt>@Initialized(ApplicationScoped.class)</tt> is fired when the application context is initialized
+  * and an event with qualifier <tt>@Destroyed(ApplicationScoped.class)</tt> when the application context is destroyed.
+  * The event payload is:
+  * </p>
+  * 
+  * <ul>
+  * <li>the <tt>ServletContext</tt> if the application is a web application deployed to a Servlet container, or</li>
+  * <li>any <tt>java.lang.Object</tt> for other types of application.</li>
+  * </ul>
  * 
  * @author Gavin King
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  */
 
 @Target({ TYPE, METHOD, FIELD })

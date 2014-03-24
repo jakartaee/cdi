@@ -32,9 +32,9 @@ import java.lang.annotation.Target;
  * Specifies that a bean is session scoped.
  * </p>
  * <p>
- * While <tt>SessionScoped</tt> must be associated to the built-in session context required by the spec, 
- * third parties extensions are
- * allowed to also bind it to their own context. Behavior described below is only related to the built-in Session Context.
+ * While <tt>SessionScoped</tt> must be associated with the built-in session context required by the specification, 
+ * third-party extensions are
+ * allowed to also associate it with their own context. Behavior described below is only related to the built-in session context.
  * </p>
  * <p>
  * The session scope is active:
@@ -64,7 +64,7 @@ import java.lang.annotation.Target;
  * <p>
  * An event with qualifier <tt>@Initialized(SessionScoped.class)</tt> is fired when the session context is initialized and an
  * event 
- * with qualifier <tt>@Destroyed(SessionScoped.class)</tt> when the session context is destroyed. The events payload is
+ * with qualifier <tt>@Destroyed(SessionScoped.class)</tt> when the session context is destroyed. The event payload is
  * the <tt>HttpSession</tt> 
  * 
  * @author Gavin King
