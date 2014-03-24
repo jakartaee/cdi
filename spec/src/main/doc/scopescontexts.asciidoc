@@ -511,7 +511,7 @@ The conversation context provides access to state associated with a particular _
 
 * Any Servlet request has exactly one associated conversation.
 * The container provides a filter with the name "CDI Conversation Filter", which may be mapped in +web.xml+, allowing the user alter when the conversation is associated with the servlet request. If this filter is not mapped in any +web.xml+ in the application, the conversation associated with a Servlet request is determined at the beginning of the request before calling any +service()+ method of any servlet in the web application, calling the +doFilter()+ method of any servlet filter in the web application and before the container calls any +ServletRequestListener+ or +AsyncListener+ in the web application.
-
+* The implementation should determine the conversation associated with the Servlet request in a way that does not prevent other filters or servlet from setting the request character encoding or parsing the request body themselves.
 
 Any conversation is in one of two states: _transient_ or _long-running_.
 
