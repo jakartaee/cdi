@@ -499,9 +499,23 @@ The _default scope_ for a bean which does not explicitly declare a scope depends
 
 If a bean explicitly declares a scope, any default scopes declared by stereotypes are ignored.
 
+[[default_bean_discovery]]
+
+=== Default bean discovery mode
+
+The default _bean discovery mode_ for a bean archive is `annotated`, and such a bean archive is said to be an _implicit bean archive_ as defined in <<bean_archive>>.
+
+If the _bean discovery mode_ is `annotated` then:
+
+* bean classes that don't have _bean defining annotation_ (as defined in <<bean_defining_annotations>>) and are not bean classes of sessions beans, are not discovered, and
+* producer methods (as defined in <<producer_method>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
+* producer fields (as defined in <<producer_field>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
+* disposer methods (as defined in <<disposer_method>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
+* observer methods (as defined in <<observes>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered.
+
 [[bean_defining_annotations]]
 
-=== Bean defining annotations
+==== Bean defining annotations
 
 A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>. A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
 
