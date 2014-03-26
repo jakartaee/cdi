@@ -286,6 +286,8 @@ If the event parameter does not explicitly declare any qualifier, the observer m
 
 The event parameter type may contain a type variable or wildcard.
 
+The event parameter may be an array type whose component type contains a type variable or a wildcard.
+
 [[observes]]
 
 ==== Declaring an observer method

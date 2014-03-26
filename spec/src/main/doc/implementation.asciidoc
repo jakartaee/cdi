@@ -254,11 +254,11 @@ If a producer method sometimes returns a null value, then the producer method mu
 
 If the producer method return type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
-If a producer method return type contains a wildcard type parameter the container automatically detects the problem and treats it as a definition error.
+If a producer method return type contains a wildcard type parameter or is an array type whose component type contains a wildcard type parameter, the container automatically detects the problem and treats it as a definition error.
 
 If the producer method return type is a parameterized type with a type variable, it must have scope +@Dependent+. If a producer method with a parameterized return type with a type variable declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
 
-If a producer method return type is a type variable the container automatically detects the problem and treats it as a definition error.
+If a producer method return type is a type variable or an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
 
 The application may call producer methods directly. However, if the application calls a producer method directly, no parameters will be passed to the producer method by the container; the returned object is not bound to any context; and its lifecycle is not managed by the container.
 
@@ -386,11 +386,11 @@ If a producer field sometimes contains a null value when accessed, then the prod
 
 If the producer field type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
-If a producer field type contains a wildcard type parameter the container automatically detects the problem and treats it as a definition error.
+If a producer field type contains a wildcard type parameter or is an array type whose component type contains a wildcard parameter, the container automatically detects the problem and treats it as a definition error.
 
 If the producer field type is a parameterized type with a type variable, it must have scope +@Dependent+. If a producer field with a parameterized type with a type variable declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
 
-If a producer field type is a type variable the container automatically detects the problem and treats it as a definition error.
+If a producer field type is a type variable or is an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
 
 The application may access producer fields directly. However, if the application accesses a producer field directly, the returned object is not bound to any context; and its lifecycle is not managed by the container.
 
