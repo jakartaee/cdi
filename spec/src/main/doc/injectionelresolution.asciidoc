@@ -157,7 +157,7 @@ For a custom implementation of the +Bean+ interface defined in <<bean>>, the con
 
 ==== Legal injection point types
 
-Any legal bean type, as defined in <<legal_bean_types>> may be the required type of an injection point. Furthermore, the required type of an injection point may contain a wildcard type parameter or may be an array type whose component type contain a wildcard type parameter. However, a type variable or an array type whose component type is a type variable, is not a legal injection point type.
+Any legal bean type, as defined in <<legal_bean_types>> may be the required type of an injection point. Furthermore, the required type of an injection point may contain a wildcard type parameter. However, a type variable is not a legal injection point type.
 
 If an injection point type is a type variable, the container automatically detects the problem and treats it as a definition error.
 
