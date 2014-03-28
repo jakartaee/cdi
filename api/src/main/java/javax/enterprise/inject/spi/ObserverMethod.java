@@ -77,7 +77,7 @@ public interface ObserverMethod<T> {
      * </p>
      * 
      * <p>
-     * The implementation of {@link #notify(Object)} for a custom observer method is responsible for deciding whether to call
+     * The implementation of this method for a custom observer method is responsible for deciding whether to call
      * the method if the {@link #getReception()} returns {@link Reception#IF_EXISTS}.
      * </p>
      * 

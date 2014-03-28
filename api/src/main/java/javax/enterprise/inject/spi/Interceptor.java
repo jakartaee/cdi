@@ -66,7 +66,7 @@ public interface Interceptor<T> extends Bean<T> {
      * @param instance the interceptor instance to invoke
      * @param ctx the context for the invocation
      * @return the invocation return value
-     * @throws exceptions thrown by the target method and/or the following interceptors in the chain
+     * @throws Exception thrown by the target method and/or the following interceptors in the chain
      */
     public Object intercept(InterceptionType type, T instance, InvocationContext ctx) throws Exception;
 
