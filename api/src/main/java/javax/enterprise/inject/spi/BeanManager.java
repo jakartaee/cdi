@@ -56,8 +56,8 @@ import javax.enterprise.util.Nonbinding;
  * 
  * <p>
  * Most operations of <tt>BeanManager</tt> may be called at any time during the execution of the application.
- * Note that - in order to prevent random behaviour - some BeanManager operations must not be called 
- * before the AfterDeploymentValidation phase.
+ * Note that - in order to prevent random behaviour caused by the not guaranteed order of class scanning - some BeanManager operations must not be called
+ * before the {@link AfterBeanDiscovery} event is fired.
  * </p>
  * 
  * @author Gavin King
@@ -78,10 +78,8 @@ public interface BeanManager {
      *        {@link javax.enterprise.context.Dependent} that is created
      * @return a contextual reference representing the bean
      * @throws IllegalArgumentException if the given type is not a bean type of the given bean
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *          this method may be called from an observer of the
-     *         {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
 
@@ -96,10 +94,8 @@ public interface BeanManager {
      * @return the injectable reference
      * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
      * @throws AmbiguousResolutionException typesafe resolution results in an unresolvable ambiguous dependency
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the
-     *         {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 
@@ -125,9 +121,8 @@ public interface BeanManager {
      * @throws IllegalArgumentException if the given type represents a type variable
      * @throws IllegalArgumentException if two instances of the same qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
 
@@ -138,9 +133,8 @@ public interface BeanManager {
      * 
      * @param name the EL name
      * @return the resulting set of {@linkplain Bean beans}
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which this method may be
-     *         called from an observer of the {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public Set<Bean<?>> getBeans(String name);
 
@@ -150,10 +144,8 @@ public interface BeanManager {
      * @param id the identifier
      * @return a {@link Bean} that implements {@link javax.enterprise.inject.spi.PassivationCapable} and has the given
      *         identifier, or a null value if there is no such bean
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the {@link AfterBeanDiscovery}
-     *         event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public Bean<?> getPassivationCapableBean(String id);
 
@@ -164,9 +156,8 @@ public interface BeanManager {
      * @param beans a set of {@linkplain Bean beans} of the given type
      * @return the resolved bean, or null if null or an empty set is passed
      * @throws AmbiguousResolutionException if the ambiguous dependency resolution rules fail
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which this method may be
-     *         called from an observer of the {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
 
@@ -176,9 +167,8 @@ public interface BeanManager {
      * @param injectionPoint the {@linkplain InjectionPoint injection point} to validate
      * @throws InjectionException if there is a deployment problem (for example, an unsatisfied or unresolvable ambiguous
      *         dependency) associated with the injection point
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public void validate(InjectionPoint injectionPoint);
 
@@ -206,10 +196,8 @@ public interface BeanManager {
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      * @throws IllegalArgumentException if two instances of the same qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the
-     *         {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);
 
@@ -224,10 +212,8 @@ public interface BeanManager {
      * @throws IllegalArgumentException if the set of bean types is empty
      * @throws IllegalArgumentException if an annotation which is not a binding type is passed
      * @throws IllegalArgumentException if two instances of the same binding type are passed
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the {@link AfterBeanDiscovery}
-     *         event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 
@@ -242,10 +228,8 @@ public interface BeanManager {
      * @throws IllegalArgumentException if no interceptor binding type is given
      * @throws IllegalArgumentException if two instances of the same interceptor binding type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not an interceptor binding type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired The container is permitted to define a non-portable mode in which
-     *         this method may be called from an observer of the
-     *         {@link AfterBeanDiscovery} event.
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
      */
     public List<Interceptor<?>> resolveInterceptors(InterceptionType type, Annotation... interceptorBindings);
 
@@ -519,7 +503,7 @@ public interface BeanManager {
      * <p>
      * The {@link Producer} creates and destroys instances of the decorator, and determines the return value of
      * {@link Bean#getInjectionPoints()}. The {@link Producer} is obtained from the {@link ProducerFactory}.
-     * {@link #getProducerFactory(AnnotatedMethod, Bean)} or {@link #getProducerFactory(AnnotatedField, Bean)} allows use of a 
+     * {@link #getProducerFactory(AnnotatedMethod, Bean)} or {@link #getProducerFactory(AnnotatedField, Bean)} allows use of a
      * container created {@link Producer}.
      * </p>
      * 

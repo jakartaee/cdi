@@ -195,7 +195,7 @@ The container provides a built-in bean with bean type +BeanManager+, scope +@Dep
 ----
 
 Most operations of the +BeanManager+ may be called at any time during the execution of the application.
-Note that - in order to prevent random behaviour - the following +BeanManager+ operations must not be called before the +AfterDeploymentValidation+
+Note that - in order to prevent random behaviour caused by the not guaranteed order of class scanning - the following +BeanManager+ operations must not be called before the +AfterBeanDiscovery+
 phase:
 
 * +getReference()+
