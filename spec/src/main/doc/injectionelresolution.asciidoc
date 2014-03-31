@@ -662,7 +662,7 @@ The +get()+ method must:
 
 The +iterator()+ method must:
 
-* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>.
+* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent +Instance+ was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * Return an +Iterator+, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
 
