@@ -12,7 +12,7 @@ An event comprises:
 
 The event object acts as a payload, to propagate state from producer to consumer. The event qualifiers act as topic selectors, allowing the consumer to narrow the set of events it observes.
 
-An _observer method_ acts as event consumer, observing events of a specific type - the _observed event type_  - with a specific set of qualifiers - the _observed event qualifiers_. An observer method will be notified of an event if the event object is assignable to the observed event type, and if all the observed event qualifiers are event qualifiers of the event.
+An _observer method_ acts as event consumer, observing events of a specific type - the _observed event type_  - with a specific set of qualifiers - the _observed event qualifiers_. An observer method will be notified of an event if the event object is assignable to the observed event type, and if the set of observed event qualifiers is a subset of all the event qualifiers of the event. 
 
 [[event_types_and_qualifier_types]]
 
@@ -56,11 +56,11 @@ Any combination of qualifiers may be specified at the injection point:
 @Inject @Admin Event<LoggedInEvent> adminLoggedInEvent;
 ----
 
-Or, the +@Any+ qualifier may be used, allowing the application to specify qualifiers dynamically:
+Or the application may specify qualifiers dynamically:
 
 [source, java]
 ----
-@Inject @Any Event<LoggedInEvent> loggedInEvent;
+@Inject Event<LoggedInEvent> loggedInEvent;
 ...
 LoggedInEvent event = new LoggedInEvent(user);
 if ( user.isAdmin() ) {
@@ -98,11 +98,11 @@ For an injected +Event+:
 * the _specified qualifiers_ are the qualifiers specified at the injection point.
 
 
-For example, this injected +Event+ has specified type +LoggedInEvent+ and specified qualifier +@Any+:
+For example, this injected +Event+ has specified type +LoggedInEvent+ and specified qualifier +@Admin+:
 
 [source, java]
 ----
-@Inject @Any Event<LoggedInEvent> any;
+@Inject @Admin Event<LoggedInEvent> any;
 ----
 
 The +select()+ method returns a child +Event+ for a given specified type and additional specified qualifiers. If no specified type is given, the specified type is the same as the parent.
@@ -199,7 +199,7 @@ Consider the following event:
 
 [source, java]
 ----
-@Inject @Any Event<LoggedInEvent> loggedInEvent;
+@Inject Event<LoggedInEvent> loggedInEvent;
 ...
 public void login() {
     final User user = ...;
@@ -247,7 +247,7 @@ Then this observer method will only be notified if all the observed event qualif
 
 [source, java]
 ----
-@Inject @Any Event<Document> documentEvent;
+@Inject Event<Document> documentEvent;
 ...
 documentEvent.select(new UpdatedQualifier(), new ByAdminQualifier()).fire(document);
 ----
