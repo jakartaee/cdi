@@ -38,6 +38,7 @@ public interface ProcessProducerMethod<T, X> extends ProcessBean<X> {
      * Returns the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the producer method.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} for the producer method being registered
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedMethod<T> getAnnotatedProducerMethod();
 
@@ -46,6 +47,7 @@ public interface ProcessProducerMethod<T, X> extends ProcessBean<X> {
      * the producer method return type found on a disposal method.
      * 
      * @return the disposal method's {@link javax.enterprise.inject.spi.AnnotatedParameter}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
 }

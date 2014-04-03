@@ -48,6 +48,7 @@ public interface AfterBeanDiscovery {
      * notified.
      * 
      * @param t The definition error as a {@link java.lang.Throwable}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 
@@ -58,6 +59,7 @@ public interface AfterBeanDiscovery {
      * may implement {@link javax.enterprise.inject.spi.Interceptor} or {@link javax.decorator.Decorator}.
      * 
      * @param bean The bean to add to the deployment
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addBean(Bean<?> bean);
 
@@ -68,6 +70,7 @@ public interface AfterBeanDiscovery {
      * notifications.
      * 
      * @param observerMethod The custom observer method to add to the deployment
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addObserverMethod(ObserverMethod<?> observerMethod);
 
@@ -75,6 +78,7 @@ public interface AfterBeanDiscovery {
      * Registers a custom {@link javax.enterprise.context.spi.Context} object with the container.
      * 
      * @param context The custom context to add to the deployment
+     * @throws IllegalStateException if called outside of the observer method invocation                
      */
     public void addContext(Context context);
 
@@ -86,6 +90,7 @@ public interface AfterBeanDiscovery {
      * @param type the {@link java.lang.Class} object
      * @param id the type identifier. If null, the fully qualifier class name of type is used
      * @return the {@link AnnotatedType}
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
@@ -97,6 +102,7 @@ public interface AfterBeanDiscovery {
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
      * @return the {@link AnnotatedType}s
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);

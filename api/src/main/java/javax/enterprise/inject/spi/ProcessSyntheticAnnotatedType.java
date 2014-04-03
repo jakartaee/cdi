@@ -3,7 +3,9 @@ package javax.enterprise.inject.spi;
 /**
  * <p>
  * The container fires an event of this type for each Java class or interface added by
- * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType)}.
+ * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType)}, 
+ * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType, String)} or 
+ * {@link javax.enterprise.inject.spi.AfterTypeDiscovery#addAnnotatedType(AnnotatedType, String)}
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.AnnotatedType}. The
@@ -37,6 +39,7 @@ public interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X
      * Get the extension instance which added the {@link AnnotatedType} for which this event is being fired.
      * 
      * @return the extension instance
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Extension getSource();
 }

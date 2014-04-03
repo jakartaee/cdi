@@ -24,11 +24,13 @@ public interface ProcessBeanAttributes<T> {
     /**
      * @return the {@link AnnotatedType} representing the managed bean class or session bean class, the {@link AnnotatedMethod}
      *         representing the producer field, or the {@link AnnotatedField} representing the producer field
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Annotated getAnnotated();
 
     /**
      * @return the {@link BeanAttributes} object that will be used by the container to manage instances of the bean
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public BeanAttributes<T> getBeanAttributes();
 
@@ -36,6 +38,7 @@ public interface ProcessBeanAttributes<T> {
      * Replaces the {@link BeanAttributes}.
      * 
      * @param beanAttributes the new {@link BeanAttributes} to use
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setBeanAttributes(BeanAttributes<T> beanAttributes);
 
@@ -44,11 +47,13 @@ public interface ProcessBeanAttributes<T> {
      * complete.
      * 
      * @param t the error to add
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 
     /**
      * Forces the container to ignore the bean.
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();
 }

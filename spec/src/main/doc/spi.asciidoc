@@ -774,6 +774,8 @@ Observer methods of these events must belong to _extensions_. An extension is a 
 public interface Extension {}
 ----
 
+If any method on the event object is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 Service providers may have observer methods, which may observe any event, including any container lifecycle event, and obtain an injected +BeanManager+ reference. Any decorators associated with +BeanManager+ will not be applied. If other beans are injected into an extension's observer methods, non-portable behavior results. An extension may use +BeanManager.fireEvent()+ to deliver events to observer methods defined on extensions. The container is not required to deliver events fired during application initialization to observer methods defined on beans.
 
 The container instantiates a single instance of each extension at the beginning of the application initialization process and maintains a reference to it until the application shuts down. The container delivers event notifications to this instance by calling its observer methods.
@@ -814,6 +816,8 @@ void beforeBeanDiscovery(@Observes BeforeBeanDiscovery event) { ... }
 
 If any observer method of the +BeforeBeanDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
 
+If any +BeforeBeanDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 [[atd]]
 
 ==== +AfterTypeDiscovery+ event
@@ -846,6 +850,8 @@ void afterTypeDiscovery(@Observes AfterTypeDiscovery event) { ... }
 
 
 If any observer method of a +AfterTypeDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +AfterTypeDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 
 [[abd]]
@@ -884,6 +890,8 @@ void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager)
 
 If any observer method of the +AfterBeanDiscovery+ event throws an exception, the exception is treated as a definition error by the container.
 
+If any +AfterBeanDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 [[adv]]
 
 ==== +AfterDeploymentValidation+ event
@@ -908,6 +916,8 @@ void afterDeploymentValidation(@Observes AfterDeploymentValidation event, BeanMa
 ----
 
 If any observer method of the +AfterDeploymentValidation+ event throws an exception, the exception is treated as a deployment problem by the container.
+
+If any +AfterDeploymentValidation+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 The container must not allow any request to be processed by the deployment until all observers of this event return.
 
@@ -982,6 +992,8 @@ For example, the following observer decorates the +AnnotatedType+ for every clas
 
 If any observer method of a +ProcessAnnotatedType+ event throws an exception, the exception is treated as a definition error by the container.
 
+If any +ProcessAnnotatedType+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 [[pip]]
 
 ==== +ProcessInjectionPoint+ event
@@ -1007,6 +1019,8 @@ public interface ProcessInjectionPoint<T, X> {
 Any observer of this event is permitted to wrap and/or replace the +InjectionPoint+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the injection point.
 
 If any observer method of a +ProcessInjectionPoint+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +ProcessInjectionPoint+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 [[pit]]
 
@@ -1045,6 +1059,8 @@ For example, this observer decorates the +InjectionTarget+ for all servlets.
 
 If any observer method of a +ProcessInjectionTarget+ event throws an exception, the exception is treated as a definition error by the container.
 
+If any +ProcessInjectionTarget+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 [[pp]]
 
 ==== +ProcessProducer+ event
@@ -1081,6 +1097,8 @@ void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
 ----
 
 If any observer method of a +ProcessProducer+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +ProcessProducer+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 [[pba]]
 
@@ -1119,6 +1137,8 @@ Any observer of this event is permitted to wrap and/or replace the +BeanAttribut
 Any bean which has its bean attributes altered must have it's definition validated during deployment validation.
 
 If any observer method of a +ProcessBeanAttributes+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +ProcessBeanAttributes+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 [[pb]]
 
@@ -1198,6 +1218,8 @@ public interface ProcessProducerField<T, X>
 
 If any observer method of a +ProcessBean+ event throws an exception, the exception is treated as a definition error by the container.
 
+If any +ProcessBean+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
 [[pom]]
 
 ==== +ProcessObserverMethod+ event
@@ -1221,4 +1243,6 @@ public interface ProcessObserverMethod<T, X> {
 
 
 If any observer method of a +ProcessObserverMethod+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +ProcessObserverMethod+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 

@@ -51,6 +51,7 @@ public interface ProcessInjectionTarget<X> {
      * other Java EE component class supporting injection.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedType} of the bean with an injection target
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedType<X> getAnnotatedType();
 
@@ -59,6 +60,7 @@ public interface ProcessInjectionTarget<X> {
      * injection.
      * 
      * @return the {@link javax.enterprise.inject.spi.InjectionTarget} object which performs the injection
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public InjectionTarget<X> getInjectionTarget();
 
@@ -66,6 +68,7 @@ public interface ProcessInjectionTarget<X> {
      * Replaces the {@link javax.enterprise.inject.spi.InjectionTarget} which performs injection for this target.
      * 
      * @param injectionTarget The new {@link javax.enterprise.inject.spi.InjectionTarget} to use
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setInjectionTarget(InjectionTarget<X> injectionTarget);
 
@@ -74,6 +77,7 @@ public interface ProcessInjectionTarget<X> {
      * complete.
      * 
      * @param t A {@link java.lang.Throwable} representing the definition error
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 }

@@ -42,6 +42,7 @@ public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
      * Returns the EJB name of the session bean.
      * 
      * @return the name of the EJB
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public String getEjbName();
 
@@ -49,6 +50,7 @@ public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
      * Returns a {@link javax.enterprise.inject.spi.SessionBeanType} representing the kind of session bean.
      * 
      * @return the {@link javax.enterprise.inject.spi.SessionBeanType}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public SessionBeanType getSessionBeanType();
 }

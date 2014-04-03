@@ -11,6 +11,7 @@ import java.util.List;
  * Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of
  * interceptors or list of decorators. The container will use the final values of these lists, after all observers have been
  * called, to determine the enabled alternatives, interceptors, and decorators for application.
+ * Changes made to these lists after the invocation of the last observer method of the {@code AfterTypeDiscovery} are ignored. 
  * </p>
  * 
  * @author Pete Muir
@@ -20,16 +21,19 @@ public interface AfterTypeDiscovery {
 
     /**
      * @return the ordered list of enabled alternatives of the bean deployment archive
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getAlternatives();
 
     /**
      * @return the ordered list of enabled interceptors of the bean deployment archive.
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getInterceptors();
 
     /**
      * @return the ordered list of enabled decorators of the bean deployment archive
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getDecorators();
 
@@ -51,6 +55,7 @@ public interface AfterTypeDiscovery {
      * </p>
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addAnnotatedType(AnnotatedType<?> type, String id);
 

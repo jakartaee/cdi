@@ -44,6 +44,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * @param qualifier The annotation to treat as a qualifier
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addQualifier(Class<? extends Annotation> qualifier);
 
@@ -57,6 +58,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * @param qualifier The annotation to treat as a qualifier
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public void addQualifier(AnnotatedType<? extends Annotation> qualifier);
@@ -77,6 +79,7 @@ public interface BeforeBeanDiscovery {
      * @param normal Indicates if the scope is normal
      * @param passivating Indicates if the scope is {@linkplain javax.enterprise.inject.spi.PassivationCapable passivation
      *        capable}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addScope(Class<? extends Annotation> scopeType, boolean normal, boolean passivating);
 
@@ -94,6 +97,7 @@ public interface BeforeBeanDiscovery {
      * @param stereotype The annotation type to treat as a {@linkplain javax.enterprise.inject.Stereotype stereotype}
      * @param stereotypeDef An optional list of annotations defining the {@linkplain javax.enterprise.inject.Stereotype
      *        stereotype}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
 
@@ -108,6 +112,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
 
@@ -123,6 +128,7 @@ public interface BeforeBeanDiscovery {
      * 
      * @param bindingType The annotation type to treat as an interceptor binding type
      * @param bindingTypeDef An optional list of annotations defining the {@linkplain Interceptor interceptor}
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
@@ -137,6 +143,7 @@ public interface BeforeBeanDiscovery {
      * This method is deprecated from CDI 1.1 and {@link #addAnnotatedType(AnnotatedType, String)} should be used instead.
      * </p>
      * 
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      */
     public void addAnnotatedType(AnnotatedType<?> type);
@@ -160,6 +167,7 @@ public interface BeforeBeanDiscovery {
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
      * @param id The id of the annotated type
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public void addAnnotatedType(AnnotatedType<?> type, String id);
