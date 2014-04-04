@@ -39,6 +39,7 @@ public interface ProcessProducerField<T, X> extends ProcessBean<X> {
      * Returns the {@link javax.enterprise.inject.spi.AnnotatedField} representing the producer field.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedField} for the producer field being registered
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedField<T> getAnnotatedProducerField();
 
@@ -47,6 +48,7 @@ public interface ProcessProducerField<T, X> extends ProcessBean<X> {
      * the producer field return type found on a disposal method.
      * 
      * @return the disposal method's {@link javax.enterprise.inject.spi.AnnotatedParameter}
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();

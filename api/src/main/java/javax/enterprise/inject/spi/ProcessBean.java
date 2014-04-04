@@ -53,6 +53,7 @@ public interface ProcessBean<X> {
      * {@link javax.enterprise.inject.spi.AnnotatedField} representing the producer field.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedType} for the bean being registered
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Annotated getAnnotated();
 
@@ -62,6 +63,7 @@ public interface ProcessBean<X> {
      * {@link javax.decorator.Decorator}.
      * 
      * @return the {@link javax.enterprise.inject.spi.Bean} object about to be registered
+     * @throws IllegalStateException if called outside of the observer method invocation     * 
      */
     public Bean<X> getBean();
 
@@ -70,6 +72,7 @@ public interface ProcessBean<X> {
      * complete.
      * 
      * @param t The definition error to register as a {@link java.lang.Throwable}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 }

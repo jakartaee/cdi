@@ -52,6 +52,7 @@ public interface ProcessProducer<T, X> {
      * {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the producer method.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedMember} representing the producer
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedMember<T> getAnnotatedMember();
 
@@ -60,6 +61,7 @@ public interface ProcessProducer<T, X> {
      * method or read the producer field.
      * 
      * @return the {@link javax.enterprise.inject.spi.Producer} invoker object used by the container
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Producer<X> getProducer();
 
@@ -68,6 +70,7 @@ public interface ProcessProducer<T, X> {
      * method or read the producer field.
      * 
      * @param producer the new {@link javax.enterprise.inject.spi.Producer} object to use
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setProducer(Producer<X> producer);
 
@@ -76,6 +79,7 @@ public interface ProcessProducer<T, X> {
      * complete.
      * 
      * @param t The definition error to register as a {@link java.lang.Throwable}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 }

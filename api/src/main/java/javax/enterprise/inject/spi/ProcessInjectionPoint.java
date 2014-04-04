@@ -26,6 +26,7 @@ public interface ProcessInjectionPoint<T, X> {
 
     /**
      * @return the InjectionPoint object that will be used by the container to perform injection
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public InjectionPoint getInjectionPoint();
 
@@ -33,6 +34,7 @@ public interface ProcessInjectionPoint<T, X> {
      * Replaces the InjectionPoint.
      * 
      * @param injectionPoint the new injection point
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setInjectionPoint(InjectionPoint injectionPoint);
 
@@ -41,6 +43,7 @@ public interface ProcessInjectionPoint<T, X> {
      * complete.
      * 
      * @param t the definition error
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 }

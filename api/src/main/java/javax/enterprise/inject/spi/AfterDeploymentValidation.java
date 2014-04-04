@@ -35,6 +35,7 @@ public interface AfterDeploymentValidation {
      * been notified.
      * 
      * @param t The deployment problem as a {@link java.lang.Throwable}
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDeploymentProblem(Throwable t);
 

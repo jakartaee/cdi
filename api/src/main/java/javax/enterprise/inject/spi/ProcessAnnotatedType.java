@@ -51,6 +51,7 @@ public interface ProcessAnnotatedType<X> {
      * declared annotations.
      * 
      * @return the {@code AnnotatedType} object
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedType<X> getAnnotatedType();
 
@@ -58,11 +59,13 @@ public interface ProcessAnnotatedType<X> {
      * Replaces the {@link javax.enterprise.inject.spi.AnnotatedType}.
      * 
      * @param type the new {@link javax.enterprise.inject.spi.AnnotatedType} object to use
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setAnnotatedType(AnnotatedType<X> type);
 
     /**
      * Forces the container to ignore this type.
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();
 }

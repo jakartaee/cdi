@@ -34,6 +34,7 @@ public interface ProcessManagedBean<X> extends ProcessBean<X> {
      * Returns the {@link javax.enterprise.inject.spi.AnnotatedType} representing the bean class.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedType} for the bean being registered
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedType<X> getAnnotatedBeanClass();
 }

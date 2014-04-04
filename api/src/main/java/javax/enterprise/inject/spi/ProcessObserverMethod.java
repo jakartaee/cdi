@@ -42,6 +42,7 @@ public interface ProcessObserverMethod<T, X> {
      * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedMethod<X> getAnnotatedMethod();
 
@@ -51,6 +52,7 @@ public interface ProcessObserverMethod<T, X> {
      * 
      * @return the {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to call the
      *         observer method
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public ObserverMethod<T> getObserverMethod();
 
@@ -59,6 +61,7 @@ public interface ProcessObserverMethod<T, X> {
      * complete.
      * 
      * @param t A {@link java.lang.Throwable} representing the definition error
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
 }
