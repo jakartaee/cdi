@@ -782,6 +782,25 @@ The container instantiates a single instance of each extension at the beginning 
 
 For each service provider, the container must provide a bean of scope +@ApplicationScoped+ and qualifier +@Default+, supporting injection of a reference to the service provider instance. The bean types of this bean include the class of the service provider and all superclasses and interfaces.
 
+Lifecycle events described below can be grouped in to two categories:
+
+* Application lifecycle events, that are fired once:
+ ** BeforeBeanDiscovery
+ ** AfterTypeDiscovery
+ ** AfterBeanDiscovery
+ ** AfterDeploymentValidation
+ ** BeforeShutdown
+* Bean discovery events, that are fired multiple times:
+ ** ProcessAnnotatedType
+ ** ProcessInjectionPoint
+ ** ProcessInjectionTarget
+ ** ProcessBeanAttributes
+ ** ProcessBean
+ ** ProcessProducer
+ ** ProcessObserverMethod
+
+Note that the chronological order of these events is specified in <<initialization>>.
+ 
 [[bbd]]
 
 ==== +BeforeBeanDiscovery+ event
@@ -1061,45 +1080,6 @@ If any observer method of a +ProcessInjectionTarget+ event throws an exception, 
 
 If any +ProcessInjectionTarget+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pp]]
-
-==== +ProcessProducer+ event
-
-The container must fire an event for each producer method or field of each bean, including resources.
-
-The event object must be of type +javax.enterprise.inject.spi.ProcessProducer<T, X>+, where +T+ is the bean class of the bean that declares the producer method or field and +X+ is the return type of the producer method or the type of the producer field.
-
-[source, java]
-----
-public interface ProcessProducer<T, X> {
-    public AnnotatedMember<T> getAnnotatedMember();
-    public Producer<X> getProducer();
-    public void setProducer(Producer<X> producer);
-    public void addDefinitionError(Throwable t);
-}
-----
-
-* +getAnnotatedMember()+ returns the +AnnotatedField+ representing the producer field or the +AnnotatedMethod+ representing the producer method.
-* +getProducer()+ returns the +Producer+ object that will be used by the container to call the producer method or read the producer field.
-* +setProducer()+ replaces the +Producer+.
-* +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
-
-
-Any observer of this event is permitted to wrap and/or replace the +Producer+. The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
-
-For example, this observer decorates the +Producer+ for all producer methods and fields of type +EntityManager+.
-
-[source, java]
-----
-void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
-    pit.setProducer( decorate( pp.getProducer() ) );
-}
-----
-
-If any observer method of a +ProcessProducer+ event throws an exception, the exception is treated as a definition error by the container.
-
-If any +ProcessProducer+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
-
 [[pba]]
 
 ==== +ProcessBeanAttributes+ event
@@ -1219,6 +1199,45 @@ public interface ProcessProducerField<T, X>
 If any observer method of a +ProcessBean+ event throws an exception, the exception is treated as a definition error by the container.
 
 If any +ProcessBean+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
+
+[[pp]]
+
+==== +ProcessProducer+ event
+
+The container must fire an event for each producer method or field of each bean, including resources.
+
+The event object must be of type +javax.enterprise.inject.spi.ProcessProducer<T, X>+, where +T+ is the bean class of the bean that declares the producer method or field and +X+ is the return type of the producer method or the type of the producer field.
+
+[source, java]
+----
+public interface ProcessProducer<T, X> {
+    public AnnotatedMember<T> getAnnotatedMember();
+    public Producer<X> getProducer();
+    public void setProducer(Producer<X> producer);
+    public void addDefinitionError(Throwable t);
+}
+----
+
+* +getAnnotatedMember()+ returns the +AnnotatedField+ representing the producer field or the +AnnotatedMethod+ representing the producer method.
+* +getProducer()+ returns the +Producer+ object that will be used by the container to call the producer method or read the producer field.
+* +setProducer()+ replaces the +Producer+.
+* +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
+
+
+Any observer of this event is permitted to wrap and/or replace the +Producer+. The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
+
+For example, this observer decorates the +Producer+ for all producer methods and fields of type +EntityManager+.
+
+[source, java]
+----
+void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
+    pit.setProducer( decorate( pp.getProducer() ) );
+}
+----
+
+If any observer method of a +ProcessProducer+ event throws an exception, the exception is treated as a definition error by the container.
+
+If any +ProcessProducer+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 [[pom]]
 
