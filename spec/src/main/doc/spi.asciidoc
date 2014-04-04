@@ -1226,18 +1226,18 @@ If any +ProcessBean+ method is called outside of the observer method invocation,
 
 The container must fire an event for each observer method of each bean, before registering the +ObserverMethod+ object.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessObserverMethod<T, X>+, where +T+ is the bean class of the bean that declares the observer method and +X+ is the observed event type of the observer method.
+The event object must be of type +javax.enterprise.inject.spi.ProcessObserverMethod<T, X>+, where +T+ is the observed event type of the observer method and +X+ is the bean class of the bean that declares the observer method.
 
 [source, java]
 ----
 public interface ProcessObserverMethod<T, X> {
-    public AnnotatedParameter<T> getAnnotatedEventParameter();
-    public ObserverMethod<X> getObserverMethod();
+    public AnnotatedMethod<X> getAnnotatedMethod();
+    public ObserverMethod<T> getObserverMethod();
     public void addDefinitionError(Throwable t);
 }
 ----
 
-* +getAnnotatedEventParameter()+ returns the +AnnotatedParameter+ representing the event parameter.
+* +getAnnotatedMethod()+ returns the +AnnotatedMethod+ representing the observer method.
 * +getObserverMethod()+ returns the +ObserverMethod+ object that will be used by the container to call the observer method.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
