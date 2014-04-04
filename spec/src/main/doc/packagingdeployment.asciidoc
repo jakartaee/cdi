@@ -79,9 +79,9 @@ When an application is started, the container performs the following steps:
 
 * First, the container must search for service providers for the service +javax.enterprise.inject.spi.Extension+ defined in <<init_events>>, instantiate a single instance of each service provider, and search the service provider class for observer methods of initialization events.
 * Next, the container must fire an event of type +BeforeBeanDiscovery+, as defined in <<bbd>>.
-* Next, the container must perform type discovery. Additionally, for every type discovered the container must fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>.
+* Next, the container must perform type discovery, as defined in <<type_discovery_steps>>.
 * Next, the container must fire an event of type +AfterTypeDiscovery+, as defined in <<atd>>.
-* Next, the container must perform bean discovery, and abort initialization of the application if any definition errors exist, as defined in <<exceptions>>. Additionally, for every Java EE component class supporting injection that may be instantiated by the container at runtime, the container must create an +InjectionTarget+ for the class, as defined in <<injectiontarget>>, and fire an event of type +ProcessInjectionTarget+, as defined in <<pit>>.
+* Next, the container must perform bean discovery, as defined in <<bean_discovery_steps>>.
 * Next, the container must fire an event of type +AfterBeanDiscovery+, as defined in <<abd>>, and abort initialization of the application if any observer registers a definition error.
 * Next, the container must detect deployment problems by validating bean dependencies and specialization and abort initialization of the application if any deployment problems exist, as defined in <<exceptions>>.
 * Next, the container must fire an event of type +AfterDeploymentValidation+, as defined in <<adv>>, and abort initialization of the application if any observer registers a deployment problem.
@@ -98,11 +98,31 @@ When an application is stopped, the container performs the following steps:
 * Finally, the container must fire an event of type +BeforeShutdown+, as defined in <<bs>>.
 
 
-[[bean_discovery]]
+[[type_bean_discovery]]
 
-=== Bean discovery
+=== Type and Bean discovery
 
 The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) and session beans in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
+
+[[type_discovery]]
+
+==== Type discovery
+
+First the container must discover types. The container discovers:
+
+* each Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum deployed in an explicit bean archive, and
+* each Java class with a bean defining annotation in an implicit bean archive.
+* each session bean
+
+that is not excluded from discovery by an _exclude filter_ as defined in <<exclude_filters>>.
+
+Then, for every type discovered the container must create an +AnnotatedType+ representing the type and fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>.
+
+If an extension calls +BeforeBeanDiscovery.addAnnotatedType()+ or +AfterTypeDiscovery.addAnnotatedType()+, the type passed must be added to the set of discovered types and the container must fire an event of type +ProcessSyntheticAnnotatedType+ for every type added, as defined in <<pat>>+
+
+[[exclude_filters]]
+
+==== Exclude filters
 
 Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the bean archive as children of the +<scan>+ element. By default an exclude filter is active. If the exclude filter definition contains:
 
@@ -148,35 +168,38 @@ For example, consider the follow +beans.xml+ file:
 </beans>
 ----
 
-The first exclude filter will exclude all classes in +com.acme.rest+ package. The second exclude filter will exclude all classes in the +com.acme.faces+ package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the +com.acme.verbose+ package if the system property +verbosity+ has the value +low+. The fourth exclude filter will exclude all classes in the +com.acme.ejb+ package, and any subpackages if the system property +exclude-ejbs+ is set (with any value).
+The first exclude filter will exclude all classes in +com.acme.rest+ package. The second exclude filter will exclude all classes in the +com.acme.faces+ package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the +com.acme.verbose+ package if the system property +verbosity+ has the value +low+. The fourth exclude filter will exclude all classes in the +com.acme.ejb+ package, and any subpackages if the system property +exclude-ejbs+ is set (with any value) and at the same time, the +javax.enterprise.inject.Model+ class is available to the classloader.
 
-First the container must discover types. The container discovers:
 
-* each Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum deployed in an explicit bean archive, and
-* each Java class with a bean defining annotation in an implicit bean archive.
-* each session bean
+[[bean_discovery]]
 
-that is not excluded from discovery.
+==== Bean discovery
 
-Then, for every type discovered the container must create an +AnnotatedType+ representing the type and fire an event of type +ProcessAnnotatedType+, as defined in <<pat>>.
-
-If an extension calls +BeforeBeanDiscovery.addAnnotatedType()+ or +AfterTypeDiscovery.addAnnotatedType()+, the type passed must be added to the set of discovered types.
-
-Then, for every type in the set of discovered types, the container must:
+For every type in the set of discovered types (as defined in <<type_discovery>>), the container must:
 
 * inspect the type metadata to determine if it is a bean or other Java EE component class supporting injection, and then
 * detect definition errors by validating the class and its metadata, and then
-* if the class is a managed bean, session bean, or other Java EE component class supporting injection, create an +InjectionTarget+ for the class, as defined in <<injectiontarget>>, and fire an event of type +ProcessInjectionTarget+, as defined in <<pit>>, and then
-* if the class is an enabled bean, interceptor or decorator, create a +Bean+ object that implements the rules defined in <<managed_bean_lifecycle>>, <<stateful_lifecycle>> or <<stateless_lifecycle>>, and fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
+* if the class is a managed bean, session bean, or other Java EE component class supporting injection, fire an event of type +ProcessInjectionPoint+ for each injection point in the class, as defined in <<pip>>, and then
+* if the class is a managed bean, session bean, or other Java EE component class supporting injection, fire an event of type +ProcessInjectionTarget+, as defined in <<pit>>, and then
+* determine which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and then
+* if the class is an enabled bean, interceptor or decorator, fire an event of type +ProcessBeanAttributes+, as defined in <<pba>>, and then
+* if the class is an enabled bean, interceptor or decorator and if +ProcessBeanAttributes.veto()+ wasn't called in previous step, fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
 
-The container determines which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>. For each enabled bean, the container must search the class for producer methods and fields, including resources, and for each producer method or field:
+For each enabled bean, the container must search the class for producer methods and fields, as defined in <<producer_method>> and in <<producer_field>>, including resources, and for each producer:
 
-* create a +Producer+, as defined in <<injectiontarget>>, and fire an event of type +ProcessProducer+, as defined in <<pp>>, and then
-* if the producer method or field is enabled, create a +Bean+ object that implements the rules defined in <<producer_method_lifecycle>>, <<producer_field_lifecycle>> or <<resource_lifecycle>>, and fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
+* if it is a producer method, fire an event of type +ProcessInjectionPoint+ for each injection point in the method parameters, as defined in <<pip>>, and then
+* fire an event of type +ProcessProducer+, as defined in <<pp>>, and then
+* if the producer method or field is enabled, fire an event of type +ProcessBeanAttributes+, as defined in <<pba>>, and then
+* if the producer method or field is enabled and if +ProcessBeanAttributes.veto()+ wasn't called in previous step, fire an event which is a subtype of +ProcessBean+, as defined in <<pb>>.
+
+For each enabled bean, the container must search for disposer methods as defined in <<disposer_method>>, and for each disposer method:
+
+* fire an event of type +ProcessInjectionPoint+ for each injection point in the method parameters, as defined in <<pip>>.
 
 For each enabled bean, the container must search the class for observer methods, and for each observer method:
 
-* create an +ObserverMethod+ object, as defined in <<observer_method>> and fire an event of type +ProcessObserverMethod+, as defined in <<pom>>.
+* fire an event of type +ProcessInjectionPoint+ for each injection point in the method parameters, as defined in <<pip>>, and then
+* fire an event of type +ProcessObserverMethod+, as defined in <<pom>>.
 
 Then, the container registers the +Bean+ and +ObserverMethod+ objects:
 
