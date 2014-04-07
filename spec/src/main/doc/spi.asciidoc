@@ -194,7 +194,24 @@ The container provides a built-in bean with bean type +BeanManager+, scope +@Dep
 @Inject BeanManager manager;
 ----
 
-Any operation of +BeanManager+ may be called at any time during the execution of the application.
+    
+Note that, an exception is thrown if the following operations are called before the +AfterBeanDiscovery+ event is fired:
+
+* +getBeans(String)+,
+* +getBeans(Type, Annotation...)+,
+* +getPassivationCapableBean(String)+
+* +resolve(Set)+,
+* +resolveDecorators(Set, Annotation...)+,
+* +resolveInterceptors(InterceptionType, Annotation...)+,
+* +resolveObserverMethods(Object, Annotation...)+,
+* +validate(InjectionPoint)+,
+
+and if the following operations are called before the {@Link AfterDeploymentValidation} event is fired:
+
+* +getReference(Bean, Type, CreationalContext)+
+* +getInjectableReference(InjectionPoint, CreationalContext)+.
+
+All other operations of BeanManager may be called at any time during the execution of the application.
 
 [[provider]]
 
