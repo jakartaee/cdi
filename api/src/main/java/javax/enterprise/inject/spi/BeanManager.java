@@ -68,6 +68,7 @@ import javax.enterprise.util.Nonbinding;
  *     <li>{@link #resolveDecorators(java.util.Set, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
+ *     <li>{@link #validate(InjectionPoint)},</li>
  * </ul>
  * <p>
  * and the following operations must not be called before the {@Link AfterDeploymentValidation} event is fired:
@@ -75,7 +76,6 @@ import javax.enterprise.util.Nonbinding;
  * <ul>
  *     <li>{@link #getReference(Bean, java.lang.reflect.Type, javax.enterprise.context.spi.CreationalContext)},</li>
  *     <li>{@link #getInjectableReference(InjectionPoint, javax.enterprise.context.spi.CreationalContext)},</li>
- *     <li>{@link #validate(InjectionPoint)},</li>
  * </ul>
  * <p>
  * or the container will throw an Exception.
