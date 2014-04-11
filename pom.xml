@@ -18,5 +18,11 @@
         <defaultGoal>clean package</defaultGoal>
     </build>
 
+    <scm>
+        <connection>scm:git:git@github.com:cdi-spec/cdi.git</connection>
+        <url>scm:git:git@github.com:cdi-spec/cdi.git</url>
+        <developerConnection>scm:git:git@github.com:cdi-spec/cdi.git</developerConnection>
+    </scm>
+
 
 </project>
