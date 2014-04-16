@@ -79,9 +79,9 @@ When an application is started, the container performs the following steps:
 
 * First, the container must search for service providers for the service +javax.enterprise.inject.spi.Extension+ defined in <<init_events>>, instantiate a single instance of each service provider, and search the service provider class for observer methods of initialization events.
 * Next, the container must fire an event of type +BeforeBeanDiscovery+, as defined in <<bbd>>.
-* Next, the container must perform type discovery, as defined in <<type_discovery_steps>>.
+* Next, the container must perform type discovery, as defined in <<type_discovery>>.
 * Next, the container must fire an event of type +AfterTypeDiscovery+, as defined in <<atd>>.
-* Next, the container must perform bean discovery, as defined in <<bean_discovery_steps>>.
+* Next, the container must perform bean discovery, as defined in <<bean_discovery>>.
 * Next, the container must fire an event of type +AfterBeanDiscovery+, as defined in <<abd>>, and abort initialization of the application if any observer registers a definition error.
 * Next, the container must detect deployment problems by validating bean dependencies and specialization and abort initialization of the application if any deployment problems exist, as defined in <<exceptions>>.
 * Next, the container must fire an event of type +AfterDeploymentValidation+, as defined in <<adv>>, and abort initialization of the application if any observer registers a deployment problem.
