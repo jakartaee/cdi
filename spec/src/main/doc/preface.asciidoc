@@ -9,29 +9,31 @@ include::license-${license}.asciidoc[]
 
 === Foreword
 
-Contexts and Dependency Injection 1.1 (JSR-346) is an update to Contexts and Dependency Injection 1.0 (JSR-299). A full changelog can be found in the link:$$https://issues.jboss.org/sr/jira.issueviews:searchrequest-printable/12314424/SearchRequest-12314424.html?tempMax=1000$$[issue tracker].
+Contexts and Dependency Injection 1.2 is a maintenance release of Contexts and Dependency Injection 1.1 (link:https://jcp.org/en/jsr/detail?id=346[JSR-346^]).
+
+A full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?version=12323655&styleName=Html&projectId=12311062[here^].
 
 === Major changes 
 
-These major changes have been introduced for CDI 1.1:
+These major changes have been introduced for CDI 1.2:
 
-* Add global enablement of interceptors (see the Java Interceptors Specification 1.2), global enablement of decorators (see <<enabled_decorators_priority>>) and alternatives (see <<unsatisfied_and_ambig_dependencies>>) using the +@Priority+ annotation
-* Add support for +@AroundConstruct+ lifecycle callback for constructors (see the Java Interceptors Specification 1.2)
-* Allow binding interceptors to constructors
-* Moved interceptor binding to interceptors spec, allowing for reuse by other specifications
-* Support decorators on built in beans (see <<decorators>>)
-* Add +EventMetadata+ (see <<event_metadata>>) to allow inspection of event metadata
-* Add +@Vetoed+ annotation allowing easy programmatic disablement of classes (see <<what_classes_are_beans>>
-* Many improvements for passivation capable beans, including +@TransientReference+ allowing instances to be retained only for use within the invoked method or constructor (see <<passivation_capable_injection_points>> and <<passivating_scope>>)
-* Add scope activation and destruction callback events (see <<builtin_contexts>>)
-* Add +AlterableContext+ allowing bean instances to be explicitly destroyed (see <<context>>)
-* Add automatic enablement of CDI for beans with a scope annotation, and EJBs, in Java EE (see <<bean_archive>>)
-* Add class exclusion filters to +beans.xml+ to prevent scanning of classes and packages (see <<exclude_filters>>)
-* Add +Unmanaged+ allowing easy access to non-contextual instances of beans (see <<bm_obtain_unmanaged_instance>>)
-* Add +CDI+ allowing easy access to the current CDI container (see <<provider>>)
-* Add +AfterTypeDiscovery+ event, allowing extensions to register additional types after type discovery (see <<atd>>)
-* Add +@WithAnnotations+ as a way of improving extension loading performance (see <<pat>>)
-* Many minor improvements to portable extensions (see <<spi>>)
+* Improvement regarding the `annotated` bean discovery mode to ensure compatibility with other JSR-330 in <<default_bean_discovery>>.
+* Clarification about conversation resolution in <<conversation_context>>.
+* Multiple clarifications about events and observers resolution in <<events>>.
+* Clarification and restriction loosening on some `BeanManager` method calls in <<beanmanager>>.
+* Clarification on the limitation of container lifecycle events use in <<init_events>>.
+* Multiple clarification on the whole initialization phase ordering in <<init_events>> and <<initialization>>.
+
+More minor changes have been introduced as well :
+
+* Clarification about legal bean type and array in <<legal_bean_types>> and <<producer_field>>.
+* Clarification on the fact that CDI built-in scope can be extended by third-party extensions in <<builtin_scopes>> and <<context>>.
+* Clarification on `Iterator` returned by `Instance.iterator()` in <<dynamic_lookup>>.
+* Clarification on interceptor binding on producer method in <<binding_interceptor_to_bean>>.
+* Clarification on `ProcessAnnotatedType` in <<pat>>.
+* Clarification on EJB related terms or example to conform to EJB specification.
+* Correction of differences between specification and Javadoc.
+* Correction of wrong examples.
 
 :numbered:
 
