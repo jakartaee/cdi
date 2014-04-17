@@ -5,7 +5,7 @@
     <groupId>javax.enterprise</groupId>
     <artifactId>cdi-spec-doc-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
 
     <name>Parent for CDI Specification documentation</name>
     <description>Parent of Specification for CDI (Contexts and Dependency Injection for Java EE)</description>

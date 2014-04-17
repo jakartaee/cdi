@@ -5,7 +5,7 @@
     <parent>
         <groupId>javax.enterprise</groupId>
         <artifactId>cdi-spec</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.2</version>
     </parent>
 
     <artifactId>cdi-spec-doc</artifactId>
