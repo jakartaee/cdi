@@ -20,19 +20,19 @@ import java.util.List;
 public interface AfterTypeDiscovery {
 
     /**
-     * @return the ordered list of enabled alternatives for the application, alternatives enabled for a bean archive are not included
+     * @return the list of enabled alternatives for the application, sorted by priority in ascending order. Alternatives enabled for a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getAlternatives();
 
     /**
-     * @return the ordered list of enabled interceptors for the application, interceptors enabled for a bean archive are not included
+     * @return the list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled for a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getInterceptors();
 
     /**
-     * @return the ordered list of enabled decorators for the application, decorators enabled for a bean archive are not included
+     * @return the list of enabled decorators for the application, sorted by priority in ascending order. Decorators enabled for a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getDecorators();
