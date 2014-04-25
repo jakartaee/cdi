@@ -99,7 +99,7 @@ An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout met
 
 [source, java]
 ----
-public enum InterceptionType { 
+public enum InterceptionType {
     AROUND_INVOKE, AROUND_CONSTRUCT, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
 }
 ----
@@ -194,7 +194,7 @@ The container provides a built-in bean with bean type +BeanManager+, scope +@Dep
 @Inject BeanManager manager;
 ----
 
-    
+
 Note that, an exception is thrown if the following operations are called before the +AfterBeanDiscovery+ event is fired:
 
 * +getBeans(String)+,
@@ -450,7 +450,7 @@ The method +BeanManager.resolveInterceptors()+ returns the ordered list of inter
 
 [source, java]
 ----
-List<Interceptor<?>> resolveInterceptors(InterceptionType type, 
+List<Interceptor<?>> resolveInterceptors(InterceptionType type,
                                          Annotation... interceptorBindings);
 ----
 
@@ -472,7 +472,7 @@ public boolean isScope(Class<? extends Annotation> annotationType);
 public boolean isQualifier(Class<? extends Annotation> annotationType);
 public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
 public boolean isStereotype(Class<? extends Annotation> annotationType);
-    
+
 public boolean isNormalScope(Class<? extends Annotation> scopeType);
 public boolean isPassivatingScope(Class<? extends Annotation> scopeType);
 public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotation> qualifierType);
@@ -626,7 +626,7 @@ The method +BeanManager.createBean()+ returns a container provided implementatio
 
 [source, java]
 ----
-public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, 
+public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass,
                           InjectionTargetFactory<T> injectionTargetFactory);
 ----
 
@@ -639,7 +639,7 @@ A second version of the method is provided to create a +Bean+ from a producer. T
 
 [source, java]
 ----
-public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass, 
+public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass,
                           ProducerFactory<X> producer);
 ----
 
@@ -688,8 +688,8 @@ The interface +javax.enterprise.inject.spi.AnnotatedField+ exposes the +Field+ o
 
 [source, java]
 ----
-public interface AnnotatedField<X> 
-        extends AnnotatedMember<X> {    
+public interface AnnotatedField<X>
+        extends AnnotatedMember<X> {
     public Field getJavaMember();
 }
 ----
@@ -698,7 +698,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedMethod+ exposes the +Method+
 
 [source, java]
 ----
-public interface AnnotatedMethod<X> 
+public interface AnnotatedMethod<X>
         extends AnnotatedCallable<X> {
     public Method getJavaMember();
 }
@@ -708,7 +708,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedConstructor+ exposes the +Co
 
 [source, java]
 ----
-public interface AnnotatedConstructor<X> 
+public interface AnnotatedConstructor<X>
         extends AnnotatedCallable<X> {
     public Constructor<X> getJavaMember();
 }
@@ -718,7 +718,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedParameter+ exposes the +posi
 
 [source, java]
 ----
-public interface AnnotatedParameter<X> 
+public interface AnnotatedParameter<X>
         extends Annotated {
     public int getPosition();
     public AnnotatedCallable<X> getDeclaringCallable();
@@ -729,7 +729,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedMemember+ exposes the +Membe
 
 [source, java]
 ----
-public interface AnnotatedMember<X> 
+public interface AnnotatedMember<X>
         extends Annotated {
     public Member getJavaMember();
     public boolean isStatic();
@@ -743,7 +743,7 @@ Contexts and Dependency Injection for Java EE 1.1 deprecated the method +Annotat
 
 [source, java]
 ----
-public interface AnnotatedCallable<X> 
+public interface AnnotatedCallable<X>
         extends AnnotatedMember<X> {
     public List<AnnotatedParameter<X>> getParameters();
 }
@@ -756,8 +756,8 @@ The interface +javax.enterprise.inject.spi.Annotated+ exposes the overriding ann
 public interface Annotated {
     public Type getBaseType();
     public Set<Type> getTypeClosure();
-    public <T extends Annotation> T getAnnotation(Class<T> annotationType); 
-    public Set<Annotation> getAnnotations(); 
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType);
+    public Set<Annotation> getAnnotations();
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 }
 ----
@@ -817,7 +817,7 @@ Lifecycle events described below can be grouped in to two categories:
  ** ProcessObserverMethod
 
 Note that the chronological order of these events is specified in <<initialization>>.
- 
+
 [[bbd]]
 
 ==== +BeforeBeanDiscovery+ event
@@ -858,7 +858,7 @@ If any +BeforeBeanDiscovery+ method is called outside of the observer method inv
 
 ==== +AfterTypeDiscovery+ event
 
-The container must fire an event when it has fully completed the type discovery process and before it begins the bean discovery process. The event object must be of type +javax.enterprise.inject.spi.AfterTypeDiscovery+. 
+The container must fire an event when it has fully completed the type discovery process and before it begins the bean discovery process. The event object must be of type +javax.enterprise.inject.spi.AfterTypeDiscovery+.
 
 [source, java]
 ----
@@ -866,13 +866,13 @@ public interface AfterTypeDiscovery {
     public List<Class<?>> getAlternatives();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
-    public void addAnnotatedType(AnnotatedType<?> type, String id);    
+    public void addAnnotatedType(AnnotatedType<?> type, String id);
 }
 ----
 
-* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternatives enabled for a bean archive are not included in the list.
-* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
-* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
+* +getAlternatives()+ returns the list of enabled alternatives for the application, sorted by priority in ascending order. Alternatives enabled for a bean archive are not included in the list.
+* +getInterceptors()+ returns the list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled for a bean archive are not included in the list.
+* +getDecorators()+ returns the list of enabled decorators for the application, sorted by priority in ascending order. Decorators enabled for a bean archive are not included in the list.
 * +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an identifier.
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
@@ -1171,7 +1171,7 @@ public interface ProcessBean<X> {
 
 [source, java]
 ----
-public interface ProcessSessionBean<X> 
+public interface ProcessSessionBean<X>
         extends ProcessManagedBean<Object> {
     public String getEjbName();
     public SessionBeanType getSessionBeanType();
@@ -1189,7 +1189,7 @@ public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }
 
 [source, java]
 ----
-public interface ProcessManagedBean<X> 
+public interface ProcessManagedBean<X>
         extends ProcessBean<X> {
     public AnnotatedType<X> getAnnotatedBeanClass();
 }
@@ -1197,7 +1197,7 @@ public interface ProcessManagedBean<X>
 
 [source, java]
 ----
-public interface ProcessProducerMethod<T, X> 
+public interface ProcessProducerMethod<T, X>
         extends ProcessBean<X> {
     public AnnotatedMethod<T> getAnnotatedProducerMethod();
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
@@ -1206,7 +1206,7 @@ public interface ProcessProducerMethod<T, X>
 
 [source, java]
 ----
-public interface ProcessProducerField<T, X> 
+public interface ProcessProducerField<T, X>
         extends ProcessBean<X> {
     public AnnotatedField<T> getAnnotatedProducerField();
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
