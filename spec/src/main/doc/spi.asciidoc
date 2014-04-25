@@ -870,9 +870,9 @@ public interface AfterTypeDiscovery {
 }
 ----
 
-* +getAlternatives()+ returns the ordered list of enabled alternatives for the application. Alternatives enabled for a bean archive are not included in the list.
-* +getInterceptors()+ returns the ordered list of enabled interceptors for the application. Interceptors enabled for a bean archive are not included in the list.
-* +getDecorators()+ returns the ordered list of enabled decorators for the application. Decorators enabled for a bean archive are not included in the list.
+* +getAlternatives()+ returns the ordered list of enabled alternatives for the application, sorted by priority in ascending order. Alternatives enabled for a bean archive are not included in the list.
+* +getInterceptors()+ returns the ordered list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled for a bean archive are not included in the list.
+* +getDecorators()+ returns the ordered list of enabled decorators for the application, sorted by priority in ascending order. Decorators enabled for a bean archive are not included in the list.
 * +addAnnotatedType()+ adds a given +AnnotatedType+ to the set of types which will be scanned during bean discovery, with an identifier.
 
 If an alternative, interceptor or decorator is added using +AfterTypeDiscovery.addAnnotatedType()+, non-portable behavior results.
