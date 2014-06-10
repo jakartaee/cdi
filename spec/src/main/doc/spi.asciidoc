@@ -725,7 +725,7 @@ public interface AnnotatedParameter<X>
 }
 ----
 
-The interface +javax.enterprise.inject.spi.AnnotatedMemember+ exposes the +Member+ object and the +AnnotatedType+ that defines the member.
+The interface +javax.enterprise.inject.spi.AnnotatedMember+ exposes the +Member+ object and the +AnnotatedType+ that defines the member.
 
 [source, java]
 ----
