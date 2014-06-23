@@ -1147,8 +1147,8 @@ The event object type in the package +javax.enterprise.inject.spi+ depends upon 
 
 * For a managed bean with bean class +X+, the container must raise an event of type +ProcessManagedBean<X>+.
 * For a session bean with bean class +X+, the container must raise an event of type +ProcessSessionBean<X>+.
-* For a producer method with method return type +X+ of a bean with bean class +T+, the container must raise an event of type +ProcessProducerMethod<T, X>+.
-* For a producer field with field type +X+ of a bean with bean class +T+, the container must raise an event of type +ProcessProducerField<T, X>+.
+* For a producer method with method return type +T+ of a bean with bean class +X+, the container must raise an event of type +ProcessProducerMethod<T, X>+.
+* For a producer field with field type +T+ of a bean with bean class +X+, the container must raise an event of type +ProcessProducerField<T, X>+.
 
 
 Resources are considered to be producer fields.
