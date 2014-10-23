@@ -194,7 +194,7 @@ A raw bean type is considered assignable to a parameterized required type if the
 
 Note that a special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
 
-[[null]]
+[[primitive_types_and_null_values]]
 
 ==== Primitive types and null values
 
