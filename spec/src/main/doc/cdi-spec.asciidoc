@@ -1,5 +1,6 @@
-= Contexts and Dependency Injection for the Java EE platform
+:sectanchors:
 :doctype: book
+= Contexts and Dependency Injection for the Java EE platform
 
 include::preface.asciidoc[]
 
@@ -26,4 +27,3 @@ include::events.asciidoc[]
 include::spi.asciidoc[]
 
 include::packagingdeployment.asciidoc[]
-
