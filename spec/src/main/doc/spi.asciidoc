@@ -99,7 +99,7 @@ An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout met
 
 [source, java]
 ----
-public enum InterceptionType { 
+public enum InterceptionType {
     AROUND_INVOKE, AROUND_CONSTRUCT, POST_CONSTRUCT, PRE_DESTROY, PRE_PASSIVATE, POST_ACTIVATE, AROUND_TIMEOUT
 }
 ----
@@ -194,7 +194,7 @@ The container provides a built-in bean with bean type +BeanManager+, scope +@Dep
 @Inject BeanManager manager;
 ----
 
-    
+
 Note that, an exception is thrown if the following operations are called before the +AfterBeanDiscovery+ event is fired:
 
 * +getBeans(String)+,
@@ -450,7 +450,7 @@ The method +BeanManager.resolveInterceptors()+ returns the ordered list of inter
 
 [source, java]
 ----
-List<Interceptor<?>> resolveInterceptors(InterceptionType type, 
+List<Interceptor<?>> resolveInterceptors(InterceptionType type,
                                          Annotation... interceptorBindings);
 ----
 
@@ -472,7 +472,7 @@ public boolean isScope(Class<? extends Annotation> annotationType);
 public boolean isQualifier(Class<? extends Annotation> annotationType);
 public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
 public boolean isStereotype(Class<? extends Annotation> annotationType);
-    
+
 public boolean isNormalScope(Class<? extends Annotation> scopeType);
 public boolean isPassivatingScope(Class<? extends Annotation> scopeType);
 public Set<Annotation> getInterceptorBindingDefinition(Class<? extends Annotation> qualifierType);
@@ -626,7 +626,7 @@ The method +BeanManager.createBean()+ returns a container provided implementatio
 
 [source, java]
 ----
-public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass, 
+public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass,
                           InjectionTargetFactory<T> injectionTargetFactory);
 ----
 
@@ -639,7 +639,7 @@ A second version of the method is provided to create a +Bean+ from a producer. T
 
 [source, java]
 ----
-public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass, 
+public <T, X> Bean<T> createBean(BeanAttributes<T> attributes, Class<X> beanClass,
                           ProducerFactory<X> producer);
 ----
 
@@ -688,8 +688,8 @@ The interface +javax.enterprise.inject.spi.AnnotatedField+ exposes the +Field+ o
 
 [source, java]
 ----
-public interface AnnotatedField<X> 
-        extends AnnotatedMember<X> {    
+public interface AnnotatedField<X>
+        extends AnnotatedMember<X> {
     public Field getJavaMember();
 }
 ----
@@ -698,7 +698,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedMethod+ exposes the +Method+
 
 [source, java]
 ----
-public interface AnnotatedMethod<X> 
+public interface AnnotatedMethod<X>
         extends AnnotatedCallable<X> {
     public Method getJavaMember();
 }
@@ -708,7 +708,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedConstructor+ exposes the +Co
 
 [source, java]
 ----
-public interface AnnotatedConstructor<X> 
+public interface AnnotatedConstructor<X>
         extends AnnotatedCallable<X> {
     public Constructor<X> getJavaMember();
 }
@@ -718,7 +718,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedParameter+ exposes the +posi
 
 [source, java]
 ----
-public interface AnnotatedParameter<X> 
+public interface AnnotatedParameter<X>
         extends Annotated {
     public int getPosition();
     public AnnotatedCallable<X> getDeclaringCallable();
@@ -729,7 +729,7 @@ The interface +javax.enterprise.inject.spi.AnnotatedMemember+ exposes the +Membe
 
 [source, java]
 ----
-public interface AnnotatedMember<X> 
+public interface AnnotatedMember<X>
         extends Annotated {
     public Member getJavaMember();
     public boolean isStatic();
@@ -743,7 +743,7 @@ Contexts and Dependency Injection for Java EE 1.1 deprecated the method +Annotat
 
 [source, java]
 ----
-public interface AnnotatedCallable<X> 
+public interface AnnotatedCallable<X>
         extends AnnotatedMember<X> {
     public List<AnnotatedParameter<X>> getParameters();
 }
@@ -756,8 +756,8 @@ The interface +javax.enterprise.inject.spi.Annotated+ exposes the overriding ann
 public interface Annotated {
     public Type getBaseType();
     public Set<Type> getTypeClosure();
-    public <T extends Annotation> T getAnnotation(Class<T> annotationType); 
-    public Set<Annotation> getAnnotations(); 
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType);
+    public Set<Annotation> getAnnotations();
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 }
 ----
@@ -817,8 +817,8 @@ Lifecycle events described below can be grouped in to two categories:
  ** ProcessObserverMethod
 
 Note that the chronological order of these events is specified in <<initialization>>.
- 
-[[bbd]]
+
+[[before_bean_discovery]]
 
 ==== +BeforeBeanDiscovery+ event
 
@@ -854,11 +854,11 @@ If any observer method of the +BeforeBeanDiscovery+ event throws an exception, t
 
 If any +BeforeBeanDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[atd]]
+[[after_type_discovery]]
 
 ==== +AfterTypeDiscovery+ event
 
-The container must fire an event when it has fully completed the type discovery process and before it begins the bean discovery process. The event object must be of type +javax.enterprise.inject.spi.AfterTypeDiscovery+. 
+The container must fire an event when it has fully completed the type discovery process and before it begins the bean discovery process. The event object must be of type +javax.enterprise.inject.spi.AfterTypeDiscovery+.
 
 [source, java]
 ----
@@ -866,7 +866,7 @@ public interface AfterTypeDiscovery {
     public List<Class<?>> getAlternatives();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
-    public void addAnnotatedType(AnnotatedType<?> type, String id);    
+    public void addAnnotatedType(AnnotatedType<?> type, String id);
 }
 ----
 
@@ -890,7 +890,7 @@ If any observer method of a +AfterTypeDiscovery+ event throws an exception, the 
 If any +AfterTypeDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
 
-[[abd]]
+[[after_bean_discovery]]
 
 ==== +AfterBeanDiscovery+ event
 
@@ -928,7 +928,7 @@ If any observer method of the +AfterBeanDiscovery+ event throws an exception, th
 
 If any +AfterBeanDiscovery+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[adv]]
+[[after_deployment_validation]]
 
 ==== +AfterDeploymentValidation+ event
 
@@ -957,7 +957,7 @@ If any +AfterDeploymentValidation+ method is called outside of the observer meth
 
 The container must not allow any request to be processed by the deployment until all observers of this event return.
 
-[[bs]]
+[[before_shutdown]]
 
 ==== +BeforeShutdown+ event
 
@@ -977,7 +977,7 @@ void beforeShutdown(@Observes BeforeShutdown event, BeanManager manager) { ... }
 
 If any observer method of the +BeforeShutdown+ event throws an exception, the exception is ignored by the container.
 
-[[pat]]
+[[process_annotated_type]]
 
 ==== +ProcessAnnotatedType+ event
 
@@ -1030,7 +1030,7 @@ If any observer method of a +ProcessAnnotatedType+ event throws an exception, th
 
 If any +ProcessAnnotatedType+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pip]]
+[[process_injection_point]]
 
 ==== +ProcessInjectionPoint+ event
 
@@ -1058,7 +1058,7 @@ If any observer method of a +ProcessInjectionPoint+ event throws an exception, t
 
 If any +ProcessInjectionPoint+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pit]]
+[[process_injection_target]]
 
 ==== +ProcessInjectionTarget+ event
 
@@ -1097,7 +1097,7 @@ If any observer method of a +ProcessInjectionTarget+ event throws an exception, 
 
 If any +ProcessInjectionTarget+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pba]]
+[[process_bean_attributes]]
 
 ==== +ProcessBeanAttributes+ event
 
@@ -1137,7 +1137,7 @@ If any observer method of a +ProcessBeanAttributes+ event throws an exception, t
 
 If any +ProcessBeanAttributes+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pb]]
+[[process_bean]]
 
 ==== +ProcessBean+ event
 
@@ -1171,7 +1171,7 @@ public interface ProcessBean<X> {
 
 [source, java]
 ----
-public interface ProcessSessionBean<X> 
+public interface ProcessSessionBean<X>
         extends ProcessManagedBean<Object> {
     public String getEjbName();
     public SessionBeanType getSessionBeanType();
@@ -1189,7 +1189,7 @@ public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }
 
 [source, java]
 ----
-public interface ProcessManagedBean<X> 
+public interface ProcessManagedBean<X>
         extends ProcessBean<X> {
     public AnnotatedType<X> getAnnotatedBeanClass();
 }
@@ -1197,7 +1197,7 @@ public interface ProcessManagedBean<X>
 
 [source, java]
 ----
-public interface ProcessProducerMethod<T, X> 
+public interface ProcessProducerMethod<T, X>
         extends ProcessBean<X> {
     public AnnotatedMethod<T> getAnnotatedProducerMethod();
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
@@ -1206,7 +1206,7 @@ public interface ProcessProducerMethod<T, X>
 
 [source, java]
 ----
-public interface ProcessProducerField<T, X> 
+public interface ProcessProducerField<T, X>
         extends ProcessBean<X> {
     public AnnotatedField<T> getAnnotatedProducerField();
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
@@ -1217,7 +1217,7 @@ If any observer method of a +ProcessBean+ event throws an exception, the excepti
 
 If any +ProcessBean+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pp]]
+[[process_producer]]
 
 ==== +ProcessProducer+ event
 
@@ -1256,7 +1256,7 @@ If any observer method of a +ProcessProducer+ event throws an exception, the exc
 
 If any +ProcessProducer+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
 
-[[pom]]
+[[process_observer_method]]
 
 ==== +ProcessObserverMethod+ event
 
@@ -1281,4 +1281,3 @@ public interface ProcessObserverMethod<T, X> {
 If any observer method of a +ProcessObserverMethod+ event throws an exception, the exception is treated as a definition error by the container.
 
 If any +ProcessObserverMethod+ method is called outside of the observer method invocation, an +IllegalStateException+ is thrown.
-
