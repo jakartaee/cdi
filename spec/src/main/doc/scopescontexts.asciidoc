@@ -92,7 +92,7 @@ public interface AlterableContext extends Context {
 
 The method +getScope()+ returns the scope type of the context object.
 
-A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<abd>>.
+A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
 
 At a particular point in the execution of the program a context object may be _active_ with respect to the current thread. When a context object is active the +isActive()+ method returns +true+. Otherwise, we say that the context object is _inactive_ and the +isActive()+ method returns +false+.
 
@@ -367,7 +367,7 @@ The container must guarantee that:
 * all stateless session beans are passivation capable dependencies,
 * all singleton session beans are passivation capable dependencies,
 * all passivation capable stateful session beans are passivation capable dependencies,
-* all resources are passivation capable dependencies, and 
+* all resources are passivation capable dependencies, and
 * the built-in beans of type +Instance+, +Event+, +InjectionPoint+ and +BeanManager+ are passivation capable dependencies.
 
 
@@ -582,4 +582,3 @@ If +end()+ is called, and the current conversation is marked transient, an +Ille
 If +begin()+ is called, and the current conversation is already marked long-running, an +IllegalStateException+ is thrown.
 
 If +begin()+ is called with an explicit conversation identifier, and a long-running conversation with that identifier already exists, an +IllegalArgumentException+ is thrown.
-

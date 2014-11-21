@@ -13,7 +13,7 @@ Contexts and Dependency Injection 1.2 is a maintenance release of Contexts and D
 
 A full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?version=12323655&styleName=Html&projectId=12311062[here^].
 
-=== Major changes 
+=== Major changes
 
 These major changes have been introduced for CDI 1.2:
 
@@ -30,10 +30,9 @@ More minor changes have been introduced as well :
 * Clarification on the fact that CDI built-in scope can be extended by third-party extensions in <<builtin_scopes>> and <<context>>.
 * Clarification on `Iterator` returned by `Instance.iterator()` in <<dynamic_lookup>>.
 * Clarification on interceptor binding on producer method in <<binding_interceptor_to_bean>>.
-* Clarification on `ProcessAnnotatedType` in <<pat>>.
+* Clarification on `ProcessAnnotatedType` in <<process_annotated_type>>.
 * Clarification on EJB related terms or example to conform to EJB specification.
 * Correction of differences between specification and Javadoc.
 * Correction of wrong examples.
 
 :numbered:
-
