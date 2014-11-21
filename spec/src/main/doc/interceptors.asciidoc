@@ -63,7 +63,7 @@ If a managed bean has a class-level or method-level interceptor binding, the man
 This specification extends the Java Interceptors specification and defines:
 
 * support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
-* the ability to override the interceptor order using the portable extension SPI, defined in <<atd>>.
+* the ability to override the interceptor order using the portable extension SPI, defined in <<after_type_discovery>>.
 
 An interceptor may be explicitly enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
 
@@ -87,7 +87,7 @@ If the same class is listed twice under the +<interceptors>+ element, the contai
 
 Interceptors enabled using +@Priority+ are called before interceptors enabled using +beans.xml+.
 
-An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<atd>>.
+An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<after_type_discovery>>.
 
 [[interceptor_resolution]]
 

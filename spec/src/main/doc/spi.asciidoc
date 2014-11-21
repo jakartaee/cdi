@@ -50,7 +50,7 @@ Note that implementations of +Bean+ must also implement the inherited operations
 
 An instance of +Bean+ must exist for every enabled bean.
 
-A portable extension may add support for new kinds of beans beyond those defined by the this specification (managed beans, session beans, producer methods, producer fields and resources) by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<abd>>.
+A portable extension may add support for new kinds of beans beyond those defined by the this specification (managed beans, session beans, producer methods, producer fields and resources) by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<after_bean_discovery>>.
 
 Custom implementations of +Bean+ are encouraged to implement +PassivationCapable+ and may be required to in later revisions of this specification.
 
@@ -983,7 +983,7 @@ If any observer method of the +BeforeShutdown+ event throws an exception, the ex
 
 The container must fire an event, before it processes a type, for every Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum discovered
 
-as defined in <<type_discovery>>
+as defined in <<type_discovery_steps>>
 
 An event is not fired for any type annotated with +@Vetoed+, or in a package annotated with +@Vetoed+.
 
