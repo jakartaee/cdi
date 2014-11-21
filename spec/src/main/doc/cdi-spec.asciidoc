@@ -1,5 +1,6 @@
 :sectanchors:
 :doctype: book
+:compat-mode:
 = Contexts and Dependency Injection for the Java EE platform
 
 include::preface.asciidoc[]
