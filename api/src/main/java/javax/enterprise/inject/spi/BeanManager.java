@@ -71,7 +71,7 @@ import javax.enterprise.util.Nonbinding;
  *     <li>{@link #validate(InjectionPoint)},</li>
  * </ul>
  * <p>
- * and the following operations must not be called before the {@Link AfterDeploymentValidation} event is fired:
+ * and the following operations must not be called before the {@link AfterDeploymentValidation} event is fired:
  * </p>
  * <ul>
  *     <li>{@link #getReference(Bean, java.lang.reflect.Type, javax.enterprise.context.spi.CreationalContext)},</li>
