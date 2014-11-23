@@ -206,7 +206,7 @@ Note that, an exception is thrown if the following operations are called before 
 * +resolveObserverMethods(Object, Annotation...)+,
 * +validate(InjectionPoint)+,
 
-and if the following operations are called before the {@Link AfterDeploymentValidation} event is fired:
+and if the following operations are called before the +AfterDeploymentValidation+ event is fired:
 
 * +getReference(Bean, Type, CreationalContext)+
 * +getInjectableReference(InjectionPoint, CreationalContext)+.
