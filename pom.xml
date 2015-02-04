@@ -9,14 +9,37 @@
 
     <description>Parent module for CDI Specification</description>
 
-    <modules>
-        <module>spec</module>
-        <module>api</module>
-    </modules>
 
-    <build>
-        <defaultGoal>clean package</defaultGoal>
-    </build>
+    <profiles>
+        <profile>
+            <id>basic</id>
+            <activation>
+                <property>
+                    <name>!tck</name>
+                </property>
+            </activation>
+            <modules>
+                <module>spec</module>
+                <module>api</module>
+            </modules>
+            <build>
+                <defaultGoal>clean package</defaultGoal>
+            </build>
+        </profile>
 
+        <profile>
+            <id>spec-with-assertions</id>
+            <activation>
+                <property>
+                    <name>tck</name>
+                </property>
+            </activation>
+            <modules>
+                <module>spec</module>
+                <module>tck-mapper</module>
+                <module>api</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
