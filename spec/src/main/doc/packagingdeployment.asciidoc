@@ -34,38 +34,26 @@ An _explicit bean archive_ is an archive which contains a +beans.xml+ file:
 * with no version number, or,
 * that is an empty file.
 
-An _implicit bean archive_ is any other archive which contains one or more bean classes with a bean defining annotation as defined in <<bean_defining_annotations>>, or one or more session beans.
+An _implicit bean archive_ is any other archive which contains one or more bean classes with a bean defining annotation as defined in <<bean_defining_annotations>>.
 
 When determining which archives are bean archives, the container must consider:
 
-* Library jars, EJB jars or application client jars
-* The +WEB-INF/classes+ directory of a war
+* Library jars
 * Directories in the JVM classpath
 
-The container is not required to support application client jar bean archives.
-
-A Java EE container is required by the Java EE specification to support Java EE modules. Other containers may or may not provide support for war, EJB jar or rar bean archives.
+Non Java EE containers may or may not provide support for war, EJB jar or rar bean archives.
 
 The +beans.xml+ file must be named:
 
-* +META-INF/beans.xml+ , or,
-* in a war,  +WEB-INF/beans.xml+  or +WEB-INF/classes/META-INF/beans.xml+.
-
-If a war has a file named +beans.xml+ in both the +WEB-INF+ directory and in the +WEB-INF/classes/META-INF+ directory, then non-portable behavior results. Portable applications must have a +beans.xml+ file in only one of the +WEB-INF+ or the +WEB-INF/classes/META-INF+ directories.
+* +META-INF/beans.xml+.
 
 For compatibility with Contexts and Dependency 1.0, products must contain an option to cause an archive to be ignored by the container when no +beans.xml+ is present.
 
-The container searches for beans in all bean archives in the application classpath:
-
-* In an application deployed as an ear, the container searches every bean archive bundled with or referenced by the ear, including bean archives bundled with or referenced by wars, EJB jars and rars contained in the ear. The bean archives might be library jars, EJB jars or war +WEB-INF/classes+ directories.
-* In an application deployed as a war, the container searches every bean archive bundled with or referenced by the war. The bean archives might be library jars or the +WEB-INF/classes+ directory.
-* In an application deployed as an EJB jar, the container searches the EJB jar, if it is a bean archive, and every bean archive referenced by the EJB jar.
-* In an application deployed as a rar, the container searches every bean archive bundled with or referenced by the rar.
-* An embeddable EJB container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property +javax.ejb.embeddable.modules+, or every bean archive in the JVM classpath if the property is not specified. The bean archives might be directories, library jars or EJB jars.
+The container searches for beans in all bean archives in the application classpath.
 
 If a bean class is deployed in two different bean archives, non-portable behavior results. Portable applications must deploy each bean class in no more than one bean archive.
 
-Explicit bean archives may contain classes which are not deployed as beans. For example a bean archive might contain message-driven beans.
+Explicit bean archives may contain classes which are not deployed as beans. For example a bean archive might contain an abstract class not annotated with `@Decorator`.
 
 Implicit bean archives are likely to contain classes which are not deployed as beans.
 
@@ -102,7 +90,7 @@ When an application is stopped, the container performs the following steps:
 
 === Type and Bean discovery
 
-The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) and session beans in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
+The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
 
 [[type_discovery_steps]]
 
@@ -177,10 +165,10 @@ The first exclude filter will exclude all classes in +com.acme.rest+ package. Th
 
 For every type in the set of discovered types (as defined in <<type_discovery_steps>>), the container must:
 
-* inspect the type metadata to determine if it is a bean or other Java EE component class supporting injection, and then
+* inspect the type metadata to determine if it is a bean or other component class supporting injection, and then
 * detect definition errors by validating the class and its metadata, and then
-* if the class is a managed bean, session bean, or other Java EE component class supporting injection, fire an event of type +ProcessInjectionPoint+ for each injection point in the class, as defined in <<process_injection_point>>, and then
-* if the class is a managed bean, session bean, or other Java EE component class supporting injection, fire an event of type +ProcessInjectionTarget+, as defined in <<process_injection_target>>, and then
+* if the class is a managed bean, session bean, or other component class supporting injection, fire an event of type +ProcessInjectionPoint+ for each injection point in the class, as defined in <<process_injection_point>>, and then
+* if the class is a managed bean, session bean, or other component class supporting injection, fire an event of type +ProcessInjectionTarget+, as defined in <<process_injection_target>>, and then
 * determine which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and then
 * if the class is an enabled bean, interceptor or decorator, fire an event of type +ProcessBeanAttributes+, as defined in <<process_bean_attributes>>, and then
 * if the class is an enabled bean, interceptor or decorator and if +ProcessBeanAttributes.veto()+ wasn't called in previous step, fire an event which is a subtype of +ProcessBean+, as defined in <<process_bean>>.

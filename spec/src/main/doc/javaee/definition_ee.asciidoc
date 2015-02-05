@@ -1,0 +1,69 @@
+[[concepts_ee]]
+
+== Extended Concepts for Java EE
+
+When using CDI in a Java EE container the following concepts apply in addition to those defined in <<concepts>>:
+
+* A Java EE component is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>
+* Contextual instances of a bean may be used in EL expressions that are evaluated in the same context
+* For some Java EE components - like environment resources, defined in <<resources>>  - the container provides bean implementation
+
+[[capabilities_ee]]
+
+=== Functionality provided by the container to the bean in Java EE
+
+In addition to the capabilities defined in <<capabilities>>, in Java EE, a bean is provided by the container with the following capability:
+
+* scoped resolution by bean name when used in a Unified EL expression, as defined by <<name_resolution>>.
+
+[[bean_types_ee]]
+
+=== Bean types for Java EE component
+
+As managed beans, EJB session beans may have multiple bean types depending on their client-visible types. For instance, this session bean has only the local interfaces +BookShop+ and +Auditable+, along with +Object+, as bean types, since the bean class is not a client-visible type.
+                                                                                                                        
+[source, java]
+----
+@Stateful 
+public class BookShopBean 
+        extends Business 
+        implements BookShop, Auditable { 
+    ... 
+}
+----
+
+The rules for determining the (unrestricted) set of bean types for Java EE components are defined in  <<session_bean_types>> and <<resource_types>>.
+
+
+[[default_bean_discovery_ee]]
+=== Default bean discovery mode for Java EE
+
+In addition to rules listed in <<default_bean_discovery>>, if the _bean discovery mode_ is `annotated` in Java EE, then:
+
+* bean classes of EJB sessions beans, are not discovered, and
+* producer methods that are not on an EJB session bean are not discovered, and
+* producer fields that are not on an EJB session bean are not discovered, and
+* disposer methods that are not on an EJB session bean are not discovered, and
+* observer methods that are not on an EJB session bean are not discovered.
+
+
+[[names_ee]]
+=== Bean names in Java EE
+
+A bean with a name may be referred to by its name in Unified EL expressions.
+
+There is no relationship between the bean name of an EJB session bean and the EJB name of the bean.
+
+Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
+
+[source, xml]
+----
+<h:outputText value="#{products.total}"/>
+----
+
+[[default_name_ee]]
+
+==== Default bean names for EJB session beans
+
+In the circumstances listed in <<default_name>>, the rule for determining default name for an EJB session bean are defined in <<session_bean_name>>.
+

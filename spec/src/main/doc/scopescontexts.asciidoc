@@ -109,7 +109,7 @@ The +get()+ method may not create a new instance of the given contextual type un
 
 The +destroy()+ method destroys an existing contextual instance, removing it from the context instance.
 
-The +AlterableContext+ interface was introduced in Contexts and Dependency Injection for Java EE 1.1 to allow bean instances to be destroyed by the application. Extensions providing context implementations for normal scopes should implement +AlterableContext+ instead of +Context+.
+The +AlterableContext+ interface was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions providing context implementations for normal scopes should implement +AlterableContext+ instead of +Context+.
 
 If the context object is inactive, the +get()+ and +destroy()+ methods must throw a +ContextNotActiveException+.
 
@@ -170,10 +170,10 @@ The +@Dependent+ scope is always active.
 
 ==== Dependent objects
 
-Many instances of beans with scope +@Dependent+ belong to some other bean or Java EE component class instance and are called _dependent objects_.
+Many instances of beans with scope +@Dependent+ belong to some other bean or component class instance and are called _dependent objects_.
 
 * Instances of decorators and interceptors are dependent objects of the bean instance they decorate.
-* An instance of a bean with scope +@Dependent+ injected into a field, bean constructor or initializer method is a dependent object of the bean or Java EE component class instance into which it was injected.
+* An instance of a bean with scope +@Dependent+ injected into a field, bean constructor or initializer method is a dependent object of the bean or component class instance into which it was injected.
 * An instance of a bean with scope +@Dependent+ injected into a producer method is a dependent object of the producer method bean instance that is being produced.
 * An instance of a bean with scope +@Dependent+ obtained by direct invocation of an +Instance+ is a dependent object of the instance of +Instance+.
 
@@ -186,7 +186,7 @@ Dependent objects of a contextual instance are destroyed when +Contextual.destro
 
 Additionally, the container must ensure that:
 
-* all dependent objects of a non-contextual instance of a bean or other Java EE component class are destroyed when the instance is destroyed by the container,
+* all dependent objects of a non-contextual instance of a bean or other component class are destroyed when the instance is destroyed by the container,
 * all +@Dependent+ scoped contextual instances injected into method parameters of a disposer method or an observer method are destroyed when the invocation completes,
 * all +@Dependent+ scoped contextual instances injected into method or constructor parameters that are annotated with +@TransientReference+ are destroyed when the invocation completes,
 * any +@Dependent+ scoped contextual instance created to receive a producer method, producer field, disposer method or observer method invocation is destroyed when the invocation completes, and
@@ -321,10 +321,6 @@ The temporary transfer of the state of an idle object held in memory to some for
 
 A bean is called _passivation capable_ if the container is able to temporarily transfer the state of any idle instance to secondary storage.
 
-* As defined by the EJB specification, a stateful session beans is passivation capable if:
-** interceptors and decorators of the bean are passivation capable, and,
-** the stateful session bean does not have the +passivationCapable+ flag set to +false+.
-* As defined by the EJB specification, a stateless session bean or a singleton session bean is not passivation capable.
 * A managed bean is passivation capable if and only if the bean class is serializable and all interceptors and decorators of the bean are passivation capable.
 * A producer method is passivation capable if and only if it never returns a value which is not passivation capable at runtime.
 * A producer field is passivation capable if and only if it never refers to a value which is not passivation capable at runtime.
@@ -364,10 +360,6 @@ The container must guarantee that:
 
 * all beans with normal scope are passivation capable dependencies,
 * all passivation capable beans with scope +@Dependent+ are passivation capable dependencies,
-* all stateless session beans are passivation capable dependencies,
-* all singleton session beans are passivation capable dependencies,
-* all passivation capable stateful session beans are passivation capable dependencies,
-* all resources are passivation capable dependencies, and
 * the built-in beans of type +Instance+, +Event+, +InjectionPoint+ and +BeanManager+ are passivation capable dependencies.
 
 
@@ -393,7 +385,7 @@ For example, the built-in session and conversation scopes defined in <<builtin_c
 
 For every bean which declares a passivating scope, the container must validate that the bean truly is passivation capable and that, in addition, its dependencies are passivation capable.
 
-If a managed bean which declares a passivating scope, a stateful session bean which declares a passivating scope, or a built-in bean:
+If a managed bean which declares a passivating scope, or a built-in bean:
 
 * is not passivation capable,
 * has an injection point that is not passivation capable,
@@ -419,7 +411,7 @@ If a producer method or field of scope +@Dependent+ returns an unserializable ob
 
 For a custom implementation of +Bean+, the container calls +getInjectionPoints()+ to determine the injection points, and +InjectionPoint.isTransient()+ to determine whether the injection point is a transient field.
 
-If a managed bean or a stateful session bean which declares a passivating scope type, has a decorator or interceptor which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
+If a managed bean which declares a passivating scope type, has a decorator or interceptor which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
 
 [[builtin_contexts]]
 

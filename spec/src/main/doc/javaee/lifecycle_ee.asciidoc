@@ -1,0 +1,61 @@
+[[lifecycle_ee]]
+
+== Lifecycle of contextual instances
+
+[[biz_method_ee]]
+
+=== Container invocations and interception in Java EE
+
+In addition to definition given in <<biz_method>>, when the application invokes:
+
+* a business method of a session bean via an EJB remote or local reference,
+
+the invocation is treated as a _business method invocation_.
+
+The following additional rule apply in Java EE:
+
+* Invocation of EJB timer service timeouts by the container are not business method invocations, but are intercepted by interceptors for EJB timeouts.
+* Only an invocation of business method on an EJB session bean is subject to EJB services such as declarative transaction management, concurrency, security and asynchronicity, as defined by the EJB specification.
+* Additionally, invocations of message listener methods of message-driven beans during message delivery are passed through method interceptors.
+
+
+[[stateful_lifecycle]]
+
+==== Lifecycle of EJB stateful session beans
+
+When the +create()+ method of a +Bean+ object that represents an EJB stateful session bean that is called, the container creates and returns a container-specific internal local reference to a new EJB session bean instance. The reference must be passivation capable. This reference is not directly exposed to the application.
+When the +create()+ method of a +Bean+ object that represents an EJB stateful session bean that is called, the container creates and returns a container-specific internal local reference to a new EJB session bean instance. The reference must be passivation capable. This reference is not directly exposed to the application.
+
+Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying EJB stateful session bean instance. This object must be passivation capable.
+
+When the +destroy()+ method is called, and if the underlying EJB was not already removed by direct invocation of a remove method by the application, the container removes the EJB stateful session bean. The +@PreDestroy+ callback must be invoked by the container.
+
+Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
+
+[[stateless_lifecycle]]
+
+==== Lifecycle of EJB stateless and singleton session beans
+
+When the +create()+ method of a +Bean+ object that represents an EJB stateless session or singleton session bean is called, the container creates and returns a container-specific internal local reference to the EJB session bean. This reference is not directly exposed to the application.
+
+Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying EJB session bean. This object must be passivation capable.
+
+When the +destroy()+ method is called, the container simply discards this internal reference.
+
+Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
+
+[[resource_lifecycle]]
+
+==== Lifecycle of resources
+
+When the +create()+ method of a +Bean+ object that represents a resource is called, the container creates and returns a container-specific internal reference to the Java EE component environment resource, entity manager, entity manager factory, remote EJB instance or web service reference. This reference is not directly exposed to the application.
+
+Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying resource, entity manager, entity manager factory, remote EJB instance or web service reference. This object must be passivation capable.
+
+The container must perform ordinary Java EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Java EE platform and Common Annotations for the Java platform specifications. The container is not required to perform Java EE component environment injection upon a static field. Portable applications should not rely upon the value of a static field that functions as a resource declaration.
+
+References to EJBs and web services are always dependent scoped and a new instance must be obtained for every injection performed.
+
+For an entity manager associated with a resource definition, it must behave as though it were injected directly using +@PersistencContext+.
+
+When the +destroy()+ method of a bean which represents a remote stateful EJB reference is called, the container will _not_ automatically destroy the EJB reference. The application must explicitly call the method annotated +@Remove+. This behavior differs to that specified in <<stateful_lifecycle>> for beans which represent a local stateful EJB reference

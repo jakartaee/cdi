@@ -1,0 +1,11 @@
+[[injection_ee]]
+
+=== Dependency injection in Java EE
+
+In addition to rules defined in <<injection>>, in Java EE, the container is also required to perform dependency injection whenever it creates one of the following objects:
+
+* contextual instances of EJB session beans,
+* non-contextual instances of EJB session beans (for example, session beans obtained by the application from JNDI or injected using +@EJB+), and
+* instances of any other Java EE component class supporting injection.
+
+A Java EE 5 container is not required to support injection for non-contextual objects.

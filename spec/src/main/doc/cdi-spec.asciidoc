@@ -7,9 +7,13 @@
 :compat-mode:
 Red Hat, Inc.
 
+[preface]
 include::preface.asciidoc[]
 
 include::architecture.asciidoc[]
+
+[[part_1]]
+= Part I - CDI in Java SE
 
 include::definition.asciidoc[]
 
@@ -34,3 +38,5 @@ include::cdi-se.asciidoc[]
 include::spi.asciidoc[]
 
 include::packagingdeployment.asciidoc[]
+
+include::javaee/javaeeintegration.asciidoc[]

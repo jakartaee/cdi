@@ -1,0 +1,297 @@
+[[implementation_ee]]
+
+== Addition to programming model for Java EE
+
+In Java EE, in addition to the kinds of bean listed in <<implementation>>, the container must provide built-in support for injection and contextual lifecycle management of the following kinds of bean:
+
+* Session beans
+* Resources (Java EE resources, persistence contexts, persistence units, remote EJBs and web services)
+
+All containers must support managed beans, producer methods and producer fields. Java EE and embeddable EJB containers are required by the Java EE and EJB specifications to support EJB session beans and the Java EE component environment. Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
+
+[[session_beans]]
+
+=== Session beans
+
+A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+ or in a package annotated +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
+
+A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton session bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error. A stateful session bean may have any scope.
+
+When a contextual instance of a session bean is obtained via the dependency injection service, the behavior of +SessionContext.getInvokedBusinessInterface()+ is specific to the container implementation. Portable applications should not rely upon the value returned by this method.
+
+If the bean class of a session bean is annotated +@Interceptor+ or +@Decorator+, the container automatically detects the problem and treats it as a definition error.
+
+If the session bean class is a generic type, it must have scope +@Dependent+. If a session bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+
+If packages annotated +@Vetoed+ are split across classpath entries, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
+
+[[session_bean_ejb_remove_method]]
+
+==== EJB remove methods of session beans
+
+If a session bean is a stateful session bean:
+
+* If the scope is +@Dependent+, the application _may_ call any EJB remove method of a contextual instance of the session bean.
+* Otherwise, the application _may not_ directly call any EJB remove method of any contextual instance of the session bean.
+
+The session bean is not required to have an EJB remove method in order for the container to destroy it.
+
+If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and declares any scope other than +@Dependent+, an +UnsupportedOperationException+ is thrown.
+
+If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and has scope +@Dependent+ then no parameters are passed to the method by the container. Furthermore, the container ignores the instance instead of destroying it when +Contextual.destroy()+ is called, as defined in <<stateful_lifecycle>>.
+
+[[session_bean_types]]
+
+==== Bean types of a session bean
+
+The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces. If the session bean has a no-interface view, the unrestricted set of bean types contains the bean class and all superclasses. In addition, +java.lang.Object+ is a bean type of every session bean.
+
+Remote interfaces are not included in the set of bean types.
+
+[[declaring_session_bean]]
+
+==== Declaring a session bean
+
+A session bean does not require any special annotations apart from the component-defining annotation (or XML declaration) required by the EJB specification. The following EJBs are beans:
+
+[source, java]
+----
+@Singleton
+class Shop { .. }
+----
+
+[source, java]
+----
+@Stateless
+class PaymentProcessorImpl implements PaymentProcessor { ... }
+----
+
+A bean class may also specify a scope, bean name, stereotypes and/or qualifiers:
+
+[source, java]
+----
+@ConversationScoped @Stateful @Default @Model
+public class ShoppingCart { ... }
+----
+
+A session bean class may extend another bean class:
+
+[source, java]
+----
+@Stateless
+@Named("loginAction")
+public class LoginActionImpl implements LoginAction { ... }
+----
+
+[source, java]
+----
+@Stateless
+@Mock
+@Named("loginAction")
+public class MockLoginActionImpl extends LoginActionImpl { ... }
+----
+
+[[specialize_session_bean]]
+
+==== Specializing a session bean
+
+If a bean class of a session bean X is annotated +@Specializes+, then the bean class of X must directly extend the bean class of another session bean Y. Then X _directly specializes_ Y, as defined in <<specialization>>.
+
+If the bean class of X does not directly extend the bean class of another session bean, the container automatically detects the problem and treats it as a definition error.
+
+For example, +MockLoginActionBean+ directly specializes +LoginActionBean+:
+
+[source, java]
+----
+@Stateless
+public class LoginActionBean implements LoginAction { ... }
+----
+
+[source, java]
+----
+@Stateless @Mock @Specializes
+public class MockLoginActionBean extends LoginActionBean implements LoginAction { ... }
+----
+
+[[session_bean_name]]
+
+==== Default bean name for a session bean
+
+The default name for a session bean is the unqualified class name of the session bean class, after converting the first character to lower case.
+
+For example, if the bean class is named +ProductList+, the default bean name is +productList+.
+
+[[producer_method_ee]]
+
+=== Producer methods on EJB session bean
+
+A producer method defined in an EJB session bean follow the rules defined in <<producer_method> with the following addition:
+
+* A producer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
+
+[[declaring_producer_method_ee]]
+
+==== Declaring a producer method in an EJB session bean
+
+Declaring a producer method in an EJB session bean follow the rules defined in <<declaring_producer_method>> with the following addition:
+
+* if a non-static method of a session bean class is annotated +@Produces+, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
+
+[[producer_field_ee]]
+
+=== Producer field on EJB session bean
+
+A producer field defined in an EJB session bean follow the rules defined in <<producer_field> with the following addition:
+
+* A producer field defined in an EJB session bean must be a static field of the bean class.
+
+[[declaring_producer_field_ee]]
+
+==== Declaring a producer field in an EJB session bean
+
+Declaring a producer field in an EJB session bean follow the rules defined in <<declaring_producer_field>> with the following addition:
+
+* If a non-static field of an EJB session bean class is annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
+
+[[disposer_method_ee]]
+
+=== Disposer methods on EJB session bean
+
+A disposer method defined in an EJB session bean follow the rules defined in <<disposer_method> with the following addition:
+
+* A disposer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
+
+[[declaring_disposer_method_ee]]
+
+==== Declaring a disposer method
+
+Declaring a disposer method in an EJB session bean follow the rules defined in <<declaring_disposer_method>> with the following addition:
+
+* If a non-static method of an EJB session bean class has a parameter annotated +@Disposes+, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
+
+[[javaee_components]]
+
+=== Java EE components
+
+Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are an exception.
+
+The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using +@Inject+, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field. It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods. It is safe to annotate Java EE components with +@Vetoed+ to prevent them being considered beans.
+
+[[resources]]
+
+=== Resources
+
+A _resource_ is a bean that represents a reference to a resource, persistence context, persistence unit, remote EJB or web service in the Java EE component environment.
+
+By declaring a resource, we enable an object from the Java EE component environment to be injected by specifying only its type and qualifiers at the injection point. For example, if +@CustomerDatabase+ is a qualifier:
+
+[source, java]
+----
+@Inject @CustomerDatabase Datasource customerData;
+----
+
+[source, java]
+----
+@Inject @CustomerDatabase EntityManager customerDatabaseEntityManager;
+----
+
+[source, java]
+----
+@Inject @CustomerDatabase EntityManagerFactory customerDatabaseEntityManagerFactory;
+----
+
+[source, java]
+----
+@Inject PaymentService remotePaymentService;
+----
+
+The container is not required to support resources with scope other than +@Dependent+. Portable applications should not define resources with any scope other than +@Dependent+.
+
+A resource may not have a bean name.
+
+[[declaring_resource]]
+
+==== Declaring a resource
+
+A resource may be declared by specifying a Java EE component environment injection annotation as part of a producer field declaration. The producer field may be static.
+
+* For a Java EE resource, +@Resource+ must be specified.
+* For a persistence context, +@PersistenceContext+ must be specified.
+* For a persistence unit, +@PersistenceUnit+ must be specified.
+* For a remote EJB, +@EJB+ must be specified.
+* For a web service, +@WebServiceRef+ must be specified.
+
+
+The injection annotation specifies the metadata needed to obtain the resource, entity manager, entity manager factory, remote EJB instance or web service reference from the component environment.
+
+[source, java]
+----
+@Produces @WebServiceRef(lookup="java:app/service/PaymentService")
+PaymentService paymentService;
+----
+
+[source, java]
+----
+@Produces @EJB(ejbLink="../their.jar#PaymentService")
+PaymentService paymentService;
+----
+
+[source, java]
+----
+@Produces @Resource(lookup="java:global/env/jdbc/CustomerDatasource")
+@CustomerDatabase Datasource customerDatabase;
+----
+
+[source, java]
+----
+@Produces @PersistenceContext(unitName="CustomerDatabase")
+@CustomerDatabase EntityManager customerDatabasePersistenceContext;
+----
+
+[source, java]
+----
+@Produces @PersistenceUnit(unitName="CustomerDatabase")
+@CustomerDatabase EntityManagerFactory customerDatabasePersistenceUnit;
+----
+
+The bean type and qualifiers of the resource are determined by the producer field declaration.
+
+If the producer field declaration specifies a bean name, the container automatically detects the problem and treats it as a definition error.
+
+If the matching object in the Java EE component environment is not of the same type as the producer field declaration, the container automatically detects the problem and treats it as a definition error.
+
+[[resource_types]]
+
+==== Bean types of a resource
+
+The unrestricted set of bean types of a resource is determined by the declared type of the producer field, as specified by <<producer_field_types>>.
+
+[[additional_builtin_beans]]
+
+=== Additional built-in beans
+
+A Java EE or embeddable EJB container must provide the following built-in beans, all of which have qualifier +@Default+:
+
+* a bean with bean type +javax.transaction.UserTransaction+, allowing injection of a reference to the JTA +UserTransaction+, and
+* a bean with bean type +javax.security.Principal+, allowing injection of a +Principal+ representing the current caller identity.
+
+
+A servlet container must provide the following built-in beans, all of which have qualifier +@Default+:
+
+* a bean with bean type +javax.servlet.http.HttpServletRequest+, allowing injection of a reference to the +HttpServletRequest+
+* a bean with bean type +javax.servlet.http.HttpSession+, allowing injection of a reference to the +HttpSession+,
+* a bean with bean type +javax.servlet.ServletContext+, allowing injection of a reference to the +ServletContext+,
+
+
+These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
+
+If a Java EE component class has an injection point of type +UserTransaction+ and qualifier +@Default+, and may not validly make use of the JTA +UserTransaction+ according to the Java EE platform specification, the container automatically detects the problem and treats it as a definition error.
+
+
+[[initializer_methods_ee]]
+
+=== Initializer methods on EJB session beans
+
+An initializer method defined in an EJB session bean follow the rules defined in <<initializer_methods> with the following addition:
+
+* An intializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.

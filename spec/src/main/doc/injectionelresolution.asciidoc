@@ -39,7 +39,7 @@ This specification defines two methods of selecting alternatives. From Contexts 
 
 An alternative may be given a priority for the application:
 
-* by placing the +@Priority+ annotation on the bean class of a managed bean or session bean, or
+* by placing the +@Priority+ annotation on the bean class of a bean, or
 * by placing the +@Priority+ annotation on the bean class that declares the producer method, field or resource.
 
 [[declaring_selected_alternatives_bean_archive]]
@@ -49,7 +49,7 @@ An alternative may be given a priority for the application:
 
 An alternative may be explicitly declared using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
 
-* the alternative is a managed bean or session bean and the bean class of the bean is listed,
+* the alternative is a bean and the bean class of the bean is listed,
 * the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
 * any +@Alternative+ stereotype of the alternative is listed.
 
@@ -149,7 +149,7 @@ When an ambiguous dependency exists, the container attempts to resolve the ambig
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
 * all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for alternatives with the highest priority and producer methods and fields of alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
 
-The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other Java EE component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
+The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getInjectionPoints()+ to determine the set of injection points.
 
@@ -346,23 +346,14 @@ The behavior of all methods declared by +java.lang.Object+, except for +toString
 
 === Dependency injection
 
-From time to time the container instantiates beans and other Java EE component classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
+From time to time the container instantiates beans and other component classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
 
-The container is required to perform dependency injection whenever it creates one of the following contextual objects:
+The container is required to perform dependency injection whenever it creates one of the following objects:
 
-* contextual instances of session beans, and
-* contextual instances of managed beans.
+* contextual instances of managed beans, and
+* non-contextual instances of managed beans.
 
-
-The container is also required to perform dependency injection whenever it instantiates any of the following non-contextual objects:
-
-* non-contextual instances of session beans (for example, session beans obtained by the application from JNDI or injected using +@EJB+),
-* non-contextual instances of managed beans, and
-* instances of any other Java EE component class supporting injection.
-
-A Java EE 5 container is not required to support injection for non-contextual objects.
-
-The container interacts with instances of beans and other Java EE component classes supporting injection by calling methods and getting and setting field values.
+The container interacts with instances of beans and other component classes supporting injection by calling methods and getting and setting field values.
 
 The object injected by the container may not be a direct reference to a contextual instance of the bean. Instead, it is an injectable reference, as defined by <<injectable_reference>>.
 
@@ -370,13 +361,13 @@ The object injected by the container may not be a direct reference to a contextu
 
 ==== Injection using the bean constructor
 
-When the container instantiates a managed bean or session bean with a constructor annotated +@Inject+, the container calls this constructor, passing an injectable reference to each parameter. If there is no constructor annotated +@Inject+, the container calls the constructor with no parameters.
+When the container instantiates a bean with a constructor annotated +@Inject+, the container calls this constructor, passing an injectable reference to each parameter. If there is no constructor annotated +@Inject+, the container calls the constructor with no parameters.
 
 [[fields_initializer_methods]]
 
 ==== Injection of fields and initializer methods
 
-When the container creates a new instance of a managed bean, session bean, or of any other Java EE component class supporting injection the container must:
+When the container creates a new instance of a bean, or of any other component class supporting injection the container must:
 
 * Initialize the values of all injected fields. The container sets the value of each injected field to an injectable reference.
 * Call all initializer methods, passing an injectable reference to each parameter.
@@ -384,16 +375,16 @@ When the container creates a new instance of a managed bean, session bean, or of
 
 The container must ensure that:
 
-* Initializer methods declared by a class X in the type hierarchy of the bean are called after all injected fields declared by X or by superclasses of X have been initialized, and after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
-* Any +@PostConstruct+ callback declared by a class X in the type hierarchy of the bean is called after all initializer methods declared by X or by superclasses of X have been called, after all injected fields declared by X or by superclasses of X have been initialized, and after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
-* Any servlet +init()+ method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
+* Initializer methods declared by a class X in the type hierarchy of the bean are called after all injected fields declared by X or by superclasses of X have been initialized, and after all component environment resource dependencies declared by X or by superclasses of X have been injected.
+* Any +@PostConstruct+ callback declared by a class X in the type hierarchy of the bean is called after all initializer methods declared by X or by superclasses of X have been called, after all injected fields declared by X or by superclasses of X have been initialized, and after all component environment resource dependencies declared by X or by superclasses of X have been injected.
+* Any servlet +init()+ method is called after all initializer methods have been called, all injected fields have been initialized and all component environment resource dependencies have been injected.
 
 
 [[dependent_objects_destruction]]
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean or of any Java EE component class supporting injection, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
+When the container destroys an instance of a bean or of any component class supporting injection, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
 
 [[producer_or_disposer_methods_invocation]]
 
@@ -487,7 +478,7 @@ If a bean that declares any scope other than +@Dependent+ has an injection point
 
 If a disposer method has an injection point of type +InjectionPoint+ and qualifier +Default+, the container automatically detects the problem and treats it as a definition error.
 
-If a Java EE component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
+If a component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
 [[bean_metadata]]
 

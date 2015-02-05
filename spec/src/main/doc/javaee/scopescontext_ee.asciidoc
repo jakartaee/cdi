@@ -1,0 +1,33 @@
+[[contexts_ee]]
+
+== Scopes and contexts in Java EE
+
+[[passivating_scope_ee]]
+
+=== Passivation and passivating scopes in Java EE
+
+[[passivation_capable_ee]]
+
+==== Passivation capable beans in Java EE
+
+* As defined by the EJB specification, an EJB stateful session beans is passivation capable if:
+** interceptors and decorators of the bean are passivation capable, and,
+** the EJB stateful session bean does not have the +passivationCapable+ flag set to +false+.
+* As defined by the EJB specification, an EJB stateless session bean or an EJB singleton session bean is not passivation capable.
+
+[[passivation_capable_dependency_ee]]
+
+==== Passivation capable dependencies in java EE
+
+In addition to rules defined in <<passivation_capable_dependency>>, when running in Java EE, the container must garantee that:
+
+* all EJB stateless session beans are passivation capable dependencies,
+* all EJB singleton session beans are passivation capable dependencies,
+* all passivation capable EJB stateful session beans are passivation capable dependencies, and
+* all Java EE resources are passivation capable dependencies.
+
+[[passivation_validation_ee]]
+
+==== Validation of passivation capable beans and dependencies
+
+All rules defined in <<passivation_validation>> for managed beans, also apply for EJB stateful session beans when running in Java EE.

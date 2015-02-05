@@ -2,9 +2,9 @@
 
 == Concepts
 
-A Java EE component is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>. A bean may bear metadata defining its lifecycle and interactions with other components.
+A Java class is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>. A bean may bear metadata defining its lifecycle and interactions with other components.
 
-Speaking more abstractly, a bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context, and may be used in EL expressions that are evaluated in the same context.
+Speaking more abstractly, a bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context.
 
 A bean comprises the following attributes:
 
@@ -18,7 +18,7 @@ A bean comprises the following attributes:
 
 Furthermore, a bean may or may not be an alternative.
 
-In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other cases - for example, Java EE component environment resources, defined in <<resources>>  - the developer provides only the annotations and the bean implementation is provided by the container.
+In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other cases the developer provides only the annotations and the bean implementation is provided by the container.
 
 The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_el_resolution>>.
 
@@ -32,7 +32,6 @@ A bean is provided by the container with the following capabilities:
 
 * transparent creation and destruction and scoping to a particular context, specified in <<contexts>> and <<lifecycle>>,
 * scoped resolution by bean type and qualifier annotation type when injected into a Java-based client, as defined by <<typesafe_resolution>>,
-* scoped resolution by bean name when used in a Unified EL expression, as defined by <<name_resolution>>,
 * lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_el_resolution>>,
 * method interception, callback interception, and decoration, as defined in <<interceptors>> and <<decorators>>, and
 * event notification, as defined in <<events>>.
@@ -55,19 +54,7 @@ public class BookShop
 
 The bean types are +BookShop+, +Business+, +Shop<Book>+ and +Object+.
 
-Meanwhile, this session bean has only the local interfaces +BookShop+ and +Auditable+, along with +Object+, as bean types, since the bean class is not a client-visible type.
-
-[source, java]
-----
-@Stateful 
-public class BookShopBean 
-        extends Business 
-        implements BookShop, Auditable { 
-    ... 
-}
-----
-
-The rules for determining the (unrestricted) set of bean types for a bean are defined in <<managed_bean_types>>, <<session_bean_types>>, <<producer_method_types>>, <<producer_field_types>> and <<resource_types>>.
+The rules for determining the (unrestricted) set of bean types for a bean are defined in <<managed_bean_types>>, <<producer_method_types>> and <<producer_field_types>>.
 
 All beans have the bean type +java.lang.Object+.
 
@@ -507,11 +494,11 @@ The default _bean discovery mode_ for a bean archive is `annotated`, and such a 
 
 If the _bean discovery mode_ is `annotated` then:
 
-* bean classes that don't have _bean defining annotation_ (as defined in <<bean_defining_annotations>>) and are not bean classes of sessions beans, are not discovered, and
-* producer methods (as defined in <<producer_method>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
-* producer fields (as defined in <<producer_field>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
-* disposer methods (as defined in <<disposer_method>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered, and
-* observer methods (as defined in <<observes>>) that are not on a session bean and whose bean class does not have a _bean defining annotation_ are not discovered.
+* bean classes that don't have _bean defining annotation_ (as defined in <<bean_defining_annotations>>), and
+* producer methods (as defined in <<producer_method>>) whose bean class does not have a _bean defining annotation_ are not discovered, and
+* producer fields (as defined in <<producer_field>>) whose bean class does not have a _bean defining annotation_ are not discovered, and
+* disposer methods (as defined in <<disposer_method>>) whose bean class does not have a _bean defining annotation_ are not discovered, and
+* observer methods (as defined in <<observes>>) whose bean class does not have a _bean defining annotation_ are not discovered.
 
 [[bean_defining_annotations]]
 
@@ -556,7 +543,7 @@ Note that to ensure compatibility with other JSR-330 implementations, all pseudo
 
 === Bean names
 
-A bean may have a _bean name_. A bean with a name may be referred to by its name in Unified EL expressions. A valid bean name is a period-separated list of valid EL identifiers.
+A bean may have a _bean name_. A bean with a name may be referred to by its name when used in a non typesafe environment (like the Unified Expression Language). A valid bean name is a period-separated list of valid EL identifiers.
 
 The following strings are valid bean names:
 
@@ -568,18 +555,9 @@ com.acme.settings
 orderManager
 ----
 
-There is no relationship between the bean name of a session bean and the EJB name of the bean.
-
 Subject to the restrictions defined in <<ambig_names>>, multiple beans may share the same bean name.
 
-Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
-
-[source, xml]
-----
-<h:outputText value="#{products.total}"/>
-----
-
-Bean names are used by the rules of EL name resolution defined in <<name_resolution>>.
+Bean names are used by the rules of bean name resolution defined in <<name_resolution>>.
 
 [[declaring_bean_name]]
 
@@ -605,7 +583,7 @@ In the following circumstances, a _default name_ must be assigned by the contain
 
 If a bean class or producer method or field of a bean declares a +@Named+ annotation and no bean name is explicitly specified the value of the +value+ member is defaulted.
 
-The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<session_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
+The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
 
 [[beans_with_no_name]]
 
