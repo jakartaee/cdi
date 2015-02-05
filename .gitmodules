@@ -1,0 +1,4 @@
+[submodule "tck"]
+	path = tck
+	url = git@github.com:cdi-spec/cdi-tck.git
+	master = master
