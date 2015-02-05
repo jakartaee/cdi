@@ -7,30 +7,43 @@
 :compat-mode:
 Red Hat, Inc.
 
+[preface]
 include::preface.asciidoc[]
 
 include::architecture.asciidoc[]
 
-include::definition.asciidoc[]
+[[part_1]]
+= Part I - Core CDI
 
-include::implementation.asciidoc[]
+include::core/definition.asciidoc[]
 
-include::inheritance.asciidoc[]
+include::core/implementation.asciidoc[]
 
-include::injectionelresolution.asciidoc[]
+include::core/inheritance.asciidoc[]
 
-include::scopescontexts.asciidoc[]
+include::core/injectionandresolution.asciidoc[]
 
-include::lifecycle.asciidoc[]
+include::core/scopescontexts.asciidoc[]
 
-include::decorators.asciidoc[]
+include::core/lifecycle.asciidoc[]
 
-include::interceptors.asciidoc[]
+include::core/decorators.asciidoc[]
 
-include::events.asciidoc[]
+include::core/interceptors.asciidoc[]
 
-include::cdi-se.asciidoc[]
+include::core/events.asciidoc[]
 
-include::spi.asciidoc[]
+include::core/spi.asciidoc[]
 
-include::packagingdeployment.asciidoc[]
+include::core/packagingdeployment.asciidoc[]
+
+
+[[part_2]]
+= Part II - CDI in Java SE
+
+include::javase/javase.asciidoc[]
+
+[[part_3]]
+= Part III - CDI in Java EE
+
+include::javaee/javaeeintegration.asciidoc[]

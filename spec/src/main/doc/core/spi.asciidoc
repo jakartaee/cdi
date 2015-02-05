@@ -42,7 +42,7 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
 }
 ----
 
-* +getBeanClass()+ returns the bean class of the managed bean or session bean or of the bean that declares the producer method or field.
+* +getBeanClass()+ returns the bean class of the managed bean or of the bean that declares the producer method or field.
 * +getInjectionPoints()+ returns a set of +InjectionPoint+ objects, defined in <<injection_point>>, representing injection points of the bean, that will be validated by the container at initialization time.
 * +isNullable()+ is deprecated in CDI 1.1 and should be ignored by the container.
 
@@ -50,7 +50,7 @@ Note that implementations of +Bean+ must also implement the inherited operations
 
 An instance of +Bean+ must exist for every enabled bean.
 
-A portable extension may add support for new kinds of beans beyond those defined by the this specification (managed beans, session beans, producer methods, producer fields and resources) by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<after_bean_discovery>>.
+A portable extension may add support for new kinds of beans beyond those defined by the this specification by implementing +Bean+ and registering beans with the container, using the mechanism defined in <<after_bean_discovery>>.
 
 Custom implementations of +Bean+ are encouraged to implement +PassivationCapable+ and may be required to in later revisions of this specification.
 
@@ -95,7 +95,7 @@ public interface Interceptor<T> extends Bean<T> {
 * +intercept()+ invokes the specified kind of lifecycle callback or method invocation interception upon the given instance of the interceptor.
 
 
-An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout method or business method.
+An +InterceptionType+ identifies the kind of lifecycle callback or business method.
 
 [source, java]
 ----
@@ -178,9 +178,9 @@ public interface InjectionTarget<T>
 }
 ----
 
-* +inject()+ performs dependency injection upon the given object. The container performs Java EE component environment injection, according to the semantics required by the Java EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods>>.
-* +postConstruct()+ calls the +@PostConstruct+ callback, if it exists, according to the semantics required by the Java EE platform specification.
-* +preDestroy()+ calls the +@PreDestroy+ callback, if it exists, according to the semantics required by the Java EE platform specification.
+* +inject()+ performs dependency injection upon the given object. The container sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods>>.
+* +postConstruct()+ calls the +@PostConstruct+ callback, if it exists.
+* +preDestroy()+ calls the +@PreDestroy+ callback, if it exists.
 
 
 Implementations of +Producer+ and +InjectionTarget+ must ensure that the set of injection points returned by +getInjectionPoints()+ are injected by +produce()+ or +inject()+.
@@ -242,12 +242,11 @@ The +CDIProvider+ to use may be set by the application or container using the +s
 ----
 public interface CDIProvider {
    public CDI<Object> getCDI();
+   boolean isInitialized();
+   default CDI<Object> initialize();
+   CDI<Object> initialize(Map<String,Object> params);
 }
 ----
-
-A Java EE container is required to provide a CDI provider that will allow access to the current container for any Java EE application or Java EE module which contains enabled beans.
-
-Java EE components may obtain an instance of +BeanManager+ from JNDI by looking up the name +java:comp/BeanManager+.
 
 [[bm_obtain_contextual_reference]]
 
@@ -317,7 +316,7 @@ An instance of +CreationalContext+ for a non-contextual object may be obtained b
 
 ==== Obtaining a +Bean+ by type
 
-The method +BeanManager.getBeans()+ returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
+The method +BeanManager.getBeans()+ returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
 
 [source, java]
 ----
@@ -338,7 +337,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 ==== Obtaining a +Bean+ by name
 
-The method +BeanManager.getBeans()+ which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules of name resolution defined in <<name_resolution>>.
+The method +BeanManager.getBeans()+ which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules of name resolution defined in <<name_resolution>>.
 
 [source, java]
 ----
@@ -431,7 +430,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 ==== Decorator resolution
 
-The method +BeanManager.resolveDecorators()+ returns the ordered list of decorators for a set of bean types and a set of qualifiers and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<decorator_resolution>>.
+The method +BeanManager.resolveDecorators()+ returns the ordered list of decorators for a set of bean types and a set of qualifiers and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<decorator_resolution>>.
 
 [source, java]
 ----
@@ -450,7 +449,7 @@ If the set of bean types is empty, an +IllegalArgumentException+ is thrown.
 
 ==== Interceptor resolution
 
-The method +BeanManager.resolveInterceptors()+ returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the Java EE component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<interceptor_resolution>>.
+The method +BeanManager.resolveInterceptors()+ returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<interceptor_resolution>>.
 
 [source, java]
 ----
@@ -523,17 +522,6 @@ The method +BeanManager.getELResolver()+ returns the +javax.el.ELResolver+ speci
 [source, java]
 ----
 public ELResolver getELResolver();
-----
-
-[[bm_wrap_expressionfactory]]
-
-==== Wrapping a Unified EL +ExpressionFactory+
-
-The method +BeanManager.wrapExpressionFactory()+ returns a wrapper +javax.el.ExpressionFactory+ that delegates +MethodExpression+ and +ValueExpression+ creation to the given +ExpressionFactory+. When a Unified EL expression is evaluated using a +MethodExpression+ or +ValueExpression+ returned by the wrapper +ExpressionFactory+, the rules defined in <<dependent_scope_el>> are enforced by the container.
-
-[source, java]
-----
-public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 ----
 
 [[bm_obtain_annotatedtype]]
@@ -743,7 +731,7 @@ public interface AnnotatedMember<X>
 
 The interface +javax.enterprise.inject.spi.AnnotatedCallable+ exposes the parameters of an invokable object.
 
-Contexts and Dependency Injection for Java EE 1.1 deprecated the method +AnnotatedMember.isStatic()+. The container should instead call +AnnotatedMember.getJavaMember().getModifiers()+ to determine if the member is static.
+CDI 1.1 deprecated the method +AnnotatedMember.isStatic()+. The container should instead call +AnnotatedMember.getJavaMember().getModifiers()+ to determine if the member is static.
 
 [source, java]
 ----
@@ -1046,9 +1034,9 @@ If any +ProcessAnnotatedType+ method is called outside of the observer method in
 
 ==== +ProcessInjectionPoint+ event
 
-The container must fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, bean, interceptor or decorator.
+The container must fire an event for every injection point of every bean, interceptor or decorator.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the managed bean class, session bean class or Java EE component class supporting injection, and +X+ is the declared type of the injection point.
+The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the bean class, and +X+ is the declared type of the injection point.
 
 [source, java]
 ----
@@ -1074,9 +1062,9 @@ If any +ProcessInjectionPoint+ method is called outside of the observer method i
 
 ==== +ProcessInjectionTarget+ event
 
-The container must fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean, bean, interceptor or decorator.
+The container must fire an event for every bean, interceptor or decorator.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the managed bean class, session bean class or Java EE component class supporting injection.
+The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the bean class.
 
 [source, java]
 ----
@@ -1088,22 +1076,15 @@ public interface ProcessInjectionTarget<X> {
 }
 ----
 
-* +getAnnotatedType()+ returns the +AnnotatedType+ representing the managed bean class, session bean class or other Java EE component class supporting injection.
+* +getAnnotatedType()+ returns the +AnnotatedType+ representing the bean class.
 * +getInjectionTarget()+ returns the +InjectionTarget+ object that will be used by the container to perform injection.
 * +setInjectionTarget()+ replaces the +InjectionTarget+.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
-Any observer of this event is permitted to wrap and/or replace the +InjectionTarget+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the managed bean, session bean or other Java EE component class supporting injection.
+Any observer of this event is permitted to wrap and/or replace the +InjectionTarget+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the managed bean.
 
-For example, this observer decorates the +InjectionTarget+ for all servlets.
 
-[source, java]
-----
-<T extends Servlet> void decorateServlet(@Observes ProcessInjectionTarget<T> pit) {
-    pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
-}
-----
 
 If any observer method of a +ProcessInjectionTarget+ event throws an exception, the exception is treated as a definition error by the container.
 
@@ -1119,7 +1100,7 @@ The container must fire an event for each bean, interceptor or decorator deploye
 * beans added programmatically using +AfterBeanDiscovery.addBean()+, or,
 * for any built-in beans.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessBeanAttributes<T>+ where +T+ is the bean class of the managed bean or session bean, the return type of the producer method, or the type of the producer field.
+The event object must be of type +javax.enterprise.inject.spi.ProcessBeanAttributes<T>+ where +T+ is the bean class of the bean, the return type of the producer method, or the type of the producer field.
 
 Resources are considered to be producer fields.
 
@@ -1134,7 +1115,7 @@ public interface ProcessBeanAttributes<T> {
 }
 ----
 
-* +getAnnotated()+ returns the +AnnotatedType+ representing the managed bean class or session bean class, the +AnnotatedMethod+ representing the producer field, or the +AnnotatedField+ representing the producer field.
+* +getAnnotated()+ returns the +AnnotatedType+ representing the bean class, the +AnnotatedMethod+ representing the producer field, or the +AnnotatedField+ representing the producer field.
 * +getBeanAttributes()+ returns the +BeanAttributes+ object that will be used by the container to manage instances of the bean.
 * +setBeanAttributes()+ replaces the +BeanAttributes+.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
@@ -1158,12 +1139,9 @@ The container must fire an event for each bean, interceptor or decorator deploye
 The event object type in the package +javax.enterprise.inject.spi+ depends upon what kind of bean was discovered:
 
 * For a managed bean with bean class +X+, the container must raise an event of type +ProcessManagedBean<X>+.
-* For a session bean with bean class +X+, the container must raise an event of type +ProcessSessionBean<X>+.
 * For a producer method with method return type +T+ of a bean with bean class +X+, the container must raise an event of type +ProcessProducerMethod<T, X>+.
 * For a producer field with field type +T+ of a bean with bean class +X+, the container must raise an event of type +ProcessProducerField<T, X>+.
 
-
-Resources are considered to be producer fields.
 
 The interface +javax.enterprise.inject.spi.ProcessBean+ is a supertype of all these event types:
 
@@ -1180,24 +1158,6 @@ public interface ProcessBean<X> {
 * +getBean()+ returns the +Bean+ object that is about to be registered. The +Bean+ may implement +Interceptor+ or +Decorator+.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
-
-[source, java]
-----
-public interface ProcessSessionBean<X>
-        extends ProcessManagedBean<Object> {
-    public String getEjbName();
-    public SessionBeanType getSessionBeanType();
-}
-----
-
-* +getEjbName()+ returns the EJB name of the session bean.
-* +getSessionBeanType()+ returns a +javax.enterprise.inject.spi.SessionBeanType+ representing the kind of session bean.
-
-
-[source, java]
-----
-public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }
-----
 
 [source, java]
 ----
