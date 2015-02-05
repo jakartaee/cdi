@@ -302,7 +302,7 @@ public void afterDocumentEvent(@Observes Document doc) { ... }
 
 An observer method allows the application to receive and respond to event notifications.
 
-An observer method is a non-abstract method of a managed bean class or session bean class (or of an extension, as defined in <<init_events>>). An observer method may be either static or non-static. If the bean is a session bean, the observer method must be either a business method of the EJB or a static method of the bean class.
+An observer method is a non-abstract method of a managed bean class or of an extension, as defined in <<init_events>>. An observer method may be either static or non-static.
 
 There may be arbitrarily many observer methods with the same event parameter type and qualifiers.
 
@@ -352,8 +352,6 @@ public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 ----
 
 If an observer method is annotated +@Produces+ or +@Inject+ or has a parameter annotated +@Disposes+, the container automatically detects the problem and treats it as a definition error.
-
-If a non-static method of a session bean class has a parameter annotated +@Observes+, and the method is not a business method of the EJB, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare observer methods. If an interceptor or decorator has a method with a parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
 
@@ -527,11 +525,9 @@ The order of more than one observer with the same priority is undefined and the 
 
 The transaction context, client security context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.
 
-* If the observer method is asynchronous, it is called in a new lifecycle contexts, an new transaction context but the same security context as the invocation of `Event.fireAsync()`.
+* If the observer method is asynchronous, it is called in a new lifecycle contexts, a new transaction context but the same security context as the invocation of `Event.fireAsync()`.
 * If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same client security context and lifecycle contexts.
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same client security context and lifecycle contexts as the transaction that just completed.
 * Otherwise, the observer method is called in the same transaction context, client security context and lifecycle contexts as the invocation of +Event.fire()+ or +BeanManager.fireEvent()+.
 
-
-Of course, the transaction and security contexts for a business method of a session bean also depend upon the transaction attribute and +@RunAs+ descriptor, if any.
 

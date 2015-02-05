@@ -1,0 +1,11 @@
+[[decorators_ee]]
+
+== Decorators in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<decorators>> to EJB session beans.
+
+[[decorator_bean_ee]]
+
+=== Decorator beans in Java EE
+
+Decorators of an EJB session bean must comply with the bean provider programming restrictions defined by the EJB specification. Decorators of an EJB stateful session bean must comply with the rules for instance passivation and conversational state defined by the EJB specification.

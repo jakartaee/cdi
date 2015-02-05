@@ -2,7 +2,7 @@
 
 == Interceptor bindings
 
-Managed beans and EJB session and message-driven beans support interception. _Interceptors_ are used to separate cross-cutting concerns from business logic. The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes. This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
+Managed beans support interception. _Interceptors_ are used to separate cross-cutting concerns from business logic. The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes. This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
 
 [[interceptor_bindings]]
 
@@ -100,5 +100,5 @@ This specification extends the Java Interceptors specification and defines:
 
 If any interceptor binding has a member annotated +@javax.enterprise.util.Nonbinding+, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
 
-For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container calls +getInterceptorBindings()+ to determine the interceptor bindings of the interceptor and +intercepts()+ to determine if the interceptor intercepts a given kind of lifecycle callback, EJB timeout or business method.
+For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container calls +getInterceptorBindings()+ to determine the interceptor bindings of the interceptor and +intercepts()+ to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
 

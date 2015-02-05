@@ -10,11 +10,11 @@ Every bean in the system is represented by an instance of the +Bean+ interface d
 
 === Restriction upon bean instantiation
 
-The managed bean and EJB specifications place very few programming restrictions upon the bean class of a bean. In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass. Therefore, bean classes are easy to instantiate and unit test.
+There are very few programming restrictions upon the bean class of a bean. In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass. Therefore, bean classes are easy to instantiate and unit test.
 
 However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextual_instance>>. Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
 
-If the application requires more control over instantiation of a contextual instance, a producer method or field may be used. Any Java object may be returned by a producer method or field. It is not required that the returned object be a contextual reference for a bean. However, if the object is not a contextual reference for another bean, the object will be contextual instance of the producer method bean, and therefore available for injection into other objects and use in EL expressions, but the other capabilities listed in <<capabilities>> will not be available to the object.
+If the application requires more control over instantiation of a contextual instance, a producer method or field may be used. Any Java object may be returned by a producer method or field. It is not required that the returned object be a contextual reference for a bean. However, if the object is not a contextual reference for another bean, the object will be contextual instance of the producer method bean, and therefore available for injection into other objects and use in name resolution, but the other capabilities listed in <<capabilities>> will not be available to the object.
 
 In the following example, a producer method returns instances of other beans:
 
@@ -79,9 +79,7 @@ In this case, any object returned by the producer method will not have any depen
 When the application invokes:
 
 * a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, or
-* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  +InjectionTarget.produce()+ or +UnmanagedInstance.produce()+), or
-* a business method of a session bean via an EJB remote or local reference,
-
+* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  +InjectionTarget.produce()+ or +UnmanagedInstance.produce()+),
 
 the invocation is treated as a _business method invocation_.
 
@@ -90,17 +88,10 @@ When the container invokes a method of a bean, the invocation may or may not be 
 * Invocations of initializer methods by the container are not business method invocations.
 * Invocations of producer, disposer and observer methods by the container are business method invocations and are intercepted by method interceptors and decorators.
 * Invocation of lifecycle callbacks by the container are not business method invocations, but are intercepted by interceptors for lifecycle callbacks.
-* Invocation of EJB timer service timeouts by the container are not business method invocations, but are intercepted by interceptors for EJB timeouts.
 * Invocations of interceptors and decorator methods during method or lifecycle callback interception are not business method invocations, and therefore no recursive interception occurs.
 * Invocations of methods declared by java.lang.Object are not business method invocations.
 
-
-If, and only if, an invocation is a business method invocation:
-
-* it passes through method interceptors and decorators, and
-* in the case of a session bean, it is subject to EJB services such as declarative transaction management, concurrency, security and asynchronicity, as defined by the EJB specification.
-
-Additionally, invocations of message listener methods of message-driven beans during message delivery are passed through method interceptors.
+A method invocation passes through method interceptors and decorators if, and only if, it is a business method invocation.
 
 Otherwise, the invocation is treated as a normal Java method call and is not intercepted by the container.
 
@@ -120,29 +111,7 @@ When the +create()+ method of the +Bean+ object that represents a managed bean i
 
 When the +destroy()+ method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<dependent_objects_destruction>>.
 
-[[stateful_lifecycle]]
 
-==== Lifecycle of stateful session beans
-
-When the +create()+ method of a +Bean+ object that represents a stateful session bean that is called, the container creates and returns a container-specific internal local reference to a new session bean instance. The reference must be passivation capable. This reference is not directly exposed to the application.
-
-Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying stateful session bean instance. This object must be passivation capable.
-
-When the +destroy()+ method is called, and if the underlying EJB was not already removed by direct invocation of a remove method by the application, the container removes the stateful session bean. The +@PreDestroy+ callback must be invoked by the container.
-
-Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
-
-[[stateless_lifecycle]]
-
-==== Lifecycle of stateless and singleton session beans
-
-When the +create()+ method of a +Bean+ object that represents a stateless session or singleton session bean is called, the container creates and returns a container-specific internal local reference to the session bean. This reference is not directly exposed to the application.
-
-Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying session bean. This object must be passivation capable.
-
-When the +destroy()+ method is called, the container simply discards this internal reference.
-
-Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
 
 [[producer_method_lifecycle]]
 
@@ -167,20 +136,4 @@ If the producer field contains a null value and the producer field bean has the 
 Otherwise, if the producer field contains a null value, and the scope of the producer field is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
 
 When the +destroy()+ method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter.
-
-[[resource_lifecycle]]
-
-==== Lifecycle of resources
-
-When the +create()+ method of a +Bean+ object that represents a resource is called, the container creates and returns a container-specific internal reference to the Java EE component environment resource, entity manager, entity manager factory, remote EJB instance or web service reference. This reference is not directly exposed to the application.
-
-Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying resource, entity manager, entity manager factory, remote EJB instance or web service reference. This object must be passivation capable.
-
-The container must perform ordinary Java EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Java EE platform and Common Annotations for the Java platform specifications. The container is not required to perform Java EE component environment injection upon a static field. Portable applications should not rely upon the value of a static field that functions as a resource declaration.
-
-References to EJBs and web services are always dependent scoped and a new instance must be obtained for every injection performed.
-
-For an entity manager associated with a resource definition, it must behave as though it were injected directly using +@PersistencContext+.
-
-When the +destroy()+ method of a bean which represents a remote stateful EJB reference is called, the container will _not_ automatically destroy the EJB reference. The application must explicitly call the method annotated +@Remove+. This behavior differs to that specified in <<stateful_lifecycle>> for beans which represent a local stateful EJB reference
 

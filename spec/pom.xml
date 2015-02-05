@@ -107,7 +107,7 @@
 					<doctype>book</doctype>
 					<attributes>
 						<license>${license}</license>
-						<version>${version}</version>
+						<version>${project.version}</version>
 						<status>Early Draft</status>
 						<revdate>${revisiondate}</revdate>
 					</attributes>

@@ -1,0 +1,87 @@
+[[concepts_ee]]
+
+== Extended Concepts for Java EE
+
+When running in Java EE, the container must extend the concepts defined in <<concepts>> with:
+
+* A Java EE component is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>
+* Contextual instances of a bean may be used in EL expressions that are evaluated in the same context
+* For some Java EE components - like environment resources, defined in <<resources>>  - the developer provides only the annotations and the bean implementation is provided by the container.
+
+[[capabilities_ee]]
+
+=== Functionality provided by the container to the bean in Java EE
+
+When running in Java EE, the container must extend the capabilities defined in <<capabilities>>, by providing:
+
+* scoped resolution by bean name when used in a Unified EL expression, as defined by <<name_resolution>>.
+
+[[bean_types_ee]]
+
+=== Bean types for Java EE component
+
+As managed beans, EJB session beans may have multiple bean types depending on their client-visible types. For instance, this session bean has only the local interfaces +BookShop+ and +Auditable+, along with +Object+, as bean types, since the bean class is not a client-visible type.
+                                                                                                                        
+[source, java]
+----
+@Stateful 
+public class BookShopBean 
+        extends Business 
+        implements BookShop, Auditable { 
+    ... 
+}
+----
+
+The rules for determining the (unrestricted) set of bean types for Java EE components are defined in  <<session_bean_types>> and <<resource_types>>.
+
+[[scopes_ee]]
+
+=== Scopes
+
+Java EE components such as servlets, EJBs and JavaBeans do not have a well-defined _scope_. These components are either:
+
+* _singletons_, such as EJB singleton session beans, whose state is shared between all clients,
+* _stateless objects_, such as servlets and stateless session beans, which do not contain client-visible state, or
+* objects that must be explicitly created and destroyed by their client, such as JavaBeans and stateful session beans, whose state is shared by explicit reference passing between clients.
+
+CDI scopes add to Java EE these missing well-defined lifecycle context as defined in <<scopes>>.
+
+[[builtin_scopes_ee]]
+
+==== Built-in scope types in Java EE
+
+When running in Java EE, the implementations of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations provided by the container, represent the standard scopes defined by the Java Servlets specification.
+
+
+[[default_bean_discovery_ee]]
+=== Default bean discovery mode for Java EE
+
+When running in Java EE, If the _bean discovery mode_ is `annotated`, the container must extend the rules defined in <<default_bean_discovery>> with:
+
+* bean classes of EJB sessions beans, are discovered, and
+* producer methods that are on an EJB session bean are discovered, and
+* producer fields that are on an EJB session bean are discovered, and
+* disposer methods that are on an EJB session bean are discovered, and
+* observer methods that are on an EJB session bean are discovered.
+
+
+[[names_ee]]
+=== Bean names in Java EE
+
+A bean with a name may be referred to by its name in Unified EL expressions.
+
+There is no relationship between the bean name of an EJB session bean and the EJB name of the bean.
+
+Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
+
+[source, xml]
+----
+<h:outputText value="#{products.total}"/>
+----
+
+[[default_name_ee]]
+
+==== Default bean names for EJB session beans
+
+In the circumstances listed in <<default_name>>, the rule for determining default name for an EJB session bean are defined in <<session_bean_name>>.
+

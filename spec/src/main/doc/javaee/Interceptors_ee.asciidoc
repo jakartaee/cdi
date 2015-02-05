@@ -1,0 +1,11 @@
+[[interceptors_ee]]
+
+== Interceptor bindings in Java EE
+
+EJB session and message-driven beans support interception as defined in <<interceptors>>.
+
+[[interceptor_resolution_ee]]
+
+=== Interceptor resolution in Java EE
+
+For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container also calls +intercepts()+ to determine if the interceptor intercepts an EJB timeout method invocation.
