@@ -1,0 +1,57 @@
+[[packaging_deployment_ee]]
+
+== Packaging and deployment in Java EE
+
+
+[[bean_archive_ee]]
+=== Bean archive with EJB Session Beans
+
+When running in Java EE, the container must extend the rules defined in <<bean_archive>> with:
+
+* An _implicit bean archive_ may also contain EJB session beans, and
+* EJB session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
+
+When determining which archives are bean archives, the container must also consider:
+
+* EJB jars or application client jars
+* The +WEB-INF/classes+ directory of a war
+
+The container is not required to support application client jar bean archives.
+
+A Java EE container is required by the Java EE specification to support Java EE modules.
+
+In a war, the +beans.xml+ file must be named:
+
+* +WEB-INF/beans.xml+  or +WEB-INF/classes/META-INF/beans.xml+.
+
+If a war has a file named +beans.xml+ in both the +WEB-INF+ directory and in the +WEB-INF/classes/META-INF+ directory, then non-portable behavior results. Portable applications must have a +beans.xml+ file in only one of the +WEB-INF+ or the +WEB-INF/classes/META-INF+ directories.
+
+The following additional rules apply regarding container search for beans:
+
+* In an application deployed as an ear, the container searches every bean archive bundled with or referenced by the ear, including bean archives bundled with or referenced by wars, EJB jars and rars contained in the ear. The bean archives might be library jars, EJB jars or war +WEB-INF/classes+ directories.
+* In an application deployed as a war, the container searches every bean archive bundled with or referenced by the war. The bean archives might be library jars or the +WEB-INF/classes+ directory.
+* In an application deployed as an EJB jar, the container searches the EJB jar, if it is a bean archive, and every bean archive referenced by the EJB jar.
+* In an application deployed as a rar, the container searches every bean archive bundled with or referenced by the rar.
+* An embeddable EJB container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property +javax.ejb.embeddable.modules+, or every bean archive in the JVM classpath if the property is not specified. The bean archives might be directories, library jars or EJB jars.
+
+
+[[type_bean_discovery_ee]]
+
+=== Type and Bean discovery for EJB
+
+In Java EE, the container automatically discovers EJB session beans and other Java EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
+
+[[bean_discovery_steps_ee]]
+
+==== Bean discovery in Java EE
+
+When running in Java EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
+
+[[el]]
+
+=== Integration with Unified EL
+
+The container must provide a Unified EL +ELResolver+ to the servlet engine and JSF implementation that resolves bean names using the rules of name resolution defined in <<name_resolution>> and resolving ambiguities according to <<ambig_names>>.
+
+* If a name used in an EL expression does not resolve to any bean, the +ELResolver+ must return a null value.
+* Otherwise, if a name used in an EL expression resolves to exactly one bean, the +ELResolver+ must return a contextual instance of the bean, as defined in <<contextual_instance>>.

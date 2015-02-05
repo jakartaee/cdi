@@ -1,0 +1,27 @@
+[partintro]
+--
+This part of the document, specifies additional rules or features when using CDI in a Java EE container.
+All content defined in <<part_1>> apply in this part.
+--
+
+include::definition_ee.asciidoc[]
+
+include::implementation_ee.asciidoc[]
+
+include::inheritance_ee.asciidoc[]
+
+include::injectionandresolution_ee.asciidoc[]
+
+include::scopescontext_ee.asciidoc[]
+
+include::lifecycle_ee.asciidoc[]
+
+include::decorators_ee.asciidoc[]
+
+include::interceptors_ee.asciidoc[]
+
+include::events_ee.asciidoc[]
+
+include::spi_ee.asciidoc[]
+
+include::packagingdeployment_ee.asciidoc[]
