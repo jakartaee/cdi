@@ -29,6 +29,8 @@ include::interceptors.asciidoc[]
 
 include::events.asciidoc[]
 
+include::cdi-se.asciidoc[]
+
 include::spi.asciidoc[]
 
 include::packagingdeployment.asciidoc[]
