@@ -39,7 +39,7 @@ public interface CDIContainer extends AutoCloseable {
      * @throws Exception
      */
     @Override
-    default void close() throws Exception {
+    default void close() {
         shutdown();
     }
 }
