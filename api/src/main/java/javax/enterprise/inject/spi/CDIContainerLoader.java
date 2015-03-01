@@ -3,7 +3,7 @@ package javax.enterprise.inject.spi;
 import static java.util.ServiceLoader.load;
 
 /**
- * Handles the lookup of CDIContainer based on
+ * Handles the lookup of CDIContainer based on container implementations found on classpath.
  */
 public abstract class CDIContainerLoader {
 
@@ -14,7 +14,7 @@ public abstract class CDIContainerLoader {
      * to be used like a singleton and repeated calls will return the same instance back to the caller.
      *
      * @return the located {@link javax.enterprise.inject.spi.CDIContainer}
-     * @throws java.lang.IllegalStateException if no container can be found on the classpath.
+     * @throws java.lang.IllegalStateException if no container implementation can be found on the classpath.
      */
     public static CDIContainer getCDIContainer() {
         synchronized (CDIContainerLoader.class) {
