@@ -12,7 +12,7 @@
 
 
     <properties>
-        <asciidoctor.version>0.1.4</asciidoctor.version>
+        <asciidoctor.version>1.5.2</asciidoctor.version>
     </properties>
 
     <profiles>
