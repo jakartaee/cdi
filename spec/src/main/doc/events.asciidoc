@@ -411,6 +411,7 @@ When an event is fired by the application, the container must:
 
 * determine the observer methods for that event according to the rules of observer resolution defined by <<observer_resolution>>, then,
 * for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA +Synchronization+.
+* honor the priority of observer methods.
 
 
 The container calls observer methods as defined in <<observers_method_invocation>>.
@@ -418,9 +419,6 @@ The container calls observer methods as defined in <<observers_method_invocation
 * If the observer method is a transactional observer method and there is currently a JTA transaction in progress, the container calls the observer method during the appropriate transaction completion phase.
 * If there is no context active for the scope to which the bean declaring the observer method belongs, then the observer method should not be called.
 * Otherwise, the container calls the observer immediately.
-
-
-The order in which observer methods are called is not defined, and so portable applications should not rely upon the order in which observers are called.
 
 Any observer method called before completion of a transaction may call +setRollbackOnly()+ to force a transaction rollback. An observer method may not directly initiate, commit or rollback JTA transactions.
 
@@ -431,6 +429,21 @@ Observer methods may throw exceptions:
 
 
 For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getTransactionPhase()+ to determine if the observer method is transactional observer method, and +notify()+ to invoke the method.
+
+[[observer_ordering]]
+
+==== Observer ordering
+
+Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
+The priority of an observer method may be declared using the +@Priority+ annotation. If no +@Priority+ annotation is specified, the default priority +APPLICATION + 500+ is assumed. Observers with smaller priority values are called first.
+
+[source, java]
+----
+void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
+----
+
+The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.
+
 
 [[observer_method_invocation_context]]
 

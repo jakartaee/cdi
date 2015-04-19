@@ -72,6 +72,17 @@ public interface ObserverMethod<T> {
     public TransactionPhase getTransactionPhase();
 
     /**
+     * The priority that will be used by the container to determine the notification order in which event observer
+     * methods are invoked.
+     *
+     * @return The priority that will be used by the container to determine the notification order in which event
+     *         observer methods are invoked.
+     */
+    public default int getPriority() {
+        return javax.interceptor.Interceptor.Priority.APPLICATION + 500;
+    };
+
+    /**
      * <p>
      * Calls the observer method, passing the given event object.
      * </p>
