@@ -229,7 +229,7 @@ public interface BeanManager {
     public void fireEvent(Object event, Annotation... qualifiers);
 
     /**
-     * Return the set of observers for an event.
+     * Return an ordered set of {@linkplain ObserverMethod observer methods} for an event.
      *
      * <p/>
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
@@ -238,6 +238,7 @@ public interface BeanManager {
      * @param <T> the type of the event
      * @param event the event object
      * @param qualifiers the event qualifiers
+     * @return the resulting set of {@linkplain ObserverMethod observer methods}
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      * @throws IllegalArgumentException if two instances of the same qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
