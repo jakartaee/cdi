@@ -120,6 +120,7 @@ public interface ObserverMethod<T> {
     public Set<Annotation> getObservedQualifiers();
     public Reception getReception();
     public TransactionPhase getTransactionPhase();
+    public int getPriority();
     public void notify(T event);
 }
 ----
@@ -128,6 +129,7 @@ public interface ObserverMethod<T> {
 * +getObservedType()+ and +getObservedQualifiers()+ return the observed event type and qualifiers.
 * +getReception()+ returns +IF_EXISTS+ for a conditional observer and +ALWAYS+ otherwise.
 * +getTransactionPhase()+ returns the appropriate transaction phase for a transactional observer method or +IN_PROGRESS+ otherwise.
+* +getPriority()+ returns the priority that will be used by the container to determine the notification order.
 * +notify()+ calls the observer method, as defined in <<observer_notification>>.
 
 
@@ -1269,14 +1271,12 @@ The event object must be of type +javax.enterprise.inject.spi.ProcessObserverMet
 public interface ProcessObserverMethod<T, X> {
     public AnnotatedMethod<X> getAnnotatedMethod();
     public ObserverMethod<T> getObserverMethod();
-    public int getPriority();
     public void addDefinitionError(Throwable t);
 }
 ----
 
 * +getAnnotatedMethod()+ returns the +AnnotatedMethod+ representing the observer method.
 * +getObserverMethod()+ returns the +ObserverMethod+ object that will be used by the container to call the observer method.
-* +getPriority()+ returns the priority that will be used by the container to determine the notification order.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
