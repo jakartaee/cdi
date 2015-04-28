@@ -296,7 +296,7 @@ An observer method may be declared by annotating a parameter +@javax.enterprise.
 
 [source, java]
 ----
-public void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
+public void afterLogin(@Observes LoggedInEvent event) { ... }
 ----
 
 If a method has more than one parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
@@ -305,7 +305,7 @@ Observed event qualifiers may be declared by annotating the event parameter:
 
 [source, java]
 ----
-public void afterLogin(@Observes @Priority(APPLICATION) @Admin LoggedInEvent event) { ... }
+public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 ----
 
 If an observer method is annotated +@Produces+ or +@Inject+ or has a parameter annotated +@Disposes+, the container automatically detects the problem and treats it as a definition error.
@@ -318,7 +318,7 @@ In addition to the event parameter, observer methods may declare additional para
 
 [source, java]
 ----
-public void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event, @Manager User user, Logger log) { ... }
+public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger log) { ... }
 ----
 
 [[event_metadata]]
@@ -346,7 +346,7 @@ If an injection point of type +EventMetadata+ and qualifier +@Default+ which is 
 
 [source, java]
 ----
-public void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event, EventMetadata metadata) { ... }
+public void afterLogin(@Observes LoggedInEvent event, EventMetadata metadata) { ... }
 ----
 
 [[conditional_observer_methods]]
@@ -359,7 +359,7 @@ A conditional observer method may be declared by specifying +receive=IF_EXISTS+.
 
 [source, java]
 ----
-public void refreshOnDocumentUpdate(@Observes(receive=IF_EXISTS) @Priority(APPLICATION) @Updated Document doc) { ... }
+public void refreshOnDocumentUpdate(@Observes(receive=IF_EXISTS) @Updated Document doc) { ... }
 ----
 
 Beans with scope +@Dependent+ may not have conditional observer methods. If a bean with scope +@Dependent+ has an observer method declared +receive=IF_EXISTS+, the container automatically detects the problem and treats it as a definition error.
@@ -400,18 +400,18 @@ A transactional observer method may be declared by specifying any value other th
 
 [source, java]
 ----
-void onDocumentUpdate(@Observes(during=AFTER_SUCCESS) @Priority(APPLICATION) @Updated Document doc) { ... }
+void onDocumentUpdate(@Observes(during=AFTER_SUCCESS) @Updated Document doc) { ... }
 ----
 
 [[observer_notification]]
 
-=== Observer notification and ordering
+=== Observer notification
 
 When an event is fired by the application, the container must:
 
 * determine the observer methods for that event according to the rules of observer resolution defined by <<observer_resolution>>, then,
 * for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA +Synchronization+.
-* honor the priority if it is defined using the +@Priority+ annotation
+* honor the priority if it is defined using the +@Priority+ annotation.
 
 
 The container calls observer methods as defined in <<observers_method_invocation>>.
@@ -419,9 +419,6 @@ The container calls observer methods as defined in <<observers_method_invocation
 * If the observer method is a transactional observer method and there is currently a JTA transaction in progress, the container calls the observer method during the appropriate transaction completion phase.
 * If there is no context active for the scope to which the bean declaring the observer method belongs, then the observer method should not be called.
 * Otherwise, the container calls the observer immediately.
-
-
-By default, the order in which observer methods are called is not defined. The +@Priority+ annotation can be applied to observer methods to specify a priority. Observers with the smaller priority values are called first. The order of more than one observer with the same priority is undefined.
 
 Any observer method called before completion of a transaction may call +setRollbackOnly()+ to force a transaction rollback. An observer method may not directly initiate, commit or rollback JTA transactions.
 
@@ -432,6 +429,20 @@ Observer methods may throw exceptions:
 
 
 For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getTransactionPhase()+ to determine if the observer method is transactional observer method, and +notify()+ to invoke the method.
+
+[[observer_ordering]]
+
+==== Observer ordering
+
+By default, the order in which observer methods are called is not defined. The +@Priority+ annotation can be applied to observer methods to specify a priority. If no +@Priority+ annotation is specified, the default priority +APPLICATION+ is assumed. Observers with smaller priority values are called first.
+
+[source, java]
+----
+void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
+----
+
+The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.
+
 
 [[observer_method_invocation_context]]
 

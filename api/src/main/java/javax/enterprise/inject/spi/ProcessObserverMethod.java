@@ -17,6 +17,8 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.interceptor.Interceptor;
+
 /**
  * <p>
  * The container fires an event of this type for each {@linkplain javax.enterprise.event.Observes observer method} of each
@@ -64,4 +66,15 @@ public interface ProcessObserverMethod<T, X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
+
+    /**
+     * The priority that will be used by the container to determine the notification order in which event observer
+     * methods are invoked.
+     *
+     * @return The priority that will be used by the container to determine the notification order in which event
+     *         observer methods are invoked.
+     */
+    public default int getPriority() {
+        return Interceptor.Priority.APPLICATION;
+    };
 }
