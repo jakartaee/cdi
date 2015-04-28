@@ -295,3 +295,9 @@ If a Java EE component class has an injection point of type +UserTransaction+ an
 An initializer method defined in an EJB session bean follow the rules defined in <<initializer_methods> with the following addition:
 
 * An intializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
+
+[[new_ee]]
+
+=== +@New+ qualified beans in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<new>> to EJB session beans.

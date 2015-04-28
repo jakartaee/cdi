@@ -1,3 +1,20 @@
+[[selection_ee]]
+
+=== Modularity in Java EE
+
+[[declaring_selected_alternatives_application_ee]]
+
+==== Declaring selected alternatives for an application in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_application>> to EJB session beans.
+
+[[declaring_selected_alternatives_bean_archive_ee]]
+
+==== Declaring selected alternatives for a bean archive in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to EJB session beans.
+
+
 [[injection_ee]]
 
 === Dependency injection in Java EE
@@ -9,3 +26,16 @@ In addition to rules defined in <<injection>>, in Java EE, the container is also
 * instances of any other Java EE component class supporting injection.
 
 A Java EE 5 container is not required to support injection for non-contextual objects.
+
+[[instantiation_ee]]
+
+==== Injection using the bean constructor in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<instantiation>> to EJB session beans.
+
+[[fields_initializer_methods_ee]]
+
+==== Injection of fields and initializer methods in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to EJB session beans.
+

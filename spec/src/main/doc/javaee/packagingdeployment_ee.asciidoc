@@ -40,3 +40,9 @@ The following additional rules apply regarding container search for beans:
 === Type and Bean discovery for EJB
 
 In Java EE, the container automatically discovers EJB session beans in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
+
+[[bean_discovery_steps_ee]]
+
+==== Bean discovery in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<bean_discovery_steps>> to EJB session beans.

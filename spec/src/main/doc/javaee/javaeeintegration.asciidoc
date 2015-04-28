@@ -8,6 +8,8 @@ include::definition_ee.asciidoc[]
 
 include::implementation_ee.asciidoc[]
 
+include::inheritance_ee.asciidoc[]
+
 include::injectionelresolution_ee.asciidoc[]
 
 include::scopescontext_ee.asciidoc[]

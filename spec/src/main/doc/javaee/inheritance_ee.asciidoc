@@ -1,0 +1,13 @@
+[[type_level_inheritance_ee]]
+
+=== Inheritance of type-level metadata in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<type_level_inheritance>> to EJB session beans.
+
+
+
+[[member_level_inheritance_ee]]
+
+=== Inheritance of member-level metadata in Java EE
+
+When running in Java EE, the container must extend the rules defined for managed beans in <<member_level_inheritance>> to EJB session beans.

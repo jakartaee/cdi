@@ -661,7 +661,7 @@ If any other injection point declares a +@Named+ annotation that does not specif
 
 _The @New qualifier was deprecated in CDI 1.1. CDI applications are encouraged to inject @Dependent scoped beans instead._
 
-For each bean, a second bean exists which:
+For each managed bean, a second bean exists which:
 
 * has the same bean class,
 * has the same bean types,

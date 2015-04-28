@@ -24,7 +24,7 @@ The bean developer may explicitly specify that the second bean specializes the f
 
 === Inheritance of type-level metadata
 
-Suppose a class X is extended directly or indirectly by the bean class of a bean Y.
+Suppose a class X is extended directly or indirectly by the bean class of a managed bean Y.
 
 * If X is annotated with a qualifier type, stereotype or interceptor binding type Z then Y inherits the annotation if and only if Z declares the +@Inherited+ meta-annotation and neither Y nor any intermediate class that is a subclass of X and a superclass of Y declares an annotation of type Z.
 (This behavior is defined by the Java Language Specification.)
@@ -54,7 +54,7 @@ Note that the +@Named+ annotation is not declared +@Inherited+ and bean names ar
 
 === Inheritance of member-level metadata
 
-Suppose a class X is extended directly or indirectly by the bean class of a managed bean or bean Y.
+Suppose a class X is extended directly or indirectly by the bean class of a managed bean Y.
 
 * If X declares an injected field +x+ then Y inherits +x+.
 (This behavior is defined by the Common Annotations for the Java Platform specification.)

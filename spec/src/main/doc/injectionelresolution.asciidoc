@@ -39,7 +39,7 @@ This specification defines two methods of selecting alternatives. From Contexts 
 
 An alternative may be given a priority for the application:
 
-* by placing the +@Priority+ annotation on the bean class of a bean, or
+* by placing the +@Priority+ annotation on the bean class of a managed bean, or
 * by placing the +@Priority+ annotation on the bean class that declares the producer method, field or resource.
 
 [[declaring_selected_alternatives_bean_archive]]
@@ -49,7 +49,7 @@ An alternative may be given a priority for the application:
 
 An alternative may be explicitly declared using the +<alternatives>+ element of the +beans.xml+ file of the bean archive. The +<alternatives>+ element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
 
-* the alternative is a bean and the bean class of the bean is listed,
+* the alternative is a managed bean and the bean class of the bean is listed,
 * the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
 * any +@Alternative+ stereotype of the alternative is listed.
 
@@ -361,13 +361,13 @@ The object injected by the container may not be a direct reference to a contextu
 
 ==== Injection using the bean constructor
 
-When the container instantiates a bean with a constructor annotated +@Inject+, the container calls this constructor, passing an injectable reference to each parameter. If there is no constructor annotated +@Inject+, the container calls the constructor with no parameters.
+When the container instantiates a managed bean with a constructor annotated +@Inject+, the container calls this constructor, passing an injectable reference to each parameter. If there is no constructor annotated +@Inject+, the container calls the constructor with no parameters.
 
 [[fields_initializer_methods]]
 
 ==== Injection of fields and initializer methods
 
-When the container creates a new instance of a bean, or of any other component class supporting injection the container must:
+When the container creates a new instance of a managed bean, or of any other component class supporting injection the container must:
 
 * Initialize the values of all injected fields. The container sets the value of each injected field to an injectable reference.
 * Call all initializer methods, passing an injectable reference to each parameter.
