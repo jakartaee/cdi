@@ -18,11 +18,12 @@ CDI in a Java EE container is mostly a superset of CDI in Java SE, except for fe
 
 === Organisation of this document
 
-This document is organized in 3 parts:
+This document is organized in 4 parts:
 
 * An introduction (this part), whose not part of the specification but introduce CDI concepts and give examples.
-* The CDI specification for Java SE: <<part_1>>.
-* The CDI specification for Java EE: <<part_2>>, which extends the first part.
+* The core CDI specification: <<part_1>>
+* The CDI specification for Java SE: <<part_2>>.
+* The CDI specification for Java EE: <<part_3>>, which extends the first part.
 
 
 

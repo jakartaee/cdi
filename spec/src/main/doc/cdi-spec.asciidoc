@@ -13,7 +13,7 @@ include::preface.asciidoc[]
 include::architecture.asciidoc[]
 
 [[part_1]]
-= Part I - CDI in Java SE
+= Part I - Core CDI
 
 include::definition.asciidoc[]
 
@@ -38,5 +38,13 @@ include::cdi-se.asciidoc[]
 include::spi.asciidoc[]
 
 include::packagingdeployment.asciidoc[]
+
+
+[[part_2]]
+= Part II - CDI in Java SE
+include::javase/javase.asciidoc[]
+
+[[part_3]]
+= Part III - CDI in Java EE
 
 include::javaee/javaeeintegration.asciidoc[]

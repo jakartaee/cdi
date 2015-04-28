@@ -1,10 +1,7 @@
-[[part_2]]
-= Part II - CDI in Java EE
-
 [partintro]
 --
 This part of the document, specifies additional rules or features when using CDI in a Java EE container.
-Unless explicitly stated otherwise, all content defined in <<part_1>> apply in this part.
+All content defined in <<part_1>> apply in this part.
 --
 
 include::definition_ee.asciidoc[]

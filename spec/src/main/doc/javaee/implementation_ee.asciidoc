@@ -2,7 +2,7 @@
 
 == Addition to programming model for Java EE
 
-In Java EE, in addition to the kinds of bean listed in <<implementation>>, the container must provide built-in support for injection and contextual lifecycle management of the following kinds of bean:
+When running in Java EE, the container must extend the rules defined in <<implementation>>, and must also provide built-in support for injection and contextual lifecycle management of the following kinds of bean:
 
 * Session beans
 * Resources (Java EE resources, persistence contexts, persistence units, remote EJBs and web services)
@@ -11,7 +11,7 @@ All containers must support managed beans, producer methods and producer fields.
 
 [[session_beans]]
 
-=== Session beans
+=== EJB Session beans
 
 A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+ or in a package annotated +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
 
