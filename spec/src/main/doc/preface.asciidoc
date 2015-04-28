@@ -1,0 +1,38 @@
+:numbered!:
+["preface",sectnum="0"]
+
+== Preface
+
+=== Evaluation license
+
+include::license-{license}.asciidoc[]
+
+=== Foreword
+
+Contexts and Dependency Injection 1.2 is a maintenance release of Contexts and Dependency Injection 1.1 (link:https://jcp.org/en/jsr/detail?id=346[JSR-346^]).
+
+A full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?version=12323655&styleName=Html&projectId=12311062[here^].
+
+=== Major changes
+
+These major changes have been introduced for CDI 1.2:
+
+* Improvement regarding the `annotated` bean discovery mode to ensure compatibility with other JSR-330 in <<default_bean_discovery>>.
+* Clarification about conversation resolution in <<conversation_context>>.
+* Multiple clarifications about events and observers resolution in <<events>>.
+* Clarification and restriction loosening on some `BeanManager` method calls in <<beanmanager>>.
+* Clarification on the limitation of container lifecycle events use in <<init_events>>.
+* Multiple clarification on the whole initialization phase ordering in <<init_events>> and <<initialization>>.
+
+More minor changes have been introduced as well :
+
+* Clarification about legal bean type and array in <<legal_bean_types>> and <<producer_field>>.
+* Clarification on the fact that CDI built-in scope can be extended by third-party extensions in <<builtin_scopes>> and <<context>>.
+* Clarification on `Iterator` returned by `Instance.iterator()` in <<dynamic_lookup>>.
+* Clarification on interceptor binding on producer method in <<binding_interceptor_to_bean>>.
+* Clarification on `ProcessAnnotatedType` in <<process_annotated_type>>.
+* Clarification on EJB related terms or example to conform to EJB specification.
+* Correction of differences between specification and Javadoc.
+* Correction of wrong examples.
+
+:numbered:
