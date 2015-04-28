@@ -5,7 +5,7 @@
 
 === Evaluation license
 
-include::license-${license}.asciidoc[]
+include::license-{license}.asciidoc[]
 
 === Foreword
 
