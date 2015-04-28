@@ -19,7 +19,7 @@ When running in Java EE, the container must extend the rules defined for managed
 
 === Dependency injection in Java EE
 
-In addition to rules defined in <<injection>>, in Java EE, the container is also required to perform dependency injection whenever it creates one of the following objects:
+When running in Java EE, the container must extend the rules defined in <<injection>> and is also required to perform dependency injection whenever it creates one of the following objects:
 
 * contextual instances of EJB session beans,
 * non-contextual instances of EJB session beans (for example, session beans obtained by the application from JNDI or injected using +@EJB+), and

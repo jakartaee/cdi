@@ -2,7 +2,7 @@
 
 == Extended Concepts for Java EE
 
-When using CDI in a Java EE container the following concepts apply in addition to those defined in <<concepts>>:
+When running in Java EE, the container must extend the concepts defined in <<concepts>> with:
 
 * A Java EE component is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>
 * Contextual instances of a bean may be used in EL expressions that are evaluated in the same context
@@ -12,7 +12,7 @@ When using CDI in a Java EE container the following concepts apply in addition t
 
 === Functionality provided by the container to the bean in Java EE
 
-In addition to the capabilities defined in <<capabilities>>, in Java EE, a bean is provided by the container with the following capability:
+When running in Java EE, the container must extend the capabilities defined in <<capabilities>>, by providing:
 
 * scoped resolution by bean name when used in a Unified EL expression, as defined by <<name_resolution>>.
 
@@ -38,7 +38,9 @@ The rules for determining the (unrestricted) set of bean types for Java EE compo
 [[default_bean_discovery_ee]]
 === Default bean discovery mode for Java EE
 
-In addition to rules listed in <<default_bean_discovery>>, if the _bean discovery mode_ is `annotated` in Java EE, then:
+When running in Java EE, the container must extend the rules defined in <<default_bean_discovery>> with:
+
+If the _bean discovery mode_ is `annotated`, then:
 
 * bean classes of EJB sessions beans, are not discovered, and
 * producer methods that are not on an EJB session bean are not discovered, and

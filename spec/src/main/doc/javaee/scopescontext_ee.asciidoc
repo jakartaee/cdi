@@ -19,7 +19,7 @@
 
 ==== Passivation capable dependencies in java EE
 
-In addition to rules defined in <<passivation_capable_dependency>>, when running in Java EE, the container must garantee that:
+When running in Java EE, the container must extend the rules defined in <<passivation_capable_dependency>>, and must also garantee that:
 
 * all EJB stateless session beans are passivation capable dependencies,
 * all EJB singleton session beans are passivation capable dependencies,
@@ -30,4 +30,4 @@ In addition to rules defined in <<passivation_capable_dependency>>, when running
 
 ==== Validation of passivation capable beans and dependencies
 
-All rules defined in <<passivation_validation>> for managed beans, also apply for EJB stateful session beans when running in Java EE.
+When running in Java EE, the container must extend the rules defined for managed beans in <<passivation_validation>> to EJB session beans.

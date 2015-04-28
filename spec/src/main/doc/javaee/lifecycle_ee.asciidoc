@@ -6,13 +6,13 @@
 
 === Container invocations and interception in Java EE
 
-In addition to definition given in <<biz_method>>, when the application invokes:
+When the application invokes:
 
 * a business method of a session bean via an EJB remote or local reference,
 
 the invocation is treated as a _business method invocation_.
 
-The following additional rule apply in Java EE:
+When running in Java EE, the container must extend the rules defined in <<biz_method>>, with:
 
 * Invocation of EJB timer service timeouts by the container are not business method invocations, but are intercepted by interceptors for EJB timeouts.
 * Only an invocation of business method on an EJB session bean is subject to EJB services such as declarative transaction management, concurrency, security and asynchronicity, as defined by the EJB specification.

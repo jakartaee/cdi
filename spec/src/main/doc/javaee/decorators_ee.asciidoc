@@ -2,7 +2,7 @@
 
 == Decorators in Java EE
 
-When running in Java EE Decorators may also be associated with any EJB session bean.
+When running in Java EE, the container must extend the rules defined for managed beans in <<decorators>> to EJB session beans.
 
 [[decorator_bean_ee]]
 

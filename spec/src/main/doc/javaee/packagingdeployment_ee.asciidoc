@@ -6,7 +6,7 @@
 [[bean_archive_ee]]
 === Bean archive with EJB Session Beans
 
-When running in Java EE, The following additional rules to those defined in <<bean_archive>> apply:
+When running in Java EE, the container must extend the rules defined in <<bean_archive>> with:
 
 * An implicit bean archive may also contains EJB session beans, and
 * if an archive meet the requirements to be an _implicit bean archive_ but doesn't contain any bean class with a bean defining annotation and have at least one EJB sessions beans, it's an _implicit bean archive_.
