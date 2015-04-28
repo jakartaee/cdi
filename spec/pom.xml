@@ -1,27 +1,177 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-  
-    <parent>
-        <groupId>javax.enterprise</groupId>
-        <artifactId>cdi-spec</artifactId>
-        <version>2.0-SNAPSHOT</version>
-    </parent>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cdi-spec-doc</artifactId>
-    <packaging>pom</packaging>
+	<parent>
+		<groupId>javax.enterprise</groupId>
+		<artifactId>cdi-spec</artifactId>
+		<version>2.0-SNAPSHOT</version>
+	</parent>
 
-  
-    <description>CDI Specification documentation</description>
-
-    <modules>
-        <module>jcp</module>
-        <module>asl2</module>
-    </modules>
-
-    <build>
-        <defaultGoal>clean package</defaultGoal>
-    </build>
+	<artifactId>cdi-spec-doc</artifactId>
+	<packaging>pom</packaging>
 
 
+	<description>CDI Specification documentation</description>
+
+	<properties>
+		<asciidoctor.version>1.5.2</asciidoctor.version>
+		<license>asl2</license>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>jcp</id>
+			<properties>
+				<license>jcp</license>
+			</properties>
+		</profile>
+		<profile>
+			<id>jboss-public-repository</id>
+			<activation>
+				<property>
+					<name>jboss-public-repository</name>
+					<value>!false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jboss-public-repository-group</id>
+					<name>JBoss Public Maven Repository Group</name>
+					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>jboss-public-repository-group</id>
+					<name>JBoss Public Maven Repository Group</name>
+					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+
+	<build>
+		<defaultGoal>clean package</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>${asciidoctor.version}</version>
+				<executions>
+					<execution>
+						<id>output-docbook</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<backend>docbook45</backend>
+							<outputDirectory>target/docbook/en-US</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>output-html</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<backend>html5</backend>
+							<outputDirectory>target/publish/html</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceDirectory>src/main/doc</sourceDirectory>
+					<sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
+					<doctype>book</doctype>
+					<attributes>
+						<license>${license}</license>
+					</attributes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jboss.maven.plugins</groupId>
+				<artifactId>maven-jdocbook-plugin</artifactId>
+				<version>2.3.8</version>
+				<extensions>true</extensions>
+				<dependencies>
+					<dependency>
+						<groupId>org.jboss.pressgang</groupId>
+						<artifactId>pressgang-xslt</artifactId>
+						<version>2.0.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.jboss.pressgang</groupId>
+						<artifactId>pressgang-jdocbook-style</artifactId>
+						<type>jdocbook-style</type>
+						<version>3.0.0</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>generate-pdf</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sourceDirectory>target/docbook</sourceDirectory>
+					<baseOutputDirectory>target/publish</baseOutputDirectory>
+					<sourceDocumentName>cdi-spec.xml</sourceDocumentName>
+					<ignoreTranslations>true</ignoreTranslations>
+					<!--<imageResource>
+						<directory>${project.basedir}/target/docbook/en-US</directory>
+						<includes>
+							<include>images/*.png</include>
+						</includes>
+					</imageResource>-->
+					<formats>
+						<format>
+							<formatName>pdf</formatName>
+							<stylesheetResource>classpath:/xslt/org/jboss/pdf.xsl</stylesheetResource>
+							<finalName>cdi-${project.version}.pdf</finalName>
+						</format>
+					</formats>
+					<options>
+						<xincludeSupported>true</xincludeSupported>
+						<xmlTransformerType>saxon</xmlTransformerType>
+						<docbookVersion>1.72.0</docbookVersion>
+						<localeSeparator>-</localeSeparator>
+						<injectionDateFormat>dd/MM/yyy</injectionDateFormat>
+						<transformerParameters>
+							<property>
+								<name>javax.xml.parsers.DocumentBuilderFactory</name>
+								<value>org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</value>
+							</property>
+							<property>
+								<name>javax.xml.parsers.SAXParserFactory</name>
+								<value>org.apache.xerces.jaxp.SAXParserFactoryImpl</value>
+							</property>
+						</transformerParameters>
+					</options>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

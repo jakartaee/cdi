@@ -1,13 +1,8 @@
 require 'erb'
 require 'asciidoctor'
 require 'asciidoctor/cli'
-# require 'asciidoctor-diagram'
-# require 'tilt/asciidoc'
-
-
 
   guard :shell do
-#    watch (/^.+\.adoc$/) { |m| Asciidoctor::Cli::Invoker.new(%W(-T asciidoctor-backends/slim -a data-uri -a linkcss! #{m[0]})).invoke! }
      watch (/^.+\.asciidoc$/) { |m| Asciidoctor::Cli::Invoker.new(%W(-o target/cdi-spec.html src/main/doc/cdi-spec.asciidoc)).invoke! }
   end
 
