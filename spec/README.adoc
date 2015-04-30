@@ -1,0 +1,101 @@
+= CDI Specification document generation
+:uri-chrome-extension: https://chrome.google.com/webstore/detail/asciidoctorjs-live-previe/iaalpfgpbocpdfblpnhhgllgbdbchmia
+:uri-firefox-addon: https://addons.mozilla.org/fr/firefox/addon/asciidoctorjs-live-preview
+:uri-opera-extension: https://addons.opera.com/fr/extensions/details/asciidoctorjs-live-preview
+:uri-chrome-extension-dd: https://github.com/asciidoctor/asciidoctor-chrome-extension/releases/download/v1.5.1.100/asciidoctor-chrome-extension.nex
+:uri-firefox-addon-dd: https://github.com/asciidoctor/asciidoctor-firefox-addon/releases/download/v0.3.0/asciidoctor-firefox-addon.xpi
+:uri-opera-extension-dd: https://github.com/asciidoctor/asciidoctor-chrome-extension/releases/download/v1.5.1.100/asciidoctor-chrome-extension.nex
+:experimental:
+
+
+This module contains AsciiDoc sources and configuration to generate CDI documentation in HTML and PDF format for both Apache License 2 and Java Community Process License.
+
+== Generating the documentation
+
+Just enter `mvn` at the command line.
+Maven will generate final doc in `target/publish/html` and `target/publish/docbook/publish/en-US/pdf` directories with the default license (ASL2).
+
+== License in doc
+
+The documentation can be generated for 2 licenses : Apache License v 2.0 (by default) and JCP license.
+To generate doc with JCP license just enter `mvn -Pjcp`
+
+== Working on the spec
+
+The spec is split different AsciiDoc file in `src/main/doc`
+The master doc (entry point) is `cdi-spec.asciidoc` which includes all the other part of the spec.
+
+To work in the spec you may want to install a plugin in your IDE (major 3 IDE have AsciiDoc plugins).
+You can also use a good text editor providing AsciiDoc plugin.
+Best candidate are:
+
+=== Atom
+
+Install https://atom.io/[Atom].
+Then from the Atom editor menus, navigate to menu:Atom[Preferences].
+From there, open the menu:Packages[] tab and install:
+
+AsciiDoc Preview package:: enables live preview
+AsciiDoc package:: enables syntax highlighting (AsciiDoc language support)
+
+More information:
+
+* https://atom.io/packages/asciidoc-preview[AsciiDoc Preview for Atom]
+* https://atom.io/packages/language-asciidoc[AsciiDoc language support for Atom]
+
+=== Brackets
+
+Install http://brackets.io/[Brackets].
+Then from the Brackets file menu, open the extension manager.
+Browse available extensions and install `AsciiDoc Preview`.
+
+More information:
+
+* https://github.com/asciidoctor/brackets-asciidoc-preview[AsciiDoc Preview for Brackets]
+
+=== AsciiDocFX
+
+To run AsciiDocFX, you will need to:
+
+. Install http://www.oracle.com/technetwork/java/javase/downloads/index.html[JDK 8]
+. Download the latest https://github.com/rahmanusta/AsciidocFX/releases[AsciidocFX.zip] and extract it
+. Run `bin/asciidocfx.bat` or `bin/asciidocfx.sh`
+
+More information:
+
+ * http://www.asciidocfx.com/[AsciiDocFX homepage]
+
+
+=== Using a web browser (preview only)
+
+All you need to preview an AsciiDoc document in a web browser is to install the {uri-chrome-extension}[Chrome extension], the {uri-firefox-addon}[Firefox add-on] or the {uri-opera-extension}[Opera extension].
+Then you can see the AsciiDoc file rendered as HTML just by visiting it!
+
+=== Editing the spec with Live Preview 
+
+If you want to more than just preview AsciiDoc files in your browser you may need to use an autogenerating mechanism and live preview in your browser.
+The spec provides script to help you setting up this configuration.
+Ìt only requires to have Ruby 1.8.7 or higher installed on your machine.
+More info on Ruby installation on https://www.ruby-lang.org/en/documentation/installation/ 
+
+When Ruby is installed you'll have to install bundler ruby gem with `gem install bundler` command.
+Then you can use it to install needed gems by entering the following command from `spec` directory
+
+`bundle install`
+
+After that, just launch `./preview.sh` or `preview.bat` script to have the html version of the spec generated at each AsciiDoc change.
+
+To have the generated html file automatically reload in your browser you may use `LiveReload` plugin.
+
+==== LiveReload
+
+To use Chrome, Firefox or Opera to automatically preview change on your working doc, check out http://livereload.com/[LiveReload]. It describes itself as:
+
+LiveReload monitors changes in the file system. As soon as a file is saved, it is sent to the browser using a WebSocket. In addition to reloading the HTML, it supports live updating of CSS and JavaScript in the page.
+
+You can setup LiveReload (for free) on any operating system using the https://github.com/guard/guard-livereload[Guard::LiveReload] plugin and the companion LiveReload extension for https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en[Chrome] or http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions-[Firefox].
+You can also install Chrome plugin in Opera with the https://addons.opera.com/fr/extensions/details/download-chrome-extension-9/?display=en[chrome support] extension 
+
+IMPORTANT: After installing the Chrome LiveReload extension, you need to check the "Allow access to file URLs" checkbox in Tools > Extensions > LiveReload in order for it to work with local files.
+
+Whenever the AsciiDoc file is changed, first the Guard "shell" plugin will be triggered to generate the HTML file, then the "livereload" plugin will be triggered to send the HTML to the browser.
