@@ -125,7 +125,7 @@ For example, if the bean class is named +ProductList+, the default bean name is 
 
 === Producer methods on EJB session bean
 
-A producer method defined in an EJB session bean follow the rules defined in <<producer_method> with the following addition:
+A producer method defined in an EJB session bean follows the rules defined in <<producer_method> with the following addition:
 
 * A producer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
 
@@ -133,7 +133,7 @@ A producer method defined in an EJB session bean follow the rules defined in <<p
 
 ==== Declaring a producer method in an EJB session bean
 
-Declaring a producer method in an EJB session bean follow the rules defined in <<declaring_producer_method>> with the following addition:
+A producer method declaration in an EJB session bean follows the rules defined in <<declaring_producer_method>> with the following addition:
 
 * if a non-static method of a session bean class is annotated +@Produces+, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
 
@@ -141,7 +141,7 @@ Declaring a producer method in an EJB session bean follow the rules defined in <
 
 === Producer field on EJB session bean
 
-A producer field defined in an EJB session bean follow the rules defined in <<producer_field> with the following addition:
+A producer field defined in an EJB session bean follows the rules defined in <<producer_field> with the following addition:
 
 * A producer field defined in an EJB session bean must be a static field of the bean class.
 
@@ -149,7 +149,7 @@ A producer field defined in an EJB session bean follow the rules defined in <<pr
 
 ==== Declaring a producer field in an EJB session bean
 
-Declaring a producer field in an EJB session bean follow the rules defined in <<declaring_producer_field>> with the following addition:
+A producer field declaration in an EJB session bean follows the rules defined in <<declaring_producer_field>> with the following addition:
 
 * If a non-static field of an EJB session bean class is annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
 
@@ -157,7 +157,7 @@ Declaring a producer field in an EJB session bean follow the rules defined in <<
 
 === Disposer methods on EJB session bean
 
-A disposer method defined in an EJB session bean follow the rules defined in <<disposer_method> with the following addition:
+A disposer method defined in an EJB session bean follows the rules defined in <<disposer_method> with the following addition:
 
 * A disposer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
 
@@ -165,7 +165,7 @@ A disposer method defined in an EJB session bean follow the rules defined in <<d
 
 ==== Declaring a disposer method
 
-Declaring a disposer method in an EJB session bean follow the rules defined in <<declaring_disposer_method>> with the following addition:
+A disposer method declaration in an EJB session bean follows the rules defined in <<declaring_disposer_method>> with the following addition:
 
 * If a non-static method of an EJB session bean class has a parameter annotated +@Disposes+, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
 
