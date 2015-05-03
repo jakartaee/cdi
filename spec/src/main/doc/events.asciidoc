@@ -434,7 +434,8 @@ For a custom implementation of the +ObserverMethod+ interface defined in <<obser
 
 ==== Observer ordering
 
-By default, the order in which observer methods are called is not defined. The +@Priority+ annotation can be applied to observer methods to specify a priority. If no +@Priority+ annotation is specified, the default priority +APPLICATION+ is assumed. Observers with smaller priority values are called first.
+Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
+The priority of an observer method may be declared using the +@Priority+ annotation. If no +@Priority+ annotation is specified, the default priority +APPLICATION + 500+ is assumed. Observers with smaller priority values are called first.
 
 [source, java]
 ----

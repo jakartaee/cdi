@@ -79,7 +79,7 @@ public interface ObserverMethod<T> {
      *         observer methods are invoked.
      */
     public default int getPriority() {
-        return javax.interceptor.Interceptor.Priority.APPLICATION;
+        return javax.interceptor.Interceptor.Priority.APPLICATION + 500;
     };
 
     /**
