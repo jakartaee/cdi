@@ -6,7 +6,7 @@ When running in Java EE, the container must extend the concepts defined in <<con
 
 * A Java EE component is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>
 * Contextual instances of a bean may be used in EL expressions that are evaluated in the same context
-* For some Java EE components - like environment resources, defined in <<resources>>  - the container provides bean implementation
+* For some Java EE components - like environment resources, defined in <<resources>>  - the developer provides only the annotations and the bean implementation is provided by the container.
 
 [[capabilities_ee]]
 

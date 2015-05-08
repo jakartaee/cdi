@@ -2,9 +2,7 @@
 
 == Concepts
 
-A Java class is a _bean_ if the lifecycle of its instances may be managed by the container according to the lifecycle context model defined in <<contexts>>. A bean may bear metadata defining its lifecycle and interactions with other components.
-
-Speaking more abstractly, a bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context.
+A bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context. A bean may bear metadata defining its lifecycle and interactions with other components.
 
 A bean comprises the following attributes:
 
@@ -18,7 +16,7 @@ A bean comprises the following attributes:
 
 Furthermore, a bean may or may not be an alternative.
 
-In most cases, a bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>. In certain other cases the developer provides only the annotations and the bean implementation is provided by the container.
+A bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
 
 The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_el_resolution>>.
 
