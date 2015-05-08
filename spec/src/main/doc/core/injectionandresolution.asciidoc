@@ -1,4 +1,4 @@
-[[injection_el_resolution]]
+[[injection_and_resolution]]
 
 == Dependency injection, lookup and EL
 

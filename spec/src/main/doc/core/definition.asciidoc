@@ -18,7 +18,7 @@ Furthermore, a bean may or may not be an alternative.
 
 A bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
 
-The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_el_resolution>>.
+The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_and_resolution>>.
 
 The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators. The interceptor bindings of a bean determine which interceptors will be applied at runtime. The bean types and qualifiers of a bean determine which decorators will be applied at runtime. Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>. Decorators are defined in <<decorators>>.
 
@@ -30,7 +30,7 @@ A bean is provided by the container with the following capabilities:
 
 * transparent creation and destruction and scoping to a particular context, specified in <<contexts>> and <<lifecycle>>,
 * scoped resolution by bean type and qualifier annotation type when injected into a Java-based client, as defined by <<typesafe_resolution>>,
-* lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_el_resolution>>,
+* lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_and_resolution>>,
 * method interception, callback interception, and decoration, as defined in <<interceptors>> and <<decorators>>, and
 * event notification, as defined in <<events>>.
 

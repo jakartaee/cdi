@@ -21,7 +21,7 @@ include::core/implementation.asciidoc[]
 
 include::core/inheritance.asciidoc[]
 
-include::core/injectionelresolution.asciidoc[]
+include::core/injectionandresolution.asciidoc[]
 
 include::core/scopescontexts.asciidoc[]
 
