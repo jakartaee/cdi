@@ -33,7 +33,7 @@ import javax.enterprise.event.TransactionPhase;
  * @author David Allen
  * @param <T> the event type
  */
-public interface ObserverMethod<T> {
+public interface ObserverMethod<T> extends Prioritized {
     /**
      * <p>
      * Obtains the {@linkplain Class class} of the type that declares the observer method.
@@ -78,6 +78,7 @@ public interface ObserverMethod<T> {
      * @return The priority that will be used by the container to determine the notification order in which event
      *         observer methods are invoked.
      */
+    @Override
     public default int getPriority() {
         return javax.interceptor.Interceptor.Priority.APPLICATION + 500;
     };
