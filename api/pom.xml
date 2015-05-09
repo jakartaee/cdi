@@ -106,7 +106,17 @@
 			</roles>
 			<email>johndament[at]apache[dot]org</email>
 		</developer>
-		
+
+		<developer>
+			<name>Mark Paluch</name>
+			<id>mp911de</id>
+			<organization>Independent</organization>
+			<timezone>CET</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>mpaluch[at]paluch[dot]biz</email>
+		</developer>
 
 		<developer>
 			<name>Tomas Remes</name>
