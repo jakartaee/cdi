@@ -6,7 +6,7 @@ package javax.enterprise.inject.spi;
  * </p>
  *
  * @author Mark Paluch
- * @since 1.1
+ * @since 2.0
  */
 public interface Prioritized {
 
