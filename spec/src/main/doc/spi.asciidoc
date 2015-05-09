@@ -797,7 +797,14 @@ If any method on the event object is called outside of the observer method invoc
 
 Service providers may have observer methods, which may observe any event, including any container lifecycle event, and obtain an injected +BeanManager+ reference. Any decorators associated with +BeanManager+ will not be applied. If other beans are injected into an extension's observer methods, non-portable behavior results. An extension may use +BeanManager.fireEvent()+ to deliver events to observer methods defined on extensions. The container is not required to deliver events fired during application initialization to observer methods defined on beans.
 
-The container instantiates a single instance of each extension at the beginning of the application initialization process and maintains a reference to it until the application shuts down. The container delivers event notifications to this instance by calling its observer methods. The notification order for observer methods within extensions is undefined, the +@Priority+ annotation cannot be used to control the notification order.
+The container instantiates a single instance of each extension at the beginning of the application initialization process and maintains a reference to it until the application shuts down. The container delivers event notifications to this instance by calling its observer methods.
+
+The notification order for observer methods within extensions follows the same ordering rule as defined in <<observer_ordering>> for non-extension observers. The priority of an observer method may be declared using the +@Priority+ annotation.
+
+[source, java]
+----
+void beforeBeanDiscovery(@Observes @Priority(LIBRARY) BeforeBeanDiscovery event) { ... }
+----
 
 For each service provider, the container must provide a bean of scope +@ApplicationScoped+ and qualifier +@Default+, supporting injection of a reference to the service provider instance. The bean types of this bean include the class of the service provider and all superclasses and interfaces.
 

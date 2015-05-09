@@ -411,7 +411,7 @@ When an event is fired by the application, the container must:
 
 * determine the observer methods for that event according to the rules of observer resolution defined by <<observer_resolution>>, then,
 * for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA +Synchronization+.
-* honor the priority if it is defined using the +@Priority+ annotation.
+* honor the priority of observer methods.
 
 
 The container calls observer methods as defined in <<observers_method_invocation>>.
