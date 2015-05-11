@@ -32,7 +32,7 @@ import javax.enterprise.context.spi.CreationalContext;
  * @author David Allen
  * @param <T> the class of the bean instance
  */
-public interface Bean<T> extends Contextual<T>, BeanAttributes<T>, Prioritized {
+public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
 
     /**
      * The bean {@linkplain Class class} of the managed bean or session bean or of the bean that declares the producer method or
