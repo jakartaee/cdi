@@ -23,7 +23,7 @@ The `CDI` utility class provides static lookup for `CDIProvider` instances based
 
 The `CDIProvider` instance returned is capable of starting a `CDI` instance.  By invoking either of the  `initialize` methods it can start up a container to retriever beans, fire events, gain access to the `BeanManager`.  The `initialize` methods on the `CDIProvider` interface must not be invoked when in an EE container.  If they are invoked, an `UnsupportedOperationException` shall be thrown.  Likewise, if `shutdown` or `close` were invoked on the `CDI` class while in an EE container, an `UnsupportedOperationException` shall also be thrown.
 
-Calling `initialize` on the `CDIProvider` has the effect of creating a new `CDI` instance each time invoked.
+Calling `initialize` on the `CDIProvider` has the effect of creating a new `CDI` instance each time invoked.  The _application context_ is started automatically by the container on start up.
 
 The `CDI` can be stopped when it's not needed.  To help with this, `CDI` implements `AutoCloseable`, so when derefenced it should shutdown automatically (the `close` method invokes `shutdown`).  You must also shutdown the CDI instance manually by calling the `shutdown` method on the CDI object.  If the `shutdown` method is explicitly invoked, it shall throw an `IllegalStateException` if the container was never initialized or if it was already shutdown.  The `close` method should not throw an `IllegalStateException` if the container was never initialized.
 
