@@ -11,3 +11,13 @@ When running in Java EE, the container must extend the rules defined for managed
 === Inheritance of member-level metadata in Java EE
 
 When running in Java EE, the container must extend the rules defined for managed beans in <<member_level_inheritance>> to EJB session beans.
+
+[[specialization_ee]]
+
+=== Specialization in Java EE
+
+[[direct_and_indirect_specialization_ee]]
+
+==== Direct and indirect specialization in Java EE
+
+When running in Java EE, the container must extend the rules defined in <<member_level_inheritance>> and is also required to support specialization for EJB session beans as defined in <<specialize_session_bean>>.

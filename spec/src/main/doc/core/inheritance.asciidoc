@@ -164,7 +164,7 @@ When an enabled bean, as defined in <<enablement>>, specializes a second bean, w
 
 ==== Direct and indirect specialization
 
-The annotation +@javax.enterprise.inject.Specializes+ is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>>, <<specialize_session_bean>> and <<specialize_producer_method>>.
+The annotation +@javax.enterprise.inject.Specializes+ is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>> and <<specialize_producer_method>>.
 
 Formally, a bean X is said to _specialize_ another bean Y if either:
 

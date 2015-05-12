@@ -364,14 +364,7 @@ PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync,
 
 === Scopes
 
-Java EE components such as servlets, EJBs and JavaBeans do not have a well-defined _scope_. These components are either:
-
-* _singletons_, such as EJB singleton session beans, whose state is shared between all clients,
-* _stateless objects_, such as servlets and stateless session beans, which do not contain client-visible state, or
-* objects that must be explicitly created and destroyed by their client, such as JavaBeans and stateful session beans, whose state is shared by explicit reference passing between clients.
-
-
-Scoped objects, by contrast, exist in a well-defined lifecycle context:
+Scoped objects, exist in a well-defined lifecycle context:
 
 * they may be automatically created when needed and then automatically destroyed when the context in which they were created ends, and
 * their state is automatically shared by clients that execute in the same context.
@@ -410,7 +403,7 @@ The set of scope types is extensible.
 
 There are five standard scope types defined by this specification, all defined in the package +javax.enterprise.context+.
 
-* The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>> representing the standard scopes defined by the Java Servlets specification. Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
+* The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>. Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
 * The +@ConversationScoped+ annotation represents the conversation scope defined in <<conversation_context>>.
 * Finally, there is a +@Dependent+ pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
@@ -595,7 +588,7 @@ If an interceptor or decorator has a name, non-portable behavior results.
 
 === Alternatives
 
-An _alternative_ is a bean that must be explicitly selected if it should be available for lookup, injection or EL resolution.
+An _alternative_ is a bean that must be explicitly selected if it should be available for lookup, injection or name resolution.
 
 [[declaring_alternative]]
 

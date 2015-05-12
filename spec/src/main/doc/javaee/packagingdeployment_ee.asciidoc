@@ -45,4 +45,13 @@ In Java EE, the container automatically discovers EJB session beans in bean arch
 
 ==== Bean discovery in Java EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<bean_discovery_steps>> to EJB session beans.
+When running in Java EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
+
+[[el]]
+
+=== Integration with Unified EL
+
+The container must provide a Unified EL +ELResolver+ to the servlet engine and JSF implementation that resolves bean names using the rules of name resolution defined in <<name_resolution>> and resolving ambiguities according to <<ambig_names>>.
+
+* If a name used in an EL expression does not resolve to any bean, the +ELResolver+ must return a null value.
+* Otherwise, if a name used in an EL expression resolves to exactly one bean, the +ELResolver+ must return a contextual instance of the bean, as defined in <<contextual_instance>>.

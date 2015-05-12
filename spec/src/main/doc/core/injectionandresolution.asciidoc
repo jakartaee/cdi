@@ -1,6 +1,6 @@
 [[injection_and_resolution]]
 
-== Dependency injection, lookup and EL
+== Dependency injection and lookup
 
 The container injects references to contextual instances to the following kinds of _injection point_:
 
@@ -9,9 +9,9 @@ The container injects references to contextual instances to the following kinds 
 * Any parameter of an observer method, except for the event parameter
 
 
-References to contextual instances may also be obtained by programmatic lookup or by Unified EL expression evaluation.
+References to contextual instances may also be obtained by programmatic lookup.
 
-In general, a bean type or bean name does not uniquely identify a bean. When resolving a bean at an injection point, the container considers bean type, qualifiers and selected alternatives. When resolving a name in an EL expression, the container considers the bean name and selected alternatives. This allows bean developers to decouple type from implementation.
+In general, a bean type or bean name does not uniquely identify a bean. When resolving a bean at an injection point, the container considers bean type, qualifiers and selected alternatives. This allows bean developers to decouple type from implementation.
 
 The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>. The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
 
@@ -19,13 +19,11 @@ The container is required to support circularities in the bean dependency graph 
 
 === Modularity
 
-Beans and their clients may be deployed in _modules_ in a module architecture such as the Java EE environment. In a module architecture, certain modules are considered _bean archives_. In the Java EE module architecture, any Java EE module or library is a module. The Java EE module or library is a bean archive if it contains a +beans.xml+ file, as defined in <<bean_archive>>.
+Beans and their clients may be deployed in _modules_ in a module architecture. In a module architecture, certain modules are considered _bean archives_. The library is a bean archive if it contains a +beans.xml+ file, as defined in <<bean_archive>>.
 
-A bean packaged in a certain module is available for injection, lookup and EL resolution to classes and JSP/JSF pages packaged in some other module if and only if the bean class of the bean is required to be _accessible_ to the other module by the class accessibility requirements of the module architecture. In the Java EE module architecture, a bean class is accessible in a module if and only if it is required to be accessible according to the class loading requirements defined by the Java EE platform specification.
+A bean packaged in a certain module is available for injection, lookup and name resolution to classes packaged in some other module if and only if the bean class of the bean is required to be _accessible_ to the other module by the class accessibility requirements of the module architecture.
 
-Note that, in some Java EE implementations, a bean class might be accessible to some other class even when this is not required by the Java EE platform specification. For the purposes of this specification, a class is not considered accessible to another class unless accessibility is explicitly required by the Java EE platform specification.
-
-An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
+An alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
 
 [[declaring_selected_alternatives]]
 
@@ -149,7 +147,7 @@ When an ambiguous dependency exists, the container attempts to resolve the ambig
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
 * all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for alternatives with the highest priority and producer methods and fields of alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
 
-The container must validate all injection points of all enabled beans, all observer methods, all disposer methods and all other component classes supporting injection when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
+The container must validate all injection points of all enabled beans, all observer methods and all disposer methods when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies. If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getInjectionPoints()+ to determine the set of injection points.
 
@@ -281,27 +279,26 @@ A bean must declare _all_ of the qualifiers that are specified at the injection 
 
 [[name_resolution]]
 
-=== EL name resolution
+=== Name resolution
 
-The process of matching a bean to a name used in EL is called _name resolution_. Since there is no typing information available in EL, the container may consider only the bean name. Name resolution usually occurs at runtime, during EL expression evaluation.
+The process of matching a bean to a name is called _name resolution_. Since there is no typing information available during name resolution, the container may consider only the bean name. Name resolution usually occurs at runtime.
 
-An EL name resolves to a bean if:
+A name resolves to a bean if:
 
-* the bean has the given bean name, and
-* the bean is available for injection in the war containing the JSP or JSF page with the EL expression.
+* the bean has the given bean name.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getName()+ to determine the bean name.
 
 [[ambig_names]]
 
-==== Ambiguous EL names
+==== Ambiguous names
 
-An _ambiguous EL name_ exists in an EL expression when an EL name resolves to multiple beans. When an ambiguous EL name exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives. If:
+An _ambiguous name_ exists when a name resolves to multiple beans. When an ambiguous name exists, the container attempts to resolve the ambiguity. The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives. If:
 
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 * all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 
-All unresolvable ambiguous EL names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain war, and either:
+All unresolvable ambiguous names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain application, and either:
 
 * the two beans have the same bean name and the name is not resolvable, or
 * the bean name of one bean is of the form +x.y+, where +y+ is a valid bean name, and +x+ is the bean name of the other bean,
@@ -346,14 +343,17 @@ The behavior of all methods declared by +java.lang.Object+, except for +toString
 
 === Dependency injection
 
-From time to time the container instantiates beans and other component classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
+From time to time the container instantiates beans and other classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
 
-The container is required to perform dependency injection whenever it creates one of the following objects:
+The container is required to perform dependency injection whenever it creates the following contextual objects:
 
-* contextual instances of managed beans, and
+* contextual instances of managed beans.
+
+The container is also required to perform dependency injection whenever it instantiates the following non-contextual objects:
+
 * non-contextual instances of managed beans.
 
-The container interacts with instances of beans and other component classes supporting injection by calling methods and getting and setting field values.
+The container interacts with instances of beans or objects supporting injection by calling methods and getting and setting field values.
 
 The object injected by the container may not be a direct reference to a contextual instance of the bean. Instead, it is an injectable reference, as defined by <<injectable_reference>>.
 
@@ -367,7 +367,7 @@ When the container instantiates a managed bean with a constructor annotated +@In
 
 ==== Injection of fields and initializer methods
 
-When the container creates a new instance of a managed bean, or of any other component class supporting injection the container must:
+When the container creates a new instance of a managed bean, the container must:
 
 * Initialize the values of all injected fields. The container sets the value of each injected field to an injectable reference.
 * Call all initializer methods, passing an injectable reference to each parameter.
@@ -375,16 +375,15 @@ When the container creates a new instance of a managed bean, or of any other com
 
 The container must ensure that:
 
-* Initializer methods declared by a class X in the type hierarchy of the bean are called after all injected fields declared by X or by superclasses of X have been initialized, and after all component environment resource dependencies declared by X or by superclasses of X have been injected.
-* Any +@PostConstruct+ callback declared by a class X in the type hierarchy of the bean is called after all initializer methods declared by X or by superclasses of X have been called, after all injected fields declared by X or by superclasses of X have been initialized, and after all component environment resource dependencies declared by X or by superclasses of X have been injected.
-* Any servlet +init()+ method is called after all initializer methods have been called, all injected fields have been initialized and all component environment resource dependencies have been injected.
+* Initializer methods declared by a class X in the type hierarchy of the bean are called after all injected fields declared by X or by superclasses of X have been initialized.
+* Any +@PostConstruct+ callback declared by a class X in the type hierarchy of the bean is called after all initializer methods declared by X or by superclasses of X have been called, after all injected fields declared by X or by superclasses of X have been initialized.
 
 
 [[dependent_objects_destruction]]
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean or of any component class supporting injection, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
+When the container destroys an instance of a bean, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
 
 [[producer_or_disposer_methods_invocation]]
 
@@ -463,7 +462,7 @@ public interface InjectionPoint {
 * The +isTransient()+ method returns +true+ if the injection point is a transient field, and +false+ otherwise. If the injection point represents a dynamically obtained instance then the +isTransient()+ method returns +true+ if the +Instance+ injection point is a transient field, and +false+ otherwise.
 
 
-Occasionally, a component with scope +@Dependent+ needs to access metadata relating to the object into which it is injected. For example, the following producer method creates injectable ++Logger++ s. The log category of a +Logger+ depends upon the class of the object into which it is injected:
+Occasionally, a bean with scope +@Dependent+ needs to access metadata relating to the object into which it is injected. For example, the following producer method creates injectable ++Logger++ s. The log category of a +Logger+ depends upon the class of the object into which it is injected:
 
 [source, java]
 ----
@@ -478,7 +477,7 @@ If a bean that declares any scope other than +@Dependent+ has an injection point
 
 If a disposer method has an injection point of type +InjectionPoint+ and qualifier +Default+, the container automatically detects the problem and treats it as a definition error.
 
-If a component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
+If a class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
 [[bean_metadata]]
 

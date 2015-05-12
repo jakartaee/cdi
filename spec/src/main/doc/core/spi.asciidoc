@@ -95,7 +95,7 @@ public interface Interceptor<T> extends Bean<T> {
 * +intercept()+ invokes the specified kind of lifecycle callback or method invocation interception upon the given instance of the interceptor.
 
 
-An +InterceptionType+ identifies the kind of lifecycle callback, EJB timeout method (when used in Java EE) or business method.
+An +InterceptionType+ identifies the kind of lifecycle callback or business method.
 
 [source, java]
 ----
@@ -176,9 +176,9 @@ public interface InjectionTarget<T>
 }
 ----
 
-* +inject()+ performs dependency injection upon the given object. The container performs Java EE component environment injection, according to the semantics required by the Java EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods>>.
-* +postConstruct()+ calls the +@PostConstruct+ callback, if it exists, according to the semantics required by the Java EE platform specification.
-* +preDestroy()+ calls the +@PreDestroy+ callback, if it exists, according to the semantics required by the Java EE platform specification.
+* +inject()+ performs dependency injection upon the given object. The container sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods>>.
+* +postConstruct()+ calls the +@PostConstruct+ callback, if it exists.
+* +preDestroy()+ calls the +@PreDestroy+ callback.
 
 
 Implementations of +Producer+ and +InjectionTarget+ must ensure that the set of injection points returned by +getInjectionPoints()+ are injected by +produce()+ or +inject()+.
@@ -242,8 +242,6 @@ public interface CDIProvider {
    public CDI<Object> getCDI();
 }
 ----
-
-Components may obtain an instance of +BeanManager+ from JNDI by looking up the name +java:comp/BeanManager+.
 
 [[bm_obtain_contextual_reference]]
 
@@ -519,17 +517,6 @@ The method +BeanManager.getELResolver()+ returns the +javax.el.ELResolver+ speci
 [source, java]
 ----
 public ELResolver getELResolver();
-----
-
-[[bm_wrap_expressionfactory]]
-
-==== Wrapping a Unified EL +ExpressionFactory+
-
-The method +BeanManager.wrapExpressionFactory()+ returns a wrapper +javax.el.ExpressionFactory+ that delegates +MethodExpression+ and +ValueExpression+ creation to the given +ExpressionFactory+. When a Unified EL expression is evaluated using a +MethodExpression+ or +ValueExpression+ returned by the wrapper +ExpressionFactory+, the rules defined in <<dependent_scope_el>> are enforced by the container.
-
-[source, java]
-----
-public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 ----
 
 [[bm_obtain_annotatedtype]]
@@ -1091,11 +1078,11 @@ public interface ProcessInjectionTarget<X> {
 
 Any observer of this event is permitted to wrap and/or replace the +InjectionTarget+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the bean or other component class supporting injection.
 
-For example, this observer decorates the +InjectionTarget+ for all servlets.
+For example, this observer decorates the +InjectionTarget+ for all Maps.
 
 [source, java]
 ----
-<T extends Servlet> void decorateServlet(@Observes ProcessInjectionTarget<T> pit) {
+<T extends Map> void decorateMap(@Observes ProcessInjectionTarget<T> pit) {
     pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
 }
 ----
@@ -1172,12 +1159,6 @@ public interface ProcessBean<X> {
 * +getBean()+ returns the +Bean+ object that is about to be registered. The +Bean+ may implement +Interceptor+ or +Decorator+.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
-
-
-[source, java]
-----
-public enum SessionBeanType { STATELESS, STATEFUL, SINGLETON }
-----
 
 [source, java]
 ----

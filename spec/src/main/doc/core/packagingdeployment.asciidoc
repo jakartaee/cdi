@@ -100,7 +100,6 @@ First the container must discover types. The container discovers:
 
 * each Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum deployed in an explicit bean archive, and
 * each Java class with a bean defining annotation in an implicit bean archive.
-* each session bean
 
 that is not excluded from discovery by an _exclude filter_ as defined in <<exclude_filters>>.
 
@@ -196,11 +195,3 @@ Then, the container registers the +Bean+ and +ObserverMethod+ objects:
 * For each enabled decorator, the container registers an instance of the +Decorator+ interface defined in <<decorator>>.
 * For each observer method of every enabled bean, the container registers an instance of the +ObserverMethod+ interface defined in <<observer_method>>.
 
-[[el]]
-
-=== Integration with Unified EL
-
-The container must provide a Unified EL +ELResolver+ to the servlet engine and JSF implementation that resolves bean names using the rules of name resolution defined in <<name_resolution>> and resolving ambiguities according to <<ambig_names>>.
-
-* If a name used in an EL expression does not resolve to any bean, the +ELResolver+ must return a null value.
-* Otherwise, if a name used in an EL expression resolves to exactly one bean, the +ELResolver+ must return a contextual instance of the bean, as defined in <<contextual_instance>>.

@@ -34,6 +34,24 @@ public class BookShopBean
 
 The rules for determining the (unrestricted) set of bean types for Java EE components are defined in  <<session_bean_types>> and <<resource_types>>.
 
+[[scopes_ee]]
+
+=== Scopes
+
+Java EE components such as servlets, EJBs and JavaBeans do not have a well-defined _scope_. These components are either:
+
+* _singletons_, such as EJB singleton session beans, whose state is shared between all clients,
+* _stateless objects_, such as servlets and stateless session beans, which do not contain client-visible state, or
+* objects that must be explicitly created and destroyed by their client, such as JavaBeans and stateful session beans, whose state is shared by explicit reference passing between clients.
+
+CDI scopes add to Java EE these missing well-defined lifecycle context as defined in <<scopes>>.
+
+[[builtin_scopes_ee]]
+
+==== Built-in scope types in Java EE
+
+When running in Java EE, the implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations provided by the container, represents the standard scopes defined by the Java Servlets specification.
+
 
 [[default_bean_discovery_ee]]
 === Default bean discovery mode for Java EE

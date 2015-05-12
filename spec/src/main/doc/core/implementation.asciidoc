@@ -7,6 +7,9 @@ The container provides built-in support for injection and contextual lifecycle m
 * Managed beans
 * Producer methods and fields
 
+
+All containers must support managed beans, producer methods and producer fields.
+
 A portable extension may provide other kinds of beans by implementing the interface +Bean+ defined in <<bean>>.
 
 [[managed_beans]]
@@ -25,11 +28,10 @@ If the managed bean class is a generic type, it must have scope +@Dependent+. If
 
 ==== Which Java classes are managed beans?
 
-A top-level Java class is a managed bean if it is defined to be a managed bean by any other Java EE specification, or if it meets all of the following conditions:
+A top-level Java class is a managed bean if it meets all of the following conditions:
 
 * It is not a non-static inner class.
 * It is a concrete class, or is annotated +@Decorator+.
-* It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in +ejb-jar.xml+.
 * It does not implement +javax.enterprise.inject.spi.Extension+.
 * It is not annotated +@Vetoed+ or in a package annotated +@Vetoed+.
 * It has an appropriate constructor - either:
@@ -89,7 +91,7 @@ public class LoginAction { ... }
 public class MockLoginAction extends LoginAction { ... }
 ----
 
-The second bean is a "mock object" that overrides the implementation of +LoginAction+ when running in an embedded EJB Lite based integration testing environment.
+The second bean is a "mock object" that overrides the implementation of +LoginAction+ when running in an embedded CDI based integration testing environment.
 
 [[specialize_managed_bean]]
 
@@ -492,7 +494,7 @@ A bean constructor may have any number of parameters. All parameters of a bean c
 
 === Injected fields
 
-An _injected field_ is a non-static, non-final field of a bean class or of any Java EE component class supporting injection.
+An _injected field_ is a non-static, non-final field of a bean class.
 
 [[declaring_injected_field]]
 
@@ -517,7 +519,7 @@ If an injected field is annotated +@Produces+, the container automatically detec
 
 === Initializer methods
 
-An _initializer method_ is a default-access, public, protected or private, non-abstract, non-static, non-generic method of a bean class or of any Java EE component class supporting injection.
+An _initializer method_ is a default-access, public, protected or private, non-abstract, non-static, non-generic method of a bean class.
 
 A bean class may declare multiple (or zero) initializer methods.
 
