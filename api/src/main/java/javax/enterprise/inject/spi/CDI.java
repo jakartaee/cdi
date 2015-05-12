@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,7 +85,7 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
                 }
             }
             configuredProvider = discoveredProviders.stream()
-                    .filter(CDI::notNull).findFirst()
+                    .filter(Objects::nonNull).findFirst()
                     .orElseThrow(() -> new IllegalStateException("Unable to locate CDIProvider"));
             return configuredProvider;
         }
@@ -159,10 +159,6 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
             }
         }
         return names;
-    }
-
-    private static boolean notNull(Object o) {
-        return o != null;
     }
 
     /**

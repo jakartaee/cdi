@@ -16,7 +16,7 @@ public interface CDIProvider {
      * 
      * @return the CDI instance for the current container
      */
-    public CDI<Object> getCDI();
+    CDI<Object> getCDI();
 
     /**
      * Determines whether or not this CDIProvider has been initialized or not.
@@ -25,8 +25,8 @@ public interface CDIProvider {
     boolean isInitialized();
 
     /**
-     * Initializes a CDI Container.  Cannot be called within an application server or if the container is already started.
-     * If called in either of these ways, an {@link java.lang.IllegalStateException} is thrown.
+     * Initializes a CDI Container.  Cannot be called within an application server.
+     * If called in this way, an {@link java.lang.UnsupportedOperationException} is thrown.
      *
      * @return the {@link CDI} instance associated with the container.  This is the same instance returned by using
      * {@link CDI.current()}
@@ -36,8 +36,8 @@ public interface CDIProvider {
     }
 
     /**
-     * Initializes a CDI Container.  Cannot be called within an application server or if the container is already started.
-     * If called in either of these ways, an {@link java.lang.IllegalStateException} is thrown.
+     * Initializes a CDI Container.  Cannot be called within an application server.
+     * If called in this way, an {@link java.lang.UnsupportedOperationException} is thrown.
      *
      * @param params optional parameters, may be null or empty.  May also be immutable.
      * @return the {@link CDI} instance associated with the container.  This is the same instance returned by using
