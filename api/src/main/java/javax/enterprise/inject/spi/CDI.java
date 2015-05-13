@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +22,7 @@ import javax.enterprise.inject.Instance;
  * @author Pete Muir
  * @since 1.1
  */
-public abstract class CDI<T> implements Instance<T> {
+public abstract class CDI<T> implements Instance<T>, AutoCloseable {
 
     protected static volatile Set<CDIProvider> discoveredProviders = null;
     protected static volatile CDIProvider configuredProvider = null;
@@ -42,30 +43,7 @@ public abstract class CDI<T> implements Instance<T> {
      * 
      */
     public static CDI<Object> current() {
-        if (configuredProvider != null) {
-            return configuredProvider.getCDI();
-        } else {
-
-            // Discover providers and cache
-            if (discoveredProviders == null) {
-                synchronized (lock) {
-                    if (discoveredProviders == null) {
-                        findAllProviders();
-                    }
-                }
-            }
-
-            CDI<Object> cdi = null;
-            for (CDIProvider provider : discoveredProviders) {
-                cdi = provider.getCDI();
-                if (cdi != null)
-                    break;
-            }
-            if (cdi == null) {
-                throw new IllegalStateException("Unable to access CDI");
-            }
-            return cdi;
-        }
+        return getCDIProvider().getCDI();
     }
 
     /**
@@ -81,11 +59,50 @@ public abstract class CDI<T> implements Instance<T> {
      * @throws IllegalStateException if the {@link CDIProvider} is already set
      */
     public static void setCDIProvider(CDIProvider provider) {
-        if (configuredProvider == null) {
+        if (provider != null) {
             configuredProvider = provider;
         } else {
-            throw new IllegalStateException("CDIProvider has already been set");
+            throw new IllegalStateException("CDIProvider must not be null");
         }
+    }
+
+    /**
+     * Retrieves the {@link CDIProvider}.  If one is already configured, uses that.
+     * If {@link #setCDIProvider} was called first, the provider populated there is returned.  Otherwise a
+     * {@link java.util.ServiceLoader} is used to locate a provider.
+     * @return the configured {@link CDIProvider} or a discovered {@link CDIProvider}.
+     */
+    public static CDIProvider getCDIProvider() {
+        if (configuredProvider != null) {
+            return configuredProvider;
+        } else {
+            // Discover providers and cache
+            if (discoveredProviders == null) {
+                synchronized (lock) {
+                    if (discoveredProviders == null) {
+                        findAllProviders();
+                    }
+                }
+            }
+            configuredProvider = discoveredProviders.stream()
+                    .filter(Objects::nonNull).findFirst()
+                    .orElseThrow(() -> new IllegalStateException("Unable to locate CDIProvider"));
+            return configuredProvider;
+        }
+    }
+
+    /**
+     * Shuts down the current CDI instance.  Cannot be invoked within an application server or if the container is not
+     * already started.  If called in either of these ways, an {@link java.lang.IllegalStateException} is thrown.
+     */
+    public abstract void shutdown();
+
+    /**
+     * Implemented from {@link AutoCloseable}, shuts down the current CDI instance when it is no longer in scope.
+     */
+    @Override
+    public void close() {
+        this.shutdown();
     }
 
     // Helper methods

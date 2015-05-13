@@ -1,0 +1,51 @@
+[[cdi-se]]
+
+== Using CDI in Java SE Applications
+
+=== Bootstrapping a container
+
+In Java EE, CDI comes enabled by default in your application, but if you're working with a Java SE application you can bootstrap a CDI container yourself to enable dependency injection.
+
+[source,java]
+----
+public static void main(String... args) {
+    CDIProvider provider = CDI.getCDIProvider();
+    CDI<Object> cdi = provider.initialize();
+    // retrieve a bean and do work with it
+    MyBean myBean = cdi.select(MyBean.class).get();
+    myBean.doWork();
+    // when done
+    cdi.shutdown();
+}
+----
+
+The `CDI` utility class provides static lookup for `CDIProvider` instances based on `ServiceLoader` (this doesn't preclude the notion of manually instantiating the provider in a non-portable manner).  By default, the provider will be looked up via a ServiceLoader but can be over-written by calling `setCDIProvider` on the utility.  Once a `CDIProvider` has been located, it should not be instantiated again, instead the same one returned again.
+
+The `CDIProvider` instance returned is capable of starting a `CDI` instance.  By invoking either of the  `initialize` methods it can start up a container to retriever beans, fire events, gain access to the `BeanManager`.  The `initialize` methods on the `CDIProvider` interface must not be invoked when in an EE container.  If they are invoked, an `UnsupportedOperationException` shall be thrown.  Likewise, if `shutdown` or `close` were invoked on the `CDI` class while in an EE container, an `UnsupportedOperationException` shall also be thrown.
+
+Calling `initialize` on the `CDIProvider` has the effect of creating a new `CDI` instance each time invoked.  The _application context_ is started automatically by the container on start up.
+
+The `CDI` can be stopped when it's not needed.  To help with this, `CDI` implements `AutoCloseable`, so when derefenced it should shutdown automatically (the `close` method invokes `shutdown`).  You must also shutdown the CDI instance manually by calling the `shutdown` method on the CDI object.  If the `shutdown` method is explicitly invoked, it shall throw an `IllegalStateException` if the container was never initialized or if it was already shutdown.  The `close` method should not throw an `IllegalStateException` if the container was never initialized.
+
+Due to that, the following code block is equivalent to the above example:
+
+[source,java]
+----
+public static void main(String... args) {
+    try(CDI<Object> cdi = CDI.getCDIProvider().initialize()) {
+        // start the container, retrieve a bean and do work with it
+        MyBean myBean = cdi.select(MyBean.class).get();
+        myBean.doWork();
+    }
+    // shuts down automatically after the try with resources block.
+}
+----
+
+=== Classpath Scanning
+
+All classpath entries in a Java SE application are considered to be at the same level.  All rules that apply to bean resolution based on `beans.xml` declaration continue to apply the same way in Java SE.
+
+* If a classpath entry contains a `META-INF/beans.xml` with `bean-discovery-mode=annotated` or does not contain a `META-INF/beans.xml` then only the annotated beans will be scanned within that entry.
+* If a classpath entry contains a `META-INF/beans.xml` with `bean-discovery-mode=all` then all classes will be scanned within that entry.
+* If a classpath entry contains a `META-INF/beans.xml` with `bean-discovery-mode=none` then no classes will be scanend within that entry.
+
