@@ -66,16 +66,6 @@
 		</developer>
 
 		<developer>
-			<name>Mark Struberg</name>
-			<id>mstruberg</id>
-			<timezone>CET</timezone>
-			<roles>
-				<role>Implementation developer</role>
-			</roles>
-			<email>struberg[at]yahoo[dot]de</email>
-		</developer>
-
-		<developer>
 			<name>Jozef Hartinger</name>
 			<id>jhartinger</id>
 			<timezone>CET</timezone>
@@ -87,13 +77,33 @@
 		</developer>
 
 		<developer>
+			<name>Mark Struberg</name>
+			<id>mstruberg</id>
+			<timezone>CET</timezone>
+			<roles>
+				<role>Implementation developer</role>
+			</roles>
+			<email>struberg[at]yahoo[dot]de</email>
+		</developer>
+
+		<developer>
 			<name>Martin Kouba</name>
 			<id>mkouba</id>
 			<organization>Red Hat Inc.</organization>
 			<roles>
-				<role>TCK tech lead</role>
+				<role>RI developer</role>
 			</roles>
 			<email>mkouba[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Tomas Remes</name>
+			<id>tremes</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK tech lead</role>
+			</roles>
+			<email>tremes[at]redhat[dot]com</email>
 		</developer>
 	</developers>
 
