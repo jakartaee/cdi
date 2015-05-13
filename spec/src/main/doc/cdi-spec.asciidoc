@@ -1,4 +1,4 @@
-= Contexts and Dependency Injection for the Java EE platform
+= Contexts and Dependency Injection for Java
 :sectanchors:
 :doctype: book
 :toc: left

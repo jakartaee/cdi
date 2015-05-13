@@ -1,7 +1,7 @@
 [subs="attributes"]
 ....
 
-Specification: JSR-346 Contexts and Dependency Injection for the Java EE platform (CDI) ("Specification")
+Specification: JSR-365 Contexts and Dependency Injection for Java (CDI) ("Specification")
 
 Version:  {version}
 
