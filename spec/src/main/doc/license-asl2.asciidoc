@@ -1,16 +1,17 @@
+[subs="attributes"]
 ....
 
 Specification: JSR-346 Contexts and Dependency Injection for the Java EE platform (CDI) ("Specification")
 
-Version:  1.2
+Version: {version}
 
-Status: Maintenance Release
+Status: {status}
 
 Specification Lead:  Red Hat, Inc. ("Specification Lead")
 
-Release:  April 8, 2014
+Release: {revdate}
 
-Copyright 2014 Red Hat, Inc.
+Copyright 2015 Red Hat, Inc.
 100 East Davie Street, Raleigh, NC 27601, U.S.A.
 
 Licensed under the Apache License, Version 2.0 (the "License");

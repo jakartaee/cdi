@@ -17,6 +17,8 @@
 	<properties>
 		<asciidoctor.version>1.5.2</asciidoctor.version>
 		<license>asl2</license>
+		    <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
+		    <revisiondate>${maven.build.timestamp}</revisiondate>
 	</properties>
 
 	<profiles>
@@ -104,6 +106,9 @@
 					<doctype>book</doctype>
 					<attributes>
 						<license>${license}</license>
+						<version>${version}</version>
+						<status>Early Draft</status>
+						<revdate>${revisiondate}</revdate>
 					</attributes>
 				</configuration>
 			</plugin>
