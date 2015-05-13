@@ -97,6 +97,18 @@
 		</developer>
 
 		<developer>
+			<name>John D. Ament</name>
+			<id>johndament</id>
+			<organization>Independent</organization>
+			<timezone>EST</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>johndament[at]apache[dot]org</email>
+		</developer>
+		
+
+		<developer>
 			<name>Tomas Remes</name>
 			<id>tremes</id>
 			<organization>Red Hat Inc.</organization>
