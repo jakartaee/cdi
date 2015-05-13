@@ -114,6 +114,7 @@
 		<interceptor.api.version>1.2</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -226,6 +227,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven-bundle-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
