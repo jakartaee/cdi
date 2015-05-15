@@ -169,7 +169,7 @@ The +@Dependent+ scope is always active.
 
 ==== Dependent objects
 
-Many instances of beans with scope +@Dependent+ belong to some other bean are called _dependent objects_.
+Many instances of beans with scope +@Dependent+ belong to some other bean and are called _dependent objects_.
 
 * Instances of decorators and interceptors are dependent objects of the bean instance they decorate.
 * An instance of a bean with scope +@Dependent+ injected into a field, bean constructor or initializer method is a dependent object of the bean into which it was injected.

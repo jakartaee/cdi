@@ -13,7 +13,7 @@ Java EE and embeddable EJB containers are required by the Java EE and EJB specif
 
 ==== Which Java classes are managed beans in Java EE?
 
-When running in Java EE, A top-level Java class is a managed bean if it meets requirement describe in <<what_classes_are_beans>> and if it is defined to be a managed bean by any other Java EE specification and if
+When running in Java EE, A top-level Java class is a managed bean if it meets requirement described in <<what_classes_are_beans>> and if it is defined to be a managed bean by any other Java EE specification and if
 
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in +ejb-jar.xml+.
 
