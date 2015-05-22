@@ -164,7 +164,10 @@ public class Mapper {
 
     private void compareAssertionToElements(Assertion assertion, Elements assertionTextElements) {
         for (Element assertionTextElement : assertionTextElements) {
-            if (assertionTextElement.text().contains(assertion.getText())) {
+            String assertionElement = assertionTextElement.text().replace("|", "");
+            // replace two or more spaces by just one
+            String assertionAudit =  assertion.getText().trim().replaceAll("\\s+", " ");
+            if (assertionElement.contains(assertionAudit)) {
                 Elements coverageElements = assertionTextElement.select("div[class=coverageMethod");
                 String testPackageName = assertionTextElement.select("div[class=packageName]").text();
                 for (Element coverageElement : coverageElements) {
