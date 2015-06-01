@@ -50,21 +50,19 @@ CDI scopes add to Java EE these missing well-defined lifecycle context as define
 
 ==== Built-in scope types in Java EE
 
-When running in Java EE, the implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations provided by the container, represents the standard scopes defined by the Java Servlets specification.
+When running in Java EE, the implementations of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations provided by the container, represent the standard scopes defined by the Java Servlets specification.
 
 
 [[default_bean_discovery_ee]]
 === Default bean discovery mode for Java EE
 
-When running in Java EE, the container must extend the rules defined in <<default_bean_discovery>> with:
+When running in Java EE, If the _bean discovery mode_ is `annotated`, the container must extend the rules defined in <<default_bean_discovery>> with:
 
-If the _bean discovery mode_ is `annotated`, then:
-
-* bean classes of EJB sessions beans, are not discovered, and
-* producer methods that are not on an EJB session bean are not discovered, and
-* producer fields that are not on an EJB session bean are not discovered, and
-* disposer methods that are not on an EJB session bean are not discovered, and
-* observer methods that are not on an EJB session bean are not discovered.
+* bean classes of EJB sessions beans, are discovered, and
+* producer methods that are on an EJB session bean are discovered, and
+* producer fields that are on an EJB session bean are discovered, and
+* disposer methods that are on an EJB session bean are discovered, and
+* observer methods that are on an EJB session bean are discovered.
 
 
 [[names_ee]]

@@ -12,7 +12,7 @@ When resolving a name in an EL expression, the container considers the bean name
 
 In the Java EE module architecture, any Java EE module or library is a module. The Java EE module is a bean archive if it contains a +beans.xml+ file, as defined in <<bean_archive>>.
 
-When running in Java EE, the container must extend the accessibility rules for beans and alternatives defined in <<selection>> to JSP/JSF pages using EL resolution.
+When running in Java EE, the container must follow the same accessibility rules for beans and alternatives defined in <<selection>> for JSP/JSF pages using EL resolution and make sure that only beans available from injection in the module that defines the JSP/JSF pages are resolved.
 
 In the Java EE module architecture, a bean class is accessible in a module if and only if it is required to be accessible according to the class loading requirements defined by the Java EE platform specification.
 
@@ -92,7 +92,7 @@ The container is also required to ensure that:
 
 ==== Destruction of dependent objects in Java EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection.
+When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet +destroy()+ method is called.
 
 [[injection_point_ee]]
 

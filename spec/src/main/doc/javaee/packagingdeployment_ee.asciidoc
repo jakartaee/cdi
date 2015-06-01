@@ -8,8 +8,8 @@
 
 When running in Java EE, the container must extend the rules defined in <<bean_archive>> with:
 
-* An implicit bean archive may also contains EJB session beans, and
-* if an archive meet the requirements to be an _implicit bean archive_ but doesn't contain any bean class with a bean defining annotation and have at least one EJB sessions beans, it's an _implicit bean archive_.
+* An _implicit bean archive_ may also contain EJB session beans, and
+* EJB session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
 
 When determining which archives are bean archives, the container must also consider:
 

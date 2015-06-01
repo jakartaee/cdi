@@ -285,7 +285,8 @@ The process of matching a bean to a name is called _name resolution_. Since ther
 
 A name resolves to a bean if:
 
-* the bean has the given bean name.
+* the bean has the given bean name, and
+* the bean is available for injection in the module where the name resolution is requested.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getName()+ to determine the bean name.
 
@@ -298,7 +299,7 @@ An _ambiguous name_ exists when a name resolves to multiple beans. When an ambig
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 * all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with the highest priority value. If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
 
-All unresolvable ambiguous names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain application, and either:
+All unresolvable ambiguous names are detected by the container when the application is initialized. Suppose two beans are both available for injection in a certain module, and either:
 
 * the two beans have the same bean name and the name is not resolvable, or
 * the bean name of one bean is of the form +x.y+, where +y+ is a valid bean name, and +x+ is the bean name of the other bean,
@@ -383,7 +384,7 @@ The container must ensure that:
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes and after the servlet +destroy()+ method is called.
+When the container destroys an instance of a bean, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the +@PreDestroy+ callback completes.
 
 [[producer_or_disposer_methods_invocation]]
 

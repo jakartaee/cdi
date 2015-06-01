@@ -13,7 +13,7 @@ Java EE and embeddable EJB containers are required by the Java EE and EJB specif
 
 ==== Which Java classes are managed beans in Java EE?
 
-When running in Java EE, A top-level Java class is a managed bean if it meets requirement described in <<what_classes_are_beans>> and if it is defined to be a managed bean by any other Java EE specification and if
+When running in Java EE, A top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Java EE specification and if
 
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in +ejb-jar.xml+.
 
@@ -183,7 +183,7 @@ A disposer method declaration in an EJB session bean follows the rules defined i
 
 === Java EE components
 
-Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are an exception.
+Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are the exception.
 
 The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using +@Inject+, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field. It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods. It is safe to annotate Java EE components with +@Vetoed+ to prevent them being considered beans.
 

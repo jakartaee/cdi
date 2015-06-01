@@ -485,7 +485,7 @@ The default _bean discovery mode_ for a bean archive is `annotated`, and such a 
 
 If the _bean discovery mode_ is `annotated` then:
 
-* bean classes that don't have _bean defining annotation_ (as defined in <<bean_defining_annotations>>), and
+* bean classes that don't have _bean defining annotation_ (as defined in <<bean_defining_annotations>>) are not discovered, and
 * producer methods (as defined in <<producer_method>>) whose bean class does not have a _bean defining annotation_ are not discovered, and
 * producer fields (as defined in <<producer_field>>) whose bean class does not have a _bean defining annotation_ are not discovered, and
 * disposer methods (as defined in <<disposer_method>>) whose bean class does not have a _bean defining annotation_ are not discovered, and

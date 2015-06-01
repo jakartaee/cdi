@@ -2,13 +2,19 @@
 
 == Portable extensions in Java EE
 
+[[bean_ee]]
+ 
+=== The +Bean+ interface in Java EE
+ 
+When Running in Java EE, the container must extend the rules defined in <<bean>> for managed bean to EJB session bean.
+
 [[interceptor_ee]]
 
 ==== The +Interceptor+ interface in Java EE
 
 When Running in Java EE, the container must extend the rules defined in <<interceptor>> and must also ensure that
  
-`PRE_PASSIVATE`, `POST_ACTIVATE` and `AROUND_TIMEOUT` InterceptorType value are linked to EJB lifecycle callback or method timeout. 
+`PRE_PASSIVATE`, `POST_ACTIVATE` and `AROUND_TIMEOUT` InterceptorType values are linked to EJB lifecycle callback or timeout method. 
 
 [[injectiontarget_ee]]
 
@@ -53,13 +59,24 @@ public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFacto
 
 ==== `ProcessInjectionPoint` event and EJB
 
-When running in Java EE, the container must also fire an event for every injection point of every EJB session or message-driven bean.
+When running in Java EE, the container must also fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean.
 
 [[process_injection_target_ee]]
 
 ==== `ProcessInjectionTarget` event
 
-When running in Java EE, the container must also fire an event for every EJB session or message-driven bean.
+When running in Java EE, the container must also fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean.
+
+The container must extends the rules defined in <<process_injection_target>> for managed bean to EJB session bean and other Java EE component class supporting injection.
+
+For example, this observer decorates the +InjectionTarget+ for all servlets.
+
+[source, java]
+----
+<T extends Servlet> void decorateServlet(@Observes ProcessInjectionTarget<T> pit) {
+    pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
+}
+----
 
 [[process_bean_ee]]
 

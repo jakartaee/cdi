@@ -14,13 +14,13 @@ Contexts and Dependency Injection 2.0 (link:https://jcp.org/en/jsr/detail?id=365
 A full changelog will be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?version=12323655&styleName=Html&projectId=12311062[here^].
 
 Starting with version 2.0 CDI targets Java SE and Java EE platforms.
-CDI in a Java EE container is mostly a superset of CDI in Java SE, except for features explicitly stating otherwise.
+CDI in java SE and CDI in a Java EE container share the features defined in core CDI.
 
 === Organisation of this document
 
 This document is organized in 4 parts:
 
-* An introduction (this part), whose not part of the specification but introduce CDI concepts and give examples.
+* An introduction (this part), which is not part of the specification but introduce CDI concepts and give examples.
 * The core CDI specification: <<part_1>>
 * The CDI specification for Java SE: <<part_2>>.
 * The CDI specification for Java EE: <<part_3>>, which extends the first part.

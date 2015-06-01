@@ -42,7 +42,7 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
 }
 ----
 
-* +getBeanClass()+ returns the bean class of the bean or of the bean that declares the producer method or field.
+* +getBeanClass()+ returns the bean class of the managed bean or of the bean that declares the producer method or field.
 * +getInjectionPoints()+ returns a set of +InjectionPoint+ objects, defined in <<injection_point>>, representing injection points of the bean, that will be validated by the container at initialization time.
 * +isNullable()+ is deprecated in CDI 1.1 and should be ignored by the container.
 
@@ -178,7 +178,7 @@ public interface InjectionTarget<T>
 
 * +inject()+ performs dependency injection upon the given object. The container sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods>>.
 * +postConstruct()+ calls the +@PostConstruct+ callback, if it exists.
-* +preDestroy()+ calls the +@PreDestroy+ callback.
+* +preDestroy()+ calls the +@PreDestroy+ callback, if it exists.
 
 
 Implementations of +Producer+ and +InjectionTarget+ must ensure that the set of injection points returned by +getInjectionPoints()+ are injected by +produce()+ or +inject()+.
@@ -1028,7 +1028,7 @@ If any +ProcessAnnotatedType+ method is called outside of the observer method in
 
 ==== +ProcessInjectionPoint+ event
 
-The container must fire an event for every injection point of every component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, bean, interceptor or decorator.
+The container must fire an event for every injection point of every bean, interceptor or decorator.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the bean class, or component class supporting injection, and +X+ is the declared type of the injection point.
 
@@ -1056,7 +1056,7 @@ If any +ProcessInjectionPoint+ method is called outside of the observer method i
 
 ==== +ProcessInjectionTarget+ event
 
-The container must fire an event for every component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, bean, interceptor or decorator.
+The container must fire an event for every bean, interceptor or decorator.
 
 The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the bean class or component class supporting injection.
 
@@ -1076,16 +1076,9 @@ public interface ProcessInjectionTarget<X> {
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
-Any observer of this event is permitted to wrap and/or replace the +InjectionTarget+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the bean or other component class supporting injection.
+Any observer of this event is permitted to wrap and/or replace the +InjectionTarget+. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the managed bean.
 
-For example, this observer decorates the +InjectionTarget+ for all Maps.
 
-[source, java]
-----
-<T extends Map> void decorateMap(@Observes ProcessInjectionTarget<T> pit) {
-    pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
-}
-----
 
 If any observer method of a +ProcessInjectionTarget+ event throws an exception, the exception is treated as a definition error by the container.
 
