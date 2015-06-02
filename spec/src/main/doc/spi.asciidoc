@@ -122,6 +122,7 @@ public interface ObserverMethod<T> {
     public TransactionPhase getTransactionPhase();
     public int getPriority();
     public void notify(T event);
+    public boolean isAsync();
 }
 ----
 
@@ -131,6 +132,7 @@ public interface ObserverMethod<T> {
 * +getTransactionPhase()+ returns the appropriate transaction phase for a transactional observer method or +IN_PROGRESS+ otherwise.
 * +getPriority()+ returns the priority that will be used by the container to determine the notification order.
 * +notify()+ calls the observer method, as defined in <<observer_notification>>.
+* `isAsync()` returns `true` if the method is an asynchronous observer method otherwise returns `false`.
 
 
 An instance of +ObserverMethod+ must exist for every observer method of every enabled bean.
@@ -785,6 +787,7 @@ The container must use the operations of +Annotated+ and its subinterfaces to di
 === Container lifecycle events
 
 During the application initialization process, the container fires a series of events, allowing portable extensions to integrate with the container initialization process defined in <<initialization>>.
+These events are fired synchronously.
 
 Observer methods of these events must belong to _extensions_. An extension is a service provider of the service +javax.enterprise.inject.spi.Extension+ declared in +META-INF/services+.
 

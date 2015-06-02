@@ -41,6 +41,7 @@ import javax.enterprise.event.Observes;
  * 
  * @author Lincoln Baxter, III
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @since 1.1
  */
 public interface EventMetadata {
@@ -59,4 +60,13 @@ public interface EventMetadata {
      * Get the type representing runtime class of the event object with type variables resolved.
      */
     public Type getType();
+
+  /**
+   * 
+   * @return returns <tt>true</tt> if the event was fired with <tt>fireAsync()</tt> or <tt>fireAsyncEvent()</tt>
+   * otherwise returns <tt>false</tt>
+   * @since 2.0
+   */
+  public boolean isAsync();
+    
 }

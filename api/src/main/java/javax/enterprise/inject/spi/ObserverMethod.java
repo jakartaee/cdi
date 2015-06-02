@@ -20,6 +20,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+import javax.enterprise.event.ObservesAsync;
 import javax.enterprise.event.Reception;
 import javax.enterprise.event.TransactionPhase;
 
@@ -98,5 +99,16 @@ public interface ObserverMethod<T> extends Prioritized {
      * @param event the event object
      */
     public void notify(T event);
+
+    /**
+     * <p>
+     * Determines if this observer method is asynchronous 
+     * </p>
+     * 
+     * @return returns <tt>true</tt> if the method is an asynchronous observer method (i.e. defined with {@link ObservesAsync}),
+     *         otherwise returns <tt>false</tt>
+     * 
+     */
+    public boolean isAsync();
 
 }
