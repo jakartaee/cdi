@@ -93,12 +93,3 @@ The container is also required to ensure that:
 ==== Destruction of dependent objects in Java EE
 
 When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet +destroy()+ method is called.
-
-[[injection_point_ee]]
-
-==== Injection point metadata in Java EE
-
-When running in Java EE, the container must extend the rules defined in <<injection_point>> and is also required to ensure that:
-
-If a Java EE component class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
-
