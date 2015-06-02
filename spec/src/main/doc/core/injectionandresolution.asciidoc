@@ -344,7 +344,7 @@ The behavior of all methods declared by +java.lang.Object+, except for +toString
 
 === Dependency injection
 
-From time to time the container instantiates beans and other classes supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
+From time to time the container instantiates beans and other class supporting injection. The resulting instance may or may not be a _contextual instance_ as defined by <<contextual_instance>>.
 
 The container is required to perform dependency injection whenever it creates the following contextual objects:
 
@@ -477,8 +477,6 @@ The container must provide a bean with scope +@Dependent+, bean type +InjectionP
 If a bean that declares any scope other than +@Dependent+ has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
 If a disposer method has an injection point of type +InjectionPoint+ and qualifier +Default+, the container automatically detects the problem and treats it as a definition error.
-
-If a class supporting injection that is not a bean has an injection point of type +InjectionPoint+ and qualifier +@Default+, the container automatically detects the problem and treats it as a definition error.
 
 [[bean_metadata]]
 
