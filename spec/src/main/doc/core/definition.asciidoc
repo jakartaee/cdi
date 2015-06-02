@@ -2,7 +2,7 @@
 
 == Concepts
 
-A bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context. A bean may bear metadata defining its lifecycle and interactions with other components.
+A bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context. A bean may bear metadata defining its lifecycle and interactions with other beans.
 
 A bean comprises the following attributes:
 

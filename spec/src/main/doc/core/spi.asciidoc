@@ -311,7 +311,7 @@ An instance of +CreationalContext+ for a non-contextual object may be obtained b
 
 ==== Obtaining a +Bean+ by type
 
-The method +BeanManager.getBeans()+ returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
+The method +BeanManager.getBeans()+ returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
 
 [source, java]
 ----
@@ -332,7 +332,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 ==== Obtaining a +Bean+ by name
 
-The method +BeanManager.getBeans()+ which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the component from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules of name resolution defined in <<name_resolution>>.
+The method +BeanManager.getBeans()+ which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, according to the rules of name resolution defined in <<name_resolution>>.
 
 [source, java]
 ----
@@ -425,7 +425,7 @@ If an instance of an annotation that is not a qualifier type is given, an +Illeg
 
 ==== Decorator resolution
 
-The method +BeanManager.resolveDecorators()+ returns the ordered list of decorators for a set of bean types and a set of qualifiers and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<decorator_resolution>>.
+The method +BeanManager.resolveDecorators()+ returns the ordered list of decorators for a set of bean types and a set of qualifiers and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<decorator_resolution>>.
 
 [source, java]
 ----
@@ -444,7 +444,7 @@ If the set of bean types is empty, an +IllegalArgumentException+ is thrown.
 
 ==== Interceptor resolution
 
-The method +BeanManager.resolveInterceptors()+ returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the component from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<interceptor_resolution>>.
+The method +BeanManager.resolveInterceptors()+ returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the +BeanManager+ was injected or the class from whose JNDI environment namespace the +BeanManager+ was obtained, as defined in <<interceptor_resolution>>.
 
 [source, java]
 ----
@@ -1030,7 +1030,7 @@ If any +ProcessAnnotatedType+ method is called outside of the observer method in
 
 The container must fire an event for every injection point of every bean, interceptor or decorator.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the bean class, or component class supporting injection, and +X+ is the declared type of the injection point.
+The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>+ where +T+ is the bean class, and +X+ is the declared type of the injection point.
 
 [source, java]
 ----
@@ -1058,7 +1058,7 @@ If any +ProcessInjectionPoint+ method is called outside of the observer method i
 
 The container must fire an event for every bean, interceptor or decorator.
 
-The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the bean class or component class supporting injection.
+The event object must be of type +javax.enterprise.inject.spi.ProcessInjectionTarget<X>+, where +X+ is the bean class.
 
 [source, java]
 ----
@@ -1070,7 +1070,7 @@ public interface ProcessInjectionTarget<X> {
 }
 ----
 
-* +getAnnotatedType()+ returns the +AnnotatedType+ representing the bean class or other component class supporting injection.
+* +getAnnotatedType()+ returns the +AnnotatedType+ representing the bean class.
 * +getInjectionTarget()+ returns the +InjectionTarget+ object that will be used by the container to perform injection.
 * +setInjectionTarget()+ replaces the +InjectionTarget+.
 * +addDefinitionError()+ registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
