@@ -30,7 +30,7 @@ Any Java type may be an observed event type.
 
 [[firing_events]]
 
-=== Firing events
+=== Firing events synchronously
 
 Beans fire events via an instance of the +javax.enterprise.event.Event+ interface, which may be injected:
 
@@ -73,6 +73,30 @@ else {
 
 In this example, the event sometimes has the qualifier +@Admin+, depending upon the value of +user.isAdmin()+.
 
+Event fired with the `fire()` method is fired synchronously. All the resolved synchronous observers are called in the thread in which `fire()` was called. A synchronous observer notification blocks the calling thread until it completes.
+ 
+[[firing_events_asynchronously]]
+
+=== Firing events asynchronously
+
+Events may also be fired asynchronously using one of the methods `fireAsync()`
+
+[source, java]
+----
+@Inject Event<LoggedInEvent> loggedInEvent;
+
+public void login() {
+    ...
+    loggedInEvent.fireAsync( new LoggedInEvent(user) );
+}
+----
+
+Event fired with the `fireAsync()` method is fired asynchronously. All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different thread.
+If synchronous observer have to be notified, `fireAsync` returns immediately after the last synchronous observer has returned.
+ Otherwise it returns immediately.
+
+The method `fireAsync` accepts an event object which can be qualified with the rules defined in <<firing_events>>.
+
 [[event]]
 
 ==== The +Event+ interface
@@ -84,6 +108,8 @@ The +Event+ interface provides a method for firing events with a specified combi
 public interface Event<T> {
       
     public void fire(T event);
+    public <U extends T> CompletionStage<U> fireAsync(U event);
+    public <U extends T> CompletionStage<U> fireAsync(U event, Executor executor);
       
     public Event<T> select(Annotation... qualifiers);
     public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
@@ -122,11 +148,15 @@ If two instances of the same qualifier type are passed to +select()+, an +Illega
 
 If an instance of an annotation that is not a qualifier type is passed to +select()+, an +IllegalArgumentException+ is thrown.
 
-The method +fire()+ fires an event with the specified qualifiers and notifies observers, as defined by <<observer_notification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
+The methods +fire()+ and `fireAsync()` fire an event with the specified qualifiers and notify observers, as defined by <<observer_notification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
+
+The method `fireAsync()` may be called with a specific `Executor` object to be used to invoke observers method. The container should provide a default `Executor` when `fireAsync()` is called without specifying one.
 
 If the runtime type of the event object contains an unresolvable type variable, an +IllegalArgumentException+ is thrown.
 
 If the runtime type of the event object is assignable to the type of a container lifecycle event, an +IllegalArgumentException+ is thrown.
+
+If the provided executor cannot execute observers notification, an `IllegalArgumentException` is thrown.
 
 [[builtin_event]]
 
@@ -159,6 +189,8 @@ An event is delivered to an observer method if:
 * An event type is assignable to the observed event type, taking type parameters into consideration.
 * The observer method has no event qualifiers or has a subset of the event qualifiers. An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
 * Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
+* The event is fired synchronously and the observer is defined with `@Observes`.
+* The event is fired asynchronously and the observer is defined with `@Observes` or `@ObservesAsync`.
 
 
 If the runtime type of the event object contains an unresolvable type variable, the container must throw an +IllegalArgumentException+.
@@ -288,18 +320,29 @@ The event parameter type may contain a type variable or wildcard.
 
 The event parameter may be an array type whose component type contains a type variable or a wildcard.
 
+Modifications made to the event parameter in an observer method are propagated to following observers.
+The container is not required to guarantee a consistent state for an event parameter modified by asynchronous observers.
+
+
 [[observes]]
 
 ==== Declaring an observer method
 
-An observer method may be declared by annotating a parameter +@javax.enterprise.event.Observes+ of a default-access, public, protected or private method. That parameter is the event parameter. The declared type of the parameter is the observed event type.
+An observer method may be declared by annotating a parameter +@javax.enterprise.event.Observes+ or @javax.enterprise.event.ObservesAsync+` of a default-access, public, protected or private method. That parameter is the event parameter. The declared type of the parameter is the observed event type.
+
+If +@Observes+ is used the observer method is a synchronous observer method.
+
+If +@ObservesAsync+ is used the observer method is an asynchronous observer method.
+
 
 [source, java]
 ----
 public void afterLogin(@Observes LoggedInEvent event) { ... }
+
+public void asyncAfterLogin(@ObservesAsync LoggedInEvent event) { ... }
 ----
 
-If a method has more than one parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If a method has more than one parameter annotated +@Observes+ or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Observed event qualifiers may be declared by annotating the event parameter:
 
@@ -333,12 +376,15 @@ public interface EventMetadata {
     public Set<Annotation> getQualifiers();
     public InjectionPoint getInjectionPoint();
     public Type getType();
+    public boolean isAsync();
 }
 ----
 
 * +getQualifiers()+ returns the set of qualifiers with which the event was fired.
 * +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
 * +getType()+ returns the type representing runtime class of the event object with type variables resolved.
+* `isAsync()` returns `true` if the event was fired with `fireAsync()` or `fireAsyncEvent()` methods otherwise returns `false`.
+
 
 The container must provide a bean with scope +@Dependent+, bean type +EventMetadata+ and qualifier +@Default+, allowing observer methods to obtain information about the events they observe.
 
@@ -360,6 +406,8 @@ A conditional observer method may be declared by specifying +receive=IF_EXISTS+.
 [source, java]
 ----
 public void refreshOnDocumentUpdate(@Observes(receive=IF_EXISTS) @Updated Document doc) { ... }
+
+public void asyncRefreshOnDocumentUpdate(@ObservesAsync(receive=IF_EXISTS) @Updated Document doc) { ... }
 ----
 
 Beans with scope +@Dependent+ may not have conditional observer methods. If a bean with scope +@Dependent+ has an observer method declared +receive=IF_EXISTS+, the container automatically detects the problem and treats it as a definition error.
@@ -403,6 +451,8 @@ A transactional observer method may be declared by specifying any value other th
 void onDocumentUpdate(@Observes(during=AFTER_SUCCESS) @Updated Document doc) { ... }
 ----
 
+Asynchronous observer cannot be declared transactional.
+
 [[observer_notification]]
 
 === Observer notification
@@ -411,7 +461,7 @@ When an event is fired by the application, the container must:
 
 * determine the observer methods for that event according to the rules of observer resolution defined by <<observer_resolution>>, then,
 * for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA +Synchronization+.
-* honor the priority of observer methods.
+* honor the priority of observer methods as defined in <<observer_ordering>>.
 
 
 The container calls observer methods as defined in <<observers_method_invocation>>.
@@ -425,10 +475,36 @@ Any observer method called before completion of a transaction may call +setRollb
 Observer methods may throw exceptions:
 
 * If the observer method is a transactional observer method, any exception is caught and logged by the container.
+* If the observer method is asynchronous, the exception aborts processing of the observer but not of the event. Exception management during an asynchronous event is defined in <<async_exception>>.
 * Otherwise, the exception aborts processing of the event. No other observer methods of that event will be called. The +BeanManager.fireEvent()+ or +Event.fire()+ method rethrows the exception. If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) +ObserverException+.
 
 
 For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getTransactionPhase()+ to determine if the observer method is transactional observer method, and +notify()+ to invoke the method.
+
+[[async_exception]]
+
+==== Handling multiple exceptions thrown during an asynchronous event
+
+If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `FireAsyncException` exception.
+`FireAsyncException` contains all exception thrown by observers as suppressed exceptions. They can be accessed as an array of `throwable` with the `getSuppressed` method.
+
+It can be handled with one of the `CompletionStage` methods related to exceptions:
+  
+[source, java]
+----
+myEvent.fireAsync(anEventObject)
+       .handle((ok, ex) -> {
+           if (ok != null) {
+               return ok;
+           } else {
+             for (Throwable t : ex.getSuppressed()) {
+                      ...         
+             }
+              ...
+           } }); 
+----
+
+If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event object.
 
 [[observer_ordering]]
 
@@ -451,6 +527,7 @@ The order of more than one observer with the same priority is undefined and the 
 
 The transaction context, client security context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.
 
+* If the observer method is asynchronous, it is called in a new lifecycle contexts, an new transaction context but the same security context as the invocation of `Event.fireAsync()`.
 * If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same client security context and lifecycle contexts.
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same client security context and lifecycle contexts as the transaction that just completed.
 * Otherwise, the observer method is called in the same transaction context, client security context and lifecycle contexts as the invocation of +Event.fire()+ or +BeanManager.fireEvent()+.

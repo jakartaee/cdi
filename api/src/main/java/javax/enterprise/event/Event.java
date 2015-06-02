@@ -18,7 +18,8 @@
 package javax.enterprise.event;
 
 import java.lang.annotation.Annotation;
-
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
 import javax.enterprise.util.TypeLiteral;
 
 /**
@@ -77,9 +78,14 @@ import javax.enterprise.util.TypeLiteral;
  * <li>the <em>specified qualifiers</em> are the qualifiers specified at the injection point.</li>
  * </ul>
  * 
+ * <p>
+ * Events may also be fired asynchronously with {@link #fireAsync(Object)} and {@link #fireAsync(Object, Executor)} methods
+ * </p>
+ * 
  * @author Gavin King
  * @author Pete Muir
  * @author David Allen
+ * @author Antoine Sabot-Durand
  * 
  * @param <T> the type of the event object
  */
@@ -97,6 +103,42 @@ public interface Event<T> {
      *         (unchecked) {@link ObserverException}
      */
     public void fire(T event);
+
+    /**
+     * <p>
+     * Fires an event asynchronously with the specified qualifiers and notifies synchronous and asynchronous observers.
+     * </p>
+     *
+     * @param event the event object
+     * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
+     *         if any of the synchronous or asynchronous observers notified by this event throws an exception
+     *         then the resulting CompletionStage is completed exceptionally with {@link FireAsyncException}
+     *         that wraps all the exceptions raised by observers as suppressed exception.
+     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
+     * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
+     *
+     * @since 2.0
+     */
+    public <U extends T> CompletionStage<U> fireAsync(U event);
+
+    /**
+     * <p>
+     * Fires an event asynchronously with the specified qualifiers and notifies synchronous and asynchronous observers.
+     * A custom {@link Executor} will be used to make asynchronous calls 
+     * </p>
+     *
+     * @param event the event object
+     * @param executor an custom executor to execute asynchronous event
+     * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
+     *         if any of the synchronous or asynchronous observers notfied by this event throws an exception
+     *         then the resulting CompletionStage is completed exceptionally with {@link FireAsyncException}
+     *         that wraps all the exceptions raised by observers as suppressed exception.
+     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
+     * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
+     *
+     * @since 2.0
+     */
+    public <U extends T> CompletionStage<U>  fireAsync(U event, Executor executor);
 
     /**
      * <p>

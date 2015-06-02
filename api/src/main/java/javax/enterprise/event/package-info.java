@@ -25,6 +25,8 @@
  * their internal state with state changes that occur in a 
  * different tier.</p>
  * 
+ * <p>Events may be fired synchronously or asynchronously.</p>
+ * 
  * <p>An event comprises:</p>
  * 
  * <ul>
@@ -55,14 +57,17 @@
  * <h3>Observer methods</h3>
  * 
  * <p>An {@linkplain javax.enterprise.event.Observes observer method} 
- * allows the application to receive and respond to event notifications. 
- * It acts as event consumer, observing events of a specific type, with a 
+ * allows the application to receive and respond synchronously to event notifications.
+ * And an {@linkplain javax.enterprise.event.ObservesAsync async observer method} 
+ * allows the application to receive and respond asynchronously to event notifications.
+ * they both act as event consumer, observing events of a specific type, with a 
  * specific set of qualifiers. Any Java type may be observed by an 
  * observer method.</p>
  * 
  * <p>An observer method is a method of a bean class or 
  * {@linkplain javax.enterprise.inject.spi.Extension extension} with a 
- * parameter annotated {@link javax.enterprise.event.Observes &#064;Observes}.</p>
+ * parameter annotated {@link javax.enterprise.event.Observes &#064;Observes}
+ * or {@link javax.enterprise.event.ObservesAsync &#064;ObservesAsync}.</p>
  * 
  * <p>An observer method will be notified of an event if:</p> 
  * 
@@ -76,16 +81,17 @@
  * {@linkplain javax.enterprise.inject.spi.Extension extension}.
  * </ul>
  * 
- * <p>If the observer method is a 
+ * <p>If a synchronous observer method is a 
  * {@linkplain javax.enterprise.event.TransactionPhase transactional 
  * observer method} and there is a JTA transaction in progress when the
  * event is fired, the observer method is notified during the appropriate 
  * transaction completion phase. Otherwise, the observer is notified when 
  * the event is fired.</p>
  * 
- * <p>The order in which observer methods are called is not defined, and 
- * so portable applications should not rely upon the order in which 
- * observers are called.</p>
+ * <p>The order in which observer methods are called depends on the value of
+ * the {@linkplain javax.annotation.Priority &#064;Priority} applied to the observer.</p>
+ * <p></p>If no priority is defined on a observer, its priority is javax.interceptor.Interceptor.Priority.APPLICATION+500.</p>
+ * <p>If two observer have the same priority their relative order is undifined.</p>
  * 
  * <p>Observer methods may throw exceptions:</p>
  * 
@@ -93,6 +99,8 @@
  * <li>If the observer method is a 
  * {@linkplain javax.enterprise.event.TransactionPhase transactional 
  * observer method}, any exception is caught and logged by the container.</li>
+ * <li>If the observer method is asynchronous, any exception is caught byt he container and added as a suppressed exception 
+ * to a {@link javax.enterprise.event.FireAsyncException} that could be handle by the application</li>
  * <li>Otherwise, the exception aborts processing of the event.
  * No other observer methods of that event will be called. The 
  * exception is rethrown. If the exception is a checked exception, 
