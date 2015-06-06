@@ -4,3 +4,4 @@ This part of the document, specifies additional rules or features when using CDI
 All content defined in <<part_1>> apply in this part.
 --
 
+include::cdi-se.asciidoc[]

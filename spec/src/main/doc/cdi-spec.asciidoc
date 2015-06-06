@@ -33,8 +33,6 @@ include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
 
-include::cdi-se.asciidoc[]
-
 include::spi.asciidoc[]
 
 include::core/packagingdeployment.asciidoc[]
