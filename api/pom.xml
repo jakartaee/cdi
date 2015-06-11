@@ -11,7 +11,7 @@
 	<groupId>javax.enterprise</groupId>
 	<artifactId>cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0-SNAPSHOT</version>
+	<version>2.0-EDR1</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -97,6 +97,28 @@
 		</developer>
 
 		<developer>
+			<name>John D. Ament</name>
+			<id>johndament</id>
+			<organization>Independent</organization>
+			<timezone>EST</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>johndament[at]apache[dot]org</email>
+		</developer>
+
+		<developer>
+			<name>Mark Paluch</name>
+			<id>mp911de</id>
+			<organization>Independent</organization>
+			<timezone>CET</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>mpaluch[at]paluch[dot]biz</email>
+		</developer>
+
+		<developer>
 			<name>Tomas Remes</name>
 			<id>tremes</id>
 			<organization>Red Hat Inc.</organization>
@@ -114,6 +136,7 @@
 		<interceptor.api.version>1.2</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -226,6 +249,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven-bundle-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
