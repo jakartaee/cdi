@@ -33,7 +33,7 @@ include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
 
-include::spi.asciidoc[]
+include::core/spi.asciidoc[]
 
 include::core/packagingdeployment.asciidoc[]
 
