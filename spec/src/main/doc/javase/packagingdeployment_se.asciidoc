@@ -1,0 +1,15 @@
+[[packaging_deployment_se]]
+
+== Packaging and deployment in Java SE
+
+
+[[bean_archive_se]]
+=== Bean archive in Java SE
+
+When running in Java SE, the container must extend the rules defined in <<bean_archive>> and also ensure that :
+
+An archive which doesn't contain a beans.xml file can't be discovered as an _implicit bean archive_ unless:
+
+* the application is launched with system property `javax.enterprise.inject.scan.implicit` set to `true`, or
+* the container was initialized with a parameter map containing an entry with `javax.enterprise.inject.scan.implicit` as key and `Boolean.TRUE` as value.
+

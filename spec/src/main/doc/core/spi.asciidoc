@@ -240,6 +240,9 @@ The +CDIProvider+ to use may be set by the application or container using the +s
 ----
 public interface CDIProvider {
    public CDI<Object> getCDI();
+   boolean isInitialized();
+   default CDI<Object> initialize();
+   CDI<Object> initialize(Map<String,Object> params);
 }
 ----
 

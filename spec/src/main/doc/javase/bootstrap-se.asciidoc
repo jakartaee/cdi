@@ -1,0 +1,61 @@
+[[bootstrap-se]]
+
+== Bootstrapping a CDI container in Java SE
+
+In Java SE, the CDI container must be explicitly bootstrapped by the application.
+This is performed with `CDIProvider` and `CDI` utility classes.
+
+
+[[cdiprovider_lookup]]
+
+=== CDIProvider lookup
+
+The `CDI` utility class provides static lookup for `CDIProvider`.
+By default, `CDIProvider` will be looked up via a `ServiceLoader` but this can be over-written by calling `setCDIProvider` on the `CDI` utility class. 
+Once a `CDIProvider` has been located, it should not be instantiated again, instead the same one returned again.
+
+[[init_container]]
+
+=== Starting the container
+
+Container can be initialized from a `CDIProvider` instance. Calling one of the `initialize` methods will start a container and return a `CDI` utility object to interact with it.
+
+Each time `initialize` method is called on the `CDIProvider` it returns a new `CDI` instance.  The _application context_ is started automatically by the container on start up.  An implementation need not support calling `initialize` multiple times on the same provider without the prior container being shutdown.
+
+[[stop_container]]
+
+=== Stopping the container
+
+The `CDI` can be stopped when it's not needed.  To help with this, `CDI` implements `AutoCloseable`, so when dereferenced it should shutdown automatically (the `close` method invokes `shutdown`).
+
+The CDI instance may also be stopped manually by calling the `shutdown` method on the CDI object.  If the `shutdown` method is explicitly invoked and the container was not initialized or already stopped , an `IllegalStateException` will be thrown.
+The `close` method should not throw an `IllegalStateException` if the container was never initialized.
+
+The following code example are equivalent:
+
+[source,java]
+----
+public static void main(String... args) {
+    CDIProvider provider = CDI.getCDIProvider();
+    CDI<Object> cdi = provider.initialize();
+    // retrieve a bean and do work with it
+    MyBean myBean = cdi.select(MyBean.class).get();
+    myBean.doWork();
+    // when done
+    cdi.shutdown();
+}
+----
+
+
+[source,java]
+----
+public static void main(String... args) {
+    try(CDI<Object> cdi = CDI.getCDIProvider().initialize()) {
+        // start the container, retrieve a bean and do work with it
+        MyBean myBean = cdi.select(MyBean.class).get();
+        myBean.doWork();
+    }
+    // shuts down automatically after the try with resources block.
+}
+----
+

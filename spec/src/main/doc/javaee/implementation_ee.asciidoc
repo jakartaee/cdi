@@ -9,6 +9,10 @@ When running in Java EE, the container must extend the rules defined in <<implem
 
 Java EE and embeddable EJB containers are required by the Java EE and EJB specifications to support EJB session beans and the Java EE component environment. Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
 
+[[managed_beans_ee]]
+
+=== Managed beans in Java EE
+
 [[what_classes_are_beans_ee]]
 
 ==== Which Java classes are managed beans in Java EE?

@@ -39,6 +39,8 @@ A Java EE container is required to provide a CDI provider that will allow access
 
 Java EE Components may obtain an instance of +BeanManager+ from JNDI by looking up the name +java:comp/BeanManager+.
 
+When running in Java EE, when `initialize`, `stop` or `shutdown` methods of `CDIProvider` are called an `UnsupportedOperationException` is thrown.
+
 [[bm_wrap_expressionfactory]]
 
 ==== Wrapping a Unified EL +ExpressionFactory+
