@@ -150,7 +150,7 @@ public interface Producer<T> {
 
 For a +Producer+ that represents a class:
 
-* +produce()+ calls the constructor annotated +@Inject+ if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors, +produce()+ is responsible for building the interceptors and decorators of the instance. The instance returned by +produce()+ may be a proxy.
+* +produce()+ calls the constructor annotated +@Inject+ if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors or decorators, +produce()+ is responsible for building the interceptors and decorators of the instance. The instance returned by +produce()+ may be a proxy.
 * +dispose()+ does nothing.
 * +getInjectionPoints()+ returns the set of +InjectionPoint+ objects representing all injected fields, bean constructor parameters and initializer method parameters.
 
