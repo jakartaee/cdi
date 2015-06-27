@@ -96,6 +96,7 @@
 						</goals>
 						<configuration>
 							<backend>html5</backend>
+							<sourceHighlighter>highlightjs</sourceHighlighter>
 							<outputDirectory>target/publish/html</outputDirectory>
 						</configuration>
 					</execution>
