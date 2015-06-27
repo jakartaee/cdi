@@ -1094,7 +1094,7 @@ If any +ProcessInjectionTarget+ method is called outside of the observer method 
 
 ==== +ProcessBeanAttributes+ event
 
-The container must fire an event for each bean, interceptor or decorator deployed in a bean archive, before registering the +Bean+ object. No event is fired for any:
+The container must fire an event for each managed bean, producer, interceptor or decorator deployed in a bean archive, before registering the +Bean+ object. No event is fired for any:
 
 * +@New+ qualified bean, defined in <<new>>, or,
 * beans added programmatically using +AfterBeanDiscovery.addBean()+, or,

@@ -52,6 +52,13 @@ The method +BeanManager.wrapExpressionFactory()+ returns a wrapper +javax.el.Exp
 public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 ----
 
+[[alternative_metadata_sources_ee]]
+
+=== Alternative metadata sources and EJB
+
+When running in Java EE, the container must extend the rules defined in <<alternative_metadata_sources>> and ensure that:
+
+* when an `AnnotatedType` represents an EJB session bean class, +Annotated.getTypeClosure()+ must returns the EJB session bean types as defined in <<session_bean_types>>.
 
 [[init_events_ee]]
 
@@ -79,6 +86,14 @@ For example, this observer decorates the +InjectionTarget+ for all servlets.
     pit.setInjectionTarget( decorate( pit.getInjectionTarget() ) );
 }
 ----
+
+
+[[process_bean_attributes_ee]]
+
+==== `ProcessBeanAttributes` event and EJB
+
+When running in Java EE, the container must extends the rules defined in <<process_bean_attributes>> to EJB session bean.
+
 
 [[process_bean_ee]]
 
