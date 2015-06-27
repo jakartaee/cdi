@@ -34,7 +34,7 @@ When running in Java EE, the container must extend the rules defined for managed
 
 [[unsatisfied_and_ambig_dependencies_ee]]
  
- ==== Unsatisfied and ambiguous dependencies in Java EE
+==== Unsatisfied and ambiguous dependencies in Java EE
 
 When running in Java EE, the container must extend the rules defined in <<unsatisfied_and_ambig_dependencies>> and must also validate all injection points of all Java EE component classes supporting injection
 
