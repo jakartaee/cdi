@@ -50,7 +50,7 @@ In addition, this specification defines an SPI that allows alternative, non-plat
 
 ==== Relationship to the Java EE platform specification
 
-In the Java EE 6 environment, all _component classes supporting injection_, as defined by the Java EE 6 platform specification, may inject beans via the dependency injection service.
+In the Java EE environment, all _component classes supporting injection_, as defined by the Java EE platform specification, may inject beans via the dependency injection service.
 
 The Java EE platform specification defines a facility for injecting _resources_ that exist in the _Java EE component environment_. Resources are identified by string-based names. This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
 
