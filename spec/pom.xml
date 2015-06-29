@@ -15,7 +15,9 @@
 	<description>CDI Specification documentation</description>
 
 	<properties>
-		<asciidoctor.version>1.5.2</asciidoctor.version>
+		<asciidoctor.version>1.5.2.1</asciidoctor.version>
+		<jruby.version>1.7.20.1</jruby.version>
+		<asciidoctorj-pdf.version>1.5.0-alpha.8</asciidoctorj-pdf.version>
 		<license>asl2</license>
 		    <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 		    <revisiondate>${maven.build.timestamp}</revisiondate>
@@ -76,16 +78,27 @@
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
 				<version>${asciidoctor.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.asciidoctor</groupId>
+						<artifactId>asciidoctorj-pdf</artifactId>
+						<version>${asciidoctorj-pdf.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.jruby</groupId>
+						<artifactId>jruby-complete</artifactId>
+						<version>${jruby.version}</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
-						<id>output-docbook</id>
-						<phase>process-resources</phase>
+						<id>generate-pdf-doc</id>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>process-asciidoc</goal>
 						</goals>
 						<configuration>
-							<backend>docbook45</backend>
-							<outputDirectory>target/docbook/en-US</outputDirectory>
+							<backend>pdf</backend>
 						</configuration>
 					</execution>
 					<execution>
@@ -96,86 +109,16 @@
 						</goals>
 						<configuration>
 							<backend>html5</backend>
-							<sourceHighlighter>highlightjs</sourceHighlighter>
-							<outputDirectory>target/publish/html</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
 				<configuration>
-					<sourceDirectory>src/main/doc</sourceDirectory>
 					<sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
 					<doctype>book</doctype>
+					<sourceHighlighter>coderay</sourceHighlighter>
 					<attributes>
 						<license>${license}</license>
-						<version>${project.version}</version>
-						<status>Early Draft</status>
-						<revdate>${revisiondate}</revdate>
 					</attributes>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jboss.maven.plugins</groupId>
-				<artifactId>maven-jdocbook-plugin</artifactId>
-				<version>2.3.8</version>
-				<extensions>true</extensions>
-				<dependencies>
-					<dependency>
-						<groupId>org.jboss.pressgang</groupId>
-						<artifactId>pressgang-xslt</artifactId>
-						<version>2.0.0</version>
-					</dependency>
-					<dependency>
-						<groupId>org.jboss.pressgang</groupId>
-						<artifactId>pressgang-jdocbook-style</artifactId>
-						<type>jdocbook-style</type>
-						<version>3.0.0</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>generate-pdf</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<sourceDirectory>target/docbook</sourceDirectory>
-					<baseOutputDirectory>target/publish</baseOutputDirectory>
-					<sourceDocumentName>cdi-spec.xml</sourceDocumentName>
-					<ignoreTranslations>true</ignoreTranslations>
-					<!--<imageResource>
-						<directory>${project.basedir}/target/docbook/en-US</directory>
-						<includes>
-							<include>images/*.png</include>
-						</includes>
-					</imageResource>-->
-					<formats>
-						<format>
-							<formatName>pdf</formatName>
-							<stylesheetResource>classpath:/xslt/org/jboss/pdf.xsl</stylesheetResource>
-							<finalName>cdi-${project.version}.pdf</finalName>
-						</format>
-					</formats>
-					<options>
-						<xincludeSupported>true</xincludeSupported>
-						<xmlTransformerType>saxon</xmlTransformerType>
-						<docbookVersion>1.72.0</docbookVersion>
-						<localeSeparator>-</localeSeparator>
-						<injectionDateFormat>dd/MM/yyy</injectionDateFormat>
-						<transformerParameters>
-							<property>
-								<name>javax.xml.parsers.DocumentBuilderFactory</name>
-								<value>org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</value>
-							</property>
-							<property>
-								<name>javax.xml.parsers.SAXParserFactory</name>
-								<value>org.apache.xerces.jaxp.SAXParserFactoryImpl</value>
-							</property>
-						</transformerParameters>
-					</options>
 				</configuration>
 			</plugin>
 		</plugins>
