@@ -39,8 +39,7 @@ import java.lang.annotation.Target;
  * 
  * @author Stuart Douglas
  * @since 1.1
- * @see <a href="http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing">The Extension Mechanism
- *      Architecture</a>
+ * @see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#sealing">JAR File Specification</a>
  * 
  */
 @Target({ ElementType.TYPE, ElementType.PACKAGE })
