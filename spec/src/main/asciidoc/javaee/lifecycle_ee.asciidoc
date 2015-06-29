@@ -56,6 +56,6 @@ The container must perform ordinary Java EE component environment injection upon
 
 References to EJBs and web services are always dependent scoped and a new instance must be obtained for every injection performed.
 
-For an entity manager associated with a resource definition, it must behave as though it were injected directly using +@PersistencContext+.
+For an entity manager associated with a resource definition, it must behave as though it were injected directly using +@PersistenceContext+.
 
 When the +destroy()+ method of a bean which represents a remote stateful EJB reference is called, the container will _not_ automatically destroy the EJB reference. The application must explicitly call the method annotated +@Remove+. This behavior differs to that specified in <<stateful_lifecycle>> for beans which represent a local stateful EJB reference
