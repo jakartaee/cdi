@@ -36,13 +36,13 @@ public interface CDIProvider {
      * </p>
      *
      * @return the {@link CDI} instance associated with the container.  This is the same instance returned by using
-     * {@link CDI.current()}
+     * {@link CDI#current()}
      * @throws UnsupportedOperationException if called within an application server
      * @since 2.0
      * 
      */
     default CDI<Object> initialize() {
-        return initialize(Collections.EMPTY_MAP);
+        return initialize(Collections.emptyMap());
     }
 
     /**
@@ -55,7 +55,7 @@ public interface CDIProvider {
      *
      * @param params optional parameters, may be null or empty.  May also be immutable.
      * @return the {@link CDI} instance associated with the container.  This is the same instance returned by using
-     * {@link CDI.current()}
+     * {@link CDI#current()}
      * @throws UnsupportedOperationException if called within an application server
      * @since 2.0
      */
