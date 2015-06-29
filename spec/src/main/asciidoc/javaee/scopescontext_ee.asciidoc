@@ -80,7 +80,7 @@ The built-in request and application context objects are active during servlet, 
 
 ==== Request context lifecycle in Java EE
 
-When running in Java EE the container must extends the rules defined in <<request_context>> and is also required to implement request context with the following rules.
+When running in Java EE the container must extend the rules defined in <<request_context>> and is also required to implement request context with the following rules.
 
 The request scope is active:
 
@@ -124,7 +124,7 @@ An event with the +HttpSession+ as payload and with qualifier +@Initialized(Sess
 
 ==== Application context lifecycle in Java EE
 
-When running in Java EE the container must extends the rules defined in <<application_context>> and is also required to implement application context with the following rules.
+When running in Java EE the container must extend the rules defined in <<application_context>> and is also required to implement application context with the following rules.
 
 The application scope is active:
 

@@ -76,7 +76,7 @@ When running in Java EE, the container must also fire an event for every injecti
 
 When running in Java EE, the container must also fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean.
 
-The container must extends the rules defined in <<process_injection_target>> for managed bean to EJB session bean and other Java EE component class supporting injection.
+The container must extend the rules defined in <<process_injection_target>> for managed bean to EJB session bean and other Java EE component class supporting injection.
 
 For example, this observer decorates the +InjectionTarget+ for all servlets.
 
@@ -92,7 +92,7 @@ For example, this observer decorates the +InjectionTarget+ for all servlets.
 
 ==== `ProcessBeanAttributes` event and EJB
 
-When running in Java EE, the container must extends the rules defined in <<process_bean_attributes>> to EJB session bean.
+When running in Java EE, the container must extend the rules defined in <<process_bean_attributes>> to EJB session bean.
 
 
 [[process_bean_ee]]
