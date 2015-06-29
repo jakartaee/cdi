@@ -405,18 +405,18 @@ public void afterLogin(@Observes LoggedInEvent event, EventMetadata metadata) { 
 
 A _conditional observer method_ is an observer method which is notified of an event only if an instance of the bean that defines the observer method already exists in the current context.
 
-A conditional observer method may be declared by specifying +receive=IF_EXISTS+.
+A conditional observer method may be declared by specifying +notifyObserver=IF_EXISTS+.
 
 [source, java]
 ----
-public void refreshOnDocumentUpdate(@Observes(receive=IF_EXISTS) @Updated Document doc) { ... }
+public void refreshOnDocumentUpdate(@Observes(notifyObserver=IF_EXISTS) @Updated Document doc) { ... }
 
-public void asyncRefreshOnDocumentUpdate(@ObservesAsync(receive=IF_EXISTS) @Updated Document doc) { ... }
+public void asyncRefreshOnDocumentUpdate(@ObservesAsync(notifyObserver=IF_EXISTS) @Updated Document doc) { ... }
 ----
 
-Beans with scope +@Dependent+ may not have conditional observer methods. If a bean with scope +@Dependent+ has an observer method declared +receive=IF_EXISTS+, the container automatically detects the problem and treats it as a definition error.
+Beans with scope +@Dependent+ may not have conditional observer methods. If a bean with scope +@Dependent+ has an observer method declared +notifyObserver=IF_EXISTS+, the container automatically detects the problem and treats it as a definition error.
 
-The enumeration +javax.enterprise.event.Reception+ identifies the possible values of +receive+:
+The enumeration +javax.enterprise.event.Reception+ identifies the possible values of +notifyObserver+:
 
 [source, java]
 ----
