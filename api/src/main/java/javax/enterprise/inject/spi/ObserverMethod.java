@@ -109,6 +109,8 @@ public interface ObserverMethod<T> extends Prioritized {
      *         otherwise returns <tt>false</tt>
      * 
      */
-    public boolean isAsync();
+    public default boolean isAsync() {
+        return false;
+    }
 
 }
