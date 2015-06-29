@@ -1,13 +1,13 @@
-[subs="attributes"]
+[subs="normal"]
 ....
 
-Specification: JSR-365 Contexts and Dependency Injection for Java (CDI) ("Specification")
+Specification: {doctitle}
 
-Version: {version}
+Version: {revnumber}
 
-Status: {status}
+Status: {revremark}
 
-Specification Lead:  Red Hat, Inc. ("Specification Lead")
+Specification Lead:  Red Hat, Inc.
 
 Release: {revdate}
 
