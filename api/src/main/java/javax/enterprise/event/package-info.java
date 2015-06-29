@@ -60,7 +60,7 @@
  * allows the application to receive and respond synchronously to event notifications.
  * And an {@linkplain javax.enterprise.event.ObservesAsync async observer method} 
  * allows the application to receive and respond asynchronously to event notifications.
- * they both act as event consumer, observing events of a specific type, with a 
+ * they both act as event consumers, observing events of a specific type, with a
  * specific set of qualifiers. Any Java type may be observed by an 
  * observer method.</p>
  * 
@@ -99,7 +99,7 @@
  * <li>If the observer method is a 
  * {@linkplain javax.enterprise.event.TransactionPhase transactional 
  * observer method}, any exception is caught and logged by the container.</li>
- * <li>If the observer method is asynchronous, any exception is caught byt he container and added as a suppressed exception 
+ * <li>If the observer method is asynchronous, any exception is caught by the container and added as a suppressed exception
  * to a {@link javax.enterprise.event.FireAsyncException} that could be handle by the application</li>
  * <li>Otherwise, the exception aborts processing of the event.
  * No other observer methods of that event will be called. The 

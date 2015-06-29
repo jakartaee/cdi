@@ -96,7 +96,7 @@ public void login() {
 ----
 
 Event fired with the `fireAsync()` method is fired asynchronously.
-All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different thread.
+All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different threads.
 
 If synchronous observer have to be notified, `fireAsync` returns immediately after the last synchronous observer has returned.
  Otherwise it returns immediately.
@@ -490,7 +490,7 @@ For a custom implementation of the +ObserverMethod+ interface defined in <<obser
 ==== Handling multiple exceptions thrown during an asynchronous event
 
 If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `FireAsyncException` exception.
-`FireAsyncException` contains all exception thrown by observers as suppressed exceptions. They can be accessed as an array of `throwable` with the `getSuppressed` method.
+`FireAsyncException` contains all exceptions thrown by observers as suppressed exceptions. They can be accessed as an array of `throwable` with the `getSuppressed` method.
 
 It can be handled with one of the `CompletionStage` methods related to exceptions:
   

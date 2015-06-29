@@ -128,7 +128,7 @@ public interface Event<T> {
      * </p>
      *
      * @param event the event object
-     * @param executor an custom executor to execute asynchronous event
+     * @param executor a custom executor to execute asynchronous event
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         if any of the synchronous or asynchronous observers notfied by this event throws an exception
      *         then the resulting CompletionStage is completed exceptionally with {@link FireAsyncException}
