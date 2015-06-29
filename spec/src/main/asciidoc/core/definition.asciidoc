@@ -572,8 +572,6 @@ In the following circumstances, a _default name_ must be assigned by the contain
 * A bean declares a stereotype that declares an empty +@Named+ annotation, and the bean does not explicitly specify a bean name.
 
 
-If a bean class or producer method or field of a bean declares a +@Named+ annotation and no bean name is explicitly specified the value of the +value+ member is defaulted.
-
 The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
 
 [[beans_with_no_name]]
