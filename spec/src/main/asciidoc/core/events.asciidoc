@@ -30,23 +30,13 @@ Any Java type may be an observed event type.
 
 [[firing_events]]
 
-=== Firing events synchronously
+=== Firing events
 
 Beans fire events via an instance of the +javax.enterprise.event.Event+ interface, which may be injected:
 
 [source, java]
 ----
 @Inject Event<LoggedInEvent> loggedInEvent;
-----
-
-The method +fire()+ accepts an event object:
-
-[source, java]
-----
-public void login() {
-    ...
-    loggedInEvent.fire( new LoggedInEvent(user) );
-}
 ----
 
 Any combination of qualifiers may be specified at the injection point:
@@ -73,11 +63,25 @@ else {
 
 In this example, the event sometimes has the qualifier +@Admin+, depending upon the value of +user.isAdmin()+.
 
+[[firing_events_sycnronously]]
+
+==== Firing events synchronously
+
+The method +fire()+ accepts an event object:
+
+[source, java]
+----
+public void login() {
+    ...
+    loggedInEvent.fire( new LoggedInEvent(user) );
+}
+----
+
 Event fired with the `fire()` method is fired synchronously. All the resolved synchronous observers are called in the thread in which `fire()` was called. A synchronous observer notification blocks the calling thread until it completes.
  
 [[firing_events_asynchronously]]
 
-=== Firing events asynchronously
+==== Firing events asynchronously
 
 Events may also be fired asynchronously using one of the methods `fireAsync()`
 
@@ -91,7 +95,9 @@ public void login() {
 }
 ----
 
-Event fired with the `fireAsync()` method is fired asynchronously. All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different thread.
+Event fired with the `fireAsync()` method is fired asynchronously.
+All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different thread.
+
 If synchronous observer have to be notified, `fireAsync` returns immediately after the last synchronous observer has returned.
  Otherwise it returns immediately.
 
