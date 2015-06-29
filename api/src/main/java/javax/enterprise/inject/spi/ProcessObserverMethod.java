@@ -34,9 +34,6 @@ package javax.enterprise.inject.spi;
  * @param <X> The bean type containing the observer method
  * 
  */
-// These parameters are the wrong way according to the spec, however Oracle/JCP
-// compatibility rules require us to
-// keep the wrong ordering
 public interface ProcessObserverMethod<T, X> {
     /**
      * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
