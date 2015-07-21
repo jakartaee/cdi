@@ -63,7 +63,7 @@ else {
 
 In this example, the event sometimes has the qualifier +@Admin+, depending upon the value of +user.isAdmin()+.
 
-[[firing_events_sycnronously]]
+[[firing_events_synchronously]]
 
 ==== Firing events synchronously
 
