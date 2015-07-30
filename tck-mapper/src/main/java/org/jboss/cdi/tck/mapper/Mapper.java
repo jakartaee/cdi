@@ -45,7 +45,7 @@ public class Mapper {
     private List<Section> auditSections;
     private String tckVersion;
     private static final Logger log = Logger.getLogger(Mapper.class.getName());
-    private final static String SPEC_WITH_ASSERTIONS = "spec/target/publish/html/cdi-spec-with-assertions.html";
+    private final static String SPEC_WITH_ASSERTIONS = "spec/target/generated-docs/cdi-spec-with-assertions.html";
 
     public Mapper(String tckAuditURL, String coverageReportURL, String pathToCdiSpec, String tckVersion) {
         this.auditParser = new TckAuditSaxParser(tckAuditURL);
@@ -57,7 +57,7 @@ public class Mapper {
         }
 
         try {
-            this.coverageHtml = Jsoup.connect(coverageReportURL).get();
+            this.coverageHtml = Jsoup.connect(coverageReportURL).maxBodySize(0).timeout(0).get();
         } catch (IOException e) {
             new Exception("Cannot find " + coverageReportURL + " :" + e.getStackTrace().toString());
         }
@@ -166,7 +166,7 @@ public class Mapper {
         for (Element assertionTextElement : assertionTextElements) {
             String assertionElement = assertionTextElement.text().replace("|", "");
             // replace two or more spaces by just one
-            String assertionAudit =  assertion.getText().trim().replaceAll("\\s+", " ");
+            String assertionAudit = assertion.getText().trim().replaceAll("\\s+", " ");
             if (assertionElement.contains(assertionAudit)) {
                 Elements coverageElements = assertionTextElement.select("div[class=coverageMethod");
                 String testPackageName = assertionTextElement.select("div[class=packageName]").text();
@@ -174,7 +174,7 @@ public class Mapper {
                     String test = coverageElement.text().replace("github", "");
                     try {
                         URL url = new URL(coverageElement.select("a").attr("href"));
-                        url = new URL(url.toString().replace("master",tckVersion));
+                        url = new URL(url.toString().replace("master", tckVersion));
                         assertion.getTests().add(new Test(test, url, testPackageName));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
