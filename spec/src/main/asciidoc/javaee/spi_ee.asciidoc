@@ -64,6 +64,12 @@ When running in Java EE, the container must extend the rules defined in <<altern
 
 === Addition to Container lifecycle events in Java EE
 
+[[process_annotated_type_ee]]
+
+==== +ProcessAnnotatedType+ event in Java EE
+
+When running in Java EE, the container must extend the rules defined in <<process_annotated_type>> to Java EE component and EJB session bean classes.
+
 [[process_injection_point_ee]]
 
 ==== `ProcessInjectionPoint` event and EJB
