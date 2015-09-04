@@ -387,7 +387,7 @@ public interface EventMetadata {
 * +getQualifiers()+ returns the set of qualifiers with which the event was fired.
 * +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
 * +getType()+ returns the type representing runtime class of the event object with type variables resolved.
-* `isAsync()` returns `true` if the event was fired with `fireAsync()` or `fireAsyncEvent()` methods otherwise returns `false`.
+* `isAsync()` returns `true` if the event was fired with `fireAsync()` method otherwise returns `false`.
 
 
 The container must provide a bean with scope +@Dependent+, bean type +EventMetadata+ and qualifier +@Default+, allowing observer methods to obtain information about the events they observe.
