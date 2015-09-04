@@ -63,7 +63,7 @@ public interface EventMetadata {
 
   /**
    * 
-   * @return returns <tt>true</tt> if the event was fired with <tt>fireAsync()</tt> or <tt>fireAsyncEvent()</tt>
+   * @return returns <tt>true</tt> if the event was fired with <tt>fireAsync()</tt>
    * otherwise returns <tt>false</tt>
    * @since 2.0
    */
