@@ -2,7 +2,11 @@
 
 == Concepts
 
-A bean is a source of contextual objects which define application state and/or logic. These objects are called _contextual instances of the bean_. The container creates and destroys these instances and associates them with the appropriate context. Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context. A bean may bear metadata defining its lifecycle and interactions with other beans.
+A bean is a source of contextual objects which define application state and/or logic.
+These objects are called _contextual instances of the bean_.
+The container creates and destroys these instances and associates them with the appropriate context.
+Contextual instances of a bean may be injected into other objects (including other bean instances) that execute in the same context.
+A bean may bear metadata defining its lifecycle and interactions with other beans.
 
 A bean comprises the following attributes:
 
@@ -16,11 +20,15 @@ A bean comprises the following attributes:
 
 Furthermore, a bean may or may not be an alternative.
 
-A bean developer provides the bean implementation by writing business logic in Java code. The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
+A bean developer provides the bean implementation by writing business logic in Java code.
+The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
 
 The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_and_resolution>>.
 
-The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators. The interceptor bindings of a bean determine which interceptors will be applied at runtime. The bean types and qualifiers of a bean determine which decorators will be applied at runtime. Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>. Decorators are defined in <<decorators>>.
+The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators.
+The interceptor bindings of a bean determine which interceptors will be applied at runtime.
+The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
+Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>. Decorators are defined in <<decorators>>.
 
 [[capabilities]]
 
@@ -39,7 +47,9 @@ A bean is provided by the container with the following capabilities:
 
 === Bean types
 
-A bean type defines a client-visible type of the bean. A bean may have multiple bean types. For example, the following bean has four bean types:
+A bean type defines a client-visible type of the bean.
+A bean may have multiple bean types.
+For example, the following bean has four bean types:
 
 [source, java]
 ----
@@ -66,8 +76,10 @@ Almost any Java type may be a bean type of a bean:
 
 * A bean type may be an interface, a concrete class or an abstract class, and may be declared final or have final methods.
 * A bean type may be a parameterized type with actual type parameters and type variables.
-* A bean type may be an array type. Two array types are considered identical only if the element type is identical.
-* A bean type may be a primitive type. Primitive types are considered to be identical to their corresponding wrapper types in +java.lang+.
+* A bean type may be an array type.
+Two array types are considered identical only if the element type is identical.
+* A bean type may be a primitive type.
+Primitive types are considered to be identical to their corresponding wrapper types in +java.lang+.
 * A bean type may be a raw type.
 
 However, some Java types are not legal bean types :
@@ -104,7 +116,9 @@ If a bean class or producer method or field specifies a +@Typed+ annotation, and
 
 ==== Typecasting between bean types
 
-A client of a bean may typecast its contextual reference to a bean to any bean type of the bean which is a Java interface. However, the client may not in general typecast its contextual reference to an arbitrary concrete bean type of the bean. For example, if our managed bean was injected to the following field:
+A client of a bean may typecast its contextual reference to a bean to any bean type of the bean which is a Java interface.
+However, the client may not in general typecast its contextual reference to an arbitrary concrete bean type of the bean.
+For example, if our managed bean was injected to the following field:
 
 [source, java]
 ----
@@ -129,7 +143,8 @@ BookShop bookShop = (BookShop) biz;
 
 === Qualifiers
 
-For a given bean type, there may be multiple beans which implement the type. For example, an application may have two implementations of the interface +PaymentProcessor+:
+For a given bean type, there may be multiple beans which implement the type.
+For example, an application may have two implementations of the interface +PaymentProcessor+:
 
 [source, java]
 ----
@@ -147,9 +162,12 @@ class AsynchronousPaymentProcessor
 }
 ----
 
-A client that needs a +PaymentProcessor+ that processes payments synchronously needs some way to distinguish between the two different implementations. One approach would be for the client to explicitly specify the class that implements the +PaymentProcessor+ interface. However, this approach creates a hard dependence between client and implementation - exactly what use of the interface was designed to avoid!
+A client that needs a +PaymentProcessor+ that processes payments synchronously needs some way to distinguish between the two different implementations.
+One approach would be for the client to explicitly specify the class that implements the +PaymentProcessor+ interface.
+However, this approach creates a hard dependence between client and implementation - exactly what use of the interface was designed to avoid!
 
-A _qualifier type_ represents some client-visible semantic associated with a type that is satisfied by some implementations of the type (and not by others). For example, we could introduce qualifier types representing synchronicity and asynchronicity. In Java code, qualifier types are represented by annotations.
+A _qualifier type_ represents some client-visible semantic associated with a type that is satisfied by some implementations of the type (and not by others). For example, we could introduce qualifier types representing synchronicity and asynchronicity.
+In Java code, qualifier types are represented by annotations.
 
 [source, java]
 ----
@@ -169,7 +187,8 @@ class AsynchronousPaymentProcessor
 }
 ----
 
-Finally, qualifier types are applied to injection points to distinguish which implementation is required by the client. For example, when the container encounters the following injected field, an instance of +SynchronousPaymentProcessor+ will be injected:
+Finally, qualifier types are applied to injection points to distinguish which implementation is required by the client.
+For example, when the container encounters the following injected field, an instance of +SynchronousPaymentProcessor+ will be injected:
 
 [source, java]
 ----
@@ -347,7 +366,8 @@ A bean may only be injected to an injection point if it has all the qualifiers o
 
 ==== Specifying qualifiers of a method or constructor parameter
 
-Qualifier types may be applied to parameters of producer methods, initializer methods, disposer methods, observer methods or bean constructors (see <<implementation>>) to determine the bean instance that is passed when the method is called by the container. The container uses the rules of typesafe resolution defined in <<typesafe_resolution>> to determine values for these parameters.
+Qualifier types may be applied to parameters of producer methods, initializer methods, disposer methods, observer methods or bean constructors (see <<implementation>>) to determine the bean instance that is passed when the method is called by the container.
+The container uses the rules of typesafe resolution defined in <<typesafe_resolution>> to determine values for these parameters.
 
 For example, when the container encounters the following producer method, an instance of +SynchronousPaymentProcessor+ will be passed to the first parameter and an instance of +AsynchronousPaymentProcessor+ will be passed to the second parameter:
 
@@ -370,7 +390,8 @@ Scoped objects, exist in a well-defined lifecycle context:
 * their state is automatically shared by clients that execute in the same context.
 
 
-All beans have a scope. The scope of a bean determines the lifecycle of its instances, and which instances of the bean are visible to instances of other beans, as defined in <<contexts>>. A scope type is represented by an annotation type.
+All beans have a scope.
+The scope of a bean determines the lifecycle of its instances, and which instances of the bean are visible to instances of other beans, as defined in <<contexts>>. A scope type is represented by an annotation type.
 
 For example, an object that represents the current user is represented by a session scoped object:
 
@@ -416,7 +437,8 @@ If an interceptor or decorator has any scope other than +@Dependent+, non-portab
 
 A scope type is a Java annotation defined as +@Retention(RUNTIME)+. Typically a scope type is defined as +@Target({TYPE, METHOD, FIELD})+. All scope types must also specify the +@javax.inject.Scope+ or +@javax.enterprise.context.NormalScope+ meta-annotation.
 
-A scope type must not have any attributes. If a scope type has attributes non-portable behavior results.
+A scope type must not have any attributes.
+If a scope type has attributes non-portable behavior results.
 
 For example, the following annotation declares a "business process scope":
 
@@ -437,7 +459,8 @@ Custom scopes are normally defined by portable extensions, which must also provi
 
 The scope of a bean is defined by annotating the bean class or producer method or field with a scope type.
 
-A bean class or producer method or field may specify at most one scope type annotation. If a bean class or producer method or field specifies multiple scope type annotations, the container automatically detects the problem and treats it as a definition error.
+A bean class or producer method or field may specify at most one scope type annotation.
+If a bean class or producer method or field specifies multiple scope type annotations, the container automatically detects the problem and treats it as a definition error.
 
 [source, java]
 ----
@@ -472,7 +495,8 @@ The _default scope_ for a bean which does not explicitly declare a scope depends
 
 * If the bean does not declare any stereotype with a declared default scope, the default scope for the bean is +@Dependent+.
 * If all stereotypes declared by the bean that have some declared default scope have the same default scope, then that scope is the default scope for the bean.
-* If there are two different stereotypes declared by the bean that declare different default scopes, then there is no default scope and the bean must explicitly declare a scope. If it does not explicitly declare a scope, the container automatically detects the problem and treats it as a definition error.
+* If there are two different stereotypes declared by the bean that declare different default scopes, then there is no default scope and the bean must explicitly declare a scope.
+If it does not explicitly declare a scope, the container automatically detects the problem and treats it as a definition error.
 
 
 If a bean explicitly declares a scope, any default scopes declared by stereotypes are ignored.
@@ -505,7 +529,8 @@ The set of bean defining annotations contains:
 * all stereotype annotations (i.e. annotations annotated with `@Stereotype`),
 * and the `@Dependent` scope annotation.
 
-If one of these annotations is declared on a bean class, then the bean class is said to have a bean defining annotation. For example, this dependent scoped bean has a bean defining annotation:
+If one of these annotations is declared on a bean class, then the bean class is said to have a bean defining annotation.
+For example, this dependent scoped bean has a bean defining annotation:
 
 [source,java]
 ----
@@ -528,13 +553,15 @@ public class CoffeeShop
 }
 ----
 
-Note that to ensure compatibility with other JSR-330 implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations. However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
+Note that to ensure compatibility with other JSR-330 implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations.
+However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
 [[names]]
 
 === Bean names
 
-A bean may have a _bean name_. A bean with a name may be referred to by its name when used in a non typesafe environment (like the Unified Expression Language). A valid bean name is a period-separated list of valid EL identifiers.
+A bean may have a _bean name_.
+A bean with a name may be referred to by its name when used in a non typesafe environment (like the Unified Expression Language). A valid bean name is a period-separated list of valid EL identifiers.
 
 The following strings are valid bean names:
 
@@ -554,7 +581,8 @@ Bean names are used by the rules of bean name resolution defined in <<name_resol
 
 ==== Declaring the bean name
 
-To specify the name of a bean, the qualifier +@javax.inject.Named+ is applied to the bean class or producer method or field. This bean is named +currentOrder+:
+To specify the name of a bean, the qualifier +@javax.inject.Named+ is applied to the bean class or producer method or field.
+This bean is named +currentOrder+:
 
 [source, java]
 ----
@@ -572,7 +600,8 @@ In the following circumstances, a _default name_ must be assigned by the contain
 * A bean declares a stereotype that declares an empty +@Named+ annotation, and the bean does not explicitly specify a bean name.
 
 
-The default name for a bean depends upon the kind of the bean. The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
+The default name for a bean depends upon the kind of the bean.
+The rules for determining the default name for a bean are defined in <<managed_bean_name>>, <<producer_method_name>> and <<producer_field_name>>.
 
 [[beans_with_no_name]]
 
@@ -608,7 +637,8 @@ If an interceptor or decorator is an alternative, non-portable behavior results.
 
 === Stereotypes
 
-In many systems, use of architectural patterns produces a set of recurring bean roles. A _stereotype_ allows a framework developer to identify such a role and declare some common metadata for beans with that role in a central place.
+In many systems, use of architectural patterns produces a set of recurring bean roles.
+A _stereotype_ allows a framework developer to identify such a role and declare some common metadata for beans with that role in a central place.
 
 A stereotype encapsulates any combination of:
 
@@ -644,7 +674,9 @@ public @interface Action {}
 
 ===== Declaring the default scope for a stereotype
 
-The default scope of a stereotype is defined by annotating the stereotype with a scope type. A stereotype may declare at most one scope. If a stereotype declares more than one scope, the container automatically detects the problem and treats it as a definition error.
+The default scope of a stereotype is defined by annotating the stereotype with a scope type.
+A stereotype may declare at most one scope.
+If a stereotype declares more than one scope, the container automatically detects the problem and treats it as a definition error.
 
 For example, the following stereotype might be used to identify action classes in a web application:
 
@@ -663,7 +695,8 @@ Then actions would have scope +@RequestScoped+ unless the scope is explicitly sp
 
 ===== Specifying interceptor bindings for a stereotype
 
-The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types. A stereotype may declare zero, one or multiple interceptor bindings, as defined in <<stereotype_interceptor_bindings>>.
+The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types.
+A stereotype may declare zero, one or multiple interceptor bindings, as defined in <<stereotype_interceptor_bindings>>.
 
 We may specify interceptor bindings that apply to all actions:
 
@@ -682,7 +715,8 @@ public @interface Action {}
 
 ===== Declaring a +@Named+ stereotype
 
-A stereotype may declare an empty +@Named+ annotation, which specifies that every bean with the stereotype has a defaulted name when a name is not explicitly specified by the bean. A +@Named+ qualifier declared by a stereotype is not added to the qualifiers of a bean with the stereotype.
+A stereotype may declare an empty +@Named+ annotation, which specifies that every bean with the stereotype has a defaulted name when a name is not explicitly specified by the bean.
+A +@Named+ qualifier declared by a stereotype is not added to the qualifiers of a bean with the stereotype.
 
 If a stereotype declares a non-empty +@Named+ annotation, the container automatically detects the problem and treats it as a definition error.
 
@@ -791,18 +825,26 @@ In addition, the special-purpose +@Interceptor+ and +@Decorator+ stereotypes are
 
 === Problems detected automatically by the container
 
-When the application violates a rule defined by this specification, the container automatically detects the problem. There are three kinds of problem:
+When the application violates a rule defined by this specification, the container automatically detects the problem.
+There are three kinds of problem:
 
-* Definition errors - occur when a single bean definition violates the rules of this specification. If a definition error exists, the container must throw a subclass of +javax.enterprise.inject.spi.DefinitionException+.
-* Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment. If a deployment problem occurs, the container must throw a subclass of +javax.enterprise.inject.spi.DeploymentException+.
+* Definition errors - occur when a single bean definition violates the rules of this specification.
+If a definition error exists, the container must throw a subclass of +javax.enterprise.inject.spi.DefinitionException+.
+* Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment.
+If a deployment problem occurs, the container must throw a subclass of +javax.enterprise.inject.spi.DeploymentException+.
 * Exceptions - occur at runtime
 
 
-Definition errors are _developer errors_. They may be detected by tooling at development time, and are also detected by the container at initialization time. If a definition error exists in a deployment, initialization will be aborted by the container.
+Definition errors are _developer errors_.
+They may be detected by tooling at development time, and are also detected by the container at initialization time.
+If a definition error exists in a deployment, initialization will be aborted by the container.
 
-Deployment problems are detected by the container at initialization time. If a deployment problem exists in a deployment, initialization will be aborted by the container.
+Deployment problems are detected by the container at initialization time.
+If a deployment problem exists in a deployment, initialization will be aborted by the container.
 
 The container is permitted to define a non-portable mode, for use at development time, in which some definition errors and deployment problems do not cause application initialization to abort.
 
-Exceptions represent problems that may not be detected until they actually occur at runtime. All exceptions defined by this specification are unchecked exceptions. All exceptions defined by this specification may be safely caught and handled by the application.
+Exceptions represent problems that may not be detected until they actually occur at runtime.
+All exceptions defined by this specification are unchecked exceptions.
+All exceptions defined by this specification may be safely caught and handled by the application.
 

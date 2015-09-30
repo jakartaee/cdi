@@ -14,7 +14,8 @@ When Running in Java EE, the container must extend the rules defined in <<bean>>
 
 When Running in Java EE, the container must extend the rules defined in <<interceptor>> and must also ensure that
  
-`PRE_PASSIVATE`, `POST_ACTIVATE` and `AROUND_TIMEOUT` InterceptorType values are linked to EJB lifecycle callback or timeout method. 
+`PRE_PASSIVATE`, `POST_ACTIVATE` and `AROUND_TIMEOUT` InterceptorType values are linked to EJB lifecycle callback or timeout method.
+
 
 [[injectiontarget_ee]]
 

@@ -2,7 +2,8 @@
 
 == Scopes and contexts
 
-Associated with every scope type is a _context object_. The context object determines the lifecycle and visibility of instances of all beans with that scope. In particular, the context object defines:
+Associated with every scope type is a _context object_.
+The context object determines the lifecycle and visibility of instances of all beans with that scope. In particular, the context object defines:
 
 * When a new instance of any bean with that scope is created
 * When an existing instance of any bean with that scope is destroyed
@@ -15,7 +16,8 @@ The context implementation collaborates with the container via the +Context+ and
 
 === The +Contextual+ interface
 
-The interface +javax.enterprise.context.spi.Contextual+ defines operations to create and destroy contextual instances of a certain type. Any implementation of +Contextual+ is called a _contextual type_. In particular, the +Bean+ interface defined in <<bean>> extends +Contextual+, so all beans are contextual types.
+The interface +javax.enterprise.context.spi.Contextual+ defines operations to create and destroy contextual instances of a certain type. Any implementation of +Contextual+ is called a _contextual type_.
+In particular, the +Bean+ interface defined in <<bean>> extends +Contextual+, so all beans are contextual types.
 
 [source, java]
 ----
@@ -29,7 +31,8 @@ public interface Contextual<T> {
 * +destroy()+ is responsible for destroying instances of the type. In particular, it is responsible for destroying all dependent objects of an instance.
 
 
-If an exception occurs while creating an instance, the exception is rethrown by the +create()+ method. If the exception is a checked exception, it must be wrapped and rethrown as an (unchecked) +CreationException+.
+If an exception occurs while creating an instance, the exception is rethrown by the +create()+ method.
+If the exception is a checked exception, it must be wrapped and rethrown as an (unchecked) +CreationException+.
 
 If an exception occurs while destroying an instance, the exception must be caught by the +destroy()+ method.
 
@@ -51,7 +54,8 @@ public interface CreationalContext<T> {
 }
 ----
 
-* +push()+ registers an _incompletely initialized_ contextual instance the with the container. A contextual instance is considered incompletely initialized until it is returned by the +create()+ method.
+* +push()+ registers an _incompletely initialized_ contextual instance the with the container.
+A contextual instance is considered incompletely initialized until it is returned by the +create()+ method.
 * +release()+ destroys all dependent objects, as defined in <<dependent_objects>>, of the instance which is being destroyed, by passing each dependent object to the +destroy()+ method of its +Contextual+ object.
 
 
@@ -71,7 +75,8 @@ The +javax.enterprise.context.spi.Context+ interface provides an operation for o
 
 The context object is responsible for creating and destroying contextual instances by calling operations of the +Contextual+ interface.
 
-The +Context+ interface is called by the container and may be called by portable extensions. It should not be called directly by the application.
+The +Context+ interface is called by the container and may be called by portable extensions.
+It should not be called directly by the application.
 
 [source, java]
 ----
@@ -94,7 +99,8 @@ The method +getScope()+ returns the scope type of the context object.
 
 A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
 
-At a particular point in the execution of the program a context object may be _active_ with respect to the current thread. When a context object is active the +isActive()+ method returns +true+. Otherwise, we say that the context object is _inactive_ and the +isActive()+ method returns +false+.
+At a particular point in the execution of the program a context object may be _active_ with respect to the current thread.
+When a context object is active the +isActive()+ method returns +true+. Otherwise, we say that the context object is _inactive_ and the +isActive()+ method returns +false+.
 
 The +get()+ method obtains contextual instances of the contextual type represented by the given instance of +Contextual+. The +get()+ method may either:
 
@@ -109,7 +115,8 @@ The +get()+ method may not create a new instance of the given contextual type un
 
 The +destroy()+ method destroys an existing contextual instance, removing it from the context instance.
 
-The +AlterableContext+ interface was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions providing context implementations for normal scopes should implement +AlterableContext+ instead of +Context+.
+The +AlterableContext+ interface was introduced in CDI 1.1 to allow bean instances to be destroyed by the application.
+Extensions providing context implementations for normal scopes should implement +AlterableContext+ instead of +Context+.
 
 If the context object is inactive, the +get()+ and +destroy()+ methods must throw a +ContextNotActiveException+.
 
@@ -123,21 +130,30 @@ The context object must pass the same instance of +CreationalContext+ to +Contex
 
 === Normal scopes and pseudo-scopes
 
-Most scopes are _normal scopes_. The context object for a normal scope type is a mapping from each contextual type with that scope to an instance of that contextual type. There may be no more than one mapped instance per contextual type per thread. The set of all mapped instances of contextual types with a certain scope for a certain thread is called the _context_ for that scope associated with that thread.
+Most scopes are _normal scopes_.
+The context object for a normal scope type is a mapping from each contextual type with that scope to an instance of that contextual type. There may be no more than one mapped instance per contextual type per thread.
+The set of all mapped instances of contextual types with a certain scope for a certain thread is called the _context_ for that scope associated with that thread.
 
-A context may be associated with one or more threads. A context with a certain scope is said to _propagate_ from one point in the execution of the program to another when the set of mapped instances of contextual types with that scope is preserved.
+A context may be associated with one or more threads.
+A context with a certain scope is said to _propagate_ from one point in the execution of the program to another when the set of mapped instances of contextual types with that scope is preserved.
 
 The context associated with the current thread is called the _current context_ for the scope. The mapped instance of a contextual type associated with a current context is called the _current instance_ of the contextual type.
 
 The +get()+ operation of the context object for an active normal scope returns the current instance of the given contextual type.
 
-At certain points in the execution of the program a context may be _destroyed_. When a context is destroyed, all mapped instances belonging to that context are destroyed by passing them to the +Contextual.destroy()+ method.
+At certain points in the execution of the program a context may be _destroyed_.
+When a context is destroyed, all mapped instances belonging to that context are destroyed by passing them to the +Contextual.destroy()+ method.
 
 Contexts with normal scopes must obey the following rule:
 
-_Suppose beans A, B and Z all have normal scopes. Suppose A has an injection point x, and B has an injection point y. Suppose further that both x and y resolve to bean Z according to the rules of typesafe resolution. If a is the current instance of A, and b is the current instance of B, then both a.x and b.y refer to the same instance of Z. This instance is the current instance of Z._
+_Suppose beans A, B and Z all have normal scopes.
+Suppose A has an injection point x, and B has an injection point y.
+Suppose further that both x and y resolve to bean Z according to the rules of typesafe resolution.
+If a is the current instance of A, and b is the current instance of B, then both a.x and b.y refer to the same instance of Z.
+This instance is the current instance of Z._
 
-Any scope that is not a normal scope is called a _pseudo-scope_. The concept of a current instance is not well-defined in the case of a pseudo-scope.
+Any scope that is not a normal scope is called a _pseudo-scope_.
+The concept of a current instance is not well-defined in the case of a pseudo-scope.
 
 All normal scopes must be explicitly declared +@NormalScope+, to indicate to the container that a client proxy is required.
 
@@ -216,7 +232,8 @@ If there is exactly one active instance of +Context+ associated with the scope t
 
 ==== Contextual instance of a bean
 
-From time to time, the container must obtain a _contextual instance_ of a bean. The container must:
+From time to time, the container must obtain a _contextual instance_ of a bean.
+The container must:
 
 * obtain the active context object for the bean scope, then
 * obtain an instance of the bean by calling +Context.get()+, passing the +Bean+ instance representing the bean and an instance of +CreationalContext+.
@@ -230,7 +247,8 @@ From time to time, the container attempts to obtain a _contextual instance of a 
 
 If the scope is not active, or if +Context.get()+ returns a null value, there is no contextual instance that already exists.
 
-A contextual instance of any of the built-in kinds of bean defined in <<implementation>> is considered an internal container construct, and it is therefore not strictly required that a contextual instance of a built-in kind of bean directly implement the bean types of the bean. However, in this case, the container is required to transform its internal representation to an object that does implement the bean types expected by the application before injecting or returning a contextual instance to the application.
+A contextual instance of any of the built-in kinds of bean defined in <<implementation>> is considered an internal container construct, and it is therefore not strictly required that a contextual instance of a built-in kind of bean directly implement the bean types of the bean.
+However, in this case, the container is required to transform its internal representation to an object that does implement the bean types expected by the application before injecting or returning a contextual instance to the application.
 
 For a custom implementation of the +Bean+ interface defined in <<bean>>, the container calls +getScope()+ to determine the bean scope.
 
@@ -238,13 +256,16 @@ For a custom implementation of the +Bean+ interface defined in <<bean>>, the con
 
 ==== Contextual reference for a bean
 
-From time to time, the container must obtain a _contextual reference_ for a bean and a given bean type of the bean. A contextual reference implements the given bean type and all bean types of the bean which are Java interfaces. A contextual reference is not, in general, required to implement all concrete bean types of the bean.
+From time to time, the container must obtain a _contextual reference_ for a bean and a given bean type of the bean.
+A contextual reference implements the given bean type and all bean types of the bean which are Java interfaces.
+A contextual reference is not, in general, required to implement all concrete bean types of the bean.
 
 Contextual references must be obtained with a given +CreationalContext+, allowing any instance of scope +@Dependent+ that is created to be later destroyed.
 
 * If the bean has a normal scope and the given bean type cannot be proxied by the container, as defined in <<unproxyable>>, the container throws an +UnproxyableResolutionException+.
 * If the bean has a normal scope, then the contextual reference for the bean is a client proxy, as defined in <<client_proxies>>, created by the container, that implements the given bean type and all bean types of the bean which are Java interfaces.
-* Otherwise, if the bean has a pseudo-scope, the container must obtain a contextual instance of the bean. If the bean has scope +@Dependent+, the container must associate it with the +CreationalContext+.
+* Otherwise, if the bean has a pseudo-scope, the container must obtain a contextual instance of the bean.
+If the bean has scope +@Dependent+, the container must associate it with the +CreationalContext+.
 
 
 The container must ensure that every injection point of type +InjectionPoint+ and qualifier +@Default+ of any dependent object instantiated during this process receives:
@@ -260,15 +281,18 @@ A contextual reference for a bean is _valid_ only for a certain period of time. 
 
 The validity of a contextual reference for a bean depends upon whether the scope of the bean is a normal scope or a pseudo-scope.
 
-* Any reference to a bean with a normal scope is valid as long as the application maintains a hard reference to it. However, it may only be invoked when the context associated with the normal scope is active. If it is invoked when the context is inactive, a +ContextNotActiveException+ is thrown by the container.
-* Any reference to a bean with a pseudo-scope (such as +@Dependent+) is valid until the bean instance to which it refers is destroyed. It may be invoked even if the context associated with the pseudo-scope is not active. If the application invokes a method of a reference to an instance that has already been destroyed, the behavior is undefined.
+* Any reference to a bean with a normal scope is valid as long as the application maintains a hard reference to it.
+However, it may only be invoked when the context associated with the normal scope is active. If it is invoked when the context is inactive, a +ContextNotActiveException+ is thrown by the container.
+* Any reference to a bean with a pseudo-scope (such as +@Dependent+) is valid until the bean instance to which it refers is destroyed.
+It may be invoked even if the context associated with the pseudo-scope is not active. If the application invokes a method of a reference to an instance that has already been destroyed, the behavior is undefined.
 
 
 [[injectable_reference]]
 
 ==== Injectable references
 
-From time to time, the container must obtain an _injectable reference_ for an injection point. The container must:
+From time to time, the container must obtain an _injectable reference_ for an injection point.
+The container must:
 
 * Identify a bean according to the rules defined in <<typesafe_resolution>> and resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * Obtain a contextual reference for this bean and the type of the injection point according to <<contextual_reference>>.
@@ -299,7 +323,8 @@ The application should not invoke a method of an invalid injected reference. If 
 
 === Passivation and passivating scopes
 
-The temporary transfer of the state of an idle object held in memory to some form of secondary storage is called _passivation_. The transfer of the passivated state back into memory is called _activation_.
+The temporary transfer of the state of an idle object held in memory to some form of secondary storage is called _passivation_.
+The transfer of the passivated state back into memory is called _activation_.
 
 [[passivation_capable]]
 
@@ -363,7 +388,8 @@ A _passivating scope_ requires that:
 
 Passivating scopes must be explicitly declared +@NormalScope(passivating=true)+.
 
-For example, the built-in session and conversation scopes defined in <<builtin_contexts>> are passivating scopes. No other built-in scopes are passivating scopes.
+For example, the built-in session and conversation scopes defined in <<builtin_contexts>> are passivating scopes.
+No other built-in scopes are passivating scopes.
 
 [[passivation_validation]]
 
@@ -405,11 +431,14 @@ If a managed bean which declares a passivating scope type, has a decorator or in
 
 The container must provide an implementation of the +Context+ interface for each of the built-in scopes defined in <<builtin_scopes>>. These implementations depend on the platform the container is running.
 
-A portable extension may define a custom context object for any or all of the built-in scopes. For example, a remoting framework might provide a request context object for the built-in request scope.
+A portable extension may define a custom context object for any or all of the built-in scopes.
+For example, a remoting framework might provide a request context object for the built-in request scope.
 
-The context associated with a built-in normal scope propagates across local, synchronous Java method calls. The context does not propagate across remote method invocations or to asynchronous processes.
+The context associated with a built-in normal scope propagates across local, synchronous Java method calls.
+The context does not propagate across remote method invocations or to asynchronous processes.
 
-Portable extensions are encouraged to fire an event with qualifier +@Initialized(X.class)+ when a custom context is initialized, and an event with qualifier +@Destroyed(X.class)+ when a custom context is destroyed, where X is the scope type associated with the context. A suitable event payload should be chosen.
+Portable extensions are encouraged to fire an event with qualifier +@Initialized(X.class)+ when a custom context is initialized, and an event with qualifier +@Destroyed(X.class)+ when a custom context is destroyed, where X is the scope type associated with the context.
+A suitable event payload should be chosen.
 
 [[request_context]]
 
@@ -460,7 +489,8 @@ public interface Conversation {
 }
 ----
 
-* +begin()+ marks the current transient conversation long-running. A conversation identifier may, optionally, be specified. If no conversation identifier is specified, an identifier is generated by the container.
+* +begin()+ marks the current transient conversation long-running. A conversation identifier may, optionally, be specified.
+If no conversation identifier is specified, an identifier is generated by the container.
 * +end()+ marks the current long-running conversation transient.
 * +getId()+ returns the identifier of the current long-running conversation, or a null value if the current conversation is transient.
 * +getTimeout()+ returns the timeout, in milliseconds, of the current conversation.

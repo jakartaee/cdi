@@ -6,7 +6,8 @@
 
 === Observer methods in EJB session beans
 
-An observer method may also be a non-abstract method of an EJB session bean class. It must be either a business method of the EJB or a static method of the bean class.
+An observer method may also be a non-abstract method of an EJB session bean class.
+It must be either a business method of the EJB or a static method of the bean class.
 
 [[observes_ee]]
 

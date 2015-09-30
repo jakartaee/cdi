@@ -4,21 +4,30 @@
 
 A bean may inherit type-level metadata and members from its superclasses.
 
-Inheritance of type-level metadata by beans from their superclasses is controlled via use of the Java +@Inherited+ meta-annotation. Type-level metadata is never inherited from interfaces implemented by a bean.
+Inheritance of type-level metadata by beans from their superclasses is controlled via use of the Java +@Inherited+ meta-annotation.
+Type-level metadata is never inherited from interfaces implemented by a bean.
 
-Member-level metadata is not inherited. However, injected fields, initializer methods, lifecycle callback methods and non-static observer methods are inherited by beans from their superclasses.
+Member-level metadata is not inherited.
+However, injected fields, initializer methods, lifecycle callback methods and non-static observer methods are inherited by beans from their superclasses.
 
-The implementation of a bean may be extended by the implementation of a second bean. This specification recognizes two distinct scenarios in which this situation occurs:
+The implementation of a bean may be extended by the implementation of a second bean.
+This specification recognizes two distinct scenarios in which this situation occurs:
 
-* The second bean _specializes_ the first bean in certain deployment scenarios. In these deployments, the second bean completely replaces the first, fulfilling the same role in the system.
-* The second bean is simply reusing the Java implementation, and otherwise bears no relation to the first bean. The first bean may not even have been designed for use as a contextual object.
+* The second bean _specializes_ the first bean in certain deployment scenarios.
+In these deployments, the second bean completely replaces the first, fulfilling the same role in the system.
+* The second bean is simply reusing the Java implementation, and otherwise bears no relation to the first bean.
+The first bean may not even have been designed for use as a contextual object.
 
 
 The two cases are quite dissimilar.
 
-By default, Java implementation reuse is assumed. In this case, the two beans have different roles in the system, and may both be available in a particular deployment.
+By default, Java implementation reuse is assumed.
+In this case, the two beans have different roles in the system, and may both be available in a particular deployment.
 
-The bean developer may explicitly specify that the second bean specializes the first. Then the second bean inherits, and may not override, the qualifiers and bean name of the first bean. The second bean is able to serve the same role in the system as the first. In a particular deployment, only one of the two beans may fulfill that role.
+The bean developer may explicitly specify that the second bean specializes the first.
+Then the second bean inherits, and may not override, the qualifiers and bean name of the first bean.
+The second bean is able to serve the same role in the system as the first.
+In a particular deployment, only one of the two beans may fulfill that role.
 
 [[type_level_inheritance]]
 
@@ -62,7 +71,7 @@ Suppose a class X is extended directly or indirectly by the bean class of a mana
 (This behavior is defined by the Common Annotations for the Java Platform specification.)
 * If X declares a non-static method +x()+ annotated with an interceptor binding type Z then Y inherits the binding if and only if neither Y nor any intermediate class that is a subclass of X and a superclass of Y overrides the method +x()+.
 (This behavior is defined by the Common Annotations for the Java Platform specification.)
-* If X declares a non-static producer or disposer method +x()+ then Y does not inherit this method. 
+* If X declares a non-static producer or disposer method +x()+ then Y does not inherit this method.
 (This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
 * If X declares a non-static producer field +x+ then Y does not inherit this field.
 (This behavior is different to what is defined in the Common Annotations for the Java Platform specification.)
@@ -140,7 +149,8 @@ However, the following attribute will receive an instance of +AsynchronousServic
 
 This is a useful behavior in some circumstances, however, it is not always what is intended by the developer.
 
-The only way one bean can completely override a second bean at all injection points is if it implements all the bean types and declares all the qualifiers of the second bean. However, if the second bean declares a producer method or observer method, then even this is not enough to ensure that the second bean is never called!
+The only way one bean can completely override a second bean at all injection points is if it implements all the bean types and declares all the qualifiers of the second bean.
+However, if the second bean declares a producer method or observer method, then even this is not enough to ensure that the second bean is never called!
 
 To help prevent developer error, the first bean may:
 
@@ -158,7 +168,8 @@ public class MockAsynchronousService extends AsynchronousService {
 }
 ----
 
-When an enabled bean, as defined in <<enablement>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container. Even if the second bean defines a producer or observer method, the method will never be called.
+When an enabled bean, as defined in <<enablement>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container.
+Even if the second bean defines a producer or observer method, the method will never be called.
 
 [[direct_and_indirect_specialization]]
 
@@ -178,7 +189,8 @@ Then X will inherit the qualifiers and bean name of Y:
 * if Y has a bean name, the bean name of X is the same as the bean name of Y.
 
 
-Furthermore, X must have all the bean types of Y. If X does not have some bean type of Y, the container automatically detects the problem and treats it as a definition error.
+Furthermore, X must have all the bean types of Y.
+If X does not have some bean type of Y, the container automatically detects the problem and treats it as a definition error.
 
 If Y has a bean name and X declares a bean name explicitly the container automatically detects the problem and treats it as a definition error.
 

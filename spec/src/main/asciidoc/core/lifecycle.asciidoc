@@ -10,11 +10,16 @@ Every bean in the system is represented by an instance of the +Bean+ interface d
 
 === Restriction upon bean instantiation
 
-There are very few programming restrictions upon the bean class of a bean. In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass. Therefore, bean classes are easy to instantiate and unit test.
+There are very few programming restrictions upon the bean class of a bean.
+In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass.
+Therefore, bean classes are easy to instantiate and unit test.
 
 However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextual_instance>>. Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
 
-If the application requires more control over instantiation of a contextual instance, a producer method or field may be used. Any Java object may be returned by a producer method or field. It is not required that the returned object be a contextual reference for a bean. However, if the object is not a contextual reference for another bean, the object will be contextual instance of the producer method bean, and therefore available for injection into other objects and use in name resolution, but the other capabilities listed in <<capabilities>> will not be available to the object.
+If the application requires more control over instantiation of a contextual instance, a producer method or field may be used.
+Any Java object may be returned by a producer method or field.
+It is not required that the returned object be a contextual reference for a bean.
+However, if the object is not a contextual reference for another bean, the object will be contextual instance of the producer method bean, and therefore available for injection into other objects and use in name resolution, but the other capabilities listed in <<capabilities>> will not be available to the object.
 
 In the following example, a producer method returns instances of other beans:
 
@@ -123,13 +128,15 @@ If the producer method returns a null value and the producer method bean has the
 
 Otherwise, if the producer method returns a null value, and the scope of the producer method is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
 
-When the +destroy()+ method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter. Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
+When the +destroy()+ method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter.
+Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
 
 [[producer_field_lifecycle]]
 
 ==== Lifecycle of producer fields
 
-When the +create()+ method of a +Bean+ object that represents a producer field is called, the container must access the producer field as defined by <<producer_fields_access>> to obtain the current value of the field. The value of the producer field is the new contextual instance to be returned by +Bean.create()+.
+When the +create()+ method of a +Bean+ object that represents a producer field is called, the container must access the producer field as defined by <<producer_fields_access>> to obtain the current value of the field.
+The value of the producer field is the new contextual instance to be returned by +Bean.create()+.
 
 If the producer field contains a null value and the producer field bean has the scope +@Dependent+, the +create()+ method returns a null value.
 

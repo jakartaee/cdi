@@ -11,7 +11,8 @@ Bean discovery is the process of determining:
 * The _ordering_ of enabled interceptors and decorators
 
 
-Additional beans may be registered programmatically with the container by the application or a portable extension after the automatic bean discovery completes. Portable extensions may even integrate with the process of building the +Bean+ object for a bean, to enhance the container's built-in functionality.
+Additional beans may be registered programmatically with the container by the application or a portable extension after the automatic bean discovery completes.
+Portable extensions may even integrate with the process of building the +Bean+ object for a bean, to enhance the container's built-in functionality.
 
 [[bean_archive]]
 
@@ -51,9 +52,11 @@ For compatibility with Contexts and Dependency 1.0, products must contain an opt
 
 The container searches for beans in all bean archives in the application classpath.
 
-If a bean class is deployed in two different bean archives, non-portable behavior results. Portable applications must deploy each bean class in no more than one bean archive.
+If a bean class is deployed in two different bean archives, non-portable behavior results.
+Portable applications must deploy each bean class in no more than one bean archive.
 
-Explicit bean archives may contain classes which are not deployed as beans. For example a bean archive might contain an abstract class not annotated with `@Decorator`.
+Explicit bean archives may contain classes which are not deployed as beans.
+For example a bean archive might contain an abstract class not annotated with `@Decorator`.
 
 Implicit bean archives are likely to contain classes which are not deployed as beans.
 
@@ -96,7 +99,8 @@ The container automatically discovers managed beans (according to the rules of <
 
 ==== Type discovery
 
-First the container must discover types. The container discovers:
+First the container must discover types.
+The container discovers:
 
 * each Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum deployed in an explicit bean archive, and
 * each Java class with a bean defining annotation in an implicit bean archive.
@@ -111,7 +115,8 @@ If an extension calls +BeforeBeanDiscovery.addAnnotatedType()+ or +AfterTypeDisc
 
 ==== Exclude filters
 
-Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the bean archive as children of the +<scan>+ element. By default an exclude filter is active. If the exclude filter definition contains:
+Exclude filters are defined by +<exclude>+ elements in the +beans.xml+ for the bean archive as children of the +<scan>+ element.
+By default an exclude filter is active. If the exclude filter definition contains:
 
 * a child element named +<if-class-available>+ with a +name+ attribute, and the classloader for the bean archive can not load a class for that name, or
 * a child element named +<if-class-not-available>+ with a +name+ attribute, and the classloader for the bean archive can load a class for that name, or

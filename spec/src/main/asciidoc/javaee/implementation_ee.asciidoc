@@ -7,7 +7,8 @@ When running in Java EE, the container must extend the rules defined in <<implem
 * Session beans
 * Resources (Java EE resources, persistence contexts, persistence units, remote EJBs and web services)
 
-Java EE and embeddable EJB containers are required by the Java EE and EJB specifications to support EJB session beans and the Java EE component environment. Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
+Java EE and embeddable EJB containers are required by the Java EE and EJB specifications to support EJB session beans and the Java EE component environment.
+Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
 
 [[managed_beans_ee]]
 
@@ -29,15 +30,18 @@ When running in Java EE, A top-level Java class is a managed bean if it meets re
 
 A _session bean_ is a bean that is implemented by a session bean with an EJB 3.x client view that is not annotated with +@Vetoed+ or in a package annotated +@Vetoed+. The basic lifecycle and semantics of EJB session beans are defined by the EJB specification.
 
-A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton session bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error. A stateful session bean may have any scope.
+A stateless session bean must belong to the +@Dependent+ pseudo-scope. A singleton session bean must belong to either the +@ApplicationScoped+ scope or to the +@Dependent+ pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error.
+A stateful session bean may have any scope.
 
-When a contextual instance of a session bean is obtained via the dependency injection service, the behavior of +SessionContext.getInvokedBusinessInterface()+ is specific to the container implementation. Portable applications should not rely upon the value returned by this method.
+When a contextual instance of a session bean is obtained via the dependency injection service, the behavior of +SessionContext.getInvokedBusinessInterface()+ is specific to the container implementation.
+Portable applications should not rely upon the value returned by this method.
 
 If the bean class of a session bean is annotated +@Interceptor+ or +@Decorator+, the container automatically detects the problem and treats it as a definition error.
 
 If the session bean class is a generic type, it must have scope +@Dependent+. If a session bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
 
-If packages annotated +@Vetoed+ are split across classpath entries, non-portable behavior results. An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
+If packages annotated +@Vetoed+ are split across classpath entries, non-portable behavior results.
+An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
 
 [[session_bean_ejb_remove_method]]
 
@@ -52,13 +56,16 @@ The session bean is not required to have an EJB remove method in order for the c
 
 If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and declares any scope other than +@Dependent+, an +UnsupportedOperationException+ is thrown.
 
-If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and has scope +@Dependent+ then no parameters are passed to the method by the container. Furthermore, the container ignores the instance instead of destroying it when +Contextual.destroy()+ is called, as defined in <<stateful_lifecycle>>.
+If the application directly calls an EJB remove method of a contextual instance of a session bean that is a stateful session bean and has scope +@Dependent+ then no parameters are passed to the method by the container.
+Furthermore, the container ignores the instance instead of destroying it when +Contextual.destroy()+ is called, as defined in <<stateful_lifecycle>>.
 
 [[session_bean_types]]
 
 ==== Bean types of a session bean
 
-The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces. If the session bean has a no-interface view, the unrestricted set of bean types contains the bean class and all superclasses. In addition, +java.lang.Object+ is a bean type of every session bean.
+The unrestricted set of bean types for a session bean contains all local interfaces of the bean and their superinterfaces.
+If the session bean has a no-interface view, the unrestricted set of bean types contains the bean class and all superclasses.
+In addition, +java.lang.Object+ is a bean type of every session bean.
 
 Remote interfaces are not included in the set of bean types.
 
@@ -66,7 +73,8 @@ Remote interfaces are not included in the set of bean types.
 
 ==== Declaring a session bean
 
-A session bean does not require any special annotations apart from the component-defining annotation (or XML declaration) required by the EJB specification. The following EJBs are beans:
+A session bean does not require any special annotations apart from the component-defining annotation (or XML declaration) required by the EJB specification.
+The following EJBs are beans:
 
 [source, java]
 ----
@@ -109,7 +117,8 @@ public class MockLoginActionImpl extends LoginActionImpl { ... }
 
 ==== Specializing a session bean
 
-If a bean class of a session bean X is annotated +@Specializes+, then the bean class of X must directly extend the bean class of another session bean Y. Then X _directly specializes_ Y, as defined in <<specialization>>.
+If a bean class of a session bean X is annotated +@Specializes+, then the bean class of X must directly extend the bean class of another session bean Y.
+Then X _directly specializes_ Y, as defined in <<specialization>>.
 
 If the bean class of X does not directly extend the bean class of another session bean, the container automatically detects the problem and treats it as a definition error.
 
@@ -189,7 +198,9 @@ A disposer method declaration in an EJB session bean follows the rules defined i
 
 Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are the exception.
 
-The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using +@Inject+, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field. It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods. It is safe to annotate Java EE components with +@Vetoed+ to prevent them being considered beans.
+The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using +@Inject+, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field.
+It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods.
+It is safe to annotate Java EE components with +@Vetoed+ to prevent them being considered beans.
 
 [[resources]]
 
@@ -197,7 +208,8 @@ The instance used by the container to service an invocation of a Java EE compone
 
 A _resource_ is a bean that represents a reference to a resource, persistence context, persistence unit, remote EJB or web service in the Java EE component environment.
 
-By declaring a resource, we enable an object from the Java EE component environment to be injected by specifying only its type and qualifiers at the injection point. For example, if +@CustomerDatabase+ is a qualifier:
+By declaring a resource, we enable an object from the Java EE component environment to be injected by specifying only its type and qualifiers at the injection point.
+For example, if +@CustomerDatabase+ is a qualifier:
 
 [source, java]
 ----
@@ -227,7 +239,8 @@ A resource may not have a bean name.
 
 ==== Declaring a resource
 
-A resource may be declared by specifying a Java EE component environment injection annotation as part of a producer field declaration. The producer field may be static.
+A resource may be declared by specifying a Java EE component environment injection annotation as part of a producer field declaration.
+The producer field may be static.
 
 * For a Java EE resource, +@Resource+ must be specified.
 * For a persistence context, +@PersistenceContext+ must be specified.
@@ -312,7 +325,8 @@ When running in Java EE, the container must extend the rules defined for bean cl
 
 === Initializer methods in Java EE
 
-When running in Java EE, the container must extend the rules defined for bean classes in <<initializer_methods>> to Java EE component classes supporting injection. The container must also ensure that:
+When running in Java EE, the container must extend the rules defined for bean classes in <<initializer_methods>> to Java EE component classes supporting injection.
+The container must also ensure that:
 
 * An intializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
 

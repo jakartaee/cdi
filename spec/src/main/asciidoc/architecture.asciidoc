@@ -14,15 +14,21 @@ This specification defines a powerful set of complementary services that help im
 * An SPI allowing _portable extensions_ to integrate cleanly with the container
 
 
-The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events. Various kinds of objects are injectable, including EJB 3 session beans, managed beans and Java EE resources. We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_. Contextual instances may be injected into other objects by the dependency injection service.
+The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events.
+Various kinds of objects are injectable, including EJB 3 session beans, managed beans and Java EE resources.
+We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_.
+Contextual instances may be injected into other objects by the dependency injection service.
 
 To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
 
-The use of these services significantly simplifies the task of creating Java EE applications by integrating the Java EE web tier with Java EE enterprise services. In particular, EJB components may be used as JSF managed beans, thus integrating the programming models of EJB and JSF.
+The use of these services significantly simplifies the task of creating Java EE applications by integrating the Java EE web tier with Java EE enterprise services.
+In particular, EJB components may be used as JSF managed beans, thus integrating the programming models of EJB and JSF.
 
-It's even possible to integrate with third-party frameworks. A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
+It's even possible to integrate with third-party frameworks.
+A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
 
-An application that takes advantage of these services may be designed to execute in either the Java EE environment or the Java SE environment. If the application uses Java EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the EJB specification.
+An application that takes advantage of these services may be designed to execute in either the Java EE environment or the Java SE environment.
+If the application uses Java EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the EJB specification.
 
 === Contracts
 
@@ -32,7 +38,8 @@ This specification defines the responsibilities of:
 * the vendor who implements the functionality defined by this specification and provides a runtime environment in which the application executes.
 
 
-This runtime environment is called the _container_. For example, the container might be a Java EE container or an embeddable EJB container.
+This runtime environment is called the _container_.
+For example, the container might be a Java EE container or an embeddable EJB container.
 
 <<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decorator_bean>> and <<observer_methods>> define the programming model for Java EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
 
@@ -44,7 +51,8 @@ This runtime environment is called the _container_. For example, the container m
 
 === Relationship to other specifications
 
-An application developer creates container-managed components such as JavaBeans, EJBs or servlets and then provides additional metadata that declares additional behavior defined by this specification. These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Java EE platform technologies.
+An application developer creates container-managed components such as JavaBeans, EJBs or servlets and then provides additional metadata that declares additional behavior defined by this specification.
+These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Java EE platform technologies.
 
 In addition, this specification defines an SPI that allows alternative, non-platform technologies to integrate with the container and the Java EE environment, for example, alternative web presentation technologies.
 
@@ -52,17 +60,23 @@ In addition, this specification defines an SPI that allows alternative, non-plat
 
 In the Java EE environment, all _component classes supporting injection_, as defined by the Java EE platform specification, may inject beans via the dependency injection service.
 
-The Java EE platform specification defines a facility for injecting _resources_ that exist in the _Java EE component environment_. Resources are identified by string-based names. This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
+The Java EE platform specification defines a facility for injecting _resources_ that exist in the _Java EE component environment_.
+Resources are identified by string-based names.
+This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
 
 ==== Relationship to EJB
 
-EJB defines a programming model for application components that access transactional resources in a multi-user environment. EJB allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the EJB container at runtime.
+EJB defines a programming model for application components that access transactional resources in a multi-user environment.
+EJB allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the EJB container at runtime.
 
-EJB components may be stateful, but are not by nature contextual. References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
+EJB components may be stateful, but are not by nature contextual.
+References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
 
 This specification enhances the EJB component model with contextual lifecycle management.
 
-Any session bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context. The container automatically creates the instance when it is needed by a client. When the context ends, the container automatically destroys the instance.
+Any session bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context.
+The container automatically creates the instance when it is needed by a client.
+When the context ends, the container automatically destroys the instance.
 
 Message-driven and entity beans are by nature non-contextual objects and may not be injected into other objects.
 
@@ -76,17 +90,21 @@ As defined by this specification, most Java classes, including all JavaBeans, ar
 
 This specification defines contextual lifecycle management and dependency injection as generic services applicable to all managed beans.
 
-Any managed bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context. The container automatically creates the instance when it is needed by a client. When the context ends, the container automatically destroys the instance.
+Any managed bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context.
+The container automatically creates the instance when it is needed by a client.
+When the context ends, the container automatically destroys the instance.
 
 The container performs dependency injection on all managed bean instances, even those which are not contextual instances.
 
 ==== Relationship to Dependency Injection for Java
 
-The Dependency Injection for Java specification defines a set of annotations for the declaring injected fields, methods and constructors of a bean. The dependency injection service makes use of these annotations.
+The Dependency Injection for Java specification defines a set of annotations for the declaring injected fields, methods and constructors of a bean.
+The dependency injection service makes use of these annotations.
 
 ==== Relationship to Java Interceptors
 
-The Java Interceptors specification defines the basic programming model and semantics for interceptors. This specification enhances that model by providing the ability to associate interceptors with beans using typesafe interceptor bindings.
+The Java Interceptors specification defines the basic programming model and semantics for interceptors.
+This specification enhances that model by providing the ability to associate interceptors with beans using typesafe interceptor bindings.
 
 ==== Relationship to JSF
 
@@ -98,7 +116,8 @@ This specification allows any bean to be assigned a name. Thus, a JSF applicatio
 
 Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
 
-The Bean Validation specification defines beans for Bean Validation managed objects including +Validator+ and +ValidatorFactory+. A number of Bean Validation managed instances, including ++ConstraintValidator++ s can take advantage of dependency injection. Bean Validation also provides support for method parameter validation on any bean.
+The Bean Validation specification defines beans for Bean Validation managed objects including +Validator+ and +ValidatorFactory+. A number of Bean Validation managed instances, including ++ConstraintValidator++ s can take advantage of dependency injection.
+Bean Validation also provides support for method parameter validation on any bean.
 
 === Introductory examples
 
@@ -253,7 +272,9 @@ public class DocumentEditor {
 
 The +@Documents+ annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which JPA persistence unit is required.
 
-When the login form is submitted, JSF assigns the entered username and password to an instance of the +Credentials+ bean that is automatically instantiated by the container. Next, JSF calls the +login()+ method of an instance of +Login+ that is automatically instantiated by the container. This instance continues to exist for and be available to other requests in the same HTTP session, and provides the +User+ object representing the current user to any other bean that requires it (for example, +DocumentEditor+). If the producer method is called before the +login()+ method initializes the user object, it throws a +NotLoggedInException+.
+When the login form is submitted, JSF assigns the entered username and password to an instance of the +Credentials+ bean that is automatically instantiated by the container.
+Next, JSF calls the +login()+ method of an instance of +Login+ that is automatically instantiated by the container.
+This instance continues to exist for and be available to other requests in the same HTTP session, and provides the +User+ object representing the current user to any other bean that requires it (for example, +DocumentEditor+). If the producer method is called before the +login()+ method initializes the user object, it throws a +NotLoggedInException+.
 
 ==== EJB example
 
@@ -298,11 +319,13 @@ public class Login {
 }
 ----
 
-The EJB +@Stateful+ annotation specifies that this bean is an EJB stateful session bean. The EJB +@TransactionAttribute+ and +@RolesAllowed+ annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
+The EJB +@Stateful+ annotation specifies that this bean is an EJB stateful session bean.
+The EJB +@TransactionAttribute+ and +@RolesAllowed+ annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
 
 ==== Java EE component environment example
 
-In the previous examples, we injected container-managed persistence contexts using qualifier types. We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Java EE component environment in Java code.
+In the previous examples, we injected container-managed persistence contexts using qualifier types.
+We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Java EE component environment in Java code.
 
 [source, java]
 ----
@@ -324,7 +347,8 @@ The JPA +@PersistenceContext+ and +@PersistenceUnit+ annotations identify the JP
 
 ==== Event example
 
-Beans may raise events. For example, our +Login+ class could raise events when a user logs in or out.
+Beans may raise events.
+For example, our +Login+ class could raise events when a user logs in or out.
 
 [source, java]
 ----
@@ -373,7 +397,9 @@ public class Login implements Serializable {
 }
 ----
 
-The method +fire()+ of the built-in bean of type +Event+ defined in <<event>> allows the application to fire events. Events consist of an _event object_ - in this case the +User+ - and event qualifiers. Event qualifier - such as +@LoggedIn+ and +@LoggedOut+ - allow event consumers to specify which events of a certain type they are interested in.
+The method +fire()+ of the built-in bean of type +Event+ defined in <<event>> allows the application to fire events.
+Events consist of an _event object_ - in this case the +User+ - and event qualifiers.
+Event qualifier - such as +@LoggedIn+ and +@LoggedOut+ - allow event consumers to specify which events of a certain type they are interested in.
 
 Other beans may observe these events and use them to synchronize their internal state, with no coupling to the bean producing the events:
 
@@ -414,7 +440,8 @@ public class Permissions implements Serializable {
 }
 ----
 
-The +@Produces+ annotation applied to a field identifies the field as a producer field, as defined in <<producer_field>>, a kind of shortcut version of a producer method. This producer field allows the permissions of the current user to be injected to an injection point of type +Set<Permission>+.
+The +@Produces+ annotation applied to a field identifies the field as a producer field, as defined in <<producer_field>>, a kind of shortcut version of a producer method.
+This producer field allows the permissions of the current user to be injected to an injection point of type +Set<Permission>+.
 
 The +@Observes+ annotation defined in <<observes>> identifies the method with the annotated parameter as an _observer method_ that is called by the container whenever an event matching the type and qualifiers of the annotated parameter is fired.
 
@@ -451,7 +478,8 @@ public class Permissions implements Serializable {
 
 ==== Interceptor example
 
-_Interceptors_ allow common, cross-cutting concerns to be applied to beans via custom annotations. Interceptor types may be individually enabled or disabled at deployment time.
+_Interceptors_ allow common, cross-cutting concerns to be applied to beans via custom annotations.
+Interceptor types may be individually enabled or disabled at deployment time.
 
 The +AuthorizationInterceptor+ class defines a custom authorization check:
 
@@ -484,7 +512,8 @@ public class AuthorizationInterceptor {
 }
 ----
 
-The +@Interceptor+ annotation, defined in <<declaring_interceptor>>, identifies the +AuthorizationInterceptor+ class as an interceptor. The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <<interceptor_bindings>>.
+The +@Interceptor+ annotation, defined in <<declaring_interceptor>>, identifies the +AuthorizationInterceptor+ class as an interceptor.
+The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <<interceptor_bindings>>.
 
 [source, java]
 ----
@@ -515,7 +544,8 @@ public class DocumentEditor {
 }
 ----
 
-When the +save()+ method is invoked, the +authorize()+ method of the interceptor will be called. The invocation will proceed to the +DocumentEditor+ class only if the authorization check is successful.
+When the +save()+ method is invoked, the +authorize()+ method of the interceptor will be called.
+The invocation will proceed to the +DocumentEditor+ class only if the authorization check is successful.
 
 ==== Decorator example
 
@@ -574,9 +604,12 @@ public abstract class DataAccessAuthorizationDecorator<T, V> implements DataAcce
 }
 ----
 
-The +@Decorator+ annotation defined in <<decorator_annotation>> identifies the +DataAccessAuthorizationDecorator+ class as a decorator. The +@Delegate+ annotation defined in <<delegate_attribute>> identifies the _delegate_, which the decorator uses to delegate method calls to the container. The decorator applies to any bean that implements +DataAccess+.
+The +@Decorator+ annotation defined in <<decorator_annotation>> identifies the +DataAccessAuthorizationDecorator+ class as a decorator.
+The +@Delegate+ annotation defined in <<delegate_attribute>> identifies the _delegate_, which the decorator uses to delegate method calls to the container.
+The decorator applies to any bean that implements +DataAccess+.
 
-The decorator intercepts invocations just like an interceptor. However, unlike an interceptor, the decorator contains functionality that is specific to the semantics of the method being called.
+The decorator intercepts invocations just like an interceptor.
+However, unlike an interceptor, the decorator contains functionality that is specific to the semantics of the method being called.
 
 Decorators may be declared abstract, relieving the developer of the responsibility of implementing all methods of the decorated interface. If a decorator does not implement a method of a decorated interface, the decorator will simply not be called when that method is invoked upon the decorated bean.
 

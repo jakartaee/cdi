@@ -28,7 +28,8 @@ When the +create()+ method of a +Bean+ object that represents an EJB stateful se
 
 Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying EJB stateful session bean instance. This object must be passivation capable.
 
-When the +destroy()+ method is called, and if the underlying EJB was not already removed by direct invocation of a remove method by the application, the container removes the EJB stateful session bean. The +@PreDestroy+ callback must be invoked by the container.
+When the +destroy()+ method is called, and if the underlying EJB was not already removed by direct invocation of a remove method by the application, the container removes the EJB stateful session bean.
+The +@PreDestroy+ callback must be invoked by the container.
 
 Note that the container performs additional work when the underlying EJB is created and removed, as defined in <<injection>>
 
@@ -36,9 +37,11 @@ Note that the container performs additional work when the underlying EJB is crea
 
 ==== Lifecycle of EJB stateless and singleton session beans
 
-When the +create()+ method of a +Bean+ object that represents an EJB stateless session or singleton session bean is called, the container creates and returns a container-specific internal local reference to the EJB session bean. This reference is not directly exposed to the application.
+When the +create()+ method of a +Bean+ object that represents an EJB stateless session or singleton session bean is called, the container creates and returns a container-specific internal local reference to the EJB session bean.
+This reference is not directly exposed to the application.
 
-Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying EJB session bean. This object must be passivation capable.
+Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying EJB session bean.
+This object must be passivation capable.
 
 When the +destroy()+ method is called, the container simply discards this internal reference.
 
@@ -52,7 +55,9 @@ When the +create()+ method of a +Bean+ object that represents a resource is call
 
 Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying resource, entity manager, entity manager factory, remote EJB instance or web service reference. This object must be passivation capable.
 
-The container must perform ordinary Java EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Java EE platform and Common Annotations for the Java platform specifications. The container is not required to perform Java EE component environment injection upon a static field. Portable applications should not rely upon the value of a static field that functions as a resource declaration.
+The container must perform ordinary Java EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Java EE platform and Common Annotations for the Java platform specifications.
+The container is not required to perform Java EE component environment injection upon a static field.
+Portable applications should not rely upon the value of a static field that functions as a resource declaration.
 
 References to EJBs and web services are always dependent scoped and a new instance must be obtained for every injection performed.
 

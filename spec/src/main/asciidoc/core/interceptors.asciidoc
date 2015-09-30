@@ -2,7 +2,10 @@
 
 == Interceptor bindings
 
-Managed beans support interception. _Interceptors_ are used to separate cross-cutting concerns from business logic. The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes. This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
+Managed beans support interception.
+_Interceptors_ are used to separate cross-cutting concerns from business logic.
+The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes.
+This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
 
 [[interceptor_bindings]]
 
@@ -50,7 +53,8 @@ This specification extends the Java Interceptors specification and defines:
 
 Interceptor bindings may be used to associate interceptors with any managed bean that is not a decorator.
 
-The set of interceptor bindings for a method declared at class level includes those declared on stereotypes. An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
+The set of interceptor bindings for a method declared at class level includes those declared on stereotypes.
+An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
 
 The set of interceptor bindings for a producer method is not used to associate interceptors with the return value of the producer method.
 
@@ -81,7 +85,8 @@ An interceptor may be explicitly enabled for a bean archive by listing its class
 
 The order of the interceptor declarations determines the interceptor ordering. Interceptors which occur earlier in the list are called first.
 
-Each child +<class>+ element must specify the name of an interceptor class. If there is no class with the specified name, or if the class with the specified name is not an interceptor class, the container automatically detects the problem and treats it as a deployment problem.
+Each child +<class>+ element must specify the name of an interceptor class.
+If there is no class with the specified name, or if the class with the specified name is not an interceptor class, the container automatically detects the problem and treats it as a deployment problem.
 
 If the same class is listed twice under the +<interceptors>+ element, the container automatically detects the problem and treats it as a deployment problem.
 
