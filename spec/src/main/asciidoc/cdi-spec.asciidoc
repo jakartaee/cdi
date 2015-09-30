@@ -1,6 +1,10 @@
 = JSR 365: Contexts and Dependency Injection for Java 2.0
-JSR 365 Expert Group lead by Antoine Sabot-Durand and Pete Muir; Red Hat Inc.
-2.0 EDR1, June 25, 2015: Early Draft
+:author: JSR 365 EG lead by Antoine Sabot-Durand
+:email: cdi-dev@lists.jboss.org
+:revnumber: 2.0 EDR1
+:revdate: June 25, 2015
+:revremark: Early Draft
+:version-label!:
 :sectanchors:
 :doctype: book
 :license: asl2
