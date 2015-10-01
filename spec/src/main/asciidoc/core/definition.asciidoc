@@ -60,11 +60,11 @@ public class BookShop
 }
 ----
 
-The bean types are +BookShop+, +Business+, +Shop<Book>+ and +Object+.
+The bean types are `BookShop`, `Business`, `Shop<Book>` and `Object`.
 
 The rules for determining the (unrestricted) set of bean types for a bean are defined in <<managed_bean_types>>, <<producer_method_types>> and <<producer_field_types>>.
 
-All beans have the bean type +java.lang.Object+.
+All beans have the bean type `java.lang.Object`.
 
 The bean types of a bean are used by the rules of typesafe resolution defined in <<typesafe_resolution>>.
 
@@ -79,7 +79,7 @@ Almost any Java type may be a bean type of a bean:
 * A bean type may be an array type.
 Two array types are considered identical only if the element type is identical.
 * A bean type may be a primitive type.
-Primitive types are considered to be identical to their corresponding wrapper types in +java.lang+.
+Primitive types are considered to be identical to their corresponding wrapper types in `java.lang`.
 * A bean type may be a raw type.
 
 However, some Java types are not legal bean types :
@@ -94,7 +94,7 @@ Note that certain additional restrictions are specified in <<unproxyable>> for b
 
 ==== Restricting the bean types of a bean
 
-The bean types of a bean may be restricted by annotating the bean class or producer method or field with the annotation +@javax.enterprise.inject.Typed+.
+The bean types of a bean may be restricted by annotating the bean class or producer method or field with the annotation `@javax.enterprise.inject.Typed`.
 
 [source, java]
 ----
@@ -106,11 +106,11 @@ public class BookShop
 }
 ----
 
-When a +@Typed+ annotation is explicitly specified, only the types whose classes are explicitly listed using the +value+ member, together with +java.lang.Object+, are bean types of the bean.
+When a `@Typed` annotation is explicitly specified, only the types whose classes are explicitly listed using the `value` member, together with `java.lang.Object`, are bean types of the bean.
 
-In the example, the bean has a two bean types: +Shop<Book>+ and +Object+.
+In the example, the bean has a two bean types: `Shop<Book>` and `Object`.
 
-If a bean class or producer method or field specifies a +@Typed+ annotation, and the +value+ member specifies a class which does not correspond to a type in the unrestricted set of bean types of a bean, the container automatically detects the problem and treats it as a definition error.
+If a bean class or producer method or field specifies a `@Typed` annotation, and the `value` member specifies a class which does not correspond to a type in the unrestricted set of bean types of a bean, the container automatically detects the problem and treats it as a definition error.
 
 [[typecasting_between_bean_types]]
 
@@ -144,7 +144,7 @@ BookShop bookShop = (BookShop) biz;
 === Qualifiers
 
 For a given bean type, there may be multiple beans which implement the type.
-For example, an application may have two implementations of the interface +PaymentProcessor+:
+For example, an application may have two implementations of the interface `PaymentProcessor`:
 
 [source, java]
 ----
@@ -162,8 +162,8 @@ class AsynchronousPaymentProcessor
 }
 ----
 
-A client that needs a +PaymentProcessor+ that processes payments synchronously needs some way to distinguish between the two different implementations.
-One approach would be for the client to explicitly specify the class that implements the +PaymentProcessor+ interface.
+A client that needs a `PaymentProcessor` that processes payments synchronously needs some way to distinguish between the two different implementations.
+One approach would be for the client to explicitly specify the class that implements the `PaymentProcessor` interface.
 However, this approach creates a hard dependence between client and implementation - exactly what use of the interface was designed to avoid!
 
 A _qualifier type_ represents some client-visible semantic associated with a type that is satisfied by some implementations of the type (and not by others). For example, we could introduce qualifier types representing synchronicity and asynchronicity.
@@ -188,14 +188,14 @@ class AsynchronousPaymentProcessor
 ----
 
 Finally, qualifier types are applied to injection points to distinguish which implementation is required by the client.
-For example, when the container encounters the following injected field, an instance of +SynchronousPaymentProcessor+ will be injected:
+For example, when the container encounters the following injected field, an instance of `SynchronousPaymentProcessor` will be injected:
 
 [source, java]
 ----
 @Inject @Synchronous PaymentProcessor paymentProcessor;
 ----
 
-But in this case, an instance of +AsynchronousPaymentProcessor+ will be injected:
+But in this case, an instance of `AsynchronousPaymentProcessor` will be injected:
 
 [source, java]
 ----
@@ -212,11 +212,11 @@ Qualifier types are also used as event selectors by event consumers, as defined 
 
 ==== Built-in qualifier types
 
-Three standard qualifier types are defined in the package +javax.enterprise.inject+. In addition, the built-in qualifier type +@Named+ is defined by the package +javax.inject+.
+Three standard qualifier types are defined in the package `javax.enterprise.inject`. In addition, the built-in qualifier type `@Named` is defined by the package `javax.inject`.
 
-Every bean has the built-in qualifier +@Any+, even if it does not explicitly declare this qualifier, except for the special +@New+ qualified beans defined in <<new>>.
+Every bean has the built-in qualifier `@Any`, even if it does not explicitly declare this qualifier, except for the special `@New` qualified beans defined in <<new>>.
 
-If a bean does not explicitly declare a qualifier other than +@Named+, the bean has exactly one additional qualifier, of type +@Default+. This is called the _default qualifier_.
+If a bean does not explicitly declare a qualifier other than `@Named`, the bean has exactly one additional qualifier, of type `@Default`. This is called the _default qualifier_.
 
 The following declarations are equivalent:
 
@@ -231,9 +231,9 @@ public class Order { ... }
 public class Order { ... }
 ----
 
-Both declarations result in a bean with two qualifiers: +@Any+ and +@Default+.
+Both declarations result in a bean with two qualifiers: `@Any` and `@Default`.
 
-The following declaration results in a bean with three qualifiers: +@Any+, +@Default+ and +@Named("ord")+.
+The following declaration results in a bean with three qualifiers: `@Any`, `@Default` and `@Named("ord")`.
 
 [source, java]
 ----
@@ -241,7 +241,7 @@ The following declaration results in a bean with three qualifiers: +@Any+, +@Def
 public class Order { ... }
 ----
 
-The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injection_point_default_qualifier>>. The following declarations, in which the use of the +@Inject+ annotation identifies the constructor parameter as an injection point, are equivalent:
+The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injection_point_default_qualifier>>. The following declarations, in which the use of the `@Inject` annotation identifies the constructor parameter as an injection point, are equivalent:
 
 [source, java]
 ----
@@ -263,9 +263,9 @@ public class Order {
 
 ==== Defining new qualifier types
 
-A qualifier type is a Java annotation defined as +@Retention(RUNTIME)+. Typically a qualifier type is defined as +@Target({METHOD, FIELD, PARAMETER, TYPE})+.
+A qualifier type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a qualifier type is defined as `@Target({METHOD, FIELD, PARAMETER, TYPE})`.
 
-A qualifier type may be declared by specifying the +@javax.inject.Qualifier+ meta-annotation.
+A qualifier type may be declared by specifying the `@javax.inject.Qualifier` meta-annotation.
 
 [source, java]
 ----
@@ -369,7 +369,7 @@ A bean may only be injected to an injection point if it has all the qualifiers o
 Qualifier types may be applied to parameters of producer methods, initializer methods, disposer methods, observer methods or bean constructors (see <<implementation>>) to determine the bean instance that is passed when the method is called by the container.
 The container uses the rules of typesafe resolution defined in <<typesafe_resolution>> to determine values for these parameters.
 
-For example, when the container encounters the following producer method, an instance of +SynchronousPaymentProcessor+ will be passed to the first parameter and an instance of +AsynchronousPaymentProcessor+ will be passed to the second parameter:
+For example, when the container encounters the following producer method, an instance of `SynchronousPaymentProcessor` will be passed to the first parameter and an instance of `AsynchronousPaymentProcessor` will be passed to the second parameter:
 
 [source, java]
 ----
@@ -422,20 +422,20 @@ The set of scope types is extensible.
 
 ==== Built-in scope types
 
-There are five standard scope types defined by this specification, all defined in the package +javax.enterprise.context+.
+There are five standard scope types defined by this specification, all defined in the package `javax.enterprise.context`.
 
 * The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>. Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
-* The +@ConversationScoped+ annotation represents the conversation scope defined in <<conversation_context>>.
-* Finally, there is a +@Dependent+ pseudo-scope for dependent objects, as defined in <<dependent_context>>.
+* The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
+* Finally, there is a `@Dependent` pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
 
-If an interceptor or decorator has any scope other than +@Dependent+, non-portable behavior results.
+If an interceptor or decorator has any scope other than `@Dependent`, non-portable behavior results.
 
 [[defining_new_scope_type]]
 
 ==== Defining new scope types
 
-A scope type is a Java annotation defined as +@Retention(RUNTIME)+. Typically a scope type is defined as +@Target({TYPE, METHOD, FIELD})+. All scope types must also specify the +@javax.inject.Scope+ or +@javax.enterprise.context.NormalScope+ meta-annotation.
+A scope type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a scope type is defined as `@Target({TYPE, METHOD, FIELD})`. All scope types must also specify the `@javax.inject.Scope` or `@javax.enterprise.context.NormalScope` meta-annotation.
 
 A scope type must not have any attributes.
 If a scope type has attributes non-portable behavior results.
@@ -475,7 +475,7 @@ public class Shop {
 }
 ----
 
-Likewise, a bean with the custom business process scope may be declared by annotating it with the +@BusinessProcessScoped+ annotation:
+Likewise, a bean with the custom business process scope may be declared by annotating it with the `@BusinessProcessScoped` annotation:
 
 [source, java]
 ----
@@ -493,7 +493,7 @@ When no scope is explicitly declared by annotating the bean class or producer me
 
 The _default scope_ for a bean which does not explicitly declare a scope depends upon its declared stereotypes:
 
-* If the bean does not declare any stereotype with a declared default scope, the default scope for the bean is +@Dependent+.
+* If the bean does not declare any stereotype with a declared default scope, the default scope for the bean is `@Dependent`.
 * If all stereotypes declared by the bean that have some declared default scope have the same default scope, then that scope is the default scope for the bean.
 * If there are two different stereotypes declared by the bean that declare different default scopes, then there is no default scope and the bean must explicitly declare a scope.
 If it does not explicitly declare a scope, the container automatically detects the problem and treats it as a definition error.
@@ -581,8 +581,8 @@ Bean names are used by the rules of bean name resolution defined in <<name_resol
 
 ==== Declaring the bean name
 
-To specify the name of a bean, the qualifier +@javax.inject.Named+ is applied to the bean class or producer method or field.
-This bean is named +currentOrder+:
+To specify the name of a bean, the qualifier `@javax.inject.Named` is applied to the bean class or producer method or field.
+This bean is named `currentOrder`:
 
 [source, java]
 ----
@@ -596,8 +596,8 @@ public class Order { ... }
 
 In the following circumstances, a _default name_ must be assigned by the container:
 
-* A bean class or producer method or field of a bean declares a +@Named+ annotation and no bean name is explicitly specified by the +value+ member.
-* A bean declares a stereotype that declares an empty +@Named+ annotation, and the bean does not explicitly specify a bean name.
+* A bean class or producer method or field of a bean declares a `@Named` annotation and no bean name is explicitly specified by the `value` member.
+* A bean declares a stereotype that declares an empty `@Named` annotation, and the bean does not explicitly specify a bean name.
 
 
 The default name for a bean depends upon the kind of the bean.
@@ -607,7 +607,7 @@ The rules for determining the default name for a bean are defined in <<managed_b
 
 ==== Beans with no name
 
-If +@Named+ is not declared by the bean, nor by its stereotypes, a bean has no name.
+If `@Named` is not declared by the bean, nor by its stereotypes, a bean has no name.
 
 If an interceptor or decorator has a name, non-portable behavior results.
 
@@ -621,7 +621,7 @@ An _alternative_ is a bean that must be explicitly selected if it should be avai
 
 ==== Declaring an alternative
 
-An alternative may be declared by annotating the bean class or producer method or field with the +@Alternative+ annotation.
+An alternative may be declared by annotating the bean class or producer method or field with the `@Alternative` annotation.
 
 [source, java]
 ----
@@ -629,7 +629,7 @@ An alternative may be declared by annotating the bean class or producer method o
 public class MockOrder extends Order { ... }
 ----
 
-Alternatively, an alternative may be declared by annotating a bean, producer method or producer field with a stereotype that declares an +@Alternative+ annotation.
+Alternatively, an alternative may be declared by annotating a bean, producer method or producer field with a stereotype that declares an `@Alternative` annotation.
 
 If an interceptor or decorator is an alternative, non-portable behavior results.
 
@@ -658,9 +658,9 @@ A bean may declare zero, one or multiple stereotypes.
 
 ==== Defining new stereotypes
 
-A bean stereotype is a Java annotation defined as +@Retention(RUNTIME)+. Typically a bean stereotype is defined as +@Target({TYPE, METHOD, FIELD})+, +@Target(TYPE)+, +@Target(METHOD)+, +@Target(FIELD)+ or +@Target({METHOD, FIELD})+.
+A bean stereotype is a Java annotation defined as `@Retention(RUNTIME)`. Typically a bean stereotype is defined as `@Target({TYPE, METHOD, FIELD})`, `@Target(TYPE)`, `@Target(METHOD)`, `@Target(FIELD)` or `@Target({METHOD, FIELD})`.
 
-A stereotype may be declared by specifying the +@javax.enterprise.inject.Stereotype+ meta-annotation.
+A stereotype may be declared by specifying the `@javax.enterprise.inject.Stereotype` meta-annotation.
 
 [source, java]
 ----
@@ -689,7 +689,7 @@ For example, the following stereotype might be used to identify action classes i
 public @interface Action {}
 ----
 
-Then actions would have scope +@RequestScoped+ unless the scope is explicitly specified by the bean.
+Then actions would have scope `@RequestScoped` unless the scope is explicitly specified by the bean.
 
 [[specify_stereotype_interceptor_bindings]]
 
@@ -713,12 +713,12 @@ public @interface Action {}
 
 [[named_stereotype]]
 
-===== Declaring a +@Named+ stereotype
+===== Declaring a `@Named` stereotype
 
-A stereotype may declare an empty +@Named+ annotation, which specifies that every bean with the stereotype has a defaulted name when a name is not explicitly specified by the bean.
-A +@Named+ qualifier declared by a stereotype is not added to the qualifiers of a bean with the stereotype.
+A stereotype may declare an empty `@Named` annotation, which specifies that every bean with the stereotype has a defaulted name when a name is not explicitly specified by the bean.
+A `@Named` qualifier declared by a stereotype is not added to the qualifiers of a bean with the stereotype.
 
-If a stereotype declares a non-empty +@Named+ annotation, the container automatically detects the problem and treats it as a definition error.
+If a stereotype declares a non-empty `@Named` annotation, the container automatically detects the problem and treats it as a definition error.
 
 We may specify that all actions have bean names:
 
@@ -734,15 +734,15 @@ We may specify that all actions have bean names:
 public @interface Action {}
 ----
 
-A stereotype should not declare any qualifier annotation other than +@Named+. If a stereotype declares any other qualifier annotation, non-portable behavior results.
+A stereotype should not declare any qualifier annotation other than `@Named`. If a stereotype declares any other qualifier annotation, non-portable behavior results.
 
-A stereotype should not be annotated +@Typed+. If a stereotype is annotated +@Typed+, non-portable behavior results.
+A stereotype should not be annotated `@Typed`. If a stereotype is annotated `@Typed`, non-portable behavior results.
 
 [[alternative_stereotype]]
 
-===== Declaring an +@Alternative+ stereotype
+===== Declaring an `@Alternative` stereotype
 
-A stereotype may declare an +@Alternative+ annotation, which specifies that every bean with the stereotype is an alternative.
+A stereotype may declare an `@Alternative` annotation, which specifies that every bean with the stereotype is an alternative.
 
 We may specify that all mock objects are alternatives:
 
@@ -773,7 +773,7 @@ public @interface AuditableAction {}
 
 Stereotype declarations are transitive - a stereotype declared by a second stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
 
-Stereotypes declared +@Target(TYPE)+ may not be applied to stereotypes declared +@Target({TYPE, METHOD, FIELD})+, +@Target(METHOD)+, +@Target(FIELD)+ or +@Target({METHOD, FIELD})+.
+Stereotypes declared `@Target(TYPE)` may not be applied to stereotypes declared `@Target({TYPE, METHOD, FIELD})`, `@Target(METHOD)`, `@Target(FIELD)` or `@Target({METHOD, FIELD})`.
 
 [[declaring_stereotypes]]
 
@@ -807,7 +807,7 @@ public class LoginAction { ... }
 
 ==== Built-in stereotypes
 
-The built-in stereotype +@javax.enterprise.inject.Model+ is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
+The built-in stereotype `@javax.enterprise.inject.Model` is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
 
 [source, java]
 ----
@@ -819,7 +819,7 @@ The built-in stereotype +@javax.enterprise.inject.Model+ is intended for use wit
 public @interface Model {}
 ----
 
-In addition, the special-purpose +@Interceptor+ and +@Decorator+ stereotypes are defined in <<declaring_interceptor>> and <<decorator_annotation>>.
+In addition, the special-purpose `@Interceptor` and `@Decorator` stereotypes are defined in <<declaring_interceptor>> and <<decorator_annotation>>.
 
 [[exceptions]]
 
@@ -829,9 +829,9 @@ When the application violates a rule defined by this specification, the containe
 There are three kinds of problem:
 
 * Definition errors - occur when a single bean definition violates the rules of this specification.
-If a definition error exists, the container must throw a subclass of +javax.enterprise.inject.spi.DefinitionException+.
+If a definition error exists, the container must throw a subclass of `javax.enterprise.inject.spi.DefinitionException`.
 * Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment.
-If a deployment problem occurs, the container must throw a subclass of +javax.enterprise.inject.spi.DeploymentException+.
+If a deployment problem occurs, the container must throw a subclass of `javax.enterprise.inject.spi.DeploymentException`.
 * Exceptions - occur at runtime
 
 

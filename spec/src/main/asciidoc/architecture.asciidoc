@@ -116,7 +116,7 @@ This specification allows any bean to be assigned a name. Thus, a JSF applicatio
 
 Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
 
-The Bean Validation specification defines beans for Bean Validation managed objects including +Validator+ and +ValidatorFactory+. A number of Bean Validation managed instances, including ++ConstraintValidator++ s can take advantage of dependency injection.
+The Bean Validation specification defines beans for Bean Validation managed objects including `Validator` and `ValidatorFactory`. A number of Bean Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
 Bean Validation also provides support for method parameter validation on any bean.
 
 === Introductory examples
@@ -143,9 +143,9 @@ The following JSF page defines a login prompt for a web application:
 </f:view>
 ----
 
-The Unified EL expressions in this page refer to beans named +credentials+ and +login+.
+The Unified EL expressions in this page refer to beans named `credentials` and `login`.
 
-The +Credentials+ bean has a lifecycle that is bound to the JSF request:
+The `Credentials` bean has a lifecycle that is bound to the JSF request:
 
 [source, java]
 ----
@@ -164,9 +164,9 @@ public class Credentials {
 }
 ----
 
-The +@Model+ annotation defined in <<builtin_stereotypes>> is a _stereotype_ that identifies the +Credentials+ bean as a model object in an MVC architecture.
+The `@Model` annotation defined in <<builtin_stereotypes>> is a _stereotype_ that identifies the `Credentials` bean as a model object in an MVC architecture.
 
-The +Login+ bean has a lifecycle that is bound to the HTTP session:
+The `Login` bean has a lifecycle that is bound to the HTTP session:
 
 [source, java]
 ----
@@ -227,11 +227,11 @@ public class Login implements Serializable {
 }
 ----
 
-The +@SessionScoped+ annotation defined in <<builtin_scopes>> is a _scope type_ that specifies the lifecycle of instances of +Login+. Managed beans with this scope must be serializable.
+The `@SessionScoped` annotation defined in <<builtin_scopes>> is a _scope type_ that specifies the lifecycle of instances of `Login`. Managed beans with this scope must be serializable.
 
-The +@Inject+ annotation defined by the Dependency Injection for Java specification identifies an _injected field_ which is initialized by the container when the bean is instantiated, or an _initializer method_ which is called by the container after the bean is instantiated, with injected parameters.
+The `@Inject` annotation defined by the Dependency Injection for Java specification identifies an _injected field_ which is initialized by the container when the bean is instantiated, or an _initializer method_ which is called by the container after the bean is instantiated, with injected parameters.
 
-The +@Users+ annotation is a qualifier type defined by the application:
+The `@Users` annotation is a qualifier type defined by the application:
 
 [source, java]
 ----
@@ -241,7 +241,7 @@ The +@Users+ annotation is a qualifier type defined by the application:
 public @interface Users {}
 ----
 
-The +@LoggedIn+ annotation is another qualifier type defined by the application:
+The `@LoggedIn` annotation is another qualifier type defined by the application:
 
 [source, java]
 ----
@@ -251,7 +251,7 @@ The +@LoggedIn+ annotation is another qualifier type defined by the application:
 public @interface LoggedIn {}
 ----
 
-The +@Produces+ annotation defined in <<declaring_producer_method>> identifies the method +getCurrentUser()+ as a _producer method_, which will be called whenever another bean in the system needs the currently logged-in user, for example, whenever the +user+ attribute of the +DocumentEditor+ class is injected by the container:
+The `@Produces` annotation defined in <<declaring_producer_method>> identifies the method `getCurrentUser()` as a _producer method_, which will be called whenever another bean in the system needs the currently logged-in user, for example, whenever the `user` attribute of the `DocumentEditor` class is injected by the container:
 
 [source, java]
 ----
@@ -270,15 +270,15 @@ public class DocumentEditor {
 }
 ----
 
-The +@Documents+ annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which JPA persistence unit is required.
+The `@Documents` annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which JPA persistence unit is required.
 
-When the login form is submitted, JSF assigns the entered username and password to an instance of the +Credentials+ bean that is automatically instantiated by the container.
-Next, JSF calls the +login()+ method of an instance of +Login+ that is automatically instantiated by the container.
-This instance continues to exist for and be available to other requests in the same HTTP session, and provides the +User+ object representing the current user to any other bean that requires it (for example, +DocumentEditor+). If the producer method is called before the +login()+ method initializes the user object, it throws a +NotLoggedInException+.
+When the login form is submitted, JSF assigns the entered username and password to an instance of the `Credentials` bean that is automatically instantiated by the container.
+Next, JSF calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
+This instance continues to exist for and be available to other requests in the same HTTP session, and provides the `User` object representing the current user to any other bean that requires it (for example, `DocumentEditor`). If the producer method is called before the `login()` method initializes the user object, it throws a `NotLoggedInException`.
 
 ==== EJB example
 
-Alternatively, we could write our +Login+ bean to take advantage of the functionality defined by EJB:
+Alternatively, we could write our `Login` bean to take advantage of the functionality defined by EJB:
 
 [source, java]
 ----
@@ -319,8 +319,8 @@ public class Login {
 }
 ----
 
-The EJB +@Stateful+ annotation specifies that this bean is an EJB stateful session bean.
-The EJB +@TransactionAttribute+ and +@RolesAllowed+ annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
+The EJB `@Stateful` annotation specifies that this bean is an EJB stateful session bean.
+The EJB `@TransactionAttribute` and `@RolesAllowed` annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
 
 ==== Java EE component environment example
 
@@ -343,12 +343,12 @@ public class Databases {
 }
 ----
 
-The JPA +@PersistenceContext+ and +@PersistenceUnit+ annotations identify the JPA persistence unit.
+The JPA `@PersistenceContext` and `@PersistenceUnit` annotations identify the JPA persistence unit.
 
 ==== Event example
 
 Beans may raise events.
-For example, our +Login+ class could raise events when a user logs in or out.
+For example, our `Login` class could raise events when a user logs in or out.
 
 [source, java]
 ----
@@ -397,9 +397,9 @@ public class Login implements Serializable {
 }
 ----
 
-The method +fire()+ of the built-in bean of type +Event+ defined in <<event>> allows the application to fire events.
-Events consist of an _event object_ - in this case the +User+ - and event qualifiers.
-Event qualifier - such as +@LoggedIn+ and +@LoggedOut+ - allow event consumers to specify which events of a certain type they are interested in.
+The method `fire()` of the built-in bean of type `Event` defined in <<event>> allows the application to fire events.
+Events consist of an _event object_ - in this case the `User` - and event qualifiers.
+Event qualifier - such as `@LoggedIn` and `@LoggedOut` - allow event consumers to specify which events of a certain type they are interested in.
 
 Other beans may observe these events and use them to synchronize their internal state, with no coupling to the bean producing the events:
 
@@ -440,14 +440,14 @@ public class Permissions implements Serializable {
 }
 ----
 
-The +@Produces+ annotation applied to a field identifies the field as a producer field, as defined in <<producer_field>>, a kind of shortcut version of a producer method.
-This producer field allows the permissions of the current user to be injected to an injection point of type +Set<Permission>+.
+The `@Produces` annotation applied to a field identifies the field as a producer field, as defined in <<producer_field>>, a kind of shortcut version of a producer method.
+This producer field allows the permissions of the current user to be injected to an injection point of type `Set<Permission>`.
 
-The +@Observes+ annotation defined in <<observes>> identifies the method with the annotated parameter as an _observer method_ that is called by the container whenever an event matching the type and qualifiers of the annotated parameter is fired.
+The `@Observes` annotation defined in <<observes>> identifies the method with the annotated parameter as an _observer method_ that is called by the container whenever an event matching the type and qualifiers of the annotated parameter is fired.
 
 ==== Injection point metadata example
 
-It is possible to implement generic beans that introspect the injection point to which they belong. This makes it possible to implement injection for ++Logger++ s, for example.
+It is possible to implement generic beans that introspect the injection point to which they belong. This makes it possible to implement injection for `Logger` s, for example.
 
 [source, java]
 ----
@@ -460,9 +460,9 @@ class Loggers {
 }
 ----
 
-The +InjectionPoint+ interface defined in <<injection_point>>, provides metadata about the injection point to the object being injected into it.
+The `InjectionPoint` interface defined in <<injection_point>>, provides metadata about the injection point to the object being injected into it.
 
-Then this class will have a +Logger+ named +"Permissions"+ injected:
+Then this class will have a `Logger` named `"Permissions"` injected:
 
 [source, java]
 ----
@@ -481,7 +481,7 @@ public class Permissions implements Serializable {
 _Interceptors_ allow common, cross-cutting concerns to be applied to beans via custom annotations.
 Interceptor types may be individually enabled or disabled at deployment time.
 
-The +AuthorizationInterceptor+ class defines a custom authorization check:
+The `AuthorizationInterceptor` class defines a custom authorization check:
 
 [source, java]
 ----
@@ -512,8 +512,8 @@ public class AuthorizationInterceptor {
 }
 ----
 
-The +@Interceptor+ annotation, defined in <<declaring_interceptor>>, identifies the +AuthorizationInterceptor+ class as an interceptor.
-The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <<interceptor_bindings>>.
+The `@Interceptor` annotation, defined in <<declaring_interceptor>>, identifies the `AuthorizationInterceptor` class as an interceptor.
+The `@Secure` annotation is a custom _interceptor binding type_, as defined in <<interceptor_bindings>>.
 
 [source, java]
 ----
@@ -524,7 +524,7 @@ The +@Secure+ annotation is a custom _interceptor binding type_, as defined in <
 public @interface Secure {}
 ----
 
-The +@Secure+ annotation is used to apply the interceptor to a bean:
+The `@Secure` annotation is used to apply the interceptor to a bean:
 
 [source, java]
 ----
@@ -544,14 +544,14 @@ public class DocumentEditor {
 }
 ----
 
-When the +save()+ method is invoked, the +authorize()+ method of the interceptor will be called.
-The invocation will proceed to the +DocumentEditor+ class only if the authorization check is successful.
+When the `save()` method is invoked, the `authorize()` method of the interceptor will be called.
+The invocation will proceed to the `DocumentEditor` class only if the authorization check is successful.
 
 ==== Decorator example
 
 _Decorators_ are similar to interceptors, but apply only to beans of a particular Java interface. Like interceptors, decorators may be easily enabled or disabled at deployment time. Unlike interceptors, decorators are aware of the semantics of the intercepted method.
 
-For example, the +DataAccess+ interface might be implemented by many beans:
+For example, the `DataAccess` interface might be implemented by many beans:
 
 [source, java]
 ----
@@ -567,7 +567,7 @@ public interface DataAccess<T, V> {
 }
 ----
 
-The +DataAccessAuthorizationDecorator+ class defines the authorization checks:
+The `DataAccessAuthorizationDecorator` class defines the authorization checks:
 
 [source, java]
 ----
@@ -604,9 +604,9 @@ public abstract class DataAccessAuthorizationDecorator<T, V> implements DataAcce
 }
 ----
 
-The +@Decorator+ annotation defined in <<decorator_annotation>> identifies the +DataAccessAuthorizationDecorator+ class as a decorator.
-The +@Delegate+ annotation defined in <<delegate_attribute>> identifies the _delegate_, which the decorator uses to delegate method calls to the container.
-The decorator applies to any bean that implements +DataAccess+.
+The `@Decorator` annotation defined in <<decorator_annotation>> identifies the `DataAccessAuthorizationDecorator` class as a decorator.
+The `@Delegate` annotation defined in <<delegate_attribute>> identifies the _delegate_, which the decorator uses to delegate method calls to the container.
+The decorator applies to any bean that implements `DataAccess`.
 
 The decorator intercepts invocations just like an interceptor.
 However, unlike an interceptor, the decorator contains functionality that is specific to the semantics of the method being called.

@@ -18,4 +18,4 @@ When running in Java EE, the container must extend the rules defined in <<enable
 
 === Interceptor resolution in Java EE
 
-For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container also calls +intercepts()+ to determine if the interceptor intercepts an EJB timeout method invocation.
+For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container also calls `intercepts()` to determine if the interceptor intercepts an EJB timeout method invocation.

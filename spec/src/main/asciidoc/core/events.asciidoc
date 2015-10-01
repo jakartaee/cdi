@@ -28,9 +28,9 @@ The _event types_ of the event include all superclasses and interfaces of the ru
 
 An event type may not contain an unresolvable type variable.
 
-An event qualifier type is just an ordinary qualifier type as specified in <<defining_qualifier_types>>, typically defined as +@Target({METHOD, FIELD, PARAMETER, TYPE})+ or +@Target({FIELD, PARAMETER})+.
+An event qualifier type is just an ordinary qualifier type as specified in <<defining_qualifier_types>>, typically defined as `@Target({METHOD, FIELD, PARAMETER, TYPE})` or `@Target({FIELD, PARAMETER})`.
 
-Every event has the qualifier +@javax.enterprise.inject.Any+, even if it does not explicitly declare this qualifier.
+Every event has the qualifier `@javax.enterprise.inject.Any`, even if it does not explicitly declare this qualifier.
 
 Any Java type may be an observed event type.
 
@@ -38,7 +38,7 @@ Any Java type may be an observed event type.
 
 === Firing events
 
-Beans fire events via an instance of the +javax.enterprise.event.Event+ interface, which may be injected:
+Beans fire events via an instance of the `javax.enterprise.event.Event` interface, which may be injected:
 
 [source, java]
 ----
@@ -67,13 +67,13 @@ else {
 }
 ----
 
-In this example, the event sometimes has the qualifier +@Admin+, depending upon the value of +user.isAdmin()+.
+In this example, the event sometimes has the qualifier `@Admin`, depending upon the value of `user.isAdmin()`.
 
 [[firing_events_synchronously]]
 
 ==== Firing events synchronously
 
-The method +fire()+ accepts an event object:
+The method `fire()` accepts an event object:
 
 [source, java]
 ----
@@ -113,9 +113,9 @@ The method `fireAsync` accepts an event object which can be qualified with the r
 
 [[event]]
 
-==== The +Event+ interface
+==== The `Event` interface
 
-The +Event+ interface provides a method for firing events with a specified combination of type and qualifiers:
+The `Event` interface provides a method for firing events with a specified combination of type and qualifiers:
 
 [source, java]
 ----
@@ -132,23 +132,23 @@ public interface Event<T> {
 }
 ----
 
-For an injected +Event+:
+For an injected `Event`:
 
 * the _specified type_ is the type parameter specified at the injection point, and
 * the _specified qualifiers_ are the qualifiers specified at the injection point.
 
 
-For example, this injected +Event+ has specified type +LoggedInEvent+ and specified qualifier +@Admin+:
+For example, this injected `Event` has specified type `LoggedInEvent` and specified qualifier `@Admin`:
 
 [source, java]
 ----
 @Inject @Admin Event<LoggedInEvent> any;
 ----
 
-The +select()+ method returns a child +Event+ for a given specified type and additional specified qualifiers.
+The `select()` method returns a child `Event` for a given specified type and additional specified qualifiers.
 If no specified type is given, the specified type is the same as the parent.
 
-For example, this child +Event+ has required type +AdminLoggedInEvent+ and additional specified qualifier +@Admin+:
+For example, this child `Event` has required type `AdminLoggedInEvent` and additional specified qualifier `@Admin`:
 
 [source, java]
 ----
@@ -157,37 +157,37 @@ Event<AdminLoggedInEvent> admin = any.select(
             new AdminQualifier() );
 ----
 
-If the specified type contains a type variable, an +IllegalArgumentException+ is thrown.
+If the specified type contains a type variable, an `IllegalArgumentException` is thrown.
 
-If two instances of the same qualifier type are passed to +select()+, an +IllegalArgumentException+ is thrown.
+If two instances of the same qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
 
-If an instance of an annotation that is not a qualifier type is passed to +select()+, an +IllegalArgumentException+ is thrown.
+If an instance of an annotation that is not a qualifier type is passed to `select()`, an `IllegalArgumentException` is thrown.
 
-The methods +fire()+ and `fireAsync()` fire an event with the specified qualifiers and notify observers, as defined by <<observer_notification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
+The methods `fire()` and `fireAsync()` fire an event with the specified qualifiers and notify observers, as defined by <<observer_notification>>. If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
 
 The method `fireAsync()` may be called with a specific `Executor` object to be used to invoke observers method.
 The container should provide a default `Executor` when `fireAsync()` is called without specifying one.
 
-If the runtime type of the event object contains an unresolvable type variable, an +IllegalArgumentException+ is thrown.
+If the runtime type of the event object contains an unresolvable type variable, an `IllegalArgumentException` is thrown.
 
-If the runtime type of the event object is assignable to the type of a container lifecycle event, an +IllegalArgumentException+ is thrown.
+If the runtime type of the event object is assignable to the type of a container lifecycle event, an `IllegalArgumentException` is thrown.
 
 If the provided executor cannot execute observers notification, an `IllegalArgumentException` is thrown.
 
 [[builtin_event]]
 
-==== The built-in +Event+
+==== The built-in `Event`
 
 The container must provide a built-in bean with:
 
-* +Event<X>+ in its set of bean types, for every Java type +X+ that does not contain a type variable,
+* `Event<X>` in its set of bean types, for every Java type `X` that does not contain a type variable,
 * every event qualifier type in its set of qualifier types,
-* scope +@Dependent+,
+* scope `@Dependent`,
 * no bean name, and
 * an implementation provided automatically by the container.
 
 
-If an injection point of raw type +Event+ is defined, the container automatically detects the problem and treats it as a definition error.
+If an injection point of raw type `Event` is defined, the container automatically detects the problem and treats it as a definition error.
 
 The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 
@@ -205,15 +205,15 @@ An event is delivered to an observer method if:
 * The observer method belongs to an enabled bean.
 * An event type is assignable to the observed event type, taking type parameters into consideration.
 * The observer method has no event qualifiers or has a subset of the event qualifiers.
-An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated +@javax.enterprise.util.Nonbinding+.
+An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@javax.enterprise.util.Nonbinding`.
 * Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
 * The event is fired synchronously and the observer is defined with `@Observes`.
 * The event is fired asynchronously and the observer is defined with `@Observes` or `@ObservesAsync`.
 
 
-If the runtime type of the event object contains an unresolvable type variable, the container must throw an +IllegalArgumentException+.
+If the runtime type of the event object contains an unresolvable type variable, the container must throw an `IllegalArgumentException`.
 
-For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getObservedType()+ and +getObservedQualifiers()+ to determine the observed event type and qualifiers.
+For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers.
 
 [[observers_assignability]]
 
@@ -257,7 +257,7 @@ public void login() {
 }
 ----
 
-Where +RoleQualifier+ is an implementation of the qualifier type +Role+:
+Where `RoleQualifier` is an implementation of the qualifier type `Role`:
 
 [source, java]
 ----
@@ -273,14 +273,14 @@ Then the following observer method will always be notified of the event:
 public void afterLogin(@Observes LoggedInEvent event) { ... }
 ----
 
-Whereas this observer method may or may not be notified, depending upon the value of +user.getRole()+:
+Whereas this observer method may or may not be notified, depending upon the value of `user.getRole()`:
 
 [source, java]
 ----
 public void afterAdminLogin(@Observes @Role("admin") LoggedInEvent event) { ... }
 ----
 
-As usual, the container uses +equals()+ to compare event qualifier type member values.
+As usual, the container uses `equals()` to compare event qualifier type member values.
 
 [[multiple_event_qualifiers]]
 
@@ -347,13 +347,13 @@ The container is not required to guarantee a consistent state for an event param
 
 ==== Declaring an observer method
 
-An observer method may be declared by annotating a parameter +@javax.enterprise.event.Observes+ or @javax.enterprise.event.ObservesAsync+` of a default-access, public, protected or private method.
+An observer method may be declared by annotating a parameter `@javax.enterprise.event.Observes` or `@javax.enterprise.event.ObservesAsync` of a default-access, public, protected or private method.
 That parameter is the event parameter.
 The declared type of the parameter is the observed event type.
 
-If +@Observes+ is used the observer method is a synchronous observer method.
+If `@Observes` is used the observer method is a synchronous observer method.
 
-If +@ObservesAsync+ is used the observer method is an asynchronous observer method.
+If `@ObservesAsync` is used the observer method is an asynchronous observer method.
 
 
 [source, java]
@@ -363,7 +363,7 @@ public void afterLogin(@Observes LoggedInEvent event) { ... }
 public void asyncAfterLogin(@ObservesAsync LoggedInEvent event) { ... }
 ----
 
-If a method has more than one parameter annotated +@Observes+ or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
+If a method has more than one parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Observed event qualifiers may be declared by annotating the event parameter:
 
@@ -372,10 +372,10 @@ Observed event qualifiers may be declared by annotating the event parameter:
 public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 ----
 
-If an observer method is annotated +@Produces+ or +@Inject+ or has a parameter annotated +@Disposes+, the container automatically detects the problem and treats it as a definition error.
+If an observer method is annotated `@Produces` or `@Inject` or has a parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare observer methods.
-If an interceptor or decorator has a method with a parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If an interceptor or decorator has a method with a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the event parameter, observer methods may declare additional parameters, which may declare qualifiers.
 These additional parameters are injection points.
@@ -387,9 +387,9 @@ public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger
 
 [[event_metadata]]
 
-==== The +EventMetadata+ interface
+==== The `EventMetadata` interface
 
-The interface +javax.enterprise.inject.spi.EventMetadata+ provides access to metadata about an observed event.
+The interface `javax.enterprise.inject.spi.EventMetadata` provides access to metadata about an observed event.
 
 
 [source, java]
@@ -402,15 +402,15 @@ public interface EventMetadata {
 }
 ----
 
-* +getQualifiers()+ returns the set of qualifiers with which the event was fired.
-* +getInjectionPoint()+ returns the +InjectionPoint+ from which this event payload was fired, or +null+ if it was fired from +BeanManager.fireEvent(...)+.
-* +getType()+ returns the type representing runtime class of the event object with type variables resolved.
-* `isAsync()` returns `true` if the event was fired with `fireAsync()` method otherwise returns `false`.
+* `getQualifiers()` returns the set of qualifiers with which the event was fired.
+* `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanManager.fireEvent(...)`.
+* `getType()` returns the type representing runtime class of the event object with type variables resolved.
+* `isAsync()` returns `true` if the event was fired with `fireAsync()` methods otherwise returns `false`.
 
 
-The container must provide a bean with scope +@Dependent+, bean type +EventMetadata+ and qualifier +@Default+, allowing observer methods to obtain information about the events they observe.
+The container must provide a bean with scope `@Dependent`, bean type `EventMetadata` and qualifier `@Default`, allowing observer methods to obtain information about the events they observe.
 
-If an injection point of type +EventMetadata+ and qualifier +@Default+ which is not a parameter of an observer method exists, the container automatically detects the problem and treats it as a definition error.
+If an injection point of type `EventMetadata` and qualifier `@Default` which is not a parameter of an observer method exists, the container automatically detects the problem and treats it as a definition error.
 
 [source, java]
 ----
@@ -423,7 +423,7 @@ public void afterLogin(@Observes LoggedInEvent event, EventMetadata metadata) { 
 
 A _conditional observer method_ is an observer method which is notified of an event only if an instance of the bean that defines the observer method already exists in the current context.
 
-A conditional observer method may be declared by specifying +notifyObserver=IF_EXISTS+.
+A conditional observer method may be declared by specifying `notifyObserver=IF_EXISTS`.
 
 [source, java]
 ----
@@ -432,10 +432,10 @@ public void refreshOnDocumentUpdate(@Observes(notifyObserver=IF_EXISTS) @Updated
 public void asyncRefreshOnDocumentUpdate(@ObservesAsync(notifyObserver=IF_EXISTS) @Updated Document doc) { ... }
 ----
 
-Beans with scope +@Dependent+ may not have conditional observer methods.
-If a bean with scope +@Dependent+ has an observer method declared +notifyObserver=IF_EXISTS+, the container automatically detects the problem and treats it as a definition error.
+Beans with scope `@Dependent` may not have conditional observer methods.
+If a bean with scope `@Dependent` has an observer method declared `notifyObserver=IF_EXISTS`, the container automatically detects the problem and treats it as a definition error.
 
-The enumeration +javax.enterprise.event.Reception+ identifies the possible values of +notifyObserver+:
+The enumeration `javax.enterprise.event.Reception` identifies the possible values of `notifyObserver`:
 
 [source, java]
 ----
@@ -455,7 +455,7 @@ If no transaction is in progress when the event is fired, they are notified at t
 * An _after failure_ observer method is called during the after completion phase of the transaction, only when the transaction fails.
 
 
-The enumeration +javax.enterprise.event.TransactionPhase+ identifies the kind of transactional observer method:
+The enumeration `javax.enterprise.event.TransactionPhase` identifies the kind of transactional observer method:
 
 [source, java]
 ----
@@ -468,7 +468,7 @@ public enum TransactionPhase {
 }
 ----
 
-A transactional observer method may be declared by specifying any value other than +IN_PROGRESS+ for +during+:
+A transactional observer method may be declared by specifying any value other than `IN_PROGRESS` for `during`:
 
 [source, java]
 ----
@@ -484,7 +484,7 @@ Asynchronous observer cannot be declared transactional.
 When an event is fired by the application, the container must:
 
 * determine the observer methods for that event according to the rules of observer resolution defined by <<observer_resolution>>, then,
-* for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA +Synchronization+.
+* for each observer method, either invoke the observer method immediately, or register the observer method for later invocation during the transaction completion phase, using a JTA `Synchronization`.
 * honor the priority of observer methods as defined in <<observer_ordering>>.
 
 
@@ -494,7 +494,7 @@ The container calls observer methods as defined in <<observers_method_invocation
 * If there is no context active for the scope to which the bean declaring the observer method belongs, then the observer method should not be called.
 * Otherwise, the container calls the observer immediately.
 
-Any observer method called before completion of a transaction may call +setRollbackOnly()+ to force a transaction rollback.
+Any observer method called before completion of a transaction may call `setRollbackOnly()` to force a transaction rollback.
 An observer method may not directly initiate, commit or rollback JTA transactions.
 
 Observer methods may throw exceptions:
@@ -504,11 +504,11 @@ Observer methods may throw exceptions:
 Exception management during an asynchronous event is defined in <<async_exception>>.
 * Otherwise, the exception aborts processing of the event.
 No other observer methods of that event will be called.
-The +BeanManager.fireEvent()+ or +Event.fire()+ method rethrows the exception.
-If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) +ObserverException+.
+The `BeanManager.fireEvent()` or `Event.fire()` method rethrows the exception.
+If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) `ObserverException`.
 
 
-For a custom implementation of the +ObserverMethod+ interface defined in <<observer_method>>, the container must call +getTransactionPhase()+ to determine if the observer method is transactional observer method, and +notify()+ to invoke the method.
+For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` to invoke the method.
 
 [[async_exception]]
 
@@ -541,8 +541,8 @@ If no exception is thrown by observers then the resulting CompletionStage is com
 ==== Observer ordering
 
 Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
-The priority of an observer method may be declared using the +@Priority+ annotation.
-If no +@Priority+ annotation is specified, the default priority +APPLICATION + 500+ is assumed.
+The priority of an observer method may be declared using the `@Priority` annotation.
+If no `@Priority` annotation is specified, the default priority `APPLICATION + 500` is assumed.
 Observers with smaller priority values are called first.
 
 [source, java]
@@ -562,6 +562,6 @@ The transaction context, client security context and lifecycle contexts active w
 * If the observer method is asynchronous, it is called in a new lifecycle contexts, a new transaction context but the same security context as the invocation of `Event.fireAsync()`.
 * If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same client security context and lifecycle contexts.
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same client security context and lifecycle contexts as the transaction that just completed.
-* Otherwise, the observer method is called in the same transaction context, client security context and lifecycle contexts as the invocation of +Event.fire()+ or +BeanManager.fireEvent()+.
+* Otherwise, the observer method is called in the same transaction context, client security context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.fireEvent()`.
 
 

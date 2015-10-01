@@ -4,7 +4,7 @@
 
 The lifecycle of a contextual instance of a bean is managed by the context object for the bean's scope, as defined in <<contexts>>.
 
-Every bean in the system is represented by an instance of the +Bean+ interface defined in <<bean>>. This interface is a subtype of +Contextual+. To create and destroy contextual instances, the context object calls the +create()+ and +destroy()+ operations defined by the interface +Contextual+, as defined in <<contextual>>.
+Every bean in the system is represented by an instance of the `Bean` interface defined in <<bean>>. This interface is a subtype of `Contextual`. To create and destroy contextual instances, the context object calls the `create()` and `destroy()` operations defined by the interface `Contextual`, as defined in <<contextual>>.
 
 [[bean_instantiation_restriction]]
 
@@ -84,7 +84,7 @@ In this case, any object returned by the producer method will not have any depen
 When the application invokes:
 
 * a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, or
-* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  +InjectionTarget.produce()+ or +UnmanagedInstance.produce()+),
+* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  `InjectionTarget.produce()` or `UnmanagedInstance.produce()`),
 
 the invocation is treated as a _business method invocation_.
 
@@ -112,9 +112,9 @@ The actual mechanics of bean creation and destruction varies according to what k
 
 ==== Lifecycle of managed beans
 
-When the +create()+ method of the +Bean+ object that represents a managed bean is called, the container obtains an instance of the bean, as defined by the Managed Beans specification, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
+When the `create()` method of the `Bean` object that represents a managed bean is called, the container obtains an instance of the bean, as defined by the Managed Beans specification, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
 
-When the +destroy()+ method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<dependent_objects_destruction>>.
+When the `destroy()` method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<dependent_objects_destruction>>.
 
 
 
@@ -122,25 +122,25 @@ When the +destroy()+ method is called, the container destroys the instance, as d
 
 ==== Lifecycle of producer methods
 
-When the +create()+ method of a +Bean+ object that represents a producer method is called, the container must invoke the producer method as defined by <<producer_or_disposer_methods_invocation>>. The return value of the producer method, after method interception completes, is the new contextual instance to be returned by +Bean.create()+.
+When the `create()` method of a `Bean` object that represents a producer method is called, the container must invoke the producer method as defined by <<producer_or_disposer_methods_invocation>>. The return value of the producer method, after method interception completes, is the new contextual instance to be returned by `Bean.create()`.
 
-If the producer method returns a null value and the producer method bean has the scope +@Dependent+, the +create()+ method returns a null value.
+If the producer method returns a null value and the producer method bean has the scope `@Dependent`, the `create()` method returns a null value.
 
-Otherwise, if the producer method returns a null value, and the scope of the producer method is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
+Otherwise, if the producer method returns a null value, and the scope of the producer method is not `@Dependent`, the `create()` method throws an `IllegalProductException`.
 
-When the +destroy()+ method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter.
+When the `destroy()` method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to `destroy()` to the disposed parameter.
 Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
 
 [[producer_field_lifecycle]]
 
 ==== Lifecycle of producer fields
 
-When the +create()+ method of a +Bean+ object that represents a producer field is called, the container must access the producer field as defined by <<producer_fields_access>> to obtain the current value of the field.
-The value of the producer field is the new contextual instance to be returned by +Bean.create()+.
+When the `create()` method of a `Bean` object that represents a producer field is called, the container must access the producer field as defined by <<producer_fields_access>> to obtain the current value of the field.
+The value of the producer field is the new contextual instance to be returned by `Bean.create()`.
 
-If the producer field contains a null value and the producer field bean has the scope +@Dependent+, the +create()+ method returns a null value.
+If the producer field contains a null value and the producer field bean has the scope `@Dependent`, the `create()` method returns a null value.
 
-Otherwise, if the producer field contains a null value, and the scope of the producer field is not +@Dependent+, the +create()+ method throws an +IllegalProductException+.
+Otherwise, if the producer field contains a null value, and the scope of the producer field is not `@Dependent`, the `create()` method throws an `IllegalProductException`.
 
-When the +destroy()+ method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to +destroy()+ to the disposed parameter.
+When the `destroy()` method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to `destroy()` to the disposed parameter.
 

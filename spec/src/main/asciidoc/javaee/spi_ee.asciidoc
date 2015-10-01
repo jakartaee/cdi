@@ -4,13 +4,13 @@
 
 [[bean_ee]]
  
-=== The +Bean+ interface in Java EE
+=== The `Bean` interface in Java EE
  
 When Running in Java EE, the container must extend the rules defined in <<bean>> for managed bean to EJB session bean.
 
 [[interceptor_ee]]
 
-==== The +Interceptor+ interface in Java EE
+==== The `Interceptor` interface in Java EE
 
 When Running in Java EE, the container must extend the rules defined in <<interceptor>> and must also ensure that
  
@@ -19,18 +19,18 @@ When Running in Java EE, the container must extend the rules defined in <<interc
 
 [[injectiontarget_ee]]
 
-=== +InjectionTarget+ interface in Java EE
+=== `InjectionTarget` interface in Java EE
 
 When running in Java EE, the container must extend the rules defined for `InjectionTarget` in <<injectiontarget>> and must also ensure that:
 
-* when +inject()+ is called, The container performs Java EE component environment injection, according to the semantics required by the Java EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods_ee>>.
-* +@PostConstruct+ callback is called according to the semantics required by the Java EE platform specification.
-* +@PreDestroy+ callback is called according to the semantics required by the Java EE platform specification.
+* when `inject()` is called, The container performs Java EE component environment injection, according to the semantics required by the Java EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods_ee>>.
+* `@PostConstruct` callback is called according to the semantics required by the Java EE platform specification.
+* `@PreDestroy` callback is called according to the semantics required by the Java EE platform specification.
 
 
 [[beanmanager_ee]]
 
-=== The +BeanManager+ object in Java EE
+=== The `BeanManager` object in Java EE
 
 [[provider_ee]]
 
@@ -38,15 +38,15 @@ When running in Java EE, the container must extend the rules defined for `Inject
 
 A Java EE container is required to provide a CDI provider that will allow access to the current container for any Java EE application or Java EE module which contains enabled beans.
 
-Java EE Components may obtain an instance of +BeanManager+ from JNDI by looking up the name +java:comp/BeanManager+.
+Java EE Components may obtain an instance of `BeanManager` from JNDI by looking up the name `java:comp/BeanManager`.
 
 When running in Java EE, when `initialize`, `stop` or `shutdown` methods of `CDIProvider` are called an `UnsupportedOperationException` is thrown.
 
 [[bm_wrap_expressionfactory]]
 
-==== Wrapping a Unified EL +ExpressionFactory+
+==== Wrapping a Unified EL `ExpressionFactory`
 
-The method +BeanManager.wrapExpressionFactory()+ returns a wrapper +javax.el.ExpressionFactory+ that delegates +MethodExpression+ and +ValueExpression+ creation to the given +ExpressionFactory+. When a Unified EL expression is evaluated using a +MethodExpression+ or +ValueExpression+ returned by the wrapper +ExpressionFactory+, the rules defined in <<dependent_scope_el>> are enforced by the container.
+The method `BeanManager.wrapExpressionFactory()` returns a wrapper `javax.el.ExpressionFactory` that delegates `MethodExpression` and `ValueExpression` creation to the given `ExpressionFactory`. When a Unified EL expression is evaluated using a `MethodExpression` or `ValueExpression` returned by the wrapper `ExpressionFactory`, the rules defined in <<dependent_scope_el>> are enforced by the container.
 
 [source, java]
 ----
@@ -59,7 +59,7 @@ public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFacto
 
 When running in Java EE, the container must extend the rules defined in <<alternative_metadata_sources>> and ensure that:
 
-* when an `AnnotatedType` represents an EJB session bean class, +Annotated.getTypeClosure()+ must returns the EJB session bean types as defined in <<session_bean_types>>.
+* when an `AnnotatedType` represents an EJB session bean class, `Annotated.getTypeClosure()` must returns the EJB session bean types as defined in <<session_bean_types>>.
 
 [[init_events_ee]]
 
@@ -67,7 +67,7 @@ When running in Java EE, the container must extend the rules defined in <<altern
 
 [[process_annotated_type_ee]]
 
-==== +ProcessAnnotatedType+ event in Java EE
+==== `ProcessAnnotatedType` event in Java EE
 
 When running in Java EE, the container must extend the rules defined in <<process_annotated_type>> to Java EE component and EJB session bean classes.
 
@@ -75,17 +75,17 @@ When running in Java EE, the container must extend the rules defined in <<proces
 
 ==== `ProcessInjectionPoint` event and EJB
 
-When running in Java EE, the container must also fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean.
+When running in Java EE, the container must also fire an event for every injection point of every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using `@ManagedBean`, EJB session or message-driven bean.
 
 [[process_injection_target_ee]]
 
 ==== `ProcessInjectionTarget` event and EJB
 
-When running in Java EE, the container must also fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using +@ManagedBean+, EJB session or message-driven bean.
+When running in Java EE, the container must also fire an event for every Java EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using `@ManagedBean`, EJB session or message-driven bean.
 
 The container must extend the rules defined in <<process_injection_target>> for managed bean to EJB session bean and other Java EE component class supporting injection.
 
-For example, this observer decorates the +InjectionTarget+ for all servlets.
+For example, this observer decorates the `InjectionTarget` for all servlets.
 
 [source, java]
 ----

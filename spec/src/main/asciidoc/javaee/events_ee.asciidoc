@@ -13,10 +13,10 @@ It must be either a business method of the EJB or a static method of the bean cl
 
 ==== Declaring an observer method in an EJB
 
-If a non-static method of a session bean class has a parameter annotated +@Observes+, and the method is not a business method of the EJB, the container automatically detects the problem and treats it as a definition error.
+If a non-static method of a session bean class has a parameter annotated `@Observes`, and the method is not a business method of the EJB, the container automatically detects the problem and treats it as a definition error.
 
 [[observer_method_invocation_context_ee]]
 
 ==== Observer method invocation context in Java EE
 
-The transaction and security contexts for a business method of an EJB session bean also depend upon the transaction attribute and +@RunAs+ descriptor, if any.
+The transaction and security contexts for a business method of an EJB session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.

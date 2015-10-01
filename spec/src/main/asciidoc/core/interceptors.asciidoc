@@ -5,7 +5,7 @@
 Managed beans support interception.
 _Interceptors_ are used to separate cross-cutting concerns from business logic.
 The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes.
-This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the +@Priority+ annotation.
+This specification defines various extensions to the Java Interceptors specification, including how to override the interceptor order defined by the `@Priority` annotation.
 
 [[interceptor_bindings]]
 
@@ -32,7 +32,7 @@ public @interface Action {}
 
 An interceptor binding declared by a stereotype is inherited by any bean that declares that stereotype.
 
-If a stereotype declares interceptor bindings, it must be defined as +@Target(TYPE)+.
+If a stereotype declares interceptor bindings, it must be defined as `@Target(TYPE)`.
 
 [[declaring_interceptor]]
 
@@ -69,7 +69,7 @@ This specification extends the Java Interceptors specification and defines:
 * support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
 * the ability to override the interceptor order using the portable extension SPI, defined in <<after_type_discovery>>.
 
-An interceptor may be explicitly enabled for a bean archive by listing its class under the +<interceptors>+ element of the +beans.xml+ file of the bean archive.
+An interceptor may be explicitly enabled for a bean archive by listing its class under the `<interceptors>` element of the `beans.xml` file of the bean archive.
 
 [source,xml]
 ----
@@ -85,12 +85,12 @@ An interceptor may be explicitly enabled for a bean archive by listing its class
 
 The order of the interceptor declarations determines the interceptor ordering. Interceptors which occur earlier in the list are called first.
 
-Each child +<class>+ element must specify the name of an interceptor class.
+Each child `<class>` element must specify the name of an interceptor class.
 If there is no class with the specified name, or if the class with the specified name is not an interceptor class, the container automatically detects the problem and treats it as a deployment problem.
 
-If the same class is listed twice under the +<interceptors>+ element, the container automatically detects the problem and treats it as a deployment problem.
+If the same class is listed twice under the `<interceptors>` element, the container automatically detects the problem and treats it as a deployment problem.
 
-Interceptors enabled using +@Priority+ are called before interceptors enabled using +beans.xml+.
+Interceptors enabled using `@Priority` are called before interceptors enabled using `beans.xml`.
 
 An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<after_type_discovery>>.
 
@@ -100,10 +100,10 @@ An interceptor is said to be *enabled* if it is enabled in at least one bean arc
 
 This specification extends the Java Interceptors specification and defines:
 
-* the effect of applying +@Nonbinding+ to an interceptor binding member, and
-* how the interceptor bindings of a custom implementation of the +Interceptor+ interface are determined.
+* the effect of applying `@Nonbinding` to an interceptor binding member, and
+* how the interceptor bindings of a custom implementation of the `Interceptor` interface are determined.
 
-If any interceptor binding has a member annotated +@javax.enterprise.util.Nonbinding+, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
+If any interceptor binding has a member annotated `@javax.enterprise.util.Nonbinding`, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
 
-For a custom implementation of the +Interceptor+ interface defined in <<interceptor>>, the container calls +getInterceptorBindings()+ to determine the interceptor bindings of the interceptor and +intercepts()+ to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
+For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
 

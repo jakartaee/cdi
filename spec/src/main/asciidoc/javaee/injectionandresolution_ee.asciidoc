@@ -10,7 +10,7 @@ When resolving a name in an EL expression, the container considers the bean name
 
 === Modularity in Java EE
 
-In the Java EE module architecture, any Java EE module or library is a module. The Java EE module is a bean archive if it contains a +beans.xml+ file, as defined in <<bean_archive>>.
+In the Java EE module architecture, any Java EE module or library is a module. The Java EE module is a bean archive if it contains a `beans.xml` file, as defined in <<bean_archive>>.
 
 When running in Java EE, the container must follow the same accessibility rules for beans and alternatives defined in <<selection>> for JSP/JSF pages using EL resolution and make sure that only beans available from injection in the module that defines the JSP/JSF pages are resolved.
 
@@ -66,7 +66,7 @@ When running in Java EE, the container must extend the rules defined in <<inject
 
 The container is also required to perform dependency injection whenever it instantiates any of the following non-contextual objects:
 
-* non-contextual instances of EJB session beans (for example, session beans obtained by the application from JNDI or injected using +@EJB+), and
+* non-contextual instances of EJB session beans (for example, session beans obtained by the application from JNDI or injected using `@EJB`), and
 * instances of any other Java EE component class supporting injection.
 
 A Java EE 5 container is not required to support injection for non-contextual objects.
@@ -86,11 +86,11 @@ When running in Java EE, the container must extend the rules defined for managed
 The container is also required to ensure that:
 
 -* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any +@PostConstruct+ callback declared by a class X in the type hierarchy of the bean is called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any servlet +init()+ method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
+-* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+-* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
 
 [[dependent_objects_destruction_ee]]
 
 ==== Destruction of dependent objects in Java EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet +destroy()+ method is called.
+When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.

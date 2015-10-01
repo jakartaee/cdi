@@ -7,7 +7,7 @@ These bean types are called _decorated types_.
 
 Decorators are superficially similar to interceptors, but because they directly implement operations with business semantics, they are able to implement business logic and, conversely, unable to implement the cross-cutting concerns for which interceptors are optimized.
 
-Decorators may be associated with any managed bean that is not itself an interceptor or decorator, or with any built-in bean other than the built-in bean with type +BeanManager+ and qualifier +@Default+. Decorators are not applied to the return value of a producer method or the current value of a producer field.
+Decorators may be associated with any managed bean that is not itself an interceptor or decorator, or with any built-in bean other than the built-in bean with type `BeanManager` and qualifier `@Default`. Decorators are not applied to the return value of a producer method or the current value of a producer field.
 A decorator instance is a dependent object of the object it decorates.
 
 [[decorator_bean]]
@@ -15,7 +15,7 @@ A decorator instance is a dependent object of the object it decorates.
 === Decorator beans
 
 A decorator is a managed bean.
-The set of decorated types of a decorator includes all bean types of the managed bean which are Java interfaces, except for +java.io.Serializable+. The decorator bean class and its superclasses are not decorated types of the decorator.
+The set of decorated types of a decorator includes all bean types of the managed bean which are Java interfaces, except for `java.io.Serializable`. The decorator bean class and its superclasses are not decorated types of the decorator.
 The decorator class may be abstract.
 
 If the set of decorated types of a decorator is empty, the container automatically detects the problem and treats it as a definition error.
@@ -24,7 +24,7 @@ If the set of decorated types of a decorator is empty, the container automatical
 
 ==== Declaring a decorator
 
-A decorator is declared by annotating the bean class with the +@javax.decorator.Decorator+ stereotype.
+A decorator is declared by annotating the bean class with the `@javax.decorator.Decorator` stereotype.
 
 [source, java]
 ----
@@ -41,7 +41,7 @@ A delegate injection point is an injection point of the bean class.
 The type and qualifiers of the injection point are called the _delegate type_ and _delegate qualifiers_.
 The decorator applies to beans that are assignable to the delegate injection point.
 
-The delegate injection point must be declared by annotating the injection point with the annotation +@javax.decorator.Delegate+:
+The delegate injection point must be declared by annotating the injection point with the annotation `@javax.decorator.Delegate`:
 
 [source, java]
 ----
@@ -70,9 +70,9 @@ A decorator must have exactly one delegate injection point.
 If a decorator has more than one delegate injection point, or does not have a delegate injection point, the container automatically detects the problem and treats it as a definition error.
 
 The delegate injection point must be an injected field, initializer method parameter or bean constructor method parameter.
-If an injection point that is not an injected field, initializer method parameter or bean constructor method parameter is annotated +@Delegate+, the container automatically detects the problem and treats it as a definition error.
+If an injection point that is not an injected field, initializer method parameter or bean constructor method parameter is annotated `@Delegate`, the container automatically detects the problem and treats it as a definition error.
 
-If a bean class that is not a decorator has an injection point annotated +@Delegate+, the container automatically detects the problem and treats it as a definition error.
+If a bean class that is not a decorator has an injection point annotated `@Delegate`, the container automatically detects the problem and treats it as a definition error.
 
 The container must inject a _delegate_ object to the delegate injection point.
 The delegate object implements the delegate type and delegates method invocations to remaining uninvoked decorators and eventually to the bean.
@@ -91,7 +91,7 @@ class TimestampLogger implements Logger {
 }
 ----
 
-If a decorator invokes the delegate object at any other time, the invoked method throws an +IllegalStateException+.
+If a decorator invokes the delegate object at any other time, the invoked method throws an `IllegalStateException`.
 
 [[decorated_types]]
 
@@ -112,11 +112,11 @@ The decorator intercepts every method which is declared by a decorated type of t
 === Decorator enablement and ordering
 
 This specification defines two methods of enabling and ordering decorators.
-From Contexts and Dependency Injection 1.1 onwards the +@Priority+ annotation allows a decorator to be enabled and ordered for an entire application.
+From Contexts and Dependency Injection 1.1 onwards the `@Priority` annotation allows a decorator to be enabled and ordered for an entire application.
 Contexts and Dependency Injection 1.0 allowed only for a decorator to be enabled and ordered for a bean archive.
 
 Decorators are called after interceptors.
-Decorators enabled using +@Priority+ are called before decorators enabled using +beans.xml+.
+Decorators enabled using `@Priority` are called before decorators enabled using `beans.xml`.
 
 A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<after_type_discovery>>.
 
@@ -125,7 +125,7 @@ A decorator is said to be *enabled* if it is enabled in at least one bean archiv
 ==== Decorator enablement and ordering for an application
 
 
-A decorator may be enabled for the entire application by applying the +@Priority+ annotation, along with a priority value, on the decorator class.
+A decorator may be enabled for the entire application by applying the `@Priority` annotation, along with a priority value, on the decorator class.
 Decorators with the smaller priority values are called first.
 The order of more than one decorator with the same priority is undefined.
 
@@ -144,7 +144,7 @@ The priority value ranges defined in the Java Interceptors specification section
 
 ==== Decorator enablement and ordering for a bean archive
 
-A decorator may be  explicitly enabled by listing its bean class under the +<decorators>+ element of the +beans.xml+ file of the bean archive.
+A decorator may be  explicitly enabled by listing its bean class under the `<decorators>` element of the `beans.xml` file of the bean archive.
 
 [source,xml]
 ----
@@ -161,10 +161,10 @@ A decorator may be  explicitly enabled by listing its bean class under the +<dec
 The order of the decorator declarations determines the decorator ordering.
 Decorators which occur earlier in the list are called first.
 
-Each child +<class>+ element must specify the name of a decorator bean class.
+Each child `<class>` element must specify the name of a decorator bean class.
 If there is no class with the specified name, or if the class with the specified name is not a decorator bean class, the container automatically detects the problem and treats it as a deployment problem.
 
-If the same class is listed twice under the +<decorators>+ element, the container automatically detects the problem and treats it as a deployment problem.
+If the same class is listed twice under the `<decorators>` element, the container automatically detects the problem and treats it as a deployment problem.
 
 
 [[decorator_resolution]]
@@ -180,7 +180,7 @@ A decorator is bound to a bean if:
 
 If a decorator matches a managed bean, the managed bean class must be a proxyable bean type, as defined in <<unproxyable>>.
 
-For a custom implementation of the +Decorator+ interface defined in <<decorator>>, the container calls +getDelegateType()+, +getDelegateQualifiers()+ and +getDecoratedTypes()+ to determine the delegate type and qualifiers and decorated types of the decorator.
+For a custom implementation of the `Decorator` interface defined in <<decorator>>, the container calls `getDelegateType()`, `getDelegateQualifiers()` and `getDecoratedTypes()` to determine the delegate type and qualifiers and decorated types of the decorator.
 
 [[delegate_assignable_parameters]]
 
@@ -188,7 +188,7 @@ For a custom implementation of the +Decorator+ interface defined in <<decorator>
 
 Decorator delegate injection points have a special set of rules for determining assignability of raw and parameterized types, as an exception to <<assignable_parameters>>.
 
-A raw bean type is considered assignable to a parameterized delegate type if the raw types are identical and all type parameters of the delegate type are either unbounded type variables or +java.lang.Object+.
+A raw bean type is considered assignable to a parameterized delegate type if the raw types are identical and all type parameters of the delegate type are either unbounded type variables or `java.lang.Object`.
 
 A parameterized bean type is considered assignable to a parameterized delegate type if they have identical raw type and for each parameter:
 

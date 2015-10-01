@@ -10,7 +10,7 @@ The container provides built-in support for injection and contextual lifecycle m
 
 All containers must support managed beans, producer methods and producer fields.
 
-A portable extension may provide other kinds of beans by implementing the interface +Bean+ defined in <<bean>>.
+A portable extension may provide other kinds of beans by implementing the interface `Bean` defined in <<bean>>.
 
 [[managed_beans]]
 
@@ -20,11 +20,11 @@ A _managed bean_ is a bean that is implemented by a Java class.
 This class is called the _bean class_ of the managed bean.
 The basic lifecycle and semantics of managed beans are defined by the Managed Beans specification.
 
-If the bean class of a managed bean is annotated with both +@Interceptor+ and +@Decorator+, the container automatically detects the problem and treats it as a definition error.
+If the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
 
-If a managed bean has a non-static public field, it must have scope +@Dependent+. If a managed bean with a non-static public field declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+If a managed bean has a non-static public field, it must have scope `@Dependent`. If a managed bean with a non-static public field declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
-If the managed bean class is a generic type, it must have scope +@Dependent+. If a managed bean with a parameterized bean class declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+If the managed bean class is a generic type, it must have scope `@Dependent`. If a managed bean with a parameterized bean class declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
 [[what_classes_are_beans]]
 
@@ -33,16 +33,16 @@ If the managed bean class is a generic type, it must have scope +@Dependent+. If
 A top-level Java class is a managed bean if it meets all of the following conditions:
 
 * It is not a non-static inner class.
-* It is a concrete class, or is annotated +@Decorator+.
-* It does not implement +javax.enterprise.inject.spi.Extension+.
-* It is not annotated +@Vetoed+ or in a package annotated +@Vetoed+.
+* It is a concrete class, or is annotated `@Decorator`.
+* It does not implement `javax.enterprise.inject.spi.Extension`.
+* It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
 ** the class has a constructor with no parameters, or
-** the class declares a constructor annotated +@Inject+.
+** the class declares a constructor annotated `@Inject`.
 
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
-If packages annotated +@Vetoed+ are split across classpath entries, non-portable behavior results.
+If packages annotated `@Vetoed` are split across classpath entries, non-portable behavior results.
 An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
 
 [[managed_bean_types]]
@@ -70,7 +70,7 @@ public class Shop { .. }
 class PaymentProcessorImpl implements PaymentProcessor { ... }
 ----
 
-If the managed bean does not have a constructor that takes no parameters, it must have a constructor annotated +@Inject+. No additional special annotations are required.
+If the managed bean does not have a constructor that takes no parameters, it must have a constructor annotated `@Inject`. No additional special annotations are required.
 
 A bean class may specify a scope, bean name, stereotypes and/or qualifiers:
 
@@ -95,18 +95,18 @@ public class LoginAction { ... }
 public class MockLoginAction extends LoginAction { ... }
 ----
 
-The second bean is a "mock object" that overrides the implementation of +LoginAction+ when running in an embedded CDI based integration testing environment.
+The second bean is a "mock object" that overrides the implementation of `LoginAction` when running in an embedded CDI based integration testing environment.
 
 [[specialize_managed_bean]]
 
 ==== Specializing a managed bean
 
-If a bean class of a managed bean X is annotated +@Specializes+, then the bean class of X must directly extend the bean class of another managed bean Y.
+If a bean class of a managed bean X is annotated `@Specializes`, then the bean class of X must directly extend the bean class of another managed bean Y.
 Then X _directly specializes_ Y, as defined in <<specialization>>.
 
 If the bean class of X does not directly extend the bean class of another managed bean, the container automatically detects the problem and treats it as a definition error.
 
-For example, +MockLoginAction+ directly specializes +LoginAction+:
+For example, `MockLoginAction` directly specializes `LoginAction`:
 
 [source, java]
 ----
@@ -125,7 +125,7 @@ public class MockLoginAction extends LoginAction { ... }
 
 The default name for a managed bean is the unqualified class name of the bean class, after converting the first character to lower case.
 
-For example, if the bean class is named +ProductList+, the default bean name is +productList+.
+For example, if the bean class is named `ProductList`, the default bean name is `productList`.
 
 
 [[producer_method]]
@@ -142,14 +142,14 @@ A _producer method_ acts as a source of objects to be injected, where:
 A producer method must be a default-access, public, protected or private, non-abstract method of a managed bean class.
 A producer method may be either static or non-static.
 
-If a producer method sometimes returns a null value, then the producer method must have scope +@Dependent+. If a producer method returns a null value at runtime, and the producer method declares any other scope, an +IllegalProductException+ is thrown by the container.
+If a producer method sometimes returns a null value, then the producer method must have scope `@Dependent`. If a producer method returns a null value at runtime, and the producer method declares any other scope, an `IllegalProductException` is thrown by the container.
 This restriction allows the container to use a client proxy, as defined in <<client_proxies>>.
 
 If the producer method return type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
 If a producer method return type contains a wildcard type parameter or is an array type whose component type contains a wildcard type parameter, the container automatically detects the problem and treats it as a definition error.
 
-If the producer method return type is a parameterized type with a type variable, it must have scope +@Dependent+. If a producer method with a parameterized return type with a type variable declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+If the producer method return type is a parameterized type with a type variable, it must have scope `@Dependent`. If a producer method with a parameterized return type with a type variable declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
 If a producer method return type is a type variable or an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
 
@@ -164,8 +164,8 @@ A bean may declare multiple producer methods.
 
 The bean types of a producer method depend upon the method return type:
 
-* If the return type is an interface, the unrestricted set of bean types contains the return type, all interfaces it extends directly or indirectly and +java.lang.Object+.
-* If a return type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the method return type and +java.lang.Object+.
+* If the return type is an interface, the unrestricted set of bean types contains the return type, all interfaces it extends directly or indirectly and `java.lang.Object`.
+* If a return type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the method return type and `java.lang.Object`.
 * If the return type is a class, the unrestricted set of bean types contains the return type, every superclass and all interfaces it implements directly or indirectly.
 
 
@@ -175,7 +175,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 ==== Declaring a producer method
 
-A producer method may be declared by annotating a method with the +@javax.enterprise.inject.Produces+ annotation.
+A producer method may be declared by annotating a method with the `@javax.enterprise.inject.Produces` annotation.
 
 [source, java]
 ----
@@ -195,11 +195,11 @@ public class Shop {
 }
 ----
 
-If a producer method is annotated +@Inject+, has a parameter annotated +@Disposes+, or has a parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If a producer method is annotated `@Inject`, has a parameter annotated `@Disposes`, or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
 
 
 Interceptors and decorators may not declare producer methods.
-If an interceptor or decorator has a method annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
+If an interceptor or decorator has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
 
 A producer method may have any number of parameters.
 All producer method parameters are injection points.
@@ -221,7 +221,7 @@ public class OrderFactory {
 
 ==== Specializing a producer method
 
-If a producer method X is annotated +@Specializes+, then it must be non-static and directly override another producer method Y.
+If a producer method X is annotated `@Specializes`, then it must be non-static and directly override another producer method Y.
 Then X _directly specializes_ Y, as defined in <<specialization>>.
 
 If the method is static or does not directly override another producer method, the container automatically detects the problem and treats it as a definition error.
@@ -254,7 +254,7 @@ public class MockShop extends Shop {
 
 The default name for a producer method is the method name, unless the method follows the JavaBeans property getter naming convention, in which case the default name is the JavaBeans property name.
 
-For example, this producer method is named +products+:
+For example, this producer method is named `products`:
 
 [source, java]
 ----
@@ -262,7 +262,7 @@ For example, this producer method is named +products+:
 public List<Product> getProducts() { ... }
 ----
 
-This producer method is named +paymentProcessor+:
+This producer method is named `paymentProcessor`:
 
 [source, java]
 ----
@@ -279,14 +279,14 @@ A _producer field_ is a slightly simpler alternative to a producer method.
 A producer field must be a default-access, public, protected or private, field of a managed bean class.
 A producer field may be either static or non-static.
 
-If a producer field sometimes contains a null value when accessed, then the producer field must have scope +@Dependent+. If a producer field contains a null value at runtime, and the producer field declares any other scope, an +IllegalProductException+ is thrown by the container.
+If a producer field sometimes contains a null value when accessed, then the producer field must have scope `@Dependent`. If a producer field contains a null value at runtime, and the producer field declares any other scope, an `IllegalProductException` is thrown by the container.
 This restriction allows the container to use a client proxy, as defined in <<client_proxies>>.
 
 If the producer field type is a parameterized type, it must specify an actual type parameter or type variable for each type parameter.
 
 If a producer field type contains a wildcard type parameter or is an array type whose component type contains a wildcard parameter, the container automatically detects the problem and treats it as a definition error.
 
-If the producer field type is a parameterized type with a type variable, it must have scope +@Dependent+. If a producer field with a parameterized type with a type variable declares any scope other than +@Dependent+, the container automatically detects the problem and treats it as a definition error.
+If the producer field type is a parameterized type with a type variable, it must have scope `@Dependent`. If a producer field with a parameterized type with a type variable declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
 If a producer field type is a type variable or is an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
 
@@ -301,8 +301,8 @@ A bean may declare multiple producer fields.
 
 The bean types of a producer field depend upon the field type:
 
-* If the field type is an interface, the unrestricted set of bean types contains the field type, all interfaces it extends directly or indirectly and +java.lang.Object+.
-* If a field type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the field type and +java.lang.Object+.
+* If the field type is an interface, the unrestricted set of bean types contains the field type, all interfaces it extends directly or indirectly and `java.lang.Object`.
+* If a field type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the field type and `java.lang.Object`.
 * If the field type is a class, the unrestricted set of bean types contains the field type, every superclass and all interfaces it implements directly or indirectly.
 
 
@@ -312,7 +312,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 ==== Declaring a producer field
 
-A producer field may be declared by annotating a field with the +@javax.enterprise.inject.Produces+ annotation.
+A producer field may be declared by annotating a field with the `@javax.enterprise.inject.Produces` annotation.
 
 [source, java]
 ----
@@ -332,10 +332,10 @@ public class Shop {
 }
 ----
 
-If a producer field is annotated +@Inject+, the container automatically detects the problem and treats it as a definition error.
+If a producer field is annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare producer fields.
-If an interceptor or decorator has a field annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
+If an interceptor or decorator has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
 
 [[producer_field_name]]
 
@@ -343,7 +343,7 @@ If an interceptor or decorator has a field annotated +@Produces+, the container 
 
 The default name for a producer field is the field name.
 
-For example, this producer field is named +products+:
+For example, this producer field is named `products`:
 
 [source, java]
 ----
@@ -376,7 +376,7 @@ A disposer method may resolve to multiple producer methods or producer fields de
 
 ==== Declaring a disposer method
 
-A disposer method may be declared by annotating a parameter +@javax.enterprise.inject.Disposes+. That parameter is the disposed parameter.
+A disposer method may be declared by annotating a parameter `@javax.enterprise.inject.Disposes`. That parameter is the disposed parameter.
 Qualifiers may be declared by annotating the disposed parameter:
 
 [source, java]
@@ -410,12 +410,12 @@ public class Resources {
 }
 ----
 
-If a method has more than one parameter annotated +@Disposes+, the container automatically detects the problem and treats it as a definition error.
+If a method has more than one parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
-If a disposer method is annotated +@Produces+ or +@Inject+ or has a parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If a disposer method is annotated `@Produces` or `@Inject` or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare disposer methods.
-If an interceptor or decorator has a method annotated +@Disposes+, the container automatically detects the problem and treats it as a definition error.
+If an interceptor or decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify qualifiers.
 These additional parameters are injection points.
@@ -454,7 +454,7 @@ However, if the application directly instantiates the bean, no parameters are pa
 
 ==== Declaring a bean constructor
 
-The bean constructor may be identified by annotating the constructor +@Inject+.
+The bean constructor may be identified by annotating the constructor `@Inject`.
 
 [source, java]
 ----
@@ -505,11 +505,11 @@ public class Order {
 }
 ----
 
-If a bean class does not explicitly declare a constructor using +@Inject+, the constructor that accepts no parameters is the bean constructor.
+If a bean class does not explicitly declare a constructor using `@Inject`, the constructor that accepts no parameters is the bean constructor.
 
-If a bean class has more than one constructor annotated +@Inject+, the container automatically detects the problem and treats it as a definition error.
+If a bean class has more than one constructor annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
-If a bean constructor has a parameter annotated +@Disposes+, or +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If a bean constructor has a parameter annotated `@Disposes`, or `@Observes`, the container automatically detects the problem and treats it as a definition error.
 
 A bean constructor may have any number of parameters.
 All parameters of a bean constructor are injection points.
@@ -524,7 +524,7 @@ An _injected field_ is a non-static, non-final field of a bean class or of any o
 
 ==== Declaring an injected field
 
-An injected field may be declared by annotating the field +@javax.inject.Inject+.
+An injected field may be declared by annotating the field `@javax.inject.Inject`.
 
 [source, java]
 ----
@@ -537,7 +537,7 @@ public class Order {
 }
 ----
 
-If an injected field is annotated +@Produces+, the container automatically detects the problem and treats it as a definition error.
+If an injected field is annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
 
 [[initializer_methods]]
 
@@ -555,7 +555,7 @@ The application may call initializer methods directly, but then no parameters wi
 
 ==== Declaring an initializer method
 
-An initializer method may be declared by annotating the method +@javax.inject.Inject+.
+An initializer method may be declared by annotating the method `@javax.inject.Inject`.
 
 [source, java]
 ----
@@ -578,9 +578,9 @@ public class Order {
 }
 ----
 
-If a generic method of a bean is annotated +@Inject+, the container automatically detects the problem and treats it as a definition error.
+If a generic method of a bean is annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
-If an initializer method is annotated +@Produces+, has a parameter annotated +@Disposes+, or has a parameter annotated +@Observes+, the container automatically detects the problem and treats it as a definition error.
+If an initializer method is annotated `@Produces`, has a parameter annotated `@Disposes`, or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
 
 An initializer method may have any number of parameters.
 All initializer method parameters are injection points.
@@ -589,7 +589,7 @@ All initializer method parameters are injection points.
 
 === The default qualifier at injection points
 
-If an injection point declares no qualifier, the injection point has exactly one qualifier, the default qualifier +@Default+.
+If an injection point declares no qualifier, the injection point has exactly one qualifier, the default qualifier `@Default`.
 
 The following are equivalent:
 
@@ -669,23 +669,23 @@ Finally, the following are equivalent:
 
 [[named_at_injection_point]]
 
-=== The qualifier +@Named+ at injection points
+=== The qualifier `@Named` at injection points
 
-The use of +@Named+ as an injection point qualifier is not recommended, except in the case of integration with legacy code that uses string-based names to identify beans.
+The use of `@Named` as an injection point qualifier is not recommended, except in the case of integration with legacy code that uses string-based names to identify beans.
 
-If an injected field declares a +@Named+ annotation that does not specify the +value+ member, the name of the field is assumed.
-For example, the following field has the qualifier +@Named("paymentService")+:
+If an injected field declares a `@Named` annotation that does not specify the `value` member, the name of the field is assumed.
+For example, the following field has the qualifier `@Named("paymentService")`:
 
 [source, java]
 ----
 @Inject @Named PaymentService paymentService;
 ----
 
-If any other injection point declares a +@Named+ annotation that does not specify the +value+ member, the container automatically detects the problem and treats it as a definition error.
+If any other injection point declares a `@Named` annotation that does not specify the `value` member, the container automatically detects the problem and treats it as a definition error.
 
 [[new]]
 
-=== +@New+ qualified beans
+=== `@New` qualified beans
 
 _The @New qualifier was deprecated in CDI 1.1.
 CDI applications are encouraged to inject @Dependent scoped beans instead._
@@ -700,18 +700,18 @@ For each managed bean, a second bean exists which:
 
 However, this second bean:
 
-* has scope +@Dependent+,
-* has exactly one qualifier: +@javax.enterprise.inject.New(X.class)+ where +X+ is the bean class,
+* has scope `@Dependent`,
+* has exactly one qualifier: `@javax.enterprise.inject.New(X.class)` where `X` is the bean class,
 * has no bean name,
 * has no stereotypes,
 * has no observer methods, producer methods or fields or disposer methods, and
 * is not an alternative, and
-* is enabled, in the sense of <<enablement>>, if and only if some other enabled bean has an injection point with the qualifier +@New(X.class)+ where +X+ is the bean class.
+* is enabled, in the sense of <<enablement>>, if and only if some other enabled bean has an injection point with the qualifier `@New(X.class)` where `X` is the bean class.
 
 
-This bean is called the _@New qualified bean_ for the class +X+.
+This bean is called the _@New qualified bean_ for the class `X`.
 
-Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>. The container discovers +@New+ qualified beans by inspecting injection points of other enabled beans.
+Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>. The container discovers `@New` qualified beans by inspecting injection points of other enabled beans.
 
 This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
 
@@ -724,8 +724,8 @@ This allows the application to obtain a new instance of a bean which is not boun
 }
 ----
 
-When the qualifier +@New+ is specified at an injection point and no +value+ member is explicitly specified, the container defaults the +value+ to the declared type of the injection point.
-So the following injection point has qualifier +@New(Order.class)+:
+When the qualifier `@New` is specified at an injection point and no `value` member is explicitly specified, the container defaults the `value` to the declared type of the injection point.
+So the following injection point has qualifier `@New(Order.class)`:
 
 [source, java]
 ----

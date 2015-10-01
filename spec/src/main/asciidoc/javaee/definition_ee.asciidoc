@@ -21,7 +21,7 @@ When running in Java EE, the container must extend the capabilities defined in <
 === Bean types for Java EE component
 
 As managed beans, EJB session beans may have multiple bean types depending on their client-visible types.
-For instance, this session bean has only the local interfaces +BookShop+ and +Auditable+, along with +Object+, as bean types, since the bean class is not a client-visible type.
+For instance, this session bean has only the local interfaces `BookShop` and `Auditable`, along with `Object`, as bean types, since the bean class is not a client-visible type.
                                                                                                                         
 [source, java]
 ----
@@ -74,7 +74,7 @@ A bean with a name may be referred to by its name in Unified EL expressions.
 
 There is no relationship between the bean name of an EJB session bean and the EJB name of the bean.
 
-Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name +products+ could be used like this:
+Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name `products` could be used like this:
 
 [source, xml]
 ----
