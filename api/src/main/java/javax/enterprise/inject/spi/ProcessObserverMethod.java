@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2010, 2015, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -30,6 +30,7 @@ package javax.enterprise.inject.spi;
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen
+ * @auhtor Antoine Sabot-Durand
  * @param <T> The type of the event being observed
  * @param <X> The bean type containing the observer method
  * 
@@ -61,4 +62,22 @@ public interface ProcessObserverMethod<T, X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDefinitionError(Throwable t);
+
+    /**
+     * Replaces the {@link javax.enterprise.inject.spi.ObserverMethod}.
+     *
+     * @param observerMethod the new {@link javax.enterprise.inject.spi.ObserverMethod} object to use
+     * @throws IllegalStateException if called outside of the observer method invocation
+     *
+     * @since 2.0
+     */
+    public void setObserverMethod(ObserverMethod<T> observerMethod);
+
+    /**
+     * Forces the container to ignore the observer method.
+     * @throws IllegalStateException if called outside of the observer method invocation
+     *
+     * @since 2.0
+     */
+    public void veto();
 }

@@ -1284,12 +1284,17 @@ public interface ProcessObserverMethod<T, X> {
     public AnnotatedMethod<X> getAnnotatedMethod();
     public ObserverMethod<T> getObserverMethod();
     public void addDefinitionError(Throwable t);
+    public void setObserverMethod(ObserverMethod<T> observerMethod);
+    public void veto();
 }
 ----
 
 * `getAnnotatedMethod()` returns the `AnnotatedMethod` representing the observer method.
 * `getObserverMethod()` returns the `ObserverMethod` object that will be used by the container to call the observer method.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
+* `setObserverMethod()` replaces the `ObserverMethod`.
+* `veto()` forces the container to ignore the `ObserverMethod`.
+
 
 
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
