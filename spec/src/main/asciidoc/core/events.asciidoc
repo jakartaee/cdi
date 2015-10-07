@@ -557,11 +557,11 @@ The order of more than one observer with the same priority is undefined and the 
 
 ==== Observer method invocation context
 
-The transaction context, client security context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.
+The transaction context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.
 
-* If the observer method is asynchronous, it is called in a new lifecycle contexts, a new transaction context but the same security context as the invocation of `Event.fireAsync()`.
-* If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same client security context and lifecycle contexts.
-* Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same client security context and lifecycle contexts as the transaction that just completed.
-* Otherwise, the observer method is called in the same transaction context, client security context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.fireEvent()`.
+* If the observer method is asynchronous, it is called in a new lifecycle contexts and a new transaction context.
+* If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same lifecycle contexts.
+* Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same lifecycle contexts as the transaction that just completed.
+* Otherwise, the observer method is called in the same transaction context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.fireEvent()`.
 
 
