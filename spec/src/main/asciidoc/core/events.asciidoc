@@ -172,8 +172,6 @@ If the runtime type of the event object contains an unresolvable type variable, 
 
 If the runtime type of the event object is assignable to the type of a container lifecycle event, an `IllegalArgumentException` is thrown.
 
-If the provided executor cannot execute observers notification, an `IllegalArgumentException` is thrown.
-
 [[builtin_event]]
 
 ==== The built-in `Event`
