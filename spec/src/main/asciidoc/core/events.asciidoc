@@ -138,11 +138,11 @@ For an injected `Event`:
 * the _specified qualifiers_ are the qualifiers specified at the injection point.
 
 
-For example, this injected `Event` has specified type `LoggedInEvent` and specified qualifier `@Admin`:
+For example, this injected `Event` has specified type `LoggedInEvent`:
 
 [source, java]
 ----
-@Inject @Admin Event<LoggedInEvent> any;
+@Inject Event<LoggedInEvent> any;
 ----
 
 The `select()` method returns a child `Event` for a given specified type and additional specified qualifiers.
