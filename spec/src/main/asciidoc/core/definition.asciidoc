@@ -216,7 +216,7 @@ Three standard qualifier types are defined in the package `javax.enterprise.inje
 
 Every bean has the built-in qualifier `@Any`, even if it does not explicitly declare this qualifier, except for the special `@New` qualified beans defined in <<new>>.
 
-If a bean does not explicitly declare a qualifier other than `@Named`, the bean has exactly one additional qualifier, of type `@Default`. This is called the _default qualifier_.
+If a bean does not explicitly declare a qualifier other than `@Named` or `@Any`, the bean has exactly one additional qualifier, of type `@Default`. This is called the _default qualifier_.
 
 The following declarations are equivalent:
 
