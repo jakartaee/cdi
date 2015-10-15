@@ -6,7 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
@@ -30,12 +32,12 @@ public class Mapper {
             + "{\n"
             + " var divElement = document.getElementById(divId);\n"
             + " var hrefElement = document.getElementById(hrefId);"
-            + " if(divElement.style.display == 'none') {\n"
-            + "   divElement.style.display=\"block\";\n"
-            + "   hrefElement.innerHTML = '<img src=\"images/minus.png\"/>';\n"
-            + " } else {\n"
+            + " if(divElement.style.display == 'block') {\n"
             + "   divElement.style.display=\"none\";\n"
-            + "   hrefElement.innerHTML = '<img src=\"images/plus.png\"/>';\n"
+            + "   hrefElement.innerHTML = '<img src=\"images/plus.png\"/> <strong>Show TCK Assertions</strong>';\n"
+            + " } else {\n"
+            + "   divElement.style.display=\"block\";\n"
+            + "   hrefElement.innerHTML = '<img src=\"images/minus.png\"/> <strong>Hide TCK Assertions</strong>';\n"
             + " }"
             + "}\n</script>";
 
@@ -44,6 +46,24 @@ public class Mapper {
     private TckAuditSaxParser auditParser;
     private List<Section> auditSections;
     private String tckVersion;
+
+    private static Map<String,String> cov2sections= new HashMap<> ();
+
+    {{
+        cov2sections.put("abd","after_bean_discovery");
+        cov2sections.put("atd","after_type_discovery");
+        cov2sections.put("adv","after_deployment_validation");
+        cov2sections.put("bs","before_shutdown");
+        cov2sections.put("pat","process_annotated_type");
+        cov2sections.put("pip","process_injection_point");
+        cov2sections.put("pit","process_injection_target");
+        cov2sections.put("pba","process_bean_attributes");
+        cov2sections.put("pb","process_bean");
+        cov2sections.put("pp","process_producer");
+        cov2sections.put("pom","process_observer_method");
+        cov2sections.put("bean_discovery","bean_discovery_steps");
+    }}
+
     private static final Logger log = Logger.getLogger(Mapper.class.getName());
     private final static String SPEC_WITH_ASSERTIONS = "spec/target/publish/html/cdi-spec-with-assertions.html";
 
@@ -86,7 +106,7 @@ public class Mapper {
                         }
                     }
                 } else {
-                    log.warning("Section " + sectionElement + " cannot be found!");
+                    log.warning("TCK Section " + section.getTitle() + " cannot be found!");
                 }
             }
         }
@@ -96,23 +116,24 @@ public class Mapper {
         //append changing visibility script to head
         specHtml.select("head").after(script);
         Element styleElement = specHtml.select("style").first();
-        styleElement.append(".assertionsDiv {background-color: #F2FAF2; display: block; padding: 10pt 10pt 5pt 10pt; \n}" +
+        styleElement.append(".assertionsDiv {background-color: #F2FAF2; display: none; padding: 10pt 10pt 5pt 10pt; \n}" +
                 ".groupAssertion { padding-left:15pt }\n" +
                 ".notTestableAssertion { background-color: #E1F0FF; }\n" +
                 ".assertionTest { font-family: monospace; }");
 
         for (Section section : auditSections) {
             if (!section.getSectionElements().isEmpty()) {
-                Element sectionElement = specHtml.getElementById(section.getId());
-                String wrapDivId = "assertions" + section.getId();
-                String hrefId = "href" + section.getId();
+                String sectionId = cov2sections.containsKey(section.getId()) ? cov2sections.get(section.getId()) : section.getId();
+                Element sectionElement = specHtml.getElementById(sectionId);
+                String wrapDivId = "assertions" + sectionId;
+                String hrefId = "href" + sectionId;
 
                 // append hidden div with assertions and link to display the div
                 if (sectionElement != null) {
                     sectionElement.after("<div id=" + wrapDivId + " class=\"assertionsDiv\"></div>");
                     sectionElement.after(
                             "<p><a id=" + hrefId + " onclick=\"changeVisibility('" + wrapDivId + "', '" + hrefId
-                                    + "')\";\"><img src=\"images/minus.png\"/></a> TCK assertions</p>");
+                                    + "')\";\"><img src=\"images/plus.png\"/> <strong>Show TCK assertions</strong></a></p>");
                     Element wrapDiv = sectionElement.parent().getElementById(wrapDivId);
 
                     for (SectionElement auditSectionElement : section.getSectionElements()) {
@@ -128,7 +149,7 @@ public class Mapper {
                         }
                     }
                 } else {
-                    log.warning("Section " + sectionElement + " cannot be found!");
+                    log.warning("Spec Section " + sectionId + " cannot be found!");
                 }
             }
         }
