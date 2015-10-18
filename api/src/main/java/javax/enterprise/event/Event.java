@@ -112,7 +112,7 @@ public interface Event<T> {
      * @param event the event object
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         if any of the synchronous or asynchronous observers notified by this event throws an exception
-     *         then the resulting CompletionStage is completed exceptionally with {@link FireAsyncException}
+     *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
      *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
@@ -131,7 +131,7 @@ public interface Event<T> {
      * @param executor a custom executor to execute asynchronous event
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         if any of the synchronous or asynchronous observers notfied by this event throws an exception
-     *         then the resulting CompletionStage is completed exceptionally with {@link FireAsyncException}
+     *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
      *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable

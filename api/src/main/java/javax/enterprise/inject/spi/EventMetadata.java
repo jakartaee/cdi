@@ -60,13 +60,5 @@ public interface EventMetadata {
      * Get the type representing runtime class of the event object with type variables resolved.
      */
     public Type getType();
-
-  /**
-   * 
-   * @return returns <tt>true</tt> if the event was fired with <tt>fireAsync()</tt>
-   * otherwise returns <tt>false</tt>
-   * @since 2.0
-   */
-  public boolean isAsync();
     
 }

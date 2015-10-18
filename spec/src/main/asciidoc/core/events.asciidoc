@@ -64,10 +64,12 @@ if ( user.isAdmin() ) {
 }
 else {
     loggedInEvent.fire(event);
+    loggedInEvent.fireAsync(event);
 }
 ----
 
 In this example, the event sometimes has the qualifier `@Admin`, depending upon the value of `user.isAdmin()`.
+It is first fired synchronously with `fire()` then asynchronously with `fireAsync()`.
 
 [[firing_events_synchronously]]
 
@@ -104,12 +106,9 @@ public void login() {
 ----
 
 Event fired with the `fireAsync()` method is fired asynchronously.
-All resolved synchronous observers are called in the same thread in which `fireAsync()` was called, and all the resolved asynchronous observers are called in one or more different threads.
+All the resolved asynchronous observers are called in one or more different threads.
 
-If synchronous observer have to be notified, `fireAsync` returns immediately after the last synchronous observer has returned.
- Otherwise it returns immediately.
-
-The method `fireAsync` accepts an event object which can be qualified with the rules defined in <<firing_events>>.
+Method `fireAsync()` returns immediately.
 
 [[event]]
 
@@ -206,7 +205,7 @@ An event is delivered to an observer method if:
 An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@javax.enterprise.util.Nonbinding`.
 * Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
 * The event is fired synchronously and the observer is defined with `@Observes`.
-* The event is fired asynchronously and the observer is defined with `@Observes` or `@ObservesAsync`.
+* The event is fired asynchronously and the observer is defined with `@ObservesAsync`.
 
 
 If the runtime type of the event object contains an unresolvable type variable, the container must throw an `IllegalArgumentException`.
@@ -396,14 +395,12 @@ public interface EventMetadata {
     public Set<Annotation> getQualifiers();
     public InjectionPoint getInjectionPoint();
     public Type getType();
-    public boolean isAsync();
 }
 ----
 
 * `getQualifiers()` returns the set of qualifiers with which the event was fired.
 * `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanManager.fireEvent(...)`.
 * `getType()` returns the type representing runtime class of the event object with type variables resolved.
-* `isAsync()` returns `true` if the event was fired with `fireAsync()` methods otherwise returns `false`.
 
 
 The container must provide a bean with scope `@Dependent`, bean type `EventMetadata` and qualifier `@Default`, allowing observer methods to obtain information about the events they observe.
@@ -512,8 +509,8 @@ For a custom implementation of the `ObserverMethod` interface defined in <<obser
 
 ==== Handling multiple exceptions thrown during an asynchronous event
 
-If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `FireAsyncException` exception.
-`FireAsyncException` contains all exceptions thrown by observers as suppressed exceptions.
+If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `java.util.concurrent.CompletionException` exception.
+`CompletionException` contains all exceptions thrown by observers as suppressed exceptions.
 They can be accessed as an array of `throwable` with the `getSuppressed` method.
 
 It can be handled with one of the `CompletionStage` methods related to exceptions:
