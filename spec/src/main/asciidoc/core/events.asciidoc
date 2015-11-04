@@ -86,7 +86,7 @@ public void login() {
 ----
 
 Event fired with the `fire()` method is fired synchronously.
-All the resolved synchronous observers are called in the thread in which `fire()` was called.
+All the resolved synchronous observers (as defined in <<observer_resolution>>) are called in the thread in which `fire()` was called.
 A synchronous observer notification blocks the calling thread until it completes.
  
 [[firing_events_asynchronously]]
@@ -106,7 +106,7 @@ public void login() {
 ----
 
 Event fired with the `fireAsync()` method is fired asynchronously.
-All the resolved asynchronous observers are called in one or more different threads.
+All the resolved asynchronous observers (as defined in <<observer_resolution>>) are called in one or more different threads.
 
 Method `fireAsync()` returns immediately.
 
@@ -204,13 +204,13 @@ An event is delivered to an observer method if:
 * The observer method has no event qualifiers or has a subset of the event qualifiers.
 An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@javax.enterprise.util.Nonbinding`.
 * Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
-* The event is fired synchronously and the observer is defined with `@Observes`.
-* The event is fired asynchronously and the observer is defined with `@ObservesAsync`.
+* The event is fired synchronously and the observer is a synchronous observer as defined in <<observes>>.
+* The event is fired asynchronously and the observer is an asynchronous observer as defined in <<observes>>.
 
 
 If the runtime type of the event object contains an unresolvable type variable, the container must throw an `IllegalArgumentException`.
 
-For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers.
+For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers, and `isAsync()` to determine whether the observer is asynchronous or synchronous.
 
 [[observers_assignability]]
 
