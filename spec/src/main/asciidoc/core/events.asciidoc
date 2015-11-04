@@ -372,7 +372,7 @@ public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 If an observer method is annotated `@Produces` or `@Inject` or has a parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare observer methods.
-If an interceptor or decorator has a method with a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
+If an interceptor or decorator has a method with a parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the event parameter, observer methods may declare additional parameters, which may declare qualifiers.
 These additional parameters are injection points.

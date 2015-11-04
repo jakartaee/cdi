@@ -195,7 +195,7 @@ public class Shop {
 }
 ----
 
-If a producer method is annotated `@Inject`, has a parameter annotated `@Disposes`, or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
+If a producer method is annotated `@Inject`, has a parameter annotated `@Disposes`, has a parameter annotated `@Observes`, or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 
 Interceptors and decorators may not declare producer methods.
@@ -412,7 +412,7 @@ public class Resources {
 
 If a method has more than one parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
-If a disposer method is annotated `@Produces` or `@Inject` or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
+If a disposer method is annotated `@Produces` or `@Inject` has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors and decorators may not declare disposer methods.
 If an interceptor or decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
@@ -509,7 +509,7 @@ If a bean class does not explicitly declare a constructor using `@Inject`, the c
 
 If a bean class has more than one constructor annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
-If a bean constructor has a parameter annotated `@Disposes`, or `@Observes`, the container automatically detects the problem and treats it as a definition error.
+If a bean constructor has a parameter annotated `@Disposes`, `@Observes`, or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 A bean constructor may have any number of parameters.
 All parameters of a bean constructor are injection points.
@@ -580,7 +580,7 @@ public class Order {
 
 If a generic method of a bean is annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
-If an initializer method is annotated `@Produces`, has a parameter annotated `@Disposes`, or has a parameter annotated `@Observes`, the container automatically detects the problem and treats it as a definition error.
+If an initializer method is annotated `@Produces`, has a parameter annotated `@Disposes`, has a parameter annotated `@Observes`, or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 An initializer method may have any number of parameters.
 All initializer method parameters are injection points.
