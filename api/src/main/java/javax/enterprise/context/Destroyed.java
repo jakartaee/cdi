@@ -47,7 +47,7 @@ import javax.inject.Qualifier;
 public @interface Destroyed {
 
     /**
-     * The scope for which to observe initialization
+     * The scope for which to observe destruction
      */
     Class<? extends Annotation> value();
 
