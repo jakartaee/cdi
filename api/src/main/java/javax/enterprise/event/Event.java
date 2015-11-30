@@ -106,12 +106,13 @@ public interface Event<T> {
 
     /**
      * <p>
-     * Fires an event asynchronously with the specified qualifiers and notifies synchronous and asynchronous observers.
+     * Fires an event asynchronously with the specified qualifiers and notifies asynchronous observers.
      * </p>
      *
      * @param event the event object
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
-     *         if any of the synchronous or asynchronous observers notified by this event throws an exception
+     *         Default asynchronous execution facility is container specific.
+     *         If any observer notified by this event throws an exception
      *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
      *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
@@ -123,14 +124,15 @@ public interface Event<T> {
 
     /**
      * <p>
-     * Fires an event asynchronously with the specified qualifiers and notifies synchronous and asynchronous observers.
+     * Fires an event asynchronously with the specified qualifiers and notifies asynchronous observers.
      * A custom {@link Executor} will be used to make asynchronous calls 
      * </p>
      *
      * @param event the event object
      * @param executor a custom executor to execute asynchronous event
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
-     *         if any of the synchronous or asynchronous observers notfied by this event throws an exception
+     *         Default asynchronous execution facility is container specific.
+     *         If any observer notified by this event throws an exception
      *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
      *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.

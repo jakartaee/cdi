@@ -166,7 +166,12 @@ The methods `fire()` and `fireAsync()` fire an event with the specified qualifie
 If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
 
 The method `fireAsync()` may be called with a specific `Executor` object to be used to invoke observers method.
-The container should provide a default `Executor` when `fireAsync()` is called without specifying one.
+
+The following elements are container specific:
+
+* the default `Executor` used by the container when `fireAsync()` is called without specifying an `Executor`,
+* the `CompletionStage` returned by `fireAsync` methods, and
+* all dependent stages of this initial CompletionStage.
 
 If the runtime type of the event object contains an unresolvable type variable, an `IllegalArgumentException` is thrown.
 
@@ -557,6 +562,7 @@ The order of more than one observer with the same priority is undefined and the 
 The transaction context and lifecycle contexts active when an observer method is invoked depend upon what kind of observer method it is.
 
 * If the observer method is asynchronous, it is called in a new lifecycle contexts and a new transaction context.
+As specified in <<builtin_contexts>>, contexts associated with built-in normal scope don't propagate across asynchronous observers.
 * If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same lifecycle contexts.
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same lifecycle contexts as the transaction that just completed.
 * Otherwise, the observer method is called in the same transaction context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.fireEvent()`.
