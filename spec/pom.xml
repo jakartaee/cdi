@@ -15,12 +15,12 @@
 	<description>CDI Specification documentation</description>
 
 	<properties>
-		<asciidoctor.version>1.5.2.1</asciidoctor.version>
-		<jruby.version>1.7.20.1</jruby.version>
-		<asciidoctorj-pdf.version>1.5.0-alpha.8</asciidoctorj-pdf.version>
+		<asciidoctor-maven.version>1.5.2.1</asciidoctor-maven.version>
+		<asciidoctorj.version>1.5.3.2</asciidoctorj.version>
+		<asciidoctorj-pdf.version>1.5.0-alpha.10.1</asciidoctorj-pdf.version>
 		<license>asl2</license>
-		    <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
-		    <revisiondate>${maven.build.timestamp}</revisiondate>
+		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
+		<revisiondate>${maven.build.timestamp}</revisiondate>
 	</properties>
 
 	<profiles>
@@ -77,17 +77,17 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>${asciidoctor.version}</version>
+				<version>${asciidoctor-maven.version}</version>
 				<dependencies>
+					<dependency>
+						<groupId>org.asciidoctor</groupId>
+						<artifactId>asciidoctorj</artifactId>
+						<version>${asciidoctorj.version}</version>
+					</dependency>
 					<dependency>
 						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctorj-pdf</artifactId>
 						<version>${asciidoctorj-pdf.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.jruby</groupId>
-						<artifactId>jruby-complete</artifactId>
-						<version>${jruby.version}</version>
 					</dependency>
 				</dependencies>
 				<executions>
