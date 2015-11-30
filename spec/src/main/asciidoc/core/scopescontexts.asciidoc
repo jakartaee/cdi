@@ -429,7 +429,8 @@ If a managed bean which declares a passivating scope type, has a decorator or in
 
 === Context management for built-in scopes
 
-The container must provide an implementation of the `Context` interface for each of the built-in scopes defined in <<builtin_scopes>>. These implementations depend on the platform the container is running.
+The container must provide an implementation of the `Context` interface for each of the built-in scopes defined in <<builtin_scopes>>.
+These implementations depend on the platform the container is running.
 
 A portable extension may define a custom context object for any or all of the built-in scopes.
 For example, a remoting framework might provide a request context object for the built-in request scope.

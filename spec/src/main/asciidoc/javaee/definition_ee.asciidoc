@@ -74,7 +74,8 @@ A bean with a name may be referred to by its name in Unified EL expressions.
 
 There is no relationship between the bean name of an EJB session bean and the EJB name of the bean.
 
-Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>. For example, a bean with the name `products` could be used like this:
+Bean names allow the direct use of beans in JSP or JSF pages, as defined in <<el>>.
+For example, a bean with the name `products` could be used like this:
 
 [source, xml]
 ----

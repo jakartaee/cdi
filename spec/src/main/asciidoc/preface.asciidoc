@@ -21,7 +21,7 @@ CDI in java SE and CDI in a Java EE container share the features defined in core
 This document is organized in 4 parts:
 
 * An introduction (this part), which is not part of the specification but introduce CDI concepts and give examples.
-* The core CDI specification: <<part_1>>. 
+* The core CDI specification: <<part_1>>.
 * Specific CDI features for Java SE: <<part_2>>.
 * Specific CDI features for Java EE: <<part_3>>.
 

@@ -711,7 +711,8 @@ However, this second bean:
 
 This bean is called the _@New qualified bean_ for the class `X`.
 
-Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>. The container discovers `@New` qualified beans by inspecting injection points of other enabled beans.
+Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>.
+The container discovers `@New` qualified beans by inspecting injection points of other enabled beans.
 
 This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
 

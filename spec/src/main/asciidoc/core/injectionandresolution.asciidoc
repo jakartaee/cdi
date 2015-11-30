@@ -15,7 +15,8 @@ In general, a bean type or bean name does not uniquely identify a bean.
 When resolving a bean at an injection point, the container considers bean type, qualifiers and selected alternatives.
 This allows bean developers to decouple type from implementation.
 
-The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>. The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
+The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>.
+The container is not required to support circular chains of dependencies where every bean participating in the chain has a pseudo-scope.
 
 [[selection]]
 
@@ -359,7 +360,8 @@ In certain scenarios, for example if a request scoped bean is injected into a se
 This is only necessary when the circular dependencies are initialized via a managed bean constructor or producer method parameter.
 (Beans with scope `@Dependent` never have circular dependencies.)
 * Finally, client proxies may be passivated, even when the bean itself may not be.
-Therefore the container must use a client proxy whenever a bean with normal scope is injected into a bean with a passivating scope, as defined in <<passivating_scope>>. (On the other hand, beans with scope `@Dependent` must be serialized along with their client.)
+Therefore the container must use a client proxy whenever a bean with normal scope is injected into a bean with a passivating scope, as defined in <<passivating_scope>>.
+(On the other hand, beans with scope `@Dependent` must be serialized along with their client.)
 
 
 Client proxies are never required for a bean whose scope is a pseudo-scope such as `@Dependent`.
@@ -472,7 +474,8 @@ When the container calls an observer method (defined in <<observer_methods>>), t
 
 * If the observer method is static, the container must invoke the method.
 * Otherwise, if the observer method is non-static, the container must:
-* Obtain a contextual instance of the bean which declares the observer method according to <<contextual_instance>>. If this observer method is a conditional observer method, obtain the contextual instance that already exists, only if the scope of the bean that declares the observer method is currently active, without creating a new contextual instance.
+* Obtain a contextual instance of the bean which declares the observer method according to <<contextual_instance>>.
+If this observer method is a conditional observer method, obtain the contextual instance that already exists, only if the scope of the bean that declares the observer method is currently active, without creating a new contextual instance.
 * Invoke the observer method on the resulting instance, if any, as a business method invocation, as defined in <<biz_method>>.
 
 

@@ -4,7 +4,8 @@
 
 The lifecycle of a contextual instance of a bean is managed by the context object for the bean's scope, as defined in <<contexts>>.
 
-Every bean in the system is represented by an instance of the `Bean` interface defined in <<bean>>. This interface is a subtype of `Contextual`. To create and destroy contextual instances, the context object calls the `create()` and `destroy()` operations defined by the interface `Contextual`, as defined in <<contextual>>.
+Every bean in the system is represented by an instance of the `Bean` interface defined in <<bean>>.
+This interface is a subtype of `Contextual`. To create and destroy contextual instances, the context object calls the `create()` and `destroy()` operations defined by the interface `Contextual`, as defined in <<contextual>>.
 
 [[bean_instantiation_restriction]]
 
@@ -14,7 +15,8 @@ There are very few programming restrictions upon the bean class of a bean.
 In particular, the class is a concrete class and is not required to implement any special interface or extend any special superclass.
 Therefore, bean classes are easy to instantiate and unit test.
 
-However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextual_instance>>. Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
+However, if the application directly instantiates a bean class, instead of letting the container perform instantiation, the resulting instance is not managed by the container and is not a contextual instance as defined by <<contextual_instance>>.
+Furthermore, the capabilities listed in <<capabilities>> will not be available to that particular instance. In a deployed application, it is the container that is responsible for instantiating beans and initializing their dependencies.
 
 If the application requires more control over instantiation of a contextual instance, a producer method or field may be used.
 Any Java object may be returned by a producer method or field.
@@ -122,7 +124,8 @@ When the `destroy()` method is called, the container destroys the instance, as d
 
 ==== Lifecycle of producer methods
 
-When the `create()` method of a `Bean` object that represents a producer method is called, the container must invoke the producer method as defined by <<producer_or_disposer_methods_invocation>>. The return value of the producer method, after method interception completes, is the new contextual instance to be returned by `Bean.create()`.
+When the `create()` method of a `Bean` object that represents a producer method is called, the container must invoke the producer method as defined by <<producer_or_disposer_methods_invocation>>.
+The return value of the producer method, after method interception completes, is the new contextual instance to be returned by `Bean.create()`.
 
 If the producer method returns a null value and the producer method bean has the scope `@Dependent`, the `create()` method returns a null value.
 

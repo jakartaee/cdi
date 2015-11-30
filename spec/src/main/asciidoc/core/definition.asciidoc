@@ -28,7 +28,8 @@ The bean types and qualifiers of a bean determine where its instances will be in
 The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators.
 The interceptor bindings of a bean determine which interceptors will be applied at runtime.
 The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
-Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>. Decorators are defined in <<decorators>>.
+Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>.
+Decorators are defined in <<decorators>>.
 
 [[capabilities]]
 
@@ -241,7 +242,8 @@ The following declaration results in a bean with three qualifiers: `@Any`, `@Def
 public class Order { ... }
 ----
 
-The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injection_point_default_qualifier>>. The following declarations, in which the use of the `@Inject` annotation identifies the constructor parameter as an injection point, are equivalent:
+The default qualifier is also assumed for any injection point that does not explicitly declare a qualifier, as defined in <<injection_point_default_qualifier>>.
+The following declarations, in which the use of the `@Inject` annotation identifies the constructor parameter as an injection point, are equivalent:
 
 [source, java]
 ----
@@ -391,7 +393,8 @@ Scoped objects, exist in a well-defined lifecycle context:
 
 
 All beans have a scope.
-The scope of a bean determines the lifecycle of its instances, and which instances of the bean are visible to instances of other beans, as defined in <<contexts>>. A scope type is represented by an annotation type.
+The scope of a bean determines the lifecycle of its instances, and which instances of the bean are visible to instances of other beans, as defined in <<contexts>>.
+A scope type is represented by an annotation type.
 
 For example, an object that represents the current user is represented by a session scoped object:
 
@@ -424,7 +427,8 @@ The set of scope types is extensible.
 
 There are five standard scope types defined by this specification, all defined in the package `javax.enterprise.context`.
 
-* The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>. Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
+* The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>.
+Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
 * The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
 * Finally, there is a `@Dependent` pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
@@ -519,7 +523,8 @@ If the _bean discovery mode_ is `annotated` then:
 
 ==== Bean defining annotations
 
-A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>. A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
+A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>.
+A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
 
 The set of bean defining annotations contains:
 
