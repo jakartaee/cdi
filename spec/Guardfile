@@ -2,10 +2,14 @@ require 'erb'
 require 'asciidoctor'
 require 'asciidoctor/cli'
 
-  guard :shell do
-     watch (/^.+\.asciidoc$/) { |m| Asciidoctor::Cli::Invoker.new(%W(-o target/cdi-spec.html src/main/doc/cdi-spec.asciidoc)).invoke! }
-  end
+invoker = Asciidoctor::Cli::Invoker.new(%W(src/main/asciidoc/cdi-spec.asciidoc -o ./target/generated-docs/cdi-spec.html))
 
-  guard 'livereload' do
-    watch(%r{.+\.(css|js|html?|php|inc|theme)$})
-  end
+invoker.invoke!
+
+guard :shell do
+  watch (/^.+\.(asciidoc|puml)$/) { |m| invoker.invoke! }
+end
+
+guard 'livereload' do
+  watch(%r{.+\.(css|js|html?|php|inc|theme)$})
+end
