@@ -17,26 +17,18 @@
 
 package javax.enterprise.inject.spi;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.enterprise.inject.Instance;
 
 /**
  * Provides access to the current container.
  * 
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @author John D. Ament
  * @since 1.1
  */
@@ -84,37 +76,7 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
         }
     }
 
-    /**
-     * <p>
-     * Retrieves the {@link CDIProvider}.  If one is already configured, uses that.
-     * </p>
-     * 
-     * <p>
-     * If {@link #setCDIProvider} was called first, the provider populated there is returned.
-     * Otherwise a {@link java.util.ServiceLoader} is used to locate a provider.
-     * </p>
-     * 
-     * @return the configured {@link CDIProvider} or a discovered {@link CDIProvider}.
-     * @since 2.0
-     */
-    public static CDIProvider getCDIProvider() {
-        if (configuredProvider != null) {
-            return configuredProvider;
-        } else {
-            // Discover providers and cache
-            if (discoveredProviders == null) {
-                synchronized (lock) {
-                    if (discoveredProviders == null) {
-                        findAllProviders();
-                    }
-                }
-            }
-            configuredProvider = discoveredProviders.stream()
-                    .filter(Objects::nonNull).findFirst()
-                    .orElseThrow(() -> new IllegalStateException("Unable to locate CDIProvider"));
-            return configuredProvider;
-        }
-    }
+
 
     /**
      * <p>
@@ -130,73 +92,59 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
      * <p>
      * Shuts down this CDI instance when it is no longer in scope. Implemented from {@link AutoCloseable},
      * </p>
-     * 
+     *
      * @since 2.0
      */
     @Override
     public void close() {
-        this.shutdown();
+        shutdown();
     }
+
+    /**
+     * Get the CDI BeanManager for the current context
+     *
+     * @return the BeanManager
+     */
+    public abstract BeanManager getBeanManager();
 
     // Helper methods
 
-    private static void findAllProviders() {
-        Set<CDIProvider> providers = new LinkedHashSet<CDIProvider>();
-        try {
-            final ClassLoader loader = CDI.class.getClassLoader();
-            final Enumeration<URL> resources;
-            if (loader != null) {
-                resources = loader.getResources("META-INF/services/" + CDIProvider.class.getName());
-            } else {
-                // this should not happen unless the CDI api is on the boot
-                // class path
-                resources = ClassLoader.getSystemResources("META-INF/services/" + CDIProvider.class.getName());
-            }
-
-            final Set<String> names = new HashSet<String>();
-            while (resources.hasMoreElements()) {
-                URL url = resources.nextElement();
-                InputStream is = url.openStream();
-                try {
-                    names.addAll(providerNamesFromReader(new BufferedReader(new InputStreamReader(is))));
-                } finally {
-                    is.close();
+    private static CDIProvider getCDIProvider() {
+        if (configuredProvider != null) {
+            return configuredProvider;
+        } else {
+            // Discover providers and cache
+            if (discoveredProviders == null) {
+                synchronized (lock) {
+                    if (discoveredProviders == null) {
+                        findAllProviders();
+                    }
                 }
             }
-            for (String s : names) {
-                final Class<CDIProvider> providerClass = (Class<CDIProvider>) Class.forName(s, true, loader);
-                providers.add(providerClass.newInstance());
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        } catch (InstantiationException e) {
-            throw new IllegalStateException(e);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException(e);
-        } catch (ClassNotFoundException e) {
+            configuredProvider = discoveredProviders.stream()
+                    .filter(c -> c.getCDI() != null)
+                    .findAny().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
+            return configuredProvider;
+        }
+    }
+
+    private static void findAllProviders() {
+
+        ServiceLoader<CDIProvider> providerLoader;
+        Set<CDIProvider> providers = new LinkedHashSet<>();
+
+        providerLoader = ServiceLoader.load(CDIProvider.class, CDI.class.getClassLoader());
+
+        if(! providerLoader.iterator().hasNext()) {
+            throw new IllegalStateException("Unable to locate CDIProvider");
+        }
+
+        try {
+            providerLoader.forEach(providers::add);
+        } catch (ServiceConfigurationError e) {
             throw new IllegalStateException(e);
         }
         CDI.discoveredProviders = Collections.unmodifiableSet(providers);
     }
 
-    private static final Pattern nonCommentPattern = Pattern.compile("^([^#]+)");
-
-    private static Set<String> providerNamesFromReader(BufferedReader reader) throws IOException {
-        Set<String> names = new HashSet<String>();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            line = line.trim();
-            Matcher m = nonCommentPattern.matcher(line);
-            if (m.find()) {
-                names.add(m.group().trim());
-            }
-        }
-        return names;
-    }
-
-    /**
-     * Get the CDI BeanManager for the current context
-     * 
-     */
-    public abstract BeanManager getBeanManager();
 }

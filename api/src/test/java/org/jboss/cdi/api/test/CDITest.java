@@ -97,8 +97,6 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        System.out.println("****** " + CDI.current().getClass() + " ********" );
-
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
                 CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
     }
@@ -110,8 +108,6 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        System.out.println("$$$$$ " + CDI.current().getClass() + " $$$$$" );
-
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
                 CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
     }
@@ -128,7 +124,7 @@ public class CDITest {
     }
 
 
-    @Test(expectedExceptions = ClassCastException.class)
+    @Test(expectedExceptions = IllegalStateException.class)
     public void testWithCDIProviderBadClass() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write(getClass().getName());
