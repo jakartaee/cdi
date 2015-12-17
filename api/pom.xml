@@ -146,8 +146,7 @@
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>5.10</version>
-				<classifier>jdk15</classifier>
+				<version>6.8.8</version>
 			</dependency>
 
 			<dependency>
@@ -190,7 +189,6 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<classifier>jdk15</classifier>
 			<scope>test</scope>
 		</dependency>
 
@@ -280,6 +278,16 @@
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version>
+				<configuration>
+					<systemPropertyVariables>
+						<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>
