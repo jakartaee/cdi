@@ -70,6 +70,16 @@ public class CDITest {
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
+    public void testWithCDIProviderHavingNullCDI() throws Exception {
+
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(DummyCDIProviderWithNullCDI.class.getName());
+        fw.close();
+        Assert.assertEquals(CDI.current().getClass(), DummyCDIProvider.DummyCDI.class);
+
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
     public void testWithOneBadCDIProvider() throws Exception {
 
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
@@ -87,6 +97,21 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
+        System.out.println("****** " + CDI.current().getClass() + " ********" );
+
+        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
+                CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
+    }
+
+    @Test
+    public void testWithTwoCDIProviderOneWithNullCDIAndOneGood() throws Exception {
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(DummyCDIProviderWithNullCDI.class.getName());
+        fw.write('\n');
+        fw.write(DummyCDIProvider2.class.getName());
+        fw.close();
+        System.out.println("$$$$$ " + CDI.current().getClass() + " $$$$$" );
+
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
                 CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
     }
