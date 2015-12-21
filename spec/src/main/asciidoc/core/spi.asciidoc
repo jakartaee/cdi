@@ -789,6 +789,130 @@ The container must not directly call the Java Reflection API. In particular, the
 * call `Annotated.isAnnotationPresent()` and `Annotated.getAnnotation()` to read any bean annotations defined by this specification, and
 * call `AnnotatedType.getConstructors()`, `AnnotatedType.getMethods()` and `AnnotatedType.getFields()` to determine the members of a bean class.
 
+[[annotated_type_configurator]]
+
+==== `AnnotatedTypeConfigurator` SPI
+
+CDI 2.0 introduced a new SPI to help defining and creating instance for type metadata.
+
+This SPI is composed of the following interfaces:
+
+* `javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
+* `javax.enterprise.inject.spi.builder.AnnotatedFieldConfigurator` to configure an `AnnotatedField`
+* `javax.enterprise.inject.spi.builder.AnnotatedConstructorConfigurator` to configure an `AnnotatedConstructor`
+* `javax.enterprise.inject.spi.builder.AnnotatedMethodConfigurator` to configure an `AnnotatedMethod`
+* `javax.enterprise.inject.spi.builder.AnnotatedParameterConfigurator` to configure an `AnnotatedParameter`
+
+
+`AnnotatedTypeConfigurator` is the entry point for this SPI.
+
+[source, java]
+----
+public interface AnnotatedTypeConfigurator<T> {
+
+    AnnotatedType<T> getAnnotated();
+    AnnotatedTypeConfigurator<T> add(Annotation annotation);
+    AnnotatedTypeConfigurator<T> remove(Annotation annotation);
+    AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedTypeConfigurator<T> removeAll();
+    Set<AnnotatedMethodConfigurator<T>> methods();
+    Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate);
+    Set<AnnotatedFieldConfigurator<T>> fields();
+    Stream<AnnotatedFieldConfigurator<T>> filterFields(Predicate<AnnotatedField<T>> predicate);
+    Set<AnnotatedConstructorConfigurator<T>> constructors();
+    Stream<AnnotatedConstructorConfigurator<T>> filterConstructors(Predicate<AnnotatedConstructor<T>> predicate);
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured `AnnotatedType`
+* `remove()` methods remove all annotation from the configured `AnnotatedType`
+* `removeAll()` remove all existing annotation on the configured `AnnotatedType`
+* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
+* `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
+* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.
+* `filterMethods()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
+* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
+* `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
+
+`AnnotatedMethodConfigurator` and `AnnotatedConstructorConfigurator` are accessed through `AnnotatedTypeConfigurator`:
+
+[source, java]
+----
+public interface AnnotatedMethodConfigurator<T> {
+    AnnotatedMethod<T> getAnnotated();
+    AnnotatedMethodConfigurator<T> add(Annotation annotation);
+    AnnotatedMethodConfigurator<T> remove(Annotation annotation);
+    AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedMethodConfigurator<T> removeAll();
+    List<AnnotatedParameterConfigurator<T>> params();
+    Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
+}
+----
+
+[source, java]
+----
+public interface AnnotatedConstructorConfigurator<T> {
+    AnnotatedConstructor<T> getAnnotated();
+    AnnotatedConstructorConfigurator<T> add(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> remove(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedConstructorConfigurator<T> removeAll();
+    List<AnnotatedParameterConfigurator<T>> params();
+    Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+* `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
+* `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
+
+Both interfaces give access to `AnnotatedParameterConfigurator`:
+[source, java]
+----
+public interface AnnotatedParameterConfigurator<T> {
+    AnnotatedParameter<T> getAnnotated();
+    AnnotatedParameterConfigurator<T> add(Annotation annotation);
+    AnnotatedParameterConfigurator<T> remove(Annotation annotation);
+    AnnotatedParameterConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedParameterConfigurator<T> removeAll();
+}
+----
+
+`AnnotatedFieldConfigurator` is accessed through `AnnotatedTypeConfigurator`:
+
+[source, java]
+----
+public interface AnnotatedFieldConfigurator<T> {
+
+    AnnotatedField<T> getAnnotated();
+    AnnotatedFieldConfigurator<T> add(Annotation annotation);
+    AnnotatedFieldConfigurator<T> remove(Annotation annotation);
+    AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedFieldConfigurator<T> removeAll();
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+
+
+The container must provide an instance of each of these interfaces.
+
+Implementation of `AnnotatedTypeConfigurator` is returned by methods in the following lifecycle event:
+
+* `BeforeBeanDiscovery` as defined in <<before_bean_discovery>>
+* `ProcessAnnotatedType` as defined in <<process_annotated_type>>
+* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
+
+
+
+
 
 [[init_events]]
 
@@ -862,6 +986,7 @@ public interface BeforeBeanDiscovery {
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
     public void addAnnotatedType(AnnotatedType<?> type);
     public void addAnnotatedType(AnnotatedType<?> type, String id);
+    public AnnotatedTypeConfigurator<?> addAnnotatedType(String id);
 }
 ----
 
@@ -871,6 +996,8 @@ public interface BeforeBeanDiscovery {
 * `addInterceptorBinding()` declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
 * `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an optional identifier.
 The first version of the method is deprecated since version 1.1 of Contexts and Dependency Injection.
++
+The third version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
 
 
 [source, java]
@@ -881,6 +1008,7 @@ void beforeBeanDiscovery(@Observes BeforeBeanDiscovery event) { ... }
 If any observer method of the `BeforeBeanDiscovery` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `BeforeBeanDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
 
 [[after_type_discovery]]
 
@@ -896,6 +1024,7 @@ public interface AfterTypeDiscovery {
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
     public void addAnnotatedType(AnnotatedType<?> type, String id);
+    public AnnotatedTypeConfigurator<?> addAnnotatedType(String id);
 }
 ----
 
@@ -906,6 +1035,8 @@ Interceptors enabled for a bean archive are not included in the list.
 * `getDecorators()` returns the ordered list of enabled decorators for the application, sorted by priority in ascending order.
 Decorators enabled for a bean archive are not included in the list.
 * `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an identifier.
++
+The second version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of observer invocation.
 
 If an alternative, interceptor or decorator is added using `AfterTypeDiscovery.addAnnotatedType()`, non-portable behavior results.
 
@@ -937,7 +1068,9 @@ The event object must be of type `javax.enterprise.inject.spi.AfterBeanDiscovery
 public interface AfterBeanDiscovery {
     public void addDefinitionError(Throwable t);
     public void addBean(Bean<?> bean);
+    public BeanConfigurator<?> addBean();
     public void addObserverMethod(ObserverMethod<?> observerMethod);
+    public ObserverMethodConfigurator<?> addObserverMethod();
     public void addContext(Context context);
     public <T> AnnotatedType<T> getAnnotatedType(Class<T> type, String id);
     public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
@@ -947,7 +1080,11 @@ public interface AfterBeanDiscovery {
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after all observers have been notified.
 * `addBean()` fires an event of type `ProcessBean` containing the given `Bean` and then registers the `Bean` with the container, thereby making it available for injection into other beans.
 The given `Bean` may implement `Interceptor` or `Decorator`.
++
+The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
 * `addObserverMethod()` fires an event of type `ProcessObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
++
+The second version of the method, returns a new `ObserverMethodConfigurator` as defined in <<observer_method_configurator>> to easily configure the `ObserverMethod` which will be added at the end of observer invocation.
 * `addContext()` registers a custom `Context` object with the container.
 * `getAnnotatedType()` and `getAnnotatedTypes()` returns the `AnnotatedType` s discovered or added during container initialization.
 The id of an `AnnotatedType` added by the container is not defined.
@@ -964,6 +1101,45 @@ void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager)
 If any observer method of the `AfterBeanDiscovery` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `AfterBeanDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+
+[[bean_configurator]]
+
+===== `BeanConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.BeanConfigurator` interface to help configuring a new `Bean` instance.
+
+With `BeanConfigurator` you can perform all the operations defined in <<bean_attributes_configurator>> plus the following:
+
+* Set the class of the bean with `beanClass` method.
+* Add an injection point for the bean with `addInjectionPoint` method.
+* Add multiple injection points for the bean with `addInjectionPoints` methods.
+* Replace all injection points for the bean with `injectionPoints` methods.
+* Make the bean implements `PassivationCapable` and set its id with `id` method.
+* Set the `Function` to create a bean instance from a `CreationalContext` with `createWith` method.
+* Set the `Supplier` or `Function` to create a bean instance with `produceWith` method
+* Set the object to return when creating a bean instance with `producing` method
+* Set the `BiConsumer` or `Consumer` to destroy an instance from or without a CreationalContext with `disposeWith` methods.
+
+[[observer_method_configurator]]
+
+===== `ObserverMethodConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.ObserverMethodConfigurator` interface to help configuring a new `ObserverMethod` instance.
+
+`ObserverMethodConfigurator` must be initialized from a `java.lang.reflect.Method`, `AnnotatedMethod` or an existing `ObserverMethod` with one of its `read()` methods.
+
+With `ObserverMethodConfigurator` you can perform the following operations:
+
+* Set the `ObserverMethod` bean class with `beanClass` method.
+* Set the type of the observed event with `observedType` method.
+* Add a qualifier with `addQualifier` method.
+* Set or add multiple qualifiers with `addQualifiers` and `qualifiers` methods.
+* Set the `Reception` type with reception method.
+* Set the `TransactionPhase` type with `transactionPhase` method.
+* Set the priority with `priority` method.
+* Define the `Consumer` to call on notification with `notifyWith` method.
+* Make the observer asynchronous with `async` method.
 
 [[after_deployment_validation]]
 
@@ -1038,6 +1214,7 @@ If the `@WithAnnotations` annotation is applied to any other event parameter, th
 public interface ProcessAnnotatedType<X> {
     public AnnotatedType<X> getAnnotatedType();
     public void setAnnotatedType(AnnotatedType<X> type);
+    public AnnotatedTypeConfigurator<X> configureAnnotatedType();
     public void veto();
 }
 ----
@@ -1051,6 +1228,8 @@ interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
 
 * `getAnnotatedType()` returns the `AnnotatedType` object that will be used by the container to read the declared annotations.
 * `setAnnotatedType()` replaces the `AnnotatedType`.
+* `configureAnnotatedType()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the `AnnotatedType` processed by the event to easily configure the `AnnotatedType` which will be used to replace the original one at the end of observer invocation.
+The method always return the same `AnnotatedTypeConfigurator`
 * `veto()` forces the container to ignore the type.
 * `getSource()` returns the `Extension` instance that added the annotated type.
 
@@ -1083,12 +1262,15 @@ The event object must be of type `javax.enterprise.inject.spi.ProcessInjectionPo
 public interface ProcessInjectionPoint<T, X> {
     public InjectionPoint getInjectionPoint();
     public void setInjectionPoint(InjectionPoint injectionPoint);
+    public InjectionPointConfigurator configureInjectionPoint();
     public void addDefinitionError(Throwable t);
 }
 ----
 
 * `getInjectionPoint()` returns the `InjectionPoint` object that will be used by the container to perform injection.
 * `setInjectionPoint()` replaces the `InjectionPoint`.
+* `configureInjectionPoint()` returns an `InjectionPointConfigurator` (as defined in <<injection_point_configurator>>) initialized with the `InjectionPoint` processed by the event to easily configure the  `InjectionPoint` which will be used to replace the original one at the end of observer invocation.
+The method always return the same `InjectionPointConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
@@ -1097,6 +1279,26 @@ Any observer of this event is permitted to wrap and/or replace the `InjectionPoi
 If any observer method of a `ProcessInjectionPoint` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessInjectionPoint` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+[[injection_point_configurator]]
+
+===== `InjectionPointConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.InjectionPointConfigurator` interface to help configure a new `InjectionPoint` instance.
+
+`InjectionPointConfigurator` must be initialized from a field, a method or constructor parameter or an existing `InjectionPoint` with one of its `read()` methods.
+
+With `InjectionPointConfigurator` you can perform the following operations:
+
+* Set the type of `InjectionPoint` with `type` method.
+* Add a qualifier with `addQualifier` method.
+* Set or add multiple qualifiers with `addQualifiers` and `qualifiers` methods.
+* Add a stereotype with `addStereotype` method.
+* Set or add multiple stereotypes with `addStereotypes` and `stereotypes` methods.
+* Set the bean that defines this injection point with `bean` method.
+* Make the injection point delegate with `delegate` method.
+* Make the injection point a transient field with `transientField` method.
+
 
 [[process_injection_target]]
 
@@ -1151,6 +1353,7 @@ public interface ProcessBeanAttributes<T> {
     public Annotated getAnnotated();
     public BeanAttributes<T> getBeanAttributes();
     public void setBeanAttributes(BeanAttributes<T> beanAttributes);
+    public BeanAttributesConfigurator<T> configureBeanAttributes();
     public void addDefinitionError(Throwable t);
     public void veto();
 }
@@ -1159,6 +1362,8 @@ public interface ProcessBeanAttributes<T> {
 * `getAnnotated()` returns the `AnnotatedType` representing the bean class, the `AnnotatedMethod` representing the producer field, or the `AnnotatedField` representing the producer field.
 * `getBeanAttributes()` returns the `BeanAttributes` object that will be used by the container to manage instances of the bean.
 * `setBeanAttributes()` replaces the `BeanAttributes`.
+* `configureBeanAttributes()` returns a `BeanAttributesConfigurator` (as defined in <<bean_attributes_configurator>>) initialized with the `BeanAttributes` processed by the event to easily configure the  `BeanAttributes` which will be used to replace the original one at the end of observer invocation.
+The method always return the same `BeanAttributesConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `veto()` forces the container to ignore the bean.
 
@@ -1171,6 +1376,28 @@ Any bean which has its bean attributes altered must have it's definition validat
 If any observer method of a `ProcessBeanAttributes` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessBeanAttributes` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+
+[[bean_attributes_configurator]]
+
+===== `BeanAttributesConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
+
+`BeanAttributesConfigurator` must be initialized from an `AnnotatedType`, or an existing `BeanAttributes` with one of its `read()` methods.
+
+With `BeanAttributesConfigurator` you can perform the following operations :
+
+* Add type with `addType` or `addTransitiveTypeClosure` methods.
+* Set multiple types with `types` methods.
+* Set scope with `scope` method.
+* Add a qualifier with `addQualifier` method.
+* Set or add multiple qualifiers with `addQualifiers` and `qualifiers` methods.
+* Add a stereotype with `addStereotype` method.
+* Set or add multiple stereotypes with `addStereotypes` and `stereotypes` methods.
+* Set the bean name `name` method.
+* Make the bean an alternative with `alternative` methods.
+
 
 [[process_bean]]
 
@@ -1287,6 +1514,7 @@ public interface ProcessObserverMethod<T, X> {
     public ObserverMethod<T> getObserverMethod();
     public void addDefinitionError(Throwable t);
     public void setObserverMethod(ObserverMethod<T> observerMethod);
+    public ObserverMethodConfigurator<T> setObserverMethod();
     public void veto();
 }
 ----
@@ -1295,6 +1523,8 @@ public interface ProcessObserverMethod<T, X> {
 * `getObserverMethod()` returns the `ObserverMethod` object that will be used by the container to call the observer method.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `setObserverMethod()` replaces the `ObserverMethod`.
+* `configureObserverMethod()` returns an `ObserverMethodConfigurator` (as defined in <<observer_method_configurator>>) initialized with the `ObserverMethod` processed by the event to easily configure the  `ObserverMethod` which will be used to replace the original one at the end of observer invocation.
+The method always return the same `ObserverMethodConfigurator`.
 * `veto()` forces the container to ignore the `ObserverMethod`.
 
 
@@ -1302,3 +1532,17 @@ public interface ProcessObserverMethod<T, X> {
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessObserverMethod` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+[[configurators]]
+
+=== Configurators interfaces
+
+CDI 2.0 introduced the following Configurators interface:
+
+* <<annotated_type_configurator>> for `AnnotatedType` configuration
+* <<injection_point_configurator>> for `InjectionPoint` configuration
+* <<bean_attributes_configurator>> for `BeanAttributes` configuration
+* <<bean_configurator>> for `Bean` configuration
+* <<observer_method_configurator>> for `ObserverMethod` configuration
+
+The container must provide implementation for all these configurators and make them available in matching container lifecycle events as defined in <<init_events>>.

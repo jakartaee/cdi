@@ -17,6 +17,8 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.context.spi.Context;
+import javax.enterprise.inject.spi.builder.BeanConfigurator;
+import javax.enterprise.inject.spi.builder.ObserverMethodConfigurator;
 
 /**
  * <p>
@@ -41,6 +43,7 @@ import javax.enterprise.context.spi.Context;
  * </p>
  * 
  * @author David Allen
+ * @author Antoine Sabot-Durand
  */
 public interface AfterBeanDiscovery {
     /**
@@ -64,6 +67,21 @@ public interface AfterBeanDiscovery {
     public void addBean(Bean<?> bean);
 
     /**
+     *
+     * Obtains a new {@link BeanConfigurator} to configure  a new {@link Bean}  and add it at the end of the observer invocation.
+     * It will then fire an event of type {@link javax.enterprise.inject.spi.ProcessBean} containing the built
+     * {@link javax.enterprise.inject.spi.Bean} from this configuration and then register it with the
+     * container, thereby making it available for injection into other beans.
+     *
+     * Each call returns a new BeanConfigurator.
+     *
+     * @return a non reusable {@link BeanConfigurator} to configure the bean to add
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public <T> BeanConfigurator<T> addBean();
+
+    /**
      * Fires an event of type {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the given
      * {@link javax.enterprise.inject.spi.ObserverMethod} and then registers the
      * {@link javax.enterprise.inject.spi.ObserverMethod} with the container, thereby making it available for event
@@ -73,6 +91,21 @@ public interface AfterBeanDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addObserverMethod(ObserverMethod<?> observerMethod);
+
+    /**
+     * obtains a new {@link ObserverMethodConfigurator} to configure a new {@link ObserverMethod} and add it at the end of the observer invocation.
+     * It will then fire an event of type {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the built
+     * {@link javax.enterprise.inject.spi.ObserverMethod} from this configuration and then registers the
+     * {@link javax.enterprise.inject.spi.ObserverMethod} with the container, thereby making it available for event
+     * notifications.
+     *
+     * Each call returns a new ObserverMethodConfigurator.
+     *
+     * @return a non reusable {@link ObserverMethodConfigurator} instance
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public <T> ObserverMethodConfigurator<T> addObserverMethod();
 
     /**
      * Registers a custom {@link javax.enterprise.context.spi.Context} object with the container.
@@ -106,5 +139,4 @@ public interface AfterBeanDiscovery {
      * @since 1.1
      */
     public <T> Iterable<AnnotatedType<T>> getAnnotatedTypes(Class<T> type);
-
 }

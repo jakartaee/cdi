@@ -16,13 +16,13 @@
  */
 package javax.enterprise.inject.spi;
 
-import java.lang.annotation.Annotation;
-
 import javax.enterprise.context.NormalScope;
 import javax.enterprise.inject.Stereotype;
+import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
 import javax.inject.Qualifier;
 import javax.inject.Scope;
 import javax.interceptor.InterceptorBinding;
+import java.lang.annotation.Annotation;
 
 /**
  * <p>
@@ -32,6 +32,7 @@ import javax.interceptor.InterceptorBinding;
  * 
  * @author Pete Muir
  * @author David Allen
+ * @author Antoine Sabot-Durand
  */
 public interface BeforeBeanDiscovery {
     /**
@@ -171,4 +172,34 @@ public interface BeforeBeanDiscovery {
      * @since 1.1
      */
     public void addAnnotatedType(AnnotatedType<?> type, String id);
+
+    /**
+     * <p>
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link javax.enterprise.inject.spi.AnnotatedType} and
+     * add it to the set of types which will be scanned during bean discovery at the end of the observer invocation
+     * </p>
+     *
+     * <p>
+     * This method allows multiple annotated types, based on the same underlying type, to be defined with a builder.
+     * {@link AnnotatedType}s discovered by the container use the fully qualified class name of
+     * {@link AnnotatedType#getJavaClass()} to identify the type.
+     * </p>
+     *
+     * <p>
+     * {@link AfterBeanDiscovery#getAnnotatedType(Class, String)} and {@link AfterBeanDiscovery#getAnnotatedTypes(Class)} allows
+     * annotated types to be obtained by identifier.
+     * </p>
+     *
+     * Each call returns a new AnnotatedTypeConfigurator
+     *
+     *
+     * @param id The id of the annotated type
+     * @param type type of the class that the {@link AnnotatedType} will represent
+     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id, Class<T> type);
+
+
 }
