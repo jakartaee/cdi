@@ -17,6 +17,8 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.builder.ObserverMethodConfigurator;
+
 /**
  * <p>
  * The container fires an event of this type for each {@linkplain javax.enterprise.event.Observes observer method} of each
@@ -72,6 +74,19 @@ public interface ProcessObserverMethod<T, X> {
      * @since 2.0
      */
     public void setObserverMethod(ObserverMethod<T> observerMethod);
+
+
+    /**
+     * Returns a {@link ObserverMethodConfigurator} initialized with the {@link ObserverMethod} processed by this event,
+     * to configure a new ObserverMethod that will replace the original one at the end of the observer invocation.
+     *
+     * Each call returns the same ObserverMethodConfigurator
+     *
+     * @return a non reusable {@link ObserverMethodConfigurator} to configure the replacing ObserverMethod
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public ObserverMethodConfigurator<T> configureObserverMethod();
 
     /**
      * Forces the container to ignore the observer method.

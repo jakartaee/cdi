@@ -16,6 +16,8 @@
  */
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
+
 /**
  * <p>
  * The container fires an event of this type for each Java class or interface it discovers in a bean archive, before it reads
@@ -42,6 +44,7 @@ package javax.enterprise.inject.spi;
  * </p>
  * 
  * @author David Allen
+ * @author Antoine Sabot-Durand
  * @see AnnotatedType
  * @param <X> The class being annotated
  */
@@ -62,6 +65,18 @@ public interface ProcessAnnotatedType<X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setAnnotatedType(AnnotatedType<X> type);
+
+    /**
+     * Returns an {@link AnnotatedTypeConfigurator} initialized with the {@link AnnotatedType} processed by this event
+     * to configure a new AnnotatedType that will replace the original one at the end of the observer invocation.
+     *
+     * Each call returns the same AnnotatedTypeConfigurator.
+     *
+     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the replacing AnnotatedType
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public AnnotatedTypeConfigurator<X> configureAnnotatedType();
 
     /**
      * Forces the container to ignore this type.
