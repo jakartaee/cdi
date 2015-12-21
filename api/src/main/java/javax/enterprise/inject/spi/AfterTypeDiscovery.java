@@ -17,6 +17,7 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ import java.util.List;
  * </p>
  *
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @since 1.1
  */
 public interface AfterTypeDiscovery {
@@ -75,5 +77,33 @@ public interface AfterTypeDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addAnnotatedType(AnnotatedType<?> type, String id);
+
+    /**
+     * <p>
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link javax.enterprise.inject.spi.AnnotatedType} and
+     * add it to the set of types which will be scanned during bean discovery at the end of the observer invocation.
+     * Calling this method multiple times will return a new AnnotatedTypeConfigurator.
+     * </p>
+     *
+     * <p>
+     * This method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
+     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
+     * type.
+     * </p>
+     *
+     * <p>
+     * {@link AfterBeanDiscovery#getAnnotatedType(Class, String)} and {@link AfterBeanDiscovery#getAnnotatedTypes(Class)} allows
+     * annotated types to be obtained by identifier.
+     * </p>
+     *
+     * Each call returns a new AnnotatedTypeConfigurator.
+     *
+     *
+     * @param id The id of the annotated type
+     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id);
 
 }

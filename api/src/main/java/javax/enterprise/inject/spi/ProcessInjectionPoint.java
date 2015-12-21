@@ -17,6 +17,8 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.builder.InjectionPointConfigurator;
+
 /**
  * <p>
  * The container fires an event of this type for every injection point of every Java EE component class supporting injection
@@ -36,6 +38,7 @@ package javax.enterprise.inject.spi;
  * 
  * @see InjectionPoint
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @param <X> the declared type of the injection point.
  * @param <T> the bean class of the bean that declares the injectoion point
  */
@@ -54,6 +57,18 @@ public interface ProcessInjectionPoint<T, X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setInjectionPoint(InjectionPoint injectionPoint);
+
+    /**
+     * Returns an {@link InjectionPointConfigurator} initialized with the {@link InjectionPoint} processed by this event
+     * to configure a new InjectionPoint that will replace the original one at the end of the observer invocation.
+     *
+     * Each call returns the same InjectionPointConfigurator
+     *
+     * @return a non reusable {@link InjectionPointConfigurator} to configure the replacing InjectionPoint
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public InjectionPointConfigurator configureInjectionPoint();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
