@@ -743,7 +743,7 @@ Certain legal bean types cannot be proxied by the container:
 
 * classes which don't have a non-private constructor with no parameters,
 * classes which are declared final,
-* classes which have non-static, final methods with public, protected or default visibility,
+* classes which have non-static, final methods with public, protected or default visibility except the classes are explicitly enlisted via <<allowProxying>>,
 * primitive types,
 * and array types.
 
@@ -757,3 +757,24 @@ A bean type must be proxyable if an injection point resolves to a bean:
 
 Otherwise, the container automatically detects the problem, and treats it as a deployment problem.
 
+[[allowProxying]]
+
+==== Explicitly allow proxying of a bean type with final methods
+
+The container has multiple ways to define a list of classes which should be considered proxyable despite of having final methods:
+
+* a comma (`','`) separated list of class names set via the java system property `javax.enterprise.inject.allowProxying.classes`, plus
+* a comma (`','`) separated list of class names set via the environment `JAVAX_ENTERPRISE_INJECT_ALLOWPROXYING_CLASSES`, plus
+* a `allowProxying` entry in `beans.xml` as shown in the following example
+
+[source, xml]
+----
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"">
+  <allowProxying>
+    <class>com.acme.myfwk.SomeClassWithFinalMethods</class>
+    <class>java.util.concurrent.ThreadPoolExecutor</class>
+  </allowProxying>
+</beans>
+----
