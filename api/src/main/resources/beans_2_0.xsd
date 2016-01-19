@@ -19,7 +19,7 @@
    elementFormDefault="qualified" 
    targetNamespace="http://xmlns.jcp.org/xml/ns/javaee"
    xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"
-   version="1.1">
+   version="2.0">
 
    <xs:annotation>
       <xs:documentation>
@@ -33,7 +33,7 @@
          
 
          This is the XML Schema for the beans.xml deployment
-         descriptor for CDI 1.1.  The deployment descriptor must be named
+         descriptor for CDI 2.0.  The deployment descriptor must be named
          "META-INF/beans.xml" or "WEB-INF/beans.xml" in a war file.
          All application deployment descriptors may indicate
          the application schema by using the Java EE namespace:
@@ -47,7 +47,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
-         version="1.1">
+         version="2.0">
             ...
          </beans>
 
@@ -83,7 +83,7 @@
             <xs:element ref="javaee:allowProxying" />
             <xs:any namespace="##other" processContents="lax"/>
          </xs:choice>
-         <xs:attribute name="version" default="1.1">
+         <xs:attribute name="version" default="2.0">
             <xs:annotation>
                 <xs:documentation>
                     The version of CDI this beans.xml is for. If the version is "1.1" (or 
