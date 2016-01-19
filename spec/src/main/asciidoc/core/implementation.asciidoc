@@ -778,3 +778,5 @@ The container has multiple ways to define a list of classes which should be cons
   </allowProxying>
 </beans>
 ----
+
+If any of the final methods get invoked on those proxies, non-portable behaviour results.
