@@ -40,7 +40,7 @@ Contexts and Dependency Injection 1.0 allowed only for an alternative to be sele
 
 [[declaring_selected_alternatives_application]]
 
-===== Declaring selected alternatives for an application 
+===== Declaring selected alternatives for an application
 
 An alternative may be given a priority for the application:
 
@@ -530,7 +530,7 @@ The log category of a `Logger` depends upon the class of the object into which i
 [source, java]
 ----
 @Produces Logger createLogger(InjectionPoint injectionPoint) {
-    return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );    
+    return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );
 }
 ----
 
@@ -585,13 +585,13 @@ Otherwise, the container automatically detects the problem and treats it as a de
 [source, java]
 ----
 @Named("Order") public class OrderProcessor {
-    
+
     @Inject Bean<OrderProcessor> bean;
-    
+
     public void getBeanName() {
        return bean.getName();
     }
-    
+
 }
 ----
 
@@ -667,16 +667,18 @@ The `Instance` interface provides a method for obtaining instances of beans with
 [source, java]
 ----
 public interface Instance<T> extends Iterable<T>, Provider<T> {
-      
+
     public Instance<T> select(Annotation... qualifiers);
     public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
     public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
-    
+
     public boolean isUnsatisfied();
     public boolean isAmbiguous();
 
     public void destroy(T instance);
-      
+
+    public Bean<T> getBean();
+
 }
 ----
 
@@ -700,7 +702,7 @@ For example, this child `Instance` has required type `AsynchronousPaymentProcess
 
 [source, java]
 ----
-Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select( 
+Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select(
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );
 ----
 
@@ -715,6 +717,12 @@ The `get()` method must:
 * Identify a bean that has the required type and required qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * If typesafe resolution results in an unsatisfied dependency, throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, throw an `AmbiguousResolutionException`.
 * Otherwise, obtain a contextual reference for the bean and the required type, as defined in <<contextual_reference>>.
+
+The `getBean()` method must:
+
+* Identify a bean that has the required type and required qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
+* If typesafe resolution results in an unsatisfied dependency, throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, throw an `AmbiguousResolutionException`.
+* Otherwise, return the metadata about the identified bean, as defined in <<bean_metadata>>.
 
 
 The `iterator()` method must:
@@ -756,15 +764,15 @@ The built-in implementation must be a passivation capable dependency, as defined
 [source, java]
 ----
 public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMethod) {
-    
+
     class SynchronousQualifier extends AnnotationLiteral<Synchronous>
             implements Synchronous {}
-    
+
     class PayByQualifier extends AnnotationLiteral<PayBy>
             implements PayBy {
         public PaymentMethod value() { return paymentMethod; }
     }
-    
+
     return anyPaymentProcessor.select(new SynchronousQualifier(), new PayByQualifier()).get();
 }
 ----
