@@ -94,6 +94,8 @@ Interceptors enabled using `@Priority` are called before interceptors enabled us
 
 An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<after_type_discovery>>.
 
+If an interceptor declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
+
 [[interceptor_resolution]]
 
 === Interceptor resolution

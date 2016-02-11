@@ -20,6 +20,8 @@ The decorator class may be abstract.
 
 If the set of decorated types of a decorator is empty, the container automatically detects the problem and treats it as a definition error.
 
+If a decorator declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
+
 [[decorator_annotation]]
 
 ==== Declaring a decorator
