@@ -9,7 +9,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -28,17 +28,18 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 /**
  * <p>
  * The <code>@Destroyed</code> qualifier.
  * </p>
- * 
+ *
  * @author Pete Muir
  * @see Initialized
  * @since 1.1
- * 
+ *
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
@@ -50,5 +51,29 @@ public @interface Destroyed {
      * The scope for which to observe destruction
      */
     Class<? extends Annotation> value();
+
+    /**
+     * Supports inline instantiation of the {@link Destroyed} qualifier.
+     *
+     * @author Martin Kouba
+     */
+    public final static class Literal extends AnnotationLiteral<Destroyed> implements Destroyed {
+
+        private static final long serialVersionUID = 1L;
+
+        private final Class<? extends Annotation> value;
+
+        public static Literal of(Class<? extends Annotation> value) {
+            return new Literal(value);
+        }
+
+        private Literal(Class<? extends Annotation> value) {
+            this.value = value;
+        }
+
+        public Class<? extends Annotation> value() {
+            return value;
+        }
+    }
 
 }
