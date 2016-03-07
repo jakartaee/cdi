@@ -26,7 +26,7 @@ An observer method will be notified of an event if the event object is assignabl
 An event object is an instance of a concrete Java class with no unresolvable type variables.
 The _event types_ of the event include all superclasses and interfaces of the runtime class of the event object.
 
-An event type may not contain an unresolvable type variable.
+An event type may not contain an unresolvable type variable. A wildcard type is not considered an unresolvable type variable.
 
 An event qualifier type is just an ordinary qualifier type as specified in <<defining_qualifier_types>>, typically defined as `@Target({METHOD, FIELD, PARAMETER, TYPE})` or `@Target({FIELD, PARAMETER})`.
 
@@ -88,7 +88,7 @@ public void login() {
 Event fired with the `fire()` method is fired synchronously.
 All the resolved synchronous observers (as defined in <<observer_resolution>>) are called in the thread in which `fire()` was called.
 A synchronous observer notification blocks the calling thread until it completes.
- 
+
 [[firing_events_asynchronously]]
 
 ==== Firing events asynchronously
@@ -119,15 +119,15 @@ The `Event` interface provides a method for firing events with a specified combi
 [source, java]
 ----
 public interface Event<T> {
-      
+
     public void fire(T event);
     public <U extends T> CompletionStage<U> fireAsync(U event);
     public <U extends T> CompletionStage<U> fireAsync(U event, Executor executor);
-      
+
     public Event<T> select(Annotation... qualifiers);
     public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
     public <U extends T> Event<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
-      
+
 }
 ----
 
@@ -151,8 +151,8 @@ For example, this child `Event` has required type `AdminLoggedInEvent` and addit
 
 [source, java]
 ----
-Event<AdminLoggedInEvent> admin = any.select( 
-            AdminLoggedInEvent.class, 
+Event<AdminLoggedInEvent> admin = any.select(
+            AdminLoggedInEvent.class,
             new AdminQualifier() );
 ----
 
@@ -264,8 +264,8 @@ Where `RoleQualifier` is an implementation of the qualifier type `Role`:
 
 [source, java]
 ----
-public abstract class RoleQualifier 
-        extends AnnotationLiteral<Role> 
+public abstract class RoleQualifier
+        extends AnnotationLiteral<Role>
         implements Role {}
 ----
 
@@ -521,7 +521,7 @@ If an event is asynchronous, and an exception is thrown by any of its notified o
 They can be accessed as an array of `throwable` with the `getSuppressed` method.
 
 It can be handled with one of the `CompletionStage` methods related to exceptions:
-  
+
 [source, java]
 ----
 myEvent.fireAsync(anEventObject)
@@ -530,10 +530,10 @@ myEvent.fireAsync(anEventObject)
                return ok;
            } else {
              for (Throwable t : ex.getSuppressed()) {
-                      ...         
+                      ...
              }
               ...
-           } }); 
+           } });
 ----
 
 If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event object.
