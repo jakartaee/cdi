@@ -192,7 +192,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * </p>
      * 
      * <p>
-     * The instance passed should either be a dependent scoped bean instance, or the client proxy for a normal scoped bean
+     * The instance passed should either be a dependent scoped bean instance obtained from the same {@link Instance} object, or the client proxy for a normal scoped bean
      * instance.
      * </p>
      * 
