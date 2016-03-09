@@ -779,3 +779,53 @@ public PaymentProcessor<Cheque> getChequePaymentProcessor() {
 }
 ----
 
+==== Built-in annotation literals
+
+As an helper, CDI 2.0 introduced built-in Literals for the following cdi annotations:
+
+* `javax.enterprise.inject.Any`
+* `javax.enterprise.inject.Default`
+* `javax.enterprise.inject.New`
+* `javax.enterprise.util.Nonbinding`
+* `javax.enterprise.context.Initialized`
+* `javax.enterprise.context.Destroyed`
+* `javax.enterprise.context.RequestScoped`
+* `javax.enterprise.context.SessionScoped`
+* `javax.enterprise.context.ApplicationScoped`
+* `javax.enterprise.context.Dependent`
+* `javax.enterprise.context.ConversationScoped`
+* `javax.enterprise.inject.Alternative`
+* `javax.enterprise.inject.Typed`
+
+Each of these annotations contains a `Literal` inner class to instantiate the matching annotation literal:
+
+[source, java]
+----
+Default defaultLiteral = new Default.Literal();
+----
+
+Annotation without members can provide annotation literal instance from the `INSTANCE` static field:
+
+[source, java]
+----
+RequestScoped requestScopedLiteral = RequestScoped.Literal.INSTANCE;
+----
+
+Annotation having members can provide annotation literal instance either from constructor or `of` static method:
+
+[source, java]
+----
+Initialized initializedForApplicationScoped = new Initialized.Literal(ApplicationScoped.class);
+
+Initialized initializedForRequestScoped = Initialized.Instance.of(RequestScoped.class);
+----
+
+See annotation javadoc for information about `Literal` inner class constructor parameters.
+
+In addition to these literals, CDI also provides annotation literals for the following JSR 330 annotations:
+
+* `javax.inject.Named` with `javax.enterprise.inject.literal.NamedLiteral` class
+* `javax.inject.Qualifier` with `javax.enterprise.inject.literal.QualifierLiteral` class
+* `javax.inject.Singleton` with `javax.enterprise.inject.literal.SingletonLiteral` class
+
+They can be used like inner classes described above.
