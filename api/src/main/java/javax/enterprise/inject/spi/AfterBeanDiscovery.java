@@ -55,9 +55,9 @@ public interface AfterBeanDiscovery {
     /**
      * Fires an event of type {@link javax.enterprise.inject.spi.ProcessBean} containing the given
      * {@link javax.enterprise.inject.spi.Bean} and then registers the {@link javax.enterprise.inject.spi.Bean} with the
-     * container, thereby making it available for injection into other beans. The given {@link javax.enterprise.inject.spi.Bean}
-     * may implement {@link javax.enterprise.inject.spi.Interceptor} or {@link javax.decorator.Decorator}.
-     * 
+     * container, thereby making a bean which is not an interceptor nor a decorator available for injection into other beans.
+     * The given {@link javax.enterprise.inject.spi.Bean} may implement {@link javax.enterprise.inject.spi.Interceptor} or {@link javax.decorator.Decorator}.
+     *
      * @param bean The bean to add to the deployment
      * @throws IllegalStateException if called outside of the observer method invocation
      */
