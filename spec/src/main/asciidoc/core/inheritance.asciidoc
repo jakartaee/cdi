@@ -177,10 +177,10 @@ Even if the second bean defines a producer or observer method, the method will n
 
 The annotation `@javax.enterprise.inject.Specializes` is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>> and <<specialize_producer_method>>.
 
-Formally, a bean X is said to _specialize_ another bean Y if either:
+Formally, a bean X is said to _specialize_ another bean Y if there is either:
 
-* X directly specializes Y, or
-* a bean Z exists, such that X directly specializes Z and Z specializes Y.
+* direct specialization, where X directly specializes Y, or
+* transitive specialization, where a bean Z exists, such that X directly specializes Z and Z specializes Y.
 
 
 Then X will inherit the qualifiers and bean name of Y:
