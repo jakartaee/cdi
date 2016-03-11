@@ -30,10 +30,10 @@ If the managed bean class is a generic type, it must have scope `@Dependent`. If
 
 ==== Which Java classes are managed beans?
 
-A top-level Java class is a managed bean if it meets all of the following conditions:
+A Java class is a managed bean if it meets all of the following conditions:
 
-* It is not a non-static inner class.
-* It is a concrete class, or is annotated `@Decorator`.
+* It is not an inner class.
+* It is a non-abstract class, or is annotated `@Decorator`.
 * It does not implement `javax.enterprise.inject.spi.Extension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
