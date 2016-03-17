@@ -20,7 +20,6 @@ package javax.enterprise.inject.spi.builder;
 import javax.enterprise.event.Reception;
 import javax.enterprise.event.TransactionPhase;
 import javax.enterprise.inject.Default;
-import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.EventMetadata;
@@ -29,26 +28,26 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
  * This API is an helper to build a new {@link ObserverMethod} instance.
  * CDI container must provides an implementation of this interface accessible.
- *
+ * <p/>
  * ObserverMethodConfigurator is not reusable.
- *
+ * <p/>
  * This configurator is not thread safe and shall not be used concurrently.
  *
  * @param <T> type of the event the configured ObserverMethod will observe
- * @see AfterBeanDiscovery#addObserverMethod()
  * @author Antoine Sabot-Durand
+ * @see AfterBeanDiscovery#addObserverMethod()
  * @since 2.0
  */
- public interface ObserverMethodConfigurator<T> {
+public interface ObserverMethodConfigurator<T> {
 
 
     /**
-     *
      * Read observer meta data from a existing {@link java.lang.reflect.Method}
      *
      * @param method to read meta data from
@@ -57,7 +56,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> read(Method method);
 
     /**
-     *
      * Read observer meta data from a existing {@link AnnotatedMethod}
      *
      * @param method to read meta data from
@@ -66,7 +64,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> read(AnnotatedMethod<?> method);
 
     /**
-     *
      * Read observer meta data from a existing ObserverMethod
      *
      * @param method to read meta data from
@@ -75,7 +72,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> read(ObserverMethod<T> method);
 
     /**
-     *
      * Set the class of the Bean containing this observer.
      * If not set, the extension class is used.
      *
@@ -85,7 +81,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> beanClass(Class<?> type);
 
     /**
-     *
      * Set the type of the observed event
      *
      * @param type of the observed event
@@ -94,7 +89,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> observedType(Type type);
 
     /**
-     *
      * Add the qualifier to the observed event
      * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
@@ -104,7 +98,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> addQualifier(Annotation qualifier);
 
     /**
-     *
      * Add all the qualifiers to the Observed event
      * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
@@ -114,7 +107,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> addQualifiers(Annotation... qualifiers);
 
     /**
-     *
      * Add all the qualifiers to the Observed event
      * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
@@ -142,7 +134,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> qualifiers(Set<Annotation> qualifiers);
 
     /**
-     *
      * Set the {@link Reception} mode for the observer to build
      *
      * @param reception reception type
@@ -151,7 +142,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> reception(Reception reception);
 
     /**
-     *
      * Set the {@link TransactionPhase} for the observer to build
      *
      * @param transactionPhase phase for the observer
@@ -160,7 +150,6 @@ import java.util.function.Consumer;
     ObserverMethodConfigurator<T> transactionPhase(TransactionPhase transactionPhase);
 
     /**
-     *
      * Set the priority for the observer to build
      *
      * @param priority priority of the observer
@@ -168,26 +157,23 @@ import java.util.function.Consumer;
      */
     ObserverMethodConfigurator<T> priority(int priority);
 
-   /**
-    * Define consumer to call when event is notified
-    *
-    * @param consumer to call for the event notification
-    * @return self
-    */
-   ObserverMethodConfigurator<T> notifyWith(Consumer<T> consumer);
-
-   /**
-    *
-    * Define notification directly in the observer with event metadata and an Instance for beans
-    *
-    * @param metadata metadata of the event
-    * @param instance instance to retrieve all beans
-    * @return self
-     */
-   ObserverMethodConfigurator<T> notifyWith(EventMetadata metadata, Instance<Object> instance);
-
-   /**
+    /**
+     * Define Consumer to call when event is notified
      *
+     * @param callback to call for the event notification
+     * @return self
+     */
+    ObserverMethodConfigurator<T> notifyWith(Consumer<T> callback);
+
+    /**
+     * Defines a BiConsumer to call when event is notified
+     *
+     * @param callback a BiConsumer taking EventMetadata and event type as type parameters
+     * @return self
+     */
+    ObserverMethodConfigurator<T> notifyWith(BiConsumer<EventMetadata, T> callback);
+
+    /**
      * Allows modification of the asynchronous status of the observer to build.
      *
      * @param async async status
