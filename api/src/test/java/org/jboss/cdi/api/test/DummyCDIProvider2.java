@@ -17,14 +17,16 @@
 
 package org.jboss.cdi.api.test;
 
+import java.lang.annotation.Annotation;
+import java.util.Iterator;
+import java.util.Map;
+
 import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.enterprise.inject.spi.CDIProvider;
 import javax.enterprise.util.TypeLiteral;
-import java.lang.annotation.Annotation;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by antoine on 16/12/2015.
@@ -81,6 +83,11 @@ public class DummyCDIProvider2 implements CDIProvider {
 
         @Override
         public Object get() {
+            return null;
+        }
+
+        @Override
+        public Bean<Object> getBean() {
             return null;
         }
     }
