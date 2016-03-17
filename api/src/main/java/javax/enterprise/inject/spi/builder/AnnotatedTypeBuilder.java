@@ -28,7 +28,7 @@ import javax.enterprise.inject.spi.AnnotatedType;
  *
  * @param <T> the class represented by the AnnotatedType to build
  * @author Antoine Sabot-Durand
- * @see Builders#annotatedType()
+ * @see Builders#annotatedType(Class)
  * @since 2.0
  */
 public interface AnnotatedTypeBuilder<T> {

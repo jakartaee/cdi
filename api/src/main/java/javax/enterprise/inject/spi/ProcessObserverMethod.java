@@ -32,7 +32,7 @@ import javax.enterprise.inject.spi.builder.ObserverMethodConfigurator;
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen
- * @auhtor Antoine Sabot-Durand
+ * @author  Antoine Sabot-Durand
  * @param <T> The type of the event being observed
  * @param <X> The bean type containing the observer method
  * 

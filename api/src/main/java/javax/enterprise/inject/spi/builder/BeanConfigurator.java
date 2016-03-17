@@ -178,7 +178,7 @@ public interface BeanConfigurator<T> {
      * @param type class to read information from
      * @return self
      */
-    <U extends T> BeanConfigurator<T> read(AnnotatedType<U> type);
+    <U extends T> BeanConfigurator<U> read(AnnotatedType<U> type);
 
     /**
      * Read the information from the given bean attributes. All relevant information is overwritten.

@@ -28,7 +28,7 @@ import javax.enterprise.inject.spi.ObserverMethod;
  * This builder is not thread safe and shall not be used concurrently.
  *
  * @param <T> type of the event the configured ObserverMethod will observe
- * @see Builders#observerMethod()
+ * @see Builders#observerMethod(Class)
  * @author Antoine Sabot-Durand
  * @since 2.0
  */

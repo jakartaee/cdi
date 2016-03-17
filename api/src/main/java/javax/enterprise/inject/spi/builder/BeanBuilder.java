@@ -27,7 +27,7 @@ import javax.enterprise.inject.spi.Bean;
  *
  * This builder is not thread safe and shall not be used concurrently.
  *
- * @see Builders#bean()
+ * @see Builders#bean(Class)
  * @author Antoine Sabot-Durand
  * @param <T> the class of the bean instance
  * @since 2.0

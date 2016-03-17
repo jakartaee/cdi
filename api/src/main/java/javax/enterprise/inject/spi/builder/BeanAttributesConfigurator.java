@@ -45,7 +45,7 @@ public interface BeanAttributesConfigurator<T> {
      * @param type class to read information from
      * @return self
      */
-    <U extends T> BeanAttributesConfigurator<T> read(AnnotatedType<U> type);
+    <U extends T> BeanAttributesConfigurator<U> read(AnnotatedType<U> type);
 
     /**
      * Read the information from the given bean attributes. All relevant information is overwritten.

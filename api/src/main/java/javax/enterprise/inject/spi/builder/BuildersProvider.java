@@ -36,12 +36,6 @@ public interface BuildersProvider {
      */
     <T> AnnotatedTypeBuilder<T> getAnnotatedTypeBuilder(Class<T> type);
 
-    /**
-     * Obtains a generic {@link AnnotatedTypeBuilder}
-     *
-     * @return a reusable AnnotatedTypeBuilder
-     */
-    AnnotatedTypeBuilder getAnnotatedTypeBuilder();
 
     /**
      * Obtains a {@link InjectionPointBuilder}
@@ -60,13 +54,6 @@ public interface BuildersProvider {
     <T> BeanAttributesBuilder<T> getBeanAttributesBuilder(Class<T> type);
 
     /**
-     * Obtains a generic {@link BeanAttributesBuilder}
-     *
-     * @return a reusable BeanAttributesBuilder
-     */
-    BeanAttributesBuilder getBeanAttributesBuilder();
-
-    /**
      * Obtains a {@link BeanBuilder} for the given type
      *
      * @param type the type of the instance of the built Bean
@@ -76,13 +63,6 @@ public interface BuildersProvider {
     <T> BeanBuilder<T> getBeanBuilder(Class<T> type);
 
     /**
-     * Obtains a generic {@link BeanBuilder}
-     *
-     * @return a reusable BeanBuilder
-     */
-    BeanBuilder getBeanBuilder();
-
-    /**
      * Obtains a {@link ObserverMethodBuilder} for the given event type
      *
      * @param type the type of the event for the built ObserverMethod
@@ -90,13 +70,6 @@ public interface BuildersProvider {
      * @return a reusable BeanBuilder
      */
     <T> ObserverMethodBuilder<T> getObserverMethodBuilder(Class<T> type);
-
-    /**
-     * Obtains a generic {@link ObserverMethodBuilder}
-     *
-     * @return a reusable ObserverMethodBuilder
-     */
-    ObserverMethodBuilder getObserverMethodBuilder();
 
 
 }
