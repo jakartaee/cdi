@@ -14,12 +14,17 @@ import javax.enterprise.inject.Alternative;
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.New;
+import javax.enterprise.inject.Specializes;
+import javax.enterprise.inject.TransientReference;
 import javax.enterprise.inject.Typed;
+import javax.enterprise.inject.Vetoed;
+import javax.enterprise.inject.literal.InjectLiteral;
 import javax.enterprise.inject.literal.NamedLiteral;
 import javax.enterprise.inject.literal.QualifierLiteral;
 import javax.enterprise.inject.literal.SingletonLiteral;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.enterprise.util.Nonbinding;
+import javax.inject.Inject;
 import javax.inject.Qualifier;
 import javax.inject.Singleton;
 
@@ -153,6 +158,34 @@ public class AnnotationLiteralTest {
     public void testDependentLiteral() {
         assertEquals(new AnnotationLiteral<Dependent>() {
         }, Dependent.Literal.INSTANCE);
+    }
+    
+    @SuppressWarnings("serial")
+    @Test
+    public void testVetoedLiteral() {
+        assertEquals(new AnnotationLiteral<Vetoed>() {
+        }, Vetoed.Literal.INSTANCE);
+    }
+    
+    @SuppressWarnings("serial")
+    @Test
+    public void testInjectLiteral() {
+        assertEquals(new AnnotationLiteral<Inject>() {
+        }, InjectLiteral.INSTANCE);
+    }
+    
+    @SuppressWarnings("serial")
+    @Test
+    public void testSpecializesLiteral() {
+        assertEquals(new AnnotationLiteral<Specializes>() {
+        }, Specializes.Literal.INSTANCE);
+    }
+    
+    @SuppressWarnings("serial")
+    @Test
+    public void testTransientReferenceLiteral() {
+        assertEquals(new AnnotationLiteral<TransientReference>() {
+        }, TransientReference.Literal.INSTANCE);
     }
 
 }

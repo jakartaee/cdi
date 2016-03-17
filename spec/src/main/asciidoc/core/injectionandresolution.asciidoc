@@ -40,7 +40,7 @@ Contexts and Dependency Injection 1.0 allowed only for an alternative to be sele
 
 [[declaring_selected_alternatives_application]]
 
-===== Declaring selected alternatives for an application 
+===== Declaring selected alternatives for an application
 
 An alternative may be given a priority for the application:
 
@@ -530,7 +530,7 @@ The log category of a `Logger` depends upon the class of the object into which i
 [source, java]
 ----
 @Produces Logger createLogger(InjectionPoint injectionPoint) {
-    return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );    
+    return Logger.getLogger( injectionPoint.getMember().getDeclaringClass().getName() );
 }
 ----
 
@@ -585,13 +585,13 @@ Otherwise, the container automatically detects the problem and treats it as a de
 [source, java]
 ----
 @Named("Order") public class OrderProcessor {
-    
+
     @Inject Bean<OrderProcessor> bean;
-    
+
     public void getBeanName() {
        return bean.getName();
     }
-    
+
 }
 ----
 
@@ -667,16 +667,16 @@ The `Instance` interface provides a method for obtaining instances of beans with
 [source, java]
 ----
 public interface Instance<T> extends Iterable<T>, Provider<T> {
-      
+
     public Instance<T> select(Annotation... qualifiers);
     public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
     public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
-    
+
     public boolean isUnsatisfied();
     public boolean isAmbiguous();
 
     public void destroy(T instance);
-      
+
 }
 ----
 
@@ -700,7 +700,7 @@ For example, this child `Instance` has required type `AsynchronousPaymentProcess
 
 [source, java]
 ----
-Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select( 
+Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select(
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );
 ----
 
@@ -756,15 +756,15 @@ The built-in implementation must be a passivation capable dependency, as defined
 [source, java]
 ----
 public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMethod) {
-    
+
     class SynchronousQualifier extends AnnotationLiteral<Synchronous>
             implements Synchronous {}
-    
+
     class PayByQualifier extends AnnotationLiteral<PayBy>
             implements PayBy {
         public PaymentMethod value() { return paymentMethod; }
     }
-    
+
     return anyPaymentProcessor.select(new SynchronousQualifier(), new PayByQualifier()).get();
 }
 ----
@@ -781,11 +781,13 @@ public PaymentProcessor<Cheque> getChequePaymentProcessor() {
 
 ==== Built-in annotation literals
 
-As an helper, CDI 2.0 introduced built-in Literals for the following cdi annotations:
+The following built-in annotations define a `Literal` static nested class to support inline instantiation of the specific annotation type:
 
 * `javax.enterprise.inject.Any`
 * `javax.enterprise.inject.Default`
 * `javax.enterprise.inject.New`
+* `javax.enterprise.inject.Specializes`
+* `javax.enterprise.inject.Vetoed`
 * `javax.enterprise.util.Nonbinding`
 * `javax.enterprise.context.Initialized`
 * `javax.enterprise.context.Destroyed`
@@ -797,35 +799,36 @@ As an helper, CDI 2.0 introduced built-in Literals for the following cdi annotat
 * `javax.enterprise.inject.Alternative`
 * `javax.enterprise.inject.Typed`
 
-Each of these annotations contains a `Literal` inner class to instantiate the matching annotation literal:
+The `Literal` class might be used to instantiate the matching `AnnotationLiteral`:
 
 [source, java]
 ----
 Default defaultLiteral = new Default.Literal();
 ----
 
-Annotation without members can provide annotation literal instance from the `INSTANCE` static field:
+Annotations without members provide the default `AnnotationLiteral` instance declared as a constant named `INSTANCE`:
 
 [source, java]
 ----
 RequestScoped requestScopedLiteral = RequestScoped.Literal.INSTANCE;
 ----
 
-Annotation having members can provide annotation literal instance either from constructor or `of` static method:
+Annotations having members do not provide the default `AnnotationLiteral` instance. Instead, a constructor or factory method named `of` can be used:
 
 [source, java]
 ----
 Initialized initializedForApplicationScoped = new Initialized.Literal(ApplicationScoped.class);
 
-Initialized initializedForRequestScoped = Initialized.Instance.of(RequestScoped.class);
+Initialized initializedForRequestScoped = Initialized.Literal.of(RequestScoped.class);
 ----
 
-See annotation javadoc for information about `Literal` inner class constructor parameters.
+See also the annotation javadoc for more information about specific `Literal` members.
 
-In addition to these literals, CDI also provides annotation literals for the following JSR 330 annotations:
+In addition, CDI also provides annotation literals for the following JSR 330 annotations:
 
+* `javax.inject.Inject` with `javax.enterprise.inject.literal.InjectLiteral` class
 * `javax.inject.Named` with `javax.enterprise.inject.literal.NamedLiteral` class
 * `javax.inject.Qualifier` with `javax.enterprise.inject.literal.QualifierLiteral` class
 * `javax.inject.Singleton` with `javax.enterprise.inject.literal.SingletonLiteral` class
 
-They can be used like inner classes described above.
+They can be used like static nested classes described above.

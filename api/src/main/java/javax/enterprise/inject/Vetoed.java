@@ -23,6 +23,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.enterprise.event.Event;
+import javax.enterprise.util.AnnotationLiteral;
+
 /**
  * <p>
  * Veto the processing of the class. Any beans or observer methods defined by this class will not be installed.
@@ -46,5 +49,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Vetoed {
+
+    /**
+     * Supports inline instantiation of the {@link Vetoed} annotation.
+     *
+     * @author Martin Kouba
+     * @since 2.0
+     * @see Instance
+     * @see Event
+     */
+    public static final class Literal extends AnnotationLiteral<Vetoed> implements Vetoed {
+
+        private static final long serialVersionUID = 1L;
+
+        public static final Literal INSTANCE = new Literal();
+
+    }
 
 }

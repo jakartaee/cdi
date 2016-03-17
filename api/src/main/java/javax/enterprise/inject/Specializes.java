@@ -25,6 +25,9 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import javax.enterprise.event.Event;
+import javax.enterprise.util.AnnotationLiteral;
+
 /**
  * <p>
  * Indicates that a bean directly specializes another bean. May be applied to a bean class or producer method.
@@ -67,4 +70,20 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Documented
 public @interface Specializes {
+    
+    /**
+     * Supports inline instantiation of the {@link Specializes} annotation.
+     *
+     * @author Martin Kouba
+     * @since 2.0
+     * @see Instance
+     * @see Event
+     */
+    public static final class Literal extends AnnotationLiteral<Specializes> implements Specializes {
+
+        private static final long serialVersionUID = 1L;
+
+        public static final Literal INSTANCE = new Literal();
+
+    }
 }
