@@ -307,6 +307,16 @@ public interface AnnotatedTypeConfigurator<T> {
     AnnotatedTypeConfigurator<T> removeFromAll(Class<? extends Annotation> annotationType);
 
     /**
+     * Remove the provided annotation from the type, and all of it's members. If the
+     * annotation appears on the type declaration, or any of it's members it will be removed.
+     *
+     * @param annotation the annotation to remove
+     * @throws IllegalArgumentException if the annotation is null
+     * @return self
+     */
+    AnnotatedTypeConfigurator<T> removeFromAll(Annotation annotation);
+
+    /**
      * Reads in from an existing AnnotatedType. Any elements not present are
      * added. The javaClass will be read in. If the annotation already exists on
      * that element in the configurator the read annotation will be used.
