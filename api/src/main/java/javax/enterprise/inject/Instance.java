@@ -203,5 +203,17 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      *         destroying bean instances
      */
     public void destroy(T instance);
+    
+    /**
+     * <p>
+     * Instructs the container to destroy the instance. The instance passed should be a dependent scoped bean instance
+     * obtained from the same {@link Instance} object. All other instances, including client proxies, are ignored.
+     * </p>
+     * 
+     * @param dependentInstance the instance to destroy
+     * @since 2.0
+     * @see javax.enterprise.context.spi.CreationalContext#release()
+     */
+    public void release(T dependentInstance);
 
 }

@@ -676,6 +676,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
     public boolean isAmbiguous();
 
     public void destroy(T instance);
+    public void release(T dependentInstance);
 
 }
 ----
@@ -731,6 +732,11 @@ The method `destroy()` instructs the container to destroy the instance.
 The bean instance passed to `destroy()` should be a dependent scoped bean instance obtained from the same `Instance` object, or a client proxy for a normal scoped bean.
 Applications are encouraged to always call `destroy()` when they no longer require an instance obtained from `Instance`. All built-in normal scoped contexts support destroying bean instances.
 An `UnsupportedOperationException` is thrown if the active context object for the scope type of the bean does not support destroying bean instances.
+
+The method `release()` instructs the container to destroy the instance.
+The bean instance passed to `release()` should be a dependent scoped bean instance obtained from the same `Instance` object.
+All other instances, including client proxies, are ignored.
+Applications are encouraged to always call `release()` when they no longer require a dependent scoped bean instance obtained from `Instance`.
 
 [[builtin_instance]]
 
