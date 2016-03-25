@@ -77,5 +77,4 @@ public interface CDIProvider {
      * @since 2.0
      */
     CDI<Object> initialize(Map<String,Object> params);
-
 }

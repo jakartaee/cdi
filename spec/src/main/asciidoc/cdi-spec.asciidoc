@@ -10,7 +10,8 @@
 :license: asl2
 :source-highlighter: coderay
 :toc: left
-:toclevels: 3
+:toclevels: 4
+:sectnumlevels: 4
 ifdef::backend-pdf[]
 :pagenums:
 endif::[]

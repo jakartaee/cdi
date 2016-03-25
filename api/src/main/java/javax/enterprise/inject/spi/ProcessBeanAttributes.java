@@ -18,6 +18,7 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.inject.New;
+import javax.enterprise.inject.spi.builder.BeanAttributesConfigurator;
 
 /**
  * <p>
@@ -33,6 +34,7 @@ import javax.enterprise.inject.New;
  * </p>
  * 
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @param <T> The class of the bean
  * @since 1.1
  */
@@ -58,6 +60,18 @@ public interface ProcessBeanAttributes<T> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setBeanAttributes(BeanAttributes<T> beanAttributes);
+
+    /**
+     * returns a {@link BeanAttributesConfigurator} initialized with the {@link BeanAttributes} processed by this event
+     * to configure a new BeanAttributes that will replace the original one at the end of the observer invocation.
+     *
+     * Each call returns the same BeanAttributesConfigurator.
+     *
+     * @return a non reusable {@link BeanAttributesConfigurator} to configure the replacing BeanAttributes
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public BeanAttributesConfigurator<T> configureBeanAttributes();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
