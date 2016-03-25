@@ -269,7 +269,7 @@ public interface AnnotatedTypeConfigurator<T> {
                                                                 Class<? extends Annotation> annotationType);
 
     /**
-     * Remove an annotation from the specified parameter.
+     * Remove an annotation from the specified parameter coming from an {@link AnnotatedMethod} or an {@link AnnotatedConstructor}
      *
      * @param parameter      the parameter to remove the annotation from
      * @param annotationType the annotation type to remove
@@ -283,8 +283,8 @@ public interface AnnotatedTypeConfigurator<T> {
                                                      Class<? extends Annotation> annotationType);
 
     /**
-     * Add an annotation to the specified parameter. If the callable which
-     * declares the parameter is not already present, it will be added. If the
+     * Add an annotation to the specified parameter oming from an {@link AnnotatedMethod} or an {@link AnnotatedConstructor}.
+     * If the callable which declares the parameter is not already present, it will be added. If the
      * parameter is not already present on the callable, it will be added.
      *
      * @param parameter  the parameter to add the annotation to
@@ -422,11 +422,4 @@ public interface AnnotatedTypeConfigurator<T> {
      */
     Class<T> getJavaClass();
 
-    /**
-     * set the class represented by the AnnotatedType to configure
-     *
-     * @param type the Class represented by the AnnotatedType
-     * @return self
-     */
-    AnnotatedTypeConfigurator<T> setType(Class<T> type);
 }

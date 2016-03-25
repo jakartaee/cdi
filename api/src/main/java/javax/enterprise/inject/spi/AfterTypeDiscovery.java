@@ -104,6 +104,6 @@ public interface AfterTypeDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
-    public AnnotatedTypeConfigurator<?> addAnnotatedType(String id);
+    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id);
 
 }

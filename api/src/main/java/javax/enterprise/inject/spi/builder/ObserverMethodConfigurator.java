@@ -168,10 +168,10 @@ public interface ObserverMethodConfigurator<T> {
     /**
      * Defines a BiConsumer to call when event is notified
      *
-     * @param callback a BiConsumer taking EventMetadata and event type as type parameters
+     * @param callback a BiConsumer taking an event type and an EventMetadata as type parameters
      * @return self
      */
-    ObserverMethodConfigurator<T> notifyWith(BiConsumer<EventMetadata, T> callback);
+    ObserverMethodConfigurator<T> notifyWith(BiConsumer<T, EventMetadata> callback);
 
     /**
      * Allows modification of the asynchronous status of the observer to build.

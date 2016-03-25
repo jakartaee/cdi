@@ -79,7 +79,7 @@ public interface AfterBeanDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
-    public BeanConfigurator<?> addBean();
+    public <T> BeanConfigurator<T> addBean();
 
     /**
      * Fires an event of type {@link javax.enterprise.inject.spi.ProcessObserverMethod} containing the given
@@ -105,7 +105,7 @@ public interface AfterBeanDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
-    public ObserverMethodConfigurator<?> addObserverMethod();
+    public <T> ObserverMethodConfigurator<T> addObserverMethod();
 
 
     /**

@@ -96,18 +96,19 @@ public interface InjectionPointConfigurator {
      * Read the InjectionPoint information from the given {@link InjectionPoint}.
      * All relevant information is overwritten.
      *
-     * @param delegate the InjectionPoint to get information from
+     * @param injectionPoint the InjectionPoint to get information from
      * @return self
      */
-    InjectionPointConfigurator read(InjectionPoint delegate);
+    InjectionPointConfigurator read(InjectionPoint injectionPoint);
 
     /**
-     * Set the {@link Type} of the InjectionPoint to build.
+     * Set the required {@link Type} (that will be used during typesafe resolution)
+     * of the InjectionPoint to build.
      *
-     * @param type for the InjectionPoint to build
+     * @param requiredType for the InjectionPoint to build
      * @return self
      */
-    InjectionPointConfigurator type(Type type);
+    InjectionPointConfigurator type(Type requiredType);
 
     /**
      *
@@ -156,33 +157,6 @@ public interface InjectionPointConfigurator {
      * @return self
      */
     InjectionPointConfigurator qualifiers(Set<Annotation> qualifiers);
-
-    /**
-     *
-     * Add a stereotype to the InjectionPoint
-     *
-     * @param stereotype the stereotype to add
-     * @return self
-     */
-    InjectionPointConfigurator addStereotype(Class<? extends Annotation> stereotype);
-
-    /**
-     *
-     * Add all the stereotypes to the InjectionPoint
-     *
-     * @param stereotypes a Set of the Stereotypes to add
-     * @return self
-     */
-    InjectionPointConfigurator addStereotypes(Set<Class<? extends Annotation>> stereotypes);
-
-    /**
-     *
-     * Replace all the stereotypes to the InjectionPoint
-     *
-     * @param stereotypes a Set of Stereotypes to replace the exisiting ones
-     * @return self
-     */
-    InjectionPointConfigurator stereotypes(Set<Class<? extends Annotation>> stereotypes);
 
     /**
      * Set the {@link javax.enterprise.inject.spi.Bean} object representing the bean that defines the injection point. If the

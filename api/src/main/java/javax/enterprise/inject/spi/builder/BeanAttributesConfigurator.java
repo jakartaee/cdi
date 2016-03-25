@@ -17,6 +17,7 @@
 package javax.enterprise.inject.spi.builder;
 
 import javax.enterprise.inject.Default;
+import javax.enterprise.inject.spi.AnnotatedMember;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanAttributes;
 import javax.enterprise.inject.spi.ProcessBeanAttributes;
@@ -40,12 +41,21 @@ import java.util.Set;
  */
 public interface BeanAttributesConfigurator<T> {
     /**
-     * Read the information from the given annotated type. All relevant information is overwritten.
+     * Read the information from the given {@link AnnotatedType}. All relevant information is overwritten.
      *
-     * @param type class to read information from
+     * @param type AnnotatedType to read information from
      * @return self
      */
     <U extends T> BeanAttributesConfigurator<U> read(AnnotatedType<U> type);
+
+    /**
+     * Read the information from the given {@link AnnotatedMember} (field or method).
+     * All relevant information is overwritten.
+     *
+     * @param member AnnotatedMember to read information from
+     * @return self
+     */
+    <U extends T> BeanAttributesConfigurator<U> read(AnnotatedMember<U> member);
 
     /**
      * Read the information from the given bean attributes. All relevant information is overwritten.
