@@ -27,9 +27,10 @@ import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
+import javax.enterprise.util.Nonbinding;
 
 /**
- * This API is an helper to configure a new {@link AnnotatedType} instance. The CDI container must provides an implementation of
+ * This API is an helper to configure a new {@link AnnotatedType} instance. The CDI container must provide an implementation of
  * this interface.
  *
  * AnnotatedTypeConfigurator is not reusable.
@@ -45,32 +46,90 @@ import javax.enterprise.inject.spi.ProcessAnnotatedType;
  */
 public interface AnnotatedTypeConfigurator<T> {
 
+    /**
+     * 
+     * @return the original {@link AnnotatedType}
+     */
+    AnnotatedType<T> getAnnotated();
+
+    /**
+     * Add an annotation to the type.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedTypeConfigurator<T> add(Annotation annotation);
 
+    /**
+     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
+     * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
+     * to compare values.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedTypeConfigurator<T> remove(Annotation annotation);
 
+    /**
+     * Removes all annotations with the same type. Annotation members are ignored.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
-    
+
+    /**
+     * Remove all annotations from the type.
+     * 
+     * @return self
+     */
     AnnotatedTypeConfigurator<T> removeAll();
 
-    // All find methods query the original AnnotatedType
-    
+    /**
+     * 
+     * @return an immutable set of {@link AnnotatedMethodConfigurator}s reflecting the {@link AnnotatedType#getMethods()}
+     */
     Set<AnnotatedMethodConfigurator<T>> methods();
-    
-    AnnotatedMethodConfigurator<T> findMethod(Predicate<AnnotatedMethod<T>> predicate);
 
-    Stream<AnnotatedMethodConfigurator<T>> findMethods(Predicate<AnnotatedMethod<T>> predicate);
+    /**
+     * @param predicate Testing the original {@link AnnotatedMethod}
+     * @return a sequence of {@link AnnotatedMethodConfigurator}s matching the given predicate
+     * @see AnnotatedMethodConfigurator#getAnnotated()
+     */
+    default Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate) {
+        return methods().stream().filter(c -> predicate.test(c.getAnnotated()));
+    }
 
+    /**
+     * 
+     * @return an immutable set of {@link AnnotatedFieldConfigurator}s reflecting the {@link AnnotatedType#getFields()}
+     */
     Set<AnnotatedFieldConfigurator<T>> fields();
-    
-    AnnotatedFieldConfigurator<T> findField(Predicate<AnnotatedField<T>> predicate);
 
-    Stream<AnnotatedFieldConfigurator<T>> findFields(Predicate<AnnotatedField<T>> predicate);
+    /**
+     * @param predicate Testing the original {@link AnnotatedField}
+     * @return a sequence of {@link AnnotatedFieldConfigurator}s matching the given predicate
+     * @see AnnotatedFieldConfigurator#getAnnotated()
+     */
+    default Stream<AnnotatedFieldConfigurator<T>> filterFields(Predicate<AnnotatedField<T>> predicate) {
+        return fields().stream().filter(f -> predicate.test(f.getAnnotated()));
+    }
 
+    /**
+     * 
+     * @return an immutable set of {@link AnnotatedConstuctorConfigurator}s reflecting the
+     *         {@link AnnotatedType#getConstructors()}
+     */
     Set<AnnotatedConstuctorConfigurator<T>> constructors();
-    
-    AnnotatedConstuctorConfigurator<T> findConstructor(Predicate<AnnotatedConstructor<T>> predicate);
 
-    Stream<AnnotatedConstuctorConfigurator<T>> findConstructors(Predicate<AnnotatedConstructor<T>> predicate);
+    /**
+     * 
+     * @param predicate Testing the original {@link AnnotatedConstructor}
+     * @return a sequence of {@link AnnotatedConstuctorConfigurator}s matching the given predicate
+     * @see AnnotatedConstuctorConfigurator#getAnnotated()
+     */
+    default Stream<AnnotatedConstuctorConfigurator<T>> filterConstructors(Predicate<AnnotatedConstructor<T>> predicate) {
+        return constructors().stream().filter(c -> predicate.test(c.getAnnotated()));
+    }
 
 }

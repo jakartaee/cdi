@@ -18,6 +18,9 @@ package javax.enterprise.inject.spi.builder;
 
 import java.lang.annotation.Annotation;
 
+import javax.enterprise.inject.spi.AnnotatedParameter;
+import javax.enterprise.util.Nonbinding;
+
 /**
  * 
  * @author Martin Kouba
@@ -25,12 +28,43 @@ import java.lang.annotation.Annotation;
  */
 public interface AnnotatedParameterConfigurator<T> {
     
+    /**
+     * 
+     * @return the original {@link AnnotatedParameter}
+     */
+    AnnotatedParameter<T> getAnnotated();
+    
+    /**
+     * Add an annotation to the param.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedParameterConfigurator<T> add(Annotation annotation);
     
+    /**
+     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not annotated
+     * {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value to
+     * compare values.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedParameterConfigurator<T> remove(Annotation annotation);
     
+    /**
+     * Removes all annotations with the same type. Annotation members are ignored.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedParameterConfigurator<T> remove(Class<? extends Annotation> annotationType);
     
+    /**
+     * Remove all annotations from the method.
+     * 
+     * @return self
+     */
     AnnotatedParameterConfigurator<T> removeAll();
 
 }

@@ -19,8 +19,11 @@ package javax.enterprise.inject.spi.builder;
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
+import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedParameter;
+import javax.enterprise.util.Nonbinding;
 
 /**
  * 
@@ -29,18 +32,60 @@ import javax.enterprise.inject.spi.AnnotatedParameter;
  */
 public interface AnnotatedMethodConfigurator<T> {
 
+    /**
+     * 
+     * @return the original {@link AnnotatedMethod}
+     */
+    AnnotatedMethod<T> getAnnotated();
+
+    /**
+     * Add an annotation to the method.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedMethodConfigurator<T> add(Annotation annotation);
 
+    /**
+     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not annotated
+     * {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value to
+     * compare values.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedMethodConfigurator<T> remove(Annotation annotation);
 
+    /**
+     * Removes all annotations with the same type. Annotation members are ignored.
+     * 
+     * @param annotation
+     * @return self
+     */
     AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
 
+    /**
+     * Remove all annotations from the method.
+     * 
+     * @return self
+     */
     AnnotatedMethodConfigurator<T> removeAll();
 
-    AnnotatedParameterConfigurator<T> param(int position);
-
+    /**
+     * 
+     * @return an immutable list of {@link AnnotatedParameterConfigurator}s reflecting the
+     *         {@link AnnotatedMethod#getParameters()}
+     */
     List<AnnotatedParameterConfigurator<T>> params();
 
-    AnnotatedParameterConfigurator<T> findParam(Predicate<AnnotatedParameter<T>> predicate);
+    /**
+     * 
+     * @param predicate Testing the original {@link AnnotatedParameter}
+     * @return a sequence of {@link AnnotatedParameterConfigurator}s matching the given predicate
+     * @see AnnotatedParameterConfigurator#getAnnotated()
+     */
+    default Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate) {
+        return params().stream().filter(p -> predicate.test(p.getAnnotated()));
+    }
 
 }
