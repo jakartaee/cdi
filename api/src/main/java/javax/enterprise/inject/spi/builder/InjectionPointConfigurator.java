@@ -34,8 +34,6 @@ import java.util.Set;
  * This API is an helper to configure a new {@link InjectionPoint} instance.
  * CDI container must provides an implementation of this interface.
  *
- * InjectionPointConfigurator is not reusable.
- *
  * This builder is not thread safe and shall not be used concurrently.
  *
  * @see ProcessInjectionPoint#configureInjectionPoint()

@@ -30,8 +30,6 @@ import java.util.Set;
  * This API is an helper to configure a new {@link BeanAttributes} instance.
  * CDI container must provides an implementation of this interface.
  *
- * BeanAttributesConfigurator is not reusable.
- *
  * This configurator is not thread safe and shall not be used concurrently.
  *
  * @see ProcessBeanAttributes#configureBeanAttributes()

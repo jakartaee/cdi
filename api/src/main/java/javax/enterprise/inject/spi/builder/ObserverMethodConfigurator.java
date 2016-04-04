@@ -34,9 +34,7 @@ import java.util.function.Consumer;
 /**
  * This API is an helper to build a new {@link ObserverMethod} instance.
  * CDI container must provides an implementation of this interface accessible.
- * <p/>
- * ObserverMethodConfigurator is not reusable.
- * <p/>
+ *
  * This configurator is not thread safe and shall not be used concurrently.
  *
  * @param <T> type of the event the configured ObserverMethod will observe

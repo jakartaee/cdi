@@ -38,8 +38,6 @@ import java.util.function.Supplier;
  * This API is an helper to configure a new {@link Bean} instance.
  * CDI container must provides an implementation of this interface.
  *
- * BeanConfigurator is not reusable.
- *
  * This builder is not thread safe and shall not be used concurrently.
  *
  * @see AfterBeanDiscovery#addBean()
