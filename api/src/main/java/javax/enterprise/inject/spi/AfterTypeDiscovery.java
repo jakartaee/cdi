@@ -100,10 +100,11 @@ public interface AfterTypeDiscovery {
      *
      *
      * @param id The id of the annotated type
+     * @param type type of the class that the {@link AnnotatedType} will represent
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
-    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id);
+    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id, Class<T> type);
 
 }
