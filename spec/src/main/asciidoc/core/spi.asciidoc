@@ -789,6 +789,131 @@ The container must not directly call the Java Reflection API. In particular, the
 * call `Annotated.isAnnotationPresent()` and `Annotated.getAnnotation()` to read any bean annotations defined by this specification, and
 * call `AnnotatedType.getConstructors()`, `AnnotatedType.getMethods()` and `AnnotatedType.getFields()` to determine the members of a bean class.
 
+[[annotated_type_configurator]]
+
+==== `AnnotatedTypeConfigurator` SPI
+
+CDI 2.0 introduced a new SPI to help defining and creating instance for type metadata.
+
+This SPI is composed of the following interfaces:
+
+* `javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
+* `javax.enterprise.inject.spi.builder.AnnotatedFieldConfigurator` to configure an `AnnotatedField`
+* `javax.enterprise.inject.spi.builder.AnnotatedConstructorConfigurator` to configure an `AnnotatedConstructor`
+* `javax.enterprise.inject.spi.builder.AnnotatedMethodConfigurator` to configure an `AnnotatedMethod`
+* `javax.enterprise.inject.spi.builder.AnnotatedParameterConfigurator` to configure an `AnnotatedParameter`
+
+
+`AnnotatedTypeConfigurator` is the entry point for this SPI.
+
+[source, java]
+----
+public interface AnnotatedTypeConfigurator<T> {
+
+    AnnotatedType<T> getAnnotated();
+    AnnotatedTypeConfigurator<T> add(Annotation annotation);
+    AnnotatedTypeConfigurator<T> remove(Annotation annotation);
+    AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedTypeConfigurator<T> removeAll();
+    Set<AnnotatedMethodConfigurator<T>> methods();
+    Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate);
+    Set<AnnotatedFieldConfigurator<T>> fields();
+    Stream<AnnotatedFieldConfigurator<T>> filterFields(Predicate<AnnotatedField<T>> predicate);
+    Set<AnnotatedConstructorConfigurator<T>> constructors();
+    Stream<AnnotatedConstructorConfigurator<T>> filterConstructors(Predicate<AnnotatedConstructor<T>> predicate);
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured `AnnotatedType`
+* `remove()` methods remove all annotation from the configured `AnnotatedType`
+* `removeAll()` remove all existing annotation on the configured `AnnotatedType`
+* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
+* `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
+* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.
+* `filterMethods()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
+* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
+* `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
+
+`AnnotatedMethodConfigurator` and `AnnotatedConstructorConfigurator` are accessed through `AnnotatedTypeConfigurator`:
+
+[source, java]
+----
+public interface AnnotatedMethodConfigurator<T> {
+    AnnotatedMethod<T> getAnnotated();
+    AnnotatedMethodConfigurator<T> add(Annotation annotation);
+    AnnotatedMethodConfigurator<T> remove(Annotation annotation);
+    AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedMethodConfigurator<T> removeAll();
+    List<AnnotatedParameterConfigurator<T>> params();
+    Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
+}
+----
+
+[source, java]
+----
+public interface AnnotatedConstructorConfigurator<T> {
+    AnnotatedConstructor<T> getAnnotated();
+    AnnotatedConstructorConfigurator<T> add(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> remove(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedConstructorConfigurator<T> removeAll();
+    List<AnnotatedParameterConfigurator<T>> params();
+    Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+* `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
+* `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
+
+Both interfaces give access to `AnnotatedParameterConfigurator`:
+[source, java]
+----
+public interface AnnotatedParameterConfigurator<T> {
+    AnnotatedParameter<T> getAnnotated();
+    AnnotatedParameterConfigurator<T> add(Annotation annotation);
+    AnnotatedParameterConfigurator<T> remove(Annotation annotation);
+    AnnotatedParameterConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedParameterConfigurator<T> removeAll();
+}
+----
+
+`AnnotatedFieldConfigurator` is accessed through `AnnotatedTypeConfigurator`:
+
+[source, java]
+----
+public interface AnnotatedFieldConfigurator<T> {
+
+    AnnotatedField<T> getAnnotated();
+    AnnotatedFieldConfigurator<T> add(Annotation annotation);
+    AnnotatedFieldConfigurator<T> remove(Annotation annotation);
+    AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedFieldConfigurator<T> removeAll();
+}
+----
+
+* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+
+
+The container must provide an instance of each of these interfaces.
+
+Implementation of `AnnotatedTypeConfigurator` is returned by methods in the following lifecycle event:
+
+* `BeforeBeanDiscovery` as defined in <<before_bean_discovery>>
+* `ProcessAnnotatedType` as defined in <<process_annotated_type>>
+* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
+
+In addition `AnnotatedTypeConfigurator` is used by `AnnotatedTypeBuilder` as defined in <<builders>>
+
+
+
 
 [[init_events]]
 
@@ -884,28 +1009,6 @@ void beforeBeanDiscovery(@Observes BeforeBeanDiscovery event) { ... }
 If any observer method of the `BeforeBeanDiscovery` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `BeforeBeanDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
-
-[[annotated_type_configurator]]
-
-===== `AnnotatedTypeConfigurator` interface
-
-CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator` interface to help configuring a new `AnnotatedType` instance.
-
-`AnnotatedTypeConfigurator` must be initialized from a `java.lang.Class` or an existing `AnnotatedType` with one of its `read()` methods.
-
-With `AnnotatedTypeConfigurator` you can perform the following operations:
-
-* Add or remove annotation at type level with `addToType` and `removeFromType` methods.
-* Add or remove annotation on a field with `addToField` and `removeFromField` methods.
-* Add or remove annotation on a method with `addToMethod` and `removeFromMethod` methods.
-* Add or remove annotation on a method parameter with `addToMethodParameter` and `removeFromMethodParameter` methods.
-* Add or remove annotation on a constructor with `addToConstructor` and `removeFromConstructor` methods.
-* Add or remove annotation on a constructor parameter with `addToConstructorParameter` and `removeFromConstructorParameter` methods.
-* Remove an annotation from the type or any type member with `removeFromAll` method.
-* Override a field type with `overrideFieldType` methods.
-* Override a method parameter type with `overrideMethodParameterType` method.
-* Override a constructor parameter type with `overrideConstructorParameterType` method.
-* Change the class that the `AnnotatedType` will represent.
 
 
 [[after_type_discovery]]
