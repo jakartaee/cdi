@@ -107,7 +107,6 @@ public interface AfterBeanDiscovery {
      */
     public <T> ObserverMethodConfigurator<T> addObserverMethod();
 
-
     /**
      * Registers a custom {@link javax.enterprise.context.spi.Context} object with the container.
      * 

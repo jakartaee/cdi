@@ -17,7 +17,6 @@
 package javax.enterprise.inject.spi.builder;
 
 import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -261,7 +260,6 @@ public interface BeanConfigurator<T> {
     /**
      *
      * Add a qualifier to the configured bean
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifier qualifier to add
      * @return self
@@ -271,7 +269,6 @@ public interface BeanConfigurator<T> {
     /**
      *
      * Add qualifiers to the bean.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers qualifiers to add
      * @return self
@@ -281,7 +278,6 @@ public interface BeanConfigurator<T> {
     /**
      *
      * Add qualifiers to the bean.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers qualifiers to add
      * @return self

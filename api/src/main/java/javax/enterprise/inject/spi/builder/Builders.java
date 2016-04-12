@@ -94,7 +94,6 @@ public final class Builders {
         return provider().getObserverMethodBuilder(type);
     }
 
-
     private static BuildersProvider provider() {
         if (buildersProvider == null)
             buildersProvider = findProvider();

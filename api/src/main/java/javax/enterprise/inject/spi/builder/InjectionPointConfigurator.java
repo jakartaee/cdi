@@ -17,16 +17,14 @@
 
 package javax.enterprise.inject.spi.builder;
 
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedParameter;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.ProcessInjectionPoint;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
 import java.util.Set;
 
@@ -42,7 +40,6 @@ import java.util.Set;
  */
 public interface InjectionPointConfigurator {
 
-
     /**
      * Read the InjectionPoint information from the given {@link Field}.
      * All relevant information is overwritten.
@@ -53,24 +50,13 @@ public interface InjectionPointConfigurator {
     InjectionPointConfigurator read(Field field);
 
     /**
-     * Read the InjectionPoint information from the given {@link Method}.
+     * Read the InjectionPoint information from the given {@link Parameter}.
      * All relevant information is overwritten.
      *
-     * @param method defining the InjectionPoint.
-     * @param param  the parameter's index in the Method defining the InjectionPoint
+     * @param param  the parameter defining the InjectionPoint
      * @return self
      */
-    InjectionPointConfigurator read(Method method, int param);
-
-    /**
-     * Read the InjectionPoint information from the given {@link Constructor}.
-     * All relevant information is overwritten.
-     *
-     * @param constructor defining the InjectionPoint.
-     * @param param       the parameter's index in the Constructor defining the InjectionPoint
-     * @return self
-     */
-    InjectionPointConfigurator read(Constructor<?> constructor, int param);
+    InjectionPointConfigurator read(Parameter param);
 
     /**
      * Read the InjectionPoint information from the given {@link AnnotatedField}.
@@ -111,7 +97,6 @@ public interface InjectionPointConfigurator {
     /**
      *
      * Add the qualifier to the InjectionPoint to build
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifier the qualifier to add
      * @return self
@@ -121,7 +106,6 @@ public interface InjectionPointConfigurator {
     /**
      *
      * Add all the qualifiers to the InjectionPoint to build
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers a varargs or array of qualifiers to add
      * @return self
@@ -131,7 +115,6 @@ public interface InjectionPointConfigurator {
     /**
      *
      * Add all the qualifiers to the InjectionPoint to build
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers a Set of qualifiers to add
      * @return self
@@ -140,7 +123,6 @@ public interface InjectionPointConfigurator {
 
     /**
      * Replace all qualifiers.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers a varargs or array of qualifiers to replace to existing ones
      * @return self
@@ -149,7 +131,6 @@ public interface InjectionPointConfigurator {
 
     /**
      * Replace all qualifiers.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers a Set of qualifiers to replace to existing ones
      * @return self

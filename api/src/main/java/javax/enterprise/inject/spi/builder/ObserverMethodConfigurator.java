@@ -19,7 +19,6 @@ package javax.enterprise.inject.spi.builder;
 
 import javax.enterprise.event.Reception;
 import javax.enterprise.event.TransactionPhase;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.EventMetadata;
@@ -43,7 +42,6 @@ import java.util.function.Consumer;
  * @since 2.0
  */
 public interface ObserverMethodConfigurator<T> {
-
 
     /**
      * Read observer meta data from a existing {@link java.lang.reflect.Method}
@@ -88,7 +86,6 @@ public interface ObserverMethodConfigurator<T> {
 
     /**
      * Add the qualifier to the observed event
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifier to add to event
      * @return self
@@ -97,7 +94,6 @@ public interface ObserverMethodConfigurator<T> {
 
     /**
      * Add all the qualifiers to the Observed event
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers to add to event
      * @return self
@@ -106,7 +102,6 @@ public interface ObserverMethodConfigurator<T> {
 
     /**
      * Add all the qualifiers to the Observed event
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers to add to event
      * @return self
@@ -115,7 +110,6 @@ public interface ObserverMethodConfigurator<T> {
 
     /**
      * Replace all qualifiers on the Observed event.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers to put on event
      * @return self
@@ -124,7 +118,6 @@ public interface ObserverMethodConfigurator<T> {
 
     /**
      * Replace all qualifiers on the Observed event.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers to put on event
      * @return self

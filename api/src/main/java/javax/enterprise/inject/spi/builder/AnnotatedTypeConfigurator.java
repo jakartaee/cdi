@@ -17,17 +17,16 @@
 
 package javax.enterprise.inject.spi.builder;
 
-import java.lang.annotation.Annotation;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
-
 import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedField;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.ProcessAnnotatedType;
 import javax.enterprise.util.Nonbinding;
+import java.lang.annotation.Annotation;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * This API is an helper to configure a new {@link AnnotatedType} instance. The CDI container must provide an implementation of
@@ -90,14 +89,14 @@ public interface AnnotatedTypeConfigurator<T> {
      * 
      * @return an immutable set of {@link AnnotatedMethodConfigurator}s reflecting the {@link AnnotatedType#getMethods()}
      */
-    Set<AnnotatedMethodConfigurator<T>> methods();
+    Set<AnnotatedMethodConfigurator<? super T>> methods();
 
     /**
      * @param predicate Testing the original {@link AnnotatedMethod}
      * @return a sequence of {@link AnnotatedMethodConfigurator}s matching the given predicate
      * @see AnnotatedMethodConfigurator#getAnnotated()
      */
-    default Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate) {
+    default Stream<AnnotatedMethodConfigurator<? super T>> filterMethods(Predicate<AnnotatedMethod<? super T>> predicate) {
         return methods().stream().filter(c -> predicate.test(c.getAnnotated()));
     }
 
@@ -105,14 +104,14 @@ public interface AnnotatedTypeConfigurator<T> {
      * 
      * @return an immutable set of {@link AnnotatedFieldConfigurator}s reflecting the {@link AnnotatedType#getFields()}
      */
-    Set<AnnotatedFieldConfigurator<T>> fields();
+    Set<AnnotatedFieldConfigurator<? super T>> fields();
 
     /**
      * @param predicate Testing the original {@link AnnotatedField}
      * @return a sequence of {@link AnnotatedFieldConfigurator}s matching the given predicate
      * @see AnnotatedFieldConfigurator#getAnnotated()
      */
-    default Stream<AnnotatedFieldConfigurator<T>> filterFields(Predicate<AnnotatedField<T>> predicate) {
+    default Stream<AnnotatedFieldConfigurator<? super T>> filterFields(Predicate<AnnotatedField<? super T>> predicate) {
         return fields().stream().filter(f -> predicate.test(f.getAnnotated()));
     }
 

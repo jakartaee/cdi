@@ -36,7 +36,6 @@ public interface BuildersProvider {
      */
     <T> AnnotatedTypeBuilder<T> getAnnotatedTypeBuilder(Class<T> type);
 
-
     /**
      * Obtains a {@link InjectionPointBuilder}
      *
@@ -70,6 +69,4 @@ public interface BuildersProvider {
      * @return a reusable BeanBuilder
      */
     <T> ObserverMethodBuilder<T> getObserverMethodBuilder(Class<T> type);
-
-
 }

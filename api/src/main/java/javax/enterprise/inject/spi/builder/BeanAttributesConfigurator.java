@@ -16,7 +16,6 @@
  */
 package javax.enterprise.inject.spi.builder;
 
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.spi.AnnotatedMember;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanAttributes;
@@ -138,7 +137,6 @@ public interface BeanAttributesConfigurator<T> {
     /**
      *
      * Add a qualifier to the configured bean
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifier qualifier to add
      * @return self
@@ -148,7 +146,6 @@ public interface BeanAttributesConfigurator<T> {
     /**
      *
      * Add qualifiers to the bean.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers qualifiers to add
      * @return self
@@ -158,7 +155,6 @@ public interface BeanAttributesConfigurator<T> {
     /**
      *
      * Add qualifiers to the bean.
-     * If the builder declares the {@link Default} qualifier, it's automatically removed.
      *
      * @param qualifiers qualifiers to add
      * @return self
