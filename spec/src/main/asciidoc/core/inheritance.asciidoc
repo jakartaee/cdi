@@ -162,7 +162,7 @@ explicitly declare that it _specializes_ the second bean.
 
 [source, java]
 ----
-@Alternative @Specializes
+@Specializes
 public class MockAsynchronousService extends AsynchronousService { 
     ... 
 }
