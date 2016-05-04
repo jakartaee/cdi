@@ -209,6 +209,23 @@ Additionally, the container must ensure that:
 
 Finally, the container is permitted to destroy any `@Dependent` scoped contextual instance at any time if the instance is no longer referenced by the application (excluding weak, soft and phantom references).
 
+[[programmatic_dependent]]
+
+==== Programmatic creation and destruction of objects with scope `@Dependent`
+
+Dependent objects can be used as references within an `Instance` object.  Creating an instance of a dependent object in this way creates one that is not bounded to the creational context of the injection point.  This true also when using the `CDI` utility class.  Since the container may not be able to track these instances against a context, they must be destroyed after use.
+
+```
+@Inject
+Instance<MyDependentClass> instance;
+
+MyDependentClass object = instance.get();
+
+// do work with that instance
+
+instance.destroy(object);
+```
+
 
 [[contextual_instances_and_references]]
 
