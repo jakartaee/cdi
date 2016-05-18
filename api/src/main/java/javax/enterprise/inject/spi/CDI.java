@@ -17,12 +17,12 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.Instance;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
-import javax.enterprise.inject.Instance;
 
 /**
  * Provides access to the current container.
@@ -109,7 +109,7 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
 
     // Helper methods
 
-    private static CDIProvider getCDIProvider() {
+    public static CDIProvider getCDIProvider() {
         if (configuredProvider != null) {
             return configuredProvider;
         } else {
