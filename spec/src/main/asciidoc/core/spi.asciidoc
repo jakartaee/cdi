@@ -831,7 +831,7 @@ public interface AnnotatedTypeConfigurator<T> {
 * `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
 * `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
 * `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.
-* `filterMethods()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
+* `filterFields()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
 * `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
 * `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
 
@@ -1293,8 +1293,6 @@ With `InjectionPointConfigurator` you can perform the following operations:
 * Set the type of `InjectionPoint` with `type` method.
 * Add a qualifier with `addQualifier` method.
 * Set or add multiple qualifiers with `addQualifiers` and `qualifiers` methods.
-* Add a stereotype with `addStereotype` method.
-* Set or add multiple stereotypes with `addStereotypes` and `stereotypes` methods.
 * Set the bean that defines this injection point with `bean` method.
 * Make the injection point delegate with `delegate` method.
 * Make the injection point a transient field with `transientField` method.
