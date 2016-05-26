@@ -863,7 +863,7 @@ public interface AnnotatedConstructorConfigurator<T> {
 }
 ----
 
-* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `getAnnotated()` returns the original `AnnotatedConstructor` or `AnnotatedMethod` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
 * `remove()` methods remove all annotation from the configured element
 * `removeAll()` remove all existing annotation on the configured element
@@ -896,7 +896,7 @@ public interface AnnotatedFieldConfigurator<T> {
 }
 ----
 
-* `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
+* `getAnnotated()` returns the original `AnnotatedField` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
 * `remove()` methods remove all annotation from the configured element
 * `removeAll()` remove all existing annotation on the configured element
