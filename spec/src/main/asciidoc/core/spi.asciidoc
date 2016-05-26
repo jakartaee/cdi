@@ -798,13 +798,21 @@ CDI 2.0 introduced a new SPI to help defining and creating instance for type met
 This SPI is composed of the following interfaces:
 
 * `javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
-* `javax.enterprise.inject.spi.builder.AnnotatedFieldConfigurator` to configure an `AnnotatedField`
-* `javax.enterprise.inject.spi.builder.AnnotatedConstructorConfigurator` to configure an `AnnotatedConstructor`
-* `javax.enterprise.inject.spi.builder.AnnotatedMethodConfigurator` to configure an `AnnotatedMethod`
-* `javax.enterprise.inject.spi.builder.AnnotatedParameterConfigurator` to configure an `AnnotatedParameter`
+* `javax.enterprise.inject.spi.builder.AnnotatedFieldConfigurator` (defined in <<annotated_field_configurator>>) to configure an `AnnotatedField`
+* `javax.enterprise.inject.spi.builder.AnnotatedConstructorConfigurator` (defined in <<annotated_constructor_configurator>>) to configure an `AnnotatedConstructor`
+* `javax.enterprise.inject.spi.builder.AnnotatedMethodConfigurator` (defined in <<annotated_method_configurator>>) to configure an `AnnotatedMethod`
+* `javax.enterprise.inject.spi.builder.AnnotatedParameterConfigurator` (defined in <<annotated_parameter_configurator>>) to configure an `AnnotatedParameter`
 
+The container must provide an implementation for each of these interfaces.
+
+* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
 
 `AnnotatedTypeConfigurator` is the entry point for this SPI.
+Implementation of `AnnotatedTypeConfigurator` is returned by methods in the following lifecycle event:
+
+* `BeforeBeanDiscovery` as defined in <<before_bean_discovery>>
+* `ProcessAnnotatedType` as defined in <<process_annotated_type>>
+
 
 [source, java]
 ----
@@ -835,7 +843,11 @@ public interface AnnotatedTypeConfigurator<T> {
 * `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
 * `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
 
-`AnnotatedMethodConfigurator` and `AnnotatedConstructorConfigurator` are accessed through `AnnotatedTypeConfigurator`:
+[[annotated_method_configurator]]
+
+==== `AnnotatedMethodConfigurator`
+
+`AnnotatedMethodConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
 
 [source, java]
 ----
@@ -850,6 +862,20 @@ public interface AnnotatedMethodConfigurator<T> {
 }
 ----
 
+* `getAnnotated()` returns the original `AnnotatedMethod` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+* `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
+* `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
+
+
+[[annotated_constructor_configurator]]
+
+==== `AnnotatedConstructorConfigurator`
+
+`AnnotatedConstructorConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
+
 [source, java]
 ----
 public interface AnnotatedConstructorConfigurator<T> {
@@ -863,14 +889,19 @@ public interface AnnotatedConstructorConfigurator<T> {
 }
 ----
 
-* `getAnnotated()` returns the original `AnnotatedConstructor` or `AnnotatedMethod` with which this configurator was initialized
+* `getAnnotated()` returns the original `AnnotatedConstructor` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
 * `remove()` methods remove all annotation from the configured element
 * `removeAll()` remove all existing annotation on the configured element
 * `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
 * `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
 
-Both interfaces give access to `AnnotatedParameterConfigurator`:
+[[annotated_parameter_configurator]]
+
+==== `AnnotatedParameterConfigurator`
+
+`AnnotatedParameterConfigurator` is obtained through `AnnotatedMethodConfigurator` (as defined in <<annotated_method_configurator>>) and `AnnotatedConstructorConfigurator` as defined in <<annotated_constructor_configurator>>.
+
 [source, java]
 ----
 public interface AnnotatedParameterConfigurator<T> {
@@ -882,7 +913,16 @@ public interface AnnotatedParameterConfigurator<T> {
 }
 ----
 
-`AnnotatedFieldConfigurator` is accessed through `AnnotatedTypeConfigurator`:
+* `getAnnotated()` returns the original `AnnotatedParameter` with which this configurator was initialized
+* `add()` adds an annotation to the configured element
+* `remove()` methods remove all annotation from the configured element
+* `removeAll()` remove all existing annotation on the configured element
+
+[[annotated_field_configurator]]
+
+==== `AnnotatedFieldConfigurator`
+
+`AnnotatedFieldConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>:
 
 [source, java]
 ----
@@ -900,18 +940,6 @@ public interface AnnotatedFieldConfigurator<T> {
 * `add()` adds an annotation to the configured element
 * `remove()` methods remove all annotation from the configured element
 * `removeAll()` remove all existing annotation on the configured element
-
-
-The container must provide an instance of each of these interfaces.
-
-Implementation of `AnnotatedTypeConfigurator` is returned by methods in the following lifecycle event:
-
-* `BeforeBeanDiscovery` as defined in <<before_bean_discovery>>
-* `ProcessAnnotatedType` as defined in <<process_annotated_type>>
-* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
-
-
-
 
 
 [[init_events]]
