@@ -150,7 +150,7 @@ For example, if the bean class is named `ProductList`, the default bean name is 
 
 A producer method defined in an EJB session bean follows the rules defined in <<producer_method> with the following addition:
 
-* A producer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
+* A producer method defined in an EJB session bean must be either a business method exposed by a local business interface of the EJB or a static method of the bean class.
 
 [[declaring_producer_method_ee]]
 
@@ -158,7 +158,7 @@ A producer method defined in an EJB session bean follows the rules defined in <<
 
 A producer method declaration in an EJB session bean follows the rules defined in <<declaring_producer_method>> with the following addition:
 
-* if a non-static method of a session bean class is annotated `@Produces`, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
+* if a non-static method of a session bean class is annotated `@Produces`, and the method is not a business method exposed by a local business interface of the session bean, the container automatically detects the problem and treats it as a definition error.
 
 [[producer_field_ee]]
 
@@ -182,7 +182,7 @@ A producer field declaration in an EJB session bean follows the rules defined in
 
 A disposer method defined in an EJB session bean follows the rules defined in <<disposer_method> with the following addition:
 
-* A disposer method defined in an EJB session bean must be either a business method of the EJB or a static method of the bean class.
+* A disposer method defined in an EJB session bean must be either a business method exposed by a local business interface of the EJB or a static method of the bean class.
 
 [[declaring_disposer_method_ee]]
 
@@ -190,7 +190,7 @@ A disposer method defined in an EJB session bean follows the rules defined in <<
 
 A disposer method declaration in an EJB session bean follows the rules defined in <<declaring_disposer_method>> with the following addition:
 
-* If a non-static method of an EJB session bean class has a parameter annotated `@Disposes`, and the method is not a business method of the session bean, the container automatically detects the problem and treats it as a definition error.
+* If a non-static method of an EJB session bean class has a parameter annotated `@Disposes`, and the method is not a business method exposed by a local business interface of the session bean, the container automatically detects the problem and treats it as a definition error.
 
 [[javaee_components]]
 
