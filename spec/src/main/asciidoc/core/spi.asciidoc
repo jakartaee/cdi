@@ -805,13 +805,12 @@ This SPI is composed of the following interfaces:
 
 The container must provide an implementation for each of these interfaces.
 
-* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
-
 `AnnotatedTypeConfigurator` is the entry point for this SPI.
 Implementation of `AnnotatedTypeConfigurator` is returned by methods in the following lifecycle event:
 
 * `BeforeBeanDiscovery` as defined in <<before_bean_discovery>>
 * `ProcessAnnotatedType` as defined in <<process_annotated_type>>
+* `AfterTypeDiscovery` as defined in <<after_type_discovery>>
 
 
 [source, java]
@@ -845,7 +844,7 @@ public interface AnnotatedTypeConfigurator<T> {
 
 [[annotated_method_configurator]]
 
-==== `AnnotatedMethodConfigurator`
+===== `AnnotatedMethodConfigurator`
 
 `AnnotatedMethodConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
 
@@ -872,7 +871,7 @@ public interface AnnotatedMethodConfigurator<T> {
 
 [[annotated_constructor_configurator]]
 
-==== `AnnotatedConstructorConfigurator`
+===== `AnnotatedConstructorConfigurator`
 
 `AnnotatedConstructorConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
 
@@ -898,7 +897,7 @@ public interface AnnotatedConstructorConfigurator<T> {
 
 [[annotated_parameter_configurator]]
 
-==== `AnnotatedParameterConfigurator`
+===== `AnnotatedParameterConfigurator`
 
 `AnnotatedParameterConfigurator` is obtained through `AnnotatedMethodConfigurator` (as defined in <<annotated_method_configurator>>) and `AnnotatedConstructorConfigurator` as defined in <<annotated_constructor_configurator>>.
 
@@ -920,7 +919,7 @@ public interface AnnotatedParameterConfigurator<T> {
 
 [[annotated_field_configurator]]
 
-==== `AnnotatedFieldConfigurator`
+===== `AnnotatedFieldConfigurator`
 
 `AnnotatedFieldConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>:
 
