@@ -846,7 +846,7 @@ public interface AnnotatedTypeConfigurator<T> {
 
 ===== `AnnotatedMethodConfigurator`
 
-`AnnotatedMethodConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
+`AnnotatedMethodConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>>
 
 [source, java]
 ----
@@ -873,7 +873,7 @@ public interface AnnotatedMethodConfigurator<T> {
 
 ===== `AnnotatedConstructorConfigurator`
 
-`AnnotatedConstructorConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>
+`AnnotatedConstructorConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>>
 
 [source, java]
 ----
@@ -921,7 +921,7 @@ public interface AnnotatedParameterConfigurator<T> {
 
 ===== `AnnotatedFieldConfigurator`
 
-`AnnotatedFieldConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<AnnotatedTypeConfigurator>>:
+`AnnotatedFieldConfigurator` is obtained through `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>>:
 
 [source, java]
 ----
