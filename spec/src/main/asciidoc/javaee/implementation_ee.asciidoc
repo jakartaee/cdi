@@ -148,7 +148,7 @@ For example, if the bean class is named `ProductList`, the default bean name is 
 
 === Producer methods on EJB session bean
 
-A producer method defined in an EJB session bean follows the rules defined in <<producer_method> with the following addition:
+A producer method defined in an EJB session bean follows the rules defined in <<producer_method>> with the following addition:
 
 * A producer method defined in an EJB session bean must be either a business method exposed by a local business interface of the EJB or a static method of the bean class.
 
@@ -164,7 +164,7 @@ A producer method declaration in an EJB session bean follows the rules defined i
 
 === Producer field on EJB session bean
 
-A producer field defined in an EJB session bean follows the rules defined in <<producer_field> with the following addition:
+A producer field defined in an EJB session bean follows the rules defined in <<producer_field>> with the following addition:
 
 * A producer field defined in an EJB session bean must be a static field of the bean class.
 
@@ -180,7 +180,7 @@ A producer field declaration in an EJB session bean follows the rules defined in
 
 === Disposer methods on EJB session bean
 
-A disposer method defined in an EJB session bean follows the rules defined in <<disposer_method> with the following addition:
+A disposer method defined in an EJB session bean follows the rules defined in <<disposer_method>> with the following addition:
 
 * A disposer method defined in an EJB session bean must be either a business method exposed by a local business interface of the EJB or a static method of the bean class.
 
