@@ -2,50 +2,116 @@
 
 == Bootstrapping a CDI container in Java SE
 
-In Java SE, the CDI container must be explicitly bootstrapped by the application.
-This is performed with `CDIProvider` and `CDI` utility classes.
+In Java SE, the CDI container must be explicitly bootstrapped by the user.
+This is performed with the `UserContainerInitializer` abstract class and its static method `getInstance()`.
+
+`UserContainerInitializer` implementation is obtained by java service-provider.
+It allows the configuration of the CDI container before its bootstrapping.
+Calling the `initialize()` method bootstrap the container by returning a `UserContainer`.
+
+User can shutdown the Container manually by calling the `close() method on `UserContainer` or automatically since `UserContainer` implements `AutoCloseable` interface.
+
+[[container_builder]]
+
+=== `UserContainerInitializer` class
+
+CDI Container can be configured and bootstrapped from `javax.enterprise.inject.bootstrap.UserContainerInitializer` abstract class.
+
+A CDI implementation is required to provide an implementation of `UserContainerInitializer` declared as a service-provider.
+`getInstance()` static method uses java service-provider to obtain an implementation of `UserContainerInitializer` and return an instance of it.
+Only the first service-provider found by java service-provider is used.
+If no provider is available or if the provider class can't be instantiated an `IllegalStateException` is thrown.
+
+`UserContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
+These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
+
+This synthetic bean archive behaves like an explicit bean archive (as defined in <<bean_archive>>).
+
+[source, java]
+----
+public abstract class UserContainerInitializer {
+    public static UserContainerInitializer getInstance() { ... }
+    public UserContainerInitializer addBeanClasses(Class<?>... classes);
+    public UserContainerInitializer addPackages(Class<?>... packageClasses);
+    public UserContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
+    public UserContainerInitializer addPackages(Package... packages);
+    public UserContainerInitializer addPackages(boolean scanRecursively, Package... packages);
+    public UserContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
+    public UserContainerInitializer addExtensions(Extension... extensions);
+    public UserContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+    public UserContainerInitializer addInterceptors(Class<?>... interceptorClasses);
+    public UserContainerInitializer addDecorators(Class<?>... decoratorClasses);
+    public UserContainerInitializer addAlternatives(Class<?>... alternativeClasses);
+    public UserContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
+    public UserContainerInitializer addProperty(String key, Object value);
+    public UserContainerInitializer properties(Map<String, Object> properties);
+    public UserContainerInitializer addBeans(Bean<?>... beans);
+    public UserContainerInitializer disableDiscovery();
+    public UserContainerInitializer setClassLoader(ClassLoader classLoader);
+    public UserContainer<Object> initialize();
+}
+----
+
+Unless specified differently each methods of `UserContainerInitializer` returns the current `UserContainerInitializer` object.
+
+* `getInstance()` static method returns an instance of the implementation of `UserContainerInitializer` discovered by java service-provider.
+Each call returns a new instance of `UserContainerInitializer`.
+* `addBeanClasses()` add classes to the the synthetic bean archive
+* `addPackages()` add packages content to the synthetic bean archive.
+Versions exist by providing classes in the whished pakage or `Package` objects themsleves.
+Other version of the method allows recursive addition
+* `addAnnotatedTypes()` add the provided `AnnotatedTypes` to the synthetic bean archive.
+* `addExtensions()` add the provided extensions (class or instance) to the synthetic bean archive.
+* `addInterceptors()` add the provided interceptors to the synthetic bean archive.
+* `addDecorators()` add the provided decorators to the synthetic bean archive.
+* `addAlternatives()` add the provided alternatives classes to the synthetic bean archive.
+* `addAlternativeStereotypes()` add the provided stereotypes classes to the synthetic bean archive.
+* `addProperty()` add a configuration property for the container
+* `properties()` add a Map of configuration properties for the container
+* `addBeans()` add the provided beans to the set of discovered beans.
+* `disableDiscovery()` deactivate automatic type scanning and discovery.
+All bean archive will be ignored except the implicit bean archive.
+* `setClassLoader()` change the default class loader for the container
+* `initialize()` bootstrap the container and returns a `UserContainer<Object>` object as defined in <<user_container>>.
 
 
-[[cdiprovider_lookup]]
 
-=== CDIProvider lookup
+Each time `initialize` method is called on the `UserContainerInitializer` it returns a new `UserContainer<Object>` instance.  The _application context_ is started automatically by the container on start up.
+ An implementation need not support calling `initialize` multiple times on the same container without the prior container being shutdown.
 
-The `CDI` utility class provides static lookup for `CDIProvider`.
-By default, `CDIProvider` will be looked up via a `ServiceLoader` but this can be over-written by calling `setCDIProvider` on the `CDI` utility class.
-Once a `CDIProvider` has been located, it should not be instantiated again, instead the same one returned again.
 
-[[init_container]]
+[[user_container]]
 
-=== Starting the container
+=== `UserContainer` class
 
-Container can be initialized from a `CDIProvider` instance. Calling one of the `initialize` methods will start a container and return a `CDI` utility object to interact with it.
+The `javax.enterprise.inject.bootstrap.UserContainer` inherits the `javax.enterprise.inject.spi.CDI` class as defined in <<provider>>.
 
-Each time `initialize` method is called on the `CDIProvider` it returns a new `CDI` instance.  The _application context_ is started automatically by the container on start up.
- An implementation need not support calling `initialize` multiple times on the same provider without the prior container being shutdown.
 
-[[stop_container]]
+[source, java]
+----
+public abstract class UserContainer<T> extends CDI<T> implements AutoCloseable {
+    public abstract void close();
+}
+----
 
-=== Stopping the container
 
-The `CDI` can be stopped when it's not needed.
- To help with this, `CDI` implements `AutoCloseable`, so when dereferenced it should shutdown automatically (the `close` method invokes `shutdown`).
+`UserContainer` implements `AutoCloseable`, so when dereferenced it should shutdown automatically.
 
-The CDI instance may also be stopped manually by calling the `shutdown` method on the CDI object.
- If the `shutdown` method is explicitly invoked and the container was not initialized or already stopped , an `IllegalStateException` will be thrown.
-The `close` method should not throw an `IllegalStateException` if the container was never initialized.
+The `UserContainer` instance may also be stopped manually by explicitly calling the `close()` method on the `UserContainer` object.
+ If the `close()` method is explicitly invoked and the container was already stopped, an `IllegalStateException` will be thrown.
 
 The following code example are equivalent:
 
 [source,java]
 ----
 public static void main(String... args) {
-    CDIProvider provider = CDI.getCDIProvider();
-    CDI<Object> cdi = provider.initialize();
+    UserContainerInitializer containerInit = UserContainerInitializer.getInstance();
+    UserContainer<Object> container = containerInit.initialize();
     // retrieve a bean and do work with it
-    MyBean myBean = cdi.select(MyBean.class).get();
+    MyBean myBean = container.select(MyBean.class).get();
     myBean.doWork();
     // when done
-    cdi.shutdown();
+    container.close();
 }
 ----
 
@@ -53,9 +119,9 @@ public static void main(String... args) {
 [source,java]
 ----
 public static void main(String... args) {
-    try(CDI<Object> cdi = CDI.getCDIProvider().initialize()) {
+    try(UserContainer<Object> container = UserContainerInitializer.getInstance().initialize()) {
         // start the container, retrieve a bean and do work with it
-        MyBean myBean = cdi.select(MyBean.class).get();
+        MyBean myBean = container.select(MyBean.class).get();
         myBean.doWork();
     }
     // shuts down automatically after the try with resources block.

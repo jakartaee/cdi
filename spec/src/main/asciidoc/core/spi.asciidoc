@@ -249,9 +249,6 @@ If no provider is available an `IllegalStateException` is thrown.
 ----
 public interface CDIProvider {
    public CDI<Object> getCDI();
-   boolean isInitialized();
-   default CDI<Object> initialize();
-   CDI<Object> initialize(Map<String,Object> params);
 }
 ----
 

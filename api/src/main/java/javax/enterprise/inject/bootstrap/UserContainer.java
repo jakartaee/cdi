@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, 2015 Red Hat, Inc., and individual contributors
+ * Copyright 2016, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -9,27 +9,33 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
-package javax.enterprise.inject.spi;
+package javax.enterprise.inject.bootstrap;
+
+import javax.enterprise.inject.spi.CDI;
 
 /**
- * Interface implemented by a CDI provider to provide access to the current container
- * 
- * @author Pete Muir
- * @since 1.1
+ * Provides access to the current container in Java SE.
+ *
+ * @author Antoine Sabot-Durand
+ * @author John D. Ament
+ * @since 2.0
  */
-public interface CDIProvider {
+public abstract class UserContainer<T> extends CDI<T> implements AutoCloseable {
+
 
     /**
-     * Provides access to the current container
-     * 
-     * @return the CDI instance for the current container
+     * <p>
+     * Shuts down this UserContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
+     * </p>
      */
-    CDI<Object> getCDI();
+    @Override
+    public abstract void close();
+
 
 }
