@@ -95,7 +95,7 @@ public class DummyUserContainerInitializer2 extends UserContainerInitializer {
     }
 
     @Override
-    public UserContainerInitializer properties(Map<String, Object> properties) {
+    public UserContainerInitializer setProperties(Map<String, Object> properties) {
         return null;
     }
 

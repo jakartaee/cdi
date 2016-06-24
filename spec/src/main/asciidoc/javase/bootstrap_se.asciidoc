@@ -44,7 +44,7 @@ public abstract class UserContainerInitializer {
     public UserContainerInitializer addAlternatives(Class<?>... alternativeClasses);
     public UserContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
     public UserContainerInitializer addProperty(String key, Object value);
-    public UserContainerInitializer properties(Map<String, Object> properties);
+    public UserContainerInitializer setProperties(Map<String, Object> properties);
     public UserContainerInitializer addBeans(Bean<?>... beans);
     public UserContainerInitializer disableDiscovery();
     public UserContainerInitializer setClassLoader(ClassLoader classLoader);
@@ -67,7 +67,8 @@ Other version of the method allows recursive addition
 * `addAlternatives()` add the provided alternatives classes to the synthetic bean archive.
 * `addAlternativeStereotypes()` add the provided stereotypes classes to the synthetic bean archive.
 * `addProperty()` add a configuration property for the container
-* `properties()` add a Map of configuration properties for the container
+* `SetProperties()` set the Map of configuration properties for the container.
+replace previous properties.
 * `addBeans()` add the provided beans to the set of discovered beans.
 * `disableDiscovery()` deactivate automatic type scanning and discovery.
 All bean archive will be ignored except the implicit bean archive.

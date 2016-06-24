@@ -37,7 +37,7 @@ import java.util.ServiceLoader;
  * UserContainer<Object> container = UserContainerInitializer.getInstance().initialize();
  * container.select(Foo.class).get();
  * container.event().select(Bar.class).fire(new Bar());
- * container.shutdown();
+ * container.close();
  * </pre>
  * <p>
  * <p>
@@ -73,11 +73,11 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * UserContainerInitializer container = UserContainerInitializer.getInstance()
+ * UserContainerInitializer containerInitializer = UserContainerInitializer.getInstance()
  *    .disableDiscovery()
- *    .packages(Main.class, Utils.class)
- *    .interceptors(TransactionalInterceptor.class)
- *    .property("property", true);
+ *    .addPackages(Main.class, Utils.class)
+ *    .addInterceptors(TransactionalInterceptor.class)
+ *    .addProperty("property", true);
  * UserContainer<Object> container = container.initialize();
  * </pre>
  *
@@ -267,11 +267,12 @@ public abstract class UserContainerInitializer {
 
     /**
      * Set all the configuration properties.
+     * Erase previous properties set
      *
      * @param properties a map containing properties to add
      * @return self
      */
-    public abstract UserContainerInitializer properties(Map<String, Object> properties);
+    public abstract UserContainerInitializer setProperties(Map<String, Object> properties);
 
 
     /**
