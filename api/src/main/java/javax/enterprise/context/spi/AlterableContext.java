@@ -58,6 +58,6 @@ public interface AlterableContext extends Context {
      * @param contextual the contextual type
      * @throws ContextNotActiveException if the context is not active
      */
-    public void destroy(Contextual<?> contextual);
+    void destroy(Contextual<?> contextual);
 
 }

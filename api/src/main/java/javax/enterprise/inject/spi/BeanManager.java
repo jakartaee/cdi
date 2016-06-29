@@ -28,6 +28,7 @@ import javax.enterprise.context.ContextNotActiveException;
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.context.spi.UnmanagedContext;
 import javax.enterprise.event.ObserverException;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
@@ -86,6 +87,7 @@ import javax.enterprise.util.Nonbinding;
  * @author Clint Popetz
  * @author David Allen
  * @author Antoine Sabot-Durand
+ * @author John D. Ament
  */
 public interface BeanManager {
 
@@ -408,7 +410,15 @@ public interface BeanManager {
      */
     Context getContext(Class<? extends Annotation> scopeType);
 
-
+    /**
+     * Obtains an inactive {@linkplain javax.enterprise.context.spi.UnmanagedContext context object} for the given
+     * built in {@linkplain javax.enterprise.context scope}.
+     *
+     * @param scopeType the  {@linkplain javax.enterprise.context scope}
+     * @return the {@linkplain javax.enterprise.context.spi.UnmanagedContext context object}
+     * @throws IllegalArgumentException if the given scopeType is not a valid built in scope.
+     */
+    UnmanagedContext getUnmanagedContext(Class<? extends Annotation> scopeType);
 
     /**
      * Returns a {@link javax.el.ELResolver} that resolves beans by EL name.
