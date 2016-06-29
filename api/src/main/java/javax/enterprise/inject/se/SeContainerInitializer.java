@@ -26,7 +26,7 @@ import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
 /**
- * Container initializer to se CDI in Java SE.
+ * Container initializer to bootstrap CDI in Java SE.
  * It is obtained by calling the {@link SeContainerInitializer#getInstance()} static method
  * <p>
  * <p>
@@ -135,7 +135,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on bootstrap performance.
      * </p>
      *
      * @param packageClasses classes whose packages will be added to the synthetic bean archive
@@ -151,7 +151,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on bootstrap performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
@@ -169,7 +169,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on bootstrap performance.
      * </p>
      *
      * @param packages packages that will be added to the synthetic bean archive
@@ -185,7 +185,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on bootstrap performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
