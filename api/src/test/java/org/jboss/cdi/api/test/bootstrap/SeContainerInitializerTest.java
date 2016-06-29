@@ -21,7 +21,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.enterprise.inject.bootstrap.UserContainerInitializer;
+import javax.enterprise.inject.se.SeContainerInitializer;
 import java.io.FileWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -31,10 +31,10 @@ import java.nio.file.Files;
  * @author Antoine Sabot-durand
  *
  */
-public class UserContainerInitializerTest {
+public class SeContainerInitializerTest {
 
     private static final String SERVICE_PATH = System.getProperty("serviceDir");
-    private static final String SERVICE_FILE_NAME = SERVICE_PATH + UserContainerInitializer.class.getName();
+    private static final String SERVICE_FILE_NAME = SERVICE_PATH + SeContainerInitializer.class.getName();
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -45,16 +45,16 @@ public class UserContainerInitializerTest {
 
     @Test(expectedExceptions = IllegalStateException.class)
     public void testWithoutServiceFile() throws Exception {
-        UserContainerInitializer.getInstance();
+        SeContainerInitializer.getInstance();
     }
 
     @Test
     public void testWithOneGoodUserContainerInitializer() throws Exception {
 
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
-        fw.write(DummyUserContainerInitializer.class.getName());
+        fw.write(DummySeContainerInitializer.class.getName());
         fw.close();
-        Assert.assertEquals(UserContainerInitializer.getInstance().getClass(), DummyUserContainerInitializer.class);
+        Assert.assertEquals(SeContainerInitializer.getInstance().getClass(), DummySeContainerInitializer.class);
 
     }
 
@@ -65,25 +65,25 @@ public class UserContainerInitializerTest {
         fw.write("badprovider");
         fw.close();
 
-        UserContainerInitializer.getInstance();
+        SeContainerInitializer.getInstance();
 
     }
 
     @Test
     public void testWithTwoGoodUserContainerInitializer() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
-        fw.write(DummyUserContainerInitializer.class.getName());
+        fw.write(DummySeContainerInitializer.class.getName());
         fw.write('\n');
-        fw.write(DummyUserContainerInitializer2.class.getName());
+        fw.write(DummySeContainerInitializer2.class.getName());
         fw.close();
-        Assert.assertTrue(UserContainerInitializer.getInstance().getClass().equals(DummyUserContainerInitializer.class) ||
-                UserContainerInitializer.getInstance().getClass().equals(DummyUserContainerInitializer2.class));
+        Assert.assertTrue(SeContainerInitializer.getInstance().getClass().equals(DummySeContainerInitializer.class) ||
+                SeContainerInitializer.getInstance().getClass().equals(DummySeContainerInitializer2.class));
     }
 
-    private static abstract class ContainerInitChild extends UserContainerInitializer {
+    private static abstract class ContainerInitChild extends SeContainerInitializer {
 
         public static void reset() {
-            userContainerInitializer = null;
+            seContainerInitializer = null;
         }
 
 

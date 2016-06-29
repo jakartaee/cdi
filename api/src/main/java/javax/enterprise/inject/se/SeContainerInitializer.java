@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package javax.enterprise.inject.bootstrap;
+package javax.enterprise.inject.se;
 
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
@@ -26,26 +26,26 @@ import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
 /**
- * Container initializer to bootstrap CDI in Java SE.
- * It is obtained by calling the {@link UserContainerInitializer#getInstance()} static method
+ * Container initializer to se CDI in Java SE.
+ * It is obtained by calling the {@link SeContainerInitializer#getInstance()} static method
  * <p>
  * <p>
  * Typical usage looks like this:
  * </p>
  * <p>
  * <pre>
- * UserContainer<Object> container = UserContainerInitializer.getInstance().initialize();
+ * SeContainer<Object> container = SeContainerInitializer.getInstance().initialize();
  * container.select(Foo.class).get();
  * container.event().select(Bar.class).fire(new Bar());
  * container.close();
  * </pre>
  * <p>
  * <p>
- * The {@link UserContainer} interface implements AutoCloseable:
+ * The {@link SeContainer} interface implements AutoCloseable:
  * </p>
  * <p>
  * <pre>
- * try (UserContainer<Object> container = UserContainerInitializer.getInstance().initialize()) {
+ * try (SeContainer<Object> container = SeContainerInitializer.getInstance().initialize()) {
  *     container.select(Foo.class).get();
  * }
  * </pre>
@@ -56,7 +56,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * UserContainer<Object> container = UserContainerInitializer.getInstance().beanClasses(Foo.class, Bar.class).alternatives(Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.getInstance().beanClasses(Foo.class, Bar.class).alternatives(Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -64,7 +64,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * UserContainer<Object> container = UserContainerInitializer.getInstance().disableDiscovery().beanClasses(Foo.class, Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.getInstance().disableDiscovery().beanClasses(Foo.class, Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -73,12 +73,12 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * UserContainerInitializer containerInitializer = UserContainerInitializer.getInstance()
+ * SeContainerInitializer containerInitializer = SeContainerInitializer.getInstance()
  *    .disableDiscovery()
  *    .addPackages(Main.class, Utils.class)
  *    .addInterceptors(TransactionalInterceptor.class)
  *    .addProperty("property", true);
- * UserContainer<Object> container = container.initialize();
+ * SeContainer<Object> container = container.initialize();
  * </pre>
  *
  * @author Antoine Sabot-Durand
@@ -86,30 +86,30 @@ import java.util.ServiceLoader;
  * @author John D. Ament
  * @since 2.0
  */
-public abstract class UserContainerInitializer {
+public abstract class SeContainerInitializer {
 
-    protected static volatile UserContainerInitializer userContainerInitializer = null;
+    protected static volatile SeContainerInitializer seContainerInitializer = null;
 
 
     /**
-     * Returns an instance of {@link UserContainerInitializer}
+     * Returns an instance of {@link SeContainerInitializer}
      * Each call returns a new instance
      *
-     * @return a new UserContainerInitializer instance.
+     * @return a new SeContainerInitializer instance.
      * @throws IllegalStateException if called in a Java EE container
      */
-    public static UserContainerInitializer getInstance() {
-        if (userContainerInitializer == null)
-            userContainerInitializer = findUserContainerInitializer();
-        return userContainerInitializer;
+    public static SeContainerInitializer getInstance() {
+        if (seContainerInitializer == null)
+            seContainerInitializer = findUserContainerInitializer();
+        return seContainerInitializer;
     }
 
-    private static UserContainerInitializer findUserContainerInitializer() {
-        ServiceLoader<UserContainerInitializer> loader;
+    private static SeContainerInitializer findUserContainerInitializer() {
+        ServiceLoader<SeContainerInitializer> loader;
 
-        loader = ServiceLoader.load(UserContainerInitializer.class, UserContainerInitializer.class.getClassLoader());
+        loader = ServiceLoader.load(SeContainerInitializer.class, SeContainerInitializer.class.getClassLoader());
         if (!loader.iterator().hasNext()) {
-            throw new IllegalStateException("Unable to locate UserContainerInitializer");
+            throw new IllegalStateException("Unable to locate SeContainerInitializer");
         }
         try {
             return loader.iterator().next();
@@ -124,7 +124,7 @@ public abstract class UserContainerInitializer {
      * @param classes classes to add to the synthetic bean archive
      * @return self
      */
-    public abstract UserContainerInitializer addBeanClasses(Class<?>... classes);
+    public abstract SeContainerInitializer addBeanClasses(Class<?>... classes);
 
 
     /**
@@ -135,13 +135,13 @@ public abstract class UserContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param packageClasses classes whose packages will be added to the synthetic bean archive
      * @return self
      */
-    public abstract UserContainerInitializer addPackages(Class<?>... packageClasses);
+    public abstract SeContainerInitializer addPackages(Class<?>... packageClasses);
 
     /**
      * Packages of the specified classes will be scanned and found classes will be added to the set of bean classes for the synthetic bean archive.*
@@ -151,14 +151,14 @@ public abstract class UserContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
      * @param packageClasses  classes whose packages will be scanned
      * @return self
      */
-    public abstract UserContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
+    public abstract SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
 
 
     /**
@@ -169,13 +169,13 @@ public abstract class UserContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param packages packages that will be added to the synthetic bean archive
      * @return self
      */
-    public abstract UserContainerInitializer addPackages(Package... packages);
+    public abstract SeContainerInitializer addPackages(Package... packages);
 
     /**
      * All classes from the specified packages will be added to the set of bean classes for the synthetic bean archive.
@@ -185,14 +185,14 @@ public abstract class UserContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
      * @param packages        packages that will be added to the synthetic bean archive
      * @return self
      */
-    public abstract UserContainerInitializer addPackages(boolean scanRecursively, Package... packages);
+    public abstract SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
 
 
     /**
@@ -201,7 +201,7 @@ public abstract class UserContainerInitializer {
      * @param annotatedTypes the AnnotatedTypes to add
      * @return self
      */
-    public abstract UserContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
+    public abstract SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
 
 
     /**
@@ -210,7 +210,7 @@ public abstract class UserContainerInitializer {
      * @param extensions extensions to use in the container
      * @return self
      */
-    public abstract UserContainerInitializer addExtensions(Extension... extensions);
+    public abstract SeContainerInitializer addExtensions(Extension... extensions);
 
     /**
      * Add extensions to the set of extensions.
@@ -218,7 +218,7 @@ public abstract class UserContainerInitializer {
      * @param extensions extensions class to use in the container
      * @return self
      */
-    public abstract UserContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+    public abstract SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
 
     /**
      * Add interceptors classes to the list of enabled interceptors for a synthetic bean archive.
@@ -226,7 +226,7 @@ public abstract class UserContainerInitializer {
      * @param interceptorClasses classes of the interceptors to enable.
      * @return self
      */
-    public abstract UserContainerInitializer addInterceptors(Class<?>... interceptorClasses);
+    public abstract SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
 
 
     /**
@@ -235,7 +235,7 @@ public abstract class UserContainerInitializer {
      * @param decoratorClasses classes of the decorators to enable.
      * @return self
      */
-    public abstract UserContainerInitializer addDecorators(Class<?>... decoratorClasses);
+    public abstract SeContainerInitializer addDecorators(Class<?>... decoratorClasses);
 
 
     /**
@@ -244,7 +244,7 @@ public abstract class UserContainerInitializer {
      * @param alternativeClasses classes of the alternatives to select
      * @return self
      */
-    public abstract UserContainerInitializer addAlternatives(Class<?>... alternativeClasses);
+    public abstract SeContainerInitializer addAlternatives(Class<?>... alternativeClasses);
 
 
     /**
@@ -253,7 +253,7 @@ public abstract class UserContainerInitializer {
      * @param alternativeStereotypeClasses alternatives stereotypes to select
      * @return self
      */
-    public abstract UserContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
+    public abstract SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
 
 
     /**
@@ -263,7 +263,7 @@ public abstract class UserContainerInitializer {
      * @param value property value
      * @return self
      */
-    public abstract UserContainerInitializer addProperty(String key, Object value);
+    public abstract SeContainerInitializer addProperty(String key, Object value);
 
     /**
      * Set all the configuration properties.
@@ -272,7 +272,7 @@ public abstract class UserContainerInitializer {
      * @param properties a map containing properties to add
      * @return self
      */
-    public abstract UserContainerInitializer setProperties(Map<String, Object> properties);
+    public abstract SeContainerInitializer setProperties(Map<String, Object> properties);
 
 
     /**
@@ -281,7 +281,7 @@ public abstract class UserContainerInitializer {
      * @param beans beans to add
      * @return self
      */
-    public abstract UserContainerInitializer addBeans(Bean<?>... beans);
+    public abstract SeContainerInitializer addBeans(Bean<?>... beans);
 
 
     /**
@@ -289,7 +289,7 @@ public abstract class UserContainerInitializer {
      *
      * @return self
      */
-    public abstract UserContainerInitializer disableDiscovery();
+    public abstract SeContainerInitializer disableDiscovery();
 
 
     /**
@@ -298,20 +298,20 @@ public abstract class UserContainerInitializer {
      * @param classLoader the class loader to use
      * @return self
      */
-    public abstract UserContainerInitializer setClassLoader(ClassLoader classLoader);
+    public abstract SeContainerInitializer setClassLoader(ClassLoader classLoader);
 
     /**
      * <p>
-     * Initializes a CDI UserContainerInitializer.
+     * Initializes a CDI SeContainerInitializer.
      * </p>
      * <p>
      * Cannot be called within an application server.
      * </p>
      *
-     * @return the {@link UserContainer} instance associated with the container.
+     * @return the {@link SeContainer} instance associated with the container.
      * @throws UnsupportedOperationException if called within an application server
      */
-    public abstract UserContainer<Object> initialize();
+    public abstract SeContainer<Object> initialize();
 
 
 }

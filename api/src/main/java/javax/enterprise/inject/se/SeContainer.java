@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package javax.enterprise.inject.bootstrap;
+package javax.enterprise.inject.se;
 
 import javax.enterprise.inject.spi.CDI;
 
@@ -26,12 +26,12 @@ import javax.enterprise.inject.spi.CDI;
  * @author John D. Ament
  * @since 2.0
  */
-public abstract class UserContainer<T> extends CDI<T> implements AutoCloseable {
+public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
 
 
     /**
      * <p>
-     * Shuts down this UserContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
+     * Shuts down this SeContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
      * </p>
      */
     @Override

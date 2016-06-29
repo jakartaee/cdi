@@ -1,61 +1,61 @@
-[[bootstrap-se]]
+[[se_bootstrap]]
 
 == Bootstrapping a CDI container in Java SE
 
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
-This is performed with the `UserContainerInitializer` abstract class and its static method `getInstance()`.
+This is performed with the `SeContainerInitializer` abstract class and its static method `getInstance()`.
 
-`UserContainerInitializer` implementation is obtained by java service-provider.
+`SeContainerInitializer` implementation is obtained by java service-provider.
 It allows the configuration of the CDI container before its bootstrapping.
-Calling the `initialize()` method bootstrap the container by returning a `UserContainer`.
+Calling the `initialize()` method bootstraps the container and return a `SeContainer`.
 
-User can shutdown the Container manually by calling the `close() method on `UserContainer` or automatically since `UserContainer` implements `AutoCloseable` interface.
+User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` implements `AutoCloseable` interface.
 
-[[container_builder]]
+[[se_container_initializer]]
 
-=== `UserContainerInitializer` class
+=== `SeContainerInitializer` class
 
-CDI Container can be configured and bootstrapped from `javax.enterprise.inject.bootstrap.UserContainerInitializer` abstract class.
+CDI Container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
 
-A CDI implementation is required to provide an implementation of `UserContainerInitializer` declared as a service-provider.
-`getInstance()` static method uses java service-provider to obtain an implementation of `UserContainerInitializer` and return an instance of it.
+A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service-provider.
+`getInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
 Only the first service-provider found by java service-provider is used.
 If no provider is available or if the provider class can't be instantiated an `IllegalStateException` is thrown.
 
-`UserContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
+`SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
 These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
 
 This synthetic bean archive behaves like an explicit bean archive (as defined in <<bean_archive>>).
 
 [source, java]
 ----
-public abstract class UserContainerInitializer {
-    public static UserContainerInitializer getInstance() { ... }
-    public UserContainerInitializer addBeanClasses(Class<?>... classes);
-    public UserContainerInitializer addPackages(Class<?>... packageClasses);
-    public UserContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
-    public UserContainerInitializer addPackages(Package... packages);
-    public UserContainerInitializer addPackages(boolean scanRecursively, Package... packages);
-    public UserContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
-    public UserContainerInitializer addExtensions(Extension... extensions);
-    public UserContainerInitializer addExtensions(Class<? extends Extension>... extensions);
-    public UserContainerInitializer addInterceptors(Class<?>... interceptorClasses);
-    public UserContainerInitializer addDecorators(Class<?>... decoratorClasses);
-    public UserContainerInitializer addAlternatives(Class<?>... alternativeClasses);
-    public UserContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
-    public UserContainerInitializer addProperty(String key, Object value);
-    public UserContainerInitializer setProperties(Map<String, Object> properties);
-    public UserContainerInitializer addBeans(Bean<?>... beans);
-    public UserContainerInitializer disableDiscovery();
-    public UserContainerInitializer setClassLoader(ClassLoader classLoader);
-    public UserContainer<Object> initialize();
+public abstract class SeContainerInitializer {
+    public static SeContainerInitializer getInstance() { ... }
+    public SeContainerInitializer addBeanClasses(Class<?>... classes);
+    public SeContainerInitializer addPackages(Class<?>... packageClasses);
+    public SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
+    public SeContainerInitializer addPackages(Package... packages);
+    public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
+    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
+    public SeContainerInitializer addExtensions(Extension... extensions);
+    public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+    public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
+    public SeContainerInitializer addDecorators(Class<?>... decoratorClasses);
+    public SeContainerInitializer addAlternatives(Class<?>... alternativeClasses);
+    public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
+    public SeContainerInitializer addProperty(String key, Object value);
+    public SeContainerInitializer setProperties(Map<String, Object> properties);
+    public SeContainerInitializer addBeans(Bean<?>... beans);
+    public SeContainerInitializer disableDiscovery();
+    public SeContainerInitializer setClassLoader(ClassLoader classLoader);
+    public SeContainer<Object> initialize();
 }
 ----
 
-Unless specified differently each methods of `UserContainerInitializer` returns the current `UserContainerInitializer` object.
+Unless specified differently each methods of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
 
-* `getInstance()` static method returns an instance of the implementation of `UserContainerInitializer` discovered by java service-provider.
-Each call returns a new instance of `UserContainerInitializer`.
+* `getInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
+Each call returns a new instance of `SeContainerInitializer`.
 * `addBeanClasses()` add classes to the the synthetic bean archive
 * `addPackages()` add packages content to the synthetic bean archive.
 Versions exist by providing classes in the whished pakage or `Package` objects themsleves.
@@ -73,32 +73,33 @@ replace previous properties.
 * `disableDiscovery()` deactivate automatic type scanning and discovery.
 All bean archive will be ignored except the implicit bean archive.
 * `setClassLoader()` change the default class loader for the container
-* `initialize()` bootstrap the container and returns a `UserContainer<Object>` object as defined in <<user_container>>.
+* `initialize()` bootstrap the container and returns a `SeContainer<Object>` object as defined in <<se_container>>.
 
 
 
-Each time `initialize` method is called on the `UserContainerInitializer` it returns a new `UserContainer<Object>` instance.  The _application context_ is started automatically by the container on start up.
- An implementation need not support calling `initialize` multiple times on the same container without the prior container being shutdown.
+Each time `initialize()` method is called on the `SeContainerInitializer` it returns a new `SeContainer<Object>` instance.
+The _application context_ is started automatically by the container on start up.
+An implementation need not support calling `initialize()` multiple times on `SeContainerInitializer` without the previously returned `SeContainer` being shutdown.
 
 
-[[user_container]]
+[[se_container]]
 
-=== `UserContainer` class
+=== `SeContainer` class
 
-The `javax.enterprise.inject.bootstrap.UserContainer` inherits the `javax.enterprise.inject.spi.CDI` class as defined in <<provider>>.
+The `javax.enterprise.inject.se.SeContainer` inherits the `javax.enterprise.inject.spi.CDI` class as defined in <<provider>>.
 
 
 [source, java]
 ----
-public abstract class UserContainer<T> extends CDI<T> implements AutoCloseable {
+public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
     public abstract void close();
 }
 ----
 
 
-`UserContainer` implements `AutoCloseable`, so when dereferenced it should shutdown automatically.
+`SeContainer` implements `AutoCloseable`, so when dereferenced it should shutdown automatically.
 
-The `UserContainer` instance may also be stopped manually by explicitly calling the `close()` method on the `UserContainer` object.
+The `SeContainer` instance may also be stopped manually by explicitly calling the `close()` method on the `SeContainer` object.
  If the `close()` method is explicitly invoked and the container was already stopped, an `IllegalStateException` will be thrown.
 
 The following code example are equivalent:
@@ -106,8 +107,8 @@ The following code example are equivalent:
 [source,java]
 ----
 public static void main(String... args) {
-    UserContainerInitializer containerInit = UserContainerInitializer.getInstance();
-    UserContainer<Object> container = containerInit.initialize();
+    SeContainerInitializer containerInit = SeContainerInitializer.getInstance();
+    SeContainer<Object> container = containerInit.initialize();
     // retrieve a bean and do work with it
     MyBean myBean = container.select(MyBean.class).get();
     myBean.doWork();
@@ -120,7 +121,7 @@ public static void main(String... args) {
 [source,java]
 ----
 public static void main(String... args) {
-    try(UserContainer<Object> container = UserContainerInitializer.getInstance().initialize()) {
+    try(SeContainer<Object> container = SeContainerInitializer.getInstance().initialize()) {
         // start the container, retrieve a bean and do work with it
         MyBean myBean = container.select(MyBean.class).get();
         myBean.doWork();

@@ -17,8 +17,8 @@
 
 package org.jboss.cdi.api.test.bootstrap;
 
-import javax.enterprise.inject.bootstrap.UserContainer;
-import javax.enterprise.inject.bootstrap.UserContainerInitializer;
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.Extension;
@@ -26,96 +26,99 @@ import java.lang.annotation.Annotation;
 import java.util.Map;
 
 /**
- * Created by antoine on 23/06/2016.
+ *
+ * Dummy implementation of {@link SeContainerInitializer} for tests
+ *
+ * @author Antoine Sabot-Durand.
  */
-public class DummyUserContainerInitializer2 extends UserContainerInitializer {
+public class DummySeContainerInitializer2 extends SeContainerInitializer {
     @Override
-    public UserContainerInitializer addBeanClasses(Class<?>... classes) {
+    public SeContainerInitializer addBeanClasses(Class<?>... classes) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addPackages(Class<?>... packageClasses) {
+    public SeContainerInitializer addPackages(Class<?>... packageClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses) {
+    public SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addPackages(Package... packages) {
+    public SeContainerInitializer addPackages(Package... packages) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addPackages(boolean scanRecursively, Package... packages) {
+    public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes) {
+    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addExtensions(Extension... extensions) {
+    public SeContainerInitializer addExtensions(Extension... extensions) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addExtensions(Class<? extends Extension>... extensions) {
+    public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addInterceptors(Class<?>... interceptorClasses) {
+    public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addDecorators(Class<?>... decoratorClasses) {
+    public SeContainerInitializer addDecorators(Class<?>... decoratorClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addAlternatives(Class<?>... alternativeClasses) {
+    public SeContainerInitializer addAlternatives(Class<?>... alternativeClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
+    public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addProperty(String key, Object value) {
+    public SeContainerInitializer addProperty(String key, Object value) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer setProperties(Map<String, Object> properties) {
+    public SeContainerInitializer setProperties(Map<String, Object> properties) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer addBeans(Bean<?>... beans) {
+    public SeContainerInitializer addBeans(Bean<?>... beans) {
         return null;
     }
 
     @Override
-    public UserContainerInitializer disableDiscovery() {
+    public SeContainerInitializer disableDiscovery() {
         return null;
     }
 
     @Override
-    public UserContainerInitializer setClassLoader(ClassLoader classLoader) {
+    public SeContainerInitializer setClassLoader(ClassLoader classLoader) {
         return null;
     }
 
     @Override
-    public UserContainer<Object> initialize() {
+    public SeContainer<Object> initialize() {
         return null;
     }
 }
