@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.cdi.api.test.bootstrap;
+package org.jboss.cdi.api.test.se;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.se.SeContainerInitializer;
@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author Antoine Sabot-Durand.
  */
-public class DummySeContainerInitializer extends SeContainerInitializer {
+public class DummySeContainerInitializer2 extends SeContainerInitializer {
     @Override
     public SeContainerInitializer addBeanClasses(Class<?>... classes) {
         return null;

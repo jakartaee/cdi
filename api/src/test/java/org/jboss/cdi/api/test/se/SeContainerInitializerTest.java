@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.jboss.cdi.api.test.bootstrap;
+package org.jboss.cdi.api.test.se;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -38,85 +38,45 @@ public class SeContainerInitializerTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        ContainerInitChild.reset();
+
         Files.deleteIfExists(FileSystems.getDefault().getPath(SERVICE_FILE_NAME));
 
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
     public void testWithoutServiceFile() throws Exception {
-        SeContainerInitializer.getInstance();
+        SeContainerInitializer.newInstance();
     }
 
     @Test
-    public void testWithOneGoodUserContainerInitializer() throws Exception {
+    public void testWithOneGoodSeContainerInitializer() throws Exception {
 
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write(DummySeContainerInitializer.class.getName());
         fw.close();
-        Assert.assertEquals(SeContainerInitializer.getInstance().getClass(), DummySeContainerInitializer.class);
+        Assert.assertEquals(SeContainerInitializer.newInstance().getClass(), DummySeContainerInitializer.class);
 
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
-    public void testWithOneBadUserContainerInitializer() throws Exception {
+    public void testWithOneBadSeContainerInitializer() throws Exception {
 
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write("badprovider");
         fw.close();
 
-        SeContainerInitializer.getInstance();
+        SeContainerInitializer.newInstance();
 
     }
 
-    @Test
-    public void testWithTwoGoodUserContainerInitializer() throws Exception {
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void testWithTwoGoodSeContainerInitializer() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write(DummySeContainerInitializer.class.getName());
         fw.write('\n');
         fw.write(DummySeContainerInitializer2.class.getName());
         fw.close();
-        Assert.assertTrue(SeContainerInitializer.getInstance().getClass().equals(DummySeContainerInitializer.class) ||
-                SeContainerInitializer.getInstance().getClass().equals(DummySeContainerInitializer2.class));
+        Assert.assertTrue(SeContainerInitializer.newInstance().getClass().equals(DummySeContainerInitializer.class) ||
+                SeContainerInitializer.newInstance().getClass().equals(DummySeContainerInitializer2.class));
     }
-
-    private static abstract class ContainerInitChild extends SeContainerInitializer {
-
-        public static void reset() {
-            seContainerInitializer = null;
-        }
-
-
-    }
-
-    /*@Test
-    public void testWithTwoCDIProviderOneWithNullCDIAndOneGood() throws Exception {
-        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
-        fw.write(DummyCDIProviderWithNullCDI.class.getName());
-        fw.write('\n');
-        fw.write(DummyCDIProvider2.class.getName());
-        fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
-                CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
-    }
-
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void testWithFirstGoodCDIProvider() throws Exception {
-        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
-        fw.write(DummyCDIProvider.class.getName());
-        fw.write('\n');
-        fw.write("badprovider");
-        fw.close();
-        CDI.current();
-    }
-
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void testWithCDIProviderBadClass() throws Exception {
-        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
-        fw.write(getClass().getName());
-        fw.close();
-        CDI.current();
-    }*/
 }

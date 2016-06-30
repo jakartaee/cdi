@@ -3,7 +3,7 @@
 == Bootstrapping a CDI container in Java SE
 
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
-This is performed with the `SeContainerInitializer` abstract class and its static method `getInstance()`.
+This is performed with the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
 `SeContainerInitializer` implementation is obtained by java service-provider.
 It allows the configuration of the CDI container before its bootstrapping.
@@ -18,9 +18,8 @@ User can shutdown the container manually by calling the `close()` method on `SeC
 CDI Container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
 
 A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service-provider.
-`getInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
-Only the first service-provider found by java service-provider is used.
-If no provider is available or if the provider class can't be instantiated an `IllegalStateException` is thrown.
+`newInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
+If the number of providers available is lesser or greater than one or if the provider class can't be instantiated an `IllegalStateException` is thrown.
 
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
 These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
@@ -30,7 +29,7 @@ This synthetic bean archive behaves like an explicit bean archive (as defined in
 [source, java]
 ----
 public abstract class SeContainerInitializer {
-    public static SeContainerInitializer getInstance() { ... }
+    public static SeContainerInitializer newInstance() { ... }
     public SeContainerInitializer addBeanClasses(Class<?>... classes);
     public SeContainerInitializer addPackages(Class<?>... packageClasses);
     public SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
@@ -54,11 +53,11 @@ public abstract class SeContainerInitializer {
 
 Unless specified differently each methods of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
 
-* `getInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
+* `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
 Each call returns a new instance of `SeContainerInitializer`.
 * `addBeanClasses()` add classes to the the synthetic bean archive
 * `addPackages()` add packages content to the synthetic bean archive.
-Versions exist by providing classes in the whished pakage or `Package` objects themsleves.
+Versions exist by providing classes in the wished package or `Package` objects themselves.
 Other version of the method allows recursive addition
 * `addAnnotatedTypes()` add the provided `AnnotatedTypes` to the synthetic bean archive.
 * `addExtensions()` add the provided extensions (class or instance) to the synthetic bean archive.
@@ -107,7 +106,7 @@ The following code example are equivalent:
 [source,java]
 ----
 public static void main(String... args) {
-    SeContainerInitializer containerInit = SeContainerInitializer.getInstance();
+    SeContainerInitializer containerInit = SeContainerInitializer.newInstance();
     SeContainer<Object> container = containerInit.initialize();
     // retrieve a bean and do work with it
     MyBean myBean = container.select(MyBean.class).get();
@@ -121,7 +120,7 @@ public static void main(String... args) {
 [source,java]
 ----
 public static void main(String... args) {
-    try(SeContainer<Object> container = SeContainerInitializer.getInstance().initialize()) {
+    try(SeContainer<Object> container = SeContainerInitializer.newInstance().initialize()) {
         // start the container, retrieve a bean and do work with it
         MyBean myBean = container.select(MyBean.class).get();
         myBean.doWork();

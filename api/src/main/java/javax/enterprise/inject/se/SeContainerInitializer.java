@@ -21,20 +21,21 @@ import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.Extension;
 import java.lang.annotation.Annotation;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
 /**
- * Container initializer to bootstrap CDI in Java SE.
- * It is obtained by calling the {@link SeContainerInitializer#getInstance()} static method
+ * Container initializer to se CDI in Java SE.
+ * It is obtained by calling the {@link SeContainerInitializer#newInstance()} static method
  * <p>
  * <p>
  * Typical usage looks like this:
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.getInstance().initialize();
+ * SeContainer<Object> container = SeContainerInitializer.newInstance().initialize();
  * container.select(Foo.class).get();
  * container.close();
  * </pre>
@@ -44,7 +45,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * try (SeContainer<Object> container = SeContainerInitializer.getInstance().initialize()) {
+ * try (SeContainer<Object> container = SeContainerInitializer.newInstance().initialize()) {
  *     container.select(Foo.class).get();
  * }
  * </pre>
@@ -55,7 +56,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.getInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.newInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -63,7 +64,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.getInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.newInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -72,7 +73,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainerInitializer containerInitializer = SeContainerInitializer.getInstance()
+ * SeContainerInitializer containerInitializer = SeContainerInitializer.newInstance()
  *    .disableDiscovery()
  *    .addPackages(Main.class, Utils.class)
  *    .addInterceptors(TransactionalInterceptor.class)
@@ -87,8 +88,6 @@ import java.util.ServiceLoader;
  */
 public abstract class SeContainerInitializer {
 
-    protected static volatile SeContainerInitializer seContainerInitializer = null;
-
 
     /**
      * Returns an instance of {@link SeContainerInitializer}
@@ -97,24 +96,26 @@ public abstract class SeContainerInitializer {
      * @return a new SeContainerInitializer instance.
      * @throws IllegalStateException if called in a Java EE container
      */
-    public static SeContainerInitializer getInstance() {
-        if (seContainerInitializer == null)
-            seContainerInitializer = findUserContainerInitializer();
-        return seContainerInitializer;
+    public static SeContainerInitializer newInstance() {
+        return findSeContainerInitializer();
     }
 
-    private static SeContainerInitializer findUserContainerInitializer() {
-        ServiceLoader<SeContainerInitializer> loader;
+    private static SeContainerInitializer findSeContainerInitializer() {
 
-        loader = ServiceLoader.load(SeContainerInitializer.class, SeContainerInitializer.class.getClassLoader());
-        if (!loader.iterator().hasNext()) {
-            throw new IllegalStateException("Unable to locate SeContainerInitializer");
+        SeContainerInitializer result;
+        Iterator<SeContainerInitializer> iterator = ServiceLoader.load(SeContainerInitializer.class, SeContainerInitializer.class.getClassLoader()).iterator();
+
+        if (!iterator.hasNext()) {
+            throw new IllegalStateException("No valid CDI implementation found");
         }
         try {
-            return loader.iterator().next();
+            result = iterator.next();
         } catch (ServiceConfigurationError e) {
-            throw new IllegalStateException("Error while while processing provider", e);
+            throw new IllegalStateException("Error while instantiating SeContainerInitializer", e);
         }
+        if (iterator.hasNext())
+            throw new IllegalStateException("Two or more CDI implementations found, only one is supported");
+        return result;
     }
 
     /**
@@ -134,7 +135,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param packageClasses classes whose packages will be added to the synthetic bean archive
@@ -150,7 +151,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
@@ -168,7 +169,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param packages packages that will be added to the synthetic bean archive
@@ -184,7 +185,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on bootstrap performance.
+     * Scanning may also have negative impact on se performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
