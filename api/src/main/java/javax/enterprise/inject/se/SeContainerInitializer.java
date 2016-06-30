@@ -36,12 +36,11 @@ import java.util.ServiceLoader;
  * <pre>
  * SeContainer<Object> container = SeContainerInitializer.getInstance().initialize();
  * container.select(Foo.class).get();
- * container.event().select(Bar.class).fire(new Bar());
  * container.close();
  * </pre>
  * <p>
  * <p>
- * The {@link SeContainer} interface implements AutoCloseable:
+ * Since {@link SeContainer} interface implements AutoCloseable:
  * </p>
  * <p>
  * <pre>
@@ -56,7 +55,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.getInstance().beanClasses(Foo.class, Bar.class).alternatives(Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.getInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -64,7 +63,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.getInstance().disableDiscovery().beanClasses(Foo.class, Bar.class).initialize());
+ * SeContainer<Object> container = SeContainerInitializer.getInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
