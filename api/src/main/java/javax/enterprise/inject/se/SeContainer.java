@@ -37,5 +37,13 @@ public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
     @Override
     public abstract void close();
 
+    /**
+     *
+     * Check if the container is running or was shut down
+     *
+     * @return true if called before container shutdown
+     */
+    public abstract boolean isRunning();
+
 
 }

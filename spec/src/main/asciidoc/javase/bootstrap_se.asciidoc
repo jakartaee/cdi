@@ -92,6 +92,7 @@ The `javax.enterprise.inject.se.SeContainer` inherits the `javax.enterprise.inje
 ----
 public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
     public abstract void close();
+    public abstract boolean isRunning();
 }
 ----
 
@@ -100,6 +101,8 @@ public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
 
 The `SeContainer` instance may also be stopped manually by explicitly calling the `close()` method on the `SeContainer` object.
  If the `close()` method is explicitly invoked and the container was already stopped, an `IllegalStateException` will be thrown.
+
+State of the container can be checked with `isRunning()` method which returns `true` if called before container shutdown and `false` after.
 
 The following code example are equivalent:
 
