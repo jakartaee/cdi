@@ -22,12 +22,28 @@ import java.lang.annotation.Annotation;
 
 /**
  * Provides the same capabilities as a {@linkplain javax.enterprise.context.spi.Context object}, however is not intended to be active when first retrieved.
- * UnmanagedContext is designed for use-cases where you need to manually start a built-in context in a novel way.
+ * ManageableContext is designed as a tool to allow you to start and stop a built in context programmatically in ways other than how the spec defines them.
+ *
+ * <pre>
+ *
+ * public class MyRunner implements Runnable {
+ *
+ *     public void run() {
+ *        BeanManager beanManager = CDI.current().getBeanManager();
+ *        ManageableContext context = beanManager.getManageableContext(RequestScoped.class);
+ *        context.activate();
+ *        // do some work in this runnable
+ *        context.deactivate();
+ *     }
+ *
+ * }
+
+ * </pre>
  *
  * @author John D. Ament
  * @since 2.0
  */
-public interface UnmanagedContext {
+public interface ManageableContext extends AutoCloseable{
 
     /**
      * Get the scope type of the context object.
@@ -87,7 +103,14 @@ public interface UnmanagedContext {
     /**
      * Deactivates the given context, freeing any objects associated.
      *
-     * @throws IllegalStateException if the context has not been started or has been stopped already.
+     * @throws ContextNotActiveException if the context has not been started or has been stopped already.
      */
     void deactivate();
+
+    @Override
+    default void close() throws Exception {
+        if(isActive()) {
+            deactivate();
+        }
+    }
 }
