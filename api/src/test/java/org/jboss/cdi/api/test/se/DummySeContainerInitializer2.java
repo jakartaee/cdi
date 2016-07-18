@@ -118,7 +118,7 @@ public class DummySeContainerInitializer2 extends SeContainerInitializer {
     }
 
     @Override
-    public SeContainer<Object> initialize() {
+    public SeContainer initialize() {
         return null;
     }
 }

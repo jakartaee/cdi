@@ -47,7 +47,7 @@ public abstract class SeContainerInitializer {
     public SeContainerInitializer addBeans(Bean<?>... beans);
     public SeContainerInitializer disableDiscovery();
     public SeContainerInitializer setClassLoader(ClassLoader classLoader);
-    public SeContainer<Object> initialize();
+    public SeContainer initialize();
 }
 ----
 
@@ -72,7 +72,7 @@ replace previous properties.
 * `disableDiscovery()` deactivate automatic type scanning and discovery.
 All bean archive will be ignored except the implicit bean archive.
 * `setClassLoader()` change the default class loader for the container
-* `initialize()` bootstrap the container and returns a `SeContainer<Object>` object as defined in <<se_container>>.
+* `initialize()` bootstrap the container and returns a `SeContainer` object as defined in <<se_container>>.
 
 
 
@@ -90,7 +90,7 @@ The `javax.enterprise.inject.se.SeContainer` inherits the `javax.enterprise.inje
 
 [source, java]
 ----
-public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
+public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
     public abstract void close();
     public abstract boolean isRunning();
 }
@@ -110,7 +110,7 @@ The following code example are equivalent:
 ----
 public static void main(String... args) {
     SeContainerInitializer containerInit = SeContainerInitializer.newInstance();
-    SeContainer<Object> container = containerInit.initialize();
+    SeContainer container = containerInit.initialize();
     // retrieve a bean and do work with it
     MyBean myBean = container.select(MyBean.class).get();
     myBean.doWork();
@@ -123,7 +123,7 @@ public static void main(String... args) {
 [source,java]
 ----
 public static void main(String... args) {
-    try(SeContainer<Object> container = SeContainerInitializer.newInstance().initialize()) {
+    try(SeContainer container = SeContainerInitializer.newInstance().initialize()) {
         // start the container, retrieve a bean and do work with it
         MyBean myBean = container.select(MyBean.class).get();
         myBean.doWork();

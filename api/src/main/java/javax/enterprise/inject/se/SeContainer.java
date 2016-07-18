@@ -26,7 +26,7 @@ import javax.enterprise.inject.spi.CDI;
  * @author John D. Ament
  * @since 2.0
  */
-public abstract class SeContainer<T> extends CDI<T> implements AutoCloseable {
+public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
 
 
     /**

@@ -35,7 +35,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.newInstance().initialize();
+ * SeContainer container = SeContainerInitializer.newInstance().initialize();
  * container.select(Foo.class).get();
  * container.close();
  * </pre>
@@ -45,7 +45,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * try (SeContainer<Object> container = SeContainerInitializer.newInstance().initialize()) {
+ * try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
  *     container.select(Foo.class).get();
  * }
  * </pre>
@@ -56,7 +56,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.newInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
+ * SeContainer container = SeContainerInitializer.newInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -64,7 +64,7 @@ import java.util.ServiceLoader;
  * </p>
  * <p>
  * <pre>
- * SeContainer<Object> container = SeContainerInitializer.newInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
+ * SeContainer container = SeContainerInitializer.newInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
  * </pre>
  * <p>
  * <p>
@@ -78,7 +78,7 @@ import java.util.ServiceLoader;
  *    .addPackages(Main.class, Utils.class)
  *    .addInterceptors(TransactionalInterceptor.class)
  *    .addProperty("property", true);
- * SeContainer<Object> container = container.initialize();
+ * SeContainer container = container.initialize();
  * </pre>
  *
  * @author Antoine Sabot-Durand
@@ -311,7 +311,7 @@ public abstract class SeContainerInitializer {
      * @return the {@link SeContainer} instance associated with the container.
      * @throws UnsupportedOperationException if called within an application server
      */
-    public abstract SeContainer<Object> initialize();
+    public abstract SeContainer initialize();
 
 
 }
