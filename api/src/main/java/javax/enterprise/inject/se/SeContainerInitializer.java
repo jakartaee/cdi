@@ -27,7 +27,7 @@ import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
 /**
- * Container initializer to se CDI in Java SE.
+ * A CDI container initializer for Java SE.
  * It is obtained by calling the {@link SeContainerInitializer#newInstance()} static method
  * <p>
  * <p>
