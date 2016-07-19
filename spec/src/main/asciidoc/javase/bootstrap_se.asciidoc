@@ -19,7 +19,7 @@ CDI Container can be configured and bootstrapped from `javax.enterprise.inject.s
 
 A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service-provider.
 `newInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
-If the number of providers available is lesser or greater than one or if the provider class can't be instantiated an `IllegalStateException` is thrown.
+There must be exactly one provider available, otherwise an IllegalStateException is thrown.
 
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
 These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
