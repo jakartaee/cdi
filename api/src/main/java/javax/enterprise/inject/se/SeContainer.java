@@ -17,7 +17,8 @@
 
 package javax.enterprise.inject.se;
 
-import javax.enterprise.inject.spi.CDI;
+import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * Provides access to the current container in Java SE.
@@ -26,7 +27,7 @@ import javax.enterprise.inject.spi.CDI;
  * @author John D. Ament
  * @since 2.0
  */
-public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
+public interface SeContainer extends Instance<Object>,AutoCloseable {
 
 
     /**
@@ -35,7 +36,7 @@ public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
      * </p>
      */
     @Override
-    public abstract void close();
+    void close();
 
     /**
      *
@@ -43,7 +44,13 @@ public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
      *
      * @return true if called before container shutdown
      */
-    public abstract boolean isRunning();
+     boolean isRunning();
 
+    /**
+     * Get the CDI BeanManager for this container
+     *
+     * @return the BeanManager
+     */
+     BeanManager getBeanManager();
 
 }

@@ -9,7 +9,7 @@ This is performed with the `SeContainerInitializer` abstract class and its stati
 It allows the configuration of the CDI container before its bootstrapping.
 Calling the `initialize()` method bootstraps the container and return a `SeContainer`.
 
-User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` implements `AutoCloseable` interface.
+User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` extends `AutoCloseable` interface.
 
 [[se_container_initializer]]
 
@@ -72,7 +72,7 @@ replace previous properties.
 * `disableDiscovery()` deactivate automatic type scanning and discovery.
 All bean archive will be ignored except the implicit bean archive.
 * `setClassLoader()` change the default class loader for the container
-* `initialize()` bootstrap the container and returns a `SeContainer` object as defined in <<se_container>>.
+* `initialize()` bootstrap the container and returns a `SeContainer` as defined in <<se_container>>.
 
 
 
@@ -83,26 +83,28 @@ An implementation need not support calling `initialize()` multiple times on `SeC
 
 [[se_container]]
 
-=== `SeContainer` class
+=== `SeContainer` interface
 
-The `javax.enterprise.inject.se.SeContainer` inherits the `javax.enterprise.inject.spi.CDI` class as defined in <<provider>>.
+
+The `javax.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` as well providing lookup of bean instances since it inherits `Instance<Object>` as defined in <<dynamic_lookup>>.
+`SeContainer` also extends `AutoCloseable`, so when dereferenced, it should shutdown automatically.
 
 
 [source, java]
 ----
-public abstract class SeContainer extends CDI<Object> implements AutoCloseable {
-    public abstract void close();
-    public abstract boolean isRunning();
+public interface SeContainer extends Instance<Object>,AutoCloseable {
+    void close();
+    boolean isRunning();
+    BeanManager getBeanManager();
 }
 ----
 
 
-`SeContainer` implements `AutoCloseable`, so when dereferenced it should shutdown automatically.
-
-The `SeContainer` instance may also be stopped manually by explicitly calling the `close()` method on the `SeContainer` object.
- If the `close()` method is explicitly invoked and the container was already stopped, an `IllegalStateException` will be thrown.
-
-State of the container can be checked with `isRunning()` method which returns `true` if called before container shutdown and `false` after.
+* `close()` method explicitly shutdown the container.
+If it is called and the container was already shutdown, it throws an `IllegalStateException`.
+* `isRunning()` method returns `true` if called before container shutdown and `false` after.
+* `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
+if it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
 The following code example are equivalent:
 
