@@ -6,7 +6,7 @@
 
 === The `BeanManager` object in Java SE
 
-[[provider_ee]]
+[[provider_se]]
 
 ==== Obtaining a reference to the CDI container in Java SE
 
