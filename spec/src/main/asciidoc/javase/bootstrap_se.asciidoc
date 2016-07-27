@@ -5,9 +5,9 @@
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
 This is performed with the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
-`SeContainerInitializer` implementation is obtained by java service-provider.
+`SeContainerInitializer` is a service provider of the service `javax.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
 It allows the configuration of the CDI container before its bootstrapping.
-Calling the `initialize()` method bootstraps the container and return a `SeContainer`.
+The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
 
 User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` extends `AutoCloseable` interface.
 
@@ -51,7 +51,7 @@ public abstract class SeContainerInitializer {
 }
 ----
 
-Unless specified differently each methods of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
+Unless specified differently each method of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
 
 * `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
 Each call returns a new instance of `SeContainerInitializer`.
@@ -76,7 +76,7 @@ All bean archive will be ignored except the implicit bean archive.
 
 
 
-Each time `initialize()` method is called on the `SeContainerInitializer` it returns a new `SeContainer<Object>` instance.
+Every invocation of the `SeContainerInitializer.initialize()` method returns a new `SeContainer instance.
 The _application context_ is started automatically by the container on start up.
 An implementation need not support calling `initialize()` multiple times on `SeContainerInitializer` without the previously returned `SeContainer` being shutdown.
 
@@ -86,7 +86,7 @@ An implementation need not support calling `initialize()` multiple times on `SeC
 === `SeContainer` interface
 
 
-The `javax.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` as well providing lookup of bean instances since it inherits `Instance<Object>` as defined in <<dynamic_lookup>>.
+The `javax.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` and programmatic lookup as defined in <<dynamic_lookup>>.
 `SeContainer` also extends `AutoCloseable`, so when dereferenced, it should shutdown automatically.
 
 
