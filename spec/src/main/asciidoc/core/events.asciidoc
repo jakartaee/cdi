@@ -296,14 +296,17 @@ An event parameter may have multiple qualifiers.
 public void afterDocumentUpdatedByAdmin(@Observes @Updated @ByAdmin Document doc) { ... }
 ----
 
-Then this observer method will only be notified if all the observed event qualifiers are specified when the event is fired:
+Then this observer method will be notified if the set of observer qualifiers is a subset of the fired event's qualifiers or an empty set:
 
 [source, java]
 ----
 @Inject Event<Document> documentEvent;
 ...
-documentEvent.select(new UpdatedQualifier(), new ByAdminQualifier()).fire(document);
+documentEvent.select(new UpdatedQualifier(), new ByAdminQualifier(), new ClarificationQualifier()).fire(document);
 ----
+
+In the above example the event is fired with `@ByAdmin`, `@Updated`, and `@Clarification` qualifiers. The observer qualifiers are `@Updated` and `@ByAdmin`.
+Observer qualifiers therefore form a subset of event qualifiers and the observer will be notified.
 
 Other, less specific, observers will also be notified of this event:
 
@@ -315,6 +318,24 @@ public void afterDocumentUpdated(@Observes @Updated Document doc) { ... }
 [source, java]
 ----
 public void afterDocumentEvent(@Observes Document doc) { ... }
+----
+
+On the other hand, following observer will not be notified as slightly different behaviour applies to observers with `@Default` qualifier:
+
+[source, java]
+----
+public void afterDocumentDefaultEvent(@Observes @Default Document doc) { ... }
+----
+
+Such observer will only be notified for events having either no qualifiers or only `@Default` qualifier:
+
+[source, java]
+----
+@Inject Event<Document> documentEvent;
+@Inject @Default Event<Document> documentDefaultEvent;
+...
+documentEvent.fire(document);
+documentDefaultEvent.fire(document);
 ----
 
 [[observer_methods]]
