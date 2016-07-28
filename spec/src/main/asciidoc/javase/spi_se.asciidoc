@@ -1,0 +1,14 @@
+[[spi_se]]
+
+== Portable extensions in Java SE
+
+[[beanmanager_se]]
+
+=== The `BeanManager` object in Java SE
+
+[[provider_se]]
+
+==== Obtaining a reference to the CDI container in Java SE
+
+In Java SE, while the access to CDI container and ``BeanManager`` described in <<provider>> is available, the preferred way to access them is through ``SeContainer`` interface as described in <<se_container>>.
+

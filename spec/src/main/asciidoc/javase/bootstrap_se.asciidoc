@@ -1,51 +1,123 @@
-[[bootstrap-se]]
+[[se_bootstrap]]
 
 == Bootstrapping a CDI container in Java SE
 
-In Java SE, the CDI container must be explicitly bootstrapped by the application.
-This is performed with `CDIProvider` and `CDI` utility classes.
+In Java SE, the CDI container must be explicitly bootstrapped by the user.
+This is performed with the `SeContainerInitializer` abstract class and its static method `newInstance()`.
+
+`SeContainerInitializer` is a service provider of the service `javax.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
+It allows the configuration of the CDI container before its bootstrapping.
+The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
+
+User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` extends `AutoCloseable` interface.
+
+[[se_container_initializer]]
+
+=== `SeContainerInitializer` class
+
+CDI Container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
+
+A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service-provider.
+`newInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
+There must be exactly one provider available, otherwise an IllegalStateException is thrown.
+
+`SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
+These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
+
+This synthetic bean archive behaves like an explicit bean archive (as defined in <<bean_archive>>).
+
+[source, java]
+----
+public abstract class SeContainerInitializer {
+    public static SeContainerInitializer newInstance() { ... }
+    public SeContainerInitializer addBeanClasses(Class<?>... classes);
+    public SeContainerInitializer addPackages(Class<?>... packageClasses);
+    public SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
+    public SeContainerInitializer addPackages(Package... packages);
+    public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
+    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
+    public SeContainerInitializer addExtensions(Extension... extensions);
+    public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+    public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
+    public SeContainerInitializer addDecorators(Class<?>... decoratorClasses);
+    public SeContainerInitializer addAlternatives(Class<?>... alternativeClasses);
+    public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
+    public SeContainerInitializer addProperty(String key, Object value);
+    public SeContainerInitializer setProperties(Map<String, Object> properties);
+    public SeContainerInitializer addBeans(Bean<?>... beans);
+    public SeContainerInitializer disableDiscovery();
+    public SeContainerInitializer setClassLoader(ClassLoader classLoader);
+    public SeContainer initialize();
+}
+----
+
+Unless specified differently each method of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
+
+* `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
+Each call returns a new instance of `SeContainerInitializer`.
+* `addBeanClasses()` add classes to the the synthetic bean archive
+* `addPackages()` add packages content to the synthetic bean archive.
+Versions exist by providing classes in the wished package or `Package` objects themselves.
+Other version of the method allows recursive addition
+* `addAnnotatedTypes()` add the provided `AnnotatedTypes` to the synthetic bean archive.
+* `addExtensions()` add the provided extensions (class or instance) to the synthetic bean archive.
+* `addInterceptors()` add the provided interceptors to the synthetic bean archive.
+* `addDecorators()` add the provided decorators to the synthetic bean archive.
+* `addAlternatives()` add the provided alternatives classes to the synthetic bean archive.
+* `addAlternativeStereotypes()` add the provided stereotypes classes to the synthetic bean archive.
+* `addProperty()` add a configuration property for the container
+* `SetProperties()` set the Map of configuration properties for the container.
+replace previous properties.
+* `addBeans()` add the provided beans to the set of discovered beans.
+* `disableDiscovery()` deactivate automatic type scanning and discovery.
+All bean archive will be ignored except the implicit bean archive.
+* `setClassLoader()` change the default class loader for the container
+* `initialize()` bootstrap the container and returns a `SeContainer` as defined in <<se_container>>.
 
 
-[[cdiprovider_lookup]]
 
-=== CDIProvider lookup
+Every invocation of the `SeContainerInitializer.initialize()` method returns a new `SeContainer instance.
+The _application context_ is started automatically by the container on start up.
+An implementation need not support calling `initialize()` multiple times on `SeContainerInitializer` without the previously returned `SeContainer` being shutdown.
 
-The `CDI` utility class provides static lookup for `CDIProvider`.
-By default, `CDIProvider` will be looked up via a `ServiceLoader` but this can be over-written by calling `setCDIProvider` on the `CDI` utility class.
-Once a `CDIProvider` has been located, it should not be instantiated again, instead the same one returned again.
 
-[[init_container]]
+[[se_container]]
 
-=== Starting the container
+=== `SeContainer` interface
 
-Container can be initialized from a `CDIProvider` instance. Calling one of the `initialize` methods will start a container and return a `CDI` utility object to interact with it.
 
-Each time `initialize` method is called on the `CDIProvider` it returns a new `CDI` instance.  The _application context_ is started automatically by the container on start up.
- An implementation need not support calling `initialize` multiple times on the same provider without the prior container being shutdown.
+The `javax.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` and programmatic lookup as defined in <<dynamic_lookup>>.
+`SeContainer` also extends `AutoCloseable`, so when dereferenced, it should shutdown automatically.
 
-[[stop_container]]
 
-=== Stopping the container
+[source, java]
+----
+public interface SeContainer extends Instance<Object>,AutoCloseable {
+    void close();
+    boolean isRunning();
+    BeanManager getBeanManager();
+}
+----
 
-The `CDI` can be stopped when it's not needed.
- To help with this, `CDI` implements `AutoCloseable`, so when dereferenced it should shutdown automatically (the `close` method invokes `shutdown`).
 
-The CDI instance may also be stopped manually by calling the `shutdown` method on the CDI object.
- If the `shutdown` method is explicitly invoked and the container was not initialized or already stopped , an `IllegalStateException` will be thrown.
-The `close` method should not throw an `IllegalStateException` if the container was never initialized.
+* `close()` method explicitly shutdown the container.
+If it is called and the container was already shutdown, it throws an `IllegalStateException`.
+* `isRunning()` method returns `true` if called before container shutdown and `false` after.
+* `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
+if it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
 The following code example are equivalent:
 
 [source,java]
 ----
 public static void main(String... args) {
-    CDIProvider provider = CDI.getCDIProvider();
-    CDI<Object> cdi = provider.initialize();
+    SeContainerInitializer containerInit = SeContainerInitializer.newInstance();
+    SeContainer container = containerInit.initialize();
     // retrieve a bean and do work with it
-    MyBean myBean = cdi.select(MyBean.class).get();
+    MyBean myBean = container.select(MyBean.class).get();
     myBean.doWork();
     // when done
-    cdi.shutdown();
+    container.close();
 }
 ----
 
@@ -53,9 +125,9 @@ public static void main(String... args) {
 [source,java]
 ----
 public static void main(String... args) {
-    try(CDI<Object> cdi = CDI.getCDIProvider().initialize()) {
+    try(SeContainer container = SeContainerInitializer.newInstance().initialize()) {
         // start the container, retrieve a bean and do work with it
-        MyBean myBean = cdi.select(MyBean.class).get();
+        MyBean myBean = container.select(MyBean.class).get();
         myBean.doWork();
     }
     // shuts down automatically after the try with resources block.

@@ -9,3 +9,5 @@ include::bootstrap_se.asciidoc[]
 include::scopescontext_se.asciidoc[]
 
 include::packagingdeployment_se.asciidoc[]
+
+include::spi_se.asciidoc[]

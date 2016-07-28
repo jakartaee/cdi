@@ -24,19 +24,19 @@ import javax.enterprise.inject.spi.CDIProvider;
 import javax.enterprise.util.TypeLiteral;
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by antoine on 16/12/2015.
  */
 public class DummyCDIProvider implements CDIProvider {
 
+    @Override
+    public CDI<Object> getCDI() {
+        return new DummyCDI();
+    }
+
     public static class DummyCDI extends CDI<Object> {
 
-
-        public void shutdown() {
-
-        }
 
         @Override
         public BeanManager getBeanManager() {
@@ -84,23 +84,4 @@ public class DummyCDIProvider implements CDIProvider {
         }
     }
 
-    @Override
-    public CDI<Object> getCDI() {
-        return new DummyCDI();
-    }
-
-    @Override
-    public boolean isInitialized() {
-        return false;
-    }
-
-    @Override
-    public CDI<Object> initialize() {
-        return null;
-    }
-
-    @Override
-    public CDI<Object> initialize(Map<String, Object> params) {
-        return null;
-    }
 }

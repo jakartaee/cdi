@@ -18,11 +18,7 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.inject.Instance;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.ServiceConfigurationError;
-import java.util.ServiceLoader;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Provides access to the current container.
@@ -32,12 +28,11 @@ import java.util.Set;
  * @author John D. Ament
  * @since 1.1
  */
-public abstract class CDI<T> implements Instance<T>, AutoCloseable {
-
-    protected static volatile Set<CDIProvider> discoveredProviders = null;
-    protected static volatile CDIProvider configuredProvider = null;
+public abstract class CDI<T> implements Instance<T> {
 
     private static final Object lock = new Object();
+    protected static volatile Set<CDIProvider> discoveredProviders = null;
+    protected static volatile CDIProvider configuredProvider = null;
 
     /**
      * <p>
@@ -55,58 +50,6 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
     public static CDI<Object> current() {
         return getCDIProvider().getCDI();
     }
-
-    /**
-     * <p>
-     * Set the {@link CDIProvider} to use.
-     * </p>
-     * 
-     * <p>
-     * If a {@link CDIProvider} is set using this method, any provider specified as a service provider will not be used.
-     * </p>
-     * 
-     * @param provider the provider to use
-     * @throws IllegalStateException if the {@link CDIProvider} is already set
-     */
-    public static void setCDIProvider(CDIProvider provider) {
-        if (provider != null) {
-            configuredProvider = provider;
-        } else {
-            throw new IllegalStateException("CDIProvider must not be null");
-        }
-    }
-
-
-
-    /**
-     * <p>
-     * Shuts down this CDI instance.
-     * </p>
-     *
-     * @throws IllegalStateException if called within an application server or if the container is not already started
-     * @since 2.0
-     */
-    public abstract void shutdown();
-
-    /**
-     * <p>
-     * Shuts down this CDI instance when it is no longer in scope. Implemented from {@link AutoCloseable},
-     * </p>
-     *
-     * @since 2.0
-     */
-    @Override
-    public void close() {
-        shutdown();
-    }
-
-    /**
-     * Get the CDI BeanManager for the current context
-     *
-     * @return the BeanManager
-     */
-    public abstract BeanManager getBeanManager();
-
 
     /**
      *
@@ -131,7 +74,25 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
         }
     }
 
-    // Helper methods
+    /**
+     * <p>
+     * Set the {@link CDIProvider} to use.
+     * </p>
+     *
+     * <p>
+     * If a {@link CDIProvider} is set using this method, any provider specified as a service provider will not be used.
+     * </p>
+     *
+     * @param provider the provider to use
+     * @throws IllegalStateException if the {@link CDIProvider} is already set
+     */
+    public static void setCDIProvider(CDIProvider provider) {
+        if (provider != null) {
+            configuredProvider = provider;
+        } else {
+            throw new IllegalStateException("CDIProvider must not be null");
+        }
+    }
 
     private static void findAllProviders() {
 
@@ -151,5 +112,14 @@ public abstract class CDI<T> implements Instance<T>, AutoCloseable {
         }
         CDI.discoveredProviders = Collections.unmodifiableSet(providers);
     }
+
+    // Helper methods
+
+    /**
+     * Get the CDI BeanManager for the current context
+     *
+     * @return the BeanManager
+     */
+    public abstract BeanManager getBeanManager();
 
 }
