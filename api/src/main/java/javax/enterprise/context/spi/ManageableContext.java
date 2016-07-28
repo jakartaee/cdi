@@ -97,8 +97,9 @@ public interface ManageableContext extends AutoCloseable{
      * Starts the given context, allowing beans to be looked up within the bounds of that context.
      *
      * @throws IllegalStateException if the context has already been started.
+     * @return this manageable context
      */
-    void activate();
+    ManageableContext activate();
 
     /**
      * Deactivates the given context, freeing any objects associated.
@@ -108,6 +109,10 @@ public interface ManageableContext extends AutoCloseable{
     void deactivate();
 
     @Override
+    /**
+     * When called, deactivates the current manageable context if it is active.
+     *
+     */
     default void close() throws Exception {
         if(isActive()) {
             deactivate();

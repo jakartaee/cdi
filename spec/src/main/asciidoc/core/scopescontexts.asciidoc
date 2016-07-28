@@ -134,7 +134,7 @@ The context object must pass the same instance of `CreationalContext` to `Contex
 
 All of the rules for a `Context` and an `AlterableContext` apply to `ManageableContext` as well, except that it specifies manual activation and deactivation.
 
-The `activate()` method starts the given context.  It will throw an `IllegalStateException` if this manageable context is already active.
+The `activate()` method starts the given context.  It will throw an `IllegalStateException` if the scope represented by this manageable context is already active within the current thread.
 
 The `deactivate()` method stops the given context.  It will throw a `ContextNotActiveException` if this manageable context is not active.  When `deactivate()` is called, all beans created within this context are destroyed.
 
@@ -148,15 +148,10 @@ The easiest way to use `ManageableContext` is using a try-with-resources block.
 ----
 public class MyRunnable implements Runnable {
     public void run() {
-        BeanManager beanManager = CDI.current().getBeanManager();
-
-        try(ManageableContext context = beanManager.createManagedContext(RequestScoped.class)) {
-            context.activate();
-            Set<Bean<?>> beans = beanManager.getBeans(MyBean.class);
-            Bean<?> bean = beanManager.resolve(beans);
-            CreationalContext<?> creationalContext = beanManager.createCreationalContext(bean);
-            MyBean myBean = (MyBean)beanManager.getReference(bean, MyBean.class, creationalContext);
-            // do some work against that bean
+        CDI cdi = CDI.current();
+        try (ManageableContext ctx = cdi.getBeanManager().createManagedContext(RequestScoped.class).activate()) {
+          MyBean myBean = cdi.select(MyBean.class).get();
+          // do some work against that bean
         }
         // auto closed in try-with-resources
     }
