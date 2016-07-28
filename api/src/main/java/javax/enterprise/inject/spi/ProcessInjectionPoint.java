@@ -27,8 +27,9 @@ import javax.enterprise.inject.spi.builder.InjectionPointConfigurator;
  * decorator.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.InjectionPoint}. The
- * container must use the final value of this property, after all observers have been called, he container must use the final
+ * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.InjectionPoint} by calling either {@link #setInjectionPoint(InjectionPoint)} or {@link #configureInjectionPoint()}.
+ * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
+ * The container must use the final value of this property, after all observers have been called, he container must use the final
  * value of this property, after all observers have been called, whenever it performs injection upon the injection point.
  * </p>
  * <p>

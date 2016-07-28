@@ -25,22 +25,28 @@ import javax.enterprise.inject.spi.builder.ObserverMethodConfigurator;
  * enabled bean, before registering the {@link javax.enterprise.inject.spi.ObserverMethod} object.
  * </p>
  * <p>
+ * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.ObserverMethod} by calling either {@link #setObserverMethod(ObserverMethod)} or {@link #configureObserverMethod()}.
+ * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
+ * The container must use the final value of this property, after all observers have been called, he container must use the final
+ * value of this property, after all observers have been called, whenever it performs observer resolution.
+ * </p>
+ * <p>
  * If any observer method of a {@code ProcessObserverMethod} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
- * 
+ *
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen
  * @author  Antoine Sabot-Durand
  * @param <T> The type of the event being observed
  * @param <X> The bean type containing the observer method
- * 
+ *
  */
 public interface ProcessObserverMethod<T, X> {
     /**
      * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
-     * 
+     *
      * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -49,7 +55,7 @@ public interface ProcessObserverMethod<T, X> {
     /**
      * The {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to invoke the observer
      * when a matching event is fired.
-     * 
+     *
      * @return the {@link javax.enterprise.inject.spi.ObserverMethod} object that will be used by the container to call the
      *         observer method
      * @throws IllegalStateException if called outside of the observer method invocation

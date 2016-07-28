@@ -29,6 +29,11 @@ import javax.enterprise.inject.spi.builder.BeanAttributesConfigurator;
  * No event is fired for {@link New} qualified beans.
  * </p>
  * <p>
+ * Any observer of this event is permitted to wrap and/or replace the {@link BeanAttributes} by calling either {@link #setBeanAttributes(BeanAttributes)} or {@link #configureBeanAttributes()}.
+ * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
+ * The container must use the final value of this property, after all observers have been called, to manage instances of the bean.
+ * </p>
+ * <p>
  * If any observer method of a {@code ProcessBeanAttributes} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
