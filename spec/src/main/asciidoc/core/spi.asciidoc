@@ -1300,7 +1300,9 @@ The method always return the same `InjectionPointConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
-Any observer of this event is permitted to wrap and/or replace the `InjectionPoint`. The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the injection point.
+Any observer of this event is permitted to wrap and/or replace the `InjectionPoint` by calling either `setInjectionPoint()` or `configureInjectionPoint()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
+The container must use the final value of this property, after all observers have been called, whenever it performs injection upon the injection point.
 
 If any observer method of a `ProcessInjectionPoint` event throws an exception, the exception is treated as a definition error by the container.
 
@@ -1392,7 +1394,9 @@ The method always return the same `BeanAttributesConfigurator`.
 * `veto()` forces the container to ignore the bean.
 
 
-Any observer of this event is permitted to wrap and/or replace the `BeanAttributes`. The container must use the final value of this property, after all observers have been called, to manage instances of the bean.
+Any observer of this event is permitted to wrap and/or replace the `BeanAttributes` by calling either `setBeanAttributes()` or `configureBeanAttributes()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
+The container must use the final value of this property, after all observers have been called, to manage instances of the bean.
 Changes to `BeanAttributes` are _not_ propagated to the annotated type from which the bean definition was created.
 
 Any bean which has its bean attributes altered must have it's definition validated during deployment validation.
@@ -1551,6 +1555,9 @@ public interface ProcessObserverMethod<T, X> {
 The method always return the same `ObserverMethodConfigurator`.
 * `veto()` forces the container to ignore the `ObserverMethod`.
 
+Any observer of this event is permitted to wrap and/or replace the `ObserverMethod` by calling either `setObserverMethod()` or `configureObserverMethod()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
+The container must use the final value of this property, after all observers have been called, whenever it performs observer resolution.
 
 
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
