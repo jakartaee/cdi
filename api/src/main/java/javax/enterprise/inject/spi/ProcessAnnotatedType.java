@@ -25,7 +25,7 @@ import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.AnnotatedType} by calling either {@link #setAnnotatedType(AnnotatedType)} or {@link #configureAnnotatedType()}.
- * If both methods are called in the observer method, an {@link IllegalStateException} is thrown.
+ * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
  * The container must use the final value of this property, after all observers have been called, to discover the types and read the annotations of the program elements.
  * </p>
  * <p>

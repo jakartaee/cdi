@@ -1258,8 +1258,8 @@ The method always return the same `AnnotatedTypeConfigurator`
 * `getSource()` returns the `Extension` instance that added the annotated type.
 
 
-Any observer of this event is permitted to wrap and/or replace the `AnnotatedType` with either `setAnnotatedType()` or `configureAnnotatedType()` methods.
-If both methods are called in the observer method, an `IllegalStateException` is thrown.
+Any observer of this event is permitted to wrap and/or replace the `AnnotatedType` by calling either `setAnnotatedType()` or `configureAnnotatedType()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
 The container must use the final value of this property, after all observers have been called, as the only source of types and annotations for the program elements.
 
 For example, the following observer decorates the `AnnotatedType` for every class that is discovered by the container.
