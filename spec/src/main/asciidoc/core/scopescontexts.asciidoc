@@ -149,7 +149,7 @@ The easiest way to use `ManageableContext` is using a try-with-resources block.
 public class MyRunnable implements Runnable {
     public void run() {
         CDI cdi = CDI.current();
-        try (ManageableContext ctx = cdi.getBeanManager().createManagedContext(RequestScoped.class).activate()) {
+        try (ManageableContext ctx = cdi.getBeanManager().getManageableContext(RequestScoped.class).activate()) {
           MyBean myBean = cdi.select(MyBean.class).get();
           // do some work against that bean
         }
@@ -166,7 +166,7 @@ public class MyRunnable implements Runnable {
     public void run() {
         BeanManager beanManager = CDI.current().getBeanManager();
 
-        ManageableContext context = beanManager.createManagedContext(RequestScoped.class));
+        ManageableContext context = beanManager.getManageableContext(RequestScoped.class));
         try {
             context.activate();
             // do some work

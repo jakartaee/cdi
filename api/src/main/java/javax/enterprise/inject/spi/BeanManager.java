@@ -17,11 +17,6 @@
 
 package javax.enterprise.inject.spi;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Set;
-
 import javax.el.ELResolver;
 import javax.el.ExpressionFactory;
 import javax.enterprise.context.ContextNotActiveException;
@@ -34,6 +29,10 @@ import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 import javax.enterprise.util.Nonbinding;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -411,15 +410,18 @@ public interface BeanManager {
     Context getContext(Class<? extends Annotation> scopeType);
 
     /**
-     * Creates a new {@link ManageableContext} that represents the given built-in scope.  This ManageableContext is not
-     * yet active, it must be activated when ready to use.  Upon activation, you may use it to retrieve beans from
-     * the context.
+     * Returns a {@link ManageableContext} that represents the given built-in scope.
+     *
+     * If the given context type is not yet active on this thread, this ManageableContext is not yet active, it must
+     * be activated when ready to use.  Upon activation, you may use it to retrieve beans from the context.
+     *
+     * If the given context type is already active on this thread, then this ManageableContext is already active.
      *
      * @param scopeType the  {@linkplain javax.enterprise.context scope}
      * @return the {@linkplain ManageableContext context object}
      * @throws IllegalArgumentException if the given scopeType is not a valid built in scope.
      */
-    ManageableContext createManageableContext(Class<? extends Annotation> scopeType);
+    ManageableContext getManageableContext(Class<? extends Annotation> scopeType);
 
     /**
      * Returns a {@link javax.el.ELResolver} that resolves beans by EL name.
