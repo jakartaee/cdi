@@ -99,7 +99,7 @@ public class Unmanaged<T> {
          * @throws IllegalStateException if produce() is called on an instance that has already been disposed
          */
         public UnmanagedInstance<T> produce() {
-            if (this.instance != null) {
+            if (instance != null) {
                 throw new IllegalStateException("Trying to call produce() on already constructed instance");
             }
             if (disposed) {
@@ -116,7 +116,7 @@ public class Unmanaged<T> {
          * @throws IllegalStateException if inject() is called on an instance that has already been disposed
          */
         public UnmanagedInstance<T> inject() {
-            if (this.instance == null) {
+            if (instance == null) {
                 throw new IllegalStateException("Trying to call inject() before produce() was called");
             }
             if (disposed) {
@@ -133,7 +133,7 @@ public class Unmanaged<T> {
          * @throws IllegalStateException if postConstruct() is called on an instance that has already been disposed
          */
         public UnmanagedInstance<T> postConstruct() {
-            if (this.instance == null) {
+            if (instance == null) {
                 throw new IllegalStateException("Trying to call postConstruct() before produce() was called");
             }
             if (disposed) {
@@ -150,7 +150,7 @@ public class Unmanaged<T> {
          * @throws IllegalStateException if preDestroy() is called on an instance that has already been disposed
          */
         public UnmanagedInstance<T> preDestroy() {
-            if (this.instance == null) {
+            if (instance == null) {
                 throw new IllegalStateException("Trying to call preDestroy() before produce() was called");
             }
             if (disposed) {
@@ -167,12 +167,13 @@ public class Unmanaged<T> {
          * @throws IllegalStateException if dispose() is called on an instance that has already been disposed
          */
         public UnmanagedInstance<T> dispose() {
-            if (this.instance == null) {
+            if (instance == null) {
                 throw new IllegalStateException("Trying to call dispose() before produce() was called");
             }
             if (disposed) {
                 throw new IllegalStateException("Trying to call dispose() on already disposed instance");
             }
+            disposed = true;
             injectionTarget.dispose(instance);
             ctx.release();
             return this;
