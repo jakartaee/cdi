@@ -779,6 +779,8 @@ public PaymentProcessor<Cheque> getChequePaymentProcessor() {
 }
 ----
 
+[[built_in_annotation_literals]]
+
 ==== Built-in annotation literals
 
 The following built-in annotations define a `Literal` static nested class to support inline instantiation of the specific annotation type:

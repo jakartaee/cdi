@@ -31,10 +31,14 @@ This document is organized in 4 parts:
 This Early draft of CDI 2.0 includes important changes for the platform.
 
 * The spec was split in 3 parts as desibed in <<doc_organisation>> to add the support for Java SE.
-* API to boot CDI in Java SE, described in <<bootstrap-se>>
+* API to boot CDI in Java SE, described in <<se_bootstrap>>
 * Observer ordering, described in <<observer_ordering>>
 * Asynchronous event, descibed in <<firing_events_asynchronously>>
+* Configurators for meta-data in <<configurators>>
+* Possibility to decorate or cancel observer method in <<process_observer_method>>
+* Add built-in annotation literals in <<built_in_annotation_literals>>
 
-The full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?version=12327364&styleName=Html&projectId=12311062[here^].
+
+The full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&version=12328436[here^].
 
 :numbered:
