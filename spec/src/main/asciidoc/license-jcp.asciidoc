@@ -11,7 +11,7 @@ Specification Lead:  Red Hat, Inc.
 
 Release: {revdate}
 
-Copyright 2015 Red Hat, Inc.
+Copyright 2016 Red Hat, Inc.
 100 East Davie Street, Raleigh, NC 27601, U.S.A.
 
 All rights reserved.
