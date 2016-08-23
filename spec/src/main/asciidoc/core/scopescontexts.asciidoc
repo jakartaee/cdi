@@ -126,6 +126,58 @@ The context object is responsible for destroying any contextual instance it crea
 
 The context object must pass the same instance of `CreationalContext` to `Contextual.destroy()` that it passed to `Contextual.create()` when it created the instance.
 
+[[manageable_context]]
+
+=== The `ManageableContext` interface
+
+`ManageableContext` provides a portable way to start contexts in ways that are not defined by the specification.  This is designed for extensibility, allowing other frameworks to make use of context activation and deactivation.
+
+All of the rules for a `Context` and an `AlterableContext` apply to `ManageableContext` as well, except that it specifies manual activation and deactivation.
+
+The `activate()` method starts the given context.  It will throw an `IllegalStateException` if the scope represented by this manageable context is already active within the current thread.
+
+The `deactivate()` method stops the given context.  It will throw a `ContextNotActiveException` if this manageable context is not active.  When `deactivate()` is called, all beans created within this context are destroyed.
+
+The `close()` method, derived from `AutoCloseable` is designed as a safe version of deactivate that checks for activation prior to deactivating.
+
+The activation and deactivation of a manageable context follows standard context activation lifecycle methods.
+
+The easiest way to use `ManageableContext` is using a try-with-resources block.
+
+[source, java]
+----
+public class MyRunnable implements Runnable {
+    public void run() {
+        CDI cdi = CDI.current();
+        try (ManageableContext ctx = cdi.getBeanManager().getManageableContext(RequestScoped.class).activate()) {
+          MyBean myBean = cdi.select(MyBean.class).get();
+          // do some work against that bean
+        }
+        // auto closed in try-with-resources
+    }
+}
+----
+
+If you're not using a try-with-resources block, make sure you close your context
+
+[source, java]
+----
+public class MyRunnable implements Runnable {
+    public void run() {
+        BeanManager beanManager = CDI.current().getBeanManager();
+
+        ManageableContext context = beanManager.getManageableContext(RequestScoped.class));
+        try {
+            context.activate();
+            // do some work
+        }
+        finally {
+            context.close();
+        }
+    }
+}
+----
+
 [[normal_scope]]
 
 === Normal scopes and pseudo-scopes

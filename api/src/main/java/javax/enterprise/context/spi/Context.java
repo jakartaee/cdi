@@ -58,7 +58,7 @@ public interface Context {
      * 
      * @return the scope
      */
-    public Class<? extends Annotation> getScope();
+    Class<? extends Annotation> getScope();
 
     /**
      * Return an existing instance of certain contextual type or create a new instance by calling
@@ -71,7 +71,7 @@ public interface Context {
      * 
      * @throws ContextNotActiveException if the context is not active
      */
-    public <T> T get(Contextual<T> contextual, CreationalContext<T> creationalContext);
+    <T> T get(Contextual<T> contextual, CreationalContext<T> creationalContext);
 
     /**
      * Return an existing instance of a certain contextual type or a null value.
@@ -82,13 +82,13 @@ public interface Context {
      * 
      * @throws ContextNotActiveException if the context is not active
      */
-    public <T> T get(Contextual<T> contextual);
+    <T> T get(Contextual<T> contextual);
 
     /**
      * Determines if the context object is active.
      * 
      * @return <tt>true</tt> if the context is active, or <tt>false</tt> otherwise.
      */
-    public boolean isActive();
+    boolean isActive();
 
 }
