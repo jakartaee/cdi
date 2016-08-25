@@ -26,10 +26,14 @@ package javax.enterprise.event;
  * Transactional observer methods are observer methods which receive event notifications during the before or after completion
  * phase of the transaction in which the event was fired. If no transaction is in progress when the event is fired, they are
  * notified at the same time as other observers.
+ * If the transaction is in an illegal state or already rolled back when the event is fired, the {@link #BEFORE_COMPLETION},
+ * {@link #AFTER_COMPLETION} and {@link #AFTER_FAILURE} observer methods are notified at the same time as other observers,
+ * but {@link #AFTER_SUCCESS} observer methods get skipped.
  * </p>
  * 
  * @author Pete Muir
  * @author Gavin King
+ * @author Mark Struberg
  * 
  */
 public enum TransactionPhase {
@@ -45,12 +49,30 @@ public enum TransactionPhase {
      * <p>
      * Identifies a before completion observer method, called during the before completion phase of the transaction.
      * </p>
+     * <p>
+     * It will also get invoked if
+     * <ul>
+     *     <li>there is no transaction in progress, or</li>
+     *     <li>the transaction already got rolled back, or</li>
+     *     <li>the transaction is marked for rollback, or</li>
+     *     <li>the transaction is in an illegal state.</li>
+     * </ul>
+     * </p>
      */
     BEFORE_COMPLETION,
 
     /**
      * <p>
      * Identifies an after completion observer method, called during the after completion phase of the transaction.
+     * </p>
+     * <p>
+     * It will also get invoked if
+     * <ul>
+     *     <li>there is no transaction in progress, or</li>
+     *     <li>the transaction already got rolled back, or</li>
+     *     <li>the transaction is marked for rollback, or</li>
+     *     <li>the transaction is in an illegal state.</li>
+     * </ul>
      * </p>
      */
     AFTER_COMPLETION,
@@ -60,6 +82,15 @@ public enum TransactionPhase {
      * Identifies an after failure observer method, called during the after completion phase of the transaction, only when the
      * transaction fails.
      * </p>
+     * <p>
+     * It will also get invoked if
+     * <ul>
+     *     <li>there is no transaction in progress, or</li>
+     *     <li>the transaction already got rolled back, or</li>
+     *     <li>the transaction is marked for rollback, or</li>
+     *     <li>the transaction is in an illegal state.</li>
+     * </ul>
+     * </p>
      */
     AFTER_FAILURE,
 
@@ -67,6 +98,9 @@ public enum TransactionPhase {
      * <p>
      * Identifies an after success observer method, called during the after completion phase of the transaction, only when the
      * transaction completes successfully.
+     * </p>
+     * <p>
+     * It will also get invoked if there is no transaction in progress.
      * </p>
      */
     AFTER_SUCCESS
