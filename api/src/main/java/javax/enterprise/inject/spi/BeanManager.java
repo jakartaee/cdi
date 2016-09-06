@@ -17,11 +17,6 @@
 
 package javax.enterprise.inject.spi;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Set;
-
 import javax.el.ELResolver;
 import javax.el.ExpressionFactory;
 import javax.enterprise.context.ContextNotActiveException;
@@ -33,6 +28,10 @@ import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 import javax.enterprise.util.Nonbinding;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -88,6 +87,7 @@ import javax.enterprise.util.Nonbinding;
  * @author Antoine Sabot-Durand
  */
 public interface BeanManager {
+
 
     /**
      * <p>
@@ -605,5 +605,16 @@ public interface BeanManager {
      * @since 1.1
      */
     public <T extends Extension> T getExtension(Class<T> extensionClass);
+
+    /**
+     *
+     * Create an {@link InterceptionProxyFactory} for the given {@link CreationalContext} and type.
+     *
+     * @param ctx {@link CreationalContext} for the {@link InterceptionProxyFactory} to create
+     * @param clazz class of the instance to apply proxies on
+     * @param <T> type of the instance to apply proxies on
+     * @return a new {@link InterceptionProxyFactory} to create proxies for an instance of T
+     */
+    <T> InterceptionProxyFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 
 }

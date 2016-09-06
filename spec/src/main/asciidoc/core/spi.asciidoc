@@ -660,6 +660,18 @@ The method `BeanManager.getExtension()` returns the container's instance of an `
 public <T extends Extension> T getExtension(Class<T> extensionClass);
 ----
 
+[[bm_obtain_interception_proxy_factory]]
+
+==== Obtain an `InterceptionProxyFactory`
+
+The method `BeanManager.getInterceptionProxyFactory()` returns an `InterceptionProxyFactory` for the provided type as defined in <<interception_proxy_factory>>.
+
+[source, java]
+----
+<T> InterceptionProxyFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
+----
+
+
 [[alternative_metadata_sources]]
 
 === Alternative metadata sources
@@ -1580,3 +1592,33 @@ CDI 2.0 introduced the following Configurators interface:
 * <<observer_method_configurator>> for `ObserverMethod` configuration
 
 The container must provide implementation for all these configurators and make them available in matching container lifecycle events as defined in <<init_events>>.
+
+[[interception_proxy_factory]]
+
+=== Obtain an `InterceptionProxyFactory`
+
+Contextual instances of bean having interceptors binding or defined decorators are provided by the container as a proxy.
+
+When a bean is defined by a producer method or has a custom bean type, the container doesn't provide this proxy for interceptor or decorator.
+
+To allow creation of these proxies programmatically, CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionProxyFactory<T>` where T is the type of instance to create the proxy for.
+
+[source, java]
+----
+public interface InterceptionProxyFactory<T> {
+    InterceptionProxyFactory<T> ignoreFinalMethods();
+    AnnotatedTypeConfigurator<T> configure();
+    <U extends T> U createInterceptionProxy(T instance);
+}
+----
+
+* `ignoreFinalMethods()` forces the creation of the proxy even if the type T contains public final methods.
+* `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when creating the proxy.
+The method always return the same `AnnotatedTypeConfigurator`
+* `createInterceptionProxy()` returns the proxy adding interceptors and decorators on the provided instance.
+The method can be only called once, subsequent calls will throw an exception.
+
+An `InterceptionProxyFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_proxy_factory>>
+
+The container must also provide an instance of `InterceptionProxyFactory` for every producer methods injecting this interface.
+This allow creation of produced instances having interceptors and decorators applied to them.
