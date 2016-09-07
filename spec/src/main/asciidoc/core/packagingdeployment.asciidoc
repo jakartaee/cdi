@@ -20,7 +20,10 @@ Portable extensions may even integrate with the process of building the `Bean` o
 
 Bean classes of enabled beans must be deployed in _bean archives_.
 
-A bean archive has a _bean discovery mode_ of `all`, `annotated` or `none`. A bean archive which contains a `beans.xml` file with no version has a default bean discovery mode of `all`. A bean archive which contains a `beans.xml` file with version 1.1 (or later) must specify the `bean-discovey-mode` attribute. The default value for the attribute is `annotated`.
+A bean archive has a _bean discovery mode_ of `all`, `annotated`, `none` or `scoped`.
+A bean archive which contains a `beans.xml` file with no version has a default bean discovery mode of `all`.
+A bean archive which contains a `beans.xml` file with version 1.1 (or later) must specify the `bean-discovey-mode` attribute.
+The default value for the attribute is `annotated`.
 
 An archive which:
 
@@ -31,7 +34,7 @@ is not a bean archive.
 
 An _explicit bean archive_ is an archive which contains a `beans.xml` file:
 
-* with a version number of `1.1` (or later), with the `bean-discovery-mode` of `all`, or,
+* with a version number of `1.1` (or later), with the `bean-discovery-mode` of `all` or `scoped`, or,
 * with no version number, or,
 * that is an empty file.
 
@@ -169,6 +172,7 @@ The first exclude filter will exclude all classes in `com.acme.rest` package. Th
 
 For every type in the set of discovered types (as defined in <<type_discovery_steps>>), the container must:
 
+* for bean archives with bean-discovery-mode `scoped`: skip all `AnnotatedType` without <<bean_defining_annotations>>
 * inspect the type metadata to determine if it is a bean, and then
 * detect definition errors by validating the class and its metadata, and then
 * if the class is a managed bean, fire an event of type `ProcessInjectionPoint` for each injection point in the class, as defined in <<process_injection_point>>, and then
