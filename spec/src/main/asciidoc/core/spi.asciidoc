@@ -1010,7 +1010,7 @@ public interface BeforeBeanDiscovery {
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
     public void addAnnotatedType(AnnotatedType<?> type);
     public void addAnnotatedType(AnnotatedType<?> type, String id);
-    public AnnotatedTypeConfigurator<?> addAnnotatedType(String id);
+    public AnnotatedTypeConfigurator<?> addAnnotatedType(Class<T> type,String id);
 }
 ----
 
@@ -1022,6 +1022,7 @@ public interface BeforeBeanDiscovery {
 The first version of the method is deprecated since version 1.1 of Contexts and Dependency Injection.
 +
 The third version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
+The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
 
 
 [source, java]
@@ -1048,7 +1049,7 @@ public interface AfterTypeDiscovery {
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
     public void addAnnotatedType(AnnotatedType<?> type, String id);
-    public AnnotatedTypeConfigurator<?> addAnnotatedType(String id);
+    public AnnotatedTypeConfigurator<?> addAnnotatedType(Class<T> type,String id);
 }
 ----
 
@@ -1061,6 +1062,7 @@ Decorators enabled for a bean archive are not included in the list.
 * `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an identifier.
 +
 The second version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of observer invocation.
+The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
 
 If an alternative, interceptor or decorator is added using `AfterTypeDiscovery.addAnnotatedType()`, non-portable behavior results.
 

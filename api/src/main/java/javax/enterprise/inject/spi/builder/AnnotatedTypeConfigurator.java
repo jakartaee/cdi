@@ -36,8 +36,8 @@ import java.util.stream.Stream;
  *
  * This configurator is not thread safe and shall not be used concurrently.
  *
- * @see javax.enterprise.inject.spi.BeforeBeanDiscovery#addAnnotatedType(String)
- * @see javax.enterprise.inject.spi.AfterTypeDiscovery#addAnnotatedType(String)
+ * @see javax.enterprise.inject.spi.BeforeBeanDiscovery#addAnnotatedType(Class, String)
+ * @see javax.enterprise.inject.spi.AfterTypeDiscovery#addAnnotatedType(Class, String)
  * @see ProcessAnnotatedType#configureAnnotatedType()
  * @param <T> the class represented by the configured AnnotatedType
  * @author Martin Kouba
