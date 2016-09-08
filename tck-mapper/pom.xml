@@ -16,7 +16,7 @@
 
     <properties>
         <jsoup.version>1.8.1</jsoup.version>
-        <path.to.cdi.spec>spec/target/publish/html/cdi-spec.html</path.to.cdi.spec>
+        <path.to.cdi.spec>spec/target/generated-docs/cdi-spec.html</path.to.cdi.spec>
         <tck.version>1.2.7.Final</tck.version>
         <tck.audit.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-audit-cdi.xml</tck.audit.url>
         <tck.coverage.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-coverage-cdi.html</tck.coverage.url>
@@ -82,7 +82,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>../spec/target/publish/html/images</outputDirectory>
+                                    <outputDirectory>../spec/target/generated-docs/images</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>src/main/resources/images/</directory>

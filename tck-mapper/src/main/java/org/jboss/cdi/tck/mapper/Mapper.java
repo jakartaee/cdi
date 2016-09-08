@@ -45,7 +45,7 @@ public class Mapper {
     private List<Section> auditSections;
     private String tckVersion;
     private static final Logger log = Logger.getLogger(Mapper.class.getName());
-    private final static String SPEC_WITH_ASSERTIONS = "spec/target/publish/html/cdi-spec-with-assertions.html";
+    private final static String SPEC_WITH_ASSERTIONS = "spec/target/generated-docs/cdi-spec-with-assertions.html";
 
     public Mapper(String tckAuditURL, String coverageReportURL, String pathToCdiSpec, String tckVersion) {
         this.auditParser = new TckAuditSaxParser(tckAuditURL);
