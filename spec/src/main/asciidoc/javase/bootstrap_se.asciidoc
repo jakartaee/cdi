@@ -35,7 +35,6 @@ public abstract class SeContainerInitializer {
     public SeContainerInitializer addPackages(boolean scanRecursively, Class<?>... packageClasses);
     public SeContainerInitializer addPackages(Package... packages);
     public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
-    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
     public SeContainerInitializer addExtensions(Extension... extensions);
     public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
     public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
@@ -44,7 +43,6 @@ public abstract class SeContainerInitializer {
     public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
     public SeContainerInitializer addProperty(String key, Object value);
     public SeContainerInitializer setProperties(Map<String, Object> properties);
-    public SeContainerInitializer addBeans(Bean<?>... beans);
     public SeContainerInitializer disableDiscovery();
     public SeContainerInitializer setClassLoader(ClassLoader classLoader);
     public SeContainer initialize();
@@ -59,7 +57,6 @@ Each call returns a new instance of `SeContainerInitializer`.
 * `addPackages()` add packages content to the synthetic bean archive.
 Versions exist by providing classes in the wished package or `Package` objects themselves.
 Other version of the method allows recursive addition
-* `addAnnotatedTypes()` add the provided `AnnotatedTypes` to the synthetic bean archive.
 * `addExtensions()` add the provided extensions (class or instance) to the synthetic bean archive.
 * `addInterceptors()` add the provided interceptors to the synthetic bean archive.
 * `addDecorators()` add the provided decorators to the synthetic bean archive.
@@ -68,7 +65,6 @@ Other version of the method allows recursive addition
 * `addProperty()` add a configuration property for the container
 * `SetProperties()` set the Map of configuration properties for the container.
 replace previous properties.
-* `addBeans()` add the provided beans to the set of discovered beans.
 * `disableDiscovery()` deactivate automatic type scanning and discovery.
 All bean archive will be ignored except the implicit bean archive.
 * `setClassLoader()` change the default class loader for the container
