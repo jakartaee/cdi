@@ -119,7 +119,6 @@ public abstract class CDI<T> implements Instance<T> {
      * Get the CDI BeanManager for the current context
      *
      * @return the BeanManager
-     * @throws IllegalStateException if no CDI container is available
      */
     public abstract BeanManager getBeanManager();
 
