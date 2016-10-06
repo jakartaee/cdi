@@ -235,7 +235,8 @@ public abstract class CDI<T> implements Instance<T> {
 }
 ----
 
-A portable extension or other object may obtain a reference to the current container by calling `CDI.current()`. `CDI.getBeanManager()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
+A portable extension or other object may obtain a reference to the current container by calling `CDI.current()`.
+`CDI.getBeanManager()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
 Other methods on `CDI` may be called after the application initialization is completed until the application shutdown starts.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
