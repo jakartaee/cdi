@@ -156,7 +156,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
+     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
      * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
      * type.
      * </p>
@@ -167,7 +167,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * @param type The {@link javax.enterprise.inject.spi.AnnotatedType} to add for later scanning
-     * @param id The id of the annotated type
+     * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
@@ -180,7 +180,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      *
      * <p>
-     * This method allows multiple annotated types, based on the same underlying type, to be defined with a builder.
+     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be defined with a builder.
      * {@link AnnotatedType}s discovered by the container use the fully qualified class name of
      * {@link AnnotatedType#getJavaClass()} to identify the type.
      * </p>
@@ -193,13 +193,13 @@ public interface BeforeBeanDiscovery {
      * Each call returns a new AnnotatedTypeConfigurator
      *
      *
-     * @param id The id of the annotated type
-     * @param type type of the class that the {@link AnnotatedType} will represent
+     * @param type class used to initialized the type and annotations on the {@link AnnotatedTypeConfigurator}
+     * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
-    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(String id, Class<T> type);
+    public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(Class<T> type, String id);
 
 
 }
