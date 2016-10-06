@@ -196,15 +196,6 @@ public abstract class SeContainerInitializer {
 
 
     /**
-     * Add a given set of {@link AnnotatedType} to the set of discovered types.
-     *
-     * @param annotatedTypes the AnnotatedTypes to add
-     * @return self
-     */
-    public abstract SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes);
-
-
-    /**
      * Add extensions to the set of extensions.
      *
      * @param extensions extensions to use in the container
@@ -273,15 +264,6 @@ public abstract class SeContainerInitializer {
      * @return self
      */
     public abstract SeContainerInitializer setProperties(Map<String, Object> properties);
-
-
-    /**
-     * Add the provided beans to set of discovered beans.
-     *
-     * @param beans beans to add
-     * @return self
-     */
-    public abstract SeContainerInitializer addBeans(Bean<?>... beans);
 
 
     /**

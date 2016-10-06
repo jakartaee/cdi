@@ -58,11 +58,6 @@ public class DummySeContainerInitializer2 extends SeContainerInitializer {
     }
 
     @Override
-    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes) {
-        return null;
-    }
-
-    @Override
     public SeContainerInitializer addExtensions(Extension... extensions) {
         return null;
     }
@@ -99,11 +94,6 @@ public class DummySeContainerInitializer2 extends SeContainerInitializer {
 
     @Override
     public SeContainerInitializer setProperties(Map<String, Object> properties) {
-        return null;
-    }
-
-    @Override
-    public SeContainerInitializer addBeans(Bean<?>... beans) {
         return null;
     }
 

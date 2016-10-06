@@ -58,11 +58,6 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
     }
 
     @Override
-    public SeContainerInitializer addAnnotatedTypes(AnnotatedType<?>... annotatedTypes) {
-        return null;
-    }
-
-    @Override
     public SeContainerInitializer addExtensions(Extension... extensions) {
         return null;
     }
@@ -102,10 +97,6 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
         return null;
     }
 
-    @Override
-    public SeContainerInitializer addBeans(Bean<?>... beans) {
-        return null;
-    }
 
     @Override
     public SeContainerInitializer disableDiscovery() {
