@@ -506,3 +506,66 @@ If `end()` is called, and the current conversation is marked transient, an `Ille
 If `begin()` is called, and the current conversation is already marked long-running, an `IllegalStateException` is thrown.
 
 If `begin()` is called with an explicit conversation identifier, and a long-running conversation with that identifier already exists, an `IllegalArgumentException` is thrown.
+
+=== Context control for built-in scopes
+
+Most of the time the container will handle the lifecycle of built-in contexts automatically. However, in some cases it may be vital to have the ability to start and stop a context manually.
+To support these cases, the container provides built in beans that can handle the operations for activation and deactivation.
+
+[source, java]
+----
+public interface ContextController {
+    Optional<ManagedContext> getManagedContext(Class<? extends Annotation> scopeType);
+    ManagedContext getManagedContext(String id, Class<? extends Annotation> scopeType);
+    ManagedContext activate(Class<? extends Annotation> scopeType) throws IllegalStateException;
+}
+----
+
+A built in bean exists of type `ContextController`  which may be used to manage contexts.  This built in bean has scope `Dependent` and the qualifier `Default`.
+
+* `getManagedContext()` allows you to look up a context.  When only passing in the scopeType, the current thread will be used to look up an `ManagedContext`.
+* `activate()` starts the provided context on the current thread, allowing beans of that scope to be used.  May throw `IllegalStateException` if the context is already active on this thread.  You should check if the context is active before calling.
+* `deactivate()` stops the given context if it was started by this bean.  Throws a `ContextNotActiveException` if the given `ManagedContext` is no longer active, or was not activated by a `ContextController`
+
+==== Contexts supporting activation
+
+The following built in contexts may be activated manually
+
+* `ConversationScoped`
+* `RequestScoped`
+* `SessionScoped`
+
+`ApplicationScoped` may not be activated as it is always guaranteed to be active while CDI is running.
+
+==== Active Contexts
+
+Once you have retrieved (or activated) a context, you may use the `ManagedContext` reference to interact with beans defined within that context
+
+[source, java]
+----
+public interface ManagedContext {
+    String getId();
+    void associate(Thread thread);
+    void disassociate(Thread thread);
+    Class<? extends Annotation> getScope();
+    boolean isActive();
+    Instance<Object> instance();
+    void deactivate();
+}
+----
+
+* `getId()` returns the unique id of the given `ManagedContext`.  The combination of id and scope are guaranteed to be unique globally, where as the id alone must be unique for that scope
+* `associate(Thread)` following the CDI pattern of contexts and threading, associates a thread to a context, allowing beans to be retrieved on that thread.  Only needs to be used if other threads than the one that created the context will be doing automatic injection of fields
+* `disassociate(Thread)` removes the association between a context and a thread
+* `getScope()` Similar to the `Context.getScope()` method, returns back the scope represented by this ManagedContext
+* `isActive()` determines whether or not this `ManagedContext` is still active
+* `instance()` provides a handle to perform bean look up based on the context originating this instance.  The relevant instance object may not be used if the context has been deactivated.
+* `deactivate()` provides the ability to deactivate an already active `ManagedContext`
+
+==== Interceptor based context control
+
+In addition to using `ContextController`, the container must provide interceptors that will start and stop contexts when invoked against bean instances.
+
+Using the interceptor `ActivateRequestScope` on a bean method will start a request context if one is not already started and then stop it if it was started by this invocation upon completion, regardless of any exception being thrown by the invocation.  You may also apply `ActivateRequestScope` at the class level, in which case all valid bean methods on the class will perform this action.
+
+Using the interceptor `ActivateSessionScope` on a bean method will start a session context if one is not already started and then stop it if it was started by this invocation upon completion, regardless of any exception being thrown by the invocation.  You may also apply `ActivateSessionScope` at the class level, in which case all valid bean methods on the class will perform this action.
