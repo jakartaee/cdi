@@ -163,6 +163,25 @@ For example, consider the follow `beans.xml` file:
 The first exclude filter will exclude all classes in `com.acme.rest` package. The second exclude filter will exclude all classes in the `com.acme.faces` package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the `com.acme.verbose` package if the system property `verbosity` has the value `low`. The fourth exclude filter will exclude all classes in the `com.acme.ejb` package, and any subpackages if the system property `exclude-ejbs` is set (with any value) and at the same time, the `javax.enterprise.inject.Model` class is available to the classloader.
 
 
+[[trimmed_bean_archive]]
+
+==== Trimmed bean archive
+
+A bean archive might be marked as to be 'trimmed' by adding the following tag to beans.xml:
+[source, xml]
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <trim/>
+</beans>
+
+If a bean archive is marked with the `<trim/>` element in it's beans.xml, only AnnotatedTypes will get processed as Beans if they
+
+* have an explicit Scope annotation, or
+* are an Interceptor or a Decorator
+
+after the `ProcessAnnotatedType` event got fired.
+`AnnotatedTypes` with no scope will not get a <<default_scope>>.
+
+
 [[bean_discovery_steps]]
 
 ==== Bean discovery

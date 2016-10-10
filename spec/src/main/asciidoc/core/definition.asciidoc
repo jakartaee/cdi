@@ -493,7 +493,7 @@ Alternatively, a scope type may be specified using a stereotype annotation, as d
 
 ==== Default scope
 
-When no scope is explicitly declared by annotating the bean class or producer method or field the scope of a bean is defaulted.
+When no scope is explicitly declared by annotating the bean class or producer method or field and the bean is not deployed in a <<trimmed_bean_archive>> the scope of a bean is defaulted.
 
 The _default scope_ for a bean which does not explicitly declare a scope depends upon its declared stereotypes:
 
