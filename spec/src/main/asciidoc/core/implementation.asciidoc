@@ -398,11 +398,19 @@ public class UserDatabaseEntityManager {
 [source, java]
 ----
 public class Resources {
-    
-    @PersistenceContext
+
+    private EntityManagerFactory emf;
+
+    @PostConstruct
+    public void setupEntityManagerFactory() {
+        emf = Persistence.createEntityManagerFactory("userDatabase");
+    }
+
     @Produces @UserDatabase
-    private EntityManager em;
-    
+    public EntityManager start() {
+        return emf.createEntityManager();
+    }
+
     public void close(@Disposes @UserDatabase EntityManager em) {
         em.close();
     }
