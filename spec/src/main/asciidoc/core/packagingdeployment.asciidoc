@@ -165,6 +165,27 @@ beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 The first exclude filter will exclude all classes in `com.acme.rest` package. The second exclude filter will exclude all classes in the `com.acme.faces` package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the `com.acme.verbose` package if the system property `verbosity` has the value `low`. The fourth exclude filter will exclude all classes in the `com.acme.ejb` package, and any subpackages if the system property `exclude-ejbs` is set (with any value) and at the same time, the `javax.enterprise.inject.Model` class is available to the classloader.
 
 
+[[trimmed_bean_archive]]
+
+==== Trimmed bean archive
+
+An explicit bean archive may be marked as 'trimmed' by adding the `<trim />` element to its `beans.xml` file:
+
+[source, xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all" version="2.0">
+
+    <trim/>
+</beans>
+----
+
+If an explicit bean archive contains the `<trim/>` element in its `beans.xml` file, types that don't have either a bean defining annotation (as defined in <<bean_defining_annotations>>) or any scope annotation, are removed from the set of discovered types.
+
+
+
 [[bean_discovery_steps]]
 
 ==== Bean discovery
