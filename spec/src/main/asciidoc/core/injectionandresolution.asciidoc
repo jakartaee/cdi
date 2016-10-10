@@ -668,14 +668,17 @@ The `Instance` interface provides a method for obtaining instances of beans with
 ----
 public interface Instance<T> extends Iterable<T>, Provider<T> {
 
-    public Instance<T> select(Annotation... qualifiers);
-    public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
-    public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
+    Instance<T> select(Annotation... qualifiers);
+    <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
+    <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
 
-    public boolean isUnsatisfied();
-    public boolean isAmbiguous();
+    Stream<T> stream();
 
-    public void destroy(T instance);
+    boolean isUnsatisfied();
+    boolean isAmbiguous();
+
+    void destroy(T instance);
+
 
 }
 ----
@@ -722,6 +725,10 @@ The `iterator()` method must:
 * Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * Return an `Iterator`, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
+The `stream()` method must:
+
+* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
+* Returns a `Stream`, that can stream over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
 The method `isUnsatisfied()` returns `true` if there is no bean that has the required type and qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, or `false` otherwise.
 
