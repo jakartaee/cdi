@@ -64,7 +64,7 @@ An alternative is selected for the bean archive if either:
 ----
 <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd">
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all" version="2.0">
    <alternatives>
       <class>com.acme.myfwk.InMemoryDatabase</class>
       <stereotype>com.acme.myfwk.Mock</stereotype>
