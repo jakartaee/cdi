@@ -18,8 +18,6 @@
 package javax.enterprise.context.control;
 
 import javax.enterprise.context.ContextNotActiveException;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.spi.Context;
 
 /**
  * The CDI container provides a built in instance of RequestContextController that is dependent scoped for the purposes
@@ -47,7 +45,7 @@ import javax.enterprise.context.spi.Context;
  * @since 2.0
  * @author John D. Ament
  */
-public interface RequestContextController extends ContextController<RequestScoped>{
+public interface RequestContextController {
 
    /**
     * Activates a RequestContext for the current thread if one is not already active.
