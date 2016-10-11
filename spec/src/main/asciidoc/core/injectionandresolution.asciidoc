@@ -75,7 +75,7 @@ An alternative is selected for the bean archive if either:
 
 For each child `<class>` element the container verifies that either:
 
-* a class T exists which is annotated with `@Alternative` or contains a producer field or producer method which is annotated with `@Alternative`, or
+* a class `T` exists which is annotated with `@Alternative` or contains a producer field or producer method which is annotated with `@Alternative`, or
 * an alternative `Bean<T>` exists for the bean class.
 
 Otherwise the container automatically detects the problem and treats it as a deployment problem.
