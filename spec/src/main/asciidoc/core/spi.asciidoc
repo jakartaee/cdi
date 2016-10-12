@@ -1109,9 +1109,11 @@ public interface AfterBeanDiscovery {
 The given `Bean` may implement `Interceptor` or `Decorator`.
 +
 The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
+If the container is unable to process the configurator it automatically detects the problem and treats it as a deployment problem.
 * `addObserverMethod()` fires an event of type `ProcessObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
 +
 The second version of the method, returns a new `ObserverMethodConfigurator` as defined in <<observer_method_configurator>> to easily configure the `ObserverMethod` which will be added at the end of observer invocation.
+If the container is unable to process the configurator it automatically detects the problem and treats it as a deployment problem.
 * `addContext()` registers a custom `Context` object with the container.
 * `getAnnotatedType()` and `getAnnotatedTypes()` returns the `AnnotatedType` s discovered or added during container initialization.
 The id of an `AnnotatedType` added by the container is not defined.
