@@ -18,7 +18,7 @@ package javax.enterprise.inject.spi;
 
 import javax.enterprise.context.NormalScope;
 import javax.enterprise.inject.Stereotype;
-import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 import javax.inject.Qualifier;
 import javax.inject.Scope;
 import javax.interceptor.InterceptorBinding;

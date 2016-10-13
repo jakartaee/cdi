@@ -795,11 +795,11 @@ CDI 2.0 introduced a new SPI to help defining and creating instance for type met
 
 This SPI is composed of the following interfaces:
 
-* `javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
-* `javax.enterprise.inject.spi.builder.AnnotatedFieldConfigurator` (defined in <<annotated_field_configurator>>) to configure an `AnnotatedField`
-* `javax.enterprise.inject.spi.builder.AnnotatedConstructorConfigurator` (defined in <<annotated_constructor_configurator>>) to configure an `AnnotatedConstructor`
-* `javax.enterprise.inject.spi.builder.AnnotatedMethodConfigurator` (defined in <<annotated_method_configurator>>) to configure an `AnnotatedMethod`
-* `javax.enterprise.inject.spi.builder.AnnotatedParameterConfigurator` (defined in <<annotated_parameter_configurator>>) to configure an `AnnotatedParameter`
+* `javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
+* `javax.enterprise.inject.spi.configurator.AnnotatedFieldConfigurator` (defined in <<annotated_field_configurator>>) to configure an `AnnotatedField`
+* `javax.enterprise.inject.spi.configurator.AnnotatedConstructorConfigurator` (defined in <<annotated_constructor_configurator>>) to configure an `AnnotatedConstructor`
+* `javax.enterprise.inject.spi.configurator.AnnotatedMethodConfigurator` (defined in <<annotated_method_configurator>>) to configure an `AnnotatedMethod`
+* `javax.enterprise.inject.spi.configurator.AnnotatedParameterConfigurator` (defined in <<annotated_parameter_configurator>>) to configure an `AnnotatedParameter`
 
 The container must provide an implementation for each of these interfaces.
 
@@ -1134,7 +1134,7 @@ If any `AfterBeanDiscovery` method is called outside of the observer method invo
 
 ===== `BeanConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.BeanConfigurator` interface to help configuring a new `Bean` instance.
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanConfigurator` interface to help configuring a new `Bean` instance.
 
 With `BeanConfigurator` you can perform all the operations defined in <<bean_attributes_configurator>> plus the following:
 
@@ -1152,7 +1152,7 @@ With `BeanConfigurator` you can perform all the operations defined in <<bean_att
 
 ===== `ObserverMethodConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.ObserverMethodConfigurator` interface to help configuring a new `ObserverMethod` instance.
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ObserverMethodConfigurator` interface to help configuring a new `ObserverMethod` instance.
 
 `ObserverMethodConfigurator` must be initialized from a `java.lang.reflect.Method`, `AnnotatedMethod` or an existing `ObserverMethod` with one of its `read()` methods.
 
@@ -1256,7 +1256,7 @@ interface ProcessSyntheticAnnotatedType<X> extends ProcessAnnotatedType<X> {
 * `getAnnotatedType()` returns the `AnnotatedType` object that will be used by the container to read the declared annotations.
 * `setAnnotatedType()` replaces the `AnnotatedType`.
 * `configureAnnotatedType()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the `AnnotatedType` processed by the event to easily configure the `AnnotatedType` which will be used to replace the original one at the end of observer invocation.
-The method always return the same `AnnotatedTypeConfigurator`
+The method always returns the same `AnnotatedTypeConfigurator`
 * `veto()` forces the container to ignore the type.
 * `getSource()` returns the `Extension` instance that added the annotated type.
 
@@ -1299,7 +1299,7 @@ public interface ProcessInjectionPoint<T, X> {
 * `getInjectionPoint()` returns the `InjectionPoint` object that will be used by the container to perform injection.
 * `setInjectionPoint()` replaces the `InjectionPoint`.
 * `configureInjectionPoint()` returns an `InjectionPointConfigurator` (as defined in <<injection_point_configurator>>) initialized with the `InjectionPoint` processed by the event to easily configure the  `InjectionPoint` which will be used to replace the original one at the end of observer invocation.
-The method always return the same `InjectionPointConfigurator`.
+The method always returns the same `InjectionPointConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
@@ -1315,7 +1315,7 @@ If any `ProcessInjectionPoint` method is called outside of the observer method i
 
 ===== `InjectionPointConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.InjectionPointConfigurator` interface to help configure a new `InjectionPoint` instance.
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.InjectionPointConfigurator` interface to help configure a new `InjectionPoint` instance.
 
 `InjectionPointConfigurator` must be initialized from a field, a method or constructor parameter or an existing `InjectionPoint` with one of its `read()` methods.
 
@@ -1392,7 +1392,7 @@ public interface ProcessBeanAttributes<T> {
 * `getBeanAttributes()` returns the `BeanAttributes` object that will be used by the container to manage instances of the bean.
 * `setBeanAttributes()` replaces the `BeanAttributes`.
 * `configureBeanAttributes()` returns a `BeanAttributesConfigurator` (as defined in <<bean_attributes_configurator>>) initialized with the `BeanAttributes` processed by the event to easily configure the  `BeanAttributes` which will be used to replace the original one at the end of observer invocation.
-The method always return the same `BeanAttributesConfigurator`.
+The method always returns the same `BeanAttributesConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `veto()` forces the container to ignore the bean.
 
@@ -1413,7 +1413,7 @@ If any `ProcessBeanAttributes` method is called outside of the observer method i
 
 ===== `BeanAttributesConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.builder.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
 
 `BeanAttributesConfigurator` must be initialized from an `AnnotatedType`, or an existing `BeanAttributes` with one of its `read()` methods.
 
@@ -1555,7 +1555,7 @@ public interface ProcessObserverMethod<T, X> {
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `setObserverMethod()` replaces the `ObserverMethod`.
 * `configureObserverMethod()` returns an `ObserverMethodConfigurator` (as defined in <<observer_method_configurator>>) initialized with the `ObserverMethod` processed by the event to easily configure the  `ObserverMethod` which will be used to replace the original one at the end of observer invocation.
-The method always return the same `ObserverMethodConfigurator`.
+The method always returns the same `ObserverMethodConfigurator`.
 * `veto()` forces the container to ignore the `ObserverMethod`.
 
 Any observer of this event is permitted to wrap and/or replace the `ObserverMethod` by calling either `setObserverMethod()` or `configureObserverMethod()`.

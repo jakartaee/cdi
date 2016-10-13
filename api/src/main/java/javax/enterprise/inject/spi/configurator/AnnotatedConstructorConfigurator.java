@@ -14,71 +14,71 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package javax.enterprise.inject.spi.builder;
+package javax.enterprise.inject.spi.configurator;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedConstructor;
 import javax.enterprise.inject.spi.AnnotatedParameter;
 import javax.enterprise.util.Nonbinding;
 
 /**
  *
- * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedMethod}
+ * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedConstructor}
  * 
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
  * @since 2.0
- * @param <T> the class declaring the method
+ * @param <T> the class declaring the constructor
  */
-public interface AnnotatedMethodConfigurator<T> {
+public interface AnnotatedConstructorConfigurator<T> {
 
     /**
      * 
-     * @return the original {@link AnnotatedMethod}
+     * @return the original {@link AnnotatedConstructor}
      */
-    AnnotatedMethod<T> getAnnotated();
+    AnnotatedConstructor<T> getAnnotated();
 
     /**
-     * Add an annotation to the field.
-     *
-     * @param annotation to add
+     * Add an annotation to the constructor.
+     * 
+     * @param annotation annotation to add
      * @return self
      */
-    AnnotatedMethodConfigurator<T> add(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> add(Annotation annotation);
 
     /**
-     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
+     * Remove all annotation with (a) the same type and (b) the same annotation member value for each member which is not
      * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
      * to compare values.
-     *
-     * @param annotation to remove
+     * 
+     * @param annotation annotation to remove
      * @return self
      */
-    AnnotatedMethodConfigurator<T> remove(Annotation annotation);
+    AnnotatedConstructorConfigurator<T> remove(Annotation annotation);
 
     /**
      * Removes all annotations with the same type. Annotation members are ignored.
-     *
+     * 
      * @param annotationType annotation class to remove
      * @return self
      */
-    AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedConstructorConfigurator<T> remove(Class<? extends Annotation> annotationType);
 
     /**
-     * Remove all annotations from the method.
+     * Remove all annotations from the constructor.
      * 
      * @return self
      */
-    AnnotatedMethodConfigurator<T> removeAll();
+    AnnotatedConstructorConfigurator<T> removeAll();
 
     /**
      * 
      * @return an immutable list of {@link AnnotatedParameterConfigurator}s reflecting the
-     *         {@link AnnotatedMethod#getParameters()}
+     *         {@link AnnotatedConstructor#getParameters()}
      */
     List<AnnotatedParameterConfigurator<T>> params();
 

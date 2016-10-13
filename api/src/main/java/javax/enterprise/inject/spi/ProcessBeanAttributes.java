@@ -18,7 +18,7 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.inject.New;
-import javax.enterprise.inject.spi.builder.BeanAttributesConfigurator;
+import javax.enterprise.inject.spi.configurator.BeanAttributesConfigurator;
 
 /**
  * <p>

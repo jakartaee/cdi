@@ -17,7 +17,7 @@
 
 package javax.enterprise.inject.spi;
 
-import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 import java.util.List;
 
 /**
