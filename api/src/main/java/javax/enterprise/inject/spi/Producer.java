@@ -37,7 +37,7 @@ public interface Producer<T> {
      * <p>
      * If the {@code Producer} represents a class, this will invoke the constructor annotated {@link javax.inject.Inject} if it
      * exists, or the constructor with no parameters otherwise. If the class has interceptors, <tt>produce()</tt> is responsible
-     * for building the interceptors and decorators of the instance.
+     * for building the interceptors and decorators of the instance programatically with an {@link InterceptionProxyFactory}.
      * </p>
      * <p>
      * If the {@code Producer} represents a producer field or method, this will invoke the producer method on, or access the

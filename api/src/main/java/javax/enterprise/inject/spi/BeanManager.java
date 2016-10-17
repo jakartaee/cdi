@@ -614,6 +614,7 @@ public interface BeanManager {
      * @param clazz class of the instance to apply proxies on
      * @param <T> type of the instance to apply proxies on
      * @return a new {@link InterceptionProxyFactory} to create proxies for an instance of T
+     * @since 2.0
      */
     <T> InterceptionProxyFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 

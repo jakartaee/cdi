@@ -18,7 +18,7 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.builder.AnnotatedTypeConfigurator;
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 /**
  * <p>An {@link InterceptionProxyFactory} can create interceptor and decorator proxy for a given instance.</p>
@@ -79,6 +79,10 @@ public interface InterceptionProxyFactory<T> {
     /**
      *
      * Forces the creation of the proxy even if the targeted class has public final methods.
+     *
+     * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)
+     *
+     * Final methods on T won't be available on the produced proxy.
      *
      * @return self
      */
