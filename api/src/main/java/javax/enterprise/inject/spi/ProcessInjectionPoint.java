@@ -17,7 +17,7 @@
 
 package javax.enterprise.inject.spi;
 
-import javax.enterprise.inject.spi.builder.InjectionPointConfigurator;
+import javax.enterprise.inject.spi.configurator.InjectionPointConfigurator;
 
 /**
  * <p>

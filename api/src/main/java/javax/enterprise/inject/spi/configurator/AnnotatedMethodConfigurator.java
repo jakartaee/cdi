@@ -14,60 +14,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package javax.enterprise.inject.spi.builder;
+package javax.enterprise.inject.spi.configurator;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-import javax.enterprise.inject.spi.AnnotatedField;
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedParameter;
 import javax.enterprise.util.Nonbinding;
 
 /**
- * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedField}
+ *
+ * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedMethod}
  * 
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
  * @since 2.0
- * @param <T> the class declaring the field
+ * @param <T> the class declaring the method
  */
-public interface AnnotatedFieldConfigurator<T> {
-    
+public interface AnnotatedMethodConfigurator<T> {
+
     /**
      * 
-     * @return the original {@link AnnotatedField}
+     * @return the original {@link AnnotatedMethod}
      */
-    AnnotatedField<T> getAnnotated();
-    
+    AnnotatedMethod<T> getAnnotated();
+
     /**
      * Add an annotation to the field.
-     * 
+     *
      * @param annotation to add
      * @return self
      */
-    AnnotatedFieldConfigurator<T> add(Annotation annotation);
-    
+    AnnotatedMethodConfigurator<T> add(Annotation annotation);
+
     /**
      * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
      * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
      * to compare values.
-     * 
+     *
      * @param annotation to remove
      * @return self
      */
-    AnnotatedFieldConfigurator<T> remove(Annotation annotation);
-    
+    AnnotatedMethodConfigurator<T> remove(Annotation annotation);
+
     /**
      * Removes all annotations with the same type. Annotation members are ignored.
-     * 
+     *
      * @param annotationType annotation class to remove
      * @return self
      */
-    AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);
-    
+    AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
+
     /**
-     * Remove all annotations from the field.
+     * Remove all annotations from the method.
      * 
      * @return self
      */
-    AnnotatedFieldConfigurator<T> removeAll();
+    AnnotatedMethodConfigurator<T> removeAll();
+
+    /**
+     * 
+     * @return an immutable list of {@link AnnotatedParameterConfigurator}s reflecting the
+     *         {@link AnnotatedMethod#getParameters()}
+     */
+    List<AnnotatedParameterConfigurator<T>> params();
+
+    /**
+     * 
+     * @param predicate Testing the original {@link AnnotatedParameter}
+     * @return a sequence of {@link AnnotatedParameterConfigurator}s matching the given predicate
+     * @see AnnotatedParameterConfigurator#getAnnotated()
+     */
+    default Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate) {
+        return params().stream().filter(p -> predicate.test(p.getAnnotated()));
+    }
 
 }
