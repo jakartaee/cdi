@@ -24,7 +24,7 @@ package javax.enterprise.context;
  * 
  * <p>
  * If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation
- * and throw an exception of type <tt>NonexistentConversationException</tt> from the restore view phase of the JSF lifecycle.
+ * and throw an exception of type <tt>NonexistentConversationException</tt>.
  * </p>
  * 
  * @see javax.enterprise.context.ConversationScoped
