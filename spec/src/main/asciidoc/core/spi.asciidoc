@@ -122,6 +122,7 @@ public interface ObserverMethod<T> {
     public TransactionPhase getTransactionPhase();
     public int getPriority();
     public void notify(T event);
+    public void notify(EventContext<T> eventContext);
     public boolean isAsync();
 }
 ----
@@ -1110,6 +1111,8 @@ The given `Bean` may implement `Interceptor` or `Decorator`.
 +
 The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
 * `addObserverMethod()` fires an event of type `ProcessObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
++
+If the given `ObserverMethod` does not override either `ObserverMethod.notify(T)` or `ObserverMethod.notify(EventContext<T>)`, the container automatically detects the problem and treats it as a definition error.
 +
 The second version of the method, returns a new `ObserverMethodConfigurator` as defined in <<observer_method_configurator>> to easily configure the `ObserverMethod` which will be added at the end of observer invocation.
 * `addContext()` registers a custom `Context` object with the container.

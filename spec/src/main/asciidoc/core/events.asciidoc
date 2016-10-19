@@ -531,7 +531,7 @@ The `BeanManager.fireEvent()` or `Event.fire()` method rethrows the exception.
 If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) `ObserverException`.
 
 
-For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` to invoke the method.
+For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `javax.enterprise.inject.spi.EventContext` to invoke the method.
 
 [[async_exception]]
 
