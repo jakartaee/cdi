@@ -37,6 +37,9 @@ import javax.enterprise.event.TransactionPhase;
  * @param <T> the event type
  */
 public interface ObserverMethod<T> extends Prioritized {
+    
+    public static final int DEFAULT_PRIORITY = javax.interceptor.Interceptor.Priority.APPLICATION + 500;
+    
     /**
      * <p>
      * Obtains the {@linkplain Class class} of the type that declares the observer method.
@@ -84,8 +87,8 @@ public interface ObserverMethod<T> extends Prioritized {
      */
     @Override
     public default int getPriority() {
-        return javax.interceptor.Interceptor.Priority.APPLICATION + 500;
-    };
+        return DEFAULT_PRIORITY;
+    }
 
     /**
      * <p>
