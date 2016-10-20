@@ -524,7 +524,7 @@ If the injection point represents a dynamically obtained instance, then the `get
 * The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
 If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
 * The `isTransient()` method returns `true` if the injection point is a transient field, and `false` otherwise.
-If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise.
+If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise. If this injection point is declared as transient, after bean's passivation, the value will not be restored. Instance<> injection point is the preferred approach.
 
 
 Occasionally, a bean with scope `@Dependent` needs to access metadata relating to the object into which it is injected.
