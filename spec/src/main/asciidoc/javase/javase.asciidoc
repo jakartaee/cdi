@@ -1,7 +1,7 @@
 [partintro]
 --
-This part of the document, specifies additional rules or features when using CDI in a Java SE.
-All content defined in <<part_1>> apply in this part.
+This part of the document specifies additional rules and features when using CDI in Java SE.
+All content defined in <<part_1>> applies to this part.
 --
 
 include::bootstrap_se.asciidoc[]

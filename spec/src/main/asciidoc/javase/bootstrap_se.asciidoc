@@ -3,22 +3,22 @@
 == Bootstrapping a CDI container in Java SE
 
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
-This is performed with the `SeContainerInitializer` abstract class and its static method `newInstance()`.
+This is performed by the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
-`SeContainerInitializer` is a service provider of the service `javax.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
-It allows the configuration of the CDI container before its bootstrapping.
+`SeContainerInitializer` is a `ServiceProvider` of the service `javax.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
+This class allows a user to configure the CDI container before it is bootstrapped.
 The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
 
-User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically since `SeContainer` extends `AutoCloseable` interface.
+User can shutdown the container manually by calling the `close()` method on `SeContainer` or automatically using try-with-resources since `SeContainer` extends `AutoCloseable` interface.
 
 [[se_container_initializer]]
 
 === `SeContainerInitializer` class
 
-CDI Container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
+CDI container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
 
-A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service-provider.
-`newInstance()` static method uses java service-provider to obtain an implementation of `SeContainerInitializer` and return an instance of it.
+A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a `ServiceProvider`.
+`newInstance()` static method uses Java `ServiceProvider` to obtain an implementation of `SeContainerInitializer` and return an instance of it.
 There must be exactly one provider available, otherwise an IllegalStateException is thrown.
 
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
@@ -51,30 +51,29 @@ public abstract class SeContainerInitializer {
 
 Unless specified differently each method of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
 
-* `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by java service-provider.
-Each call returns a new instance of `SeContainerInitializer`.
-* `addBeanClasses()` add classes to the the synthetic bean archive
-* `addPackages()` add packages content to the synthetic bean archive.
-Versions exist by providing classes in the wished package or `Package` objects themselves.
-Other version of the method allows recursive addition
-* `addExtensions()` add the provided extensions (class or instance) to the synthetic bean archive.
-* `addInterceptors()` add the provided interceptors to the synthetic bean archive.
-* `addDecorators()` add the provided decorators to the synthetic bean archive.
-* `addAlternatives()` add the provided alternatives classes to the synthetic bean archive.
-* `addAlternativeStereotypes()` add the provided stereotypes classes to the synthetic bean archive.
-* `addProperty()` add a configuration property for the container
-* `SetProperties()` set the Map of configuration properties for the container.
-replace previous properties.
-* `disableDiscovery()` deactivate automatic type scanning and discovery.
-All bean archive will be ignored except the implicit bean archive.
-* `setClassLoader()` change the default class loader for the container
-* `initialize()` bootstrap the container and returns a `SeContainer` as defined in <<se_container>>.
+* `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by Java service provider.
+Each call returns a new instance of `SeContainerInitializer`. This method throws `IllegalStateException` if called in Java EE container.
+* `addBeanClasses()` adds classes to the the synthetic bean archive
+* `addPackages()` adds packages content to the synthetic bean archive.
+There are other versions of this method, which enables user to add a package according to class or classes it contains and also to add packages recursively.
+* `addExtensions()` adds the provided extensions (class or instance) to the synthetic bean archive.
+* `addInterceptors()` adds the provided interceptors to the synthetic bean archive.
+* `addDecorators()` adds the provided decorators to the synthetic bean archive.
+* `addAlternatives()` adds the provided alternatives classes to the synthetic bean archive.
+* `addAlternativeStereotypes()` adds the provided stereotypes classes to the synthetic bean archive.
+* `addProperty()` adds a configuration property to the container
+* `setProperties()` sets the `Map` of configuration properties for the container.
+Original properties `Map` is replaced by a new instance.
+* `disableDiscovery()` deactivates automatic type scanning and discovery.
+All bean archives will be ignored except the implicit bean archive.
+* `setClassLoader()` changes the default class loader for the container
+* `initialize()` bootstraps the container and returns a `SeContainer` as defined in <<se_container>>.
 
 
 
-Every invocation of the `SeContainerInitializer.initialize()` method returns a new `SeContainer instance.
-The _application context_ is started automatically by the container on start up.
-An implementation need not support calling `initialize()` multiple times on `SeContainerInitializer` without the previously returned `SeContainer` being shutdown.
+Every invocation of the `SeContainerInitializer.initialize()` method returns a new `SeContainer` instance.
+The application context is started automatically by the container on start up.
+An implementation does not need to support multiple calls of `SeContainerInitializer.initialize()` method when the `SeContainer` is running.
 
 
 [[se_container]]
@@ -96,15 +95,15 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
 ----
 
 
-* `close()` method explicitly shutdown the container.
+* `close()` method explicitly shuts down the container.
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
-* `isRunning()` method returns `true` if called before container shutdown and `false` after.
+* `isRunning()` method returns `true` if called before container shuts down and `false` after.
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
-if it is called and the container was already shutdown, it throws an `IllegalStateException`.
+If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
 
-The following code example are equivalent:
+The following code examples demonstrate the options of handling container shutdown:
 
 [source,java]
 ----
