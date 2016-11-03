@@ -17,10 +17,11 @@
 
 package javax.enterprise.inject;
 
-import java.lang.annotation.Annotation;
-
 import javax.enterprise.util.TypeLiteral;
 import javax.inject.Provider;
+import java.lang.annotation.Annotation;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * <p>
@@ -132,7 +133,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
-    public Instance<T> select(Annotation... qualifiers);
+    Instance<T> select(Annotation... qualifiers);
 
     /**
      * <p>
@@ -146,7 +147,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
-    public <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
+    <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
 
     /**
      * <p>
@@ -160,7 +161,19 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
-    public <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
+    <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
+
+    /**
+     * <p>
+     * When called, provides back a Stream of the beans available in this Instance.  If no beans are found, it
+     * returns an empty stream.
+     * </p>
+     *
+     * @return a <tt>Stream</tt> representing the beans associated with this {@link Instance} object
+     */
+    default Stream<T> stream(){
+        return StreamSupport.stream(this.spliterator(), false);
+    }
 
     /**
      * <p>
@@ -171,7 +184,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return <tt>true</tt> if there is no bean that matches the required type and qualifiers and is eligible for injection
      *         into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
      */
-    public boolean isUnsatisfied();
+    boolean isUnsatisfied();
 
     /**
      * <p>
@@ -182,7 +195,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return <tt>true</tt> if there is more than one bean that matches the required type and qualifiers and is eligible for
      *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
      */
-    public boolean isAmbiguous();
+    boolean isAmbiguous();
 
     /**
      * <p>
@@ -202,6 +215,6 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @throws UnsupportedOperationException if the active context object for the scope type of the bean does not support
      *         destroying bean instances
      */
-    public void destroy(T instance);
+    void destroy(T instance);
 
 }
