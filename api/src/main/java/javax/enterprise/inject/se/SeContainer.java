@@ -43,6 +43,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * Check if the container is running or was shut down
      *
      * @return true if called before container shutdown
+     * @throws IllegalStateException if the container is already shutdown
      */
      boolean isRunning();
 
@@ -50,6 +51,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * Get the CDI BeanManager for this container
      *
      * @return the BeanManager
+     * @throws IllegalStateException if called when the container is already shutdown
      */
      BeanManager getBeanManager();
 
