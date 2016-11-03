@@ -84,10 +84,10 @@
         <xs:element ref="javaee:scan"/>
         <xs:any namespace="##other" processContents="lax"/>
       </xs:choice>
-      <xs:attribute name="version" default="1.1">
+      <xs:attribute name="version" default="2.0">
         <xs:annotation>
           <xs:documentation>
-            The version of CDI this beans.xml is for. If the version is "1.1" (or
+            The version of CDI this beans.xml is for. If the version is "2.0" (or
             later), then the attribute bean-discovery-mode must be added.
           </xs:documentation>
         </xs:annotation>
