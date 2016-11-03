@@ -34,7 +34,7 @@ When running in Java EE, the container must extend the rules defined for managed
 When running in Java EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to EJB session beans.
 
 [[unsatisfied_and_ambig_dependencies_ee]]
- 
+
 ==== Unsatisfied and ambiguous dependencies in Java EE
 
 When running in Java EE, the container must extend the rules defined in <<unsatisfied_and_ambig_dependencies>> and must also validate all injection points of all Java EE component classes supporting injection
@@ -94,3 +94,9 @@ The container is also required to ensure that:
 ==== Destruction of dependent objects in Java EE
 
 When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.
+
+[[bean_metadata_ee]]
+
+==== Bean metadata in Java EE
+
+Interceptor and decorator instances associated with Java EE components that are not considered beans (as defined by this specification) cannot obtain information about the beans they intercept and decorate (as defined in <<bean_metadata>>) and thus `null` is injected into relevant injection points.
