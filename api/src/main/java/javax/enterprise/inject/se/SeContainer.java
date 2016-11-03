@@ -34,6 +34,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * <p>
      * Shuts down this SeContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
      * </p>
+     * @throws IllegalStateException if the container is already shutdown
      */
     @Override
     void close();
@@ -50,6 +51,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * Get the CDI BeanManager for this container
      *
      * @return the BeanManager
+     * @throws IllegalStateException if called when the container is already shutdown
      */
      BeanManager getBeanManager();
 
