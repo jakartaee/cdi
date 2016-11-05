@@ -102,6 +102,8 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
 if it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
+If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
+
 The following code example are equivalent:
 
 [source,java]

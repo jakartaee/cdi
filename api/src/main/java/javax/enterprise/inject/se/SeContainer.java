@@ -34,6 +34,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * <p>
      * Shuts down this SeContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
      * </p>
+     * @throws IllegalStateException if the container is already shutdown
      */
     @Override
     void close();
@@ -43,7 +44,6 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * Check if the container is running or was shut down
      *
      * @return true if called before container shutdown
-     * @throws IllegalStateException if the container is already shutdown
      */
      boolean isRunning();
 

@@ -132,6 +132,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return the child <tt>Instance</tt>
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
+     * @throws IllegalStateException if the container is already shutdown
      */
     Instance<T> select(Annotation... qualifiers);
 
@@ -146,6 +147,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return the child <tt>Instance</tt>
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
+     * @throws IllegalStateException if the container is already shutdown
      */
     <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
 
@@ -160,6 +162,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return the child <tt>Instance</tt>
      * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
      *         is not a qualifier type
+     * @throws IllegalStateException if the container is already shutdown
      */
     <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
 
