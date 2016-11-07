@@ -228,6 +228,34 @@ From time to time, the container must obtain an _active context object_ for a ce
 
 If there is exactly one active instance of `Context` associated with the scope type, we say that the scope is _active_.
 
+==== Activating Built In Contexts
+
+Certain built in contexts support the ability to be activated and deactivated.  This allows developers to control built-in contexts in ways that they could also manage custom built contexts.
+
+When activating and deactivating built in contexts, it is important to realize that they can only be activated if not already active within a given thread.
+
+===== Activating a Request Context
+
+Request contexts can be managed either programmatically or via interceptor.
+
+To programmatically manage request contexts, the container provides a built in bean that is `@Dependent` scoped and of type `RequestContextController` that allows you to activate and deactivate a request context on the current thread.  The object should be considered stateful, invoking the same instance on different threads may not work properly, non-portable behavior may occur.
+
+```
+public interface RequestContextController {
+   boolean activate();
+   void deactivate() throws ContextNotActiveException;
+}
+```
+
+When the `activate()` method is called, if the request context is not already active on the current thread then it will be activated and the method returns `true`.  Otherwise, the method returns `false`.
+
+When the `deactivate()` method is called, if this controller started the request context then the request context is stopped.  The method does nothing if this controller did not activate the context and the context is active.  This method throws a `ContextNotActiveException` if there is no request context active.
+
+If within the same thread the `activate()` and `deactivate()` methods are invoked repeatedly, the instances between the activations are not the same instances, each request context should be assumed to be new.
+
+To automatically start a request context via interceptor binding, the container provides an interceptor `@ActivateRequestContext` which will activate a request context if not already active prior to the method's invocation, and deactivate it upon method completion, with the same rules as in `RequestContextController`.  The interceptor is automatically registered with a priority of `PLATFORM_BEFORE + 100`.
+
+
 [[contextual_instance]]
 
 ==== Contextual instance of a bean
