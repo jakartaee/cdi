@@ -1317,9 +1317,7 @@ If any `ProcessInjectionPoint` method is called outside of the observer method i
 
 ===== `InjectionPointConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.InjectionPointConfigurator` interface to help configure a new `InjectionPoint` instance.
-
-`InjectionPointConfigurator` must be initialized from a field, a method or constructor parameter or an existing `InjectionPoint` with one of its `read()` methods.
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.InjectionPointConfigurator` interface to help configure an existing `InjectionPoint` instance.
 
 With `InjectionPointConfigurator` you can perform the following operations:
 
