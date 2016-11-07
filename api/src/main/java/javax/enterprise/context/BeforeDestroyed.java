@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2013, Red Hat, Inc., and individual contributors
+ * Copyright 2016, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -32,31 +32,30 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 /**
- * An event with this qualifier is fired when a context is intialized, i.e. ready for use. 
+ * An event with this qualifier is fired when a context is about to be destroyed, i.e. before the actual destruction. 
  *
  * @author Pete Muir
- * @see BeforeDestroyed
+ * @author Martin Kouba
+ * @see Initialized
  * @see Destroyed
- * @since 1.1
+ * @since 2.0
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface Initialized {
+public @interface BeforeDestroyed {
 
     /**
-     * The scope for which to observe initialization
+     * The scope for which to observe destruction
      */
     Class<? extends Annotation> value();
 
     /**
-     * Supports inline instantiation of the {@link Initialized} qualifier.
-     *
-     * @author Martin Kouba
+     * Supports inline instantiation of the {@link BeforeDestroyed} qualifier.
      */
-    public final static class Literal extends AnnotationLiteral<Initialized> implements Initialized {
-        
+    public final static class Literal extends AnnotationLiteral<BeforeDestroyed> implements BeforeDestroyed {
+
         public static final Literal REQUEST = of(RequestScoped.class); 
         
         public static final Literal CONVERSATION = of(ConversationScoped.class);
@@ -64,7 +63,7 @@ public @interface Initialized {
         public static final Literal SESSION = of(SessionScoped.class);
         
         public static final Literal APPLICATION = of(ApplicationScoped.class);
-
+        
         private static final long serialVersionUID = 1L;
 
         private final Class<? extends Annotation> value;

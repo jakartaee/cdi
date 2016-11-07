@@ -32,14 +32,12 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 /**
- * <p>
- * The <code>@Destroyed</code> qualifier.
- * </p>
+ * An event with this qualifier is fired when a context is destroyed, i.e. after the actual destruction.
  *
  * @author Pete Muir
  * @see Initialized
+ * @see BeforeDestroyed
  * @since 1.1
- *
  */
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
@@ -58,6 +56,14 @@ public @interface Destroyed {
      * @author Martin Kouba
      */
     public final static class Literal extends AnnotationLiteral<Destroyed> implements Destroyed {
+
+        public static final Literal REQUEST = of(RequestScoped.class);
+
+        public static final Literal CONVERSATION = of(ConversationScoped.class);
+
+        public static final Literal SESSION = of(SessionScoped.class);
+
+        public static final Literal APPLICATION = of(ApplicationScoped.class);
 
         private static final long serialVersionUID = 1L;
 
