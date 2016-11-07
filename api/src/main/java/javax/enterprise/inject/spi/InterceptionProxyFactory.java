@@ -21,7 +21,10 @@ import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 /**
- * <p>An {@link InterceptionProxyFactory} can create interceptor and decorator proxy for a given instance.</p>
+ * <p>An {@link InterceptionProxyFactory} can provide for an instance provided by user the services available for instances
+ * created by the container.
+ * It makes each method invocation in the instance a business method invocation as defined in section 7.2 of the specification document
+ * </p>
  *
  * <p>An implementation of {@link InterceptionProxyFactory} may be obtain by
  * calling {@link BeanManager#createInterceptionFactory(CreationalContext, Class)}
@@ -78,11 +81,11 @@ public interface InterceptionProxyFactory<T> {
 
     /**
      *
-     * Forces the creation of the proxy even if the targeted class has public final methods.
+     * Forces the instance enhancement even if the targeted class has public final methods.
      *
      * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)
      *
-     * Final methods on T won't be available on the produced proxy.
+     * Final methods on T won't be available on the instance returned by createInterceptionProxy.
      *
      * @return self
      */
@@ -101,15 +104,15 @@ public interface InterceptionProxyFactory<T> {
     AnnotatedTypeConfigurator<T> configure();
 
     /**
-     * Returns a proxy for the provided instance. This proxy includes potential interceptors and decorators defined for the Bean
-     * or the {@link AnnotatedType} defined with the configure method.
+     * Returns an enhanced version of the instance for which each method invocations will be a business method invocation.
+     * Invocation will pass through Method interceptors and decorators defined in T class or in the {@link AnnotatedTypeConfigurator}
+     * defined with the configure method.
      *
      * This method should ony be called once, subsequent calls will throw an {@link IllegalStateException}
      *
-     * @param instance for which the proxy is required
-     * @param <U> the implementation proxy's internal class
-     * @return a proxied instance
+     * @param instance on which container should add its services
+     * @return an enhanced instance whose method invocations will be business method invocations
      */
-    <U extends T> U createInterceptionProxy(T instance);
+     T createInterceptionProxy(T instance);
 
 }

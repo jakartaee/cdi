@@ -1599,11 +1599,10 @@ The container must provide implementation for all these configurators and make t
 
 === Apply interceptor and decorators programmatically
 
-Contextual instances of bean having interceptors binding or defined decorators are provided by the container as a proxy.
+Method invocation on an instance that is not created by the container is not a business method as defined in <<biz_method>>: these calls don't pass through method interceptors and decorators
 
-When a bean is defined by a producer method or has a custom bean type, the container doesn't provide this proxy for interceptor or decorator.
+CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionProxyFactory<T>` interface to enhance an instance not created by the container and by making each of its method invocation, a business method invocation.
 
-To allow creation of these proxies programmatically, CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionProxyFactory<T>` interface where T is the type of instance to create the proxy for.
 
 [source, java]
 ----
@@ -1614,15 +1613,16 @@ public interface InterceptionProxyFactory<T> {
 }
 ----
 
-* `ignoreFinalMethods()` forces the creation of the proxy even if the type T contains public final methods.
+* `ignoreFinalMethods()` forces the instance enhancement even if the targeted class has public final methods.
 This method will bypass rules defined in <<unproxyable>>
-Final methods on T won't be available on the produced proxy.
-* `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when creating the proxy.
+Final methods on T won't be available on the instance returned by `createInterceptionProxy`.
+* `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when enhancing the instance.
 The method always return the same `AnnotatedTypeConfigurator`
-* `createInterceptionProxy()` returns the proxy adding interceptors and decorators on the provided instance.
+* `createInterceptionProxy()` returns an enhanced version of the instance for which each method invocations will be a business method invocation.
 The method can be only called once, subsequent calls will throw an exception.
 
 An `InterceptionProxyFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_proxy_factory>>
 
-The container must also provide an instance of `InterceptionProxyFactory` for every producer methods injecting this interface.
-This allow creation of produced instances having interceptors and decorators applied to them.
+The container must provide a bean with scope `@Dependent`, bean type `InterceptionProxyFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
+
+If an injection point of type `InterceptionProxyFactory` and qualifier @Default which is not a parameter of a producer method exists, non-portable behavior results.
