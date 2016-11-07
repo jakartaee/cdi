@@ -117,11 +117,13 @@ The session scope is active:
 
 * during the `service()` method of any servlet in the web application, during the `doFilter()` method of any servlet filter and when the container calls any `HttpSessionListener`, `AsyncListener` or `ServletRequestListener`.
 
-
 The session context is shared between all servlet requests that occur in the same HTTP session.
 The session context is destroyed when the `HTTPSession` times out, after all `HttpSessionListener` s have been called, and at the very end of any request in which `invalidate()` was called, after all filters and `ServletRequestListener` s have been called.
 
-An event with the `HttpSession` as payload and with qualifier `@Initialized(SessionScoped.class)` is fired when the session context is initialized and an event with qualifier `@Destroyed(SessionScoped.class)` when the session context is destroyed.
+An event with qualifier `@Initialized(SessionScoped.class)` is synchronously fired when the session context is initialized.
+An event with qualifier `@BeforeDestroyed(SessionScoped.class)` is synchronously fired when the session context is about to be destroyed, i.e. before the actual destruction.
+An event with qualifier `@Destroyed(SessionScoped.class)` is synchronously fired when the session context is destroyed, i.e. after the actual destruction.
+The event payload is `javax.servlet.http.HttpSession`.
 
 [[application_context_ee]]
 
@@ -156,7 +158,9 @@ When running in Java EE the container is required to implement conversation cont
 
 The conversation scope is active during all Servlet requests.
 
-An event with qualifier `@Initialized(ConversationScoped.class)` is fired when the conversation context is initialized and an event with qualifier `@Destroyed(ConversationScoped.class)` is fired when the conversation is destroyed.
+An event with qualifier `@Initialized(ConversationScoped.class)` is synchronously fired when the conversation context is initialized.
+An event with qualifier `@BeforeDestroyed(ConversationScoped.class)` is synchronously fired when the conversation is about to be destroyed, i.e. before the actual destruction.
+An event with qualifier `@Destroyed(ConversationScoped.class)` is synchronously fired when the conversation is destroyed, i.e. after the actual destruction.
 The event payload is:
 
 * the conversation id if the conversation context is destroyed and is not associated with a current Servlet request, or

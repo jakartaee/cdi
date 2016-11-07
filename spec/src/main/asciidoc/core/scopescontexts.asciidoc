@@ -470,7 +470,14 @@ For example, a remoting framework might provide a request context object for the
 The context associated with a built-in normal scope propagates across local, synchronous Java method calls.
 The context does not propagate across remote method invocations or to asynchronous processes.
 
-Portable extensions are encouraged to synchronously fire an event with qualifier `@Initialized(X.class)` when a custom context is initialized, and an event with qualifier `@Destroyed(X.class)` when a custom context is destroyed, where X is the scope type associated with the context.
+Portable extensions are encouraged to synchronously fire:
+
+* an event with qualifier `@Initialized(X.class)` when a custom context is initialized, i.e. ready for use,
+* an event with qualifier `@BeforeDestroyed(X.class)` when a custom context is about to be destroyed, i.e. before the actual destruction,
+* an event with qualifier `@Destroyed(X.class)` when a custom context is destroyed, i.e. after the actual destruction,
+
+where `X` is the scope type associated with the context.
+
 A suitable event payload should be chosen.
 
 [[request_context]]
@@ -479,8 +486,9 @@ A suitable event payload should be chosen.
 
 The _request context_ is provided by a built-in context object for the built-in scope type `@RequestScoped`.
 
-An event with qualifier @Initialized(RequestScoped.class) is synchronously fired when the request context is initialized and an event with qualifier @Destroyed(RequestScoped.class) when the request context is destroyed.
-
+An event with qualifier `@Initialized(RequestScoped.class)` is synchronously fired when the request context is initialized.
+An event with qualifier `@BeforeDestroyed(RequestScoped.class)` is synchronously fired when the request context is about to be destroyed, i.e. before the actual destruction.
+An event with qualifier `@Destroyed(RequestScoped.class)` is synchronously fired when the request context is destroyed, i.e. after the actual destruction.
 
 [[session_context]]
 
@@ -494,8 +502,9 @@ The _session context_ is provided by a built-in context object for the built-in 
 
 The _application context_ is provided by a built-in context object for the built-in scope type `@ApplicationScoped`.
 
-An event with qualifier @Initialized(ApplicationScoped.class) is synchronously fired when the application context is initialized and an event with qualifier @Destroyed(ApplicationScoped.class) is synchronously fired when the application is destroyed.
-
+An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously fired when the application context is initialized.
+An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired when the application context is about to be destroyed, i.e. before the actual destruction.
+An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired when the application context is destroyed, i.e. after the actual destruction.
 
 [[conversation_context]]
 

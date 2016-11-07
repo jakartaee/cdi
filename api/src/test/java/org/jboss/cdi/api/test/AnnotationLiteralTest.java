@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.BeforeDestroyed;
 import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.Destroyed;
@@ -118,13 +119,26 @@ public class AnnotationLiteralTest {
     @Test
     public void testInitializedLiteral() {
         assertEquals(Initialized.Literal.of(RequestScoped.class).value(), RequestScoped.class);
+        assertEquals(Initialized.Literal.REQUEST.value(), RequestScoped.class);
+        assertEquals(Initialized.Literal.CONVERSATION.value(), ConversationScoped.class);
+        assertEquals(Initialized.Literal.SESSION.value(), SessionScoped.class);
+        assertEquals(Initialized.Literal.APPLICATION.value(), ApplicationScoped.class);
     }
 
     @Test
     public void testDestroyedLiteral() {
         assertEquals(Destroyed.Literal.of(ConversationScoped.class).value(), ConversationScoped.class);
     }
-
+    
+    @Test
+    public void testBeforeDestroyedLiteral() {
+        assertEquals(BeforeDestroyed.Literal.of(RequestScoped.class).value(), RequestScoped.class);
+        assertEquals(BeforeDestroyed.Literal.REQUEST.value(), RequestScoped.class);
+        assertEquals(BeforeDestroyed.Literal.CONVERSATION.value(), ConversationScoped.class);
+        assertEquals(BeforeDestroyed.Literal.SESSION.value(), SessionScoped.class);
+        assertEquals(BeforeDestroyed.Literal.APPLICATION.value(), ApplicationScoped.class);
+    }
+    
     @SuppressWarnings("serial")
     @Test
     public void testApplicationScopedLiteral() {
