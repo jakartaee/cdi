@@ -155,7 +155,6 @@ public interface Producer<T> {
 For a `Producer` that represents a class:
 
 * `produce()` calls the constructor annotated `@Inject` if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors, `produce()` is responsible for building the interceptors and decorators of the instance.
-It can be done easily with the `InterceptionProxyFactory` interface as defined in <<interception_proxy_factory>>
 The instance returned by `produce()` may be a proxy.
 * `dispose()` does nothing.
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all injected fields, bean constructor parameters and initializer method parameters.
@@ -662,15 +661,15 @@ The method `BeanManager.getExtension()` returns the container's instance of an `
 public <T extends Extension> T getExtension(Class<T> extensionClass);
 ----
 
-[[bm_obtain_interception_proxy_factory]]
+[[bm_obtain_interception_factory]]
 
-==== Obtain an `InterceptionProxyFactory`
+==== Obtain an `InterceptionFactory`
 
-The method `BeanManager.getInterceptionProxyFactory()` returns an `InterceptionProxyFactory` for the provided type as defined in <<interception_proxy_factory>>.
+The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactory` for the provided type as defined in <<interception_factory>>.
 
 [source, java]
 ----
-<T> InterceptionProxyFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
+<T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 ----
 
 
@@ -1595,34 +1594,35 @@ CDI 2.0 introduced the following Configurators interface:
 
 The container must provide implementation for all these configurators and make them available in matching container lifecycle events as defined in <<init_events>>.
 
-[[interception_proxy_factory]]
+[[interception_factory]]
 
-=== Apply interceptor and decorators programmatically
+=== Apply interceptor programmatically
 
-Method invocation on an instance that is not created by the container is not a business method as defined in <<biz_method>>: these calls don't pass through method interceptors and decorators
-
-CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionProxyFactory<T>` interface to enhance an instance not created by the container and by making each of its method invocation, a business method invocation.
+CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionFactory<T>` interface to add services to an instance not created by the container by making each of its method invocation, a business method invocation as defined in <<biz_method>>.
 
 
 [source, java]
 ----
-public interface InterceptionProxyFactory<T> {
+public interface InterceptionFactory<T> {
     InterceptionProxyFactory<T> ignoreFinalMethods();
     AnnotatedTypeConfigurator<T> configure();
-    <U extends T> U createInterceptionProxy(T instance);
+    T createInterceptedInstance(T instance);
 }
 ----
 
-* `ignoreFinalMethods()` forces the instance enhancement even if the targeted class has public final methods.
-This method will bypass rules defined in <<unproxyable>>
-Final methods on T won't be available on the instance returned by `createInterceptionProxy`.
+* `ignoreFinalMethods()` forces the addition of service on the instance even if the targeted class has non static and non private final methods.
+This method will bypass rules defined in <<unproxyable>> regarding final methods.
+Non static and non private Final methods on T won't be available on the instance returned by `createInterceptedInstance`.
 * `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when enhancing the instance.
 The method always return the same `AnnotatedTypeConfigurator`
-* `createInterceptionProxy()` returns an enhanced version of the instance for which each method invocations will be a business method invocation.
+* `createInterceptedInstance()` returns an enhanced version of the instance for which each method invocations will be a business method invocation.
 The method can be only called once, subsequent calls will throw an exception.
+If the type of the instance is not proxyable as defined in <<unproxyable>> an `UnproxyableResolutionException` exception is thrown.
+This rule can be loosen by calling `ignoreFinalMethods()` before this method.
+If called on an instance created by the container, this method does nothing and returns the provided instance.
 
-An `InterceptionProxyFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_proxy_factory>>
+An `InterceptionFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_factory>>
 
-The container must provide a bean with scope `@Dependent`, bean type `InterceptionProxyFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
+The container must provide a bean with scope `@Dependent`, bean type `InterceptionFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
 
-If an injection point of type `InterceptionProxyFactory` and qualifier @Default which is not a parameter of a producer method exists, non-portable behavior results.
+If an injection point of type `InterceptionFactory` and qualifier @Default which is not a parameter of a producer method exists, the container automatically detects the problem and treats it as a definition error.

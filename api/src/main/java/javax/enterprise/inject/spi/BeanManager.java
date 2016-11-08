@@ -608,14 +608,14 @@ public interface BeanManager {
 
     /**
      *
-     * Create an {@link InterceptionProxyFactory} for the given {@link CreationalContext} and type.
+     * Create an {@link InterceptionFactory} for the given {@link CreationalContext} and type.
      *
-     * @param ctx {@link CreationalContext} for the {@link InterceptionProxyFactory} to create
-     * @param clazz class of the instance to apply proxies on
-     * @param <T> type of the instance to apply proxies on
-     * @return a new {@link InterceptionProxyFactory} to create proxies for an instance of T
+     * @param ctx {@link CreationalContext} for the {@link InterceptionFactory} to create
+     * @param clazz class of the instance this factory will work on
+     * @param <T> type of the instance this factory will work on
+     * @return a new {@link InterceptionFactory} to add services on on instances of T
      * @since 2.0
      */
-    <T> InterceptionProxyFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
+    <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 
 }
