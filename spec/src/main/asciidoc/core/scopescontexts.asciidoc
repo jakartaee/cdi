@@ -228,11 +228,15 @@ From time to time, the container must obtain an _active context object_ for a ce
 
 If there is exactly one active instance of `Context` associated with the scope type, we say that the scope is _active_.
 
+[[activating_builtin_contexts]]
+
 ==== Activating Built In Contexts
 
 Certain built in contexts support the ability to be activated and deactivated.  This allows developers to control built-in contexts in ways that they could also manage custom built contexts.
 
 When activating and deactivating built in contexts, it is important to realize that they can only be activated if not already active within a given thread.
+
+[[activating_request_context]]
 
 ===== Activating a Request Context
 
