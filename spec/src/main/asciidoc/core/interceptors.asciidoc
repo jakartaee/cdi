@@ -96,6 +96,8 @@ An interceptor is said to be *enabled* if it is enabled in at least one bean arc
 
 If an interceptor declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
+If an interceptor is enabled for the application and for the bean archive, then the enablement from the bean archive is ignored by the container.  The interceptor will only be executed once based on the `@Priority` annotation's invocation chain.
+
 [[interceptor_resolution]]
 
 === Interceptor resolution

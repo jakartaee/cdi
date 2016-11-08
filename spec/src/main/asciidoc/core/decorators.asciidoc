@@ -122,6 +122,8 @@ Decorators enabled using `@Priority` are called before decorators enabled using 
 
 A decorator is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of decorators for the application, as defined in <<after_type_discovery>>.
 
+If a decorator is enabled for the application and for the bean archive, then the enablement from the bean archive is ignored by the container.  The decorator will only be executed once based on the `@Priority` annotation's invocation chain.
+
 [[enabled_decorators_priority]]
 
 ==== Decorator enablement and ordering for an application
