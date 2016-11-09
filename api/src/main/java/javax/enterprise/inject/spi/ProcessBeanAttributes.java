@@ -92,4 +92,16 @@ public interface ProcessBeanAttributes<T> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();
+
+
+    /**
+     * Forces bean creation even if the bean class has non static and non private final methods.
+     *
+     * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)
+     *
+     * Non static and non private final methods on Bean class won't be available on bean instances.
+     *
+     * @since 2.0
+     */
+    public void ignoreFinalMethods();
 }

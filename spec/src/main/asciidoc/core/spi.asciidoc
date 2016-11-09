@@ -1385,6 +1385,7 @@ public interface ProcessBeanAttributes<T> {
     public BeanAttributesConfigurator<T> configureBeanAttributes();
     public void addDefinitionError(Throwable t);
     public void veto();
+    public void ignoreFinalMethods();
 }
 ----
 
@@ -1395,6 +1396,9 @@ public interface ProcessBeanAttributes<T> {
 The method always returns the same `BeanAttributesConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `veto()` forces the container to ignore the bean.
+* `ignoreFinalMethods()` forces bean creation even if the bean class has non static and non private final methods.
+It will bypass standard rules defined in <<unproxyable>>
+
 
 
 Any observer of this event is permitted to wrap and/or replace the `BeanAttributes` by calling either `setBeanAttributes()` or `configureBeanAttributes()`.
