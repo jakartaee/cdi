@@ -1,7 +1,7 @@
 [[architecture]]
 == Architecture
 
-This specification defines a powerful set of complementary services that help improve the structure of application code.
+This specification defines a powerful set of complementary services that help to improve the structure of application code.
 
 * A well-defined lifecycle for stateful objects bound to _lifecycle contexts_, where the set of contexts is extensible
 * A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration

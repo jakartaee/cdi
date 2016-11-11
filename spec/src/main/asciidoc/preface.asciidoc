@@ -12,7 +12,7 @@ include::license-{license}.asciidoc[]
 Contexts and Dependency Injection 2.0 (link:https://jcp.org/en/jsr/detail?id=365[JSR-365^]) is an update to Contexts and Dependency Injection 1.2 (link:https://jcp.org/en/jsr/detail?id=346[JSR-346^]).
 
 Starting with version 2.0 CDI targets Java SE and Java EE platforms.
-CDI in java SE and CDI in a Java EE container share the features defined in core CDI.
+CDI in Java SE and CDI in a Java EE container share the features defined in core CDI.
 
 [[doc_organisation]]
 
@@ -20,7 +20,7 @@ CDI in java SE and CDI in a Java EE container share the features defined in core
 
 This document is organized in 4 parts:
 
-* An introduction (this part), which is not part of the specification but introduce CDI concepts and give examples.
+* An introduction (this part), which is not part of the specification but introduces CDI concepts and give examples.
 * The core CDI specification: <<part_1>>.
 * Specific CDI features for Java SE: <<part_2>>.
 * Specific CDI features for Java EE: <<part_3>>.
@@ -30,12 +30,12 @@ This document is organized in 4 parts:
 
 This Early draft of CDI 2.0 includes important changes for the platform.
 
-* The spec was split in 3 parts as desibed in <<doc_organisation>> to add the support for Java SE.
+* The spec was split into 3 parts as described in <<doc_organisation>> to add the support for Java SE.
 * API to boot CDI in Java SE, described in <<se_bootstrap>>
 * Observer ordering, described in <<observer_ordering>>
-* Asynchronous event, descibed in <<firing_events_asynchronously>>
+* Asynchronous event, described in <<firing_events_asynchronously>>
 * Configurators for meta-data in <<configurators>>
-* Possibility to decorate or cancel observer method in <<process_observer_method>>
+* Possibility to configure or veto observer method in <<process_observer_method>>
 * Add built-in annotation literals in <<built_in_annotation_literals>>
 
 
