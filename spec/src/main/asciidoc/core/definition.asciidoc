@@ -382,6 +382,67 @@ PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync,
 }
 ----
 
+[[repeating_qualifiers]]
+
+==== Repeating qualifiers
+
+In some cases, it may be useful to have a repeated qualifier for your type safe resolution.  A repeated qualifier behaves just as any other qualifier does.  For example, the below qualifier is a repeatable qualifier
+
+[source, java]
+----
+@Target({ PARAMETER, FIELD, METHOD, TYPE })
+@Retention(RUNTIME)
+@Documented
+@Qualifier
+@Repeatable(Locations.class)
+public @interface Location {
+    String value();
+}
+
+@Target({ PARAMETER, FIELD, METHOD, TYPE })
+@Retention(RUNTIME)
+public @interface Locations {
+    Location[] value();
+}
+----
+
+Now you can define appropriate producers and injection points for repeated qualifiers.
+
+[source, java]
+----
+@Produces
+@Location("north")
+@Location("south")
+public Coordinate createCoordinate() {
+   // ...
+}
+
+@Inject
+@Location("north")
+@Location("south")
+private Coordinate coordinate;
+----
+
+A partial match injection point will still work in this case (from the same producer method)
+
+[source, java]
+----
+@Inject
+@Location("south")
+private Coordinate coordinate;
+----
+
+However, adding the follow producer method will continue to give you an ambiguous resolution error (assuming the other producer exists as well)
+
+[source, java]
+----
+@Produces
+@Location("south")
+public Coordinate createSouthCoordinate() {
+   // ...
+}
+----
+
 [[scopes]]
 
 === Scopes
