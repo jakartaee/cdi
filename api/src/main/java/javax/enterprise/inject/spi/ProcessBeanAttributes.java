@@ -95,12 +95,13 @@ public interface ProcessBeanAttributes<T> {
 
 
     /**
-     * Forces bean creation even if the bean class has non static and non private final methods.
+     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
+     * These methods shouldn't be invoked in the bean instances.
      *
      * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)
      *
-     * Non static and non private final methods on Bean class won't be available on bean instances.
      *
+     * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
     public void ignoreFinalMethods();
