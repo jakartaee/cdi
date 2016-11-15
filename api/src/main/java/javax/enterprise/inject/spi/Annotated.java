@@ -31,6 +31,7 @@ import java.util.Set;
  * @author Gavin King
  * @author Pete Muir
  * @author Clint Popetz
+ * @author John D. Ament
  * 
  */
 public interface Annotated {
@@ -42,7 +43,7 @@ public interface Annotated {
      * 
      * @return the type of the annotated program element
      */
-    public Type getBaseType();
+    Type getBaseType();
 
     /**
      * <p>
@@ -51,18 +52,35 @@ public interface Annotated {
      * 
      * @return a set of all types to which the base type should be considered assignable
      */
-    public Set<Type> getTypeClosure();
+    Set<Type> getTypeClosure();
 
     /**
      * <p>
      * Get program element annotation of a certain annotation type.
+     *</p>
+     *
+     * <p>
+     * This method is deprecated from CDI 2.0 and {@link #getAnnotations(Class)} should be used instead.
      * </p>
-     * 
+     *
      * @param <T> the type of the annotation
      * @param annotationType the class of the annotation type
-     * @return the program element annotation of the given annotation type, or a null value
+     * @return the first program element annotation of the given annotation type, or a null value
      */
-    public <T extends Annotation> T getAnnotation(Class<T> annotationType);
+    <T extends Annotation> T getAnnotation(Class<T> annotationType);
+
+    /**
+     * <p>
+     * Get program element annotations of a certain annotation type.
+     *
+     * This value returns back all annotations, including repeatable annotations of this type.
+     * </p>
+     *
+     * @param <T> the type of the annotation
+     * @param annotationType the class of the annotation type
+     * @return the program element annotations of the given annotation type, or an empty collection
+     */
+    <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType);
 
     /**
      * <p>
@@ -71,7 +89,7 @@ public interface Annotated {
      * 
      * @return all annotations of the program element, or an empty set if no annotations are present
      */
-    public Set<Annotation> getAnnotations();
+    Set<Annotation> getAnnotations();
 
     /**
      * <p>
@@ -81,5 +99,5 @@ public interface Annotated {
      * @param annotationType the annotation type to check for
      * @return <tt>true</tt> if the program element has an annotation of the given annotation type, or <tt>false</tt> otherwise
      */
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
+    boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 }

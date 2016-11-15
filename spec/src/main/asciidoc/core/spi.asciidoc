@@ -763,19 +763,21 @@ The interface `javax.enterprise.inject.spi.Annotated` exposes the overriding ann
 [source, java]
 ----
 public interface Annotated {
-    public Type getBaseType();
-    public Set<Type> getTypeClosure();
-    public <T extends Annotation> T getAnnotation(Class<T> annotationType);
-    public Set<Annotation> getAnnotations();
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
+    Type getBaseType();
+    Set<Type> getTypeClosure();
+    <T extends Annotation> T getAnnotation(Class<T> annotationType);
+    <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType);
+    Set<Annotation> getAnnotations();
+    boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 }
 ----
 
 * `getBaseType()` returns the type of the program element.
 * `getTypeClosure()` returns all types to which the base type should be considered assignable.
-* `getAnnotation()` returns the program element annotation of the given annotation type, or a null value.
+* `getAnnotation(Class<T>)` returns the program element annotation of the given annotation type, or a null value.
+* `getAnnotations(Class<T>)` returns the program element annotations of the given annotation type, or an empty set.
 * `getAnnotations()` returns all annotations of the program element.
-* `isAnnotationPresent()` returns `true` if the program element has an annotation of the given annotation type, or `false` otherwise.
+* `isAnnotationPresent(Class<T>)` returns `true` if the program element has an annotation of the given annotation type, or `false` otherwise.
 
 
 The container must use the operations of `Annotated` and its subinterfaces to discover program element types and annotations.
