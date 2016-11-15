@@ -95,7 +95,8 @@ public interface ProcessBeanAttributes<T> {
 
 
     /**
-     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
+     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on
+     * any bean type of the specific bean during validation of injection points that require proxyable bean type.
      * These methods shouldn't be invoked on the bean instances.
      *
      * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)

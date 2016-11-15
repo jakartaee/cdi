@@ -1397,7 +1397,7 @@ The method always returns the same `BeanAttributesConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `veto()` forces the container to ignore the bean.
 * `ignoreFinalMethods()` Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
-These methods shouldn't be invoked on the bean instances
+These methods shouldn't be invoked on the bean instances.
 It will bypass standard rules defined in <<unproxyable>>.
 
 
