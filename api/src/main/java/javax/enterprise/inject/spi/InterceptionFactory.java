@@ -23,6 +23,7 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 /**
  * <p>An {@link InterceptionFactory} adds the services available for instances created by the container to any instance.
  * It makes each method invocation in the instance a business method invocation as defined in section 7.2 of the specification document
+ * It will bind business methods only to <tt>@AroundInvoke</tt> interceptor methods.
  * </p>
  *
  * <p>An implementation of {@link InterceptionFactory} may be obtain by
@@ -70,7 +71,9 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  * </pre>
  *
- * {@link InterceptionFactory} is not reusable
+ *
+ *
+ * InterceptionFactory is not reusable
  *
  * @author Antoine Sabot-Durand
  * @since 2.0
@@ -80,11 +83,12 @@ public interface InterceptionFactory<T> {
 
     /**
      *
-     * Forces the instance enhancement even if the targeted class has non static and non private final methods.
+     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on
+     * any bean type of the specific bean during validation of injection points that require proxyable bean type.
+     * These methods shouldn't be invoked on the bean instances.
      *
      * Calling this method will bypass standard rules for unproxyable bean types (section 3.11 of the spec)
      *
-     * Non static and non private final methods on T won't be available on the instance returned by createInterceptedInstance.
      *
      * @return self
      */

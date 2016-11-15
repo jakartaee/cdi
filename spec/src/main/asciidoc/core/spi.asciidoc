@@ -1599,6 +1599,7 @@ The container must provide implementation for all these configurators and make t
 === Apply interceptor programmatically
 
 CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionFactory<T>` interface to add services to an instance not created by the container by making each of its method invocation, a business method invocation as defined in <<biz_method>>.
+It will bind business methods only to `@AroundInvoke` interceptor methods.
 
 
 [source, java]
@@ -1610,9 +1611,9 @@ public interface InterceptionFactory<T> {
 }
 ----
 
-* `ignoreFinalMethods()` forces the addition of service on the instance even if the targeted class has non static and non private final methods.
-This method will bypass rules defined in <<unproxyable>> regarding final methods.
-Non static and non private Final methods on T won't be available on the instance returned by `createInterceptedInstance`.
+* `ignoreFinalMethods()` `ignoreFinalMethods()` Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
+ These methods shouldn't be invoked on the bean instances.
+ It will bypass standard rules defined in <<unproxyable>>.
 * `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when enhancing the instance.
 The method always return the same `AnnotatedTypeConfigurator`
 * `createInterceptedInstance()` returns an enhanced version of the instance for which each method invocations will be a business method invocation.
