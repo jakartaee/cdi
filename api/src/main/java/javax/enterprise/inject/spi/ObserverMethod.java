@@ -30,6 +30,11 @@ import javax.enterprise.event.TransactionPhase;
  * bean}. Defines everything the container needs to know about an observer method.
  * </p>
  * 
+ * <p>
+ * If a custom implementation of this interface does not override either {@link #notify(Object)} or
+ * {@link #notify(EventContext)}, the container automatically detects the problem and treats it as a definition error.
+ * </p>
+ * 
  * @author Gavin King
  * @author David Allen
  * @author Mark Paluch
@@ -102,7 +107,22 @@ public interface ObserverMethod<T> extends Prioritized {
      * 
      * @param event the event object
      */
-    public void notify(T event);
+    public default void notify(T event) {
+    }
+    
+    /**
+     * Calls the observer method, passing the given event context.
+     * <p>
+     * The container should always call this method, but the default implementation delegates to {@link #notify(Object)}.
+     * <p>
+     * The implementation of this method for a custom observer method is responsible for deciding whether to call the method if
+     * the {@link #getReception()} returns {@link Reception#IF_EXISTS}.
+     * 
+     * @param eventContext
+     */
+    public default void notify(EventContext<T> eventContext) {
+        notify(eventContext.getEventObject());
+    }
 
     /**
      * <p>
