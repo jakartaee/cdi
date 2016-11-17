@@ -17,7 +17,7 @@
 	<properties>
 		<asciidoctor-maven.version>1.5.3</asciidoctor-maven.version>
 		<asciidoctorj-pdf.version>1.5.0-alpha.10.1</asciidoctorj-pdf.version>
-		<license>asl2</license>
+		<license>Apache License, Version 2.0</license>
 		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 		<revisiondate>${maven.build.timestamp}</revisiondate>
 	</properties>
