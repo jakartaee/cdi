@@ -315,6 +315,7 @@ The validity of a contextual reference for a bean depends upon whether the scope
 
 * Any reference to a bean with a normal scope is valid as long as the application maintains a hard reference to it.
 However, it may only be invoked when the context associated with the normal scope is active. If it is invoked when the context is inactive, a `ContextNotActiveException` is thrown by the container.
+* Any reference to a bean with a normal scope is invalid after CDI container shutdown. Maintaining such reference and attempting to use it after container shutdown results in an `IllegalStateException`.
 * Any reference to a bean with a pseudo-scope (such as `@Dependent`) is valid until the bean instance to which it refers is destroyed.
 It may be invoked even if the context associated with the pseudo-scope is not active. If the application invokes a method of a reference to an instance that has already been destroyed, the behavior is undefined.
 
