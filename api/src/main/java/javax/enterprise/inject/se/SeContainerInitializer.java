@@ -135,7 +135,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on SE performance.
      * </p>
      *
      * @param packageClasses classes whose packages will be added to the synthetic bean archive
@@ -151,7 +151,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on SE performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
@@ -169,7 +169,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on SE performance.
      * </p>
      *
      * @param packages packages that will be added to the synthetic bean archive
@@ -185,7 +185,7 @@ public abstract class SeContainerInitializer {
      * </p>
      * <p>
      * <p>
-     * Scanning may also have negative impact on se performance.
+     * Scanning may also have negative impact on SE performance.
      * </p>
      *
      * @param scanRecursively should subpackages be scanned or not
@@ -212,7 +212,7 @@ public abstract class SeContainerInitializer {
     public abstract SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
 
     /**
-     * Add interceptors classes to the list of enabled interceptors for a synthetic bean archive.
+     * Add interceptors classes to the list of enabled interceptors for the synthetic bean archive.
      *
      * @param interceptorClasses classes of the interceptors to enable.
      * @return self
@@ -221,7 +221,7 @@ public abstract class SeContainerInitializer {
 
 
     /**
-     * Add decorators for a synthetic bean archive. Decorator classes are automatically added to the set of bean classes for the synthetic bean archive.
+     * Add decorators for the synthetic bean archive. Decorator classes are automatically added to the set of bean classes for the synthetic bean archive.
      *
      * @param decoratorClasses classes of the decorators to enable.
      * @return self
@@ -230,7 +230,7 @@ public abstract class SeContainerInitializer {
 
 
     /**
-     * Add alternatives classes for a synthetic bean archive.
+     * Add alternatives classes for the synthetic bean archive.
      *
      * @param alternativeClasses classes of the alternatives to select
      * @return self
@@ -239,7 +239,7 @@ public abstract class SeContainerInitializer {
 
 
     /**
-     * Add alternative stereotypes for a synthetic bean archive.
+     * Add alternative stereotypes for the synthetic bean archive.
      *
      * @param alternativeStereotypeClasses alternatives stereotypes to select
      * @return self
@@ -248,7 +248,7 @@ public abstract class SeContainerInitializer {
 
 
     /**
-     * Add a configuration property for the container
+     * Add a configuration property to the container
      *
      * @param key   property name
      * @param value property value
