@@ -92,4 +92,17 @@ public interface ProcessBeanAttributes<T> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();
+
+
+    /**
+     * <p>Instructs the container to ignore all non-static, final methods with public, protected or default visibility
+     * declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.</p>
+     *
+     * <p>These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.</p>
+     *
+     *
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public void ignoreFinalMethods();
 }
