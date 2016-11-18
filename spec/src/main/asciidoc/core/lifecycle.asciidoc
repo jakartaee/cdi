@@ -85,8 +85,9 @@ In this case, any object returned by the producer method will not have any depen
 
 When the application invokes:
 
-* a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, or
-* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  `InjectionTarget.produce()` or `UnmanagedInstance.produce()`),
+* a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>,
+* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  `InjectionTarget.produce()` or `UnmanagedInstance.produce()`), or
+* a method of a bean via a non-contextual reference to the bean, if the instance was enhanced with the `InterceptionFactory` interface as defined in <<interception_factory>>,
 
 the invocation is treated as a _business method invocation_.
 

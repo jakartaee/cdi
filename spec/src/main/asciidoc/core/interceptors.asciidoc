@@ -58,6 +58,8 @@ An interceptor binding declared on a bean class replaces an interceptor binding 
 
 The set of interceptor bindings for a producer method is not used to associate interceptors with the return value of the producer method.
 
+Since CDI 2.0 it is possible to apply interceptors programmatically to the return value of a producer method, with the `InterceptionFactory` interface as defined in <<interception_factory>>.
+
 If a managed bean has a class-level or method-level interceptor binding, the managed bean must be a proxyable bean type, as defined in <<unproxyable>>.
 
 [[enabled_interceptors]]

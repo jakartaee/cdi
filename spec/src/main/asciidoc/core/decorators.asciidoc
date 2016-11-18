@@ -7,7 +7,9 @@ These bean types are called _decorated types_.
 
 Decorators are superficially similar to interceptors, but because they directly implement operations with business semantics, they are able to implement business logic and, conversely, unable to implement the cross-cutting concerns for which interceptors are optimized.
 
-Decorators may be associated with any managed bean that is not itself an interceptor or decorator, or with any built-in bean other than the built-in bean with type `BeanManager` and qualifier `@Default`. Decorators are not applied to the return value of a producer method or the current value of a producer field.
+Decorators may be associated with any managed bean that is not itself an interceptor or decorator, or with any built-in bean other than the built-in bean with type `BeanManager` and qualifier `@Default`.
+Decorators are not automatically applied to the return value of a producer method or the current value of a producer field.
+
 A decorator instance is a dependent object of the object it decorates.
 
 [[decorator_bean]]
