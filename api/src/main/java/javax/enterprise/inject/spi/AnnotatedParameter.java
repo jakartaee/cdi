@@ -17,6 +17,10 @@
 
 package javax.enterprise.inject.spi;
 
+import java.lang.reflect.Executable;
+import java.lang.reflect.Member;
+import java.lang.reflect.Parameter;
+
 /**
  * <p>
  * Represents a parameter of a method or constructor.
@@ -24,6 +28,7 @@ package javax.enterprise.inject.spi;
  * 
  * @author Gavin King
  * @author Pete Muir
+ * @author Jozef Hartinger
  * 
  * @param <X> the type that declares the method or constructor
  */
@@ -46,5 +51,19 @@ public interface AnnotatedParameter<X> extends Annotated {
      * @return the declaring callable
      */
     public AnnotatedCallable<X> getDeclaringCallable();
+
+    /**
+     * Get the underlying {@link Parameter}.
+     *
+     * @return the {@link Parameter}
+     */
+    default Parameter getJavaParameter() {
+        Member member = getDeclaringCallable().getJavaMember();
+        if (!(member instanceof Executable)) {
+            throw new IllegalStateException("Parameter does not belong to an executable: " + member);
+        }
+        Executable executable = (Executable) member;
+        return executable.getParameters()[getPosition()];
+    }
 
 }
