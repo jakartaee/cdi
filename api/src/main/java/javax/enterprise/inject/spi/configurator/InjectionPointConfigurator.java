@@ -17,7 +17,6 @@
 
 package javax.enterprise.inject.spi.configurator;
 
-import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.ProcessInjectionPoint;
 import java.lang.annotation.Annotation;
@@ -87,15 +86,6 @@ public interface InjectionPointConfigurator {
      * @return self
      */
     InjectionPointConfigurator qualifiers(Set<Annotation> qualifiers);
-
-    /**
-     * Set the {@link javax.enterprise.inject.spi.Bean} object representing the bean that defines the injection point. If the
-     * injection point does not belong to a bean, return a null value.
-     *
-     * @param bean the bean for this configured InjectionPoint
-     * @return self
-     */
-    InjectionPointConfigurator bean(Bean<?> bean);
 
     /**
      *
