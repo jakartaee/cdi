@@ -20,6 +20,7 @@ package javax.enterprise.event;
 import java.lang.annotation.Annotation;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+
 import javax.enterprise.util.TypeLiteral;
 
 /**
@@ -129,7 +130,7 @@ public interface Event<T> {
      * </p>
      *
      * @param event the event object
-     * @param executor a custom executor to execute asynchronous event
+     * @param options the notification options
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         Default asynchronous execution facility is container specific.
      *         If any observer notified by this event throws an exception
@@ -140,7 +141,7 @@ public interface Event<T> {
      *
      * @since 2.0
      */
-    public <U extends T> CompletionStage<U>  fireAsync(U event, Executor executor);
+    public <U extends T> CompletionStage<U>  fireAsync(U event, NotificationOptions options);
 
     /**
      * <p>
@@ -181,4 +182,5 @@ public interface Event<T> {
      *         is not a qualifier type
      */
     public <U extends T> Event<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
+
 }
