@@ -17,9 +17,14 @@
 
 package javax.enterprise.inject.spi;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Member;
 import java.lang.reflect.Parameter;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static java.util.Arrays.asList;
 
 /**
  * <p>
@@ -64,6 +69,11 @@ public interface AnnotatedParameter<X> extends Annotated {
         }
         Executable executable = (Executable) member;
         return executable.getParameters()[getPosition()];
+    }
+
+    @Override default <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+        T[] annotationsByType = getJavaParameter().getAnnotationsByType(annotationType);
+        return new LinkedHashSet<>(asList(annotationsByType));
     }
 
 }

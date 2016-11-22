@@ -18,8 +18,13 @@
 package javax.enterprise.inject.spi;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
+import static java.util.Arrays.asList;
 
 /**
  * <p>
@@ -57,11 +62,10 @@ public interface Annotated {
     /**
      * <p>
      * Get program element annotation of a certain annotation type.
-     *</p>
      *
-     * <p>
-     * This method is deprecated from CDI 2.0 and {@link #getAnnotations(Class)} should be used instead.
-     * </p>
+     * The behavior of this method is intended to be the same behavior as {@link AnnotatedElement#getAnnotation(Class)},
+     * where repeatable annotations are not supported.
+     *</p>
      *
      * @param <T> the type of the annotation
      * @param annotationType the class of the annotation type
@@ -72,11 +76,14 @@ public interface Annotated {
     /**
      * <p>
      * Get program element annotations of a certain annotation type.
+     * <p>
+     * This method returns back all annotations, including repeatable annotations of this type.
      *
-     * This value returns back all annotations, including repeatable annotations of this type.
+     * The behavior of this method is intended to be the same behavior as {@link AnnotatedElement#getAnnotationsByType(Class)},
+     * where repeatable annotations are supported.
      * </p>
      *
-     * @param <T> the type of the annotation
+     * @param <T>            the type of the annotation
      * @param annotationType the class of the annotation type
      * @return the program element annotations of the given annotation type, or an empty collection
      */
@@ -94,8 +101,10 @@ public interface Annotated {
     /**
      * <p>
      * Determine if the program element has an annotation of a certain annotation type.
-     * <p>
-     * 
+     *
+     * The behavior of this method is similar to {@link AnnotatedElement#isAnnotationPresent(Class)} for the underlying
+     * program element.
+     *
      * @param annotationType the annotation type to check for
      * @return <tt>true</tt> if the program element has an annotation of the given annotation type, or <tt>false</tt> otherwise
      */

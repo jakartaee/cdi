@@ -17,7 +17,12 @@
 
 package javax.enterprise.inject.spi;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static java.util.Arrays.asList;
 
 /**
  * <p>
@@ -41,4 +46,8 @@ public interface AnnotatedConstructor<X> extends AnnotatedCallable<X> {
      */
     public Constructor<X> getJavaMember();
 
+    @Override default <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+        T[] annotationsByType = getJavaMember().getAnnotationsByType(annotationType);
+        return new LinkedHashSet<>(asList(annotationsByType));
+    }
 }

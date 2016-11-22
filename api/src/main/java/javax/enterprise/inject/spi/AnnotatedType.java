@@ -17,7 +17,11 @@
 
 package javax.enterprise.inject.spi;
 
+import java.lang.annotation.Annotation;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
+import static java.util.Arrays.asList;
 
 /**
  * <p>
@@ -68,4 +72,9 @@ public interface AnnotatedType<X> extends Annotated {
      * @return the fields, or an empty set if none are defined
      */
     public Set<AnnotatedField<? super X>> getFields();
+
+    @Override default <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+        T[] annotationsByType = getJavaClass().getAnnotationsByType(annotationType);
+        return new LinkedHashSet<>(asList(annotationsByType));
+    }
 }
