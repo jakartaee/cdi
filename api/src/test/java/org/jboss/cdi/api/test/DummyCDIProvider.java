@@ -17,13 +17,14 @@
 
 package org.jboss.cdi.api.test;
 
+import java.lang.annotation.Annotation;
+import java.util.Iterator;
+
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.CDI;
 import javax.enterprise.inject.spi.CDIProvider;
 import javax.enterprise.util.TypeLiteral;
-import java.lang.annotation.Annotation;
-import java.util.Iterator;
 
 /**
  * Created by antoine on 16/12/2015.
@@ -65,6 +66,11 @@ public class DummyCDIProvider implements CDIProvider {
 
         @Override
         public boolean isAmbiguous() {
+            return false;
+        }
+        
+        @Override
+        public boolean isResolvable() {
             return false;
         }
 
