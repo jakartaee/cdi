@@ -75,10 +75,11 @@ An alternative is selected for the bean archive if either:
 
 For each child `<class>` element the container verifies that either:
 
-* a class `T` exists which is annotated with `@Alternative` or contains a producer field or producer method which is annotated with `@Alternative`, or
-* an alternative `Bean<T>` exists for the bean class.
+* a class with the specified name exists and is annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* a class with the specified name exists and declares a field or method annotated with `@Produces` and, at the same time, annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* an alternative bean whose bean class has the specified name exists.
 
-Otherwise the container automatically detects the problem and treats it as a deployment problem.
+Otherwise, the container automatically detects the problem and treats it as a deployment problem.
 
 Each child `<stereotype>` element must specify the name of an `@Alternative` stereotype annotation.
 If there is no annotation with the specified name, or the annotation is not an `@Alternative` stereotype, the container automatically detects the problem and treats it as a deployment problem.
