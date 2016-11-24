@@ -1174,8 +1174,6 @@ With `BeanConfigurator` you can perform all the operations defined in <<bean_att
 
 CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ObserverMethodConfigurator` interface to help configuring a new `ObserverMethod` instance.
 
-`ObserverMethodConfigurator` must be initialized from a `java.lang.reflect.Method`, `AnnotatedMethod` or an existing `ObserverMethod` with one of its `read()` methods.
-
 With `ObserverMethodConfigurator` you can perform the following operations:
 
 * Set the `ObserverMethod` bean class with `beanClass` method.
