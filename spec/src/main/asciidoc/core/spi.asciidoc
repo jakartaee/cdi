@@ -1185,7 +1185,7 @@ With `ObserverMethodConfigurator` you can perform the following operations:
 * Set the `Reception` type with reception method.
 * Set the `TransactionPhase` type with `transactionPhase` method.
 * Set the priority with `priority` method.
-* Define the `Consumer` to call on notification with `notifyWith` method.
+* Define the `EventConsumer` to call on notification with `notifyWith` method.
 * Make the observer asynchronous with `async` method.
 
 [[after_deployment_validation]]
