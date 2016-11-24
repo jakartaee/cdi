@@ -202,4 +202,45 @@ public interface BeforeBeanDiscovery {
     public <T> AnnotatedTypeConfigurator<T> addAnnotatedType(Class<T> type, String id);
 
 
+    /**
+     *
+     * <p>
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link javax.enterprise.inject.spi.AnnotatedType} and
+     * and declares it as a {@linkplain javax.inject.Qualifier} qualifier type.
+     * </p>
+     *
+     * <p>
+     * This is only required if you wish to make an annotation a qualifier without adding {@link Qualifier} to it and need to
+     * easily add other annotations (like {@link javax.enterprise.util.Nonbinding} on its members.
+     * </p>
+     *
+     * @param qualifier The annotation used to initialized the configurator
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the qualifier
+     * @since 2.0
+     */
+    public <X extends Annotation> AnnotatedTypeConfigurator<X> addConfiguredQualifier(AnnotatedType<X> qualifier);
+
+
+    /**
+     *
+     * <p>
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link javax.enterprise.inject.spi.AnnotatedType} and
+     * and declares it as an {@linkplain Interceptor interceptor} binding type.
+     * </p>
+     *
+     * <p>
+     * This is only required if you wish to make an annotation an interceptor binding type without adding
+     * {@link InterceptorBinding} to it and need to easily add other annotations
+     * (like {@link javax.enterprise.util.Nonbinding} on its members.
+     * </p>
+     *
+     * @param bindingType The annotation used to initialized the configurator
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the interceptor binding
+     * @since 2.0
+     */
+    public <X extends Annotation> AnnotatedTypeConfigurator<X> addConfiguredInterceptorBinding(AnnotatedType<X> bindingType);
+
+
 }
