@@ -1163,10 +1163,8 @@ With `BeanConfigurator` you can perform all the operations defined in <<bean_att
 * Add multiple injection points for the bean with `addInjectionPoints` methods.
 * Replace all injection points for the bean with `injectionPoints` methods.
 * Make the bean implements `PassivationCapable` and set its id with `id` method.
-* Set the `Function` to create a bean instance from a `CreationalContext` with `createWith` method.
-* Set the `Supplier` or `Function` to create a bean instance with `produceWith` method
-* Set the object to return when creating a bean instance with `producing` method
-* Set the `BiConsumer` or `Consumer` to destroy an instance from or without a CreationalContext with `disposeWith` methods.
+* Set a callback to create a bean instance with `createWith()` or `produceWith()` method.
+* Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
 [[observer_method_configurator]]
 
