@@ -29,15 +29,21 @@ import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.EventContext;
 import javax.enterprise.inject.spi.ObserverMethod;
+import javax.enterprise.inject.spi.ProcessObserverMethod;
 
 /**
- * This API is an helper to build a new {@link ObserverMethod} instance. CDI container must provides an implementation of this
- * interface accessible.
- *
+ * <p>
+ * An {@link ObserverMethodConfigurator} can configure an {@link ObserverMethod}. The container must provide an implementation
+ * of this interface.
+ * </p>
+ * 
+ * <p>
  * This configurator is not thread safe and shall not be used concurrently.
+ * </p>
  *
  * @param <T> type of the event the configured ObserverMethod will observe
  * @author Antoine Sabot-Durand
+ * @see ProcessObserverMethod#configureObserverMethod()
  * @see AfterBeanDiscovery#addObserverMethod()
  * @since 2.0
  */
