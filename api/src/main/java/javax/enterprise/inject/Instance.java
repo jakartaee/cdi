@@ -210,7 +210,9 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @return <tt>true</tt> if there is exactly one bean that matches the required type and qualifiers and is eligible for
      *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
      */
-    boolean isResolvable();
+    default boolean isResolvable() {
+        return !isUnsatisfied() && !isAmbiguous();
+    }
 
     /**
      * <p>

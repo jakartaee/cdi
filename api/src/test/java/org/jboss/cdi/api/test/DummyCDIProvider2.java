@@ -71,11 +71,6 @@ public class DummyCDIProvider2 implements CDIProvider {
         }
         
         @Override
-        public boolean isResolvable() {
-            return false;
-        }
-
-        @Override
         public void destroy(Object instance) {
 
         }
