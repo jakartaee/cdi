@@ -1342,7 +1342,6 @@ With `InjectionPointConfigurator` you can perform the following operations:
 * Set the type of `InjectionPoint` with `type` method.
 * Add a qualifier with `addQualifier` method.
 * Set or add multiple qualifiers with `addQualifiers` and `qualifiers` methods.
-* Set the bean that defines this injection point with `bean` method.
 * Make the injection point delegate with `delegate` method.
 * Make the injection point a transient field with `transientField` method.
 
