@@ -17,12 +17,11 @@
 
 package javax.enterprise.inject;
 
+import javax.enterprise.util.TypeLiteral;
+import javax.inject.Provider;
 import java.lang.annotation.Annotation;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import javax.enterprise.util.TypeLiteral;
-import javax.inject.Provider;
 
 /**
  * <p>
@@ -169,13 +168,13 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * <p>
-     * When called, provides back a Stream of the beans available in this Instance. If no beans are found, it returns an empty
-     * stream.
+     * When called, provides back a Stream of the beans available in this Instance.  If no beans are found, it
+     * returns an empty stream.
      * </p>
      *
      * @return a <tt>Stream</tt> representing the beans associated with this {@link Instance} object
      */
-    default Stream<T> stream() {
+    default Stream<T> stream(){
         return StreamSupport.stream(this.spliterator(), false);
     }
 
@@ -203,24 +202,14 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * <p>
-     * Determines if there is exactly one bean that matches the required type and qualifiers and is eligible for injection
-     * into the class into which the parent <tt>Instance</tt> was injected.
-     * </p>
-     * 
-     * @return <tt>true</tt> if there is exactly one bean that matches the required type and qualifiers and is eligible for
-     *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
-     */
-    boolean isResolvable();
-
-    /**
-     * <p>
-     * When called, the container destroys the instance if the active context object for the scope type of the bean supports
-     * destroying bean instances. All normal scoped built-in contexts support destroying bean instances.
+     * When called, the container destroys the instance if the active context object for the scope
+     * type of the bean supports destroying bean instances. All normal scoped built-in contexts support destroying bean
+     * instances.
      * </p>
      * 
      * <p>
-     * The instance passed should either be a dependent scoped bean instance obtained from the same {@link Instance} object, or
-     * the client proxy for a normal scoped bean instance.
+     * The instance passed should either be a dependent scoped bean instance obtained from the same {@link Instance} object, or the client proxy for a normal scoped bean
+     * instance.
      * </p>
      * 
      * 
