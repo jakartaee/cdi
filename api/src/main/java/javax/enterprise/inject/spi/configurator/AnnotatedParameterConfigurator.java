@@ -73,14 +73,14 @@ public interface AnnotatedParameterConfigurator<T> {
      * @param predicate
      * @return self
      */
-    AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
+    AnnotatedParameterConfigurator<T> remove(Predicate<Annotation> predicate);
     
     /**
      * Remove all the annotations.
      * 
      * @return self
      */
-    default AnnotatedTypeConfigurator<T> removeAll() {
+    default     AnnotatedParameterConfigurator<T> removeAll() {
         return remove((a) -> true);
     }
 
