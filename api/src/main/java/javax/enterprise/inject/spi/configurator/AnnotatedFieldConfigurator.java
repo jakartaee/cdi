@@ -17,6 +17,7 @@
 package javax.enterprise.inject.spi.configurator;
 
 import java.lang.annotation.Annotation;
+import java.util.function.Predicate;
 
 import javax.enterprise.inject.spi.AnnotatedField;
 
@@ -43,28 +44,34 @@ public interface AnnotatedFieldConfigurator<T> {
      * @return self
      */
     AnnotatedFieldConfigurator<T> add(Annotation annotation);
-    
+
     /**
-     * Remove the specified annotation.
+     * Remove annotations that match the specified predicate.
      *
-     * @param annotation the annotation to remove
-     * @return self
-     */
-    AnnotatedFieldConfigurator<T> remove(Annotation annotation);
-    
-    /**
-     * Removes all annotations with the specified type from the field. Annotation members are ignored.
+     * <p>
+     * Example predicates:</code>
+     * </p>
      * 
-     * @param annotationType the annotation type
-     * @return self
-     */
-    AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);
-    
-    /**
-     * Remove all annotations from the field.
+     * <pre>
+     *  {@code
+     * // To remove all the annotations:
+     * (a) -> true
      * 
+     * // To remove annotations with a concrete annotation type:
+     * (a) -> a.annotationType().equals(Foo.class)
+     * 
+     * // To remove annotation equal to a specified object:
+     * (a) -> a.equals(fooAnnotation)
+     * 
+     * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
+     * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
+     * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
+     * }
+     * </pre>
+     * 
+     * @param predicate
      * @return self
      */
-    AnnotatedFieldConfigurator<T> removeAll();
+    AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
 
 }

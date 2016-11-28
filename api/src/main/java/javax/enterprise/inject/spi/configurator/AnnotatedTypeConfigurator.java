@@ -69,28 +69,33 @@ public interface AnnotatedTypeConfigurator<T> {
     AnnotatedTypeConfigurator<T> add(Annotation annotation);
 
     /**
-     * Remove the specified annotation.
+     * Remove annotations that match the specified predicate.
      *
-     * @param annotation the annotation to remove
-     * @return self
-     * @see Annotation#equals(Object)
-     */
-    AnnotatedTypeConfigurator<T> remove(Annotation annotation);
-
-    /**
-     * Removes all annotations with the specified type from the type. Annotation members are ignored.
-     *
-     * @param annotationType the annotation type
-     * @return self
-     */
-    AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
-
-    /**
-     * Remove all the annotations from the type.
+     * <p>
+     * Example predicates:</code>
+     * </p>
      * 
+     * <pre>
+     *  {@code
+     * // To remove all the annotations:
+     * (a) -> true
+     * 
+     * // To remove annotations with a concrete annotation type:
+     * (a) -> a.annotationType().equals(Foo.class)
+     * 
+     * // To remove annotation equal to a specified object:
+     * (a) -> a.equals(fooAnnotation)
+     * 
+     * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
+     * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
+     * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
+     * }
+     * </pre>
+     * 
+     * @param predicate
      * @return self
      */
-    AnnotatedTypeConfigurator<T> removeAll();
+    AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
 
     /**
      * 

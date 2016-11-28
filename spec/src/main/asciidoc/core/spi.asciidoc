@@ -833,9 +833,7 @@ public interface AnnotatedTypeConfigurator<T> {
 
     AnnotatedType<T> getAnnotated();
     AnnotatedTypeConfigurator<T> add(Annotation annotation);
-    AnnotatedTypeConfigurator<T> remove(Annotation annotation);
-    AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
-    AnnotatedTypeConfigurator<T> removeAll();
+    AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
     Set<AnnotatedMethodConfigurator<T>> methods();
     Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate);
     Set<AnnotatedFieldConfigurator<T>> fields();
@@ -847,13 +845,12 @@ public interface AnnotatedTypeConfigurator<T> {
 
 * `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
 * `add()` adds an annotation to the configured `AnnotatedType`
-* `remove()` methods remove all annotation from the configured `AnnotatedType`
-* `removeAll()` removes all annotations from the configured `AnnotatedType`
-* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
+* `remove()` removes annotations that match the specified predicate
+* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods
 * `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
-* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.
+* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields
 * `filterFields()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
-* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
+* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors
 * `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
 
 [[annotated_method_configurator]]
