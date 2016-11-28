@@ -96,6 +96,15 @@ public interface AnnotatedTypeConfigurator<T> {
      * @return self
      */
     AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
+    
+    /**
+     * Remove all the annotations.
+     * 
+     * @return self
+     */
+    default AnnotatedTypeConfigurator<T> removeAll() {
+        return remove((a) -> true);
+    }
 
     /**
      * 

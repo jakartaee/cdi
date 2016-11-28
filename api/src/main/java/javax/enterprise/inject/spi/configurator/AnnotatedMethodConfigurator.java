@@ -78,6 +78,15 @@ public interface AnnotatedMethodConfigurator<T> {
     AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
 
     /**
+     * Remove all the annotations.
+     * 
+     * @return self
+     */
+    default AnnotatedTypeConfigurator<T> removeAll() {
+        return remove((a) -> true);
+    }
+    
+    /**
      * 
      * @return an immutable list of {@link AnnotatedParameterConfigurator}s reflecting the
      *         {@link AnnotatedMethod#getParameters()}
