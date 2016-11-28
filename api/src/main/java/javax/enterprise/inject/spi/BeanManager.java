@@ -626,10 +626,10 @@ public interface BeanManager {
 
     /**
      *
-     * Returns an instance of {@link Event} whose event type is Object and without qualifier.
+     * Returns an instance of Event with specified type <tt>java.lang.Object</tt> and specified qualifier <tt>@Default</tt>
      * It allows typesafe synchronous or asynchronous event firing without injection of {@link Event} built-in bean requirement.
      *
-     * @return a new {@link Event} object whose event type is Object and without qualifier
+     * @return a new {@link Event} object whose event type is <tt>Object</tt> and qualifier <tt>@Default</tt>
      * @since 2.0
      */
     Event<Object> getEvent();

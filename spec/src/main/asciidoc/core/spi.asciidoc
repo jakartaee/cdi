@@ -401,7 +401,7 @@ public void validate(InjectionPoint injectionPoint);
 
 ==== Firing an event
 
-The method `BeanManager.getEvent()` returns an an instance of `Event<Object>` and without qualifier.
+The method `BeanManager.getEvent()` returns an instance of `Event` with specified type `java.lang.Object` and specified qualifier `@Default`.
 
 [source, java]
 ----
