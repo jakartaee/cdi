@@ -19,10 +19,9 @@ package javax.enterprise.inject.spi.configurator;
 import java.lang.annotation.Annotation;
 
 import javax.enterprise.inject.spi.AnnotatedField;
-import javax.enterprise.util.Nonbinding;
 
 /**
- * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedField}
+ * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedField}
  * 
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
@@ -40,25 +39,23 @@ public interface AnnotatedFieldConfigurator<T> {
     /**
      * Add an annotation to the field.
      * 
-     * @param annotation to add
+     * @param annotation the annotation to add
      * @return self
      */
     AnnotatedFieldConfigurator<T> add(Annotation annotation);
     
     /**
-     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
-     * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
-     * to compare values.
-     * 
-     * @param annotation to remove
+     * Remove the specified annotation.
+     *
+     * @param annotation the annotation to remove
      * @return self
      */
     AnnotatedFieldConfigurator<T> remove(Annotation annotation);
     
     /**
-     * Removes all annotations with the same type. Annotation members are ignored.
+     * Removes all annotations with the specified type from the field. Annotation members are ignored.
      * 
-     * @param annotationType annotation class to remove
+     * @param annotationType the annotation type
      * @return self
      */
     AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);

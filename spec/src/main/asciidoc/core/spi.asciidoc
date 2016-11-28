@@ -848,7 +848,7 @@ public interface AnnotatedTypeConfigurator<T> {
 * `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
 * `add()` adds an annotation to the configured `AnnotatedType`
 * `remove()` methods remove all annotation from the configured `AnnotatedType`
-* `removeAll()` remove all existing annotation on the configured `AnnotatedType`
+* `removeAll()` removes all annotations from the configured `AnnotatedType`
 * `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
 * `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
 * `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.

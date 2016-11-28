@@ -17,27 +17,35 @@
 
 package javax.enterprise.inject.spi.configurator;
 
-import javax.enterprise.inject.spi.AnnotatedConstructor;
-import javax.enterprise.inject.spi.AnnotatedField;
-import javax.enterprise.inject.spi.AnnotatedMethod;
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.ProcessAnnotatedType;
-import javax.enterprise.util.Nonbinding;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import javax.enterprise.inject.spi.AfterTypeDiscovery;
+import javax.enterprise.inject.spi.AnnotatedConstructor;
+import javax.enterprise.inject.spi.AnnotatedField;
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.BeforeBeanDiscovery;
+import javax.enterprise.inject.spi.ProcessAnnotatedType;
+
 /**
- * This API is an helper to configure a new {@link AnnotatedType} instance. The CDI container must provide an implementation of
+ * <p>
+ * This API is a helper to configure a new {@link AnnotatedType} instance. The container must provide an implementation of
  * this interface.
- *
+ * </p>
+ * 
+ * <p>
  * AnnotatedTypeConfigurator is not reusable.
- *
+ * <p>
+ * 
+ * <p>
  * This configurator is not thread safe and shall not be used concurrently.
+ * </p>
  *
- * @see javax.enterprise.inject.spi.BeforeBeanDiscovery#addAnnotatedType(Class, String)
- * @see javax.enterprise.inject.spi.AfterTypeDiscovery#addAnnotatedType(Class, String)
+ * @see BeforeBeanDiscovery#addAnnotatedType(Class, String)
+ * @see AfterTypeDiscovery#addAnnotatedType(Class, String)
  * @see ProcessAnnotatedType#configureAnnotatedType()
  * @param <T> the class represented by the configured AnnotatedType
  * @author Martin Kouba
@@ -53,33 +61,32 @@ public interface AnnotatedTypeConfigurator<T> {
     AnnotatedType<T> getAnnotated();
 
     /**
-     * Add an annotation to the field.
+     * Add an annotation to the type.
      *
-     * @param annotation to add
+     * @param annotation the annotation to add
      * @return self
      */
     AnnotatedTypeConfigurator<T> add(Annotation annotation);
 
     /**
-     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
-     * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
-     * to compare values.
+     * Remove the specified annotation.
      *
-     * @param annotation to remove
+     * @param annotation the annotation to remove
      * @return self
+     * @see Annotation#equals(Object)
      */
     AnnotatedTypeConfigurator<T> remove(Annotation annotation);
 
     /**
-     * Removes all annotations with the same type. Annotation members are ignored.
+     * Removes all annotations with the specified type from the type. Annotation members are ignored.
      *
-     * @param annotationType annotation class to remove
+     * @param annotationType the annotation type
      * @return self
      */
     AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
 
     /**
-     * Remove all annotations from the type.
+     * Remove all the annotations from the type.
      * 
      * @return self
      */
