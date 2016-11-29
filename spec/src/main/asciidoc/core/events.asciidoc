@@ -122,7 +122,7 @@ public interface Event<T> {
 
     public void fire(T event);
     public <U extends T> CompletionStage<U> fireAsync(U event);
-    public <U extends T> CompletionStage<U> fireAsync(U event, Executor executor);
+    public <U extends T> CompletionStage<U> fireAsync(U event, NotificationOptions options);
 
     public Event<T> select(Annotation... qualifiers);
     public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
@@ -165,7 +165,8 @@ If an instance of an annotation that is not a qualifier type is passed to `selec
 The methods `fire()` and `fireAsync()` fire an event with the specified qualifiers and notify observers, as defined by <<observer_notification>>.
 If the container is unable to resolve the parameterized type of the event object, it uses the specified type to infer the parameterized type of the event types.
 
-The method `fireAsync()` may be called with a specific `Executor` object to be used to invoke observers method.
+The method `fireAsync()` may be called with a `NotificationOptions` object to configure the observer methods notification, e.g. to specify an `Executor` object to be used for asynchronous delivery.
+The container is permitted to define other non-portable notification options.
 
 The following elements are container specific:
 
