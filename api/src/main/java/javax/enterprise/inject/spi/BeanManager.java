@@ -639,7 +639,7 @@ public interface BeanManager {
 
     /**
      *
-     * Obtains an {@link Instance} giving direct access to beans instances
+     * Obtains an {@link Instance} giving access to beans instances
      *
      * Instances of dependent scoped beans obtained with this Instance should be explicitly release with {@link Instance#destroy(Object)}
      *

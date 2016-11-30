@@ -688,6 +688,20 @@ The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactor
 ----
 
 
+[[bm_obtain_instance]]
+
+==== Obtain an `Instance`
+
+The method `BeanManager.getInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
+
+[source, java]
+----
+Instance<Object> getInstance();
+----
+
+Instances of dependent scoped beans obtained with this `Instance` object should be explicitly released by calling `Instance.release()` method.
+
+
 [[alternative_metadata_sources]]
 
 === Alternative metadata sources
