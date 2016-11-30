@@ -27,6 +27,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.ObserverException;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 import javax.enterprise.util.Nonbinding;
 import java.lang.annotation.Annotation;
@@ -76,6 +77,7 @@ import java.util.Set;
  * <ul>
  *     <li>{@link #getReference(Bean, java.lang.reflect.Type, javax.enterprise.context.spi.CreationalContext)},</li>
  *     <li>{@link #getInjectableReference(InjectionPoint, javax.enterprise.context.spi.CreationalContext)},</li>
+ *     <li>{@link #getInstance()}</li>
  * </ul>
  * <p>
  * or the container will throw an Exception.
@@ -220,7 +222,7 @@ public interface BeanManager {
      * <p>
      * This method is deprecated from CDI 2.0 and {@link #getEvent())} should be used instead.
      * </p>
-     * 
+     *
      * @param event the event object
      * @param qualifiers the event qualifiers
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
@@ -633,5 +635,19 @@ public interface BeanManager {
      * @since 2.0
      */
     Event<Object> getEvent();
+
+
+    /**
+     *
+     * Obtains an {@link Instance} giving direct access to beans instances
+     *
+     * Instances of dependent scoped beans obtained with this Instance should be explicitly release with {@link Instance#destroy(Object)}
+     *
+     * @return an {@link Instance} object to request beans instances
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
+     *         event is fired.
+     * @since 2.0
+     */
+    Instance<Object> getInstance();
 
 }
