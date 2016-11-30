@@ -694,12 +694,14 @@ The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactor
 
 The method `BeanManager.getInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
 
+The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Java EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
+
 [source, java]
 ----
 Instance<Object> getInstance();
 ----
 
-Instances of dependent scoped beans obtained with this `Instance` object should be explicitly released by calling `Instance.release()` method.
+Instances of dependent scoped beans obtained with this `Instance` object should be explicitly released by calling `Instance.destroy()` method.
 
 
 [[alternative_metadata_sources]]

@@ -70,6 +70,7 @@ import java.util.Set;
  *     <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #validate(InjectionPoint)},</li>
+ *     <li>{@link #getInstance()}</li>
  * </ul>
  * <p>
  * and the following operations must not be called before the {@link AfterDeploymentValidation} event is fired:
@@ -77,7 +78,6 @@ import java.util.Set;
  * <ul>
  *     <li>{@link #getReference(Bean, java.lang.reflect.Type, javax.enterprise.context.spi.CreationalContext)},</li>
  *     <li>{@link #getInjectableReference(InjectionPoint, javax.enterprise.context.spi.CreationalContext)},</li>
- *     <li>{@link #getInstance()}</li>
  * </ul>
  * <p>
  * or the container will throw an Exception.
@@ -639,12 +639,19 @@ public interface BeanManager {
 
     /**
      *
-     * Obtains an {@link Instance} giving access to beans instances
+     * Obtains an {@link Instance} giving access to beans instances.
      *
-     * Instances of dependent scoped beans obtained with this Instance should be explicitly release with {@link Instance#destroy(Object)}
+     * The returned Instance object can only access instances of  beans that are available for injection in the module
+     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+     * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution.
+     *
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
+     * this method will only return instances of beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
+     *
+     * Instances of dependent scoped beans obtained with this Instance should be explicitly destroyed with {@link Instance#destroy(Object)}
      *
      * @return an {@link Instance} object to request beans instances
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
      *         event is fired.
      * @since 2.0
      */
