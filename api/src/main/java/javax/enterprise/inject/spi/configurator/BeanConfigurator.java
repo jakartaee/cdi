@@ -16,6 +16,13 @@
  */
 package javax.enterprise.inject.spi.configurator;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
+import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
@@ -25,13 +32,6 @@ import javax.enterprise.inject.spi.BeanAttributes;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.PassivationCapable;
 import javax.enterprise.util.TypeLiteral;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * This API is an helper to configure a new {@link Bean} instance.
@@ -47,9 +47,7 @@ import java.util.function.Supplier;
  */
 public interface BeanConfigurator<T> {
 
-
     /**
-     *
      * Set the class of the configured Bean.
      * If not set, the extension class is used.
      *
@@ -59,7 +57,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> beanClass(Class<?> beanClass);
 
     /**
-     *
      * Add an InjectionPoint to the configured bean
      *
      * @param injectionPoint the injectionPoint to add
@@ -68,7 +65,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addInjectionPoint(InjectionPoint injectionPoint);
 
     /**
-     *
      * Add InjectionPoints to the configured bean
      *
      * @param injectionPoints the injectionPoints to add
@@ -77,7 +73,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addInjectionPoints(InjectionPoint... injectionPoints);
 
     /**
-     *
      * Add InjectionPoints to the configured bean
      *
      * @param injectionPoints the injectionPoints to add
@@ -86,7 +81,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addInjectionPoints(Set<InjectionPoint> injectionPoints);
 
     /**
-     *
      * Replace InjectionPoints for the configured bean
      *
      * @param injectionPoints the injectionPoints for the configured bean
@@ -95,7 +89,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> injectionPoints(InjectionPoint... injectionPoints);
 
     /**
-     *
      * Replace InjectionPoints for the configured bean
      *
      * @param injectionPoints the injectionPoints for the configured bean
@@ -104,7 +97,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> injectionPoints(Set<InjectionPoint> injectionPoints);
 
     /**
-     *
      * Make the configured bean implements {@link PassivationCapable} and its Id for passivation.
      *
      *
@@ -115,59 +107,49 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> id(String id);
 
     /**
+     * Set a callback to create a bean instance.
      *
-     * Set a {@link Function} to create a bean instance from a {@link CreationalContext}
-     *
-     * @param callback the Function to create the instance
+     * @param callback the callback to create the instance
      * @return self
+     * @see Contextual#create(CreationalContext)
      */
     <U extends T> BeanConfigurator<U> createWith(Function<CreationalContext<U>, U> callback);
 
     /**
-     *
-     * Set a {@link Supplier} to create a bean instance
-     *
-     *
-     * @param callback the Supplier to create the instance
-     * @return self
-     */
-    <U extends T> BeanConfigurator<U> produceWith(Supplier<U> callback);
-
-    /**
-     * Set a {@link Function} to create a bean instance from an {@link Instance}
-     *
-     * @param callback the function to create the instance
+     * Set a callback to create a bean instance.
+     * <p>
+     * The {@link Instance} argument might be used to simulate producer method parameter injection. However, dependent scoped
+     * bean instances obtained from {@link Instance} during the callback execution remain managed until the produced bean
+     * instance is destroyed. Therefore, applications are encouraged to always destroy unneeded dependent scoped bean instances
+     * obtained from {@link Instance}.
+     * 
+     * @param callback the callback to create the instance
      * @return self
      */
     <U extends T> BeanConfigurator<U> produceWith(Function<Instance<Object>, U> callback);
 
     /**
-     * A shortcut for {@code produceWith(() -> existing} where {@code existing} represents an instance whose lifecycle is not managed by CDI.
+     * Set a callback to destroy a bean instance.
+     * <p>
+     * If no destroy callback is specified, a NOOP callback is automatically set.
      *
-     * @param instance use as produced instance for the configured bean
-     * @return self
-     */
-    <U extends T> BeanConfigurator<U> producing(U instance);
-
-    /**
-     *
-     * Set a {@link BiConsumer} to destroy a bean instance from a {@link CreationalContext}.
-     * If no destroy callback is specified, a NOOP dispose callback is automatically set.
-     *
-     * @param callback the BiConsumer to destroy the instance
+     * @param callback the callback to destroy the instance
      * @return self
      */
     BeanConfigurator<T> destroyWith(BiConsumer<T, CreationalContext<T>> callback);
 
     /**
+     * Set a callback to destroy a bean instance.
+     * <p>
+     * If no dispose callback is specified, a NOOP callback is automatically set.
+     * <p>
+     * The {@link Instance} argument might be used to simulate disposer method parameter injection. All dependent scoped bean
+     * instances obtained from {@link Instance} during the callback execution are destroyed when the execution completes.
      *
-     * Set a {@link Consumer} to destroy a bean instance.
-     * If no dispose callback is specified, a NOOP dispose callback is automatically set.
-     *
-     * @param callback the Consumer to dispose the instance
+     * @param callback the callback to dispose the instance
      * @return self
      */
-    BeanConfigurator<T> disposeWith(Consumer<T> callback);
+    BeanConfigurator<T> disposeWith(BiConsumer<T, Instance<Object>> callback);
 
     /**
      * Read the information from the given annotated type. All relevant information is overwritten.
@@ -186,7 +168,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> read(BeanAttributes<?> beanAttributes);
 
     /**
-     *
      * Add a type to the bean types
      *
      * @param type the type to add
@@ -195,7 +176,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addType(Type type);
 
     /**
-     *
      * Add a type to the bean types
      *
      * @param typeLiteral the type to add
@@ -204,7 +184,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addType(TypeLiteral<?> typeLiteral);
 
     /**
-     *
      * Add types to the bean types
      *
      * @param types types to add
@@ -213,7 +192,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addTypes(Type... types);
 
     /**
-     *
      * Add types to the bean types
      *
      * @param types types to add
@@ -231,7 +209,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addTransitiveTypeClosure(Type type);
 
     /**
-     *
      * Replace bean types
      *
      * @param types the types of the configured bean
@@ -240,7 +217,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> types(Type... types);
 
     /**
-     *
      * Replace bean types
      *
      * @param types the types of the configured bean
@@ -249,7 +225,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> types(Set<Type> types);
 
     /**
-     *
      * Replace Bean scope
      *
      * @param scope new scope for the configured bean
@@ -258,7 +233,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> scope(Class<? extends Annotation> scope);
 
     /**
-     *
      * Add a qualifier to the configured bean
      *
      * @param qualifier qualifier to add
@@ -267,7 +241,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addQualifier(Annotation qualifier);
 
     /**
-     *
      * Add qualifiers to the bean.
      *
      * @param qualifiers qualifiers to add
@@ -276,7 +249,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addQualifiers(Annotation... qualifiers);
 
     /**
-     *
      * Add qualifiers to the bean.
      *
      * @param qualifiers qualifiers to add
@@ -301,7 +273,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> qualifiers(Set<Annotation> qualifiers);
 
     /**
-     *
      * Add a stereotype to the configured bean
      *
      * @param stereotype stereotype to add
@@ -310,7 +281,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addStereotype(Class<? extends Annotation> stereotype);
 
     /**
-     *
      * Add stereotypes to the configured bean
      *
      * @param stereotypes stereotypes to add
@@ -319,7 +289,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> addStereotypes(Set<Class<? extends Annotation>> stereotypes);
 
     /**
-     *
      * Replace stereotypes on the configured bean
      *
      * @param stereotypes for the configured bean
@@ -328,7 +297,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> stereotypes(Set<Class<? extends Annotation>> stereotypes);
 
     /**
-     *
      * Set the name of the configured bean
      *
      * @param name name for the configured bean
@@ -337,7 +305,6 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> name(String name);
 
     /**
-     *
      * Change the alternative status of the configured bean.
      * By default the configured bean is not an alternative.
      *
