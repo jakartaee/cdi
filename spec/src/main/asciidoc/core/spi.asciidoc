@@ -1121,7 +1121,7 @@ public interface AfterBeanDiscovery {
 ----
 
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after all observers have been notified.
-* `addBean()` fires an event of type `ProcessBean` containing the given `Bean` and then registers the `Bean` with the container, thereby making it available for injection into other beans.
+* `addBean()` fires an event of type `ProcessSyntheticBean` containing the given `Bean` and then registers the `Bean` with the container, thereby making it available for injection into other beans.
 The given `Bean` may implement `Interceptor` or `Decorator`.
 +
 The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
@@ -1463,7 +1463,7 @@ The event object type in the package `javax.enterprise.inject.spi` depends upon 
 * For a managed bean with bean class `X`, the container must raise an event of type `ProcessManagedBean<X>`.
 * For a producer method with method return type `T` of a bean with bean class `X`, the container must raise an event of type `ProcessProducerMethod<T, X>`.
 * For a producer field with field type `T` of a bean with bean class `X`, the container must raise an event of type `ProcessProducerField<T, X>`.
-
+* For a custom implementation of `Bean`, the container must raise an event of type `ProcessSyntheticBean<X>`.
 
 The interface `javax.enterprise.inject.spi.ProcessBean` is a supertype of all these event types:
 
@@ -1476,7 +1476,7 @@ public interface ProcessBean<X> {
 }
 ----
 
-* `getAnnotated()` returns the `AnnotatedType` representing the bean class, the `AnnotatedMethod` representing the producer method, or the `AnnotatedField` representing the producer field.
+* `getAnnotated()` returns the `AnnotatedType` representing the bean class, the `AnnotatedMethod` representing the producer method, or the `AnnotatedField` representing the producer field. If invoked upon a `ProcessSyntheticBean` event, non-portable behavior results and the returned value should be ignored.
 * `getBean()` returns the `Bean` object that is about to be registered.
 The `Bean` may implement `Interceptor` or `Decorator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
@@ -1505,6 +1505,14 @@ public interface ProcessProducerField<T, X>
         extends ProcessBean<X> {
     public AnnotatedField<T> getAnnotatedProducerField();
     public AnnotatedParameter<T> getAnnotatedDisposedParameter();
+}
+----
+
+[source, java]
+----
+public interface ProcessSyntheticBean<X>
+        extends ProcessBean<X> {
+    public Extension getSource();
 }
 ----
 
