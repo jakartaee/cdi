@@ -23,7 +23,7 @@ package javax.enterprise.inject.spi;
  * @author Pete Muir
  * @since 1.1
  */
-public interface CDIProvider {
+public interface CDIProvider extends Prioritized {
 
     /**
      * Provides access to the current container
