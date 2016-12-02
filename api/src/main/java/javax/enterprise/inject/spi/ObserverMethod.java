@@ -121,7 +121,7 @@ public interface ObserverMethod<T> extends Prioritized {
      * @param eventContext
      */
     public default void notify(EventContext<T> eventContext) {
-        notify(eventContext.getEventObject());
+        notify(eventContext.getEvent());
     }
 
     /**

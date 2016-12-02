@@ -17,27 +17,33 @@
 
 package javax.enterprise.inject.spi.configurator;
 
-import javax.enterprise.event.Reception;
-import javax.enterprise.event.TransactionPhase;
-import javax.enterprise.inject.spi.AfterBeanDiscovery;
-import javax.enterprise.inject.spi.AnnotatedMethod;
-import javax.enterprise.inject.spi.EventMetadata;
-import javax.enterprise.inject.spi.ObserverMethod;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
+
+import javax.enterprise.event.ObserverException;
+import javax.enterprise.event.Reception;
+import javax.enterprise.event.TransactionPhase;
+import javax.enterprise.inject.spi.AfterBeanDiscovery;
+import javax.enterprise.inject.spi.AnnotatedMethod;
+import javax.enterprise.inject.spi.EventContext;
+import javax.enterprise.inject.spi.ObserverMethod;
+import javax.enterprise.inject.spi.ProcessObserverMethod;
 
 /**
- * This API is an helper to build a new {@link ObserverMethod} instance.
- * CDI container must provides an implementation of this interface accessible.
- *
+ * <p>
+ * An {@link ObserverMethodConfigurator} can configure an {@link ObserverMethod}. The container must provide an implementation
+ * of this interface.
+ * </p>
+ * 
+ * <p>
  * This configurator is not thread safe and shall not be used concurrently.
+ * </p>
  *
  * @param <T> type of the event the configured ObserverMethod will observe
  * @author Antoine Sabot-Durand
+ * @see ProcessObserverMethod#configureObserverMethod()
  * @see AfterBeanDiscovery#addObserverMethod()
  * @since 2.0
  */
@@ -68,8 +74,7 @@ public interface ObserverMethodConfigurator<T> {
     ObserverMethodConfigurator<T> read(ObserverMethod<T> method);
 
     /**
-     * Set the class of the Bean containing this observer.
-     * If not set, the extension class is used.
+     * Set the class of the Bean containing this observer. If not set, the extension class is used.
      *
      * @param type the bean class containing this configurator.
      * @return self
@@ -149,20 +154,12 @@ public interface ObserverMethodConfigurator<T> {
     ObserverMethodConfigurator<T> priority(int priority);
 
     /**
-     * Define Consumer to call when event is notified
+     * Define an operation that accepts a context of a fired event.
      *
      * @param callback to call for the event notification
      * @return self
      */
-    ObserverMethodConfigurator<T> notifyWith(Consumer<T> callback);
-
-    /**
-     * Defines a BiConsumer to call when event is notified
-     *
-     * @param callback a BiConsumer taking an event type and an EventMetadata as type parameters
-     * @return self
-     */
-    ObserverMethodConfigurator<T> notifyWith(BiConsumer<T, EventMetadata> callback);
+    ObserverMethodConfigurator<T> notifyWith(EventConsumer<T> callback);
 
     /**
      * Allows modification of the asynchronous status of the observer to build.
@@ -171,4 +168,24 @@ public interface ObserverMethodConfigurator<T> {
      * @return self
      */
     ObserverMethodConfigurator<T> async(boolean async);
+
+    /**
+     * Represents an operation that accepts a context of a fired event.
+     * 
+     * @author Martin Kouba
+     *
+     * @param <T>
+     * @see EventContext
+     */
+    @FunctionalInterface
+    interface EventConsumer<T> {
+
+        /**
+         * 
+         * @param eventContext
+         * @throws Exception The thrown checked exception is wrapped and rethrown as an (unchecked) {@link ObserverException}
+         */
+        void accept(EventContext<T> eventContext) throws Exception;
+
+    }
 }

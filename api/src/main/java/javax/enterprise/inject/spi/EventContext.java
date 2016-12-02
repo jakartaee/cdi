@@ -31,7 +31,7 @@ public interface EventContext<T> {
      * 
      * @return the event object, aka the payload
      */
-    T getEventObject();
+    T getEvent();
 
     /**
      * 
