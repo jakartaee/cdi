@@ -401,6 +401,20 @@ public void validate(InjectionPoint injectionPoint);
 
 ==== Firing an event
 
+The method `BeanManager.getEvent()` returns an instance of `Event` with specified type `java.lang.Object` and specified qualifier `@Default`.
+
+[source, java]
+----
+Event<Object> getEvent();
+----
+
+The returned instance can be used like a standard `Event` as described in <<events>>.
+
+===== `fireEvent()` method
+
+_The following method was deprecated in CDI 2.0.
+CDI applications are now encouraged to use `BeanManager.getEvent()` instead._
+
 The method `BeanManager.fireEvent()` fires an event and notifies observers, according to <<observer_notification>>.
 
 [source, java]

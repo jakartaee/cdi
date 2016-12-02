@@ -23,6 +23,7 @@ import javax.enterprise.context.ContextNotActiveException;
 import javax.enterprise.context.spi.Context;
 import javax.enterprise.context.spi.Contextual;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.event.Event;
 import javax.enterprise.event.ObserverException;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
@@ -215,6 +216,10 @@ public interface BeanManager {
 
     /**
      * Fire an event and notify observers.
+     *
+     * <p>
+     * This method is deprecated from CDI 2.0 and {@link #getEvent())} should be used instead.
+     * </p>
      * 
      * @param event the event object
      * @param qualifiers the event qualifiers
@@ -617,5 +622,16 @@ public interface BeanManager {
      * @since 2.0
      */
     <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
+
+
+    /**
+     *
+     * Returns an instance of Event with specified type <tt>java.lang.Object</tt> and specified qualifier <tt>@Default</tt>
+     * It allows typesafe synchronous or asynchronous event firing without injection of {@link Event} built-in bean requirement.
+     *
+     * @return a new {@link Event} object whose event type is <tt>Object</tt> and qualifier <tt>@Default</tt>
+     * @since 2.0
+     */
+    Event<Object> getEvent();
 
 }
