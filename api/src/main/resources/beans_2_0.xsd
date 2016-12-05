@@ -77,13 +77,13 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexType>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="javaee:interceptors"/>
-        <xs:element ref="javaee:decorators"/>
-        <xs:element ref="javaee:alternatives"/>
-        <xs:element ref="javaee:scan"/>
-        <xs:any namespace="##other" processContents="lax"/>
-      </xs:choice>
+      <xs:all >
+        <xs:element ref="javaee:interceptors" minOccurs="0"/>
+        <xs:element ref="javaee:decorators" minOccurs="0" />
+        <xs:element ref="javaee:alternatives" minOccurs="0" />
+        <xs:element ref="javaee:scan" minOccurs="0" />
+        <xs:element ref="javaee:trim" minOccurs="0"/>
+      </xs:all>
       <xs:attribute name="version" default="2.0">
         <xs:annotation>
           <xs:documentation>
@@ -352,6 +352,15 @@
         </xs:element>
       </xs:choice>
     </xs:complexType>
+  </xs:element>
+  <xs:element name="trim" type="xs:string" fixed="">
+      <xs:annotation>
+        <xs:documentation>
+          If an explicit bean archive contains the &lt;trim/&lt; element in its beans.xml file, types that don’t have
+          either a bean defining annotation (as defined in Bean defining annotations) or any scope annotation,
+          are removed from the set of discovered types.
+        </xs:documentation>
+      </xs:annotation>
   </xs:element>
 
 </xs:schema>
