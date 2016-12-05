@@ -25,6 +25,9 @@ import javax.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * enabled bean, before registering the {@link javax.enterprise.inject.spi.ObserverMethod} object.
  * </p>
  * <p>
+ * For a custom implementation of {@link ObserverMethod}, the container must raise an event of type {@link ProcessSyntheticObserverMethod}.
+ * </p>
+ * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.ObserverMethod} by calling either {@link #setObserverMethod(ObserverMethod)} or {@link #configureObserverMethod()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
  * The container must use the final value of this property, after all observers have been called, he container must use the final
@@ -41,11 +44,15 @@ import javax.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * @author  Antoine Sabot-Durand
  * @param <T> The type of the event being observed
  * @param <X> The bean type containing the observer method
- *
  */
 public interface ProcessObserverMethod<T, X> {
+    
     /**
      * The {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method.
+     * 
+     * <p>
+     * If invoked upon a {@link ProcessSyntheticObserverMethod} event, non-portable behavior results and the returned value should be ignored.
+     * </p>
      *
      * @return the {@link javax.enterprise.inject.spi.AnnotatedMethod} representing the observer method
      * @throws IllegalStateException if called outside of the observer method invocation
@@ -81,7 +88,6 @@ public interface ProcessObserverMethod<T, X> {
      */
     public void setObserverMethod(ObserverMethod<T> observerMethod);
 
-
     /**
      * Returns a {@link ObserverMethodConfigurator} initialized with the {@link ObserverMethod} processed by this event,
      * to configure a new ObserverMethod that will replace the original one at the end of the observer invocation.
@@ -96,8 +102,8 @@ public interface ProcessObserverMethod<T, X> {
 
     /**
      * Forces the container to ignore the observer method.
+     * 
      * @throws IllegalStateException if called outside of the observer method invocation
-     *
      * @since 2.0
      */
     public void veto();

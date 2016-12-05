@@ -1144,7 +1144,7 @@ The given `Bean` may implement `Interceptor` or `Decorator`.
 +
 The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
 If the container is unable to process the configurator it automatically detects the problem and treats it as a deployment problem.
-* `addObserverMethod()` fires an event of type `ProcessObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
+* `addObserverMethod()` fires an event of type `ProcessSyntheticObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
 +
 If the given `ObserverMethod` does not override either `ObserverMethod.notify(T)` or `ObserverMethod.notify(EventContext<T>)`, the container automatically detects the problem and treats it as a definition error.
 +
@@ -1572,9 +1572,11 @@ If any `ProcessProducer` method is called outside of the observer method invocat
 
 ==== `ProcessObserverMethod` event
 
-The container must fire an event for each observer method of each bean, before registering the `ObserverMethod` object.
+The container must fire an event for each observer method of each enabled bean, before registering the `ObserverMethod` object.
 
 The event object must be of type `javax.enterprise.inject.spi.ProcessObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the bean class of the bean that declares the observer method.
+
+For a custom implementation of `javax.enterprise.inject.spi.ObserverMethod`, the container must raise an event of type `javax.enterprise.inject.spi.ProcessSyntheticObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the return value of `ObserverMethod.getBeanClass()`.
 
 [source, java]
 ----
@@ -1588,18 +1590,25 @@ public interface ProcessObserverMethod<T, X> {
 }
 ----
 
-* `getAnnotatedMethod()` returns the `AnnotatedMethod` representing the observer method.
+[source, java]
+----
+public interface ProcessSyntheticObserverMethod<T, X> extends ProcessObserverMethod<T, X> {
+    public Extension getSource();
+}
+----
+
+* `getAnnotatedMethod()` returns the `AnnotatedMethod` representing the observer method. If invoked upon a `ProcessSyntheticObserverMethod` event, non-portable behavior results and the returned value should be ignored.
 * `getObserverMethod()` returns the `ObserverMethod` object that will be used by the container to call the observer method.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `setObserverMethod()` replaces the `ObserverMethod`.
 * `configureObserverMethod()` returns an `ObserverMethodConfigurator` (as defined in <<observer_method_configurator>>) initialized with the `ObserverMethod` processed by the event to easily configure the  `ObserverMethod` which will be used to replace the original one at the end of observer invocation.
 The method always returns the same `ObserverMethodConfigurator`.
 * `veto()` forces the container to ignore the `ObserverMethod`.
+* `getSource()` returns the `Extension` instance that added the observer method.
 
 Any observer of this event is permitted to wrap and/or replace the `ObserverMethod` by calling either `setObserverMethod()` or `configureObserverMethod()`.
 If both methods are called within an observer notification an `IllegalStateException` is thrown.
 The container must use the final value of this property, after all observers have been called, whenever it performs observer resolution.
-
 
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
 
