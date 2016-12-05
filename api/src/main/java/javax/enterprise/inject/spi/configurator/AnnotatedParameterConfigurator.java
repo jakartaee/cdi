@@ -17,13 +17,13 @@
 package javax.enterprise.inject.spi.configurator;
 
 import java.lang.annotation.Annotation;
+import java.util.function.Predicate;
 
 import javax.enterprise.inject.spi.AnnotatedParameter;
-import javax.enterprise.util.Nonbinding;
 
 /**
  *
- * This interface is part of the {@link AnnotatedTypeConfigurator} spi and helps defining an {@link AnnotatedParameter}
+ * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedParameter}
  *
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
@@ -39,36 +39,49 @@ public interface AnnotatedParameterConfigurator<T> {
     AnnotatedParameter<T> getAnnotated();
     
     /**
-     * Add an annotation to the field.
+     * Add an annotation to the parameter.
      *
-     * @param annotation to add
+     * @param annotation the annotation to add
      * @return self
      */
     AnnotatedParameterConfigurator<T> add(Annotation annotation);
     
     /**
-     * Remove annotations with (a) the same type and (b) the same annotation member value for each member which is not
-     * annotated {@link Nonbinding}. The container calls the {@link Object#equals(Object)} method of the annotation member value
-     * to compare values.
+     * Remove annotations that match the specified predicate.
      *
-     * @param annotation to remove
+     * <p>
+     * Example predicates:</code>
+     * </p>
+     * 
+     * <pre>
+     *  {@code
+     * // To remove all the annotations:
+     * (a) -> true
+     * 
+     * // To remove annotations with a concrete annotation type:
+     * (a) -> a.annotationType().equals(Foo.class)
+     * 
+     * // To remove annotation equal to a specified object:
+     * (a) -> a.equals(fooAnnotation)
+     * 
+     * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
+     * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
+     * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
+     * }
+     * </pre>
+     * 
+     * @param predicate
      * @return self
      */
-    AnnotatedParameterConfigurator<T> remove(Annotation annotation);
+    AnnotatedParameterConfigurator<T> remove(Predicate<Annotation> predicate);
     
     /**
-     * Removes all annotations with the same type. Annotation members are ignored.
-     *
-     * @param annotationType annotation class to remove
-     * @return self
-     */
-    AnnotatedParameterConfigurator<T> remove(Class<? extends Annotation> annotationType);
-    
-    /**
-     * Remove all annotations from the method.
+     * Remove all the annotations.
      * 
      * @return self
      */
-    AnnotatedParameterConfigurator<T> removeAll();
+    default     AnnotatedParameterConfigurator<T> removeAll() {
+        return remove((a) -> true);
+    }
 
 }

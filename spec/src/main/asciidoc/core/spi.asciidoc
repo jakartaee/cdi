@@ -847,8 +847,7 @@ public interface AnnotatedTypeConfigurator<T> {
 
     AnnotatedType<T> getAnnotated();
     AnnotatedTypeConfigurator<T> add(Annotation annotation);
-    AnnotatedTypeConfigurator<T> remove(Annotation annotation);
-    AnnotatedTypeConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
     AnnotatedTypeConfigurator<T> removeAll();
     Set<AnnotatedMethodConfigurator<T>> methods();
     Stream<AnnotatedMethodConfigurator<T>> filterMethods(Predicate<AnnotatedMethod<T>> predicate);
@@ -860,14 +859,14 @@ public interface AnnotatedTypeConfigurator<T> {
 ----
 
 * `getAnnotated()` returns the original `AnnotatedType` with which this configurator was initialized
-* `add()` adds an annotation to the configured `AnnotatedType`
-* `remove()` methods remove all annotation from the configured `AnnotatedType`
-* `removeAll()` remove all existing annotation on the configured `AnnotatedType`
-* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods.
+* `add()` adds an annotation to the configured element
+* `remove()` removes annotations that match the specified predicate from the configured element
+* `removeAll()` removes all annotations from the configured element
+* `methods()` returns a set of `AnnotatedMethodConfigurator` to configure annotations on methods
 * `filterMethods()` returns a `Stream<AnnotatedMethodsConfigurator>` filtered by applying the provided Predicate on `methods()`
-* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields.
+* `fields()` returns a set of `AnnotatedFieldConfigurator` to configure annotations on fields
 * `filterFields()` returns a `Stream<AnnotatedFieldConfigurator>` filtered by applying the provided Predicate on `fields()`
-* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors.
+* `constructors()` returns a set of `AnnotatedConstructorConfigurator` to configure annotations on constructors
 * `filterConstructors()` returns a `Stream<AnnotatedConstructorConfigurator>` filtered by applying the provided Predicate on `Constructors()`
 
 [[annotated_method_configurator]]
@@ -881,8 +880,7 @@ public interface AnnotatedTypeConfigurator<T> {
 public interface AnnotatedMethodConfigurator<T> {
     AnnotatedMethod<T> getAnnotated();
     AnnotatedMethodConfigurator<T> add(Annotation annotation);
-    AnnotatedMethodConfigurator<T> remove(Annotation annotation);
-    AnnotatedMethodConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedMethodConfigurator<T> remove(Predicate<Annotation> predicate);
     AnnotatedMethodConfigurator<T> removeAll();
     List<AnnotatedParameterConfigurator<T>> params();
     Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
@@ -891,8 +889,8 @@ public interface AnnotatedMethodConfigurator<T> {
 
 * `getAnnotated()` returns the original `AnnotatedMethod` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
-* `remove()` methods remove all annotation from the configured element
-* `removeAll()` remove all existing annotation on the configured element
+* `remove()` removes annotations that match the specified predicate from the configured element
+* `removeAll()` removes all annotations from the configured element
 * `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
 * `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
 
@@ -908,8 +906,7 @@ public interface AnnotatedMethodConfigurator<T> {
 public interface AnnotatedConstructorConfigurator<T> {
     AnnotatedConstructor<T> getAnnotated();
     AnnotatedConstructorConfigurator<T> add(Annotation annotation);
-    AnnotatedConstructorConfigurator<T> remove(Annotation annotation);
-    AnnotatedConstructorConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedConstructorConfigurator<T> remove(Predicate<Annotation> predicate);
     AnnotatedConstructorConfigurator<T> removeAll();
     List<AnnotatedParameterConfigurator<T>> params();
     Stream<AnnotatedParameterConfigurator<T>> filterParams(Predicate<AnnotatedParameter<T>> predicate);
@@ -918,8 +915,8 @@ public interface AnnotatedConstructorConfigurator<T> {
 
 * `getAnnotated()` returns the original `AnnotatedConstructor` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
-* `remove()` methods remove all annotation from the configured element
-* `removeAll()` remove all existing annotation on the configured element
+* `remove()` removes annotations that match the specified predicate from the configured element
+* `removeAll()` removes all annotations from the configured element
 * `params()` returns a list of `AnnotatedParameterConfigurator` to configure annotations on parameters.
 * `filterParams(Predicate<AnnotatedParameter<T>> predicate)` returns a `Stream<AnnotatedParameterConfigurator>` filtered by applying the provided Predicate on `params()`
 
@@ -934,16 +931,15 @@ public interface AnnotatedConstructorConfigurator<T> {
 public interface AnnotatedParameterConfigurator<T> {
     AnnotatedParameter<T> getAnnotated();
     AnnotatedParameterConfigurator<T> add(Annotation annotation);
-    AnnotatedParameterConfigurator<T> remove(Annotation annotation);
-    AnnotatedParameterConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedParameterConfigurator<T> remove(Predicate<Annotation> predicate);
     AnnotatedParameterConfigurator<T> removeAll();
 }
 ----
 
 * `getAnnotated()` returns the original `AnnotatedParameter` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
-* `remove()` methods remove all annotation from the configured element
-* `removeAll()` remove all existing annotation on the configured element
+* `remove()` removes annotations that match the specified predicate from the configured element
+* `removeAll()` removes all annotations from the configured element
 
 [[annotated_field_configurator]]
 
@@ -957,16 +953,15 @@ public interface AnnotatedFieldConfigurator<T> {
 
     AnnotatedField<T> getAnnotated();
     AnnotatedFieldConfigurator<T> add(Annotation annotation);
-    AnnotatedFieldConfigurator<T> remove(Annotation annotation);
-    AnnotatedFieldConfigurator<T> remove(Class<? extends Annotation> annotationType);
+    AnnotatedFieldConfigurator<T> remove(Predicate<Annotation> predicate);
     AnnotatedFieldConfigurator<T> removeAll();
 }
 ----
 
 * `getAnnotated()` returns the original `AnnotatedField` with which this configurator was initialized
 * `add()` adds an annotation to the configured element
-* `remove()` methods remove all annotation from the configured element
-* `removeAll()` remove all existing annotation on the configured element
+* `remove()` removes annotations that match the specified predicate from the configured element
+* `removeAll()` removes all annotations from the configured element
 
 
 [[init_events]]
