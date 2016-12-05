@@ -1251,9 +1251,7 @@ If any observer method of the `BeforeShutdown` event throws an exception, the ex
 
 ==== `ProcessAnnotatedType` event
 
-The container must fire an event, before it processes a type, for every Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum discovered
-
-as defined in <<type_discovery_steps>>
+The container must fire an event, before it processes a type, for every Java class, interface (excluding _annotation type_, a special kind of interface type) or enum discovered as defined in <<type_discovery_steps>>.
 
 An event is not fired for any type annotated with `@Vetoed`, or in a package annotated with `@Vetoed`.
 
