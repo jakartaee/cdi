@@ -1042,6 +1042,8 @@ public interface BeforeBeanDiscovery {
     public void addAnnotatedType(AnnotatedType<?> type);
     public void addAnnotatedType(AnnotatedType<?> type, String id);
     public AnnotatedTypeConfigurator<?> addAnnotatedType(Class<T> type,String id);
+    <T extends Annotation> AnnotatedTypeConfigurator<T> configureQualifier(Class<T> qualifier);
+    <T extends Annotation> AnnotatedTypeConfigurator<T> configureInterceptorBinding(Class<T> bindingType);
 }
 ----
 
@@ -1054,6 +1056,8 @@ The first version of the method is deprecated since version 1.1 of Contexts and 
 +
 The third version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
 The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
+* `configureQualifier()` returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure a new `AnnotatedType` and declares it as a qualifier type.
+* `configureInterceptorBinding()` returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure a new `AnnotatedType` and declares it as an interceptor binding.
 
 
 [source, java]
