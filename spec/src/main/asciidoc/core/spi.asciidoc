@@ -1658,4 +1658,16 @@ An `InterceptionFactory` can be obtain be calling `BeanManager.createInterceptio
 
 The container must provide a bean with scope `@Dependent`, bean type `InterceptionFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
 
+Following example demonstrates producer method definition using `InterceptionFactory`. Produced bean will have a single interceptor associated by `ActionBinding`:
+
+[source, java]
+----
+@Produces
+@RequestScoped
+public Product createInterceptedProduct(InterceptionFactory<Product> interceptionFactory) {
+  interceptionFactory.configure().add(ActionBinding.BindingLiteral.INSTANCE);
+  return interceptionFactory.createInterceptedInstance(new Product());
+}
+----
+
 If an injection point of type `InterceptionFactory` and qualifier @Default which is not a parameter of a producer method exists, the container automatically detects the problem and treats it as a definition error.
