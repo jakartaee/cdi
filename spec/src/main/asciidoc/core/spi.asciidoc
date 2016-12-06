@@ -410,28 +410,7 @@ Event<Object> getEvent();
 
 The returned instance can be used like a standard `Event` as described in <<events>>.
 
-===== `fireEvent()` method
-
-_The following method was deprecated in CDI 2.0.
-CDI applications are now encouraged to use `BeanManager.getEvent()` instead._
-
-The method `BeanManager.fireEvent()` fires an event and notifies observers, according to <<observer_notification>>.
-
-[source, java]
-----
-public void fireEvent(Object event, Annotation... qualifiers);
-----
-
-The first argument is the event object.
-The remaining parameters are event qualifiers.
-
-If the runtime type of the event object contains a type variable, an `IllegalArgumentException` is thrown.
-
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
-
-If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
-
-If the runtime type of the event object is assignable to the type of a container lifecycle event, an `IllegalArgumentException` is thrown.
+The method `BeanManager.fireEvent()` is deprecated since version 2.0 of Contexts and Dependency Injection.
 
 [[bm_observer_method_resolution]]
 
