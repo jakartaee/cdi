@@ -68,6 +68,7 @@ public interface InjectionTargetFactory<T> {
      * Each call returns the same AnnotatedTypeConfigurator.
      *
      * @return an {@link AnnotatedTypeConfigurator} to configure injection points
+     * @throws IllegalStateException if used after {@link #createInjectionTarget(Bean)} was called
      * @since 2.0
      */
     default AnnotatedTypeConfigurator<T> configure() {

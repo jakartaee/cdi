@@ -566,6 +566,8 @@ public interface InjectionTargetFactory<T> {
 Null should be passed to `InjectionTargetFactory.createInjectionTarget()` to create a non-contextual injection target.
 
 * `configure()` method returns an `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure the `AnnotatedType` used to create the `InjectionTargetFactory`.
+The method always returns the same `AnnotatedTypeConfigurator` and throws an `IllegalStateException` if called after
+`createInjectionTarget()` method.
 
 The method `BeanManager.createInjectionTarget()` is deprecated since version 1.1 of Contexts and Dependency Injection.
 
