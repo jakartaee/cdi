@@ -17,14 +17,18 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.configurator.ProducerConfigurator;
+
 /**
  * <p>
  * The container fires an event of this type for each {@linkplain javax.enterprise.inject.Produces producer method or field} of
  * each enabled bean, including resources.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@code Producer}. The container must use the final value
- * of this property, after all observers have been called, whenever it calls the producer or disposer.
+ * Any observer of this event is permitted to wrap and/or replace the {@code Producer} by calling either
+ * {@link #setProducer(Producer)} or {@link #configureProducer()}. If both methods are called within an observer notification an
+ * {@link IllegalStateException} is thrown. The container must use the final value of this property, after all observers have
+ * been called, whenever it calls the producer or disposer.
  * </p>
  * <p>
  * For example, this observer decorates the {@code Producer} for the all producer methods and field of type
@@ -73,6 +77,21 @@ public interface ProcessProducer<T, X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setProducer(Producer<X> producer);
+    
+    /**
+     * Returns a {@link ProducerConfigurator} initialized with the {@link Producer} processed by this event, to configure a new
+     * {@link Producer} that will replace the original one at the end of the observer invocation.
+     * 
+     * <p>
+     * Each call returns the same configurator instance within an observer notification.
+     * </p>
+     * 
+     * @return a non reusable {@link ProducerConfigurator} to configure the original
+     *         {@link javax.enterprise.inject.spi.Producer}.
+     * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 2.0
+     */
+    public ProducerConfigurator<X> configureProducer();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
