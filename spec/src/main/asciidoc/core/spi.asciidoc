@@ -340,7 +340,7 @@ If no qualifiers are passed to `getBeans()`, the default qualifier `@Default` is
 
 If the given type represents a type variable, an `IllegalArgumentException` is thrown.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -428,7 +428,7 @@ The remaining parameters are event qualifiers.
 
 If the runtime type of the event object contains a type variable, an `IllegalArgumentException` is thrown.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -446,7 +446,7 @@ List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 The first argument is the set of bean types of the decorated bean.
 The annotations are qualifiers declared by the decorated bean.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -464,7 +464,7 @@ List<Interceptor<?>> resolveInterceptors(InterceptionType type,
                                          Annotation... interceptorBindings);
 ----
 
-If two instances of the same interceptor binding type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating interceptor binding type are given, an `IllegalArgumentException` is thrown.
 
 If no interceptor binding type instance is given, an `IllegalArgumentException` is thrown.
 
