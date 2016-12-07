@@ -19,20 +19,30 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * Provides access to the priority value of prioritized elements.
+ * This interface allows some SPI implementation to change their priority programmatically.
  * </p>
  *
+ * <p>
+ * For instance The {@link ObserverMethod} interface extends this interface to set the observer priority.
+ *
+ * A custom alternative {@link Bean}, {@link Interceptor} or {@link Decorator} may implement this interface to be activated
+ * with a given priority
+ *
+ * </p>
+ *
+ * @see Bean
  * @author Mark Paluch
+ * @author Antoine Sabot-Durand
  * @since 2.0
  */
 public interface Prioritized {
 
     /**
      * <p>
-     * Returns the priority value of this prioritized element.
+     * Returns the priority for this SPI element.
      * </p>
      *
      * @return the priority value
      */
-    public int getPriority();
+    int getPriority();
 }

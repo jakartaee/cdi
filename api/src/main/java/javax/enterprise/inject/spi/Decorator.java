@@ -25,7 +25,10 @@ import java.util.Set;
  * <p>
  * Represents an enabled {@linkplain javax.decorator decorator}.
  * </p>
- * 
+ * <p>
+ * Since CDI 2.0, an implementation this interface may implement {@link Prioritized} to be enabled for the entire application with a priority value.
+ * </p>
+ *
  * @author Gavin King
  * @author Pete Muir
  * 

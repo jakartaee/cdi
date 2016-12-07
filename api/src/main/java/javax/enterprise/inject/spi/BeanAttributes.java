@@ -67,6 +67,8 @@ public interface BeanAttributes<T> {
 
     /**
      * Determines if the bean is an {@linkplain javax.enterprise.inject.Alternative alternative}.
+     *
+     * If it is an alternative it may may implement {@link Prioritized} to be selected for the entire application with a priority value.
      * 
      * @return <tt>true</tt> if the bean is an {@linkplain javax.enterprise.inject.Alternative alternative}, and <tt>false</tt>
      *         otherwise.

@@ -188,6 +188,8 @@ If a decorator matches a managed bean, the managed bean class must be a proxyabl
 
 For a custom implementation of the `Decorator` interface defined in <<decorator>>, the container calls `getDelegateType()`, `getDelegateQualifiers()` and `getDecoratedTypes()` to determine the delegate type and qualifiers and decorated types of the decorator.
 
+A custom implementation of the `Decorator` interface may implement the <<prioritized, `Prioritized` interface>> to be enabled for the entire application with a priority value.
+
 [[delegate_assignable_parameters]]
 
 ==== Assignability of raw and parameterized types for delegate injection points
