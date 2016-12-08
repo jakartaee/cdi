@@ -47,7 +47,7 @@ An alternative may be given a priority for the application:
 * by placing the `@Priority` annotation on the bean class of a managed bean, or
 * by placing the `@Priority` annotation on the bean class that declares the producer method, field or resource.
 
-For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative and the bean must implement the <<prioritized, `Prioritized` interface>> to select this alternative for the entire application and give it a priority.
+Custom bean implementations which are also alternatives may implement <<prioritized, Prioritized interface>> in which case they will be enabled for entire application with given priority.
 
 
 [[declaring_selected_alternatives_bean_archive]]

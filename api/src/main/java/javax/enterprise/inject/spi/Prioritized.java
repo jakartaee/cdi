@@ -23,7 +23,7 @@ package javax.enterprise.inject.spi;
  * </p>
  *
  * <p>
- * For instance The {@link ObserverMethod} interface extends this interface to set the observer priority.
+ * For instance {@link ObserverMethod} extends this interface to set the observer priority.
  *
  * A custom alternative {@link Bean}, {@link Interceptor} or {@link Decorator} may implement this interface to be activated
  * with a given priority
