@@ -576,6 +576,7 @@ void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
 
 The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.
 
+If a `@Priority` annotation is set on an asynchronous observer non-portable behaviour results.
 
 [[observer_method_invocation_context]]
 
