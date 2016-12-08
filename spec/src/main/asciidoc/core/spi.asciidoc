@@ -1523,6 +1523,7 @@ public interface ProcessProducer<T, X> {
     public AnnotatedMember<T> getAnnotatedMember();
     public Producer<X> getProducer();
     public void setProducer(Producer<X> producer);
+    public ProducerConfigurator<X> configureProducer();
     public void addDefinitionError(Throwable t);
 }
 ----
@@ -1530,10 +1531,13 @@ public interface ProcessProducer<T, X> {
 * `getAnnotatedMember()` returns the `AnnotatedField` representing the producer field or the `AnnotatedMethod` representing the producer method.
 * `getProducer()` returns the `Producer` object that will be used by the container to call the producer method or read the producer field.
 * `setProducer()` replaces the `Producer`.
+* `configureProducer()` returns a `ProducerConfigurator` (as defined in <<producer_configurator>>) initialized with the `Producer` processed by this event to configure the `Producer` that will replace the original one at the end of the observer invocation. Each call returns the same configurator instance within an observer notification.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
-Any observer of this event is permitted to wrap and/or replace the `Producer`. The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
+Any observer of this event is permitted to wrap and/or replace the `Producer` by calling either `setProducer()` or `configureProducer()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
+The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
 
 For example, this observer decorates the `Producer` for all producer methods and fields of type `EntityManager`.
 
@@ -1547,6 +1551,20 @@ void decorateEntityManager(@Observes ProcessProducer<?, EntityManager> pp) {
 If any observer method of a `ProcessProducer` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessProducer` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+[[producer_configurator]]
+
+===== `ProducerConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ProducerConfigurator` interface to help configuring a `Producer` instance.
+
+With `ProducerConfigurator` you can perform the following operations:
+
+* Set a callback to produce a new instance with `produceWith()` method.
+* Set a callback to destroy the produced instance with `disposeWith()` method.
+* Add an injection point for the producer with `addInjectionPoint` method.
+* Add multiple injection points for the producer with `addInjectionPoints` methods.
+* Replace all injection points for the producer with `injectionPoints` method.
 
 [[process_observer_method]]
 
