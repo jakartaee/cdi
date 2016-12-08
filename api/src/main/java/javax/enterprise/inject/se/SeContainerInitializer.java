@@ -17,67 +17,65 @@
 
 package javax.enterprise.inject.se;
 
-import javax.enterprise.inject.spi.AnnotatedType;
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.Extension;
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
+import javax.enterprise.inject.spi.Extension;
+
 /**
- * A CDI container initializer for Java SE.
- * It is obtained by calling the {@link SeContainerInitializer#newInstance()} static method
- * <p>
+ * A CDI container initializer for Java SE. An instance may be obtained by calling {@link SeContainerInitializer#newInstance()}
+ * static method.
  * <p>
  * Typical usage looks like this:
  * </p>
- * <p>
+ * 
  * <pre>
  * SeContainer container = SeContainerInitializer.newInstance().initialize();
  * container.select(Foo.class).get();
  * container.close();
  * </pre>
- * <p>
+ * 
  * <p>
  * Since {@link SeContainer} interface implements AutoCloseable:
  * </p>
- * <p>
+ * 
  * <pre>
  * try (SeContainer container = SeContainerInitializer.newInstance().initialize()) {
  *     container.select(Foo.class).get();
  * }
  * </pre>
+ * 
  * <p>
- * <p>
- * By default, the discovery is enabled so that all beans from all discovered bean archives are considered. However, it's possible to define a "synthetic" bean
- * archive, or the set of bean classes and enablement respectively:
+ * By default, the discovery is enabled so that all beans from all discovered bean archives are considered. However, it's
+ * possible to define a "synthetic" bean archive, or the set of bean classes and enablement respectively:
  * </p>
- * <p>
+
  * <pre>
- * SeContainer container = SeContainerInitializer.newInstance().addBeanClasses(Foo.class, Bar.class).addAlternatives(Bar.class).initialize());
+ * SeContainer container = SeContainerInitializer.newInstance().addBeanClasses(Foo.class, Bar.class).selectAlternatives(Bar.class).initialize());
  * </pre>
- * <p>
+ * 
  * <p>
  * Moreover, it's also possible to disable the discovery completely so that only the "synthetic" bean archive is considered:
  * </p>
- * <p>
+ * 
  * <pre>
  * SeContainer container = SeContainerInitializer.newInstance().disableDiscovery().addBeanClasses(Foo.class, Bar.class).initialize());
  * </pre>
+
  * <p>
- * <p>
- * <p>
- * In the same manner, it is possible to explicitly declare interceptors, decorators, extensions and implementation specific options using the builder.
+ * In the same manner, it is possible to explicitly declare interceptors, decorators, extensions and implementation specific
+ * options using the builder.
  * </p>
- * <p>
+ * 
  * <pre>
  * SeContainerInitializer containerInitializer = SeContainerInitializer.newInstance()
- *    .disableDiscovery()
- *    .addPackages(Main.class, Utils.class)
- *    .addInterceptors(TransactionalInterceptor.class)
- *    .addProperty("property", true);
+ *         .disableDiscovery()
+ *         .addPackages(Main.class, Utils.class)
+ *         .enableInterceptors(TransactionalInterceptor.class)
+ *         .addProperty("property", true);
  * SeContainer container = container.initialize();
  * </pre>
  *
@@ -87,7 +85,6 @@ import java.util.ServiceLoader;
  * @since 2.0
  */
 public abstract class SeContainerInitializer {
-
 
     /**
      * Returns an instance of {@link SeContainerInitializer}
@@ -194,7 +191,6 @@ public abstract class SeContainerInitializer {
      */
     public abstract SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
 
-
     /**
      * Add extensions to the set of extensions.
      *
@@ -209,43 +205,49 @@ public abstract class SeContainerInitializer {
      * @param extensions extensions class to use in the container
      * @return self
      */
+    @SuppressWarnings("unchecked")
     public abstract SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
 
     /**
-     * Add interceptors classes to the list of enabled interceptors for the synthetic bean archive.
-     *
+     * Add interceptoror classes to the list of enabled interceptors for the synthetic bean archive.
+     * <p>
+     * This method does not add any class to the set of bean classes of the synthetic bean archive.
+     * </p>
      * @param interceptorClasses classes of the interceptors to enable.
      * @return self
      */
-    public abstract SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
-
+    public abstract SeContainerInitializer enableInterceptors(Class<?>... interceptorClasses);
 
     /**
-     * Add decorators for the synthetic bean archive. Decorator classes are automatically added to the set of bean classes for the synthetic bean archive.
-     *
+     * Add decorator classes to the list of enabled decorators for the synthetic bean archive.
+     * <p>
+     * This method does not add any class to the set of bean classes of the synthetic bean archive.
+     * </p>
      * @param decoratorClasses classes of the decorators to enable.
      * @return self
      */
-    public abstract SeContainerInitializer addDecorators(Class<?>... decoratorClasses);
-
+    public abstract SeContainerInitializer enableDecorators(Class<?>... decoratorClasses);
 
     /**
-     * Add alternatives classes for the synthetic bean archive.
-     *
+     * Add alternatives classes to the list of selected alternatives for the synthetic bean archive.
+     * <p>
+     * This method does not add any class to the set of bean classes of the synthetic bean archive.
+     * </p>
      * @param alternativeClasses classes of the alternatives to select
      * @return self
      */
-    public abstract SeContainerInitializer addAlternatives(Class<?>... alternativeClasses);
-
+    public abstract SeContainerInitializer selectAlternatives(Class<?>... alternativeClasses);
 
     /**
-     * Add alternative stereotypes for the synthetic bean archive.
-     *
+     * Add alternative stereotype classes to the list of selected alternative stereotypes for the synthetic bean archive.
+     * <p>
+     * This method does not add any class to the set of bean classes of the synthetic bean archive.
+     * </p>
      * @param alternativeStereotypeClasses alternatives stereotypes to select
      * @return self
      */
-    public abstract SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
-
+    @SuppressWarnings("unchecked")
+    public abstract SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
 
     /**
      * Add a configuration property to the container
@@ -265,14 +267,12 @@ public abstract class SeContainerInitializer {
      */
     public abstract SeContainerInitializer setProperties(Map<String, Object> properties);
 
-
     /**
      * By default, the discovery is enabled. However, it's possible to disable the discovery completely so that only the "synthetic" bean archive is considered.
      *
      * @return self
      */
     public abstract SeContainerInitializer disableDiscovery();
-
 
     /**
      * Set a {@link ClassLoader}. The given {@link ClassLoader} will be scanned automatically for bean archives if scanning is enabled.
@@ -294,6 +294,5 @@ public abstract class SeContainerInitializer {
      * @throws UnsupportedOperationException if called within an application server
      */
     public abstract SeContainer initialize();
-
 
 }

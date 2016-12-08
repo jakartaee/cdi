@@ -37,10 +37,10 @@ public abstract class SeContainerInitializer {
     public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
     public SeContainerInitializer addExtensions(Extension... extensions);
     public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
-    public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses);
-    public SeContainerInitializer addDecorators(Class<?>... decoratorClasses);
-    public SeContainerInitializer addAlternatives(Class<?>... alternativeClasses);
-    public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
+    public SeContainerInitializer enableInterceptors(Class<?>... interceptorClasses);
+    public SeContainerInitializer enableDecorators(Class<?>... decoratorClasses);
+    public SeContainerInitializer selectAlternatives(Class<?>... alternativeClasses);
+    public SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses);
     public SeContainerInitializer addProperty(String key, Object value);
     public SeContainerInitializer setProperties(Map<String, Object> properties);
     public SeContainerInitializer disableDiscovery();
@@ -57,10 +57,10 @@ Each call returns a new instance of `SeContainerInitializer`. This method throws
 * `addPackages()` adds packages content to the synthetic bean archive.
 There are other versions of this method, which enables user to add a package according to class or classes it contains and also to add packages recursively.
 * `addExtensions()` adds the provided extensions (class or instance) to the synthetic bean archive.
-* `addInterceptors()` adds the provided interceptors to the synthetic bean archive.
-* `addDecorators()` adds the provided decorators to the synthetic bean archive.
-* `addAlternatives()` adds the provided alternatives classes to the synthetic bean archive.
-* `addAlternativeStereotypes()` adds the provided stereotypes classes to the synthetic bean archive.
+* `enableInterceptors()` adds interceptoror classes to the list of enabled interceptors for the synthetic bean archive.
+* `enableDecorators()` adds decorator classes to the list of enabled decorators for the synthetic bean archive.
+* `selectAlternatives()` adds alternatives classes to the list of selected alternatives for the synthetic bean archive.
+* `selectAlternativeStereotypes()` adds alternative stereotype classes to the list of selected alternative stereotypes for the synthetic bean archive.
 * `addProperty()` adds a configuration property to the container
 * `setProperties()` sets the `Map` of configuration properties for the container.
 Original properties `Map` is replaced by a new instance.

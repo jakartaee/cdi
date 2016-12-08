@@ -68,22 +68,22 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
     }
 
     @Override
-    public SeContainerInitializer addInterceptors(Class<?>... interceptorClasses) {
+    public SeContainerInitializer enableInterceptors(Class<?>... interceptorClasses) {
         return null;
     }
 
     @Override
-    public SeContainerInitializer addDecorators(Class<?>... decoratorClasses) {
+    public SeContainerInitializer enableDecorators(Class<?>... decoratorClasses) {
         return null;
     }
 
     @Override
-    public SeContainerInitializer addAlternatives(Class<?>... alternativeClasses) {
+    public SeContainerInitializer selectAlternatives(Class<?>... alternativeClasses) {
         return null;
     }
 
     @Override
-    public SeContainerInitializer addAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
+    public SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
         return null;
     }
 
