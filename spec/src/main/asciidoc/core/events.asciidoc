@@ -566,6 +566,9 @@ If no exception is thrown by observers then the resulting CompletionStage is com
 
 Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
 The priority of an observer method may be declared using the `@Priority` annotation.
+
+If a `@Priority` annotation is declared on an event parameter of an asynchronous observer method, non-portable behavior results.
+
 If no `@Priority` annotation is specified, the default priority `APPLICATION + 500` is assumed.
 Observers with smaller priority values are called first.
 
@@ -576,7 +579,6 @@ void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
 
 The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.
 
-If a `@Priority` annotation is set on an asynchronous observer non-portable behaviour results.
 
 [[observer_method_invocation_context]]
 
