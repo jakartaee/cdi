@@ -733,13 +733,14 @@ The `iterator()` method must:
 The `stream()` method must:
 
 * Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
-* Returns a `Stream`, that can stream over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
+* Return a `Stream`, that can stream over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
-The method `isUnsatisfied()` returns `true` if there is no bean that has the required type and qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, or `false` otherwise.
+The methods `isUnsatisfied()`, `isAmbiguous()` and `isResolvable()` must:
 
-The method `isAmbiguous()` returns `true` if there is more than one bean that has the required type and qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, or `false` otherwise.
-
-The method `isResolvable()` returns `true` if there is exactly one bean that has the required type and qualifiers and is eligible for injection into the class into which the parent `Instance` was injected, or `false` otherwise.
+* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
+* The method `isUnsatisfied()` returns `true` if there is no bean found, or `false` otherwise.
+* The method `isAmbiguous()` returns `true` if there is more than one bean found, or `false` otherwise.
+* The method `isResolvable()` returns `true` if there is exactly one bean found, or `false` otherwise.
 
 The method `destroy()` instructs the container to destroy the instance.
 The bean instance passed to `destroy()` should be a dependent scoped bean instance obtained from the same `Instance` object, or a client proxy for a normal scoped bean.
