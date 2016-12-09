@@ -17,8 +17,8 @@ User can shutdown the container manually by calling the `close()` method on `SeC
 
 CDI container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
 
-A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a `ServiceProvider`.
-`newInstance()` static method uses Java `ServiceProvider` to obtain an implementation of `SeContainerInitializer` and return an instance of it.
+A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service provider.
+Static method `newInstance()` uses Java service provider mechanism to obtain an implementation of `SeContainerInitializer` and return an instance of it.
 There must be exactly one provider available, otherwise an IllegalStateException is thrown.
 
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
