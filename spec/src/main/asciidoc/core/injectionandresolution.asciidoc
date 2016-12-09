@@ -714,7 +714,7 @@ Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select(
 
 If an injection point of raw type `Instance` is defined, the container automatically detects the problem and treats it as a definition error.
 
-If two instances of the same qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is passed to `select()`, an `IllegalArgumentException` is thrown.
 
