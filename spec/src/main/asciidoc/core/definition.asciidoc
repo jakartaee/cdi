@@ -89,6 +89,8 @@ However, some Java types are not legal bean types :
 * A parameterized type that contains a wildcard type parameter is not a legal bean type.
 * An array type whose component type is not a legal bean type.
 
+If the set of bean types for a bean contains non-legal bean types, the container will ignore them during <<typesafe_resolution, typesafe resolution>>.
+
 Note that certain additional restrictions are specified in <<unproxyable>> for beans with a normal scope, as defined in <<normal_scope>>.
 
 [[restricting_bean_types]]
