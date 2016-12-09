@@ -61,9 +61,7 @@ public interface InjectionTargetFactory<T> {
 
     /**
      *
-     * Returns an {@link AnnotatedTypeConfigurator} to add or remove injection point to the {@link InjectionTarget} to create.
-     * {@link #createInjectionTarget(Bean)} will use the {@link AnnotatedTypeConfigurator} to define injection points in the returned
-     * {@link InjectionTarget}
+     * Returns an {@link AnnotatedTypeConfigurator} to to configure the {@link AnnotatedType} used to create the {@link InjectionTarget}.
      *
      * Each call returns the same AnnotatedTypeConfigurator.
      *
