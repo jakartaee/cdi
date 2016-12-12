@@ -1664,6 +1664,7 @@ CDI 2.0 introduced the following Configurators interface:
 * <<bean_attributes_configurator>> for `BeanAttributes` configuration
 * <<bean_configurator>> for `Bean` configuration
 * <<observer_method_configurator>> for `ObserverMethod` configuration
+* <<producer_configurator>> for `Producer` configuration
 
 The container must provide implementation for all these configurators and make them available in matching container lifecycle events as defined in <<init_events>>.
 
