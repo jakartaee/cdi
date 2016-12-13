@@ -150,7 +150,7 @@ public interface Event<T> {
      * 
      * @param qualifiers the additional specified qualifiers
      * @return the child <tt>Event</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
     public Event<T> select(Annotation... qualifiers);
@@ -164,7 +164,7 @@ public interface Event<T> {
      * @param subtype a {@link java.lang.Class} representing the specified type
      * @param qualifiers the additional specified qualifiers
      * @return the child <tt>Event</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
     public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
@@ -178,7 +178,7 @@ public interface Event<T> {
      * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing the specified type
      * @param qualifiers the additional specified qualifiers
      * @return the child <tt>Event</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
     public <U extends T> Event<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);

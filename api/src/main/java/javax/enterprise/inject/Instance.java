@@ -131,7 +131,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * 
      * @param qualifiers the additional required qualifiers
      * @return the child <tt>Instance</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */
@@ -146,7 +146,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @param subtype a {@link java.lang.Class} representing the required type
      * @param qualifiers the additional required qualifiers
      * @return the child <tt>Instance</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */
@@ -161,7 +161,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @param subtype a {@link javax.enterprise.util.TypeLiteral} representing the required type
      * @param qualifiers the additional required qualifiers
      * @return the child <tt>Instance</tt>
-     * @throws IllegalArgumentException if passed two instances of the same qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */

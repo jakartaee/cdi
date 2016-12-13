@@ -145,7 +145,7 @@ public interface BeanManager {
      * @param qualifiers the required qualifiers
      * @return the resulting set of {@linkplain Bean beans}
      * @throws IllegalArgumentException if the given type represents a type variable
-     * @throws IllegalArgumentException if two instances of the same qualifier type are given
+     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
      * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
      *         event is fired.
@@ -224,7 +224,7 @@ public interface BeanManager {
      * @param event the event object
      * @param qualifiers the event qualifiers
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
-     * @throws IllegalArgumentException if two instances of the same qualifier type are given
+     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
      * @throws IllegalArgumentException if the runtime type of the event object is assignable to the type of a container
      *         lifecycle event
@@ -245,7 +245,7 @@ public interface BeanManager {
      * @param qualifiers the event qualifiers
      * @return the resulting set of {@linkplain ObserverMethod observer methods}
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
-     * @throws IllegalArgumentException if two instances of the same qualifier type are given
+     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
      * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
      * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
      *         event is fired.
