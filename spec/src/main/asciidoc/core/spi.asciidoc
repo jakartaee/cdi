@@ -131,7 +131,8 @@ public interface ObserverMethod<T> extends Prioritized {
 * `getObservedType()` and `getObservedQualifiers()` return the observed event type and qualifiers.
 * `getReception()` returns `IF_EXISTS` for a conditional observer and `ALWAYS` otherwise.
 * `getTransactionPhase()` returns the appropriate transaction phase for a transactional observer method or `IN_PROGRESS` otherwise.
-* `getPriority()` this method inherited from <<prioritized, `Prioritized` interface>> returns the priority that will be used by the container to determine the notification order.
+* `getPriority()` this method inherited from <<prioritized, `Prioritized` interface>> returns the priority that will be used by the container to determine the notification order as defined in <<observer_ordering>>.
+If this method is not implemented the default priority `APPLICATION + 500` is assumed.
 * `notify()` calls the observer method, as defined in <<observer_notification>>.
 * `isAsync()` returns `true` if the method is an asynchronous observer method otherwise returns `false`.
 
