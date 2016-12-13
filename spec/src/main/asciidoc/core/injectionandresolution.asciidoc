@@ -751,13 +751,13 @@ An `UnsupportedOperationException` is thrown if the active context object for th
 
 ==== The built-in `Instance`
 
-For each injection point of `Instance<?>` or `Provider<?>`, the container must provide a built-in bean that satisfies:
+The container must provide a built-in bean that:
 
-* `Instance<X>` and `Provider<X>` for every legal bean type `X` in its set of bean types,
-* every qualifier type in its set of qualifier types,
-* scope `@Dependent`,
-* no bean name, and
-* an implementation provided automatically by the container.
+* is eligible for injection to any injection point with required type `Instance<X>` or `Provider<X>`, for any legal bean type `X`,
+* has any required qualifiers from a bean `X`
+* has scope `@Dependent`,
+* has no bean name, and
+* has an implementation provided automatically by the container.
 
 The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 
