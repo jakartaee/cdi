@@ -30,4 +30,8 @@ public class DummyCDIProviderWithNullCDI implements CDIProvider {
         return null;
     }
 
+    @Override
+    public int getPriority() {
+        return 50;
+    }
 }

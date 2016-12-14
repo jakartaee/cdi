@@ -261,15 +261,21 @@ If methods on `CDI` are called at any other time, non-portable behavior results.
 When `CDI.current()` is called, `getCDI()` method is called on `javax.enterprise.inject.spi.CDIProvider`.
 
 The `CDIProvider` to use may be set by the application or container using the `setCDIProvider()` method.
-If the `setCDIProvider()` has not been called, the first service provider of the service `javax.enterprise.inject.spi.CDIProvider` declared in META-INF/services is used.
+If the `setCDIProvider()` has not been called, the service provider with highest priority of the service `javax.enterprise.inject.spi.CDIProvider` declared in META-INF/services is used.
+The order of more than one `CDIProvider` with the same priority is undefined.
 If no provider is available an `IllegalStateException` is thrown.
 
 [source, java]
 ----
-public interface CDIProvider {
-   public CDI<Object> getCDI();
+public interface CDIProvider extends Prioritized {
+   CDI<Object> getCDI();
+   default int getPriority();
 }
 ----
+
+* `getPriority()` method is inherited from <<prioritized, `Prioritized` interface>> and returns the priority for the `CDIProvider`.
+If this method is not implemented the default priority `0` is assumed.
+
 
 [[bm_obtain_contextual_reference]]
 
@@ -356,7 +362,7 @@ If no qualifiers are passed to `getBeans()`, the default qualifier `@Default` is
 
 If the given type represents a type variable, an `IllegalArgumentException` is thrown.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -444,7 +450,7 @@ The remaining parameters are event qualifiers.
 
 If the runtime type of the event object contains a type variable, an `IllegalArgumentException` is thrown.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -462,7 +468,7 @@ List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 The first argument is the set of bean types of the decorated bean.
 The annotations are qualifiers declared by the decorated bean.
 
-If two instances of the same qualifier type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
@@ -480,7 +486,7 @@ List<Interceptor<?>> resolveInterceptors(InterceptionType type,
                                          Annotation... interceptorBindings);
 ----
 
-If two instances of the same interceptor binding type are given, an `IllegalArgumentException` is thrown.
+If two instances of the same non repeating interceptor binding type are given, an `IllegalArgumentException` is thrown.
 
 If no interceptor binding type instance is given, an `IllegalArgumentException` is thrown.
 
@@ -574,11 +580,17 @@ public <T> InjectionTargetFactory<T> getInjectionTargetFactory(AnnotatedType<T> 
 public interface InjectionTargetFactory<T> {
 
     public InjectionTarget<T> createInjectionTarget(Bean<T> bean);
+    public AnnotatedTypeConfigurator<T> configure();
 
 }
 ----
 
 Null should be passed to `InjectionTargetFactory.createInjectionTarget()` to create a non-contextual injection target.
+
+* `configure()` method returns an `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure the `AnnotatedType` used to create the `InjectionTargetFactory`.
+Subsequent invocations of the `configure()` method within one `InjectionTargetFactory` instance will always return the same `AnnotatedTypeConfigurator` instance.
+Once `createInjectionTarget()` method has been invoked, any invocations of `configure()` throws an `IllegalStateException`.
+
 The method `BeanManager.createInjectionTarget()` is deprecated since version 1.1 of Contexts and Dependency Injection.
 
 [[bm_obtain_producer]]
@@ -681,6 +693,22 @@ The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactor
 ----
 <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 ----
+
+
+[[bm_obtain_instance]]
+
+==== Obtain an `Instance`
+
+The method `BeanManager.createInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
+
+The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Java EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
+
+[source, java]
+----
+Instance<Object> createInstance();
+----
+
+Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
 
 
 [[alternative_metadata_sources]]
@@ -1134,7 +1162,7 @@ The given `Bean` may implement `Interceptor` or `Decorator`.
 +
 The second version of the method, returns a new `BeanConfigurator` as defined in <<bean_configurator>> to easily configure the `Bean` which will be added at the end of observer invocation.
 If the container is unable to process the configurator it automatically detects the problem and treats it as a deployment problem.
-* `addObserverMethod()` fires an event of type `ProcessObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
+* `addObserverMethod()` fires an event of type `ProcessSyntheticObserverMethod` containing the given `ObserverMethod` and then registers the `ObserverMethod` with the container, thereby making it available for event notifications.
 +
 If the given `ObserverMethod` does not override either `ObserverMethod.notify(T)` or `ObserverMethod.notify(EventContext<T>)`, the container automatically detects the problem and treats it as a definition error.
 +
@@ -1539,6 +1567,7 @@ public interface ProcessProducer<T, X> {
     public AnnotatedMember<T> getAnnotatedMember();
     public Producer<X> getProducer();
     public void setProducer(Producer<X> producer);
+    public ProducerConfigurator<X> configureProducer();
     public void addDefinitionError(Throwable t);
 }
 ----
@@ -1546,10 +1575,13 @@ public interface ProcessProducer<T, X> {
 * `getAnnotatedMember()` returns the `AnnotatedField` representing the producer field or the `AnnotatedMethod` representing the producer method.
 * `getProducer()` returns the `Producer` object that will be used by the container to call the producer method or read the producer field.
 * `setProducer()` replaces the `Producer`.
+* `configureProducer()` returns a `ProducerConfigurator` (as defined in <<producer_configurator>>) initialized with the `Producer` processed by this event to configure the `Producer` that will replace the original one at the end of the observer invocation. Each call returns the same configurator instance within an observer notification.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 
 
-Any observer of this event is permitted to wrap and/or replace the `Producer`. The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
+Any observer of this event is permitted to wrap and/or replace the `Producer` by calling either `setProducer()` or `configureProducer()`.
+If both methods are called within an observer notification an `IllegalStateException` is thrown.
+The container must use the final value of this property, after all observers have been called, whenever it calls the producer or disposer.
 
 For example, this observer decorates the `Producer` for all producer methods and fields of type `EntityManager`.
 
@@ -1564,13 +1596,29 @@ If any observer method of a `ProcessProducer` event throws an exception, the exc
 
 If any `ProcessProducer` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
 
+[[producer_configurator]]
+
+===== `ProducerConfigurator` interface
+
+CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ProducerConfigurator` interface to help configuring a `Producer` instance.
+
+With `ProducerConfigurator` you can perform the following operations:
+
+* Set a callback to produce a new instance with `produceWith()` method.
+* Set a callback to destroy the produced instance with `disposeWith()` method.
+* Add an injection point for the producer with `addInjectionPoint` method.
+* Add multiple injection points for the producer with `addInjectionPoints` methods.
+* Replace all injection points for the producer with `injectionPoints` method.
+
 [[process_observer_method]]
 
 ==== `ProcessObserverMethod` event
 
-The container must fire an event for each observer method of each bean, before registering the `ObserverMethod` object.
+The container must fire an event for each observer method of each enabled bean, before registering the `ObserverMethod` object.
 
 The event object must be of type `javax.enterprise.inject.spi.ProcessObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the bean class of the bean that declares the observer method.
+
+For a custom implementation of `javax.enterprise.inject.spi.ObserverMethod`, the container must raise an event of type `javax.enterprise.inject.spi.ProcessSyntheticObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the return value of `ObserverMethod.getBeanClass()`.
 
 [source, java]
 ----
@@ -1584,18 +1632,25 @@ public interface ProcessObserverMethod<T, X> {
 }
 ----
 
-* `getAnnotatedMethod()` returns the `AnnotatedMethod` representing the observer method.
+[source, java]
+----
+public interface ProcessSyntheticObserverMethod<T, X> extends ProcessObserverMethod<T, X> {
+    public Extension getSource();
+}
+----
+
+* `getAnnotatedMethod()` returns the `AnnotatedMethod` representing the observer method. If invoked upon a `ProcessSyntheticObserverMethod` event, non-portable behavior results and the returned value should be ignored.
 * `getObserverMethod()` returns the `ObserverMethod` object that will be used by the container to call the observer method.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
 * `setObserverMethod()` replaces the `ObserverMethod`.
 * `configureObserverMethod()` returns an `ObserverMethodConfigurator` (as defined in <<observer_method_configurator>>) initialized with the `ObserverMethod` processed by the event to easily configure the  `ObserverMethod` which will be used to replace the original one at the end of observer invocation.
 The method always returns the same `ObserverMethodConfigurator`.
 * `veto()` forces the container to ignore the `ObserverMethod`.
+* `getSource()` returns the `Extension` instance that added the observer method.
 
 Any observer of this event is permitted to wrap and/or replace the `ObserverMethod` by calling either `setObserverMethod()` or `configureObserverMethod()`.
 If both methods are called within an observer notification an `IllegalStateException` is thrown.
 The container must use the final value of this property, after all observers have been called, whenever it performs observer resolution.
-
 
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
 
@@ -1646,5 +1701,17 @@ If called on an instance created by the container, this method does nothing and 
 An `InterceptionFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_factory>>
 
 The container must provide a bean with scope `@Dependent`, bean type `InterceptionFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
+
+Following example demonstrates producer method definition using `InterceptionFactory`. Produced bean will have a single interceptor associated by `ActionBinding`:
+
+[source, java]
+----
+@Produces
+@RequestScoped
+public Product createInterceptedProduct(InterceptionFactory<Product> interceptionFactory) {
+  interceptionFactory.configure().add(ActionBinding.BindingLiteral.INSTANCE);
+  return interceptionFactory.createInterceptedInstance(new Product());
+}
+----
 
 If an injection point of type `InterceptionFactory` and qualifier @Default which is not a parameter of a producer method exists, the container automatically detects the problem and treats it as a definition error.

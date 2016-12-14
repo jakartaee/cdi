@@ -93,12 +93,22 @@ public class CDITest {
     @Test
     public void testWithTwoGoodCDIProvider() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(DummyCDIProvider2.class.getName());
+        fw.write('\n');
+        fw.write(DummyCDIProvider.class.getName());
+        fw.close();
+        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
+    }
+
+
+    @Test
+    public void testWithTwoGoodCDIProviderReverse() throws Exception {
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write(DummyCDIProvider.class.getName());
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
-                CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
+        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
     }
 
     @Test
@@ -108,8 +118,20 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class) ||
-                CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
+        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
+    }
+
+
+    @Test
+    public void testWithThreeCDIProviderOneWithNullCDIAndOthersGood() throws Exception {
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(DummyCDIProviderWithNullCDI.class.getName());
+        fw.write('\n');
+        fw.write(DummyCDIProvider2.class.getName());
+        fw.write('\n');
+        fw.write(DummyCDIProvider.class.getName());
+        fw.close();
+        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
     }
 
 

@@ -53,7 +53,10 @@ public abstract class CDI<T> implements Instance<T> {
 
     /**
      *
-     * @return the {@link CDIProvider} retrieved by serviceloader or setted by user
+     * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)}, or if it wasn't set, use the
+     * serviceloader the retrieve the {@link CDIProvider} with the highest priority.
+     *
+     * @return the {@link CDIProvider} set by user or retrieved by serviceloader
      */
     private static CDIProvider getCDIProvider() {
         if (configuredProvider != null) {
@@ -69,7 +72,7 @@ public abstract class CDI<T> implements Instance<T> {
             }
             configuredProvider = discoveredProviders.stream()
                     .filter(c -> c.getCDI() != null)
-                    .findAny().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
+                    .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
             return configuredProvider;
         }
     }
@@ -97,7 +100,7 @@ public abstract class CDI<T> implements Instance<T> {
     private static void findAllProviders() {
 
         ServiceLoader<CDIProvider> providerLoader;
-        Set<CDIProvider> providers = new LinkedHashSet<>();
+        Set<CDIProvider> providers = new TreeSet<>(Comparator.comparingInt(CDIProvider::getPriority).reversed());
 
         providerLoader = ServiceLoader.load(CDIProvider.class, CDI.class.getClassLoader());
 
