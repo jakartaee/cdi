@@ -67,7 +67,10 @@ public interface BeanAttributes<T> {
 
     /**
      * Determines if the bean is an {@linkplain javax.enterprise.inject.Alternative alternative}.
-     * 
+     *
+     * A custom implementation of {@link Bean} may implement {@link Prioritized} in order to be selected for the application.
+     * {@link Prioritized#getPriority()} determines the priority used to resolve ambiguities.
+     *
      * @return <tt>true</tt> if the bean is an {@linkplain javax.enterprise.inject.Alternative alternative}, and <tt>false</tt>
      *         otherwise.
      */

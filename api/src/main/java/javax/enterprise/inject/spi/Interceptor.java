@@ -26,6 +26,10 @@ import javax.interceptor.InvocationContext;
  * <p>
  * Represents an enabled {@linkplain javax.interceptor interceptor}.
  * </p>
+ * <p>
+ * Since CDI 2.0, an implementation of this interface may implement {@link Prioritized} in order to enable the interceptor with
+ * given priority value for entire application.
+ * </p>
  * 
  * @author Gavin King
  * @author Pete Muir

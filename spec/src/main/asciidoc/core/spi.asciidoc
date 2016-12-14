@@ -114,7 +114,7 @@ The interface `javax.enterprise.inject.spi.ObserverMethod` defines everything th
 
 [source, java]
 ----
-public interface ObserverMethod<T> {
+public interface ObserverMethod<T> extends Prioritized {
     public Class<?> getBeanClass();
     public Type getObservedType();
     public Set<Annotation> getObservedQualifiers();
@@ -131,12 +131,28 @@ public interface ObserverMethod<T> {
 * `getObservedType()` and `getObservedQualifiers()` return the observed event type and qualifiers.
 * `getReception()` returns `IF_EXISTS` for a conditional observer and `ALWAYS` otherwise.
 * `getTransactionPhase()` returns the appropriate transaction phase for a transactional observer method or `IN_PROGRESS` otherwise.
-* `getPriority()` returns the priority that will be used by the container to determine the notification order.
+* `getPriority()` this method inherited from <<prioritized, `Prioritized` interface>> returns the priority that will be used by the container to determine the notification order as defined in <<observer_ordering>>.
+If this method is not implemented the default priority `APPLICATION + 500` is assumed.
 * `notify()` calls the observer method, as defined in <<observer_notification>>.
 * `isAsync()` returns `true` if the method is an asynchronous observer method otherwise returns `false`.
 
 
 An instance of `ObserverMethod` must exist for every observer method of every enabled bean.
+
+
+[[prioritized]]
+
+==== The `Prioritized` interface
+
+CDI 2.0 introduced the prioritized interface to add programmatic priority to custom SPI implementation.
+
+[source, java]
+----
+public interface Prioritized {
+    int getPriority();
+}
+----
+
 
 [[injectiontarget]]
 

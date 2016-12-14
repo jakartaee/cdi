@@ -113,3 +113,6 @@ If any interceptor binding has a member annotated `@javax.enterprise.util.Nonbin
 
 For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
 
+A custom implementation of the `Interceptor` interface may implement the <<prioritized, `Prioritized` interface>> to be enabled for the entire application with a priority value.
+
+
