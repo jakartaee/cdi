@@ -27,6 +27,7 @@ import javax.enterprise.event.Event;
 import javax.enterprise.event.ObserverException;
 import javax.enterprise.inject.AmbiguousResolutionException;
 import javax.enterprise.inject.InjectionException;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.UnsatisfiedResolutionException;
 import javax.enterprise.util.Nonbinding;
 import java.lang.annotation.Annotation;
@@ -69,6 +70,7 @@ import java.util.Set;
  *     <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #validate(InjectionPoint)},</li>
+ *     <li>{@link #createInstance()}</li>
  * </ul>
  * <p>
  * and the following operations must not be called before the {@link AfterDeploymentValidation} event is fired:
@@ -220,7 +222,7 @@ public interface BeanManager {
      * <p>
      * This method is deprecated from CDI 2.0 and {@link #getEvent())} should be used instead.
      * </p>
-     * 
+     *
      * @param event the event object
      * @param qualifiers the event qualifiers
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
@@ -633,5 +635,27 @@ public interface BeanManager {
      * @since 2.0
      */
     Event<Object> getEvent();
+
+
+    /**
+     *
+     * Obtains an {@link Instance} object to access to beans instances.
+     *
+     * The returned <tt>Instance</tt> object can only access instances of  beans that are available for injection in the module
+     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+     * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution.
+     *
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
+     * the <tt>Instance</tt> returned by this method will only give access to instances of beans discovered by the container
+     * before the {@link AfterBeanDiscovery} event is fired.
+     *
+     * Instances of dependent scoped beans obtained with this <tt>Instance</tt> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
+     *
+     * @return an {@link Instance} object to request beans instances
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     *         event is fired.
+     * @since 2.0
+     */
+    Instance<Object> createInstance();
 
 }
