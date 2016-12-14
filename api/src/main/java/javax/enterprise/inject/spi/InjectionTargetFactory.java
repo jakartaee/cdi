@@ -17,6 +17,8 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
+
 /**
  * <p>
  * An {@link InjectionTargetFactory} can create an {@link InjectionTarget} for a given bean.
@@ -43,6 +45,7 @@ package javax.enterprise.inject.spi;
  * </pre>
  * 
  * @author Pete Muir
+ * @author Antoine Sabot-Durand
  * @since 1.1
  * 
  */
@@ -55,5 +58,19 @@ public interface InjectionTargetFactory<T> {
      * @return the injection target
      */
     public InjectionTarget<T> createInjectionTarget(Bean<T> bean);
+
+    /**
+     *
+     * Returns an {@link AnnotatedTypeConfigurator} to to configure the {@link AnnotatedType} used to create the {@link InjectionTarget}.
+     *
+     * Each call returns the same AnnotatedTypeConfigurator.
+     *
+     * @return an {@link AnnotatedTypeConfigurator} to configure injection points
+     * @throws IllegalStateException if used after {@link #createInjectionTarget(Bean)} invocation
+     * @since 2.0
+     */
+    public default AnnotatedTypeConfigurator<T> configure() {
+        throw new UnsupportedOperationException("Configuration not supported here");
+    }
 
 }
