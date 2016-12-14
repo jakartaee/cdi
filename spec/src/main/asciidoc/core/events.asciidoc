@@ -566,7 +566,7 @@ If no exception is thrown by observers then the resulting CompletionStage is com
 
 Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
 The priority of an observer method may be declared using the `@Priority` annotation.
-If no `@Priority` annotation is specified, the default priority `APPLICATION + 500` is assumed.
+If no `@Priority` annotation is specified, the default priority `javax.interceptor.Interceptor.Priority.APPLICATION + 500` is assumed.
 Observers with smaller priority values are called first.
 
 [source, java]
