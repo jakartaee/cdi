@@ -37,6 +37,11 @@ public class DummyCDIProvider2 implements CDIProvider {
         return new DummyCDI2();
     }
 
+    @Override
+    public int getPriority() {
+        return 10;
+    }
+
     public static class DummyCDI2 extends CDI<Object> {
 
 

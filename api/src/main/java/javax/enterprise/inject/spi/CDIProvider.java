@@ -23,7 +23,9 @@ package javax.enterprise.inject.spi;
  * @author Pete Muir
  * @since 1.1
  */
-public interface CDIProvider {
+public interface CDIProvider extends Prioritized {
+
+    public static final int DEFAULT_CDI_PROVIDER_PRIORITY = 0;
 
     /**
      * Provides access to the current container
@@ -33,4 +35,9 @@ public interface CDIProvider {
      */
     CDI<Object> getCDI();
 
+
+    @Override
+    default int getPriority() {
+        return DEFAULT_CDI_PROVIDER_PRIORITY;
+    };
 }
