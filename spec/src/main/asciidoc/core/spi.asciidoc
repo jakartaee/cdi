@@ -252,9 +252,14 @@ If no provider is available an `IllegalStateException` is thrown.
 [source, java]
 ----
 public interface CDIProvider extends Prioritized {
-   public CDI<Object> getCDI();
+   CDI<Object> getCDI();
+   default int getPriority();
 }
 ----
+
+* `getPriority()` method is inherited from <<prioritized, `Prioritized` interface>> and returns the priority for the `CDIProvider`.
+If this method is not implemented the default priority `0` is assumed.
+
 
 [[bm_obtain_contextual_reference]]
 
