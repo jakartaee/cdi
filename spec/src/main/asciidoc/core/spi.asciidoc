@@ -1692,8 +1692,8 @@ These method should never be invoked upon bean instances. Otherwise, unpredictab
  It will bypass standard rules defined in <<unproxyable>>.
 * `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when enhancing the instance.
 The method always return the same `AnnotatedTypeConfigurator`
-* `createInterceptedInstance()` returns an enhanced version of the instance for which each method invocations will be a business method invocation.
-The method can be only called once, subsequent calls will throw an exception.
+* `createInterceptedInstance()` returns an enhanced version of the instance whose method invocations are treated as business method invocations as defined in <<biz_method>>.
+The method can be only called once, subsequent calls will throw an `IllegalStateException`.
 If the type of the instance is not proxyable as defined in <<unproxyable>> an `UnproxyableResolutionException` exception is thrown.
 This rule can be loosen by calling `ignoreFinalMethods()` before this method.
 If called on an instance created by the container, this method does nothing and returns the provided instance.
