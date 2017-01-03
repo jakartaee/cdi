@@ -473,6 +473,8 @@ public enum Reception { IF_EXISTS, ALWAYS }
 _Transactional observer methods_ are observer methods which receive event notifications during the before or after completion phase of the transaction in which the event was fired.
 If no transaction is in progress when the event is fired, they are notified at the same time as other observers.
 
+If the transaction is in progress, but `javax.transaction.Synchronization` callback cannot be registered due to the transaction being already marked for rollback or in state where `javax.transaction.Synchronization` callbacks cannot be registered, the _before completion_, _after completion_ and _after failure_ observer methods are notified at the same time as other observers, but _after_success_ observer methods get skipped.
+
 * A _before completion_ observer method is called during the before completion phase of the transaction.
 * An _after completion_ observer method is called during the after completion phase of the transaction.
 * An _after success_ observer method is called during the after completion phase of the transaction, only when the transaction completes successfully.
