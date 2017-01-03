@@ -51,6 +51,13 @@ In Java EE, the container automatically discovers EJB session beans and other Ja
 
 When running in Java EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
 
+[[trimmed_bean_archive_ee]]
+
+==== Trimmed bean archive in Java EE
+
+When running in Java EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that EJB session beans are not removed from the set of discovered types.
+
+
 [[el]]
 
 === Integration with Unified EL
