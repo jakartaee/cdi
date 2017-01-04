@@ -28,17 +28,18 @@ This document is organized in 4 parts:
 
 === Major changes
 
-This Early draft of CDI 2.0 includes important changes for the platform.
+This CDI 2.0 includes important changes for the platform.
 
 * The spec was split into 3 parts as described in <<doc_organisation>> to add the support for Java SE.
 * API to boot CDI in Java SE, described in <<se_bootstrap>>
 * Observer ordering, described in <<observer_ordering>>
 * Asynchronous event, described in <<firing_events_asynchronously>>
-* Configurators for meta-data in <<configurators>>
+* Configurators for major SPI elements in <<configurators>>
 * Possibility to configure or veto observer method in <<process_observer_method>>
 * Add built-in annotation literals in <<built_in_annotation_literals>>
+* Make possible to apply interceptor on producer in <<interception_factory>>
+* Alignment on Java 8 features (streams, lambdas, repeating qualifiers)
 
-
-The full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&version=12328436[here^].
+The full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&version=12325406[here^].
 
 :numbered:
