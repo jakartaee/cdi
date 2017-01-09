@@ -101,6 +101,9 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
+When performing lookup of bean instance with `SeContainer` the qualifiers specified in the `Instance.select()` method are used to perform typesafe resolution.
+If no qualifier is specified in `Instance.select()` method the `@Default` qualifier is assumed.
+
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
 
 The following code examples demonstrate the options of handling container shutdown:

@@ -258,6 +258,9 @@ A portable extension or other object may obtain a reference to the current conta
 Other methods on `CDI` may be called after the application initialization is completed until the application shutdown starts.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
+When performing lookup of bean instance with `CDI` the qualifiers specified in the `Instance.select()` method are used to perform typesafe resolution.
+If no qualifier is specified in `Instance.select()` method the `@Default` qualifier is assumed.
+
 When `CDI.current()` is called, `getCDI()` method is called on `javax.enterprise.inject.spi.CDIProvider`.
 
 The `CDIProvider` to use may be set by the application or container using the `setCDIProvider()` method.
@@ -709,6 +712,9 @@ Instance<Object> createInstance();
 ----
 
 Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
+
+When performing lookup of bean instance with the returned `Instance`, the qualifiers specified in the `Instance.select()` method are used to perform typesafe resolution.
+If no qualifier is specified with `Instance.select()` method the `@Default` qualifier is assumed.
 
 
 [[alternative_metadata_sources]]
