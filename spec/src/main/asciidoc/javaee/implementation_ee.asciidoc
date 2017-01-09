@@ -69,6 +69,8 @@ In addition, `java.lang.Object` is a bean type of every session bean.
 
 Remote interfaces are not included in the set of bean types.
 
+If the resulting set of bean types for a session bean contains <<legal_bean_types,non-legal bean types>>, these types are removed from the set of bean types.
+
 [[declaring_session_bean]]
 
 ==== Declaring a session bean
@@ -291,7 +293,10 @@ If the matching object in the Java EE component environment is not of the same t
 
 ==== Bean types of a resource
 
-The unrestricted set of bean types of a resource is determined by the declared type of the producer field, as specified by <<producer_field_types>>.
+The unrestricted set of bean types for a resource is determined by the declared type of the producer field, as specified by <<producer_field_types>>.
+
+If the resulting set of bean types for a resource contains <<legal_bean_types,non-legal bean types>>, these types are removed from the set of bean types.
+
 
 [[additional_builtin_beans]]
 

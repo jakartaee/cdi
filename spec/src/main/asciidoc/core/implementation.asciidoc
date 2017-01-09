@@ -51,6 +51,8 @@ An application can prevent packages being split across jars by sealing the packa
 
 The unrestricted set of bean types for a managed bean contains the bean class, every superclass and all interfaces it implements directly or indirectly.
 
+If the resulting set of bean types for a managed bean contains <<legal_bean_types,non-legal bean types>>, these types are removed from the set of bean types.
+
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
 
 [[declaring_managed_bean]]
@@ -167,6 +169,8 @@ The bean types of a producer method depend upon the method return type:
 * If the return type is an interface, the unrestricted set of bean types contains the return type, all interfaces it extends directly or indirectly and `java.lang.Object`.
 * If a return type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the method return type and `java.lang.Object`.
 * If the return type is a class, the unrestricted set of bean types contains the return type, every superclass and all interfaces it implements directly or indirectly.
+
+If the resulting set of bean types for a producer method contains <<legal_bean_types,non-legal bean types>>, these types are removed from the set of bean types.
 
 
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
@@ -304,6 +308,8 @@ The bean types of a producer field depend upon the field type:
 * If the field type is an interface, the unrestricted set of bean types contains the field type, all interfaces it extends directly or indirectly and `java.lang.Object`.
 * If a field type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the field type and `java.lang.Object`.
 * If the field type is a class, the unrestricted set of bean types contains the field type, every superclass and all interfaces it implements directly or indirectly.
+
+If the resulting set of bean types for a producer field contains <<legal_bean_types,non-legal bean types>>, these types are removed from the set of bean types.
 
 
 Note the additional restrictions upon bean types of beans with normal scopes defined in <<unproxyable>>.
