@@ -1606,9 +1606,6 @@ With `ProducerConfigurator` you can perform the following operations:
 
 * Set a callback to produce a new instance with `produceWith()` method.
 * Set a callback to destroy the produced instance with `disposeWith()` method.
-* Add an injection point for the producer with `addInjectionPoint` method.
-* Add multiple injection points for the producer with `addInjectionPoints` methods.
-* Replace all injection points for the producer with `injectionPoints` method.
 
 [[process_observer_method]]
 
