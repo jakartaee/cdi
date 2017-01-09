@@ -1202,6 +1202,8 @@ With `BeanConfigurator` you can perform all the operations defined in <<bean_att
 * Set a callback to create a bean instance with `createWith()` or `produceWith()` method.
 * Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
+If a `BeanConfigurator` has no scope specified via the `BeanConfigurator.scope()` method, the <<default_scope,Default Scope>> rules apply.
+
 [[observer_method_configurator]]
 
 ===== `ObserverMethodConfigurator` interface
