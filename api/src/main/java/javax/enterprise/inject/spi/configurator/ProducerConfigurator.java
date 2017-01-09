@@ -60,36 +60,5 @@ public interface ProducerConfigurator<T> {
      */
     ProducerConfigurator<T> disposeWith(Consumer<T> callback);
 
-    /**
-     * Add an injection point to the configured producer.
-     *
-     * @param injectionPoint the injectionPoint to add
-     * @return self
-     */
-    ProducerConfigurator<T> addInjectionPoint(InjectionPoint injectionPoint);
-
-    /**
-     * Add injection points to the configured producer.
-     *
-     * @param injectionPoints the injectionPoints to add
-     * @return self
-     */
-    ProducerConfigurator<T> addInjectionPoints(InjectionPoint... injectionPoints);
-
-    /**
-     * Add injection points to the configured producer.
-     *
-     * @param injectionPoints the injectionPoints to add
-     * @return self
-     */
-    ProducerConfigurator<T> addInjectionPoints(Set<InjectionPoint> injectionPoints);
-
-    /**
-     * Replace injection points for the configured producer.
-     *
-     * @param injectionPoints the injectionPoints for the configured bean
-     * @return self
-     */
-    ProducerConfigurator<T> injectionPoints(InjectionPoint... injectionPoints);
 
 }
