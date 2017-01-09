@@ -1469,7 +1469,7 @@ If any `ProcessBeanAttributes` method is called outside of the observer method i
 
 CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
 
-`BeanAttributesConfigurator` is obtainable during `ProcessBeanAttributes` event and is therefore automatically initilized from existing `BeanAttributes`.
+`BeanAttributesConfigurator` is obtainable during `ProcessBeanAttributes` event and is therefore automatically initialized from existing `BeanAttributes`.
 
 With `BeanAttributesConfigurator` you can perform the following operations :
 
