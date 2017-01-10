@@ -88,7 +88,7 @@ public interface InterceptionFactory<T> {
      *
      * <p>These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.</p>
      *
-     *
+     * <p>This only apply for intercepted instance creation.</p>
      *
      * @return self
      */
