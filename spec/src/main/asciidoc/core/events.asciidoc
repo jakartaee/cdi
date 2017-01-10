@@ -574,7 +574,7 @@ Observers with smaller priority values are called first.
 
 [source, java]
 ----
-void afterLogin(@Observes @Priority(APPLICATION) LoggedInEvent event) { ... }
+void afterLogin(@Observes @Priority(javax.interceptor.Interceptor.Priority.APPLICATION) LoggedInEvent event) { ... }
 ----
 
 The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.

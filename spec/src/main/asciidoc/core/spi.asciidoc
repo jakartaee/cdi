@@ -1017,7 +1017,7 @@ The priority of an observer method may be declared using the `@Priority` annotat
 
 [source, java]
 ----
-void beforeBeanDiscovery(@Observes @Priority(LIBRARY) BeforeBeanDiscovery event) { ... }
+void beforeBeanDiscovery(@Observes @Priority(javax.interceptor.Interceptor.Priority.LIBRARY_BEFORE) BeforeBeanDiscovery event) { ... }
 ----
 
 For each service provider, the container must provide a bean of scope `@ApplicationScoped` and qualifier `@Default`, supporting injection of a reference to the service provider instance. The bean types of this bean include the class of the service provider and all superclasses and interfaces.
