@@ -20,7 +20,7 @@ Portable extensions may even integrate with the process of building the `Bean` o
 
 Bean classes of enabled beans must be deployed in _bean archives_.
 
-A bean archive has a _bean discovery mode_ of `all`, `annotated` or `none`. A bean archive which contains a `beans.xml` file with no version has a default bean discovery mode of `all`. A bean archive which contains a `beans.xml` file with version 1.1 (or later) must specify the `bean-discovey-mode` attribute. The default value for the attribute is `annotated`.
+A bean archive has a _bean discovery mode_ of `all`, `annotated` or `none`. A bean archive which contains a `beans.xml` file with no version has a default bean discovery mode of `all`. A bean archive which contains a `beans.xml` file with version 1.1 (or later) must specify the `bean-discovery-mode` attribute. The default value for the attribute is `annotated`.
 
 An archive which:
 
