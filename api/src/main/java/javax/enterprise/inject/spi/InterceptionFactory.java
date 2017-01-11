@@ -83,12 +83,10 @@ public interface InterceptionFactory<T> {
 
     /**
      *
-     * <p>Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on
-     * any bean type of the specific bean during validation of injection points that require proxyable bean type.</p>
+     * <p>Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared
+     * by any class in the type hierarchy of the intercepted instance during invocation of {@link #createInterceptedInstance(Object)}</p>
      *
      * <p>These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.</p>
-     *
-     * <p>This only apply for intercepted instance creation.</p>
      *
      * @return self
      */
