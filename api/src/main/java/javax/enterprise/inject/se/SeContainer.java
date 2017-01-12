@@ -17,11 +17,19 @@
 
 package javax.enterprise.inject.se;
 
+import java.lang.annotation.Annotation;
+
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * Provides access to the current container in Java SE.
+ *
+ * <p>
+ * SeContainer implements {@link Instance} and therefore might be used to perform programmatic lookup.
+ * If no qualifier is specified in {@link Instance#select(Class, Annotation...)} method the <code>@Default</code> qualifier is assumed.
+ * </p>
+ * </p>
  *
  * @author Antoine Sabot-Durand
  * @author John D. Ament

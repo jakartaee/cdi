@@ -649,9 +649,6 @@ PaymentProcessor pp = anyPaymentProcessor.select(qualifier).get().process(paymen
 
 In this example, the returned bean has qualifier `@Synchronous` or `@Asynchronous` depending upon the value of `synchronously`.
 
-Qualifiers specified at `Instance` injection point or via via the `Instance.select()` method are used to perform typesafe resolution.
-If no qualifier is specified at `Instance` injection point or via the `Instance.select()` method the `@Default` qualifier is assumed.
-
 Finally, the `@New` qualifier may be used, allowing the application to obtain a `@New` qualified bean, as defined in <<new>>:
 
 [source, java]
@@ -709,6 +706,7 @@ For example, this injected `Instance` has required type `PaymentProcessor` and r
 
 The `select()` method returns a child `Instance` for a given required type and additional required qualifiers.
 If no required type is given, the required type is the same as the parent.
+Rules specified at <<injection_point_default_qualifier>> are applied before performing typesafe resolution.
 
 For example, this child `Instance` has required type `AsynchronousPaymentProcessor` and additional required qualifier `@Asynchronous`:
 
