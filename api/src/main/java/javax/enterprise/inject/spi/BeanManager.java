@@ -651,7 +651,7 @@ public interface BeanManager {
      *
      * Instances of dependent scoped beans obtained with this <tt>Instance</tt> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
      *
-     * If no qualifier is passed to {@link Instance#select(Class, Annotation...)} method the <tt>@Default</tt> qualifier is assumed.
+     * If no qualifier is passed to {@link Instance#select} method, the <tt>@Default</tt> qualifier is assumed.
      *
      * @return an {@link Instance} object to request beans instances
      * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}

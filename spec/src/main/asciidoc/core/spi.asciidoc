@@ -259,7 +259,7 @@ Other methods on `CDI` may be called after the application initialization is com
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
 CDI implements `javax.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
-If no qualifier is specified in `Instance.select()` method the `@Default` qualifier is assumed.
+If no qualifier is passed to `CDI.select()` method, the `@Default` qualifier is assumed.
 
 When `CDI.current()` is called, `getCDI()` method is called on `javax.enterprise.inject.spi.CDIProvider`.
 
@@ -713,7 +713,7 @@ Instance<Object> createInstance();
 
 Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
 
-If no qualifier is passed to `Instance.select()` method the `@Default` qualifier is assumed.
+If no qualifier is passed to `Instance.select()` method, the `@Default` qualifier is assumed.
 
 
 [[alternative_metadata_sources]]
