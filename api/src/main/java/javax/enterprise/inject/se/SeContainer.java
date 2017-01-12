@@ -29,7 +29,6 @@ import javax.enterprise.inject.spi.BeanManager;
  * SeContainer implements {@link Instance} and therefore might be used to perform programmatic lookup.
  * If no qualifier is specified in {@link Instance#select(Class, Annotation...)} method the <code>@Default</code> qualifier is assumed.
  * </p>
- * </p>
  *
  * @author Antoine Sabot-Durand
  * @author John D. Ament
