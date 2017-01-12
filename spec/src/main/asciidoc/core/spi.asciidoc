@@ -1194,7 +1194,8 @@ CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanConfigurato
 
 With `BeanConfigurator` you can perform all the operations defined in <<bean_attributes_configurator>> plus the following:
 
-* Read the bean metadata from a `BeanAttributes` or an `AnnotatedType` with one of its `read()` methods.
+* Initialize the bean metadata with one of its `read()` methods.
+It can be done from an existing `BeanAttributes`  or by reading metadata on a given `AnnotatedType`, according to the rules defined in <<concepts>>.
 * Set the class of the bean with `beanClass` method.
 * Add an injection point for the bean with `addInjectionPoint` method.
 * Add multiple injection points for the bean with `addInjectionPoints` methods.
