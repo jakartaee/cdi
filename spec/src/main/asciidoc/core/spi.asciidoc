@@ -1672,46 +1672,45 @@ The container must provide implementation for all these configurators and make t
 
 [[interception_factory]]
 
-=== Apply interceptor programmatically
+=== The `InterceptionFactory` interface
 
-CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionFactory<T>` interface to add services to an instance not created by the container by making each of its method invocation, a business method invocation as defined in <<biz_method>>.
-It will bind business methods only to `@AroundInvoke` interceptor methods.
-
+CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionFactory<T>` interface, which allows to create a wrapper instance whose method invocations are intercepted by method interceptors and forwarded to a provided instance.
 
 [source, java]
 ----
 public interface InterceptionFactory<T> {
-    InterceptionProxyFactory<T> ignoreFinalMethods();
+    InterceptionFactory<T> ignoreFinalMethods();
     AnnotatedTypeConfigurator<T> configure();
     T createInterceptedInstance(T instance);
 }
 ----
 
-* `ignoreFinalMethods()` `ignoreFinalMethods()` Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared by any class in the type hierarchy of the intercepted instance during invocation of `createInterceptedInstance()` method.
-These method should never be invoked upon bean instances, otherwise, unpredictable behavior results.
- It will bypass standard rules defined in <<unproxyable>>.
-* `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) initialized with the instance type to easily apply specific interceptor binding to apply when enhancing the instance.
+* `ignoreFinalMethods()` instructs the container to ignore all non-static, final methods with public, protected or default visibility declared by any class in the type hierarchy of the intercepted instance during invocation of `createInterceptedInstance()` method.
+Ignored methods should never be invoked upon the wrapper instance. 
+Otherwise, unpredictable behavior results.
+* `configure()` returns an `AnnotatedTypeConfigurator` (as defined in <<annotated_type_configurator>>) 
+initialized with the `AnnotatedType` created either for the class passed to `BeanManager.createInterceptionFactory(CreationalContext, Class)` or derived from the `InterceptionFactory` parameter injection point.
 The method always return the same `AnnotatedTypeConfigurator`
-* `createInterceptedInstance()` returns an enhanced version of the instance whose method invocations are treated as business method invocations as defined in <<biz_method>>.
+* `createInterceptedInstance()` returns a wrapper instance whose method invocations are intercepted by method interceptors and forwarded to a provided instance.
 The method can be only called once, subsequent calls will throw an `IllegalStateException`.
 If the type of the instance is not proxyable as defined in <<unproxyable>> an `UnproxyableResolutionException` exception is thrown.
 This rule can be loosen by calling `ignoreFinalMethods()` before this method.
-If called on an instance created by the container, this method does nothing and returns the provided instance.
+If the provided instance is an internal container construct (such as client proxy), non-portable behavior results.
 
-An `InterceptionFactory` can be obtain be calling `BeanManager.createInterceptionFactory` as defined in <<bm_obtain_interception_factory>>
+An `InterceptionFactory` can be obtained be calling `BeanManager.createInterceptionFactory()` as defined in <<bm_obtain_interception_factory>>.
 
-The container must provide a bean with scope `@Dependent`, bean type `InterceptionFactory` and qualifier `@Default` allowing producer methods to obtain this factory to produce their instance.
+The container must provide a built-in bean with scope `@Dependent`, bean type `InterceptionFactory` and qualifier `@Default`.
 
-Following example demonstrates producer method definition using `InterceptionFactory`. Produced bean will have a single interceptor associated by `ActionBinding`:
+If an injection point of type `InterceptionFactory` and qualifier `@Default` exists and is not a parameter of a producer method, the container automatically detects the problem and treats it as a definition error.
+
+The following example demonstrates a producer method definition using `InterceptionFactory`. The produced bean instance will be a wrapper of `Product` with single interceptor associated by `ActionBinding`:
 
 [source, java]
 ----
 @Produces
 @RequestScoped
 public Product createInterceptedProduct(InterceptionFactory<Product> interceptionFactory) {
-  interceptionFactory.configure().add(ActionBinding.BindingLiteral.INSTANCE);
+  interceptionFactory.configure().add(ActionBinding.Literal.INSTANCE);
   return interceptionFactory.createInterceptedInstance(new Product());
 }
 ----
-
-If an injection point of type `InterceptionFactory` and qualifier @Default which is not a parameter of a producer method exists, the container automatically detects the problem and treats it as a definition error.

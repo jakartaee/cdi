@@ -17,19 +17,20 @@
 
 package javax.enterprise.inject.spi;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.Default;
 import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 /**
- * <p>An {@link InterceptionFactory} adds the services available for instances created by the container to any instance.
- * It makes each method invocation in the instance a business method invocation as defined in section 7.2 of the specification document
- * It will bind business methods only to <tt>@AroundInvoke</tt> interceptor methods.
+ * {@link InterceptionFactory} allows to create a wrapper instance whose method invocations are intercepted by method
+ * interceptors and forwarded to a provided instance.
+ *
+ * <p>
+ * An implementation of {@link InterceptionFactory} may be obtained by calling
+ * {@link BeanManager#createInterceptionFactory(CreationalContext, Class)} to be used in the create method of a custom bean for
+ * example.
  * </p>
- *
- * <p>An implementation of {@link InterceptionFactory} may be obtain by
- * calling {@link BeanManager#createInterceptionFactory(CreationalContext, Class)}
- * to be used in the create method of a custom bean for example.</p>
- *
  *
  * <pre>
  * public class MyCustomBean implements Bean&lt;MyClass&gt; {
@@ -40,85 +41,97 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *        this.bm = bm;
  *     }
  *
- *     ...
- *
  *     public MyClass create(CreationalContext&lt;MyClass&gt; creationalContext) {
  *
  *         InterceptionFactory<MyClass> factory = bm.createInterceptionFactory(creationalContext, MyClass.class);
  *
- *         factory.configure()
- *         .filterMethods(m -> m.getJavaMember().getName().equals("shouldBeTransactional"))
- *         .findFirst()
- *         .ifPresent(m -> m.add(new AnnotationLiteral&lt;Transactional&gt;() { }));
+ *         factory.configure().filterMethods(m -> m.getJavaMember().getName().equals("shouldBeTransactional")).findFirst()
+ *                 .ifPresent(m -> m.add(new AnnotationLiteral&lt;Transactional&gt;() {
+ *                 }));
  *
  *         return factory.createInterceptedInstance(new MyClass());
  *     }
- *
- *     ...
  * }
  * </pre>
  *
- * The container also provides a built-in bean for {@link InterceptionFactory} that can be injected in a producer method parameters to apply
- * interceptors on the produced instance.
+ * <p>
+ * The container must also provide a built-in bean with scope {@link Dependent}, bean type {@link InterceptionFactory} and
+ * qualifier {@link Default} that can be injected in a producer method parameter.
+ * </p>
  *
  * <pre>
  * &#64;Produces
  * &#64;RequestScoped
  * public MyClass produceMyClass(InterceptionFactory<MyClass> factory) {
- *     factory.configure().add(new AnnotationLiteral<Transactional>() {});
+ *     factory.configure().add(new AnnotationLiteral<Transactional>() {
+ *     });
  *     return factory.createInterceptedInstance(new MyClass());
  * }
- *
  * </pre>
  *
- *
- *
- * InterceptionFactory is not reusable
+ * <p>
+ * Instances of this class are neither reusable nor suitable for sharing between threads.
+ * </p>
  *
  * @author Antoine Sabot-Durand
  * @since 2.0
- * @param <T> type for which the proxy is created
+ * @param <T> type for which the wrapper is created
  */
 public interface InterceptionFactory<T> {
 
     /**
+     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared by
+     * any class in the type hierarchy of the intercepted instance during invocation of
+     * {@link #createInterceptedInstance(Object)}.
      *
-     * <p>Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared
-     * by any class in the type hierarchy of the intercepted instance during invocation of {@link #createInterceptedInstance(Object)}</p>
-     *
-     * <p>These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.</p>
+     * <p>
+     * Ignored methods should never be invoked upon the wrapper instance created by
+     * {@link #createInterceptedInstance(Object)}. Otherwise, unpredictable behavior results.
+     * </p>
      *
      * @return self
      */
     InterceptionFactory<T> ignoreFinalMethods();
 
     /**
+     * Returns an {@link AnnotatedTypeConfigurator} initialized with the {@link AnnotatedType} created either for the class
+     * passed to {@link BeanManager#createInterceptionFactory(CreationalContext, Class)} or derived from the
+     * {@link InterceptionFactory} parameter injection point.
      *
-     * Returns an {@link AnnotatedTypeConfigurator} to allow addition of interceptor binding on the instance's methods.
-     * The matching annotatedType will be used to apply the interceptors when calling createInterceptedInstance method.
-     * Annotations that are not interceptor binding will be ignored.
+     * <p>
+     * The configurator allows to add or remove interceptor bindings used to associate interceptors with the wrapper instance
+     * returned by {@link #createInterceptedInstance(Object)}.
+     * </p>
      *
-     * Each call returns the same AnnotatedTypeConfigurator.
+     * <p>
+     * Each call returns the same {@link AnnotatedTypeConfigurator}.
+     * </p>
      *
      * @return an {@link AnnotatedTypeConfigurator} to configure interceptors bindings
      */
     AnnotatedTypeConfigurator<T> configure();
 
     /**
-     * Returns an enhanced version of the instance for which each method invocations will be a business method invocation.
-     * Invocation will pass through Method interceptors defined in T class or in the {@link AnnotatedTypeConfigurator}
-     * defined with the configure method.
+     * Returns a wrapper instance whose method invocations are intercepted by method interceptors and forwarded to a provided
+     * instance.
      *
-     * This method should ony be called once, subsequent calls will throw an {@link IllegalStateException}
+     * <p>
+     * This method should only be called once, subsequent calls will throw an {@link IllegalStateException}.
+     * </p>
      *
-     * If T is not proxyable as defined in section 3.11 of the spec an {@link javax.enterprise.inject.UnproxyableResolutionException} exception is thrown.
-     * Calling ignoreFinalMethods before this method can loosen this restriction.
+     * <p>
+     * If T is not proxyable as defined in section 3.11 of the spec an
+     * {@link javax.enterprise.inject.UnproxyableResolutionException} exception is thrown. Calling {@link #ignoreFinalMethods()}
+     * before this method can loosen these restrictions.
+     * </p>
      *
-     * If the instance was created by the container, this method does nothing and returns the provided instance.
+     * <p>
+     * If the provided instance is an internal container construct (such as client proxy), non-portable behavior results.
+     * </p>
      *
-     * @param instance on which container should add its services
-     * @return an enhanced instance whose method invocations will be business method invocations
+     * @param instance The provided instance
+     * @return a wrapper instance
      */
-     T createInterceptedInstance(T instance);
+    T createInterceptedInstance(T instance);
 
 }
