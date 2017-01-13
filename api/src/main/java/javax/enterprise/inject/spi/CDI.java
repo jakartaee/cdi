@@ -19,8 +19,12 @@ package javax.enterprise.inject.spi;
 
 import javax.enterprise.inject.Instance;
 
-import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Provides access to the current container.
@@ -35,6 +39,7 @@ import java.util.*;
  * @author Antoine Sabot-Durand
  * @author John D. Ament
  * @since 1.1
+ * @param <T> type inherited from {@link Instance}. Always Object for CDI
  */
 public abstract class CDI<T> implements Instance<T> {
 
@@ -53,7 +58,7 @@ public abstract class CDI<T> implements Instance<T> {
      * </p>
      * 
      * @throws IllegalStateException if no {@link CDIProvider} is available
-     * 
+     * @return the CDI instance
      */
     public static CDI<Object> current() {
         return getCDIProvider().getCDI();

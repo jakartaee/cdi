@@ -92,7 +92,7 @@ public interface AnnotatedTypeConfigurator<T> {
      * }
      * </pre>
      * 
-     * @param predicate
+     * @param predicate {@link Predicate} used to filter annotations to remove
      * @return self
      */
     AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);

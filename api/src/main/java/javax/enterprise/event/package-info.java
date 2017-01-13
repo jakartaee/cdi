@@ -51,7 +51,7 @@
  * <h3>Event qualifiers</h3>
  * 
  * <p>The event qualifiers act as topic selectors, allowing the consumer 
- * to narrow the set of events it observes. An event qualfier may be an
+ * to narrow the set of events it observes. An event qualifier may be an
  * instance of any {@linkplain javax.inject.Qualifier qualifier type}.</p>
  * 
  * <h3>Observer methods</h3>
@@ -91,7 +91,7 @@
  * <p>The order in which observer methods are called depends on the value of
  * the {@linkplain javax.annotation.Priority &#064;Priority} applied to the observer.</p>
  * <p></p>If no priority is defined on a observer, its priority is javax.interceptor.Interceptor.Priority.APPLICATION+500.</p>
- * <p>If two observer have the same priority their relative order is undifined.</p>
+ * <p>If two observer have the same priority their relative order is undefined.</p>
  * 
  * <p>Observer methods may throw exceptions:</p>
  * 
@@ -100,7 +100,7 @@
  * {@linkplain javax.enterprise.event.TransactionPhase transactional 
  * observer method}, any exception is caught and logged by the container.</li>
  * <li>If the observer method is asynchronous, any exception is caught by the container and added as a suppressed exception
- * to a {@link javax.enterprise.event.FireAsyncException} that could be handle by the application</li>
+ * to a {@link java.util.concurrent.CompletionException} that could be handle by the application</li>
  * <li>Otherwise, the exception aborts processing of the event.
  * No other observer methods of that event will be called. The 
  * exception is rethrown. If the exception is a checked exception, 

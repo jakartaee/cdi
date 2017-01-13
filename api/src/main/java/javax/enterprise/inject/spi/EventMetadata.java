@@ -46,18 +46,23 @@ import javax.enterprise.event.Observes;
  */
 public interface EventMetadata {
     /**
-     * Get the qualifiers for which event payload was fired.
+     * @return the qualifiers for which event payload was fired.
      */
     public Set<Annotation> getQualifiers();
 
     /**
      * Get the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event, or
      * <code>null</code> if it was fired from {@link BeanManager#fireEvent(Object, Annotation...)};
+     *
+     * @return InjectionPoint of the Event
      */
     public InjectionPoint getInjectionPoint();
 
     /**
      * Get the type representing runtime class of the event object with type variables resolved.
+     *
+     *
+     * @return the runtime type of the event object
      */
     public Type getType();
     

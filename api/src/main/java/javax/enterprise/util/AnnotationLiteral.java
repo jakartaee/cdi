@@ -40,7 +40,7 @@ import java.util.Arrays;
  * </pre>
  * 
  * <pre>
- * PayBy paybyCheque = new PayByQualifier() {
+ * PayBy payByCheque = new PayByQualifier() {
  *     public PaymentMethod value() {
  *         return CHEQUE;
  *     }
@@ -281,13 +281,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
             if (!method.isAccessible())
                 method.setAccessible(true);
             return method.invoke(instance);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
-                    + method.getDeclaringClass(), e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
-                    + method.getDeclaringClass(), e);
-        } catch (InvocationTargetException e) {
+        } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
                     + method.getDeclaringClass(), e);
         }

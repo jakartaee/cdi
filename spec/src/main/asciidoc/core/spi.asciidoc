@@ -769,7 +769,7 @@ public interface AnnotatedMethod<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedConstructor` exposes the `Constuctor` object.
+The interface `javax.enterprise.inject.spi.AnnotatedConstructor` exposes the `Constructor` object.
 
 [source, java]
 ----

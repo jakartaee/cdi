@@ -68,7 +68,7 @@ public interface AfterBeanDiscovery {
 
     /**
      *
-     * Obtains a new {@link BeanConfigurator} to configure  a new {@link Bean}  and add it at the end of the observer invocation.
+     * Obtains a new {@link BeanConfigurator} to configure a new {@link Bean} and add it at the end of the observer invocation.
      * It will then fire an event of type {@link javax.enterprise.inject.spi.ProcessBean} containing the built
      * {@link javax.enterprise.inject.spi.Bean} from this configuration and then register it with the
      * container, thereby making it available for injection into other beans.

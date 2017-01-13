@@ -24,6 +24,7 @@ package javax.enterprise.inject.spi;
  * @see ObserverMethod#notify(EventContext)
  * @see EventMetadata
  * @since 2.0
+ * @param <T> type of event object
  */
 public interface EventContext<T> {
 

@@ -43,7 +43,7 @@ A Java class is a managed bean if it meets all of the following conditions:
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
 If packages annotated `@Vetoed` are split across classpath entries, non-portable behavior results.
-An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
+An application can prevent packages being split across jars by sealing the package as defined by the link::https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jar.html#sealing[JAR File Specification].
 
 [[managed_bean_types]]
 

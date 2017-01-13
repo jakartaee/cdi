@@ -17,8 +17,6 @@
 
 package javax.enterprise.inject.se;
 
-import java.lang.annotation.Annotation;
-
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.BeanManager;
 

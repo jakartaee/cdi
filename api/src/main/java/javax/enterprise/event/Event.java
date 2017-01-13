@@ -80,7 +80,7 @@ import javax.enterprise.util.TypeLiteral;
  * </ul>
  * 
  * <p>
- * Events may also be fired asynchronously with {@link #fireAsync(Object)} and {@link #fireAsync(Object, Executor)} methods
+ * Events may also be fired asynchronously with {@link #fireAsync(Object)} and {@link #fireAsync(Object, NotificationOptions)} methods
  * </p>
  * 
  * @author Gavin King

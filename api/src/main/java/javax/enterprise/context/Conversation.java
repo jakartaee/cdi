@@ -59,6 +59,7 @@ public interface Conversation {
      * Mark the current transient conversation long-running, with a specified identifier.
      * </p>
      * 
+     * @param id conversation id
      * @throws IllegalStateException if the current conversation is already marked long-running.
      * @throws IllegalArgumentException if a conversation with the specified identifier already exists.
      */

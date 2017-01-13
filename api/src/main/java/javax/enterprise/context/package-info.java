@@ -65,7 +65,7 @@
  * If a bean has a normal scope, every client executing in a certain 
  * thread sees the same contextual instance of the bean. This instance is 
  * called the <em>current instance</em> of the bean. The operation 
- * {@link javax.enterprise.context.spi.Context#get(Contextual)} of the 
+ * {@link javax.enterprise.context.spi.Context#get(javax.enterprise.context.spi.Contextual)} of the
  * context object for a normal scope type always returns the current 
  * instance of the given bean.</p> 
  *

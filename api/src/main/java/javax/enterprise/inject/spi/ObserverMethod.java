@@ -118,7 +118,7 @@ public interface ObserverMethod<T> extends Prioritized {
      * The implementation of this method for a custom observer method is responsible for deciding whether to call the method if
      * the {@link #getReception()} returns {@link Reception#IF_EXISTS}.
      * 
-     * @param eventContext
+     * @param eventContext {@link EventContext} used to notify observers
      */
     public default void notify(EventContext<T> eventContext) {
         notify(eventContext.getEvent());

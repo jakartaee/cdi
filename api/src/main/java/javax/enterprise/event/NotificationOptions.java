@@ -35,14 +35,14 @@ public interface NotificationOptions {
 
     /**
      * 
-     * @param optionName
+     * @param optionName name of the option to get value of
      * @return the value of an option or <code>null</code> if no option for the given name exists
      */
     Object get(String optionName);
 
     /**
      * 
-     * @param executor
+     * @param executor a specific {@link Executor} to handle observer notification
      * @return an immutable holder of an executor
      */
     static NotificationOptions ofExecutor(Executor executor) {
@@ -51,8 +51,8 @@ public interface NotificationOptions {
 
     /**
      * 
-     * @param optionName
-     * @param optionValue
+     * @param optionName name of the option to set
+     * @param optionValue value for the option
      * @return an immutable holder of a single option
      */
     static NotificationOptions of(String optionName, Object optionValue) {

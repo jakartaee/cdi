@@ -209,7 +209,7 @@ public abstract class SeContainerInitializer {
     public abstract SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
 
     /**
-     * Add interceptoror classes to the list of enabled interceptors for the synthetic bean archive.
+     * Add interceptor classes to the list of enabled interceptors for the synthetic bean archive.
      * <p>
      * This method does not add any class to the set of bean classes of the synthetic bean archive.
      * </p>

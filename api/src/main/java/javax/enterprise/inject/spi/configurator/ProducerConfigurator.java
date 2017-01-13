@@ -16,12 +16,10 @@
  */
 package javax.enterprise.inject.spi.configurator;
 
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.ProcessProducer;
 import javax.enterprise.inject.spi.Producer;
 
@@ -37,7 +35,7 @@ import javax.enterprise.inject.spi.Producer;
  *
  * @param <T> The return type of the producer method or the type of the producer field
  * @author Martin Kouba
- * @see ProcessProducer#configureObserverMethod()
+ * @see ProcessProducer#configureProducer()
  * @since 2.0
  */
 public interface ProducerConfigurator<T> {
@@ -45,7 +43,7 @@ public interface ProducerConfigurator<T> {
     /**
      * Set a callback to produce a new instance.
      * 
-     * @param callback
+     * @param callback a {@link Function} defining the callback to set
      * @return self
      * @see Producer#produce(CreationalContext)
      */
@@ -54,7 +52,7 @@ public interface ProducerConfigurator<T> {
     /**
      * Set a callback to destroy the produced instance.
      * 
-     * @param callback
+     * @param callback a {@link Consumer} defining the callback to set
      * @return self
      * @see Producer#dispose(Object)
      */

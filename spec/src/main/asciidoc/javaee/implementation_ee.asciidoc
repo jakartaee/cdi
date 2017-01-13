@@ -40,9 +40,6 @@ If the bean class of a session bean is annotated `@Interceptor` or `@Decorator`,
 
 If the session bean class is a generic type, it must have scope `@Dependent`. If a session bean with a parameterized bean class declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
-If packages annotated `@Vetoed` are split across classpath entries, non-portable behavior results.
-An application can prevent packages being split across jars by sealing the package as defined by the link::http://download.java.net/jdk8/docs/technotes/guides/extensions/spec.html#sealing[Extension Mechanism Architecture].
-
 [[session_bean_ejb_remove_method]]
 
 ==== EJB remove methods of session beans
@@ -328,7 +325,7 @@ When running in Java EE, the container must extend the rules defined for bean cl
 When running in Java EE, the container must extend the rules defined for bean classes in <<initializer_methods>> to Java EE component classes supporting injection.
 The container must also ensure that:
 
-* An intializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
+* An initializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
 
 [[new_ee]]
 

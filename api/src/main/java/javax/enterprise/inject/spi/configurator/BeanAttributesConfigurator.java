@@ -16,8 +16,6 @@
  */
 package javax.enterprise.inject.spi.configurator;
 
-import javax.enterprise.inject.spi.AnnotatedMember;
-import javax.enterprise.inject.spi.AnnotatedType;
 import javax.enterprise.inject.spi.BeanAttributes;
 import javax.enterprise.inject.spi.ProcessBeanAttributes;
 import javax.enterprise.util.TypeLiteral;

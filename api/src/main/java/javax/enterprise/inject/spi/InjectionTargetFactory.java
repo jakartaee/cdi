@@ -47,7 +47,8 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * @author Pete Muir
  * @author Antoine Sabot-Durand
  * @since 1.1
- * 
+ *
+ * @param <T> type on which this InjectionTarget operates
  */
 public interface InjectionTargetFactory<T> {
 

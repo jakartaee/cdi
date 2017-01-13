@@ -34,7 +34,7 @@ import javax.enterprise.inject.Instance;
  * 
  * <p>
  * If the injection point is a dynamically selected reference obtained then the metadata obtain reflects the injection point of
- * the {@link Instance}, with the required type and any additional required qualifers defined by {@linkplain Instance
+ * the {@link Instance}, with the required type and any additional required qualifiers defined by {@linkplain Instance
  * Instance.select()}.
  * </p>
  * 

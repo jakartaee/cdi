@@ -30,6 +30,7 @@ import javax.enterprise.inject.CreationException;
  * @author Gavin King
  * @author Nicklas Karlsson
  * @author Pete Muir
+ * @param <T> type of the instance
  */
 public interface Contextual<T> {
     /**

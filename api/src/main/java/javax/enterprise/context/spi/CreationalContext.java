@@ -24,7 +24,8 @@ package javax.enterprise.context.spi;
  * 
  * @author Gavin King
  * @author Pete Muir
- * 
+ *
+ * @param <T> type of the instances on which this CreationalContext operates
  */
 public interface CreationalContext<T> {
 

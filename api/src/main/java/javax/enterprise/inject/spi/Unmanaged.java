@@ -42,6 +42,7 @@ import javax.enterprise.context.spi.CreationalContext;
  * 
  * @author Pete Muir
  * @since 1.1
+ * @param <T> type of unmanaged instances
  */
 public class Unmanaged<T> {
 
@@ -50,6 +51,8 @@ public class Unmanaged<T> {
 
     /**
      * Create an injector for the given class
+     * @param manager the {@link BeanManager}
+     * @param clazz class of the unmanaged instances
      */
     public Unmanaged(BeanManager manager, Class<T> clazz) {
         this.beanManager = manager;
@@ -59,13 +62,19 @@ public class Unmanaged<T> {
 
     /**
      * Create an injector for the given class, using the current bean manager
+     * @param clazz class of the unmanaged instances
      */
     public Unmanaged(Class<T> clazz) {
         this(CDI.current().getBeanManager(), clazz);
     }
 
+    /**
+     * Instantiate a new UnmanagedInstance
+     *
+     * @return a new {@link UnmanagedInstance}
+     */
     public UnmanagedInstance<T> newInstance() {
-        return new UnmanagedInstance<T>(beanManager, injectionTarget);
+        return new UnmanagedInstance<>(beanManager, injectionTarget);
     }
 
     /**
@@ -87,6 +96,7 @@ public class Unmanaged<T> {
 
         /**
          * Get the instance
+         * @return the instance
          */
         public T get() {
             return instance;
@@ -97,6 +107,7 @@ public class Unmanaged<T> {
          * 
          * @throws IllegalStateException if produce() is called on an already produced instance
          * @throws IllegalStateException if produce() is called on an instance that has already been disposed
+         * @return self
          */
         public UnmanagedInstance<T> produce() {
             if (instance != null) {
@@ -114,6 +125,7 @@ public class Unmanaged<T> {
          * 
          * @throws IllegalStateException if inject() is called before produce() is called
          * @throws IllegalStateException if inject() is called on an instance that has already been disposed
+         * @return self
          */
         public UnmanagedInstance<T> inject() {
             if (instance == null) {
@@ -131,6 +143,7 @@ public class Unmanaged<T> {
          * 
          * @throws IllegalStateException if postConstruct() is called before produce() is called
          * @throws IllegalStateException if postConstruct() is called on an instance that has already been disposed
+         * @return self
          */
         public UnmanagedInstance<T> postConstruct() {
             if (instance == null) {
@@ -148,6 +161,7 @@ public class Unmanaged<T> {
          * 
          * @throws IllegalStateException if preDestroy() is called before produce() is called
          * @throws IllegalStateException if preDestroy() is called on an instance that has already been disposed
+         * @return self
          */
         public UnmanagedInstance<T> preDestroy() {
             if (instance == null) {
@@ -165,6 +179,7 @@ public class Unmanaged<T> {
          * 
          * @throws IllegalStateException if dispose() is called before produce() is called
          * @throws IllegalStateException if dispose() is called on an instance that has already been disposed
+         * @return self
          */
         public UnmanagedInstance<T> dispose() {
             if (instance == null) {

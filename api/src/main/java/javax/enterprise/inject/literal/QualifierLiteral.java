@@ -22,8 +22,7 @@ import javax.inject.Qualifier;
 /**
  * Supports inline instantiation of the {@link Qualifier} annotation.
  *
- * @author Pete Muir
- * @author Jozef Hartinger
+ * @author Martin Kouba
  * @since 2.0
  */
 public final class QualifierLiteral extends AnnotationLiteral<Qualifier> implements Qualifier {

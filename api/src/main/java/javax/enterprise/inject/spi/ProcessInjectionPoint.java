@@ -41,7 +41,7 @@ import javax.enterprise.inject.spi.configurator.InjectionPointConfigurator;
  * @author Pete Muir
  * @author Antoine Sabot-Durand
  * @param <X> the declared type of the injection point.
- * @param <T> the bean class of the bean that declares the injectoion point
+ * @param <T> the bean class of the bean that declares the injection point
  */
 public interface ProcessInjectionPoint<T, X> {
 

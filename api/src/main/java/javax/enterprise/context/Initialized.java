@@ -32,7 +32,7 @@ import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
 
 /**
- * An event with this qualifier is fired when a context is intialized, i.e. ready for use. 
+ * An event with this qualifier is fired when a context is initialized, i.e. ready for use.
  *
  * @author Pete Muir
  * @see BeforeDestroyed

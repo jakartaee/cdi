@@ -39,7 +39,7 @@ import javax.enterprise.context.ContextNotActiveException;
  * </pre>
  *
  * Once the request context has been deactivated, you may activate it once again, creating a brand new request context.
- * The activated request context is bound to the current thread, any injection points targetting a request scoped bean
+ * The activated request context is bound to the current thread, any injection points targeting a request scoped bean
  * will be satisfied with the same request scoped objects.
  *
  * @since 2.0

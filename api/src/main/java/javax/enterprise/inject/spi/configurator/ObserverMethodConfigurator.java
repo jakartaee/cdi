@@ -182,7 +182,7 @@ public interface ObserverMethodConfigurator<T> {
 
         /**
          * 
-         * @param eventContext
+         * @param eventContext the {@link EventContext} used to fire the event
          * @throws Exception The thrown checked exception is wrapped and rethrown as an (unchecked) {@link ObserverException}
          */
         void accept(EventContext<T> eventContext) throws Exception;

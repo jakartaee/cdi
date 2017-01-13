@@ -44,6 +44,7 @@ package javax.enterprise.inject.spi;
  * 
  * @author Pete Muir
  * @since 1.1
+ * @param <X> type of the bean containing the producer
  */
 public interface ProducerFactory<X> {
 
