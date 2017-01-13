@@ -101,6 +101,9 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
+SeContainer implements `javax.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
+If no qualifier is passed to `SeContainer.select()` method, the `@Default` qualifier is assumed.
+
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
 
 The following code examples demonstrate the options of handling container shutdown:

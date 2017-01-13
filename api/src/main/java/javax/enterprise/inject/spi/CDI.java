@@ -18,11 +18,19 @@
 package javax.enterprise.inject.spi;
 
 import javax.enterprise.inject.Instance;
+
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
  * Provides access to the current container.
- * 
+ *
+ * <p>
+ * CDI implements {@link Instance} and therefore might be used to perform programmatic lookup.
+ * If no qualifier is passed to {@link #select} method, the <tt>@Default</tt> qualifier is assumed.
+ * </p>
+ *
+ *
  * @author Pete Muir
  * @author Antoine Sabot-Durand
  * @author John D. Ament

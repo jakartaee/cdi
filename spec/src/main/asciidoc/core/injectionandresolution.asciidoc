@@ -706,6 +706,7 @@ For example, this injected `Instance` has required type `PaymentProcessor` and r
 
 The `select()` method returns a child `Instance` for a given required type and additional required qualifiers.
 If no required type is given, the required type is the same as the parent.
+Rules specified at <<injection_point_default_qualifier>> are applied before performing typesafe resolution.
 
 For example, this child `Instance` has required type `AsynchronousPaymentProcessor` and additional required qualifier `@Asynchronous`:
 
