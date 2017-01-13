@@ -44,36 +44,34 @@
 
 	<developers>
 		<developer>
-			<name>Pete Muir</name>
-			<id>pmuir</id>
-			<timezone>GMT</timezone>
-			<organization>Red Hat Inc.</organization>
-			<roles>
-				<role>Specfication Lead</role>
-			</roles>
-			<email>pmuir[at]redhat[dot]com</email>
-		</developer>
-
-		<developer>
 			<name>Antoine Sabot-Durand</name>
 			<id>asabotdu</id>
 			<timezone>CET</timezone>
 			<organization>Red Hat Inc.</organization>
 			<roles>
-				<role>Specfication co-lead</role>
+				<role>Specfication Lead</role>
 			</roles>
 			<email>asd[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
-			<name>Jozef Hartinger</name>
-			<id>jhartinger</id>
-			<timezone>CET</timezone>
+			<name>Martin Kouba</name>
+			<id>mkouba</id>
 			<organization>Red Hat Inc.</organization>
 			<roles>
 				<role>RI tech lead</role>
 			</roles>
-			<email>jhartinger[at]redhat[dot]com</email>
+			<email>mkouba[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Tomas Remes</name>
+			<id>tremes</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK tech lead</role>
+			</roles>
+			<email>tremes[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
@@ -84,16 +82,6 @@
 				<role>Implementation developer</role>
 			</roles>
 			<email>struberg[at]yahoo[dot]de</email>
-		</developer>
-
-		<developer>
-			<name>Martin Kouba</name>
-			<id>mkouba</id>
-			<organization>Red Hat Inc.</organization>
-			<roles>
-				<role>RI developer</role>
-			</roles>
-			<email>mkouba[at]redhat[dot]com</email>
 		</developer>
 
 		<developer>
@@ -108,6 +96,16 @@
 		</developer>
 
 		<developer>
+			<name>Matej Novotny</name>
+			<id>manovotn</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK and RI developer</role>
+			</roles>
+			<email>manovotn[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
 			<name>Mark Paluch</name>
 			<id>mp911de</id>
 			<organization>Independent</organization>
@@ -118,15 +116,6 @@
 			<email>mpaluch[at]paluch[dot]biz</email>
 		</developer>
 
-		<developer>
-			<name>Tomas Remes</name>
-			<id>tremes</id>
-			<organization>Red Hat Inc.</organization>
-			<roles>
-				<role>TCK tech lead</role>
-			</roles>
-			<email>tremes[at]redhat[dot]com</email>
-		</developer>
 	</developers>
 
 
