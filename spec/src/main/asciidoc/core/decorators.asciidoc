@@ -32,7 +32,7 @@ A decorator is declared by annotating the bean class with the `@javax.decorator.
 
 [source, java]
 ----
-@Decorator @Priority(APPLICATION)
+@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger { ... }
 ----
 
@@ -49,7 +49,7 @@ The delegate injection point must be declared by annotating the injection point 
 
 [source, java]
 ----
-@Decorator @Priority(APPLICATION)
+@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
     @Inject @Delegate @Any Logger logger;
     ...
@@ -58,7 +58,7 @@ class TimestampLogger implements Logger {
 
 [source, java]
 ----
-@Decorator @Priority(APPLICATION)
+@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
     private Logger logger;
     
@@ -84,7 +84,7 @@ When the container calls a decorator during business method interception, the de
 
 [source, java]
 ----
-@Decorator @Priority(APPLICATION)
+@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger { 
     @Inject @Delegate @Any Logger logger; 
  
@@ -137,7 +137,7 @@ The order of more than one decorator with the same priority is undefined.
 
 [source,java]
 ----
-@Decorator @Priority(APPLICATION)
+@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
 
    ...

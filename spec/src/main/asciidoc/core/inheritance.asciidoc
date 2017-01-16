@@ -127,7 +127,7 @@ Suppose that the `MockAsynchronousService` alternative is selected, as defined i
 
 [source, java]
 ----
-@Alternative @Priority(APPLICATION+100)
+@Alternative @Priority(javax.interceptor.Interceptor.Priority.APPLICATION+100)
 public class MockAsynchronousService extends AsynchronousService { 
     ... 
 }
