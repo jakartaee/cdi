@@ -1199,6 +1199,8 @@ CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanConfigurato
 
 With `BeanConfigurator` you can perform all the operations defined in <<bean_attributes_configurator>> plus the following:
 
+* Initialize the bean metadata with one of its `read()` methods.
+It can be done from an existing `BeanAttributes`  or by reading metadata on a given `AnnotatedType`, according to the rules defined in <<concepts>>.
 * Set the class of the bean with `beanClass` method.
 * Add an injection point for the bean with `addInjectionPoint` method.
 * Add multiple injection points for the bean with `addInjectionPoints` methods.
@@ -1207,7 +1209,7 @@ With `BeanConfigurator` you can perform all the operations defined in <<bean_att
 * Set a callback to create a bean instance with `createWith()` or `produceWith()` method.
 * Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
-If a `BeanConfigurator` has no scope specified via the `BeanConfigurator.scope()` method, the <<default_scope,Default Scope>> rules apply.
+If a `BeanConfigurator` has no scope specified, the default scope rules, defined in <<default_scope>>, apply.
 
 [[observer_method_configurator]]
 
