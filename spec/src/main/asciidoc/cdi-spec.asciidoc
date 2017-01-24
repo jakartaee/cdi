@@ -1,9 +1,9 @@
 = JSR 365: Contexts and Dependency Injection for Java 2.0
 :author: JSR 365 EG lead by Antoine Sabot-Durand
 :email: cdi-dev@lists.jboss.org
-:revnumber: 2.0 PFD
-:revdate: December 14th 2016
-:revremark: Proposed Final Draft
+:revnumber: 2.0 PRD
+:revdate: January 24th 2017
+:revremark: Public Review Draft
 :version-label!:
 :sectanchors:
 :doctype: book
@@ -20,6 +20,10 @@ endif::[]
 
 [preface]
 include::preface.asciidoc[]
+
+[[introduction]]
+
+= Introduction
 
 include::architecture.asciidoc[]
 

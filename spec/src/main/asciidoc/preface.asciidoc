@@ -40,6 +40,7 @@ This CDI 2.0 includes important changes for the platform.
 * Make possible to apply interceptor on producer in <<interception_factory>>
 * Alignment on Java 8 features (streams, lambdas, repeating qualifiers)
 
-The full changelog can be found link:https://issues.jboss.org/secure/ReleaseNote.jspa?projectId=12311062&version=12325406[here^].
+The full changelog can be found http://bit.ly/cdi2rl[here^].
 
 :numbered:
+<<<
