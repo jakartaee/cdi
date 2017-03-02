@@ -1016,7 +1016,13 @@ The container is not required to deliver events fired during application initial
 
 The container instantiates a single instance of each extension at the beginning of the application initialization process and maintains a reference to it until the application shuts down.
 The container delivers event notifications to this instance by calling its observer methods.
-If an extension contains static observer method of a container lifecycle event or Object class, non-portable behavior results.
+
+If an extension declares a static observer method whose event parameter type:
+
+* is a container lifecycle event, or
+* is `java.lang.Object` and the event parameter has either no qualifiers or a single qualifier `@Any`,
+
+non-portable behavior results.
 
 The notification order for observer methods within extensions follows the same ordering rule as defined in <<observer_ordering>> for non-extension observers.
 The priority of an observer method may be declared using the `@Priority` annotation.
