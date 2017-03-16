@@ -118,6 +118,8 @@ import javax.inject.Provider;
  * @see javax.enterprise.util.TypeLiteral
  * 
  * @author Gavin King
+ * @author John Ament
+ * @author Martin Kouba
  * 
  * @param <T> the required bean type
  */
@@ -173,6 +175,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * stream.
      * </p>
      *
+     * @since 2.0
      * @return a <tt>Stream</tt> representing the beans associated with this {@link Instance} object
      */
     default Stream<T> stream() {
@@ -206,7 +209,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * Determines if there is exactly one bean that matches the required type and qualifiers and is eligible for injection
      * into the class into which the parent <tt>Instance</tt> was injected.
      * </p>
-     * 
+     *
+     * @since 2.0
      * @return <tt>true</tt> if there is exactly one bean that matches the required type and qualifiers and is eligible for
      *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
      */

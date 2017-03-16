@@ -684,6 +684,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     boolean isUnsatisfied();
     boolean isAmbiguous();
+    boolean isResolvable();
 
     void destroy(T instance);
 
