@@ -391,6 +391,8 @@ public void asyncAfterLogin(@ObservesAsync LoggedInEvent event) { ... }
 
 If a method has more than one parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
+If a method has a parameter annotated `@Observes` and `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
+
 Observed event qualifiers may be declared by annotating the event parameter:
 
 [source, java]
