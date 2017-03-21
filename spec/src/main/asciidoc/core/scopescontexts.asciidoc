@@ -491,6 +491,16 @@ An event with qualifier `@Initialized(RequestScoped.class)` is synchronously fir
 An event with qualifier `@BeforeDestroyed(RequestScoped.class)` is synchronously fired when the request context is about to be destroyed, i.e. before the actual destruction.
 An event with qualifier `@Destroyed(RequestScoped.class)` is synchronously fired when the request context is destroyed, i.e. after the actual destruction.
 
+The request context is active:
+
+* during notification of an asynchronous observer method, and
+* during `@PostConstruct` callback of any bean.
+
+The request context is destroyed:
+
+* after the invocation of an asynchronous observer method completes, and
+* after the `@PostConstruct` callback completes, if it did not already exist when the `@PostConstruct` callback occurred.
+
 [[session_context]]
 
 ==== Session context lifecycle

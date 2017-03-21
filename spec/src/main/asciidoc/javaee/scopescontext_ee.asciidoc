@@ -84,22 +84,18 @@ The built-in request and application context objects are active during servlet, 
 
 When running in Java EE the container must extend the rules defined in <<request_context>> and is also required to implement request context with the following rules.
 
-The request scope is active:
+The request context is active:
 
 * during the `service()` method of any servlet in the web application, during the `doFilter()` method of any servlet filter and when the container calls any `ServletRequestListener` or `AsyncListener`,
 * during any Java EE web service invocation,
-* during any asynchronous invocation of an event observer,
-* during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to an EJB timeout method and during message delivery to any EJB message-driven bean, and
-* during `@PostConstruct` callback of any bean.
+* during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to an EJB timeout method and during message delivery to any EJB message-driven bean.
 
 
 The request context is destroyed:
 
 * at the end of the servlet request, after the `service()` method, all `doFilter()` methods, and all `requestDestroyed()` and `onComplete()` notifications return,
 * after the web service invocation completes,
-* after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it did not already exist when the invocation occurred, or
-* after the `@PostConstruct` callback completes, if it did not already exist when the `@PostConstruct` callback occurred.
-
+* after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it did not already exist when the invocation occurred.
 
 The payload of the event fired when the request context is initialized or destroyed is:
 
