@@ -19,8 +19,6 @@ If a non-static method of a session bean class has a parameter annotated `@Obser
 
 ==== Observer method invocation context in Java EE
 
-When Running in Java EE, the container must extend the rules defined in <<observer_method_invocation_context>> and must also ensure that
-
-All kinds of observers are called in the same client security context as the invocation of `Event.fire()` or `Event.fireAsync()` or `BeanManager.fireEvent()`.
+When Running in Java EE, the container must extend the rules defined in <<observer_method_invocation_context>> and must also ensure that all kinds of observers are called in the same client security context as the invocation of `Event.fire()` or `Event.fireAsync()` or `BeanManager.fireEvent()`.
 
 The transaction and security contexts for a business method exposed by a local business interface of an EJB session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.
