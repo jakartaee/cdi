@@ -697,7 +697,7 @@ The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactor
 <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 ----
 
-If type parameter `T` is not a class non-portable behavior results.
+If the actual type parameter of the method is not a Java class, non-portable behavior results.
 
 [[bm_obtain_instance]]
 
@@ -1711,7 +1711,7 @@ The container must provide a built-in bean with scope `@Dependent`, bean type `I
 
 If an injection point of type `InterceptionFactory` and qualifier `@Default` exists and is not a parameter of a producer method, the container automatically detects the problem and treats it as a definition error.
 
-If an injection point of type `InterceptionFactory` has a type parameter that is not a class, non-portable behavior results.
+If an injection point of type `InterceptionFactory` has a type parameter that is not a Java class, non-portable behavior results.
 
 The following example demonstrates a producer method definition using `InterceptionFactory`. The produced bean instance will be a wrapper of `Product` with single interceptor associated by `ActionBinding`:
 
