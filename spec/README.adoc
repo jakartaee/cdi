@@ -13,16 +13,23 @@ This module contains AsciiDoc sources and configuration to generate CDI document
 == Generating the documentation
 
 Just enter `mvn` at the command line.
-Maven will generate final doc in `target/publish/html` and `target/publish/docbook/publish/en-US/pdf` directories with the default license (ASL2).
+Maven will generate final doc in HTML and PDF in `target` directory with the default license (ASL2).
 
 == License in doc
 
 The documentation can be generated for 2 licenses : Apache License v 2.0 (by default) and JCP license.
-To generate doc with JCP license just enter `mvn -Pjcp`
+To generate doc with various JCP licenses just change the `license-file` property with one of the following value:
+
+* `jcp-prefinal`: for pre-final license
+* `jcp-final-eval`: for final evaluation license
+* `jcp-final`: for final implementation license
+* `asl2`: (default value) for Apache V2 License
+
+For instance `mvn -Dlicense-file=jcp-prefinal` will generate docs with JCP pref-final license.
 
 == Working on the spec
 
-The spec is split different AsciiDoc file in `src/main/doc`
+The spec is split different AsciiDoc file in `src/main/asciidoc`
 The master doc (entry point) is `cdi-spec.asciidoc` which includes all the other part of the spec.
 
 To work in the spec you may want to install a plugin in your IDE (major 3 IDE have AsciiDoc plugins).
@@ -73,7 +80,7 @@ Then you can see the AsciiDoc file rendered as HTML just by visiting it!
 
 === Editing the spec with Live Preview 
 
-If you want to more than just preview AsciiDoc files in your browser you may need to use an autogenerating mechanism and live preview in your browser.
+If you want to more than just preview AsciiDoc files in your browser you may need to use an auto-generating mechanism and live preview in your browser.
 The spec provides script to help you setting up this configuration.
 Ìt only requires to have Ruby 1.8.7 or higher installed on your machine.
 More info on Ruby installation on https://www.ruby-lang.org/en/documentation/installation/ 
