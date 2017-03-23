@@ -11,7 +11,6 @@
 
 	<modules>
 		<module>spec</module>
-		<module>tck-mapper</module>
 		<module>api</module>
 	</modules>
 	<build>
