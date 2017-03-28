@@ -2,7 +2,7 @@
 :author: JSR 365 EG lead by Antoine Sabot-Durand
 :email: cdi-dev@lists.jboss.org
 :revnumber: 2.0 PFD
-:revdate: January 25th 2017
+:revdate: March 28th 2017
 :revremark: Proposed Final Draft
 :version-label!:
 :sectanchors:
