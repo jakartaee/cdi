@@ -232,7 +232,8 @@ Note that, an exception is thrown if the following operations are called before 
 
 and if the following operations are called before the `AfterDeploymentValidation` event is fired:
 
-* `getReference(Bean, Type, CreationalContext)`
+* `createInstance()`,
+* `getReference(Bean, Type, CreationalContext)`,
 * `getInjectableReference(InjectionPoint, CreationalContext)`.
 
 All other operations of BeanManager may be called at any time during the execution of the application.

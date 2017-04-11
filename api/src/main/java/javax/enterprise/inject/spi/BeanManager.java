@@ -654,7 +654,7 @@ public interface BeanManager {
      * If no qualifier is passed to {@link Instance#select} method, the <tt>@Default</tt> qualifier is assumed.
      *
      * @return an {@link Instance} object to request beans instances
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
      *         event is fired.
      * @since 2.0
      */
