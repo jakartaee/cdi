@@ -66,7 +66,7 @@
 		<profile>
 			<id>tck</id>
 			<properties>
-				<path.to.cdi.spec>spec/target/generated-docs/cdi-spec.html</path.to.cdi.spec>
+				<path.to.cdi.spec>${project.build.directory}/generated-docs/cdi-spec.html</path.to.cdi.spec>
 				<tck.version>2.0.0.CR1</tck.version>
 				<tck.audit.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-audit-cdi.xml</tck.audit.url>
 				<tck.coverage.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-coverage-cdi.html
@@ -136,7 +136,7 @@
 								</property>
 								<property>
 									<key>new.spec.filename</key>
-									<value>spec/target/generated-docs/cdi-spec-with-assertions.html</value>
+									<value>${project.build.directory}/generated-docs/cdi-spec-with-assertions.html</value>
 								</property>
 							</systemProperties>
 						</configuration>
