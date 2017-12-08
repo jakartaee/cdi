@@ -67,7 +67,7 @@
 			<id>tck</id>
 			<properties>
 				<path.to.cdi.spec>${project.build.directory}/generated-docs/cdi-spec.html</path.to.cdi.spec>
-				<tck.version>2.0.0.CR1</tck.version>
+				<tck.version>2.0.3.Final</tck.version>
 				<tck.audit.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-audit-cdi.xml</tck.audit.url>
 				<tck.coverage.url>https://repo1.maven.org/maven2/org/jboss/cdi/tck/cdi-tck-impl/${tck.version}/cdi-tck-impl-${tck.version}-coverage-cdi.html
 				</tck.coverage.url>
