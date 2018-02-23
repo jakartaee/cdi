@@ -19,9 +19,9 @@
 	<url>http://cdi-spec.org</url>
 	<licenses>
 		<license>
-			<name>Apache License, Version 2.0</name>
+			<name>Apache License 2.0</name>
+			<url>http://repository.jboss.org/licenses/apache-2.0.txt</url>
 			<distribution>repo</distribution>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
 		</license>
 	</licenses>
 
