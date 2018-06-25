@@ -143,6 +143,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
+		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -296,35 +297,26 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.0</version>
-				<configuration>
-					<skip>true</skip>
-					<systemPropertyVariables>
-						<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
-					</systemPropertyVariables>
-				</configuration>
+				<version>${maven-surefire-plugin.version}</version>
 				<executions>
 					<execution>
-						<id>standard-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
+						<id>default-test</id>
 						<configuration>
-							<skip>false</skip>
+							<systemPropertyVariables>
+								<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
+							</systemPropertyVariables>
 							<excludes>
 								<exclude>**/privileged/**</exclude>
 							</excludes>
 						</configuration>
 					</execution>
 					<execution>
-						<id>privileged-tests</id>
+						<id>privileged-test</id>
 						<phase>test</phase>
 						<goals>
 							<goal>test</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip>
 							<includes>
 								<include>**/privileged/**</include>
 							</includes>
