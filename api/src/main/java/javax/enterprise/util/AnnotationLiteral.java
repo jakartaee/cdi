@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2018, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -23,11 +23,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Arrays;
 
 /**
  * <p>
  * Supports inline instantiation of annotation type instances.
+ * </p>
+ *
+ * <p>
+ * Reflection operations are made as a {@link PrivilegedAction} to support security manager.
  * </p>
  * 
  * <p>
@@ -50,6 +56,7 @@ import java.util.Arrays;
  * @author Pete Muir
  * @author Gavin King
  * @author Marko Luksa
+ * @author Antoine Sabot-Durand
  * 
  * @param <T> the annotation type
  * 
@@ -279,7 +286,13 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private static Object invoke(Method method, Object instance) {
         try {
             if (!method.isAccessible())
-                method.setAccessible(true);
+                AccessController.doPrivileged(
+                        (PrivilegedAction<?>) () -> {
+                            method.setAccessible(true);
+                            return null;
+                        }
+
+                );
             return method.invoke(instance);
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
