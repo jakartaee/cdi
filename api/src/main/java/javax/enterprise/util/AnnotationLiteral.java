@@ -23,8 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Arrays;
 
 /**
@@ -33,7 +31,7 @@ import java.util.Arrays;
  * </p>
  *
  * <p>
- * Reflection operations are made as a {@link PrivilegedAction} to support security manager.
+ * Reflection operations are using {@link SecurityActions} utility class to support security manager.
  * </p>
  * 
  * <p>
@@ -82,7 +80,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private Method[] getMembers() {
         if (members == null) {
-            members = annotationType().getDeclaredMethods();
+            members = SecurityActions.getDeclaredMethods(annotationType());
             if (members.length > 0 && !annotationType().isAssignableFrom(this.getClass())) {
                 throw new RuntimeException(getClass() + " does not implement the annotation type with members "
                         + annotationType().getName());
@@ -286,13 +284,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private static Object invoke(Method method, Object instance) {
         try {
             if (!method.isAccessible())
-                AccessController.doPrivileged(
-                        (PrivilegedAction<?>) () -> {
-                            method.setAccessible(true);
-                            return null;
-                        }
-
-                );
+                SecurityActions.setAccessible(method);
             return method.invoke(instance);
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
