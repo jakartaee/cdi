@@ -317,6 +317,9 @@
 							<goal>test</goal>
 						</goals>
 						<configuration>
+							<systemPropertyVariables>
+								<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
+							</systemPropertyVariables>
 							<includes>
 								<include>**/privileged/**</include>
 							</includes>

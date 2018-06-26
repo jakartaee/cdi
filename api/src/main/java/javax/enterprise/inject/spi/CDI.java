@@ -115,7 +115,7 @@ public abstract class CDI<T> implements Instance<T> {
         ServiceLoader<CDIProvider> providerLoader;
         Set<CDIProvider> providers = new TreeSet<>(Comparator.comparingInt(CDIProvider::getPriority).reversed());
 
-        providerLoader = ServiceLoader.load(CDIProvider.class, CDI.class.getClassLoader());
+        providerLoader = SecurityActions.loadService(CDIProvider.class, CDI.class.getClassLoader());
 
         if(! providerLoader.iterator().hasNext()) {
             throw new IllegalStateException("Unable to locate CDIProvider");
