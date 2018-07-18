@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2010, Red Hat, Inc., and individual contributors
+ * Copyright 2018, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -29,6 +29,10 @@ import java.util.Arrays;
  * <p>
  * Supports inline instantiation of annotation type instances.
  * </p>
+ *
+ * <p>
+ * Reflection operations are using {@link SecurityActions} utility class to support security manager.
+ * </p>
  * 
  * <p>
  * An instance of an annotation type may be obtained by subclassing <tt>AnnotationLiteral</tt>.
@@ -50,6 +54,7 @@ import java.util.Arrays;
  * @author Pete Muir
  * @author Gavin King
  * @author Marko Luksa
+ * @author Antoine Sabot-Durand
  * 
  * @param <T> the annotation type
  * 
@@ -75,7 +80,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private Method[] getMembers() {
         if (members == null) {
-            members = annotationType().getDeclaredMethods();
+            members = SecurityActions.getDeclaredMethods(annotationType());
             if (members.length > 0 && !annotationType().isAssignableFrom(this.getClass())) {
                 throw new RuntimeException(getClass() + " does not implement the annotation type with members "
                         + annotationType().getName());
@@ -279,7 +284,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private static Object invoke(Method method, Object instance) {
         try {
             if (!method.isAccessible())
-                method.setAccessible(true);
+                SecurityActions.setAccessible(method);
             return method.invoke(instance);
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
