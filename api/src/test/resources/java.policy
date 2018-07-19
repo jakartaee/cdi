@@ -17,6 +17,11 @@ grant codeBase "file:${project.build.outputDirectory}/-" {
         permission java.security.AllPermission;
 };
 
+grant codeBase "file:${project.build.testOutputDirectory}/-" {
+        permission java.util.PropertyPermission "serviceDir", "read";
+        permission java.io.FilePermission "${project.build.testOutputDirectory}/META-INF/services/javax.enterprise.inject.spi.CDIProvider", "write";
+};
+
 
 // default permissions granted to all domains
 
