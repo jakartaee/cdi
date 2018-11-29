@@ -58,7 +58,7 @@ public interface ProcessBean<X> {
      * If invoked upon a {@link ProcessSyntheticBean} event, non-portable behavior results and the returned value should be ignored.
      * </p>
      * 
-     * @return the {@link javax.enterprise.inject.spi.AnnotatedType} for the bean being registered
+     * @return the {@link javax.enterprise.inject.spi.Annotated} for the bean being registered
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Annotated getAnnotated();
