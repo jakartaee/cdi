@@ -58,13 +58,13 @@ perl -pi -e "s/${OLDVERSION}/${NEWVERSION}/g" `find . -name \*.xml -or -name \*.
 snapshot()
 {
    echo "\n**** Deploying $archetype to ${SNAPSHOT_REPO_URL} \n"
-   mvn clean javadoc:jar deploy  -f api/pom.xml -DaltDeploymentRepository=${SNAPSHOT_REPO_ID}::default::${SNAPSHOT_REPO_URL}
+   mvn -Pstaging clean javadoc:jar deploy  -f api/pom.xml -DaltDeploymentRepository=${SNAPSHOT_REPO_ID}::default::${SNAPSHOT_REPO_URL}
 }
 
 release()
 {
    echo "\n**** Deploying $archetype to ${RELEASE_REPO_URL} \n"
-   mvn clean javadoc:jar deploy -f api/pom.xml -DaltDeploymentRepository=${RELEASE_REPO_ID}::default::${RELEASE_REPO_URL}
+   mvn -Pstaging clean javadoc:jar deploy -f api/pom.xml -DaltDeploymentRepository=${RELEASE_REPO_ID}::default::${RELEASE_REPO_URL}
 }
 
 OLDVERSION="1.0.0-SNAPSHOT"

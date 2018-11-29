@@ -25,10 +25,10 @@
 		<relativePath />
 	</parent>
 
-	<groupId>javax.enterprise</groupId>
-	<artifactId>cdi-api</artifactId>
+	<groupId>jakarta.enterprise</groupId>
+	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>2.1-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -41,11 +41,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
-	<ciManagement>
-		<system>Hudson</system>
-		<url>http://hudson.jboss.org</url>
-	</ciManagement>
 
 	<issueManagement>
 		<system>JIRA</system>
@@ -138,12 +133,13 @@
 
 	<properties>
 		<atinject.api.version>1</atinject.api.version>
-		<uel.api.version>3.0.0</uel.api.version>
-		<interceptor.api.version>1.2</interceptor.api.version>
+		<uel.api.version>3.0.2</uel.api.version>
+		<interceptor.api.version>1.2.3</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -163,14 +159,14 @@
 			</dependency>
 
 			<dependency>
-				<groupId>javax.el</groupId>
-				<artifactId>javax.el-api</artifactId>
+				<groupId>jakarta.el</groupId>
+				<artifactId>jakarta.el-api</artifactId>
 				<version>${uel.api.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>javax.interceptor</groupId>
-				<artifactId>javax.interceptor-api</artifactId>
+				<groupId>jakarta.interceptor</groupId>
+				<artifactId>jakarta.interceptor-api</artifactId>
 				<version>${interceptor.api.version}</version>
 			</dependency>
 
@@ -179,13 +175,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
+			<groupId>jakarta.el</groupId>
+			<artifactId>jakarta.el-api</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.interceptor</groupId>
-			<artifactId>javax.interceptor-api</artifactId>
+			<groupId>jakarta.interceptor</groupId>
+			<artifactId>jakarta.interceptor-api</artifactId>
 		</dependency>
 
 		<dependency>
@@ -243,6 +239,43 @@
 					<snapshots>
 						<enabled>false</enabled>
 						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+
+		<!--
+            This profile enables consuming artifacts from the ossrh staging
+            repository group.
+        -->
+		<profile>
+			<id>staging</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>sonatype-nexus-staging</id>
+					<name>Sonatype Nexus Staging</name>
+					<url>https://oss.sonatype.org/content/repositories/staging</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sonatype-nexus-staging</id>
+					<name>Sonatype Nexus Staging</name>
+					<url>https://oss.sonatype.org/content/repositories/staging</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
 					</snapshots>
 				</pluginRepository>
 			</pluginRepositories>
