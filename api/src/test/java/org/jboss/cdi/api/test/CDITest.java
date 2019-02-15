@@ -153,4 +153,14 @@ public class CDITest {
         fw.close();
         CDI.current();
     }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void testForClosedContainer() throws Exception {
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(ClosableCDIProvider.class.getName());
+        fw.close();
+        CDI.current();
+        ClosableCDIProvider.closeContainer();
+        CDI.current();
+    }
 }
