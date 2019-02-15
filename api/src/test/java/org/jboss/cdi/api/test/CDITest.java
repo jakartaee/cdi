@@ -39,7 +39,7 @@ public class CDITest {
     private static abstract class CDIChild<T> extends CDI<T> {
 
         public static void resetCDI() {
-            configuredProvider = null;
+            cachedProvider = null;
             discoveredProviders = null;
         }
 
@@ -151,6 +151,16 @@ public class CDITest {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
         fw.write(getClass().getName());
         fw.close();
+        CDI.current();
+    }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void testForClosedContainer() throws Exception {
+        FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
+        fw.write(ClosableCDIProvider.class.getName());
+        fw.close();
+        CDI.current();
+        ClosableCDIProvider.closeContainer();
         CDI.current();
     }
 }
