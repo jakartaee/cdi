@@ -46,7 +46,6 @@ public abstract class CDI<T> implements Instance<T> {
     private static final Object lock = new Object();
     protected static volatile Set<CDIProvider> discoveredProviders = null;
     protected static volatile CDIProvider configuredProvider = null;
-    protected static volatile CDIProvider cachedProvider = null;
 
     /**
      * <p>
@@ -67,32 +66,39 @@ public abstract class CDI<T> implements Instance<T> {
 
     /**
      *
-     * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)}, if it wasn't set,
-     * or last used provider if it still has valid CDI container. Otherwise use the serviceloader to retrieve
-     * the {@link CDIProvider} with the highest priority.
+     * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)} or the last returned
+     * {@link CDIProvider} if it returns valid CDI container. Otherwise use the serviceloader to retrieve the
+     * {@link CDIProvider} with the highest priority.
      *
      * @return the {@link CDIProvider} set by user or retrieved by serviceloader
      */
     private static CDIProvider getCDIProvider() {
-        if (configuredProvider != null) {
-            return configuredProvider;
-        } else {
-            if (cachedProvider != null && cachedProvider.getCDI() != null) {
-                return cachedProvider;
+        try {
+            if (configuredProvider != null && configuredProvider.getCDI() != null) {
+                return configuredProvider;
             }
-            cachedProvider = null;
-            // Discover providers and cache
-            if (discoveredProviders == null) {
-                synchronized (lock) {
-                    if (discoveredProviders == null) {
-                        findAllProviders();
-                    }
+        } catch (IllegalStateException ignored) {
+        }
+        configuredProvider = null;
+        // Discover providers and cache
+        if (discoveredProviders == null) {
+            synchronized (lock) {
+                if (discoveredProviders == null) {
+                    findAllProviders();
                 }
             }
-            cachedProvider = discoveredProviders.stream()
-                    .filter(c -> c.getCDI() != null)
-                    .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
-            return cachedProvider;
+        }
+        configuredProvider = discoveredProviders.stream()
+                .filter(CDI::checkProvider)
+                .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
+        return configuredProvider;
+    }
+
+    private static boolean checkProvider(CDIProvider c) {
+        try {
+            return c.getCDI() != null;
+        } catch (IllegalStateException e) {
+            return false;
         }
     }
 
