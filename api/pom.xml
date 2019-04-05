@@ -250,13 +250,12 @@
 	</profiles>
 
 	<build>
-		<resources>
-			<resource>
+		<testResources>
+			<testResource>
 				<filtering>true</filtering>
 				<directory>src/test/resources</directory>
-				<targetPath>${project.build.testOutputDirectory}</targetPath>
-			</resource>
-		</resources>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
