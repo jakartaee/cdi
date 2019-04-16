@@ -37,19 +37,19 @@
 	<licenses>
 		<license>
 			<name>Apache License 2.0</name>
-			<url>http://repository.jboss.org/licenses/apache-2.0.txt</url>
+			<url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 
 	<issueManagement>
 		<system>JIRA</system>
-		<url>http://jira.jboss.org/browse/CDI</url>
+		<url>https://jira.jboss.org/browse/CDI</url>
 	</issueManagement>
 
 	<organization>
 		<name>JBoss by Red Hat, Inc.</name>
-		<url>http://jboss.org</url>
+		<url>https://jboss.org</url>
 	</organization>
 
 	<inceptionYear>2008</inceptionYear>
@@ -216,7 +216,7 @@
 				<repository>
 					<id>jboss-public-repository-group</id>
 					<name>JBoss Public Maven Repository Group</name>
-					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<url>https://repository.jboss.org/nexus/content/groups/public</url>
 					<releases>
 						<enabled>true</enabled>
 						<updatePolicy>never</updatePolicy>
@@ -231,7 +231,7 @@
 				<pluginRepository>
 					<id>jboss-public-repository-group</id>
 					<name>JBoss Public Maven Repository Group</name>
-					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<url>https://repository.jboss.org/nexus/content/groups/public</url>
 					<releases>
 						<enabled>true</enabled>
 						<updatePolicy>never</updatePolicy>
