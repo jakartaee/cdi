@@ -90,7 +90,7 @@
  * 
  * <p>The order in which observer methods are called depends on the value of
  * the {@linkplain javax.annotation.Priority &#064;Priority} applied to the observer.</p>
- * <p></p>If no priority is defined on a observer, its priority is javax.interceptor.Interceptor.Priority.APPLICATION+500.</p>
+ * <p>If no priority is defined on a observer, its priority is javax.interceptor.Interceptor.Priority.APPLICATION+500.</p>
  * <p>If two observer have the same priority their relative order is undefined.</p>
  * 
  * <p>Observer methods may throw exceptions:</p>
