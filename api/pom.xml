@@ -131,7 +131,7 @@
 
 
 	<properties>
-		<atinject.api.version>1</atinject.api.version>
+		<atinject.api.version>1.0</atinject.api.version>
 		<uel.api.version>3.0.2</uel.api.version>
 		<interceptor.api.version>1.2.3</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -152,8 +152,8 @@
 			</dependency>
 
 			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
+				<groupId>jakarta.inject</groupId>
+				<artifactId>jakarta.inject-api</artifactId>
 				<version>${atinject.api.version}</version>
 			</dependency>
 
@@ -184,8 +184,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
 		</dependency>
 
 		<dependency>
