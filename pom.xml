@@ -1,34 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.eclipse.ee4j</groupId>
-		<artifactId>project</artifactId>
-		<version>1.0.5</version>
-	</parent>
+  <parent>
+    <groupId>org.eclipse.ee4j</groupId>
+    <artifactId>project</artifactId>
+    <version>1.0.5</version>
+  </parent>
 
-	<groupId>org.eclipse.ee4j.cdi</groupId>
-	<artifactId>cdi-parent</artifactId>
-	<packaging>pom</packaging>
-	<version>2.0.2-SNAPSHOT</version>
+  <groupId>org.eclipse.ee4j.cdi</groupId>
+  <artifactId>cdi-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>2.0.2-SNAPSHOT</version>
 
-	<description>Parent module for CDI Specification</description>
+  <description>Parent module for CDI Specification</description>
 
-	<licenses>
-		<license>
-			<name>Apache License 2.0</name>
-			<url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+  <licenses>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-	<modules>
-		<module>spec</module>
-		<module>api</module>
-	</modules>
-	<build>
-		<defaultGoal>clean package</defaultGoal>
-	</build>
+  <modules>
+    <module>spec</module>
+    <module>api</module>
+  </modules>
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0-M1</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
