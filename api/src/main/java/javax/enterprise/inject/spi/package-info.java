@@ -107,7 +107,7 @@
  * 
  * <h3><tt>Producer</tt> and <tt>InjectionTarget</tt></h3>
  * 
- * <pr>The interfaces {@link javax.enterprise.inject.spi.Producer} and
+ * <p>The interfaces {@link javax.enterprise.inject.spi.Producer} and
  * {@link javax.enterprise.inject.spi.InjectionTarget} abstract the 
  * basic lifecycle of (contextual or non-contextual) container managed 
  * objects, including instantiation and destruction, dependency injection 

@@ -18,7 +18,7 @@
 package javax.enterprise.inject;
 
 /**
- * <t>Indicates a problem relating to dependency injection.</t>
+ * <tt>Indicates a problem relating to dependency injection.</tt>
  * 
  * @author Pete Muir
  */

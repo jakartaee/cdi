@@ -72,7 +72,7 @@ public interface AnnotatedTypeConfigurator<T> {
      * Remove annotations that match the specified predicate.
      *
      * <p>
-     * Example predicates:</code>
+     * Example predicates:
      * </p>
      * 
      * <pre>

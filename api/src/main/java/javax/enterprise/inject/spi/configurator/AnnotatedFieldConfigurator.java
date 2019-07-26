@@ -49,7 +49,7 @@ public interface AnnotatedFieldConfigurator<T> {
      * Remove annotations that match the specified predicate.
      *
      * <p>
-     * Example predicates:</code>
+     * Example predicates:
      * </p>
      * 
      * <pre>

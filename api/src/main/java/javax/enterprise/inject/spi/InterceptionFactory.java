@@ -32,8 +32,8 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * example.
  * </p>
  *
- * <pre>
- * public class MyCustomBean implements Bean&lt;MyClass&gt; {
+ * <pre>{@code
+ * public class MyCustomBean implements Bean<MyClass> {
  *
  *     BeanManager bm;
  *
@@ -41,18 +41,18 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *        this.bm = bm;
  *     }
  *
- *     public MyClass create(CreationalContext&lt;MyClass&gt; creationalContext) {
+ *     public MyClass create(CreationalContext<MyClass> creationalContext) {
  *
  *         InterceptionFactory<MyClass> factory = bm.createInterceptionFactory(creationalContext, MyClass.class);
  *
  *         factory.configure().filterMethods(m -> m.getJavaMember().getName().equals("shouldBeTransactional")).findFirst()
- *                 .ifPresent(m -> m.add(new AnnotationLiteral&lt;Transactional&gt;() {
+ *                 .ifPresent(m -> m.add(new AnnotationLiteral<Transactional>() {
  *                 }));
  *
  *         return factory.createInterceptedInstance(new MyClass());
  *     }
  * }
- * </pre>
+ * }</pre>
  *
  * <p>
  * The container must also provide a built-in bean with scope {@link Dependent}, bean type {@link InterceptionFactory} and
@@ -60,6 +60,7 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * </p>
  *
  * <pre>
+ * {@code
  * &#64;Produces
  * &#64;RequestScoped
  * public MyClass produceMyClass(InterceptionFactory<MyClass> factory) {
@@ -67,7 +68,7 @@ import javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *     });
  *     return factory.createInterceptedInstance(new MyClass());
  * }
- * </pre>
+ * }</pre>
  *
  * <p>
  * Instances of this class are neither reusable nor suitable for sharing between threads.
