@@ -17,7 +17,7 @@
 package javax.enterprise.inject;
 
 /**
- * <t>Indicates a problem relating to typesafe resolution.</t>
+ * <tt>Indicates a problem relating to typesafe resolution.</tt>
  * 
  * @author Gavin King
  */
