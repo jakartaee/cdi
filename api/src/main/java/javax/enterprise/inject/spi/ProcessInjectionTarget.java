@@ -18,14 +18,14 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * The container fires an event of this type for every Java EE component class supporting injection that may be instantiated by
- * the container at runtime, including every managed bean declared using {@code javax.annotation.ManagedBean}, EJB session or
+ * The container fires an event of this type for every Jakarta EE component class supporting injection that may be instantiated by
+ * the container at runtime, including every managed bean declared using {@code javax.annotation.ManagedBean}, Jakarta Enterprise Bean session or
  * message-driven bean, enabled bean, enabled interceptor or enabled decorator.
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link javax.enterprise.inject.spi.InjectionTarget}. The
  * container must use the final value of this property, after all observers have been called, whenever it performs injection
- * upon the managed bean, session bean or other Java EE component class supporting injection.
+ * upon the managed bean, session bean or other Jakarta EE component class supporting injection.
  * </p>
  * <p>
  * For example, this observer decorates the {@code InjectionTarget} for all servlets.
@@ -43,12 +43,12 @@ package javax.enterprise.inject.spi;
  * 
  * @see InjectionTarget
  * @author David Allen
- * @param <X> The managed bean class, session bean class or Java EE component class supporting injection
+ * @param <X> The managed bean class, session bean class or Jakarta EE component class supporting injection
  */
 public interface ProcessInjectionTarget<X> {
     /**
      * Returns the {@link javax.enterprise.inject.spi.AnnotatedType} representing the managed bean class, session bean class or
-     * other Java EE component class supporting injection.
+     * other Jakarta EE component class supporting injection.
      * 
      * @return the {@link javax.enterprise.inject.spi.AnnotatedType} of the bean with an injection target
      * @throws IllegalStateException if called outside of the observer method invocation

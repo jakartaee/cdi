@@ -17,7 +17,7 @@
 package javax.enterprise.inject.spi;
 
 /**
- * Identifies the kind of EJB session bean.
+ * Identifies the kind of Jakarta Enterprise Bean session bean.
  * 
  * @author Gavin King
  * 

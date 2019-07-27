@@ -91,7 +91,7 @@ public abstract class SeContainerInitializer {
      * Each call returns a new instance
      *
      * @return a new SeContainerInitializer instance.
-     * @throws IllegalStateException if called in a Java EE container
+     * @throws IllegalStateException if called in a Jakarta EE container
      */
     public static SeContainerInitializer newInstance() {
         return findSeContainerInitializer();
