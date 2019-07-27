@@ -51,7 +51,7 @@ import java.util.Set;
  * </pre>
  * 
  * <p>
- * Java EE components may obtain an instance of <tt>BeanManager</tt> from {@linkplain javax.naming JNDI} by looking up the name
+ * Jakarta EE components may obtain an instance of <tt>BeanManager</tt> from {@linkplain javax.naming JNDI} by looking up the name
  * {@code java:comp/BeanManager}.
  * </p>
  * 
@@ -136,7 +136,7 @@ public interface BeanManager {
 
     /**
      * Return the set of beans which have the given required type and qualifiers and are available for injection in the module
-     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Jakarta EE component from whose JNDI
      * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution. If no
      * qualifiers are given, the {@linkplain javax.enterprise.inject.Default default qualifier} is assumed.
      * <br>
@@ -156,7 +156,7 @@ public interface BeanManager {
 
     /**
      * Return the set of beans which have the given EL name and are available for injection in the module or library containing
-     * the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI environment namespace
+     * the class into which the <tt>BeanManager</tt> was injected or the Jakarta EE component from whose JNDI environment namespace
      * the <tt>BeanManager</tt> was obtained, according to the rules of EL name resolution.
      * <br>
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
@@ -256,7 +256,7 @@ public interface BeanManager {
 
     /**
      * Return an ordered list of {@linkplain Decorator decorators} for a set of bean types and a set of qualifiers and which are
-     * enabled in the module or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE
+     * enabled in the module or library containing the class into which the <tt>BeanManager</tt> was injected or the Jakarta EE
      * component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
      *
      * <br>
@@ -277,7 +277,7 @@ public interface BeanManager {
     /**
      * Return an ordered list of enabled {@linkplain Interceptor interceptors} for a set of interceptor bindings and a type of
      * interception and which are enabled in the module or library containing the class into which the <tt>BeanManager</tt> was
-     * injected or the Java EE component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
+     * injected or the Jakarta EE component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
      *
      * <br>
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
@@ -642,7 +642,7 @@ public interface BeanManager {
      * Obtains an {@link Instance} object to access to beans instances.
      *
      * The returned <tt>Instance</tt> object can only access instances of  beans that are available for injection in the module
-     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
+     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Jakarta EE component from whose JNDI
      * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,

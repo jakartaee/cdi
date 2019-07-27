@@ -43,7 +43,7 @@
  * <p>The container provides an implementation of the <tt>Context</tt> 
  * interface for each of the built-in scopes. The built-in request, 
  * session, and application contexts support servlet, web service 
- * and EJB invocations. The built-in conversation context supports
+ * and Jakarta Enterprise Bean invocations. The built-in conversation context supports
  * JSF requests.</p>
  * 
  * <p>For other kinds of invocations, a portable extension may define a 
@@ -53,10 +53,10 @@
  * the built-in conversation scope.</p>
  * 
  * <p>The context associated with a built-in scope propagates across 
- * local, synchronous Java method calls, including invocation of EJB 
+ * local, synchronous Java method calls, including invocation of Jakarta Enterprise Bean
  * local business methods. The context does not propagate across remote 
  * method invocations or to asynchronous processes such as JMS message 
- * listeners or EJB timer service timeouts.</p>
+ * listeners or Jakarta Enterprise Bean timer service timeouts.</p>
  * 
  * <h3>Normal scopes and pseudo-scopes</h3>
  * 

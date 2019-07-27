@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  * 
  * <p>
  * A producer method must be a non-abstract method of a managed bean class or session bean class. A producer method may be
- * either static or non-static. If the bean is a session bean, the producer method must be either a business method of the EJB
+ * either static or non-static. If the bean is a session bean, the producer method must be either a business method of the Jakarta Enterprise Bean
  * or a static method of the bean class.
  * </p>
  * 

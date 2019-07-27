@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * <p>
  * An observer method is a non-abstract method of a managed bean class or session bean class (or of an extension). An observer
  * method may be either static or non-static. If the bean is a session bean, the observer method must be either a business
- * method of the EJB or a static method of the bean class.
+ * method of the Jakarta Enterprise Bean or a static method of the bean class.
  * </p>
  * 
  * <p>
