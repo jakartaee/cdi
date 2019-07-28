@@ -9,10 +9,10 @@ include::license-{license}.asciidoc[]
 
 === Foreword
 
-Contexts and Dependency Injection 2.0 (link:https://jcp.org/en/jsr/detail?id=365[JSR-365^]) is an update to Contexts and Dependency Injection 1.2 (link:https://jcp.org/en/jsr/detail?id=346[JSR-346^]).
+Jakarta Contexts and Dependency Injection 2.0 (link:http://jakarta.ee/specifications/cdi) is an update to Contexts and Dependency Injection 1.2 (link:https://jcp.org/en/jsr/detail?id=346[JSR-346^]).
 
-Starting with version 2.0 CDI targets Java SE and Java EE platforms.
-CDI in Java SE and CDI in a Java EE container share the features defined in core CDI.
+Starting with version 2.0 CDI targets Java SE and Jakarta EE platforms.
+CDI in Java SE and CDI in a Jakarta EE container share the features defined in core CDI.
 
 [[doc_organisation]]
 
@@ -23,7 +23,7 @@ This document is organized in 4 parts:
 * An introduction (this part), which is not part of the specification but introduces CDI concepts and give examples.
 * The core CDI specification: <<part_1>>.
 * Specific CDI features for Java SE: <<part_2>>.
-* Specific CDI features for Java EE: <<part_3>>.
+* Specific CDI features for Jakarta EE: <<part_3>>.
 
 
 === Major changes

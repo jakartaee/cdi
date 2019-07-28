@@ -5,30 +5,30 @@ This specification defines a powerful set of complementary services that help to
 
 * A well-defined lifecycle for stateful objects bound to _lifecycle contexts_, where the set of contexts is extensible
 * A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration
-* Support for Java EE modularity and the Java EE component architecture - the modular structure of a Java EE application is taken into account when resolving dependencies between Java EE components
-* Integration with the Unified Expression Language (EL), allowing any contextual object to be used directly within a JSF or JSP page
+* Support for Jakarta EE modularity and the Jakarta EE component architecture - the modular structure of a Jakarta EE application is taken into account when resolving dependencies between Jakarta EE components
+* Integration with the Unified Expression Language (EL), allowing any contextual object to be used directly within a Jakarta Server Faces or JSP page
 * The ability to _decorate_ injected objects
 * The ability to associate interceptors to objects via typesafe _interceptor bindings_
 * An _event notification_ model
-* A web _conversation context_ in addition to the three standard web contexts defined by the Java Servlets specification
+* A web _conversation context_ in addition to the three standard web contexts defined by the Jakarta Servlets specification
 * An SPI allowing _portable extensions_ to integrate cleanly with the container
 
 
 The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events.
-Various kinds of objects are injectable, including EJB 3 session beans, managed beans and Java EE resources.
+Various kinds of objects are injectable, including Jakarta Eneterprise Bean 3 session beans, managed beans and Jakarta EE resources.
 We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_.
 Contextual instances may be injected into other objects by the dependency injection service.
 
 To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
 
-The use of these services significantly simplifies the task of creating Java EE applications by integrating the Java EE web tier with Java EE enterprise services.
-In particular, EJB components may be used as JSF managed beans, thus integrating the programming models of EJB and JSF.
+The use of these services significantly simplifies the task of creating Jakarta EE applications by integrating the Jakarta EE web tier with Jakarta EE enterprise services.
+In particular, Jakarta Eneterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Eneterprise Bean and Jakarta Server Faces.
 
 It's even possible to integrate with third-party frameworks.
 A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
 
-An application that takes advantage of these services may be designed to execute in either the Java EE environment or the Java SE environment.
-If the application uses Java EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the EJB specification.
+An application that takes advantage of these services may be designed to execute in either the Jakarta EE environment or the Java SE environment.
+If the application uses Jakarta EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the Jakarta Eneterprise Bean specification.
 
 === Contracts
 
@@ -39,40 +39,40 @@ This specification defines the responsibilities of:
 
 
 This runtime environment is called the _container_.
-For example, the container might be a Java EE container or an embeddable EJB container.
+For example, the container might be a Jakarta EE container or an embeddable Jakarta Eneterprise Bean container.
 
-<<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decorator_bean>> and <<observer_methods>> define the programming model for Java EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
+<<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decorator_bean>> and <<observer_methods>> define the programming model for Jakarta EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
 
 <<injection_and_resolution>>, <<contexts>>, <<lifecycle>>, <<decorators>>, <<events>> and <<interceptor_resolution>> define the semantics and behavior of the services, the responsibilities of the container implementation and the APIs used by the application to interact directly with the container.
 
-<<packaging_deployment>> defines how Java EE applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
+<<packaging_deployment>> defines how Jakarta EE applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
 
 <<spi>>, <<contextual>> and <<context>> define an SPI that allows portable extensions to integrate with the container.
 
 === Relationship to other specifications
 
-An application developer creates container-managed components such as JavaBeans, EJBs or servlets and then provides additional metadata that declares additional behavior defined by this specification.
-These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Java EE platform technologies.
+An application developer creates container-managed components such as JavaBeans, Jakarta Enterprise Beans or servlets and then provides additional metadata that declares additional behavior defined by this specification.
+These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Jakarta EE platform technologies.
 
-In addition, this specification defines an SPI that allows alternative, non-platform technologies to integrate with the container and the Java EE environment, for example, alternative web presentation technologies.
+In addition, this specification defines an SPI that allows alternative, non-platform technologies to integrate with the container and the Jakarta EE environment, for example, alternative web presentation technologies.
 
-==== Relationship to the Java EE platform specification
+==== Relationship to the Jakarta EE platform specification
 
-In the Java EE environment, all _component classes supporting injection_, as defined by the Java EE platform specification, may inject beans via the dependency injection service.
+In the Jakarta EE environment, all _component classes supporting injection_, as defined by the Jakarta EE platform specification, may inject beans via the dependency injection service.
 
-The Java EE platform specification defines a facility for injecting _resources_ that exist in the _Java EE component environment_.
+The Jakarta EE platform specification defines a facility for injecting _resources_ that exist in the _Jakarta EE component environment_.
 Resources are identified by string-based names.
 This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
 
-==== Relationship to EJB
+==== Relationship to Jakarta Eneterprise Bean
 
-EJB defines a programming model for application components that access transactional resources in a multi-user environment.
-EJB allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the EJB container at runtime.
+Jakarta Eneterprise Bean defines a programming model for application components that access transactional resources in a multi-user environment.
+Jakarta Eneterprise Bean allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the Jakarta Eneterprise Bean container at runtime.
 
-EJB components may be stateful, but are not by nature contextual.
+Jakarta Eneterprise Bean components may be stateful, but are not by nature contextual.
 References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
 
-This specification enhances the EJB component model with contextual lifecycle management.
+This specification enhances the Jakarta Eneterprise Bean component model with contextual lifecycle management.
 
 Any session bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context.
 The container automatically creates the instance when it is needed by a client.
@@ -84,7 +84,7 @@ The container performs dependency injection on all session and message-driven be
 
 ==== Relationship to managed beans
 
-The Managed Beans specification defines the basic programming model for application components managed by the Java EE container.
+The Managed Beans specification defines the basic programming model for application components managed by the Jakarta EE container.
 
 As defined by this specification, most Java classes, including all JavaBeans, are managed beans.
 
@@ -96,36 +96,37 @@ When the context ends, the container automatically destroys the instance.
 
 The container performs dependency injection on all managed bean instances, even those which are not contextual instances.
 
-==== Relationship to Dependency Injection for Java
+==== Relationship to Jakarta Dependency Injection
 
-The Dependency Injection for Java specification defines a set of annotations for the declaring injected fields, methods and constructors of a bean.
+The Jakarta Dependency Injection specification defines a set of annotations for the declaring injected fields, methods and constructors of a bean.
 The dependency injection service makes use of these annotations.
 
-==== Relationship to Java Interceptors
+==== Relationship to Jakarta Interceptors
 
-The Java Interceptors specification defines the basic programming model and semantics for interceptors.
+The Jakarta Interceptors specification defines the basic programming model and semantics for interceptors.
 This specification enhances that model by providing the ability to associate interceptors with beans using typesafe interceptor bindings.
 
-==== Relationship to JSF
+==== Relationship to Jakarta Server Faces
 
-JavaServer Faces is a web-tier presentation framework that provides a component model for graphical user interface components and an event-driven interaction model that binds user interface components to objects accessible via Unified EL.
+Jakarta Server Faces is a web-tier presentation framework that provides a component model for graphical user interface components and an event-driven interaction model that binds user interface components to objects accessible via Unified EL.
 
-This specification allows any bean to be assigned a name. Thus, a JSF application may take advantage of the sophisticated context and dependency injection model defined by this specification.
+This specification allows any bean to be assigned a name. Thus, a Jakarta Server Faces application may take advantage of the sophisticated context and dependency injection model defined by this specification.
 
-==== Relationship to Bean Validation
+==== Relationship to Jakarta Bean Validation
 
-Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
+Jakarta Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
 
-The Bean Validation specification defines beans for Bean Validation managed objects including `Validator` and `ValidatorFactory`. A number of Bean Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
+The Jakarta Bean Validation specification defines beans for Bean Validation managed objects including `Validator` and `ValidatorFactory`.
+A number of Bean Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
 Bean Validation also provides support for method parameter validation on any bean.
 
 === Introductory examples
 
 The following examples demonstrate the use of lifecycle contexts and dependency injection.
 
-==== JSF example
+==== Jakarta Server Faces example
 
-The following JSF page defines a login prompt for a web application:
+The following Jakarta Server Faces page defines a login prompt for a web application:
 
 [source, xml]
 ----
@@ -143,9 +144,9 @@ The following JSF page defines a login prompt for a web application:
 </f:view>
 ----
 
-The Unified EL expressions in this page refer to beans named `credentials` and `login`.
+The Jakarta EL expressions in this page refer to beans named `credentials` and `login`.
 
-The `Credentials` bean has a lifecycle that is bound to the JSF request:
+The `Credentials` bean has a lifecycle that is bound to the Jakarta Server Faces request:
 
 [source, java]
 ----
@@ -229,7 +230,7 @@ public class Login implements Serializable {
 
 The `@SessionScoped` annotation defined in <<builtin_scopes>> is a _scope type_ that specifies the lifecycle of instances of `Login`. Managed beans with this scope must be serializable.
 
-The `@Inject` annotation defined by the Dependency Injection for Java specification identifies an _injected field_ which is initialized by the container when the bean is instantiated, or an _initializer method_ which is called by the container after the bean is instantiated, with injected parameters.
+The `@Inject` annotation defined by the Jakarta Dependency Injection specification identifies an _injected field_ which is initialized by the container when the bean is instantiated, or an _initializer method_ which is called by the container after the bean is instantiated, with injected parameters.
 
 The `@Users` annotation is a qualifier type defined by the application:
 
@@ -270,15 +271,15 @@ public class DocumentEditor {
 }
 ----
 
-The `@Documents` annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which JPA persistence unit is required.
+The `@Documents` annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which Jakarta Persistence persistence unit is required.
 
-When the login form is submitted, JSF assigns the entered username and password to an instance of the `Credentials` bean that is automatically instantiated by the container.
-Next, JSF calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
+When the login form is submitted, Jakarta Server Faces assigns the entered username and password to an instance of the `Credentials` bean that is automatically instantiated by the container.
+Next, Jakarta Server Faces calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
 This instance continues to exist for and be available to other requests in the same HTTP session, and provides the `User` object representing the current user to any other bean that requires it (for example, `DocumentEditor`). If the producer method is called before the `login()` method initializes the user object, it throws a `NotLoggedInException`.
 
-==== EJB example
+==== Jakarta Eneterprise Bean example
 
-Alternatively, we could write our `Login` bean to take advantage of the functionality defined by EJB:
+Alternatively, we could write our `Login` bean to take advantage of the functionality defined by Jakarta Eneterprise Bean:
 
 [source, java]
 ----
@@ -319,13 +320,13 @@ public class Login {
 }
 ----
 
-The EJB `@Stateful` annotation specifies that this bean is an EJB stateful session bean.
-The EJB `@TransactionAttribute` and `@RolesAllowed` annotations declare the EJB transaction demarcation and security attributes of the annotated methods.
+The Jakarta Eneterprise Bean `@Stateful` annotation specifies that this bean is an Jakarta Eneterprise Bean stateful session bean.
+The Jakarta Eneterprise Bean `@TransactionAttribute` and `@RolesAllowed` annotations declare the Jakarta Eneterprise Bean transaction demarcation and security attributes of the annotated methods.
 
-==== Java EE component environment example
+==== Jakarta EE component environment example
 
 In the previous examples, we injected container-managed persistence contexts using qualifier types.
-We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Java EE component environment in Java code.
+We need to tell the container what persistence context is being referred to by which qualifier type. We can declare references to persistence contexts and other resources in the Jakarta EE component environment in Java code.
 
 [source, java]
 ----
@@ -343,7 +344,7 @@ public class Databases {
 }
 ----
 
-The JPA `@PersistenceContext` and `@PersistenceUnit` annotations identify the JPA persistence unit.
+The Jakarta Persistence `@PersistenceContext` and `@PersistenceUnit` annotations identify the Jakarta Persistence persistence unit.
 
 ==== Event example
 

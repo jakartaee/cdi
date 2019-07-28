@@ -19,7 +19,7 @@ package javax.enterprise.inject.spi;
 
 /**
  * <p>
- * Identifies the kind of lifecycle callback, EJB timeout method or business method interception.
+ * Identifies the kind of lifecycle callback, Jakarta Enterprise Bean timeout method or business method interception.
  * </p>
  * 
  * @author Gavin King
@@ -54,12 +54,12 @@ public enum InterceptionType {
     PRE_DESTROY,
 
     /**
-     * Intercepts bean passivation, only called for EJBs
+     * Intercepts bean passivation, only called for Jakarta Enterprise Beans
      */
     PRE_PASSIVATE,
 
     /**
-     * Intercepts bean activation, only called for EJBs
+     * Intercepts bean activation, only called for Jakarta Enterprise Beans
      */
     POST_ACTIVATE
 }

@@ -132,8 +132,8 @@
 
 	<properties>
 		<atinject.api.version>1.0</atinject.api.version>
-		<uel.api.version>3.0.2</uel.api.version>
-		<interceptor.api.version>1.2.3</interceptor.api.version>
+		<uel.api.version>3.0.3</uel.api.version>
+		<interceptor.api.version>1.2.5</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>

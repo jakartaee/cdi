@@ -1,14 +1,14 @@
 [[interceptors_ee]]
 
-== Interceptor bindings in Java EE
+== Interceptor bindings in Jakarta EE
 
-EJB session and message-driven beans support interception as defined in <<interceptors>>.
+Jakarta Eneterprise Bean session and message-driven beans support interception as defined in <<interceptors>>.
 
 [[enabled_interceptors_ee]]
 
-=== Interceptor enablement and ordering in Java EE
+=== Interceptor enablement and ordering in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<enabled_interceptors>> and also ensured that:
+When running in Jakarta EE, the container must extend the rules defined in <<enabled_interceptors>> and also ensured that:
 
 * Interceptors declared using interceptor bindings are called after interceptors declared using the `@Interceptor` annotation (or using the corresponding element of a deployment descriptor).
 * Interceptors declared using interceptor bindings are called before any around-invoke, around-timeout, or lifecycle event callback methods declared on the target class or any superclass of the target class.
@@ -16,6 +16,6 @@ When running in Java EE, the container must extend the rules defined in <<enable
 
 [[interceptor_resolution_ee]]
 
-=== Interceptor resolution in Java EE
+=== Interceptor resolution in Jakarta EE
 
-For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container also calls `intercepts()` to determine if the interceptor intercepts an EJB timeout method invocation.
+For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container also calls `intercepts()` to determine if the interceptor intercepts an Jakarta Eneterprise Bean timeout method invocation.

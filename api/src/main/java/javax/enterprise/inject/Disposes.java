@@ -68,7 +68,7 @@ import java.lang.annotation.Target;
  * 
  * <p>
  * A disposer method must be a non-abstract method of a managed bean class or session bean class. A disposer method may be
- * either static or non-static. If the bean is a session bean, the disposer method must be a business method of the EJB or a
+ * either static or non-static. If the bean is a session bean, the disposer method must be a business method of the Jakarta Enterprise Bean or a
  * static method of the bean class.
  * </p>
  * 
