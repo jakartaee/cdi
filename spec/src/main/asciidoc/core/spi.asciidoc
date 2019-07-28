@@ -706,7 +706,7 @@ If the actual type parameter of the method is not a Java class, non-portable beh
 
 The method `BeanManager.createInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
 
-The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Java EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
+The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Jakarta EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
 
 [source, java]
 ----

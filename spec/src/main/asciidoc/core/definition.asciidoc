@@ -873,7 +873,7 @@ public class LoginAction { ... }
 
 ==== Built-in stereotypes
 
-The built-in stereotype `@javax.enterprise.inject.Model` is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
+The built-in stereotype `@javax.enterprise.inject.Model` is intended for use with beans that define the _model_ layer of an MVC web application architecture such as Jakarta Server Faces:
 
 [source, java]
 ----

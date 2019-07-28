@@ -1,24 +1,24 @@
 [[events_ee]]
 
-== Events in Java EE
+== Events in Jakarta EE
 
 [[observer_methods_ee]]
 
-=== Observer methods in EJB session beans
+=== Observer methods in Jakarta Eneterprise Bean session beans
 
-An observer method may also be a non-abstract method of an EJB session bean class.
-It must be either a business method exposed by a local business interface of the EJB or a static method of the bean class.
+An observer method may also be a non-abstract method of an Jakarta Eneterprise Bean session bean class.
+It must be either a business method exposed by a local business interface of the Jakarta Eneterprise Bean or a static method of the bean class.
 
 [[observes_ee]]
 
-==== Declaring an observer method in an EJB
+==== Declaring an observer method in an Jakarta Eneterprise Bean
 
-If a non-static method of a session bean class has a parameter annotated `@Observes` or `@ObservesAsync`, and the method is not a business method exposed by a local business interface of the EJB, the container automatically detects the problem and treats it as a definition error.
+If a non-static method of a session bean class has a parameter annotated `@Observes` or `@ObservesAsync`, and the method is not a business method exposed by a local business interface of the Jakarta Eneterprise Bean, the container automatically detects the problem and treats it as a definition error.
 
 [[observer_method_invocation_context_ee]]
 
-==== Observer method invocation context in Java EE
+==== Observer method invocation context in Jakarta EE
 
-When Running in Java EE, the container must extend the rules defined in <<observer_method_invocation_context>> and must also ensure that all kinds of observers are called in the same client security context as the invocation of `Event.fire()` or `Event.fireAsync()` or `BeanManager.fireEvent()`.
+When Running in Jakarta EE, the container must extend the rules defined in <<observer_method_invocation_context>> and must also ensure that all kinds of observers are called in the same client security context as the invocation of `Event.fire()` or `Event.fireAsync()` or `BeanManager.fireEvent()`.
 
-The transaction and security contexts for a business method exposed by a local business interface of an EJB session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.
+The transaction and security contexts for a business method exposed by a local business interface of an Jakarta Eneterprise Bean session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.
