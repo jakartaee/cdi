@@ -15,8 +15,8 @@ decorators
 DoD
 EE
 EG
-EJB
-EJBs
+Jakarta Eneterprise Bean
+Jakarta Eneterprise Beans
 enablement
 enum
 enums
@@ -36,7 +36,7 @@ JDK
 JMS
 JNDI
 JPA
-JSF
+Jakarta Server Faces
 JSP
 JSR
 JTA
