@@ -2,7 +2,7 @@
 
 == Interceptor bindings in Jakarta EE
 
-Jakarta Eneterprise Bean session and message-driven beans support interception as defined in <<interceptors>>.
+Jakarta Enterprise Bean session and message-driven beans support interception as defined in <<interceptors>>.
 
 [[enabled_interceptors_ee]]
 
@@ -18,4 +18,4 @@ When running in Jakarta EE, the container must extend the rules defined in <<ena
 
 === Interceptor resolution in Jakarta EE
 
-For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container also calls `intercepts()` to determine if the interceptor intercepts an Jakarta Eneterprise Bean timeout method invocation.
+For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container also calls `intercepts()` to determine if the interceptor intercepts an Jakarta Enterprise Bean timeout method invocation.

@@ -4,16 +4,16 @@
 
 
 [[bean_archive_ee]]
-=== Bean archive with Jakarta Eneterprise Bean Session Beans
+=== Bean archive with Jakarta Enterprise Bean Session Beans
 
 When running in Jakarta EE, the container must extend the rules defined in <<bean_archive>> with:
 
-* An _implicit bean archive_ may also contain Jakarta Eneterprise Bean session beans, and
-* Jakarta Eneterprise Bean session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
+* An _implicit bean archive_ may also contain Jakarta Enterprise Bean session beans, and
+* Jakarta Enterprise Bean session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
 
 When determining which archives are bean archives, the container must also consider:
 
-* Jakarta Eneterprise Bean jars or application client jars
+* Jakarta Enterprise Bean jars or application client jars
 * The `WEB-INF/classes` directory of a war
 
 The container is not required to support application client jar bean archives.
@@ -29,33 +29,33 @@ Portable applications must have a `beans.xml` file in only one of the `WEB-INF` 
 
 The following additional rules apply regarding container search for beans:
 
-* In an application deployed as an ear, the container searches every bean archive bundled with or referenced by the ear, including bean archives bundled with or referenced by wars, Jakarta Eneterprise Bean jars and rars contained in the ear.
-The bean archives might be library jars, Jakarta Eneterprise Bean jars or war `WEB-INF/classes` directories.
+* In an application deployed as an ear, the container searches every bean archive bundled with or referenced by the ear, including bean archives bundled with or referenced by wars, Jakarta Enterprise Bean jars and rars contained in the ear.
+The bean archives might be library jars, Jakarta Enterprise Bean jars or war `WEB-INF/classes` directories.
 * In an application deployed as a war, the container searches every bean archive bundled with or referenced by the war.
 The bean archives might be library jars or the `WEB-INF/classes` directory.
-* In an application deployed as an Jakarta Eneterprise Bean jar, the container searches the Jakarta Eneterprise Bean jar, if it is a bean archive, and every bean archive referenced by the Jakarta Eneterprise Bean jar.
+* In an application deployed as an Jakarta Enterprise Bean jar, the container searches the Jakarta Eneterprise Bean jar, if it is a bean archive, and every bean archive referenced by the Jakarta Eneterprise Bean jar.
 * In an application deployed as a rar, the container searches every bean archive bundled with or referenced by the rar.
-* An embeddable Jakarta Eneterprise Bean container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property `javax.ejb.embeddable.modules`, or every bean archive in the JVM classpath if the property is not specified.
-The bean archives might be directories, library jars or Jakarta Eneterprise Bean jars.
+* An embeddable Jakarta Enterprise Bean container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property `javax.ejb.embeddable.modules`, or every bean archive in the JVM classpath if the property is not specified.
+The bean archives might be directories, library jars or Jakarta Enterprise Bean jars.
 
 
 [[type_bean_discovery_ee]]
 
-=== Type and Bean discovery for Jakarta Eneterprise Bean
+=== Type and Bean discovery for Jakarta Enterprise Bean
 
-In Jakarta EE, the container automatically discovers Jakarta Eneterprise Bean session beans and other Jakarta EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
+In Jakarta EE, the container automatically discovers Jakarta Enterprise Bean session beans and other Jakarta EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
 
 [[bean_discovery_steps_ee]]
 
 ==== Bean discovery in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each Jakarta Enterprise Bean session beans.
 
 [[trimmed_bean_archive_ee]]
 
 ==== Trimmed bean archive in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that Jakarta Eneterprise Bean session beans are not removed from the set of discovered types.
+When running in Jakarta EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that Jakarta Enterprise Bean session beans are not removed from the set of discovered types.
 
 
 [[el]]
