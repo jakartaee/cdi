@@ -1,8 +1,8 @@
-= JSR 365: Contexts and Dependency Injection for Java 2.0
-:author: JSR 365 EG lead by Antoine Sabot-Durand
-:email: cdi-dev@lists.jboss.org
-:revnumber: 2.0.1
-:revdate: November 29th 2019
+= Jakarta Contexts and Dependency Injection for Java 2.0
+:author: Jakarta Contexts and Dependency Injection Spec Project lead by Antoine Sabot-Durand
+:email: cdi-dev@eclipse.org
+:revnumber: 2.0.2
+:revdate: July 26 2019
 :revremark: Final
 :version-label!:
 :sectanchors:
@@ -59,6 +59,6 @@ include::core/packagingdeployment.asciidoc[]
 include::javase/javase.asciidoc[]
 
 [[part_3]]
-= Part III - CDI in Java EE
+= Part III - CDI in Jakarta EE
 
 include::javaee/javaeeintegration.asciidoc[]

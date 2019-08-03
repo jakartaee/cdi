@@ -21,9 +21,9 @@ import javax.enterprise.inject.spi.configurator.InjectionPointConfigurator;
 
 /**
  * <p>
- * The container fires an event of this type for every injection point of every Java EE component class supporting injection
+ * The container fires an event of this type for every injection point of every Jakarta EE component class supporting injection
  * that may be instantiated by the container at runtime, including every managed bean declared using
- * {@code javax.annotation.ManagedBean}, EJB session or message-driven bean, enabled bean, enabled interceptor or enabled
+ * {@code javax.annotation.ManagedBean}, Jakarta Enterprise Bean session or message-driven bean, enabled bean, enabled interceptor or enabled
  * decorator.
  * </p>
  * <p>

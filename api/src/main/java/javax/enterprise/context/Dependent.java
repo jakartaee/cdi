@@ -71,14 +71,14 @@ import javax.inject.Scope;
  * </p>
  *
  * <p>
- * Many instances of beans with scope <tt>@Dependent</tt> belong to some other bean or Java EE component class instance and are
+ * Many instances of beans with scope <tt>@Dependent</tt> belong to some other bean or Jakarta EE component class instance and are
  * called dependent objects.
  * </p>
  *
  * <ul>
  * <li>Instances of decorators and interceptors are dependent objects of the bean instance they decorate.</li>
  * <li>An instance of a bean with scope <tt>@Dependent</tt> injected into a field, bean constructor or initializer method is a
- * dependent object of the bean or Java EE component class instance into which it was injected.</li>
+ * dependent object of the bean or Jakarta EE component class instance into which it was injected.</li>
  * <li>An instance of a bean with scope <tt>@Dependent</tt> injected into a producer method is a dependent object of the
  * producer method bean instance that is being produced.</li>
  * <li>An instance of a bean with scope <tt>@Dependent</tt> obtained by direct invocation of an
@@ -86,7 +86,7 @@ import javax.inject.Scope;
  * </ul>
  *
  * <p>
- * When the container destroys an instance of a bean or of any Java EE component class supporting injection, the container
+ * When the container destroys an instance of a bean or of any Jakarta EE component class supporting injection, the container
  * destroys all its dependent objects, after the <tt>@PreDestroy</tt> callback completes and after the servlet
  * <tt>destroy()</tt> method is called.
  * </p>

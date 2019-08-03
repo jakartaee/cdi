@@ -1,102 +1,102 @@
 [[injection_el_resolution_ee]]
 
-== Dependency injection, lookup and EL in Java EE
+== Dependency injection, lookup and EL in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<injection_and_resolution>> and may also provide references to contextual instances by Unified EL expression evaluation.
+When running in Jakarta EE, the container must extend the rules defined in <<injection_and_resolution>> and may also provide references to contextual instances by Unified EL expression evaluation.
 
 When resolving a name in an EL expression, the container considers the bean name and selected alternatives.
 
 [[selection_ee]]
 
-=== Modularity in Java EE
+=== Modularity in Jakarta EE
 
-In the Java EE module architecture, any Java EE module or library is a module. The Java EE module is a bean archive if it contains a `beans.xml` file, as defined in <<bean_archive>>.
+In the Jakarta EE module architecture, any Jakarta EE module or library is a module. The Jakarta EE module is a bean archive if it contains a `beans.xml` file, as defined in <<bean_archive>>.
 
-When running in Java EE, the container must follow the same accessibility rules for beans and alternatives defined in <<selection>> for JSP/JSF pages using EL resolution and make sure that only beans available from injection in the module that defines the JSP/JSF pages are resolved.
+When running in Jakarta EE, the container must follow the same accessibility rules for beans and alternatives defined in <<selection>> for JSP/Jakarta Server Faces pages using EL resolution and make sure that only beans available from injection in the module that defines the JSP/Jakarta Server Faces pages are resolved.
 
-In the Java EE module architecture, a bean class is accessible in a module if and only if it is required to be accessible according to the class loading requirements defined by the Java EE platform specification.
+In the Jakarta EE module architecture, a bean class is accessible in a module if and only if it is required to be accessible according to the class loading requirements defined by the Jakarta EE platform specification.
 
-Note that, in some Java EE implementations, a bean class might be accessible to some other class even when this is not required by the Java EE platform specification.
-For the purposes of this specification, a class is not considered accessible to another class unless accessibility is explicitly required by the Java EE platform specification.
+Note that, in some Jakarta EE implementations, a bean class might be accessible to some other class even when this is not required by the Jakarta EE platform specification.
+For the purposes of this specification, a class is not considered accessible to another class unless accessibility is explicitly required by the Jakarta EE platform specification.
 
-An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
+An alternative is not available for injection, lookup or EL resolution to classes or JSP/Jakarta Server Faces pages in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
 
 [[declaring_selected_alternatives_application_ee]]
 
-==== Declaring selected alternatives for an application in Java EE
+==== Declaring selected alternatives for an application in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_application>> to EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_application>> to Jakarta Eneterprise Bean session beans.
 
 [[declaring_selected_alternatives_bean_archive_ee]]
 
-==== Declaring selected alternatives for a bean archive in Java EE
+==== Declaring selected alternatives for a bean archive in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to Jakarta Eneterprise Bean session beans.
 
 [[unsatisfied_and_ambig_dependencies_ee]]
 
-==== Unsatisfied and ambiguous dependencies in Java EE
+==== Unsatisfied and ambiguous dependencies in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<unsatisfied_and_ambig_dependencies>> and must also validate all injection points of all Java EE component classes supporting injection
+When running in Jakarta EE, the container must extend the rules defined in <<unsatisfied_and_ambig_dependencies>> and must also validate all injection points of all Jakarta EE component classes supporting injection
 
 [[name_resolution_ee]]
 
 === EL name resolution
 
-When running in Java EE, the container must extend the rules defined in <<name_resolution>> and must also support name resolution for name used in Expression Language
+When running in Jakarta EE, the container must extend the rules defined in <<name_resolution>> and must also support name resolution for name used in Expression Language
 
 An EL name resolves to a bean if:
 
 * the name can be resolved to a bean according to rules in <<name_resolution>>, and
-* the bean is available for injection in the war containing the JSP or JSF page with the EL expression.
+* the bean is available for injection in the war containing the JSP or Jakarta Server Faces page with the EL expression.
 
 [[ambig_names_ee]]
 
 ==== Ambiguous EL names
 
-When running in Java EE, the container must extend the rules defined in <<ambig_names>> to names used in Expression Language.
+When running in Jakarta EE, the container must extend the rules defined in <<ambig_names>> to names used in Expression Language.
 
 [[injection_ee]]
 
-=== Dependency injection in Java EE
+=== Dependency injection in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<injection>> and is also required to perform dependency injection whenever it creates the following contextual objects:
+When running in Jakarta EE, the container must extend the rules defined in <<injection>> and is also required to perform dependency injection whenever it creates the following contextual objects:
 
-* contextual instances of EJB session beans.
+* contextual instances of Jakarta Eneterprise Bean session beans.
 
 The container is also required to perform dependency injection whenever it instantiates any of the following non-contextual objects:
 
-* non-contextual instances of EJB session beans (for example, session beans obtained by the application from JNDI or injected using `@EJB`), and
-* instances of any other Java EE component class supporting injection.
+* non-contextual instances of Jakarta Eneterprise Bean session beans (for example, session beans obtained by the application from JNDI or injected using `@Jakarta Eneterprise Bean`), and
+* instances of any other Jakarta EE component class supporting injection.
 
-A Java EE 5 container is not required to support injection for non-contextual objects.
+A Jakarta EE 5 container is not required to support injection for non-contextual objects.
 
 [[instantiation_ee]]
 
-==== Injection using the bean constructor in Java EE
+==== Injection using the bean constructor in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<instantiation>> to EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<instantiation>> to Jakarta Eneterprise Bean session beans.
 
 [[fields_initializer_methods_ee]]
 
-==== Injection of fields and initializer methods in Java EE
+==== Injection of fields and initializer methods in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to EJB session beans and to any other Java EE component class supporting injection.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to Jakarta Eneterprise Bean session beans and to any other Jakarta EE component class supporting injection.
 
 The container is also required to ensure that:
 
--* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
+-* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+-* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+-* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Jakarta EE component environment resource dependencies have been injected.
 
 [[dependent_objects_destruction_ee]]
 
-==== Destruction of dependent objects in Java EE
+==== Destruction of dependent objects in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Jakarta EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.
 
 [[bean_metadata_ee]]
 
-==== Bean metadata in Java EE
+==== Bean metadata in Jakarta EE
 
-Interceptor and decorator instances associated with Java EE components that are not considered beans (as defined by this specification) cannot obtain information about the beans they intercept and decorate (as defined in <<bean_metadata>>) and thus `null` is injected into relevant injection points.
+Interceptor and decorator instances associated with Jakarta EE components that are not considered beans (as defined by this specification) cannot obtain information about the beans they intercept and decorate (as defined in <<bean_metadata>>) and thus `null` is injected into relevant injection points.

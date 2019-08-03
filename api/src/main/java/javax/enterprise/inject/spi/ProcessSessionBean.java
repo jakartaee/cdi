@@ -30,7 +30,7 @@ package javax.enterprise.inject.spi;
  * 
  * <p>
  * Note that the type parameter of the super-interface of {@link ProcessSessionBean} is {@link Object} as {@link ProcessBean}
- * allows you access to the {@link Bean}, which in turn allows you to instantiate an instance, which, for interface-view EJBs
+ * allows you access to the {@link Bean}, which in turn allows you to instantiate an instance, which, for interface-view Jakarta Enterprise Beans
  * will not be an instance of X.
  * </p>
  * 
@@ -39,9 +39,9 @@ package javax.enterprise.inject.spi;
  */
 public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
     /**
-     * Returns the EJB name of the session bean.
+     * Returns the Jakarta Enterprise Bean name of the session bean.
      * 
-     * @return the name of the EJB
+     * @return the name of the Jakarta Enterprise Bean
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public String getEjbName();

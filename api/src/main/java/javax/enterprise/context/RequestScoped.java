@@ -46,9 +46,9 @@ import javax.enterprise.util.AnnotationLiteral;
  * <ul>
  * <li>during the <tt>service()</tt> method of any servlet in the web application, during the <tt>doFilter()</tt> method of any
  * servlet filter and when the container calls any <tt>ServletRequestListener</tt> or <tt>AsyncListener</tt>,</li>
- * <li>during any Java EE web service invocation,</li>
- * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
- * an EJB timeout method and during message delivery to any EJB message-driven bean, and</li>
+ * <li>during any Jakarta EE web service invocation,</li>
+ * <li>during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Enterprise Bean, during any call to
+ * an Jakarta Enterprise Bean timeout method and during message delivery to any Jakarta Enterprise Bean message-driven bean, and</li>
  * <li>during <tt>@PostConstruct</tt> callback of any bean.</li>
  * </ul>
  *
@@ -60,7 +60,7 @@ import javax.enterprise.util.AnnotationLiteral;
  * <li>at the end of the servlet request, after the <tt>service()</tt> method, all <tt>doFilter()</tt> methods, and all
  * <tt>requestDestroyed()</tt> and <tt>onComplete()</tt> notifications return,</li>
  * <li>after the web service invocation completes,</li>
- * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it
+ * <li>after the Jakarta Enterprise Bean remote method invocation, asynchronous method invocation, timeout or message delivery completes if it
  * did not already exist when the invocation occurred, or</li>
  * <li>after the <tt>@PostConstruct</tt> callback completes, if it did not already exist when the <tt>@PostConstruct</tt>
  * callback occurred.</li>

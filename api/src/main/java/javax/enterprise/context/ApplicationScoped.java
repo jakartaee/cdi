@@ -47,17 +47,18 @@ import javax.enterprise.util.AnnotationLiteral;
  * <li>during the <tt>service()</tt> method of any servlet in the web application, during the <tt>doFilter()</tt> method of any
  * servlet filter and when the container calls any <tt>ServletContextListener</tt>, <tt>HttpSessionListener</tt>,
  * <tt>AsyncListener</tt> or <tt>ServletRequestListener</tt>,</li>
- * <li>during any Java EE web service invocation,</li>
- * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
- * an EJB timeout method and during message delivery to any EJB message-driven bean,</li>
+ * <li>during any Jakarta EE web service invocation,</li>
+ * <li>during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Enterprise Bean, during any call to
+ * an Jakarta Enterprise Bean timeout method and during message delivery to any Jakarta Enterprise Bean message-driven bean,</li>
  * <li>when the disposer method or <tt>@PreDestroy</tt> callback of any bean with any normal scope other than
  * <tt>@ApplicationScoped</tt> is called, and</li>
  * <li>during <tt>@PostConstruct</tt> callback of any bean.</li>
  * </ul>
  *
  * <p>
- * The application context is shared between all servlet requests, web service invocations, EJB remote method invocations, EJB
- * asynchronous method invocations, EJB timeouts and message deliveries to message-driven beans that execute within the same
+ * The application context is shared between all servlet requests, web service invocations, Jakarta Enterprise Bean
+ * remote method invocations, Jakarta Enterprise Bean
+ * asynchronous method invocations, Jakarta Enterprise BeanJakarta Enterprise Bean timeouts and message deliveries to message-driven beans that execute within the same
  * application.
  * </p>
  * <p>

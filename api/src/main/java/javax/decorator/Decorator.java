@@ -37,9 +37,9 @@ import javax.enterprise.inject.Stereotype;
  * </pre>
  * 
  * <p>
- * Decorators of a session bean must comply with the bean provider programming restrictions defined by the EJB specification.
+ * Decorators of a session bean must comply with the bean provider programming restrictions defined by the Jakarta Enterprise Bean specification.
  * Decorators of a stateful session bean must comply with the rules for instance passivation and conversational state defined by
- * the EJB specification.
+ * the Jakarta Enterprise Bean specification.
  * </p>
  * 
  * @see javax.decorator.Delegate &#064;Delegate identifies the delegate injection point of a decorator.
