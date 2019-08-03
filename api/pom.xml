@@ -365,7 +365,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</nexusUrl>
+					<nexusUrl>https://oss.sonatype.org/service/local</nexusUrl>
 					<!-- update this to the correct id! -->
 					<stagingProfileId>7edbe315063867</stagingProfileId>
 				</configuration>
