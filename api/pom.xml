@@ -373,10 +373,4 @@
 		</plugins>
 	</build>
 
-   <repositories>
-      <repository>
-         <id>cdi-api-staging</id>
-         <url>https://oss.sonatype.org/content/repositories/central_bundles-18505</url>
-      </repository>
-   </repositories>
 </project>
