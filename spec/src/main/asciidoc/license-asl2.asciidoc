@@ -11,7 +11,9 @@ Specification Lead:  Red Hat, Inc.
 
 Release: {revdate}
 
-Copyright 2017 Red Hat, Inc.
+=== Evaluation license
+
+Copyright 2017-2019 Red Hat, Inc.
 100 East Davie Street, Raleigh, NC 27601, U.S.A.
 
 Licensed under the Apache License, Version 2.0 (the "License");
