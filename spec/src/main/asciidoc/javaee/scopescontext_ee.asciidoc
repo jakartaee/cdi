@@ -55,7 +55,7 @@ Portable extensions that integrate with the container via Unified EL should also
 
 [[passivation_capable_dependency_ee]]
 
-==== Passivation capable dependencies in java EE
+==== Passivation capable dependencies in Jakarta EE
 
 When running in Jakarta EE, the container must extend the rules defined in <<passivation_capable_dependency>>, and must also guarantee that:
 
