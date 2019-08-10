@@ -1,8 +1,8 @@
-= Jakarta Contexts and Dependency Injection for Java 2.0
+= Jakarta Contexts and Dependency Injection
 :author: Jakarta Contexts and Dependency Injection Spec Project lead by Antoine Sabot-Durand
 :email: cdi-dev@eclipse.org
-:revnumber: 2.0.2
-:revdate: July 26 2019
+:revnumber: 2.0
+:revdate: Aug 10 2019
 :revremark: Final
 :version-label!:
 :sectanchors:
