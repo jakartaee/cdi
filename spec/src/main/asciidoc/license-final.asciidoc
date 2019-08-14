@@ -41,7 +41,7 @@ No right to create modifications or derivatives of Eclipse Foundation documents 
 
 The notice is:
 
-Copyright © 2019 Eclipse Foundation. This software or document includes material copied from or derived from Jakarta Bean Validation https://projects.eclipse.org/projects/ee4j.bean-validation
+Copyright © 2019 Eclipse Foundation. This software or document includes material copied from or derived from Jakarta Contexts and Dependency Injection https://projects.eclipse.org/projects/ee4j.cdi
 
 Disclaimers
 
