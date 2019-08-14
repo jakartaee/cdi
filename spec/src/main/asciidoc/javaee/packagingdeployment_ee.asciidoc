@@ -33,7 +33,7 @@ The following additional rules apply regarding container search for beans:
 The bean archives might be library jars, Jakarta Enterprise Bean jars or war `WEB-INF/classes` directories.
 * In an application deployed as a war, the container searches every bean archive bundled with or referenced by the war.
 The bean archives might be library jars or the `WEB-INF/classes` directory.
-* In an application deployed as an Jakarta Enterprise Bean jar, the container searches the Jakarta Eneterprise Bean jar, if it is a bean archive, and every bean archive referenced by the Jakarta Eneterprise Bean jar.
+* In an application deployed as an Jakarta Enterprise Bean jar, the container searches the Jakarta Enterprise Bean jar, if it is a bean archive, and every bean archive referenced by the Jakarta Enterprise Bean jar.
 * In an application deployed as a rar, the container searches every bean archive bundled with or referenced by the rar.
 * An embeddable Jakarta Enterprise Bean container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property `javax.ejb.embeddable.modules`, or every bean archive in the JVM classpath if the property is not specified.
 The bean archives might be directories, library jars or Jakarta Enterprise Bean jars.

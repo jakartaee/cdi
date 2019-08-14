@@ -7,7 +7,7 @@ When running in Jakarta EE, the container must extend the rules defined in <<imp
 * Session beans
 * Resources (Jakarta EE resources, persistence contexts, persistence units, remote Jakarta Enterprise Beans and web services)
 
-Jakarta EE and embeddable Jakarta Enterprise Bean containers are required by the Jakarta EE and Jakarta Eneterprise Bean specifications to support Jakarta Eneterprise Bean session beans and the Jakarta EE component environment.
+Jakarta EE and embeddable Jakarta Enterprise Bean containers are required by the Jakarta EE and Jakarta Enterprise Bean specifications to support Jakarta Enterprise Bean session beans and the Jakarta EE component environment.
 Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
 
 [[managed_beans_ee]]
@@ -20,7 +20,7 @@ Other containers are not required to provide support for injection or lifecycle 
 
 When running in Jakarta EE, A top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Jakarta EE specification and if
 
-* It is not annotated with an Jakarta Enterprise Bean component-defining annotation or declared as an Jakarta Eneterprise Bean bean class in `ejb-jar.xml`.
+* It is not annotated with an Jakarta Enterprise Bean component-defining annotation or declared as an Jakarta Enterprise Bean bean class in `ejb-jar.xml`.
 
 
 
@@ -28,7 +28,7 @@ When running in Jakarta EE, A top-level Java class is a managed bean if it meets
 
 === Jakarta Enterprise Bean Session beans
 
-A _session bean_ is a bean that is implemented by a session bean with an Jakarta Enterprise Bean 3.x client view that is not annotated with `@Vetoed` or in a package annotated `@Vetoed`. The basic lifecycle and semantics of Jakarta Eneterprise Bean session beans are defined by the Jakarta Eneterprise Bean specification.
+A _session bean_ is a bean that is implemented by a session bean with an Jakarta Enterprise Bean 3.x client view that is not annotated with `@Vetoed` or in a package annotated `@Vetoed`. The basic lifecycle and semantics of Jakarta Enterprise Bean session beans are defined by the Jakarta Enterprise Bean specification.
 
 A stateless session bean must belong to the `@Dependent` pseudo-scope. A singleton session bean must belong to either the `@ApplicationScoped` scope or to the `@Dependent` pseudo-scope. If a session bean specifies an illegal scope, the container automatically detects the problem and treats it as a definition error.
 A stateful session bean may have any scope.
@@ -149,7 +149,7 @@ For example, if the bean class is named `ProductList`, the default bean name is 
 
 A producer method defined in an Jakarta Enterprise Bean session bean follows the rules defined in <<producer_method>> with the following addition:
 
-* A producer method defined in an Jakarta Enterprise Bean session bean must be either a business method exposed by a local business interface of the Jakarta Eneterprise Bean or a static method of the bean class.
+* A producer method defined in an Jakarta Enterprise Bean session bean must be either a business method exposed by a local business interface of the Jakarta Enterprise Bean or a static method of the bean class.
 
 [[declaring_producer_method_ee]]
 
@@ -181,7 +181,7 @@ A producer field declaration in an Jakarta Enterprise Bean session bean follows 
 
 A disposer method defined in an Jakarta Enterprise Bean session bean follows the rules defined in <<disposer_method>> with the following addition:
 
-* A disposer method defined in an Jakarta Enterprise Bean session bean must be either a business method exposed by a local business interface of the Jakarta Eneterprise Bean or a static method of the bean class.
+* A disposer method defined in an Jakarta Enterprise Bean session bean must be either a business method exposed by a local business interface of the Jakarta Enterprise Bean or a static method of the bean class.
 
 [[declaring_disposer_method_ee]]
 
@@ -244,7 +244,7 @@ The producer field may be static.
 * For a Jakarta EE resource, `@Resource` must be specified.
 * For a persistence context, `@PersistenceContext` must be specified.
 * For a persistence unit, `@PersistenceUnit` must be specified.
-* For a remote Jakarta Enterprise Bean, `@Jakarta Eneterprise Bean` must be specified.
+* For a remote Jakarta Enterprise Bean, `@Jakarta Enterprise Bean` must be specified.
 * For a web service, `@WebServiceRef` must be specified.
 
 

@@ -66,7 +66,7 @@ When running in Jakarta EE, the container must extend the rules defined in <<inj
 
 The container is also required to perform dependency injection whenever it instantiates any of the following non-contextual objects:
 
-* non-contextual instances of Jakarta Enterprise Bean session beans (for example, session beans obtained by the application from JNDI or injected using `@Jakarta Eneterprise Bean`), and
+* non-contextual instances of Jakarta Enterprise Bean session beans (for example, session beans obtained by the application from JNDI or injected using `@Jakarta Enterprise Bean`), and
 * instances of any other Jakarta EE component class supporting injection.
 
 A Jakarta EE 5 container is not required to support injection for non-contextual objects.

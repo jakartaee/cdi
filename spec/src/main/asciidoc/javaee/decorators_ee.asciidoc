@@ -8,5 +8,5 @@ When running in Jakarta EE, the container must extend the rules defined for mana
 
 === Decorator beans in Jakarta EE
 
-Decorators of an Jakarta Enterprise Bean session bean must comply with the bean provider programming restrictions defined by the Jakarta Eneterprise Bean specification.
-Decorators of an Jakarta Enterprise Bean stateful session bean must comply with the rules for instance passivation and conversational state defined by the Jakarta Eneterprise Bean specification.
+Decorators of an Jakarta Enterprise Bean session bean must comply with the bean provider programming restrictions defined by the Jakarta Enterprise Bean specification.
+Decorators of an Jakarta Enterprise Bean stateful session bean must comply with the rules for instance passivation and conversational state defined by the Jakarta Enterprise Bean specification.

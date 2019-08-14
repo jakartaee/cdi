@@ -72,7 +72,7 @@ When running in Jakarta EE, If the _bean discovery mode_ is `annotated`, the con
 
 A bean with a name may be referred to by its name in Unified EL expressions.
 
-There is no relationship between the bean name of an Jakarta Enterprise Bean session bean and the Jakarta Eneterprise Bean name of the bean.
+There is no relationship between the bean name of an Jakarta Enterprise Bean session bean and the Jakarta Enterprise Bean name of the bean.
 
 Bean names allow the direct use of beans in JSP or Jakarta Server Faces pages, as defined in <<el>>.
 For example, a bean with the name `products` could be used like this:

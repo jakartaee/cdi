@@ -22,7 +22,7 @@ Contextual instances may be injected into other objects by the dependency inject
 To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
 
 The use of these services significantly simplifies the task of creating Jakarta EE applications by integrating the Jakarta EE web tier with Jakarta EE enterprise services.
-In particular, Jakarta Enterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Eneterprise Bean and Jakarta Server Faces.
+In particular, Jakarta Enterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Enterprise Bean and Jakarta Server Faces.
 
 It's even possible to integrate with third-party frameworks.
 A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
@@ -67,7 +67,7 @@ This specification bolsters that functionality, adding the ability to inject an 
 ==== Relationship to Jakarta Enterprise Bean
 
 Jakarta Enterprise Bean defines a programming model for application components that access transactional resources in a multi-user environment.
-Jakarta Enterprise Bean allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the Jakarta Eneterprise Bean container at runtime.
+Jakarta Enterprise Bean allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the Jakarta Enterprise Bean container at runtime.
 
 Jakarta Enterprise Bean components may be stateful, but are not by nature contextual.
 References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
@@ -320,8 +320,8 @@ public class Login {
 }
 ----
 
-The Jakarta Enterprise Bean `@Stateful` annotation specifies that this bean is an Jakarta Eneterprise Bean stateful session bean.
-The Jakarta Enterprise Bean `@TransactionAttribute` and `@RolesAllowed` annotations declare the Jakarta Eneterprise Bean transaction demarcation and security attributes of the annotated methods.
+The Jakarta Enterprise Bean `@Stateful` annotation specifies that this bean is an Jakarta Enterprise Bean stateful session bean.
+The Jakarta Enterprise Bean `@TransactionAttribute` and `@RolesAllowed` annotations declare the Jakarta Enterprise Bean transaction demarcation and security attributes of the annotated methods.
 
 ==== Jakarta EE component environment example
 

@@ -57,7 +57,7 @@ public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFacto
 
 When running in Jakarta EE, the container must extend the rules defined in <<alternative_metadata_sources>> and ensure that:
 
-* when an `AnnotatedType` represents an Jakarta Enterprise Bean session bean class, `Annotated.getTypeClosure()` must returns the Jakarta Eneterprise Bean session bean types as defined in <<session_bean_types>>.
+* when an `AnnotatedType` represents an Jakarta Enterprise Bean session bean class, `Annotated.getTypeClosure()` must returns the Jakarta Enterprise Bean session bean types as defined in <<session_bean_types>>.
 
 [[init_events_ee]]
 

@@ -48,10 +48,10 @@ Portable extensions that integrate with the container via Unified EL should also
 
 ==== Passivation capable beans in Jakarta EE
 
-* As defined by the Jakarta Enterprise Bean specification, an Jakarta Eneterprise Bean stateful session beans is passivation capable if:
+* As defined by the Jakarta Enterprise Bean specification, an Jakarta Enterprise Bean stateful session beans is passivation capable if:
 ** interceptors and decorators of the bean are passivation capable, and,
 ** the Jakarta Enterprise Bean stateful session bean does not have the `passivationCapable` flag set to `false`.
-* As defined by the Jakarta Enterprise Bean specification, an Jakarta Eneterprise Bean stateless session bean or an Jakarta Eneterprise Bean singleton session bean is not passivation capable.
+* As defined by the Jakarta Enterprise Bean specification, an Jakarta Enterprise Bean stateless session bean or an Jakarta Enterprise Bean singleton session bean is not passivation capable.
 
 [[passivation_capable_dependency_ee]]
 
@@ -88,7 +88,7 @@ The request context is active:
 
 * during the `service()` method of any servlet in the web application, during the `doFilter()` method of any servlet filter and when the container calls any `ServletRequestListener` or `AsyncListener`,
 * during any Jakarta EE web service invocation,
-* during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Eneterprise Bean, during any call to an Jakarta Eneterprise Bean timeout method and during message delivery to any Jakarta Eneterprise Bean message-driven bean.
+* during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Enterprise Bean, during any call to an Jakarta Enterprise Bean timeout method and during message delivery to any Jakarta Enterprise Bean message-driven bean.
 
 
 The request context is destroyed:
@@ -132,12 +132,12 @@ The application scope is active:
 * during the `service()` method of any servlet in the web application, during the `doFilter()` method of any servlet filter and when the container calls any `ServletContextListener`, `HttpSessionListener`, `AsyncListener` or `ServletRequestListener`,
 * during any Jakarta EE web service invocation,
 * during any asynchronous invocation of an event observer,
-* during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Eneterprise Bean, during any call to an Jakarta Eneterprise Bean timeout method and during message delivery to any Jakarta Eneterprise Bean message-driven bean,
+* during any remote method invocation of any Jakarta Enterprise Bean, during any asynchronous method invocation of any Jakarta Enterprise Bean, during any call to an Jakarta Enterprise Bean timeout method and during message delivery to any Jakarta Enterprise Bean message-driven bean,
 * when the disposer method or `@PreDestroy` callback of any bean with any normal scope other than `@ApplicationScoped` is called, and
 * during `@PostConstruct` callback of any bean.
 
 
-The application context is shared between all servlet requests, web service invocations, asynchronous invocation of an event observer, Jakarta Enterprise Bean remote method invocations, Jakarta Eneterprise Bean asynchronous method invocations, Jakarta Eneterprise Bean timeouts and message deliveries to message-driven beans that execute within the same application.
+The application context is shared between all servlet requests, web service invocations, asynchronous invocation of an event observer, Jakarta Enterprise Bean remote method invocations, Jakarta Enterprise Bean asynchronous method invocations, Jakarta Enterprise Bean timeouts and message deliveries to message-driven beans that execute within the same application.
 The application context is destroyed when the application is shut down.
 
 The payload of the event fired when the application context is initialized or destroyed is:
