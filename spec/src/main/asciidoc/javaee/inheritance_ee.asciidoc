@@ -2,7 +2,7 @@
 
 === Inheritance of type-level metadata in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<type_level_inheritance>> to Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<type_level_inheritance>> to Jakarta Enterprise Bean session beans.
 
 
 
@@ -10,7 +10,7 @@ When running in Jakarta EE, the container must extend the rules defined for mana
 
 === Inheritance of member-level metadata in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<member_level_inheritance>> to Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<member_level_inheritance>> to Jakarta Enterprise Bean session beans.
 
 [[specialization_ee]]
 
@@ -20,4 +20,4 @@ When running in Jakarta EE, the container must extend the rules defined for mana
 
 ==== Direct and indirect specialization in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined in <<member_level_inheritance>> and is also required to support specialization for Jakarta Eneterprise Bean session beans as defined in <<specialize_session_bean>>.
+When running in Jakarta EE, the container must extend the rules defined in <<member_level_inheritance>> and is also required to support specialization for Jakarta Enterprise Bean session beans as defined in <<specialize_session_bean>>.

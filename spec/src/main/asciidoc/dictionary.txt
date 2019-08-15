@@ -15,8 +15,8 @@ decorators
 DoD
 EE
 EG
-Jakarta Eneterprise Bean
-Jakarta Eneterprise Beans
+Jakarta Enterprise Bean
+Jakarta Enterprise Beans
 enablement
 enum
 enums

@@ -42,7 +42,7 @@ When determining which archives are bean archives, the container must consider:
 * Library jars
 * Directories in the JVM classpath
 
-Non Jakarta EE containers may or may not provide support for war, Jakarta Eneterprise Bean jar or rar bean archives.
+Non Jakarta EE containers may or may not provide support for war, Jakarta Enterprise Bean jar or rar bean archives.
 
 The `beans.xml` file must be named:
 

@@ -15,20 +15,20 @@ This specification defines a powerful set of complementary services that help to
 
 
 The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events.
-Various kinds of objects are injectable, including Jakarta Eneterprise Bean 3 session beans, managed beans and Jakarta EE resources.
+Various kinds of objects are injectable, including Jakarta Enterprise Bean 3 session beans, managed beans and Jakarta EE resources.
 We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_.
 Contextual instances may be injected into other objects by the dependency injection service.
 
 To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
 
 The use of these services significantly simplifies the task of creating Jakarta EE applications by integrating the Jakarta EE web tier with Jakarta EE enterprise services.
-In particular, Jakarta Eneterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Eneterprise Bean and Jakarta Server Faces.
+In particular, Jakarta Enterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Enterprise Bean and Jakarta Server Faces.
 
 It's even possible to integrate with third-party frameworks.
 A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
 
 An application that takes advantage of these services may be designed to execute in either the Jakarta EE environment or the Java SE environment.
-If the application uses Jakarta EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the Jakarta Eneterprise Bean specification.
+If the application uses Jakarta EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the Jakarta Enterprise Bean specification.
 
 === Contracts
 
@@ -39,7 +39,7 @@ This specification defines the responsibilities of:
 
 
 This runtime environment is called the _container_.
-For example, the container might be a Jakarta EE container or an embeddable Jakarta Eneterprise Bean container.
+For example, the container might be a Jakarta EE container or an embeddable Jakarta Enterprise Bean container.
 
 <<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decorator_bean>> and <<observer_methods>> define the programming model for Jakarta EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
 
@@ -64,15 +64,15 @@ The Jakarta EE platform specification defines a facility for injecting _resource
 Resources are identified by string-based names.
 This specification bolsters that functionality, adding the ability to inject an open-ended set of object types, including, but not limited to, component environment resources, based upon typesafe qualifiers.
 
-==== Relationship to Jakarta Eneterprise Bean
+==== Relationship to Jakarta Enterprise Bean
 
-Jakarta Eneterprise Bean defines a programming model for application components that access transactional resources in a multi-user environment.
-Jakarta Eneterprise Bean allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the Jakarta Eneterprise Bean container at runtime.
+Jakarta Enterprise Bean defines a programming model for application components that access transactional resources in a multi-user environment.
+Jakarta Enterprise Bean allows concerns such as role-based security, transaction demarcation, concurrency and scalability to be specified declaratively using annotations and XML deployment descriptors and enforced by the Jakarta Enterprise Bean container at runtime.
 
-Jakarta Eneterprise Bean components may be stateful, but are not by nature contextual.
+Jakarta Enterprise Bean components may be stateful, but are not by nature contextual.
 References to stateful component instances must be explicitly passed between clients and stateful instances must be explicitly destroyed by the application.
 
-This specification enhances the Jakarta Eneterprise Bean component model with contextual lifecycle management.
+This specification enhances the Jakarta Enterprise Bean component model with contextual lifecycle management.
 
 Any session bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context.
 The container automatically creates the instance when it is needed by a client.
@@ -277,9 +277,9 @@ When the login form is submitted, Jakarta Server Faces assigns the entered usern
 Next, Jakarta Server Faces calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
 This instance continues to exist for and be available to other requests in the same HTTP session, and provides the `User` object representing the current user to any other bean that requires it (for example, `DocumentEditor`). If the producer method is called before the `login()` method initializes the user object, it throws a `NotLoggedInException`.
 
-==== Jakarta Eneterprise Bean example
+==== Jakarta Enterprise Bean example
 
-Alternatively, we could write our `Login` bean to take advantage of the functionality defined by Jakarta Eneterprise Bean:
+Alternatively, we could write our `Login` bean to take advantage of the functionality defined by Jakarta Enterprise Bean:
 
 [source, java]
 ----
@@ -320,8 +320,8 @@ public class Login {
 }
 ----
 
-The Jakarta Eneterprise Bean `@Stateful` annotation specifies that this bean is an Jakarta Eneterprise Bean stateful session bean.
-The Jakarta Eneterprise Bean `@TransactionAttribute` and `@RolesAllowed` annotations declare the Jakarta Eneterprise Bean transaction demarcation and security attributes of the annotated methods.
+The Jakarta Enterprise Bean `@Stateful` annotation specifies that this bean is an Jakarta Enterprise Bean stateful session bean.
+The Jakarta Enterprise Bean `@TransactionAttribute` and `@RolesAllowed` annotations declare the Jakarta Enterprise Bean transaction demarcation and security attributes of the annotated methods.
 
 ==== Jakarta EE component environment example
 

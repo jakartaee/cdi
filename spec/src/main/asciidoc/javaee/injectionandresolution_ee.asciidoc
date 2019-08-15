@@ -25,13 +25,13 @@ An alternative is not available for injection, lookup or EL resolution to classe
 
 ==== Declaring selected alternatives for an application in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_application>> to Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_application>> to Jakarta Enterprise Bean session beans.
 
 [[declaring_selected_alternatives_bean_archive_ee]]
 
 ==== Declaring selected alternatives for a bean archive in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<declaring_selected_alternatives_bean_archive>> to Jakarta Enterprise Bean session beans.
 
 [[unsatisfied_and_ambig_dependencies_ee]]
 
@@ -62,11 +62,11 @@ When running in Jakarta EE, the container must extend the rules defined in <<amb
 
 When running in Jakarta EE, the container must extend the rules defined in <<injection>> and is also required to perform dependency injection whenever it creates the following contextual objects:
 
-* contextual instances of Jakarta Eneterprise Bean session beans.
+* contextual instances of Jakarta Enterprise Bean session beans.
 
 The container is also required to perform dependency injection whenever it instantiates any of the following non-contextual objects:
 
-* non-contextual instances of Jakarta Eneterprise Bean session beans (for example, session beans obtained by the application from JNDI or injected using `@Jakarta Eneterprise Bean`), and
+* non-contextual instances of Jakarta Enterprise Bean session beans (for example, session beans obtained by the application from JNDI or injected using `@Jakarta Enterprise Bean`), and
 * instances of any other Jakarta EE component class supporting injection.
 
 A Jakarta EE 5 container is not required to support injection for non-contextual objects.
@@ -75,13 +75,13 @@ A Jakarta EE 5 container is not required to support injection for non-contextual
 
 ==== Injection using the bean constructor in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<instantiation>> to Jakarta Eneterprise Bean session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<instantiation>> to Jakarta Enterprise Bean session beans.
 
 [[fields_initializer_methods_ee]]
 
 ==== Injection of fields and initializer methods in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to Jakarta Eneterprise Bean session beans and to any other Jakarta EE component class supporting injection.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to Jakarta Enterprise Bean session beans and to any other Jakarta EE component class supporting injection.
 
 The container is also required to ensure that:
 

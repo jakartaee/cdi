@@ -4,16 +4,16 @@
 
 [[observer_methods_ee]]
 
-=== Observer methods in Jakarta Eneterprise Bean session beans
+=== Observer methods in Jakarta Enterprise Bean session beans
 
-An observer method may also be a non-abstract method of an Jakarta Eneterprise Bean session bean class.
-It must be either a business method exposed by a local business interface of the Jakarta Eneterprise Bean or a static method of the bean class.
+An observer method may also be a non-abstract method of an Jakarta Enterprise Bean session bean class.
+It must be either a business method exposed by a local business interface of the Jakarta Enterprise Bean or a static method of the bean class.
 
 [[observes_ee]]
 
-==== Declaring an observer method in an Jakarta Eneterprise Bean
+==== Declaring an observer method in an Jakarta Enterprise Bean
 
-If a non-static method of a session bean class has a parameter annotated `@Observes` or `@ObservesAsync`, and the method is not a business method exposed by a local business interface of the Jakarta Eneterprise Bean, the container automatically detects the problem and treats it as a definition error.
+If a non-static method of a session bean class has a parameter annotated `@Observes` or `@ObservesAsync`, and the method is not a business method exposed by a local business interface of the Jakarta Enterprise Bean, the container automatically detects the problem and treats it as a definition error.
 
 [[observer_method_invocation_context_ee]]
 
@@ -21,4 +21,4 @@ If a non-static method of a session bean class has a parameter annotated `@Obser
 
 When Running in Jakarta EE, the container must extend the rules defined in <<observer_method_invocation_context>> and must also ensure that all kinds of observers are called in the same client security context as the invocation of `Event.fire()` or `Event.fireAsync()` or `BeanManager.fireEvent()`.
 
-The transaction and security contexts for a business method exposed by a local business interface of an Jakarta Eneterprise Bean session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.
+The transaction and security contexts for a business method exposed by a local business interface of an Jakarta Enterprise Bean session bean also depend upon the transaction attribute and `@RunAs` descriptor, if any.
