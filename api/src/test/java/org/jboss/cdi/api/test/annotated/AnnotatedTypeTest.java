@@ -17,7 +17,7 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import javax.enterprise.inject.spi.Annotated;
+import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 
 public class AnnotatedTypeTest extends AbstractAnnotatedTest {

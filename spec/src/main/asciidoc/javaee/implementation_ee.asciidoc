@@ -301,7 +301,7 @@ The resulting set of bean types for a resource consists only of <<legal_bean_typ
 
 A Java EE or embeddable EJB container must provide the following built-in beans, all of which have qualifier `@Default`:
 
-* a bean with bean type `javax.transaction.UserTransaction`, allowing injection of a reference to the JTA `UserTransaction`, and
+* a bean with bean type `jakarta.transaction.UserTransaction`, allowing injection of a reference to the JTA `UserTransaction`, and
 * a bean with bean type `java.security.Principal`, allowing injection of a `Principal` representing the current caller identity.
 
 

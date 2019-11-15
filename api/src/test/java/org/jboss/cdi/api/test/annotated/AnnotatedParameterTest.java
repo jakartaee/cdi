@@ -19,7 +19,7 @@ package org.jboss.cdi.api.test.annotated;
 
 import org.testng.annotations.BeforeClass;
 
-import javax.enterprise.inject.spi.Annotated;
+import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

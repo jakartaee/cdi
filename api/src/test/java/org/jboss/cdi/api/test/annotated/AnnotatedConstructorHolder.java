@@ -17,7 +17,7 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import javax.enterprise.inject.spi.AnnotatedConstructor;
+import jakarta.enterprise.inject.spi.AnnotatedConstructor;
 import java.lang.reflect.Constructor;
 
 public class AnnotatedConstructorHolder<T> extends AnnotatedCallableHolder<T> implements AnnotatedConstructor<T> {

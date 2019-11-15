@@ -7,7 +7,7 @@ import static org.testng.Assert.assertNull;
 import java.time.Duration;
 import java.util.concurrent.Executor;
 
-import javax.enterprise.event.NotificationOptions;
+import jakarta.enterprise.event.NotificationOptions;
 
 import org.testng.annotations.Test;
 
