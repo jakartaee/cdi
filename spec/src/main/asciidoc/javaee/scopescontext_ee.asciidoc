@@ -207,7 +207,7 @@ In the following cases, a propagated long-running conversation cannot be restore
 
 The _conversation timeout_, which may be specified by calling `Conversation.setTimeout()` is a hint to the container that a conversation should not be destroyed if it has been active within the last given interval in milliseconds.
 
-If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation and throw an exception of type `javax.enterprise.context.NonexistentConversationException`.
+If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation and throw an exception of type `jakarta.enterprise.context.NonexistentConversationException`.
 
 The container ensures that a long-running conversation may be associated with at most one request at a time, by blocking or rejecting concurrent requests.
-If the container rejects a request, it must associate the request with a new transient conversation and throw an exception of type `javax.enterprise.context.BusyConversationException`.
+If the container rejects a request, it must associate the request with a new transient conversation and throw an exception of type `jakarta.enterprise.context.BusyConversationException`.

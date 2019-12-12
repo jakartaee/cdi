@@ -19,7 +19,7 @@ grant codeBase "file:${project.build.outputDirectory}/-" {
 
 grant codeBase "file:${project.build.testOutputDirectory}/-" {
         permission java.util.PropertyPermission "serviceDir", "read";
-        permission java.io.FilePermission "${project.build.testOutputDirectory}/META-INF/services/javax.enterprise.inject.spi.CDIProvider", "write";
+        permission java.io.FilePermission "${project.build.testOutputDirectory}/META-INF/services/jakarta.enterprise.inject.spi.CDIProvider", "write";
 };
 
 

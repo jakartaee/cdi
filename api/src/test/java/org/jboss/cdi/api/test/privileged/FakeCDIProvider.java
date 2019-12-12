@@ -20,11 +20,11 @@ package org.jboss.cdi.api.test.privileged;
 import java.lang.annotation.Annotation;
 import java.util.Iterator;
 
-import javax.enterprise.inject.Instance;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.inject.spi.CDI;
-import javax.enterprise.inject.spi.CDIProvider;
-import javax.enterprise.util.TypeLiteral;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.enterprise.inject.spi.CDIProvider;
+import jakarta.enterprise.util.TypeLiteral;
 
 /**
  * A fake CDI Provider for testing

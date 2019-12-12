@@ -34,7 +34,7 @@ A Java class is a managed bean if it meets all of the following conditions:
 
 * It is not an inner class.
 * It is a non-abstract class, or is annotated `@Decorator`.
-* It does not implement `javax.enterprise.inject.spi.Extension`.
+* It does not implement `jakarta.enterprise.inject.spi.Extension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
 ** the class has a constructor with no parameters, or
@@ -179,7 +179,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 ==== Declaring a producer method
 
-A producer method may be declared by annotating a method with the `@javax.enterprise.inject.Produces` annotation.
+A producer method may be declared by annotating a method with the `@jakarta.enterprise.inject.Produces` annotation.
 
 [source, java]
 ----
@@ -318,7 +318,7 @@ Note the additional restrictions upon bean types of beans with normal scopes def
 
 ==== Declaring a producer field
 
-A producer field may be declared by annotating a field with the `@javax.enterprise.inject.Produces` annotation.
+A producer field may be declared by annotating a field with the `@jakarta.enterprise.inject.Produces` annotation.
 
 [source, java]
 ----
@@ -382,7 +382,7 @@ A disposer method may resolve to multiple producer methods or producer fields de
 
 ==== Declaring a disposer method
 
-A disposer method may be declared by annotating a parameter `@javax.enterprise.inject.Disposes`. That parameter is the disposed parameter.
+A disposer method may be declared by annotating a parameter `@jakarta.enterprise.inject.Disposes`. That parameter is the disposed parameter.
 Qualifiers may be declared by annotating the disposed parameter:
 
 [source, java]
@@ -538,7 +538,7 @@ An _injected field_ is a non-static, non-final field of a bean class or of any o
 
 ==== Declaring an injected field
 
-An injected field may be declared by annotating the field `@javax.inject.Inject`.
+An injected field may be declared by annotating the field `@jakarta.inject.Inject`.
 
 [source, java]
 ----
@@ -569,7 +569,7 @@ The application may call initializer methods directly, but then no parameters wi
 
 ==== Declaring an initializer method
 
-An initializer method may be declared by annotating the method `@javax.inject.Inject`.
+An initializer method may be declared by annotating the method `@jakarta.inject.Inject`.
 
 [source, java]
 ----
@@ -715,7 +715,7 @@ For each managed bean, a second bean exists which:
 However, this second bean:
 
 * has scope `@Dependent`,
-* has exactly one qualifier: `@javax.enterprise.inject.New(X.class)` where `X` is the bean class,
+* has exactly one qualifier: `@jakarta.enterprise.inject.New(X.class)` where `X` is the bean class,
 * has no bean name,
 * has no stereotypes,
 * has no observer methods, producer methods or fields or disposer methods, and

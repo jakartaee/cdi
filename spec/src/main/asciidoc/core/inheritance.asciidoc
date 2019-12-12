@@ -127,7 +127,7 @@ Suppose that the `MockAsynchronousService` alternative is selected, as defined i
 
 [source, java]
 ----
-@Alternative @Priority(javax.interceptor.Interceptor.Priority.APPLICATION+100)
+@Alternative @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION+100)
 public class MockAsynchronousService extends AsynchronousService { 
     ... 
 }
@@ -175,7 +175,7 @@ Even if the second bean defines a producer or observer method, the method will n
 
 ==== Direct and indirect specialization
 
-The annotation `@javax.enterprise.inject.Specializes` is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>> and <<specialize_producer_method>>.
+The annotation `@jakarta.enterprise.inject.Specializes` is used to indicate that one bean _directly specializes_ another bean, as defined in <<specialize_managed_bean>> and <<specialize_producer_method>>.
 
 Formally, a bean X is said to _specialize_ another bean Y if there is either:
 

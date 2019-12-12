@@ -17,12 +17,13 @@
 
 package org.jboss.cdi.api.test.privileged.annotation;
 
+import jakarta.enterprise.util.AnnotationLiteral;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
  *
- * This class test usage of privileged bloc in {@link javax.enterprise.util.AnnotationLiteral}
+ * This class test usage of privileged bloc in {@link AnnotationLiteral}
  * They launched with Java security Manager.
  *
  * @author Antoine Sabot-Durand

@@ -16,7 +16,7 @@ The context implementation collaborates with the container via the `Context` and
 
 === The `Contextual` interface
 
-The interface `javax.enterprise.context.spi.Contextual` defines operations to create and destroy contextual instances of a certain type. Any implementation of `Contextual` is called a _contextual type_.
+The interface `jakarta.enterprise.context.spi.Contextual` defines operations to create and destroy contextual instances of a certain type. Any implementation of `Contextual` is called a _contextual type_.
 In particular, the `Bean` interface defined in <<bean>> extends `Contextual`, so all beans are contextual types.
 
 [source, java]
@@ -44,7 +44,7 @@ The container and portable extensions may define implementations of the `Context
 
 ==== The `CreationalContext` interface
 
-The interface `javax.enterprise.context.spi.CreationalContext` provides operations that are used by the `Contextual` implementation during instance creation and destruction.
+The interface `jakarta.enterprise.context.spi.CreationalContext` provides operations that are used by the `Contextual` implementation during instance creation and destruction.
 
 [source, java]
 ----
@@ -71,7 +71,7 @@ If `Contextual.create()` calls `push()`, it must also return the instance passed
 
 === The `Context` interface
 
-The `javax.enterprise.context.spi.Context` interface provides an operation for obtaining contextual instances with a particular scope of any contextual type. Any instance of `Context` is called a context object.
+The `jakarta.enterprise.context.spi.Context` interface provides an operation for obtaining contextual instances with a particular scope of any contextual type. Any instance of `Context` is called a context object.
 
 The context object is responsible for creating and destroying contextual instances by calling operations of the `Contextual` interface.
 
@@ -527,7 +527,7 @@ The _conversation context_ is provided by a built-in context object for the buil
 
 ==== The `Conversation` interface
 
-The container provides a built-in bean with bean type `Conversation`, scope `@RequestScoped`, and qualifier `@Default`, named `javax.enterprise.context.conversation`.
+The container provides a built-in bean with bean type `Conversation`, scope `@RequestScoped`, and qualifier `@Default`, named `jakarta.enterprise.context.conversation`.
 
 [source, java]
 ----

@@ -109,7 +109,7 @@ This specification extends the Java Interceptors specification and defines:
 * the effect of applying `@Nonbinding` to an interceptor binding member, and
 * how the interceptor bindings of a custom implementation of the `Interceptor` interface are determined.
 
-If any interceptor binding has a member annotated `@javax.enterprise.util.Nonbinding`, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
+If any interceptor binding has a member annotated `@jakarta.enterprise.util.Nonbinding`, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
 
 For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
 

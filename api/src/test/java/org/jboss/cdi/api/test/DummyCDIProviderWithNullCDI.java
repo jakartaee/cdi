@@ -17,8 +17,8 @@
 
 package org.jboss.cdi.api.test;
 
-import javax.enterprise.inject.spi.CDI;
-import javax.enterprise.inject.spi.CDIProvider;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.enterprise.inject.spi.CDIProvider;
 
 /**
  * Created by antoine on 16/12/2015.

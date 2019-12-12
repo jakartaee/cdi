@@ -44,7 +44,7 @@ Java EE Components may obtain an instance of `BeanManager` from JNDI by looking 
 
 ==== Wrapping a Unified EL `ExpressionFactory`
 
-The method `BeanManager.wrapExpressionFactory()` returns a wrapper `javax.el.ExpressionFactory` that delegates `MethodExpression` and `ValueExpression` creation to the given `ExpressionFactory`. When a Unified EL expression is evaluated using a `MethodExpression` or `ValueExpression` returned by the wrapper `ExpressionFactory`, the rules defined in <<dependent_scope_el>> are enforced by the container.
+The method `BeanManager.wrapExpressionFactory()` returns a wrapper `jakarta.el.ExpressionFactory` that delegates `MethodExpression` and `ValueExpression` creation to the given `ExpressionFactory`. When a Unified EL expression is evaluated using a `MethodExpression` or `ValueExpression` returned by the wrapper `ExpressionFactory`, the rules defined in <<dependent_scope_el>> are enforced by the container.
 
 [source, java]
 ----
@@ -110,7 +110,7 @@ In addition to definition given in <<process_bean>> the following apply:
 
 Resources are considered to be producer fields.
 
-When running in Java EE, the interface `javax.enterprise.inject.spi.ProcessBean` is also a supertype of `javax.enterprise.inject.spi.ProcessSession` :
+When running in Java EE, the interface `jakarta.enterprise.inject.spi.ProcessBean` is also a supertype of `jakarta.enterprise.inject.spi.ProcessSession` :
 
 [source, java]
 ----
@@ -122,7 +122,7 @@ public interface ProcessSessionBean<X>
 ----
 
 * `getEjbName()` returns the EJB name of the session bean.
-* `getSessionBeanType()` returns a `javax.enterprise.inject.spi.SessionBeanType` representing the kind of session bean.
+* `getSessionBeanType()` returns a `jakarta.enterprise.inject.spi.SessionBeanType` representing the kind of session bean.
 
 [source, java]
 ----

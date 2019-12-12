@@ -30,7 +30,7 @@ An event type may not contain an unresolvable type variable. A wildcard type is 
 
 An event qualifier type is just an ordinary qualifier type as specified in <<defining_qualifier_types>>, typically defined as `@Target({METHOD, FIELD, PARAMETER, TYPE})` or `@Target({FIELD, PARAMETER})`.
 
-Every event has the qualifier `@javax.enterprise.inject.Any`, even if it does not explicitly declare this qualifier.
+Every event has the qualifier `@jakarta.enterprise.inject.Any`, even if it does not explicitly declare this qualifier.
 
 Any Java type may be an observed event type.
 
@@ -38,7 +38,7 @@ Any Java type may be an observed event type.
 
 === Firing events
 
-Beans fire events via an instance of the `javax.enterprise.event.Event` interface, which may be injected:
+Beans fire events via an instance of the `jakarta.enterprise.event.Event` interface, which may be injected:
 
 [source, java]
 ----
@@ -209,7 +209,7 @@ An event is delivered to an observer method if:
 * The observer method belongs to an enabled bean.
 * An event type is assignable to the observed event type, taking type parameters into consideration.
 * The observer method has no event qualifiers or has a subset of the event qualifiers.
-An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@javax.enterprise.util.Nonbinding`.
+An observer method has an event qualifier if it has an observed event qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@jakarta.enterprise.util.Nonbinding`.
 * Either the event is not a container lifecycle event, as defined in <<init_events>>, or the observer method belongs to an extension.
 * The event is fired synchronously and the observer is a synchronous observer as defined in <<observes>>.
 * The event is fired asynchronously and the observer is an asynchronous observer as defined in <<observes>>.
@@ -373,7 +373,7 @@ The container is not required to guarantee a consistent state for an event param
 
 ==== Declaring an observer method
 
-An observer method may be declared by annotating a parameter `@javax.enterprise.event.Observes` or `@javax.enterprise.event.ObservesAsync` of a default-access, public, protected or private method.
+An observer method may be declared by annotating a parameter `@jakarta.enterprise.event.Observes` or `@jakarta.enterprise.event.ObservesAsync` of a default-access, public, protected or private method.
 That parameter is the event parameter.
 The declared type of the parameter is the observed event type.
 
@@ -417,7 +417,7 @@ public void afterLogin(@Observes LoggedInEvent event, @Manager User user, Logger
 
 ==== The `EventMetadata` interface
 
-The interface `javax.enterprise.inject.spi.EventMetadata` provides access to metadata about an observed event.
+The interface `jakarta.enterprise.inject.spi.EventMetadata` provides access to metadata about an observed event.
 
 
 [source, java]
@@ -461,7 +461,7 @@ public void asyncRefreshOnDocumentUpdate(@ObservesAsync(notifyObserver=IF_EXISTS
 Beans with scope `@Dependent` may not have conditional observer methods.
 If a bean with scope `@Dependent` has an observer method declared `notifyObserver=IF_EXISTS`, the container automatically detects the problem and treats it as a definition error.
 
-The enumeration `javax.enterprise.event.Reception` identifies the possible values of `notifyObserver`:
+The enumeration `jakarta.enterprise.event.Reception` identifies the possible values of `notifyObserver`:
 
 [source, java]
 ----
@@ -475,7 +475,7 @@ public enum Reception { IF_EXISTS, ALWAYS }
 _Transactional observer methods_ are observer methods which receive event notifications during the before or after completion phase of the transaction in which the event was fired.
 If no transaction is in progress when the event is fired, they are notified at the same time as other observers.
 
-If the transaction is in progress, but `javax.transaction.Synchronization` callback cannot be registered due to the transaction being already marked for rollback or in state where `javax.transaction.Synchronization` callbacks cannot be registered, the _before completion_, _after completion_ and _after failure_ observer methods are notified at the same time as other observers, but _after_success_ observer methods get skipped.
+If the transaction is in progress, but `jakarta.transaction.Synchronization` callback cannot be registered due to the transaction being already marked for rollback or in state where `jakarta.transaction.Synchronization` callbacks cannot be registered, the _before completion_, _after completion_ and _after failure_ observer methods are notified at the same time as other observers, but _after_success_ observer methods get skipped.
 
 * A _before completion_ observer method is called during the before completion phase of the transaction.
 * An _after completion_ observer method is called during the after completion phase of the transaction.
@@ -483,7 +483,7 @@ If the transaction is in progress, but `javax.transaction.Synchronization` callb
 * An _after failure_ observer method is called during the after completion phase of the transaction, only when the transaction fails.
 
 
-The enumeration `javax.enterprise.event.TransactionPhase` identifies the kind of transactional observer method:
+The enumeration `jakarta.enterprise.event.TransactionPhase` identifies the kind of transactional observer method:
 
 [source, java]
 ----
@@ -536,7 +536,7 @@ The `BeanManager.fireEvent()` or `Event.fire()` method rethrows the exception.
 If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) `ObserverException`.
 
 
-For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `javax.enterprise.inject.spi.EventContext` to invoke the method.
+For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `jakarta.enterprise.inject.spi.EventContext` to invoke the method.
 
 [[async_exception]]
 
@@ -571,12 +571,12 @@ If no exception is thrown by observers then the resulting CompletionStage is com
 Before the actual observer notification, the container determines an order in which the observer methods for a certain event are invoked.
 The priority of an observer method may be declared by annotating the event parameter with `@Priority` annotation.
 If a `@Priority` annotation is declared on an event parameter of an asynchronous observer method, non-portable behavior results.
-If no `@Priority` annotation is specified, the default priority `javax.interceptor.Interceptor.Priority.APPLICATION + 500` is assumed.
+If no `@Priority` annotation is specified, the default priority `jakarta.interceptor.Interceptor.Priority.APPLICATION + 500` is assumed.
 Observers with smaller priority values are called first.
 
 [source, java]
 ----
-void afterLogin(@Observes @Priority(javax.interceptor.Interceptor.Priority.APPLICATION) LoggedInEvent event) { ... }
+void afterLogin(@Observes @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION) LoggedInEvent event) { ... }
 ----
 
 The order of more than one observer with the same priority is undefined and the observer methods are notified therefore in a non predictable order.
