@@ -20,7 +20,7 @@ package org.jboss.cdi.api.test.annotated;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.enterprise.inject.spi.Annotated;
+import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.LinkedHashSet;

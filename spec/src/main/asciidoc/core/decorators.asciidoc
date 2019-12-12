@@ -28,11 +28,11 @@ If a decorator declares any scope other than `@Dependent`, the container automat
 
 ==== Declaring a decorator
 
-A decorator is declared by annotating the bean class with the `@javax.decorator.Decorator` stereotype.
+A decorator is declared by annotating the bean class with the `@jakarta.decorator.Decorator` stereotype.
 
 [source, java]
 ----
-@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+@Decorator @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger { ... }
 ----
 
@@ -45,11 +45,11 @@ A delegate injection point is an injection point of the bean class.
 The type and qualifiers of the injection point are called the _delegate type_ and _delegate qualifiers_.
 The decorator applies to beans that are assignable to the delegate injection point.
 
-The delegate injection point must be declared by annotating the injection point with the annotation `@javax.decorator.Delegate`:
+The delegate injection point must be declared by annotating the injection point with the annotation `@jakarta.decorator.Delegate`:
 
 [source, java]
 ----
-@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+@Decorator @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
     @Inject @Delegate @Any Logger logger;
     ...
@@ -58,7 +58,7 @@ class TimestampLogger implements Logger {
 
 [source, java]
 ----
-@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+@Decorator @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
     private Logger logger;
     
@@ -84,7 +84,7 @@ When the container calls a decorator during business method interception, the de
 
 [source, java]
 ----
-@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+@Decorator @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger { 
     @Inject @Delegate @Any Logger logger; 
  
@@ -137,7 +137,7 @@ The order of more than one decorator with the same priority is undefined.
 
 [source,java]
 ----
-@Decorator @Priority(javax.interceptor.Interceptor.Priority.APPLICATION)
+@Decorator @Priority(jakarta.interceptor.Interceptor.Priority.APPLICATION)
 class TimestampLogger implements Logger {
 
    ...
