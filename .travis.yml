@@ -1,20 +1,15 @@
+dist: trusty
 language: java
 sudo: false
-install: mvn -Pstaging install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script: mvn -Pstaging test -B
+
 jdk:
-  - oraclejdk8
+  - oraclejdk11
+  - openjdk11
 
 cache:
   directories:
-  - $HOME/.m2
+    - $HOME/.m2
 
-notifications:
-  email:
-    - cdi-dev@lists.jboss.org
-  irc:
-    channels:
-      - "chat.freenode.net#cdi-dev"
-    on_success: change  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
+script:
+  - cd api
+  - mvn verify -B -V -Poss-release -Dgpg.skip=true
