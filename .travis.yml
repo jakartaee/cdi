@@ -3,7 +3,8 @@ sudo: false
 install: mvn -Pstaging install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn -Pstaging test -B
 jdk:
-  - oraclejdk8
+  - openjdk8
+  - openjdk11
 
 cache:
   directories:
