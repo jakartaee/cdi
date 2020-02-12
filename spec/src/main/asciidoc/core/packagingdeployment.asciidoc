@@ -68,7 +68,7 @@ An extension may be deployed in any archive, including those that are not bean a
 
 When an application is started, the container performs the following steps:
 
-* First, the container must search for service providers for the service `javax.enterprise.inject.spi.Extension` defined in <<init_events>>, instantiate a single instance of each service provider, and search the service provider class for observer methods of initialization events.
+* First, the container must search for service providers for the service `jakarta.enterprise.inject.spi.Extension` defined in <<init_events>>, instantiate a single instance of each service provider, and search the service provider class for observer methods of initialization events.
 * Next, the container must fire an event of type `BeforeBeanDiscovery`, as defined in <<before_bean_discovery>>.
 * Next, the container must perform type discovery, as defined in <<type_discovery_steps>>.
 * Next, the container must fire an event of type `AfterTypeDiscovery`, as defined in <<after_type_discovery>>.
@@ -154,7 +154,7 @@ beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
         </exclude>
 
         <exclude name="com.acme.ejb.**">
-            <if-class-available name="javax.enterprise.inject.Model"/>
+            <if-class-available name="jakarta.enterprise.inject.Model"/>
             <if-system-property name="exclude-ejbs"/>
         </exclude>
     </scan>
@@ -162,7 +162,7 @@ beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 </beans>
 ----
 
-The first exclude filter will exclude all classes in `com.acme.rest` package. The second exclude filter will exclude all classes in the `com.acme.faces` package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the `com.acme.verbose` package if the system property `verbosity` has the value `low`. The fourth exclude filter will exclude all classes in the `com.acme.ejb` package, and any subpackages if the system property `exclude-ejbs` is set (with any value) and at the same time, the `javax.enterprise.inject.Model` class is available to the classloader.
+The first exclude filter will exclude all classes in `com.acme.rest` package. The second exclude filter will exclude all classes in the `com.acme.faces` package, and any subpackages, but only if JSF is not available. The third exclude filter will exclude all classes in the `com.acme.verbose` package if the system property `verbosity` has the value `low`. The fourth exclude filter will exclude all classes in the `com.acme.ejb` package, and any subpackages if the system property `exclude-ejbs` is set (with any value) and at the same time, the `jakarta.enterprise.inject.Model` class is available to the classloader.
 
 
 [[trimmed_bean_archive]]

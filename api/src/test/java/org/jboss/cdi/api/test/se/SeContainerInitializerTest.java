@@ -21,7 +21,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.enterprise.inject.se.SeContainerInitializer;
+import jakarta.enterprise.inject.se.SeContainerInitializer;
 import java.io.FileWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;

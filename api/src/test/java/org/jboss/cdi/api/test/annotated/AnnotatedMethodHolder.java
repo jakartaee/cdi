@@ -17,7 +17,7 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import javax.enterprise.inject.spi.AnnotatedMethod;
+import jakarta.enterprise.inject.spi.AnnotatedMethod;
 import java.lang.reflect.Method;
 
 public class AnnotatedMethodHolder<T> extends AnnotatedCallableHolder<T> implements AnnotatedMethod<T>{

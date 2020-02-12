@@ -150,7 +150,7 @@ A bean is _assignable_ to a given injection point if:
 For this purpose, primitive types are considered to match their corresponding wrapper types in `java.lang` and array types are considered to match only if their element types are identical.
 Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignable_parameters>> or <<delegate_assignable_parameters>>.
 * The bean has all the required qualifiers.
-If no required qualifiers were explicitly specified, the container assumes the required qualifier `@Default`. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@javax.enterprise.util.Nonbinding`.
+If no required qualifiers were explicitly specified, the container assumes the required qualifier `@Default`. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@jakarta.enterprise.util.Nonbinding`.
 
 
 A bean is eligible for injection to a certain injection point if:
@@ -496,7 +496,7 @@ The container is also responsible for destroying dependent objects created durin
 
 ==== Injection point metadata
 
-The interface `javax.enterprise.inject.spi.InjectionPoint` provides access to metadata about an injection point.
+The interface `jakarta.enterprise.inject.spi.InjectionPoint` provides access to metadata about an injection point.
 An instance of `InjectionPoint` may represent:
 
 * an injected field or a parameter of a bean constructor, initializer method, producer method, disposer method or observer method, or
@@ -523,8 +523,8 @@ If the injection point represents a dynamically obtained instance, the `getBean(
 If the injection point represents a dynamically obtained instance, the `getType()` and `getQualifiers()` methods should return the required type (as defined by `Instance.select()`), and required qualifiers of the injection point including any additional required qualifiers (as defined by `Instance.select()`).
 * The `getMember()` method returns the `Field` object in the case of field injection, the `Method` object in the case of method parameter injection, or the `Constructor` object in the case of constructor parameter injection.
 If the injection point represents a dynamically obtained instance, the `getMember()` method returns the `Field` object representing the field that defines the `Instance` injection point in the case of field injection, the `Method` object representing the method that defines the `Instance` injection point in the case of method parameter injection, or the `Constructor` object representing the constructor that defines the `Instance` injection point in the case of constructor parameter injection.
-* The `getAnnotated()` method returns an instance of `javax.enterprise.inject.spi.AnnotatedField` or `javax.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
-If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `javax.enterprise.inject.spi.AnnotatedField` or `javax.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
+* The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
+If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
 * The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
 If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
 * The `isTransient()` method returns `true` if the injection point is a transient field, and `false` otherwise.
@@ -615,7 +615,7 @@ For example, it may not be used when:
 * we would like to iterate over all beans of a certain type.
 
 
-In these situations, an instance of the `javax.enterprise.inject.Instance` interface may be injected:
+In these situations, an instance of the `jakarta.enterprise.inject.Instance` interface may be injected:
 
 [source, java]
 ----
@@ -770,7 +770,7 @@ The built-in implementation must be a passivation capable dependency, as defined
 
 ==== Using `AnnotationLiteral` and `TypeLiteral`
 
-`javax.enterprise.util.AnnotationLiteral` makes it easier to specify qualifiers when calling `select()`:
+`jakarta.enterprise.util.AnnotationLiteral` makes it easier to specify qualifiers when calling `select()`:
 
 [source, java]
 ----
@@ -788,7 +788,7 @@ public PaymentProcessor getSynchronousPaymentProcessor(PaymentMethod paymentMeth
 }
 ----
 
-`javax.enterprise.util.TypeLiteral` makes it easier to specify a parameterized type with actual type parameters when calling `select()`:
+`jakarta.enterprise.util.TypeLiteral` makes it easier to specify a parameterized type with actual type parameters when calling `select()`:
 
 [source, java]
 ----
@@ -804,21 +804,21 @@ public PaymentProcessor<Cheque> getChequePaymentProcessor() {
 
 The following built-in annotations define a `Literal` static nested class to support inline instantiation of the specific annotation type:
 
-* `javax.enterprise.inject.Any`
-* `javax.enterprise.inject.Default`
-* `javax.enterprise.inject.New`
-* `javax.enterprise.inject.Specializes`
-* `javax.enterprise.inject.Vetoed`
-* `javax.enterprise.util.Nonbinding`
-* `javax.enterprise.context.Initialized`
-* `javax.enterprise.context.Destroyed`
-* `javax.enterprise.context.RequestScoped`
-* `javax.enterprise.context.SessionScoped`
-* `javax.enterprise.context.ApplicationScoped`
-* `javax.enterprise.context.Dependent`
-* `javax.enterprise.context.ConversationScoped`
-* `javax.enterprise.inject.Alternative`
-* `javax.enterprise.inject.Typed`
+* `jakarta.enterprise.inject.Any`
+* `jakarta.enterprise.inject.Default`
+* `jakarta.enterprise.inject.New`
+* `jakarta.enterprise.inject.Specializes`
+* `jakarta.enterprise.inject.Vetoed`
+* `jakarta.enterprise.util.Nonbinding`
+* `jakarta.enterprise.context.Initialized`
+* `jakarta.enterprise.context.Destroyed`
+* `jakarta.enterprise.context.RequestScoped`
+* `jakarta.enterprise.context.SessionScoped`
+* `jakarta.enterprise.context.ApplicationScoped`
+* `jakarta.enterprise.context.Dependent`
+* `jakarta.enterprise.context.ConversationScoped`
+* `jakarta.enterprise.inject.Alternative`
+* `jakarta.enterprise.inject.Typed`
 
 The `Literal` class might be used to instantiate the matching `AnnotationLiteral`:
 
@@ -847,9 +847,9 @@ See also the annotation javadoc for more information about specific `Literal` me
 
 In addition, CDI also provides annotation literals for the following JSR 330 annotations:
 
-* `javax.inject.Inject` with `javax.enterprise.inject.literal.InjectLiteral` class
-* `javax.inject.Named` with `javax.enterprise.inject.literal.NamedLiteral` class
-* `javax.inject.Qualifier` with `javax.enterprise.inject.literal.QualifierLiteral` class
-* `javax.inject.Singleton` with `javax.enterprise.inject.literal.SingletonLiteral` class
+* `jakarta.inject.Inject` with `jakarta.enterprise.inject.literal.InjectLiteral` class
+* `jakarta.inject.Named` with `jakarta.enterprise.inject.literal.NamedLiteral` class
+* `jakarta.inject.Qualifier` with `jakarta.enterprise.inject.literal.QualifierLiteral` class
+* `jakarta.inject.Singleton` with `jakarta.enterprise.inject.literal.SingletonLiteral` class
 
 They can be used like static nested classes described above.

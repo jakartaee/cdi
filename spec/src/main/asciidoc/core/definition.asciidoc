@@ -95,7 +95,7 @@ Note that certain additional restrictions are specified in <<unproxyable>> for b
 
 ==== Restricting the bean types of a bean
 
-The bean types of a bean may be restricted by annotating the bean class or producer method or field with the annotation `@javax.enterprise.inject.Typed`.
+The bean types of a bean may be restricted by annotating the bean class or producer method or field with the annotation `@jakarta.enterprise.inject.Typed`.
 
 [source, java]
 ----
@@ -213,7 +213,7 @@ Qualifier types are also used as event selectors by event consumers, as defined 
 
 ==== Built-in qualifier types
 
-Three standard qualifier types are defined in the package `javax.enterprise.inject`. In addition, the built-in qualifier type `@Named` is defined by the package `javax.inject`.
+Three standard qualifier types are defined in the package `jakarta.enterprise.inject`. In addition, the built-in qualifier type `@Named` is defined by the package `jakarta.inject`.
 
 Every bean has the built-in qualifier `@Any`, even if it does not explicitly declare this qualifier, except for the special `@New` qualified beans defined in <<new>>.
 
@@ -267,7 +267,7 @@ public class Order {
 
 A qualifier type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a qualifier type is defined as `@Target({METHOD, FIELD, PARAMETER, TYPE})`.
 
-A qualifier type may be declared by specifying the `@javax.inject.Qualifier` meta-annotation.
+A qualifier type may be declared by specifying the `@jakarta.inject.Qualifier` meta-annotation.
 
 [source, java]
 ----
@@ -486,7 +486,7 @@ The set of scope types is extensible.
 
 ==== Built-in scope types
 
-There are five standard scope types defined by this specification, all defined in the package `javax.enterprise.context`.
+There are five standard scope types defined by this specification, all defined in the package `jakarta.enterprise.context`.
 
 * The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>.
 Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
@@ -500,7 +500,7 @@ If an interceptor or decorator has any scope other than `@Dependent`, non-portab
 
 ==== Defining new scope types
 
-A scope type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a scope type is defined as `@Target({TYPE, METHOD, FIELD})`. All scope types must also specify the `@javax.inject.Scope` or `@javax.enterprise.context.NormalScope` meta-annotation.
+A scope type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a scope type is defined as `@Target({TYPE, METHOD, FIELD})`. All scope types must also specify the `@jakarta.inject.Scope` or `@jakarta.enterprise.context.NormalScope` meta-annotation.
 
 A scope type must not have any attributes.
 If a scope type has attributes non-portable behavior results.
@@ -647,7 +647,7 @@ Bean names are used by the rules of bean name resolution defined in <<name_resol
 
 ==== Declaring the bean name
 
-To specify the name of a bean, the qualifier `@javax.inject.Named` is applied to the bean class or producer method or field.
+To specify the name of a bean, the qualifier `@jakarta.inject.Named` is applied to the bean class or producer method or field.
 This bean is named `currentOrder`:
 
 [source, java]
@@ -726,7 +726,7 @@ A bean may declare zero, one or multiple stereotypes.
 
 A bean stereotype is a Java annotation defined as `@Retention(RUNTIME)`. Typically a bean stereotype is defined as `@Target({TYPE, METHOD, FIELD})`, `@Target(TYPE)`, `@Target(METHOD)`, `@Target(FIELD)` or `@Target({METHOD, FIELD})`.
 
-A stereotype may be declared by specifying the `@javax.enterprise.inject.Stereotype` meta-annotation.
+A stereotype may be declared by specifying the `@jakarta.enterprise.inject.Stereotype` meta-annotation.
 
 [source, java]
 ----
@@ -873,7 +873,7 @@ public class LoginAction { ... }
 
 ==== Built-in stereotypes
 
-The built-in stereotype `@javax.enterprise.inject.Model` is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
+The built-in stereotype `@jakarta.enterprise.inject.Model` is intended for use with beans that define the _model_ layer of an MVC web application architecture such as JSF:
 
 [source, java]
 ----
@@ -895,9 +895,9 @@ When the application violates a rule defined by this specification, the containe
 There are three kinds of problem:
 
 * Definition errors - occur when a single bean definition violates the rules of this specification.
-If a definition error exists, the container must throw a subclass of `javax.enterprise.inject.spi.DefinitionException`.
+If a definition error exists, the container must throw a subclass of `jakarta.enterprise.inject.spi.DefinitionException`.
 * Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment.
-If a deployment problem occurs, the container must throw a subclass of `javax.enterprise.inject.spi.DeploymentException`.
+If a deployment problem occurs, the container must throw a subclass of `jakarta.enterprise.inject.spi.DeploymentException`.
 * Exceptions - occur at runtime
 
 

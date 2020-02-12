@@ -17,7 +17,7 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import javax.enterprise.inject.spi.AnnotatedField;
+import jakarta.enterprise.inject.spi.AnnotatedField;
 import java.lang.reflect.Field;
 
 public class AnnotatedFieldHolder<T> extends AnnotatedMemberHolder<T> implements AnnotatedField<T> {

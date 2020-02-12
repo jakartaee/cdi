@@ -31,7 +31,7 @@ public interface BeanAttributes<T> {
 * `getTypes()`, `getQualifiers()`, `getScope()`, `getName()` and `getStereotypes()` must return the bean types, qualifiers, scope type, bean name and stereotypes of the bean, as defined in <<concepts>>.
 * `isAlternative()` must return `true` if the bean is an alternative, and `false` otherwise.
 
-The interface `javax.enterprise.inject.spi.Bean` defines everything the container needs to manage instances of a certain bean.
+The interface `jakarta.enterprise.inject.spi.Bean` defines everything the container needs to manage instances of a certain bean.
 
 [source, java]
 ----
@@ -58,7 +58,7 @@ Custom implementations of `Bean` are encouraged to implement `PassivationCapable
 
 ==== The `Decorator` interface
 
-The `Bean` object for a decorator must implement the interface `javax.enterprise.inject.spi.Decorator`.
+The `Bean` object for a decorator must implement the interface `jakarta.enterprise.inject.spi.Decorator`.
 
 [source, java]
 ----
@@ -79,7 +79,7 @@ An instance of `Decorator` exists for every enabled decorator.
 
 ==== The `Interceptor` interface
 
-The `Bean` object for an interceptor must implement `javax.enterprise.inject.spi.Interceptor`.
+The `Bean` object for an interceptor must implement `jakarta.enterprise.inject.spi.Interceptor`.
 
 [source, java]
 ----
@@ -110,7 +110,7 @@ An instance of `Interceptor` exists for every enabled interceptor.
 
 ==== The `ObserverMethod` interface
 
-The interface `javax.enterprise.inject.spi.ObserverMethod` defines everything the container needs to know about an observer method.
+The interface `jakarta.enterprise.inject.spi.ObserverMethod` defines everything the container needs to know about an observer method.
 
 [source, java]
 ----
@@ -158,7 +158,7 @@ public interface Prioritized {
 
 === The `Producer` and `InjectionTarget` interfaces
 
-The interface `javax.enterprise.inject.spi.Producer` provides a generic operation for producing an instance of a type.
+The interface `jakarta.enterprise.inject.spi.Producer` provides a generic operation for producing an instance of a type.
 
 [source, java]
 ----
@@ -184,7 +184,7 @@ For a `Producer` that represents a producer method or field:
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all parameters of the producer method.
 
 
-The subinterface `javax.enterprise.inject.spi.InjectionTarget` provides operations for performing dependency injection and lifecycle callbacks on an instance of a type.
+The subinterface `jakarta.enterprise.inject.spi.InjectionTarget` provides operations for performing dependency injection and lifecycle callbacks on an instance of a type.
 
 [source, java]
 ----
@@ -208,7 +208,7 @@ Implementations of `Producer` and `InjectionTarget` must ensure that the set of 
 
 === The `BeanManager` object
 
-The interface `javax.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to portable extensions.
+The interface `jakarta.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to portable extensions.
 
 The container provides a built-in bean with bean type `BeanManager`, scope `@Dependent` and qualifier `@Default`. The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 Thus, any bean may obtain an instance of `BeanManager` by injecting it:
@@ -243,7 +243,7 @@ All other operations of BeanManager may be called at any time during the executi
 ==== Obtaining a reference to the CDI container
 
 Portable extensions and other objects sometimes interact directly with the container via programmatic API call.
-The abstract `javax.enterprise.inject.spi.CDI` provides access to the `BeanManager` as well providing lookup of bean instances.
+The abstract `jakarta.enterprise.inject.spi.CDI` provides access to the `BeanManager` as well providing lookup of bean instances.
 
 [source, java]
 ----
@@ -259,13 +259,13 @@ A portable extension or other object may obtain a reference to the current conta
 Other methods on `CDI` may be called after the application initialization is completed until the application shutdown starts.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
-CDI implements `javax.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
+CDI implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
 If no qualifier is passed to `CDI.select()` method, the `@Default` qualifier is assumed.
 
-When `CDI.current()` is called, `getCDI()` method is called on `javax.enterprise.inject.spi.CDIProvider`.
+When `CDI.current()` is called, `getCDI()` method is called on `jakarta.enterprise.inject.spi.CDIProvider`.
 
 The `CDIProvider` to use may be set by the application or container using the `setCDIProvider()` method.
-If the `setCDIProvider()` has not been called, the service provider with highest priority of the service `javax.enterprise.inject.spi.CDIProvider` declared in META-INF/services is used.
+If the `setCDIProvider()` has not been called, the service provider with highest priority of the service `jakarta.enterprise.inject.spi.CDIProvider` declared in META-INF/services is used.
 The order of more than one `CDIProvider` with the same priority is undefined.
 If no provider is available an `IllegalStateException` is thrown.
 
@@ -550,7 +550,7 @@ public Context getContext(Class<? extends Annotation> scopeType);
 
 ==== Obtaining the `ELResolver`
 
-The method `BeanManager.getELResolver()` returns the `javax.el.ELResolver` specified in <<el>>.
+The method `BeanManager.getELResolver()` returns the `jakarta.el.ELResolver` specified in <<el>>.
 
 [source, java]
 ----
@@ -724,12 +724,12 @@ If no qualifier is passed to `Instance.select()` method, the `@Default` qualifie
 
 A portable extension may provide an alternative metadata source, such as configuration by XML.
 
-The interfaces `AnnotatedType`, `AnnotatedField`, `AnnotatedMethod`, `AnnotatedConstructor` and `AnnotatedParameter` in the package `javax.enterprise.inject.spi` allow a portable extension to specify metadata that overrides the annotations that exist on a bean class.
+The interfaces `AnnotatedType`, `AnnotatedField`, `AnnotatedMethod`, `AnnotatedConstructor` and `AnnotatedParameter` in the package `jakarta.enterprise.inject.spi` allow a portable extension to specify metadata that overrides the annotations that exist on a bean class.
 The portable extension is responsible for implementing the interfaces, thereby exposing the metadata to the container.
 
 In general, the behavior is as defined by the Java Language Specification, and only deviations from the Java Language Specification are noted.
 
-The interface `javax.enterprise.inject.spi.AnnotatedType` exposes the `Class` object and members.
+The interface `jakarta.enterprise.inject.spi.AnnotatedType` exposes the `Class` object and members.
 
 [source, java]
 ----
@@ -751,7 +751,7 @@ The container should call `AnnotatedField.getJavaMember().getDeclaringClass()` t
 
 When determining annotations on a type, the container must only consider the special inheritance rules defined for scope types in <<type_level_inheritance>>.
 
-The interface `javax.enterprise.inject.spi.AnnotatedField` exposes the `Field` object.
+The interface `jakarta.enterprise.inject.spi.AnnotatedField` exposes the `Field` object.
 
 [source, java]
 ----
@@ -761,7 +761,7 @@ public interface AnnotatedField<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedMethod` exposes the `Method` object.
+The interface `jakarta.enterprise.inject.spi.AnnotatedMethod` exposes the `Method` object.
 
 [source, java]
 ----
@@ -771,7 +771,7 @@ public interface AnnotatedMethod<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedConstructor` exposes the `Constructor` object.
+The interface `jakarta.enterprise.inject.spi.AnnotatedConstructor` exposes the `Constructor` object.
 
 [source, java]
 ----
@@ -781,7 +781,7 @@ public interface AnnotatedConstructor<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedParameter` exposes the `position` of the parameter object and the declaring program element.
+The interface `jakarta.enterprise.inject.spi.AnnotatedParameter` exposes the `position` of the parameter object and the declaring program element.
 
 [source, java]
 ----
@@ -792,7 +792,7 @@ public interface AnnotatedParameter<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedMember` exposes the `Member` object and the `AnnotatedType` that defines the member.
+The interface `jakarta.enterprise.inject.spi.AnnotatedMember` exposes the `Member` object and the `AnnotatedType` that defines the member.
 
 [source, java]
 ----
@@ -804,7 +804,7 @@ public interface AnnotatedMember<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.AnnotatedCallable` exposes the parameters of an invokable object.
+The interface `jakarta.enterprise.inject.spi.AnnotatedCallable` exposes the parameters of an invokable object.
 
 CDI 1.1 deprecated the method `AnnotatedMember.isStatic()`. The container should instead call `AnnotatedMember.getJavaMember().getModifiers()` to determine if the member is static.
 
@@ -816,7 +816,7 @@ public interface AnnotatedCallable<X>
 }
 ----
 
-The interface `javax.enterprise.inject.spi.Annotated` exposes the overriding annotations and type declarations.
+The interface `jakarta.enterprise.inject.spi.Annotated` exposes the overriding annotations and type declarations.
 
 [source, java]
 ----
@@ -855,11 +855,11 @@ CDI 2.0 introduced a new SPI to help defining and creating instance for type met
 
 This SPI is composed of the following interfaces:
 
-* `javax.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
-* `javax.enterprise.inject.spi.configurator.AnnotatedFieldConfigurator` (defined in <<annotated_field_configurator>>) to configure an `AnnotatedField`
-* `javax.enterprise.inject.spi.configurator.AnnotatedConstructorConfigurator` (defined in <<annotated_constructor_configurator>>) to configure an `AnnotatedConstructor`
-* `javax.enterprise.inject.spi.configurator.AnnotatedMethodConfigurator` (defined in <<annotated_method_configurator>>) to configure an `AnnotatedMethod`
-* `javax.enterprise.inject.spi.configurator.AnnotatedParameterConfigurator` (defined in <<annotated_parameter_configurator>>) to configure an `AnnotatedParameter`
+* `jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator` to configure an `AnnotatedType`
+* `jakarta.enterprise.inject.spi.configurator.AnnotatedFieldConfigurator` (defined in <<annotated_field_configurator>>) to configure an `AnnotatedField`
+* `jakarta.enterprise.inject.spi.configurator.AnnotatedConstructorConfigurator` (defined in <<annotated_constructor_configurator>>) to configure an `AnnotatedConstructor`
+* `jakarta.enterprise.inject.spi.configurator.AnnotatedMethodConfigurator` (defined in <<annotated_method_configurator>>) to configure an `AnnotatedMethod`
+* `jakarta.enterprise.inject.spi.configurator.AnnotatedParameterConfigurator` (defined in <<annotated_parameter_configurator>>) to configure an `AnnotatedParameter`
 
 The container must provide an implementation for each of these interfaces.
 
@@ -1002,7 +1002,7 @@ During the application initialization process, the container fires a series of e
 These events are fired synchronously.
 
 Observer methods of these events must belong to _extensions_.
-An extension is a service provider of the service `javax.enterprise.inject.spi.Extension` declared in `META-INF/services`.
+An extension is a service provider of the service `jakarta.enterprise.inject.spi.Extension` declared in `META-INF/services`.
 
 [source, java]
 ----
@@ -1031,7 +1031,7 @@ The priority of an observer method may be declared using the `@Priority` annotat
 
 [source, java]
 ----
-void beforeBeanDiscovery(@Observes @Priority(javax.interceptor.Interceptor.Priority.LIBRARY_BEFORE) BeforeBeanDiscovery event) { ... }
+void beforeBeanDiscovery(@Observes @Priority(jakarta.interceptor.Interceptor.Priority.LIBRARY_BEFORE) BeforeBeanDiscovery event) { ... }
 ----
 
 For each service provider, the container must provide a bean of scope `@ApplicationScoped` and qualifier `@Default`, supporting injection of a reference to the service provider instance. The bean types of this bean include the class of the service provider and all superclasses and interfaces.
@@ -1060,7 +1060,7 @@ Note that the chronological order of these events is specified in <<initializati
 ==== `BeforeBeanDiscovery` event
 
 The container must fire an event before it begins the type discovery process.
-The event object must be of type `javax.enterprise.inject.spi.BeforeBeanDiscovery`:
+The event object must be of type `jakarta.enterprise.inject.spi.BeforeBeanDiscovery`:
 
 [source, java]
 ----
@@ -1107,7 +1107,7 @@ If any `BeforeBeanDiscovery` method is called outside of the observer method inv
 ==== `AfterTypeDiscovery` event
 
 The container must fire an event when it has fully completed the type discovery process and before it begins the bean discovery process.
-The event object must be of type `javax.enterprise.inject.spi.AfterTypeDiscovery`.
+The event object must be of type `jakarta.enterprise.inject.spi.AfterTypeDiscovery`.
 
 [source, java]
 ----
@@ -1154,7 +1154,7 @@ If any `AfterTypeDiscovery` method is called outside of the observer method invo
 
 The container must fire an event when it has fully completed the bean discovery process, validated that there are no definition errors relating to the discovered beans, and registered `Bean` and `ObserverMethod` objects for the discovered beans.
 
-The event object must be of type `javax.enterprise.inject.spi.AfterBeanDiscovery`:
+The event object must be of type `jakarta.enterprise.inject.spi.AfterBeanDiscovery`:
 
 [source, java]
 ----
@@ -1204,7 +1204,7 @@ If any `AfterBeanDiscovery` method is called outside of the observer method invo
 
 ===== `BeanConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanConfigurator` interface to help configuring a new `Bean` instance.
+CDI 2.0 introduced the `jakarta.enterprise.inject.spi.configurator.BeanConfigurator` interface to help configuring a new `Bean` instance.
 
 With `BeanConfigurator` you can perform all the operations defined in <<bean_attributes_configurator>> plus the following:
 
@@ -1224,7 +1224,7 @@ If a `BeanConfigurator` has no scope specified, the default scope rules, defined
 
 ===== `ObserverMethodConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ObserverMethodConfigurator` interface to help configuring an `ObserverMethod` instance.
+CDI 2.0 introduced the `jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator` interface to help configuring an `ObserverMethod` instance.
 
 With `ObserverMethodConfigurator` you can perform the following operations:
 
@@ -1245,7 +1245,7 @@ With `ObserverMethodConfigurator` you can perform the following operations:
 
 The container must fire an event after it has validated that there are no deployment problems and before creating contexts or processing requests.
 
-The event object must be of type `javax.enterprise.inject.spi.AfterDeploymentValidation`:
+The event object must be of type `jakarta.enterprise.inject.spi.AfterDeploymentValidation`:
 
 [source, java]
 ----
@@ -1274,7 +1274,7 @@ The container must not allow any request to be processed by the deployment until
 
 The container must fire a final event after it has finished processing requests and destroyed all contexts.
 
-The event object must be of type `javax.enterprise.inject.spi.BeforeShutdown`:
+The event object must be of type `jakarta.enterprise.inject.spi.BeforeShutdown`:
 
 [source, java]
 ----
@@ -1296,7 +1296,7 @@ The container must fire an event, before it processes a type, for every Java cla
 
 An event is not fired for any type annotated with `@Vetoed`, or in a package annotated with `@Vetoed`.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessAnnotatedType<X>`, where `X` is the class, for types discovered in a bean archive, or of type `javax.enterprise.inject.spi.ProcessSyntheticAnnotatedType<X>` for types added by `BeforeBeanDiscovery.addAnnotatedType()` or `AfterTypeDiscovery.addAnnotatedType()`.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessAnnotatedType<X>`, where `X` is the class, for types discovered in a bean archive, or of type `jakarta.enterprise.inject.spi.ProcessSyntheticAnnotatedType<X>` for types added by `BeforeBeanDiscovery.addAnnotatedType()` or `AfterTypeDiscovery.addAnnotatedType()`.
 
 The annotation `@WithAnnotations` may be applied to the event parameter.
 If the annotation is applied, the container must only deliver `ProcessAnnotatedType` events for types which contain at least one of the annotations specified.
@@ -1353,7 +1353,7 @@ If any `ProcessAnnotatedType` method is called outside of the observer method in
 
 The container must fire an event for every injection point of every bean, interceptor or decorator.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessInjectionPoint<T, X>` where `T` is the bean class, and `X` is the declared type of the injection point.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessInjectionPoint<T, X>` where `T` is the bean class, and `X` is the declared type of the injection point.
 
 [source, java]
 ----
@@ -1384,7 +1384,7 @@ If any `ProcessInjectionPoint` method is called outside of the observer method i
 
 ===== `InjectionPointConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.InjectionPointConfigurator` interface to help configure an existing `InjectionPoint` instance.
+CDI 2.0 introduced the `jakarta.enterprise.inject.spi.configurator.InjectionPointConfigurator` interface to help configure an existing `InjectionPoint` instance.
 
 With `InjectionPointConfigurator` you can perform the following operations:
 
@@ -1401,7 +1401,7 @@ With `InjectionPointConfigurator` you can perform the following operations:
 
 The container must fire an event for every bean, interceptor or decorator.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessInjectionTarget<X>`, where `X` is the bean class.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessInjectionTarget<X>`, where `X` is the bean class.
 
 [source, java]
 ----
@@ -1438,7 +1438,7 @@ No event is fired for any:
 * beans added programmatically using `AfterBeanDiscovery.addBean()`, or,
 * for any built-in beans.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessBeanAttributes<T>` where `T` is the bean class of the bean, the return type of the producer method, or the type of the producer field.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessBeanAttributes<T>` where `T` is the bean class of the bean, the return type of the producer method, or the type of the producer field.
 
 Resources are considered to be producer fields.
 
@@ -1485,7 +1485,7 @@ If any `ProcessBeanAttributes` method is called outside of the observer method i
 
 ===== `BeanAttributesConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
+CDI 2.0 introduced the `jakarta.enterprise.inject.spi.configurator.BeanAttributesConfigurator` interface to help configuring a new `BeanAttributes` instance.
 
 `BeanAttributesConfigurator` is obtainable during `ProcessBeanAttributes` event and is therefore automatically initialized from existing `BeanAttributes`.
 
@@ -1509,14 +1509,14 @@ With `BeanAttributesConfigurator` you can perform the following operations :
 The container must fire an event for each bean, interceptor or decorator deployed in a bean archive, after firing the `ProcessBeanAttributes` for the bean and before registering the `Bean` object.
 No event is fired for any `@New` qualified bean, defined in <<new>>.
 
-The event object type in the package `javax.enterprise.inject.spi` depends upon what kind of bean was discovered:
+The event object type in the package `jakarta.enterprise.inject.spi` depends upon what kind of bean was discovered:
 
 * For a managed bean with bean class `X`, the container must raise an event of type `ProcessManagedBean<X>`.
 * For a producer method with method return type `T` of a bean with bean class `X`, the container must raise an event of type `ProcessProducerMethod<T, X>`.
 * For a producer field with field type `T` of a bean with bean class `X`, the container must raise an event of type `ProcessProducerField<T, X>`.
 * For a custom implementation of `Bean`, the container must raise an event of type `ProcessSyntheticBean<X>`.
 
-The interface `javax.enterprise.inject.spi.ProcessBean` is a supertype of all these event types:
+The interface `jakarta.enterprise.inject.spi.ProcessBean` is a supertype of all these event types:
 
 [source, java]
 ----
@@ -1577,7 +1577,7 @@ If any `ProcessBean` method is called outside of the observer method invocation,
 
 The container must fire an event for each producer method or field of each bean, including resources.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessProducer<T, X>`, where `T` is the bean class of the bean that declares the producer method or field and `X` is the return type of the producer method or the type of the producer field.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessProducer<T, X>`, where `T` is the bean class of the bean that declares the producer method or field and `X` is the return type of the producer method or the type of the producer field.
 
 [source, java]
 ----
@@ -1618,7 +1618,7 @@ If any `ProcessProducer` method is called outside of the observer method invocat
 
 ===== `ProducerConfigurator` interface
 
-CDI 2.0 introduced the `javax.enterprise.inject.spi.configurator.ProducerConfigurator` interface to help configuring a `Producer` instance.
+CDI 2.0 introduced the `jakarta.enterprise.inject.spi.configurator.ProducerConfigurator` interface to help configuring a `Producer` instance.
 
 With `ProducerConfigurator` you can perform the following operations:
 
@@ -1631,9 +1631,9 @@ With `ProducerConfigurator` you can perform the following operations:
 
 The container must fire an event for each observer method of each enabled bean, before registering the `ObserverMethod` object.
 
-The event object must be of type `javax.enterprise.inject.spi.ProcessObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the bean class of the bean that declares the observer method.
+The event object must be of type `jakarta.enterprise.inject.spi.ProcessObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the bean class of the bean that declares the observer method.
 
-For a custom implementation of `javax.enterprise.inject.spi.ObserverMethod`, the container must raise an event of type `javax.enterprise.inject.spi.ProcessSyntheticObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the return value of `ObserverMethod.getBeanClass()`.
+For a custom implementation of `jakarta.enterprise.inject.spi.ObserverMethod`, the container must raise an event of type `jakarta.enterprise.inject.spi.ProcessSyntheticObserverMethod<T, X>`, where `T` is the observed event type of the observer method and `X` is the return value of `ObserverMethod.getBeanClass()`.
 
 [source, java]
 ----
@@ -1690,7 +1690,7 @@ The container must provide implementation for all these configurators and make t
 
 === The `InterceptionFactory` interface
 
-CDI 2.0 introduces the `javax.enterprise.inject.spi.InterceptionFactory<T>` interface, which allows to create a wrapper instance whose method invocations are intercepted by method interceptors and forwarded to a provided instance.
+CDI 2.0 introduces the `jakarta.enterprise.inject.spi.InterceptionFactory<T>` interface, which allows to create a wrapper instance whose method invocations are intercepted by method interceptors and forwarded to a provided instance.
 
 [source, java]
 ----

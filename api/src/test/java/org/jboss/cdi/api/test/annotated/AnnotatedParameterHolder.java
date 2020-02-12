@@ -17,8 +17,8 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import javax.enterprise.inject.spi.AnnotatedCallable;
-import javax.enterprise.inject.spi.AnnotatedParameter;
+import jakarta.enterprise.inject.spi.AnnotatedCallable;
+import jakarta.enterprise.inject.spi.AnnotatedParameter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;

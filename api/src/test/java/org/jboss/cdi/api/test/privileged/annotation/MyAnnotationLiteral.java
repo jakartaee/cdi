@@ -17,7 +17,7 @@
 
 package org.jboss.cdi.api.test.privileged.annotation;
 
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 public class MyAnnotationLiteral extends AnnotationLiteral<MyAnnotation> implements MyAnnotation {
 

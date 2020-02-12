@@ -3,7 +3,7 @@ package org.jboss.cdi.api.test;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.enterprise.util.AnnotationLiteral;
+import jakarta.enterprise.util.AnnotationLiteral;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Foo {

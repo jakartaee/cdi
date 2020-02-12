@@ -5,7 +5,7 @@
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
 This is performed by the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
-`SeContainerInitializer` is a `ServiceProvider` of the service `javax.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
+`SeContainerInitializer` is a `ServiceProvider` of the service `jakarta.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
 This class allows a user to configure the CDI container before it is bootstrapped.
 The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
 
@@ -15,7 +15,7 @@ User can shutdown the container manually by calling the `close()` method on `SeC
 
 === `SeContainerInitializer` class
 
-CDI container can be configured and bootstrapped from `javax.enterprise.inject.se.SeContainerInitializer` abstract class.
+CDI container can be configured and bootstrapped from `jakarta.enterprise.inject.se.SeContainerInitializer` abstract class.
 
 A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service provider.
 Static method `newInstance()` uses Java service provider mechanism to obtain an implementation of `SeContainerInitializer` and return an instance of it.
@@ -81,7 +81,7 @@ An implementation does not need to support multiple calls of `SeContainerInitial
 === `SeContainer` interface
 
 
-The `javax.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` and programmatic lookup as defined in <<dynamic_lookup>>.
+The `jakarta.enterprise.inject.se.SeContainer` interface provides access to the `BeanManager` and programmatic lookup as defined in <<dynamic_lookup>>.
 `SeContainer` also extends `AutoCloseable`, so when dereferenced, it should shutdown automatically.
 
 
@@ -101,7 +101,7 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
-SeContainer implements `javax.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
+SeContainer implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
 If no qualifier is passed to `SeContainer.select()` method, the `@Default` qualifier is assumed.
 
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
