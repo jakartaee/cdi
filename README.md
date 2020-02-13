@@ -3,4 +3,4 @@
 Sources in GIT
 ====
 
-Master contains the work-in-progress on CDI 2.0 specification
+Master contains the work-in-progress on CDI 3.0 specification
