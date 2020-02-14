@@ -355,6 +355,7 @@
 								<include>**/privileged/**</include>
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
+							<forkCount>0</forkCount>
 						</configuration>
 					</execution>
 				</executions>
