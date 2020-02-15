@@ -8,8 +8,8 @@
 		<version>1.0.6</version>
 	</parent>
 
-	<groupId>org.eclipse.ee4j.cdi</groupId>
-	<artifactId>cdi-parent</artifactId>
+	<groupId>jakarta.enterprise</groupId>
+	<artifactId>jakarta.enterprise.cdi-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>3.0.0-M1</version>
 
