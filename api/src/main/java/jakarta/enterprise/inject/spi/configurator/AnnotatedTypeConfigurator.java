@@ -38,7 +38,7 @@ import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
  * 
  * <p>
  * AnnotatedTypeConfigurator is not reusable.
- * <p>
+ * </p>
  * 
  * <p>
  * This configurator is not thread safe and shall not be used concurrently.
@@ -72,7 +72,7 @@ public interface AnnotatedTypeConfigurator<T> {
      * Remove annotations that match the specified predicate.
      *
      * <p>
-     * Example predicates:</code>
+     * Example predicates:
      * </p>
      * 
      * <pre>

@@ -29,7 +29,7 @@ import jakarta.enterprise.inject.Default;
  * Service providers may have {@linkplain Observes observer methods}, which may observe any event,
  * including any {@linkplain jakarta.enterprise.inject.spi container lifecycle event}, and obtain an injected
  * {@link BeanManager}.
- * <p>
+ * </p>
  * 
  * <p>
  * The container instantiates a single instance of each extension at the beginning of the application initialization process and

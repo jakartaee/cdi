@@ -90,7 +90,7 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <pre>
- * public void close(&#064Disposes &#064UserDatabase EntityManager em, Logger log) { ... }
+ * public void close(&#064;Disposes &#064;UserDatabase EntityManager em, Logger log) { ... }
  * </pre>
  * 
  * <p>

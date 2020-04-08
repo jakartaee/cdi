@@ -35,7 +35,7 @@ package jakarta.enterprise.inject.spi;
  * </p>
  * 
  * @author David Allen
- * @param <X>
+ * @param <X> session bean type
  */
 public interface ProcessSessionBean<X> extends ProcessManagedBean<Object> {
     /**
