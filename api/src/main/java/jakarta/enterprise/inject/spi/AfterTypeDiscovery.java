@@ -100,6 +100,7 @@ public interface AfterTypeDiscovery {
      * Each call returns a new AnnotatedTypeConfigurator.
      *
      *
+     * @param <T> annotatated instance type
      * @param type class used to initialized the type and annotations on the {@link AnnotatedTypeConfigurator}
      * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType

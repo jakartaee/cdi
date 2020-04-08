@@ -111,6 +111,7 @@ public interface Event<T> {
      * Fires an event asynchronously with the specified qualifiers and notifies asynchronous observers.
      * </p>
      *
+     * @param <U> event type
      * @param event the event object
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         Default asynchronous execution facility is container specific.
@@ -130,6 +131,7 @@ public interface Event<T> {
      * A custom {@link Executor} will be used to make asynchronous calls 
      * </p>
      *
+     * @param <U> event type
      * @param event the event object
      * @param options the notification options
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.

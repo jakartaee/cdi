@@ -44,10 +44,10 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  *     public MyClass create(CreationalContext&lt;MyClass&gt; creationalContext) {
  *
- *         InterceptionFactory<MyClass> factory = bm.createInterceptionFactory(creationalContext, MyClass.class);
+ *         InterceptionFactory&lt;MyClass&gt; factory = bm.createInterceptionFactory(creationalContext, MyClass.class);
  *
- *         factory.configure().filterMethods(m -> m.getJavaMember().getName().equals("shouldBeTransactional")).findFirst()
- *                 .ifPresent(m -> m.add(new AnnotationLiteral&lt;Transactional&gt;() {
+ *         factory.configure().filterMethods(m -&gt; m.getJavaMember().getName().equals("shouldBeTransactional")).findFirst()
+ *                 .ifPresent(m -&gt; m.add(new AnnotationLiteral&lt;Transactional&gt;() {
  *                 }));
  *
  *         return factory.createInterceptedInstance(new MyClass());
@@ -63,8 +63,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * <pre>
  * &#64;Produces
  * &#64;RequestScoped
- * public MyClass produceMyClass(InterceptionFactory<MyClass> factory) {
- *     factory.configure().add(new AnnotationLiteral<Transactional>() {
+ * public MyClass produceMyClass(InterceptionFactory&lt;MyClass&gt; factory) {
+ *     factory.configure().add(new AnnotationLiteral&lt;Transactional&gt;() {
  *     });
  *     return factory.createInterceptedInstance(new MyClass());
  * }

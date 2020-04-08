@@ -77,6 +77,7 @@ public interface AfterBeanDiscovery {
      *
      * Each call returns a new BeanConfigurator.
      *
+     * @param <T> type of bean
      * @return a non reusable {@link BeanConfigurator} to configure the bean to add
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
@@ -103,6 +104,7 @@ public interface AfterBeanDiscovery {
      *
      * Each call returns a new ObserverMethodConfigurator.
      *
+     * @param <T> type of the event the configured ObserverMethod will observe
      * @return a non reusable {@link ObserverMethodConfigurator} instance
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0

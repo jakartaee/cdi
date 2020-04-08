@@ -18,7 +18,7 @@
 package jakarta.enterprise.inject;
 
 /**
- * <t>Indicates a problem relating to dependency injection.</t>
+ * Indicates a problem relating to dependency injection.
  * 
  * @author Pete Muir
  */

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 /**
- * <p>Annotations and interfaces relating to events.<p>
+ * <p>Annotations and interfaces relating to events.</p>
  * 
  * <p>{@linkplain jakarta.enterprise.inject Beans} may produce and 
  * consume events. Events allows beans to interact in a completely 
@@ -89,8 +89,8 @@
  * the event is fired.</p>
  * 
  * <p>The order in which observer methods are called depends on the value of
- * the {@linkplain javax.annotation.Priority &#064;Priority} applied to the observer.</p>
- * <p></p>If no priority is defined on a observer, its priority is jakarta.interceptor.Interceptor.Priority.APPLICATION+500.</p>
+ * the &#064;{@linkplain jakarta.annotation.Priority Priority} applied to the observer.</p>
+ * <p>If no priority is defined on a observer, its priority is jakarta.interceptor.Interceptor.Priority.APPLICATION+500.</p>
  * <p>If two observer have the same priority their relative order is undefined.</p>
  * 
  * <p>Observer methods may throw exceptions:</p>

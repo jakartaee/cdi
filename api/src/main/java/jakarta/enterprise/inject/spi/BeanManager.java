@@ -131,7 +131,8 @@ public interface BeanManager {
     /**
      * Obtain an instance of a {@link CreationalContext} for the given
      * {@linkplain Contextual contextual type}, or for a non-contextual object.
-     * 
+     *
+     * @param <T> type of the instance
      * @param contextual the {@link Contextual}, or a null value in the case of a non-contextual
      *        object
      * @return the new {@link CreationalContext}
@@ -143,7 +144,7 @@ public interface BeanManager {
      * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
      * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution. If no
      * qualifiers are given, the {@linkplain Default default qualifier} is assumed.
-     * <p/>
+     *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      *
@@ -162,7 +163,7 @@ public interface BeanManager {
      * Return the set of beans which have the given EL name and are available for injection in the module or library containing
      * the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI environment namespace
      * the <tt>BeanManager</tt> was obtained, according to the rules of EL name resolution.
-     * <p/>
+     *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      * 
@@ -176,7 +177,6 @@ public interface BeanManager {
     /**
      * Returns the {@link PassivationCapable} bean with the given identifier.
      *
-     * <p/>
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      * 
@@ -191,8 +191,7 @@ public interface BeanManager {
     /**
      * Apply the ambiguous dependency resolution rules to a set of {@linkplain Bean beans}.
      *
-     * <p/>
-     Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      * 
      * @param <X> a common type of the beans
@@ -207,8 +206,7 @@ public interface BeanManager {
     /**
      * Validate a certain {@linkplain InjectionPoint injection point}.
      *
-     * <p/>
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only validate injection points discovered by the container before the {@link AfterBeanDiscovery} 
      * event is fired.
      * 
@@ -224,7 +222,7 @@ public interface BeanManager {
      * Fire an event and notify observers.
      *
      * <p>
-     * This method is deprecated from CDI 2.0 and {@link #getEvent())} should be used instead.
+     * This method is deprecated from CDI 2.0 and {@link #getEvent()} should be used instead.
      * </p>
      *
      * @param event the event object
@@ -242,8 +240,7 @@ public interface BeanManager {
     /**
      * Return an ordered set of {@linkplain ObserverMethod observer methods} for an event.
      *
-     * <p/>
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return observers discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      * 
      * @param <T> the type of the event
@@ -263,8 +260,7 @@ public interface BeanManager {
      * enabled in the module or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE
      * component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
      *
-     * <p/>
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return decorators discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      * 
      * @param types the set of bean types of the decorated bean
@@ -283,8 +279,7 @@ public interface BeanManager {
      * interception and which are enabled in the module or library containing the class into which the <tt>BeanManager</tt> was
      * injected or the Java EE component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
      *
-     * <p/>
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return interceptors discovered by the container before the {@link AfterBeanDiscovery} event is 
      * fired.
      * 
@@ -474,7 +469,8 @@ public interface BeanManager {
      * <p>
      * This factory can be wrapped to add behavior to container created injection targets.
      * </p>
-     * 
+     *
+     * @param <T> the type
      * @param annotatedType the annotated type to create the injection target factory for
      * @return an {@link InjectionTargetFactory}
      * @since 1.1
@@ -490,7 +486,8 @@ public interface BeanManager {
      * <p>
      * This factory can be wrapped to add behavior to container created producers.
      * </p>
-     * 
+     *
+     * @param <X> the declaring type
      * @param field the field to create the producer factory for
      * @param declaringBean the bean declaring the producer. May be null if the producer is static or the declaring object is
      *        non-contextual
@@ -508,7 +505,8 @@ public interface BeanManager {
      * <p>
      * This factory can be wrapped to add behavior to container created producers.
      * </p>
-     * 
+     *
+     * @param <X> bean type
      * @param method the method to create the producer factory for
      * @param declaringBean the bean declaring the producer. May be null if the producer is static or the declaring object is
      *        non-contextual

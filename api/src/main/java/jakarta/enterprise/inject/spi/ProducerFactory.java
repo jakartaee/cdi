@@ -50,7 +50,8 @@ public interface ProducerFactory<X> {
 
     /**
      * Create a new producer for a bean.
-     * 
+     *
+     * @param <T> bean type
      * @param bean the bean to create the producer for, or null if creating a non-contextual object
      * @return the producer
      */
