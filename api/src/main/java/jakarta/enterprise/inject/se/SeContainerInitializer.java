@@ -127,10 +127,8 @@ public abstract class SeContainerInitializer {
     /**
      * All classes from the packages of the specified classes will be added to the set of bean classes for the synthetic bean archive.
      * <p>
-     * <p>
      * Note that the scanning possibilities are limited. Therefore, only directories and jar files from the filesystem are supported.
      * </p>
-     * <p>
      * <p>
      * Scanning may also have negative impact on SE performance.
      * </p>
@@ -143,10 +141,8 @@ public abstract class SeContainerInitializer {
     /**
      * Packages of the specified classes will be scanned and found classes will be added to the set of bean classes for the synthetic bean archive.*
      * <p>
-     * <p>
      * Note that the scanning possibilities are limited. Therefore, only directories and jar files from the filesystem are supported.
      * </p>
-     * <p>
      * <p>
      * Scanning may also have negative impact on SE performance.
      * </p>
@@ -161,10 +157,8 @@ public abstract class SeContainerInitializer {
     /**
      * All classes from the specified packages will be added to the set of bean classes for the synthetic bean archive.
      * <p>
-     * <p>
      * Note that the scanning possibilities are limited. Therefore, only directories and jar files from the filesystem are supported.
      * </p>
-     * <p>
      * <p>
      * Scanning may also have negative impact on SE performance.
      * </p>
@@ -177,10 +171,8 @@ public abstract class SeContainerInitializer {
     /**
      * All classes from the specified packages will be added to the set of bean classes for the synthetic bean archive.
      * <p>
-     * <p>
      * Note that the scanning possibilities are limited. Therefore, only directories and jar files from the filesystem are supported.
      * </p>
-     * <p>
      * <p>
      * Scanning may also have negative impact on SE performance.
      * </p>

@@ -95,6 +95,7 @@ public @interface Observes {
      * By default, the observer method is notified even if no instance of the bean that defines the observer method already
      * exists in the current context.
      * </p>
+     * @return conditional observer type
      */
     public Reception notifyObserver() default Reception.ALWAYS;
 
@@ -105,6 +106,7 @@ public @interface Observes {
      * 
      * <p>
      * By default, the observer method is notified when the event is fired.
+     * @return phase of the transaction
      * </p>
      */
     public TransactionPhase during() default TransactionPhase.IN_PROGRESS;

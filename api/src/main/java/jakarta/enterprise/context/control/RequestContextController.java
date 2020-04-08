@@ -58,7 +58,7 @@ public interface RequestContextController {
     * but was not activated by this controller, then it may not be deactivated by this controller,
     * meaning this method will do nothing.
     *
-    * If the context is not active, a {@see ContextNotActiveException} is thrown.
+    * If the context is not active, a {@linkplain ContextNotActiveException} is thrown.
     *
     * @throws ContextNotActiveException if the context is not active
     */

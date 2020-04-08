@@ -17,7 +17,7 @@
 package jakarta.enterprise.inject;
 
 /**
- * <t>Indicates a problem relating to typesafe resolution.</t>
+ * Indicates a problem relating to typesafe resolution.
  * 
  * @author Gavin King
  */
