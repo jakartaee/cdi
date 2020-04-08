@@ -282,6 +282,19 @@
 	</profiles>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/..</directory>
+				<includes>
+					<include>LICENSE.txt</include>
+					<include>NOTICE.md</include>
+				</includes>
+				<targetPath>META-INF</targetPath>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<testResources>
 			<testResource>
 				<filtering>true</filtering>

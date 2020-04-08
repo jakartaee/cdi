@@ -47,6 +47,7 @@ public @interface Initialized {
 
     /**
      * The scope for which to observe initialization
+     * @return the scope type class
      */
     Class<? extends Annotation> value();
 

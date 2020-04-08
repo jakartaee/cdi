@@ -196,6 +196,7 @@ public interface BeforeBeanDiscovery {
      * Each call returns a new AnnotatedTypeConfigurator
      *
      *
+     * @param <T> class type
      * @param type class used to initialized the type and annotations on the {@link AnnotatedTypeConfigurator}
      * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
@@ -217,6 +218,7 @@ public interface BeforeBeanDiscovery {
      * easily add other annotations (like {@link Nonbinding} on its members.
      * </p>
      *
+     * @param <T> qualifier type
      * @param qualifier The annotation class used to initialized the configurator
      * @throws IllegalStateException if called outside of the observer method invocation
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the qualifier
@@ -238,6 +240,7 @@ public interface BeforeBeanDiscovery {
      * (like {@link Nonbinding} on its members.
      * </p>
      *
+     * @param <T> binding class type
      * @param bindingType The annotation class used to initialized the configurator
      * @throws IllegalStateException if called outside of the observer method invocation
      * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the interceptor binding

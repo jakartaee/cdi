@@ -174,7 +174,7 @@ public interface ObserverMethodConfigurator<T> {
      * 
      * @author Martin Kouba
      *
-     * @param <T>
+     * @param <T> event type
      * @see EventContext
      */
     @FunctionalInterface
