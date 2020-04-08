@@ -109,6 +109,7 @@ public interface BeanConfigurator<T> {
     /**
      * Set a callback to create a bean instance.
      *
+     * @param <U> instance type
      * @param callback the callback to create the instance
      * @return self
      * @see Contextual#create(CreationalContext)
@@ -122,7 +123,8 @@ public interface BeanConfigurator<T> {
      * bean instances obtained from {@link Instance} during the callback execution remain managed until the produced bean
      * instance is destroyed. Therefore, applications are encouraged to always destroy unneeded dependent scoped bean instances
      * obtained from {@link Instance}.
-     * 
+     *
+     * @param <U> instance type
      * @param callback the callback to create the instance
      * @return self
      */
@@ -154,6 +156,7 @@ public interface BeanConfigurator<T> {
     /**
      * Read the information from the given annotated type. All relevant information is overwritten.
      *
+     * @param <U> instance type
      * @param type class to read information from
      * @return self
      */

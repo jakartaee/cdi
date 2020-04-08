@@ -92,6 +92,7 @@ public @interface ObservesAsync {
      * By default, the observer method is notified even if no instance of the bean that defines the observer method already
      * exists in the current context.
      * </p>
+     * @return conditional observer type
      */
     public Reception notifyObserver() default Reception.ALWAYS;
 

@@ -69,7 +69,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * method of any servlet filter in the web application and before the container calls any <tt>ServletRequestListener</tt> or
  * <tt>AsyncListener</tt> in the web application.</li>
  * </ul>
- * <p>
+ *
  *
  * <p>
  * Any conversation is in one of two states: <em>transient</em> or <em>long-running</em>.

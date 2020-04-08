@@ -42,7 +42,8 @@ public interface ProducerConfigurator<T> {
 
     /**
      * Set a callback to produce a new instance.
-     * 
+     *
+     * @param <U> instance type
      * @param callback a {@link Function} defining the callback to set
      * @return self
      * @see Producer#produce(CreationalContext)
