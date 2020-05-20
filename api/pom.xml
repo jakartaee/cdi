@@ -20,14 +20,14 @@
 
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
-		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>3.0.0-M2</version>
+		<artifactId>cdi-parent</artifactId>
+		<version>3.0.0-M3</version>
 	</parent>
 
 	<groupId>jakarta.enterprise</groupId>
-	<artifactId>jakarta.enterprise.cdi-api</artifactId>
+	<artifactId>cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.0-M2</version>
+	<version>3.0.0-M3</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -131,7 +131,7 @@
 
 
 	<properties>
-		<atinject.api.version>2.0.0-RC3</atinject.api.version>
+		<atinject.api.version>2.0.0-RC4</atinject.api.version>
 		<uel.api.version>4.0.0-RC1</uel.api.version>
 		<interceptor.api.version>2.0.0-RC2</interceptor.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -184,8 +184,8 @@
 		</dependency>
 
 		<dependency>
-                        <groupId>jakarta.inject</groupId>
-                        <artifactId>jakarta.inject-api</artifactId>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
 		</dependency>
 
 		<dependency>

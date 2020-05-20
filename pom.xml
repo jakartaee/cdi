@@ -9,9 +9,9 @@
 	</parent>
 
 	<groupId>jakarta.enterprise</groupId>
-	<artifactId>jakarta.enterprise.cdi-parent</artifactId>
+	<artifactId>cdi-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>3.0.0-M2</version>
+	<version>3.0.0-M3</version>
 
 	<description>Parent module for CDI Specification</description>
 

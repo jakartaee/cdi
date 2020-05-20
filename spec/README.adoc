@@ -17,15 +17,11 @@ Maven will generate final doc in HTML and PDF in `target` directory with the def
 
 == License in doc
 
-The documentation can be generated for 2 licenses : Apache License v 2.0 (by default) and JCP license.
-To generate doc with various JCP licenses just change the `license-file` property with one of the following value:
+The documentation can be generated for 2 licenses : Apache License v 2.0 (by default) and EFSL license.
+To generate doc with the final EFSL license, change the `license-file` property to `final`. Use `asl` or
+specify nothing for the Apache V2 License.
 
-* `jcp-prefinal`: for pre-final license
-* `jcp-final-eval`: for final evaluation license
-* `jcp-final`: for final implementation license
-* `asl2`: (default value) for Apache V2 License
-
-For instance `mvn -Dlicense-file=jcp-prefinal` will generate docs with JCP pref-final license.
+For instance `mvn -Dlicense-file=final` will generate docs with link:https://www.eclipse.org/legal/efsl.php[EFSL] final license.
 
 == Working on the spec
 

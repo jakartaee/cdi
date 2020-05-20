@@ -4,8 +4,8 @@
 
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
-		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>3.0.0-M2</version>
+		<artifactId>cdi-parent</artifactId>
+		<version>3.0.0-M3</version>
 	</parent>
 
 	<artifactId>jakarta.enterprise.cdi-spec-doc</artifactId>
@@ -17,6 +17,7 @@
 	<properties>
 		<asciidoctor-maven.version>1.5.6</asciidoctor-maven.version>
 		<asciidoctorj-pdf.version>1.5.0-alpha.14</asciidoctorj-pdf.version>
+		<!-- asl2 for non-final releases, or final for EFSL -->
 		<license-file>asl2</license-file>
 		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 		<revisiondate>${maven.build.timestamp}</revisiondate>
@@ -192,6 +193,14 @@
 					<attributes>
 						<license>${license-file}</license>
 					</attributes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 		</plugins>
