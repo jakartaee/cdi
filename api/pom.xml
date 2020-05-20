@@ -20,12 +20,12 @@
 
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
-		<artifactId>cdi-parent</artifactId>
+		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
 		<version>3.0.0-M3</version>
 	</parent>
 
 	<groupId>jakarta.enterprise</groupId>
-	<artifactId>cdi-api</artifactId>
+	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
 	<version>3.0.0-M3</version>
 
