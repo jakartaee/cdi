@@ -41,8 +41,8 @@ import jakarta.enterprise.inject.Instance;
  * </p>
  *
  * <p>
- * Beans declared with scope <tt>@Dependent</tt> behave differently to beans with other built-in scope types. When a bean is
- * declared to have scope <tt>@Dependent</tt>:
+ * Beans declared with scope <code>@Dependent</code> behave differently to beans with other built-in scope types. When a bean is
+ * declared to have scope <code>@Dependent</code>:
  * </p>
  *
  * <ul>
@@ -61,37 +61,37 @@ import jakarta.enterprise.inject.Instance;
  *
  * <p>
  * Every invocation of the {@link Context#get(Contextual, CreationalContext)} operation of the
- * context object for the <tt>@Dependent</tt> scope returns a new instance of the given bean.
+ * context object for the <code>@Dependent</code> scope returns a new instance of the given bean.
  * </p>
  *
  * <p>
  * Every invocation of the {@link Context#get(Contextual)} operation of the context object for the
- * <tt>@Dependent</tt> scope returns a null value.
+ * <code>@Dependent</code> scope returns a null value.
  * </p>
  *
  * <p>
- * The <tt>@Dependent</tt> scope is always active.
+ * The <code>@Dependent</code> scope is always active.
  * </p>
  *
  * <p>
- * Many instances of beans with scope <tt>@Dependent</tt> belong to some other bean or Java EE component class instance and are
+ * Many instances of beans with scope <code>@Dependent</code> belong to some other bean or Java EE component class instance and are
  * called dependent objects.
  * </p>
  *
  * <ul>
  * <li>Instances of decorators and interceptors are dependent objects of the bean instance they decorate.</li>
- * <li>An instance of a bean with scope <tt>@Dependent</tt> injected into a field, bean constructor or initializer method is a
+ * <li>An instance of a bean with scope <code>@Dependent</code> injected into a field, bean constructor or initializer method is a
  * dependent object of the bean or Java EE component class instance into which it was injected.</li>
- * <li>An instance of a bean with scope <tt>@Dependent</tt> injected into a producer method is a dependent object of the
+ * <li>An instance of a bean with scope <code>@Dependent</code> injected into a producer method is a dependent object of the
  * producer method bean instance that is being produced.</li>
- * <li>An instance of a bean with scope <tt>@Dependent</tt> obtained by direct invocation of an
+ * <li>An instance of a bean with scope <code>@Dependent</code> obtained by direct invocation of an
  * {@link Instance} is a dependent object of the instance of {@link Instance}.</li>
  * </ul>
  *
  * <p>
  * When the container destroys an instance of a bean or of any Java EE component class supporting injection, the container
- * destroys all its dependent objects, after the <tt>@PreDestroy</tt> callback completes and after the servlet
- * <tt>destroy()</tt> method is called.
+ * destroys all its dependent objects, after the <code>@PreDestroy</code> callback completes and after the servlet
+ * <code>destroy()</code> method is called.
  * </p>
  *
  * @author Gavin King

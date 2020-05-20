@@ -37,16 +37,16 @@ import jakarta.inject.Qualifier;
  * </p>
  *
  * <p>
- * Every bean has the qualifier <tt>&#064;Any</tt>, even if it does not explicitly declare this qualifier, except for the
+ * Every bean has the qualifier <code>&#064;Any</code>, even if it does not explicitly declare this qualifier, except for the
  * special {@link New &#064;New qualified beans}.
  * </p>
  *
  * <p>
- * Every event has the qualifier <tt>&#064;Any</tt>, even if it was raised without explicitly declaration of this qualifier.
+ * Every event has the qualifier <code>&#064;Any</code>, even if it was raised without explicitly declaration of this qualifier.
  * </p>
  *
  * <p>
- * The <tt>&#064;Any</tt> qualifier allows an injection point to refer to all beans or all events of a certain bean type.
+ * The <code>&#064;Any</code> qualifier allows an injection point to refer to all beans or all events of a certain bean type.
  * </p>
  *
  * <pre>

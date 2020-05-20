@@ -42,7 +42,7 @@ import jakarta.inject.Provider;
  * </ul>
  * 
  * <p>
- * In these situations, an instance of the <tt>Instance</tt> may be injected:
+ * In these situations, an instance of the <code>Instance</code> may be injected:
  * </p>
  * 
  * <pre>
@@ -83,7 +83,7 @@ import jakarta.inject.Provider;
  * </pre>
  * 
  * <p>
- * For an injected <tt>Instance</tt>:
+ * For an injected <code>Instance</code>:
  * </p>
  * 
  * <ul>
@@ -93,7 +93,7 @@ import jakarta.inject.Provider;
  * 
  * <p>
  * The inherited {@link jakarta.inject.Provider#get()} method returns a contextual references for the unique bean that matches the
- * required type and required qualifiers and is eligible for injection into the class into which the parent <tt>Instance</tt>
+ * required type and required qualifiers and is eligible for injection into the class into which the parent <code>Instance</code>
  * was injected, or throws an {@link UnsatisfiedResolutionException} or
  * {@link AmbiguousResolutionException}.
  * </p>
@@ -105,7 +105,7 @@ import jakarta.inject.Provider;
  * <p>
  * The inherited {@link java.lang.Iterable#iterator()} method returns an iterator over contextual references for beans that
  * match the required type and required qualifiers and are eligible for injection into the class into which the parent
- * <tt>Instance</tt> was injected.
+ * <code>Instance</code> was injected.
  * </p>
  * 
  * <pre>
@@ -129,11 +129,11 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Instance</tt> for the given additional required qualifiers.
+     * Obtains a child <code>Instance</code> for the given additional required qualifiers.
      * </p>
      * 
      * @param qualifiers the additional required qualifiers
-     * @return the child <tt>Instance</tt>
+     * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
@@ -142,13 +142,13 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Instance</tt> for the given required type and additional required qualifiers.
+     * Obtains a child <code>Instance</code> for the given required type and additional required qualifiers.
      * </p>
      * 
      * @param <U> the required type
      * @param subtype a {@link java.lang.Class} representing the required type
      * @param qualifiers the additional required qualifiers
-     * @return the child <tt>Instance</tt>
+     * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
@@ -157,13 +157,13 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Instance</tt> for the given required type and additional required qualifiers.
+     * Obtains a child <code>Instance</code> for the given required type and additional required qualifiers.
      * </p>
      * 
      * @param <U> the required type
      * @param subtype a {@link TypeLiteral} representing the required type
      * @param qualifiers the additional required qualifiers
-     * @return the child <tt>Instance</tt>
+     * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
@@ -177,7 +177,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * </p>
      *
      * @since 2.0
-     * @return a <tt>Stream</tt> representing the beans associated with this {@link Instance} object
+     * @return a <code>Stream</code> representing the beans associated with this {@link Instance} object
      */
     default Stream<T> stream() {
         return StreamSupport.stream(this.spliterator(), false);
@@ -186,34 +186,34 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
     /**
      * <p>
      * Determines if there is no bean that matches the required type and qualifiers and is eligible for injection into the class
-     * into which the parent <tt>Instance</tt> was injected.
+     * into which the parent <code>Instance</code> was injected.
      * </p>
      * 
-     * @return <tt>true</tt> if there is no bean that matches the required type and qualifiers and is eligible for injection
-     *         into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
+     * @return <code>true</code> if there is no bean that matches the required type and qualifiers and is eligible for injection
+     *         into the class into which the parent <code>Instance</code> was injected, or <code>false</code> otherwise.
      */
     boolean isUnsatisfied();
 
     /**
      * <p>
      * Determines if there is more than one bean that matches the required type and qualifiers and is eligible for injection
-     * into the class into which the parent <tt>Instance</tt> was injected.
+     * into the class into which the parent <code>Instance</code> was injected.
      * </p>
      * 
-     * @return <tt>true</tt> if there is more than one bean that matches the required type and qualifiers and is eligible for
-     *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
+     * @return <code>true</code> if there is more than one bean that matches the required type and qualifiers and is eligible for
+     *         injection into the class into which the parent <code>Instance</code> was injected, or <code>false</code> otherwise.
      */
     boolean isAmbiguous();
 
     /**
      * <p>
      * Determines if there is exactly one bean that matches the required type and qualifiers and is eligible for injection
-     * into the class into which the parent <tt>Instance</tt> was injected.
+     * into the class into which the parent <code>Instance</code> was injected.
      * </p>
      *
      * @since 2.0
-     * @return <tt>true</tt> if there is exactly one bean that matches the required type and qualifiers and is eligible for
-     *         injection into the class into which the parent <tt>Instance</tt> was injected, or <tt>false</tt> otherwise.
+     * @return <code>true</code> if there is exactly one bean that matches the required type and qualifiers and is eligible for
+     *         injection into the class into which the parent <code>Instance</code> was injected, or <code>false</code> otherwise.
      */
     default boolean isResolvable() {
         return !isUnsatisfied() && !isAmbiguous();

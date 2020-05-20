@@ -107,7 +107,7 @@ public interface Conversation {
      * Determine if the conversation is marked transient or long-running.
      * </p>
      * 
-     * @return <tt>true</tt> if the conversation is marked transient, or <tt>false</tt>if it is marked long-running.
+     * @return <code>true</code> if the conversation is marked transient, or <code>false</code>if it is marked long-running.
      */
     public boolean isTransient();
 }

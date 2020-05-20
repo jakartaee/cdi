@@ -31,7 +31,7 @@ import java.util.TreeSet;
  *
  * <p>
  * CDI implements {@link Instance} and therefore might be used to perform programmatic lookup.
- * If no qualifier is passed to {@link #select} method, the <tt>@Default</tt> qualifier is assumed.
+ * If no qualifier is passed to {@link #select} method, the <code>@Default</code> qualifier is assumed.
  * </p>
  *
  *

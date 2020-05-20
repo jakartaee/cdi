@@ -49,7 +49,7 @@ import jakarta.enterprise.inject.Produces;
  * </p>
  * 
  * <p>
- * For example, the following producer method creates injectable <tt>Logger</tt> s. The log category of a <tt>Logger</tt>
+ * For example, the following producer method creates injectable <code>Logger</code> s. The log category of a <code>Logger</code>
  * depends upon the class of the object into which it is injected.
  * </p>
  * 
@@ -114,14 +114,14 @@ public interface InjectionPoint {
     /**
      * Determines if the injection point is a decorator delegate injection point.
      * 
-     * @return <tt>true</tt> if the injection point is a decorator delegate injection point, and <tt>false</tt> otherwise
+     * @return <code>true</code> if the injection point is a decorator delegate injection point, and <code>false</code> otherwise
      */
     public boolean isDelegate();
 
     /**
      * Determines if the injection is a transient field.
      * 
-     * @return <tt>true</tt> if the injection point is a transient field, and <tt>false</tt> otherwise
+     * @return <code>true</code> if the injection point is a transient field, and <code>false</code> otherwise
      */
     public boolean isTransient();
 }

@@ -38,7 +38,7 @@ import jakarta.enterprise.inject.Instance;
  * </p>
  * 
  * <p>
- * An instance of an annotation type may be obtained by subclassing <tt>AnnotationLiteral</tt>.
+ * An instance of an annotation type may be obtained by subclassing <code>AnnotationLiteral</code>.
  * </p>
  * 
  * <pre>

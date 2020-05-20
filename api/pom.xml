@@ -24,7 +24,6 @@
 		<version>3.0.0-M3</version>
 	</parent>
 
-	<groupId>jakarta.enterprise</groupId>
 	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
 	<version>3.0.0-M3</version>
@@ -134,6 +133,8 @@
 		<atinject.api.version>2.0.0-RC4</atinject.api.version>
 		<uel.api.version>4.0.0-RC1</uel.api.version>
 		<interceptor.api.version>2.0.0-RC2</interceptor.api.version>
+		<ejb.api.version>4.0.0-RC2</ejb.api.version>
+		<transaction.api.version>2.0.0-RC1</transaction.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
@@ -169,6 +170,17 @@
 				<version>${interceptor.api.version}</version>
 			</dependency>
 
+			<!-- Only for javadoc references -->
+			<dependency>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
+				<version>${transaction.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.ejb</groupId>
+				<artifactId>jakarta.ejb-api</artifactId>
+				<version>${ejb.api.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -186,6 +198,17 @@
 		<dependency>
 			<groupId>jakarta.inject</groupId>
 			<artifactId>jakarta.inject-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.ejb</groupId>
+			<artifactId>jakarta.ejb-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -332,6 +355,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>

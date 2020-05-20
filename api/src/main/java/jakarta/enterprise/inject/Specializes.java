@@ -48,13 +48,13 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  * 
  * <ul>
- * <li>If a bean class of a managed bean is annotated <tt>&#064;Specializes</tt> , then the bean class must directly extend the
+ * <li>If a bean class of a managed bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend the
  * bean class of a second managed bean. Then the first managed bean directly specializes the second managed bean.</li>
  * 
- * <li>If a bean class of a session bean is annotated <tt>&#064;Specializes</tt> , then the bean class must directly extend the
+ * <li>If a bean class of a session bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend the
  * bean class of a second session bean. Then the first session bean directly specializes the second session bean.</li>
  * 
- * <li>If a producer method is annotated <tt>&#064;Specializes</tt>, then it must be non-static and directly override another
+ * <li>If a producer method is annotated <code>&#064;Specializes</code>, then it must be non-static and directly override another
  * producer method. Then the first producer method directly specializes the second producer method.</li>
  * </ul>
  * 

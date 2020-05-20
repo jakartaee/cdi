@@ -46,7 +46,7 @@ import jakarta.enterprise.inject.Stereotype;
  * </p>
  * 
  * <p>
- * Any bean may obtain an instance of <tt>BeanManager</tt> by injecting it:
+ * Any bean may obtain an instance of <code>BeanManager</code> by injecting it:
  * </p>
  * 
  * <pre>
@@ -55,7 +55,7 @@ import jakarta.enterprise.inject.Stereotype;
  * </pre>
  * 
  * <p>
- * Java EE components may obtain an instance of <tt>BeanManager</tt> from {@linkplain javax.naming JNDI} by looking up the name
+ * Java EE components may obtain an instance of <code>BeanManager</code> from {@linkplain javax.naming JNDI} by looking up the name
  * {@code java:comp/BeanManager}.
  * </p>
  * 
@@ -141,8 +141,8 @@ public interface BeanManager {
 
     /**
      * Return the set of beans which have the given required type and qualifiers and are available for injection in the module
-     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
-     * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution. If no
+     * or library containing the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI
+     * environment namespace the <code>BeanManager</code> was obtained, according to the rules of typesafe resolution. If no
      * qualifiers are given, the {@linkplain Default default qualifier} is assumed.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
@@ -161,8 +161,8 @@ public interface BeanManager {
 
     /**
      * Return the set of beans which have the given EL name and are available for injection in the module or library containing
-     * the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI environment namespace
-     * the <tt>BeanManager</tt> was obtained, according to the rules of EL name resolution.
+     * the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI environment namespace
+     * the <code>BeanManager</code> was obtained, according to the rules of EL name resolution.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
@@ -257,8 +257,8 @@ public interface BeanManager {
 
     /**
      * Return an ordered list of {@linkplain Decorator decorators} for a set of bean types and a set of qualifiers and which are
-     * enabled in the module or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE
-     * component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
+     * enabled in the module or library containing the class into which the <code>BeanManager</code> was injected or the Java EE
+     * component from whose JNDI environment namespace the <code>BeanManager</code> was obtained.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return decorators discovered by the container before the {@link AfterBeanDiscovery} event is fired.
@@ -276,8 +276,8 @@ public interface BeanManager {
 
     /**
      * Return an ordered list of enabled {@linkplain Interceptor interceptors} for a set of interceptor bindings and a type of
-     * interception and which are enabled in the module or library containing the class into which the <tt>BeanManager</tt> was
-     * injected or the Java EE component from whose JNDI environment namespace the <tt>BeanManager</tt> was obtained.
+     * interception and which are enabled in the module or library containing the class into which the <code>BeanManager</code> was
+     * injected or the Java EE component from whose JNDI environment namespace the <code>BeanManager</code> was obtained.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return interceptors discovered by the container before the {@link AfterBeanDiscovery} event is 
@@ -306,7 +306,7 @@ public interface BeanManager {
      * Test the given annotation type to determine if it is a {@linkplain jakarta.enterprise.context normal scope type}.
      * 
      * @param annotationType the annotation type
-     * @return <tt>true</tt> if the annotation type is a {@linkplain jakarta.enterprise.context normal scope type}
+     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.enterprise.context normal scope type}
      */
     public boolean isNormalScope(Class<? extends Annotation> annotationType);
 
@@ -314,7 +314,7 @@ public interface BeanManager {
      * Test the given annotation type to determine if it is a passivating {@linkplain jakarta.enterprise.context scope type}.
      * 
      * @param annotationType the annotation type
-     * @return <tt>true</tt> if the annotation type is a passivating scope type
+     * @return <code>true</code> if the annotation type is a passivating scope type
      */
     public boolean isPassivatingScope(Class<? extends Annotation> annotationType);
 
@@ -322,7 +322,7 @@ public interface BeanManager {
      * Test the given annotation type to determine if it is a {@linkplain jakarta.inject.Qualifier qualifier type}.
      * 
      * @param annotationType the annotation type
-     * @return <tt>true</tt> if the annotation type is a {@linkplain jakarta.inject.Qualifier qualifier type}
+     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.inject.Qualifier qualifier type}
      */
     public boolean isQualifier(Class<? extends Annotation> annotationType);
 
@@ -331,7 +331,7 @@ public interface BeanManager {
      * binding type} .
      * 
      * @param annotationType the annotation to test
-     * @return <tt>true</tt> if the annotation type is a {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding
+     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding
      *         type}
      */
     public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
@@ -340,7 +340,7 @@ public interface BeanManager {
      * Test the given annotation type to determine if it is a {@linkplain Stereotype stereotype}.
      * 
      * @param annotationType the annotation type
-     * @return <tt>true</tt> if the annotation type is a {@linkplain Stereotype stereotype}
+     * @return <code>true</code> if the annotation type is a {@linkplain Stereotype stereotype}
      */
     public boolean isStereotype(Class<? extends Annotation> annotationType);
 
@@ -577,7 +577,7 @@ public interface BeanManager {
      * @param <X> the type of the declaring bean
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return values of {@link Bean#isAlternative()} and {@link Bean#isNullable()}
-     * @param beanClass a class, which determines the return value of <tt>Bean.getClass()</tt>
+     * @param beanClass a class, which determines the return value of <code>Bean.getClass()</code>
      * @param producerFactory a {@link ProducerFactory}, used to obtain a {@link Producer}
      * @return a container provided implementation of {@link Bean}
      * @since 1.1
@@ -630,10 +630,10 @@ public interface BeanManager {
 
     /**
      *
-     * Returns an instance of Event with specified type <tt>java.lang.Object</tt> and specified qualifier <tt>@Default</tt>
+     * Returns an instance of Event with specified type <code>java.lang.Object</code> and specified qualifier <code>@Default</code>
      * It allows typesafe synchronous or asynchronous event firing without injection of {@link Event} built-in bean requirement.
      *
-     * @return a new {@link Event} object whose event type is <tt>Object</tt> and qualifier <tt>@Default</tt>
+     * @return a new {@link Event} object whose event type is <code>Object</code> and qualifier <code>@Default</code>
      * @since 2.0
      */
     Event<Object> getEvent();
@@ -643,17 +643,17 @@ public interface BeanManager {
      *
      * Obtains an {@link Instance} object to access to beans instances.
      *
-     * The returned <tt>Instance</tt> object can only access instances of  beans that are available for injection in the module
-     * or library containing the class into which the <tt>BeanManager</tt> was injected or the Java EE component from whose JNDI
-     * environment namespace the <tt>BeanManager</tt> was obtained, according to the rules of typesafe resolution.
+     * The returned <code>Instance</code> object can only access instances of  beans that are available for injection in the module
+     * or library containing the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI
+     * environment namespace the <code>BeanManager</code> was obtained, according to the rules of typesafe resolution.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * the <tt>Instance</tt> returned by this method will only give access to instances of beans discovered by the container
+     * the <code>Instance</code> returned by this method will only give access to instances of beans discovered by the container
      * before the {@link AfterBeanDiscovery} event is fired.
      *
-     * Instances of dependent scoped beans obtained with this <tt>Instance</tt> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
+     * Instances of dependent scoped beans obtained with this <code>Instance</code> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
      *
-     * If no qualifier is passed to {@link Instance#select} method, the <tt>@Default</tt> qualifier is assumed.
+     * If no qualifier is passed to {@link Instance#select} method, the <code>@Default</code> qualifier is assumed.
      *
      * @return an {@link Instance} object to request beans instances
      * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
