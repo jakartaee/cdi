@@ -47,7 +47,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <p>
  * By default, a bean archive has no selected alternatives. An alternative must be explicitly declared using the
- * <tt>&lt;alternatives&gt;</tt> element of the <tt>beans.xml</tt> file of the bean archive. The <tt>&lt;alternatives&gt;</tt>
+ * <code>&lt;alternatives&gt;</code> element of the <code>beans.xml</code> file of the bean archive. The <code>&lt;alternatives&gt;</code>
  * element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
  * </p>
  *
@@ -55,7 +55,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <li>the alternative is a managed bean or session bean and the bean class of the bean is listed,</li>
  * <li>the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed,
  * or</li>
- * <li>any <tt>&#064;Alternative</tt> stereotype of the alternative is listed.</li>
+ * <li>any <code>&#064;Alternative</code> stereotype of the alternative is listed.</li>
  * </ul>
  *
  * @author Gavin King

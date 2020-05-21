@@ -65,8 +65,8 @@
  *  
  * <p>By default, a bean archive has no enabled decorators. A 
  * decorator must be explicitly enabled by listing its bean class 
- * under the <tt>&lt;decorators&gt;</tt> element of the 
- * <tt>beans.xml</tt> file of the bean archive. The order of the 
+ * under the <code>&lt;decorators&gt;</code> element of the
+ * <code>beans.xml</code> file of the bean archive. The order of the
  * decorator declarations determines the decorator ordering. 
  * Decorators which occur earlier in the list are called first.</p>
  * 

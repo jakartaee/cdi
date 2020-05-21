@@ -38,7 +38,7 @@ import jakarta.inject.Qualifier;
  * </p>
  *
  * <p>
- * The <tt>&#064;New</tt> qualifier allows the application to obtain a new instance of a bean which is not bound to the declared
+ * The <code>&#064;New</code> qualifier allows the application to obtain a new instance of a bean which is not bound to the declared
  * scope, but has had dependency injection performed.
  * </p>
  *
@@ -51,9 +51,9 @@ import jakarta.inject.Qualifier;
  * </pre>
  *
  * <p>
- * When the <tt>&#064;New</tt> qualifier is specified at an injection point and no {@link New#value()
+ * When the <code>&#064;New</code> qualifier is specified at an injection point and no {@link New#value()
  * value} member is explicitly specified, the container defaults the {@link New#value() value} to the
- * declared type of the injection point. So the following injection point has qualifier <tt>&#064;New(Order.class)</tt>:
+ * declared type of the injection point. So the following injection point has qualifier <code>&#064;New(Order.class)</code>:
  * </p>
  *
  * <pre>

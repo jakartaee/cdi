@@ -22,7 +22,7 @@ import jakarta.enterprise.inject.Default;
 
 /**
  * <p>
- * Service interface implemented by extensions. An extension is a service provider declared in <tt>META-INF/services</tt>.
+ * Service interface implemented by extensions. An extension is a service provider declared in <code>META-INF/services</code>.
  * </p>
  * 
  * <p>

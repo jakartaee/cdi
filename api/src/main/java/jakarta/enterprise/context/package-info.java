@@ -40,7 +40,7 @@
  * {@link jakarta.enterprise.context.ApplicationScoped &#064;ApplicationScoped},
  * {@link jakarta.inject.Singleton &#064;Singleton}.</p>
  * 
- * <p>The container provides an implementation of the <tt>Context</tt> 
+ * <p>The container provides an implementation of the <code>Context</code>
  * interface for each of the built-in scopes. The built-in request, 
  * session, and application contexts support servlet, web service 
  * and EJB invocations. The built-in conversation context supports

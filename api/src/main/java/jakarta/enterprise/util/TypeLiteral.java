@@ -32,7 +32,7 @@ import jakarta.enterprise.inject.Instance;
  * </p>
  * 
  * <p>
- * An object that represents any parameterized type may be obtained by subclassing <tt>TypeLiteral</tt>.
+ * An object that represents any parameterized type may be obtained by subclassing <code>TypeLiteral</code>.
  * </p>
  * 
  * <pre>

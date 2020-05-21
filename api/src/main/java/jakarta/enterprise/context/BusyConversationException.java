@@ -26,7 +26,7 @@ package jakarta.enterprise.context;
  * <p>
  * The container ensures that a long-running conversation may be associated with at most one request at a time, by blocking or
  * rejecting concurrent requests. If the container rejects a request, it must associate the request with a new transient
- * conversation and throw an exception of type <tt>BusyConversationException</tt> from the restore view phase of the JSF
+ * conversation and throw an exception of type <code>BusyConversationException</code> from the restore view phase of the JSF
  * lifecycle.
  * </p>
  * 

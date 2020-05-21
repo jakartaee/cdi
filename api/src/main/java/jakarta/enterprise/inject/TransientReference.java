@@ -29,7 +29,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
  * <p>
- * If a parameter annotated with <tt>&#064;TransientReference</tt> resolves to a dependent scoped bean, then the bean will be
+ * If a parameter annotated with <code>&#064;TransientReference</code> resolves to a dependent scoped bean, then the bean will be
  * destroyed after the invocation completes.
  * </p>
  * 
