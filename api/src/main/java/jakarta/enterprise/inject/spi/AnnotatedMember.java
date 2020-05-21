@@ -45,7 +45,7 @@ public interface AnnotatedMember<X> extends Annotated {
      * Determines if the member is static.
      * </p>
      * 
-     * @return <tt>true</tt> if the member is static
+     * @return <code>true</code> if the member is static
      */
     public boolean isStatic();
 

@@ -34,7 +34,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * Specifies that a bean is request scoped.
  * </p>
  * <p>
- * While <tt>RequestScoped</tt> must be associated with the built-in request context required by the specification,
+ * While <code>RequestScoped</code> must be associated with the built-in request context required by the specification,
  * third-party extensions are
  * allowed to also associate it with their own context. Behavior described below is only related to the built-in request context.
  * </p>
@@ -44,12 +44,12 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet in the web application, during the <tt>doFilter()</tt> method of any
- * servlet filter and when the container calls any <tt>ServletRequestListener</tt> or <tt>AsyncListener</tt>,</li>
+ * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method of any
+ * servlet filter and when the container calls any <code>ServletRequestListener</code> or <code>AsyncListener</code>,</li>
  * <li>during any Java EE web service invocation,</li>
  * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
  * an EJB timeout method and during message delivery to any EJB message-driven bean, and</li>
- * <li>during <tt>@PostConstruct</tt> callback of any bean.</li>
+ * <li>during <code>@PostConstruct</code> callback of any bean.</li>
  * </ul>
  *
  * <p>
@@ -57,25 +57,25 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <ul>
- * <li>at the end of the servlet request, after the <tt>service()</tt> method, all <tt>doFilter()</tt> methods, and all
- * <tt>requestDestroyed()</tt> and <tt>onComplete()</tt> notifications return,</li>
+ * <li>at the end of the servlet request, after the <code>service()</code> method, all <code>doFilter()</code> methods, and all
+ * <code>requestDestroyed()</code> and <code>onComplete()</code> notifications return,</li>
  * <li>after the web service invocation completes,</li>
  * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it
  * did not already exist when the invocation occurred, or</li>
- * <li>after the <tt>@PostConstruct</tt> callback completes, if it did not already exist when the <tt>@PostConstruct</tt>
+ * <li>after the <code>@PostConstruct</code> callback completes, if it did not already exist when the <code>@PostConstruct</code>
  * callback occurred.</li>
  * </ul>
  *
  * <p>
- * An event with qualifier <tt>@Initialized(RequestScoped.class)</tt> is fired when the request context is initialized and an
+ * An event with qualifier <code>@Initialized(RequestScoped.class)</code> is fired when the request context is initialized and an
  * event
- * with qualifier <tt>@Destroyed(RequestScoped.class)</tt> when the request context is destroyed. The event payload is:
+ * with qualifier <code>@Destroyed(RequestScoped.class)</code> when the request context is destroyed. The event payload is:
  * </p>
  *
  * <ul>
- * <li>the <tt>ServletRequest</tt> if the context is initialized or destroyed due to a servlet request, or</li>
- * <li>the <tt>ServletRequest</tt> if the context is initialized or destroyed due to a web service invocation, or</li>
- * <li>any <tt>java.lang.Object</tt> for other types of request.</li>
+ * <li>the <code>ServletRequest</code> if the context is initialized or destroyed due to a servlet request, or</li>
+ * <li>the <code>ServletRequest</code> if the context is initialized or destroyed due to a web service invocation, or</li>
+ * <li>any <code>java.lang.Object</code> for other types of request.</li>
  * </ul>
  *
  * @author Gavin King

@@ -102,7 +102,7 @@ public interface Annotated {
      * program element.
      *
      * @param annotationType the annotation type to check for
-     * @return <tt>true</tt> if the program element has an annotation of the given annotation type, or <tt>false</tt> otherwise
+     * @return <code>true</code> if the program element has an annotation of the given annotation type, or <code>false</code> otherwise
      */
     boolean isAnnotationPresent(Class<? extends Annotation> annotationType);
 }

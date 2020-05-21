@@ -20,14 +20,13 @@
 
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
-		<artifactId>cdi-parent</artifactId>
+		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>jakarta.enterprise</groupId>
 	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>3.0.0-M3</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -131,9 +130,11 @@
 
 
 	<properties>
-		<atinject.api.version>2.0.0-RC3</atinject.api.version>
-		<uel.api.version>4.0.0.M1</uel.api.version>
+		<atinject.api.version>2.0.0-RC4</atinject.api.version>
+		<uel.api.version>4.0.0-RC1</uel.api.version>
 		<interceptor.api.version>2.0.0-RC2</interceptor.api.version>
+		<ejb.api.version>4.0.0-RC2</ejb.api.version>
+		<transaction.api.version>2.0.0-RC1</transaction.api.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
@@ -169,6 +170,17 @@
 				<version>${interceptor.api.version}</version>
 			</dependency>
 
+			<!-- Only for javadoc references -->
+			<dependency>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
+				<version>${transaction.api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>jakarta.ejb</groupId>
+				<artifactId>jakarta.ejb-api</artifactId>
+				<version>${ejb.api.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -184,8 +196,19 @@
 		</dependency>
 
 		<dependency>
-                        <groupId>jakarta.inject</groupId>
-                        <artifactId>jakarta.inject-api</artifactId>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.ejb</groupId>
+			<artifactId>jakarta.ejb-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -332,6 +355,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -368,6 +392,7 @@
 								<include>**/privileged/**</include>
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
+							<forkCount>0</forkCount>
 						</configuration>
 					</execution>
 				</executions>

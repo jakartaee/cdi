@@ -30,7 +30,7 @@ import jakarta.enterprise.inject.Any;
  * </p>
  * 
  * <p>
- * Beans fire events via an instance of the <tt>Event</tt> interface, which may be injected:
+ * Beans fire events via an instance of the <code>Event</code> interface, which may be injected:
  * </p>
  * 
  * <pre>
@@ -40,7 +40,7 @@ import jakarta.enterprise.inject.Any;
  * </pre>
  * 
  * <p>
- * The <tt>fire()</tt> method accepts an event object:
+ * The <code>fire()</code> method accepts an event object:
  * </p>
  * 
  * <pre>
@@ -72,7 +72,7 @@ import jakarta.enterprise.inject.Any;
  * </pre>
  * 
  * <p>
- * For an injected <tt>Event</tt>:
+ * For an injected <code>Event</code>:
  * </p>
  * 
  * <ul>
@@ -148,11 +148,11 @@ public interface Event<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Event</tt> for the given additional required qualifiers.
+     * Obtains a child <code>Event</code> for the given additional required qualifiers.
      * </p>
      * 
      * @param qualifiers the additional specified qualifiers
-     * @return the child <tt>Event</tt>
+     * @return the child <code>Event</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
@@ -160,13 +160,13 @@ public interface Event<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Event</tt> for the given required type and additional required qualifiers.
+     * Obtains a child <code>Event</code> for the given required type and additional required qualifiers.
      * </p>
      * 
      * @param <U> the specified type
      * @param subtype a {@link java.lang.Class} representing the specified type
      * @param qualifiers the additional specified qualifiers
-     * @return the child <tt>Event</tt>
+     * @return the child <code>Event</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */
@@ -174,13 +174,13 @@ public interface Event<T> {
 
     /**
      * <p>
-     * Obtains a child <tt>Event</tt> for the given required type and additional required qualifiers.
+     * Obtains a child <code>Event</code> for the given required type and additional required qualifiers.
      * </p>
      * 
      * @param <U> the specified type
      * @param subtype a {@link TypeLiteral} representing the specified type
      * @param qualifiers the additional specified qualifiers
-     * @return the child <tt>Event</tt>
+     * @return the child <code>Event</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
      *         is not a qualifier type
      */

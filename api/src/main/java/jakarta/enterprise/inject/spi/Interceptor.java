@@ -55,8 +55,8 @@ public interface Interceptor<T> extends Bean<T> {
      * </p>
      * 
      * @param type the {@linkplain InterceptionType kind of interception}
-     * @return returns <tt>true</tt> if the interceptor intercepts callbacks or business methods of the given type, and
-     *         <tt>false</tt> otherwise.
+     * @return returns <code>true</code> if the interceptor intercepts callbacks or business methods of the given type, and
+     *         <code>false</code> otherwise.
      */
     public boolean intercepts(InterceptionType type);
 

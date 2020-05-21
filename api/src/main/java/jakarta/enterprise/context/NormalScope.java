@@ -49,7 +49,7 @@ public @interface NormalScope {
      * secondary storage. A passivating scope requires that beans with the scope are passivation capable.
      * </p>
      * 
-     * @return <tt>true</tt> if the scope type is a passivating scope type
+     * @return <code>true</code> if the scope type is a passivating scope type
      */
     boolean passivating() default false;
 

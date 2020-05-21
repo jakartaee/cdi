@@ -43,7 +43,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </pre>
  *
  * <p>
- * When a <tt>&#064;Typed</tt> annotation is specified, only the types whose classes are explicitly listed using the
+ * When a <code>&#064;Typed</code> annotation is specified, only the types whose classes are explicitly listed using the
  * {@link Typed#value() value} member, along with {@link java.lang.Object}, are bean types of the bean.
  * </p>
  *
