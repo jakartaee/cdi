@@ -24,8 +24,8 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * instance of a type.
  * </p>
  * 
- * @see javax.annotation.PostConstruct
- * @see javax.annotation.PreDestroy
+ * @see jakarta.annotation.PostConstruct
+ * @see jakarta.annotation.PreDestroy
  * 
  * @author Pete Muir
  * @author David Allen
@@ -46,21 +46,21 @@ public interface InjectionTarget<T> extends Producer<T> {
 
     /**
      * <p>
-     * Calls the {@link javax.annotation.PostConstruct} callback, if it exists, according to the semantics required by the Java
+     * Calls the {@link jakarta.annotation.PostConstruct} callback, if it exists, according to the semantics required by the Java
      * EE platform specification.
      * </p>
      * 
-     * @param instance The instance on which to invoke the {@link javax.annotation.PostConstruct} method
+     * @param instance The instance on which to invoke the {@link jakarta.annotation.PostConstruct} method
      */
     public void postConstruct(T instance);
 
     /**
      * <p>
-     * Calls the {@link javax.annotation.PreDestroy} callback, if it exists, according to the semantics required by the Java EE
+     * Calls the {@link jakarta.annotation.PreDestroy} callback, if it exists, according to the semantics required by the Java EE
      * platform specification.
      * </p>
      * 
-     * @param instance The instance on which to invoke the {@link javax.annotation.PreDestroy} method
+     * @param instance The instance on which to invoke the {@link jakarta.annotation.PreDestroy} method
      */
     public void preDestroy(T instance);
 
