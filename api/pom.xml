@@ -130,11 +130,13 @@
 
 
 	<properties>
-		<atinject.api.version>2.0.0-RC4</atinject.api.version>
-		<uel.api.version>4.0.0-RC1</uel.api.version>
-		<interceptor.api.version>2.0.0-RC2</interceptor.api.version>
+		<atinject.api.version>2.0.0</atinject.api.version>
+		<uel.api.version>4.0.0</uel.api.version>
+		<interceptor.api.version>2.0.0</interceptor.api.version>
+		<!-- These are only used in javadoc links -->
 		<ejb.api.version>4.0.0-RC2</ejb.api.version>
-		<transaction.api.version>2.0.0-RC1</transaction.api.version>
+		<transaction.api.version>2.0.0-RC2</transaction.api.version>
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
@@ -303,6 +305,7 @@
 				</executions>
 				<configuration>
 					<instructions>
+						<Automatic-Module-Name>jakarta.cdi</Automatic-Module-Name>
 						<Export-Package>
 							jakarta.decorator;version=3.0,
 							jakarta.enterprise.*;version=3.0,
