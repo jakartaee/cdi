@@ -35,6 +35,7 @@ package jakarta.enterprise.event;
  * @author Gavin King
  * 
  */
+@SuppressWarnings("ALL")
 public enum TransactionPhase {
 
     /**
