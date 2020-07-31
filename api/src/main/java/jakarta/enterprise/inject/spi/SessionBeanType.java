@@ -16,6 +16,8 @@
  */
 package jakarta.enterprise.inject.spi;
 
+import jakarta.ejb.Stateless;
+
 /**
  * Identifies the kind of EJB session bean.
  * 
