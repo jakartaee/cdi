@@ -4,7 +4,7 @@
 
 [[biz_method_ee]]
 
-=== Container invocations and interception in Java EE
+=== Container invocations and interception in Jakarta EE
 
 When the application invokes:
 
@@ -12,7 +12,7 @@ When the application invokes:
 
 the invocation is treated as a _business method invocation_.
 
-When running in Java EE, the container must extend the rules defined in <<biz_method>>, with:
+When running in Jakarta EE, the container must extend the rules defined in <<biz_method>>, with:
 
 * Invocation of EJB timer service timeouts by the container are not business method invocations, but are intercepted by interceptors for EJB timeouts.
 * Only an invocation of business method on an EJB session bean is subject to EJB services such as declarative transaction management, concurrency, security and asynchronicity, as defined by the EJB specification.
@@ -51,12 +51,12 @@ Note that the container performs additional work when the underlying EJB is crea
 
 ==== Lifecycle of resources
 
-When the `create()` method of a `Bean` object that represents a resource is called, the container creates and returns a container-specific internal reference to the Java EE component environment resource, entity manager, entity manager factory, remote EJB instance or web service reference. This reference is not directly exposed to the application.
+When the `create()` method of a `Bean` object that represents a resource is called, the container creates and returns a container-specific internal reference to the Jakarta EE component environment resource, entity manager, entity manager factory, remote EJB instance or web service reference. This reference is not directly exposed to the application.
 
 Before injecting or returning a contextual instance to the application, the container transforms its internal reference into an object that implements the bean types expected by the application and delegates method invocations to the underlying resource, entity manager, entity manager factory, remote EJB instance or web service reference. This object must be passivation capable.
 
-The container must perform ordinary Java EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Java EE platform and Common Annotations for the Java platform specifications.
-The container is not required to perform Java EE component environment injection upon a static field.
+The container must perform ordinary Jakarta EE component environment injection upon any non-static field that functions as a resource declaration, as defined by the Jakarta EE platform and Common Annotations for the Java platform specifications.
+The container is not required to perform Jakarta EE component environment injection upon a static field.
 Portable applications should not rely upon the value of a static field that functions as a resource declaration.
 
 References to EJBs and web services are always dependent scoped and a new instance must be obtained for every injection performed.
