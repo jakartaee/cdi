@@ -1,12 +1,12 @@
 [[packaging_deployment_ee]]
 
-== Packaging and deployment in Java EE
+== Packaging and deployment in Jakarta EE
 
 
 [[bean_archive_ee]]
 === Bean archive with EJB Session Beans
 
-When running in Java EE, the container must extend the rules defined in <<bean_archive>> with:
+When running in Jakarta EE, the container must extend the rules defined in <<bean_archive>> with:
 
 * An _implicit bean archive_ may also contain EJB session beans, and
 * EJB session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
@@ -18,7 +18,7 @@ When determining which archives are bean archives, the container must also consi
 
 The container is not required to support application client jar bean archives.
 
-A Java EE container is required by the Java EE specification to support Java EE modules.
+A Jakarta EE container is required by the Jakarta EE specification to support Jakarta EE modules.
 
 In a war, the `beans.xml` file must be named:
 
@@ -35,7 +35,7 @@ The bean archives might be library jars, EJB jars or war `WEB-INF/classes` direc
 The bean archives might be library jars or the `WEB-INF/classes` directory.
 * In an application deployed as an EJB jar, the container searches the EJB jar, if it is a bean archive, and every bean archive referenced by the EJB jar.
 * In an application deployed as a rar, the container searches every bean archive bundled with or referenced by the rar.
-* An embeddable EJB container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property `javax.ejb.embeddable.modules`, or every bean archive in the JVM classpath if the property is not specified.
+* An embeddable EJB container searches each bean archive in the JVM classpath that is listed in the value of the embeddable container initialization property `jakarta.ejb.embeddable.modules`, or every bean archive in the JVM classpath if the property is not specified.
 The bean archives might be directories, library jars or EJB jars.
 
 
@@ -43,19 +43,19 @@ The bean archives might be directories, library jars or EJB jars.
 
 === Type and Bean discovery for EJB
 
-In Java EE, the container automatically discovers EJB session beans and other Java EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
+In Jakarta EE, the container automatically discovers EJB session beans and other Jakarta EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
 
 [[bean_discovery_steps_ee]]
 
-==== Bean discovery in Java EE
+==== Bean discovery in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
 
 [[trimmed_bean_archive_ee]]
 
-==== Trimmed bean archive in Java EE
+==== Trimmed bean archive in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that EJB session beans are not removed from the set of discovered types.
+When running in Jakarta EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that EJB session beans are not removed from the set of discovered types.
 
 
 [[el]]
