@@ -307,9 +307,9 @@ A Jakarta EE or embeddable EJB container must provide the following built-in bea
 
 A servlet container must provide the following built-in beans, all of which have qualifier `@Default`:
 
-* a bean with bean type `javax.servlet.http.HttpServletRequest`, allowing injection of a reference to the `HttpServletRequest`
-* a bean with bean type `javax.servlet.http.HttpSession`, allowing injection of a reference to the `HttpSession`,
-* a bean with bean type `javax.servlet.ServletContext`, allowing injection of a reference to the `ServletContext`,
+* a bean with bean type `jakarta.servlet.http.HttpServletRequest`, allowing injection of a reference to the `HttpServletRequest`
+* a bean with bean type `jakarta.servlet.http.HttpSession`, allowing injection of a reference to the `HttpSession`,
+* a bean with bean type `jakarta.servlet.ServletContext`, allowing injection of a reference to the `ServletContext`,
 
 
 These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
