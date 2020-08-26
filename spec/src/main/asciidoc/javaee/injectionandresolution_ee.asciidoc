@@ -73,30 +73,30 @@ A Java EE 5 container is not required to support injection for non-contextual ob
 
 [[instantiation_ee]]
 
-==== Injection using the bean constructor in Java EE
+==== Injection using the bean constructor in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<instantiation>> to EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<instantiation>> to EJB session beans.
 
 [[fields_initializer_methods_ee]]
 
-==== Injection of fields and initializer methods in Java EE
+==== Injection of fields and initializer methods in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to EJB session beans and to any other Java EE component class supporting injection.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<fields_initializer_methods>> to EJB session beans and to any other Jakarta EE component class supporting injection.
 
 The container is also required to ensure that:
 
--* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Java EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Java EE component environment resource dependencies have been injected.
+-* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+-* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+-* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Jakarta EE component environment resource dependencies have been injected.
 
 [[dependent_objects_destruction_ee]]
 
-==== Destruction of dependent objects in Java EE
+==== Destruction of dependent objects in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Java EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<dependent_objects_destruction>> to any other Jakarta EE component class supporting injection and perform destruction after the servlet `destroy()` method is called.
 
 [[bean_metadata_ee]]
 
-==== Bean metadata in Java EE
+==== Bean metadata in Jakarta EE
 
-Interceptor and decorator instances associated with Java EE components that are not considered beans (as defined by this specification) cannot obtain information about the beans they intercept and decorate (as defined in <<bean_metadata>>) and thus `null` is injected into relevant injection points.
+Interceptor and decorator instances associated with Jakarta EE components that are not considered beans (as defined by this specification) cannot obtain information about the beans they intercept and decorate (as defined in <<bean_metadata>>) and thus `null` is injected into relevant injection points.
