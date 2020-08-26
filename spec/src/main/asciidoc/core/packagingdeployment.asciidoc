@@ -147,7 +147,7 @@ For example, consider the follow `beans.xml` file:
         <exclude name="com.acme.rest.*" />
 
         <exclude name="com.acme.faces.**">
-            <if-class-not-available name="javax.faces.context.FacesContext"/>
+            <if-class-not-available name="jakarta.faces.context.FacesContext"/>
         </exclude>
 
         <exclude name="com.acme.verbose.*">

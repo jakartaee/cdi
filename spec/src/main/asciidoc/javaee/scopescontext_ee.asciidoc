@@ -119,7 +119,7 @@ The session context is destroyed when the `HTTPSession` times out, after all `Ht
 An event with qualifier `@Initialized(SessionScoped.class)` is synchronously fired when the session context is initialized.
 An event with qualifier `@BeforeDestroyed(SessionScoped.class)` is synchronously fired when the session context is about to be destroyed, i.e. before the actual destruction.
 An event with qualifier `@Destroyed(SessionScoped.class)` is synchronously fired when the session context is destroyed, i.e. after the actual destruction.
-The event payload is `javax.servlet.http.HttpSession`.
+The event payload is `jakarta.servlet.http.HttpSession`.
 
 [[application_context_ee]]
 
