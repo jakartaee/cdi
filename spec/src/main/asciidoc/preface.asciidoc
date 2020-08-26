@@ -32,8 +32,8 @@ This CDI 3.0 includes a change in the base namespace used by the APIs from
 javax to jakarta. For example, the `BeanManager` interface has moved from
 `javax.enterprise.inject.spi.BeanManager` to `jakarta.enterprise.inject.spi.BeanManager`.
 
-The a new beans.xml 3.0 schema file has been added and the namespace of the
-eans_3_0.xsd schema file has changed from xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" to
+There is a new beans.xml 3.0 schema file has been added and the namespace of the
+beans_3_0.xsd schema file has changed from xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" to
 xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee".
 
 :numbered:
