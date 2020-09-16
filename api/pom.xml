@@ -139,6 +139,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
+		<maven-javadoc-plugin>3.2.0</maven-javadoc-plugin>
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -365,6 +366,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin}</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<description>Jakarta Context Dependency Injection API</description>
