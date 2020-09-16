@@ -1,6 +1,6 @@
 language: java
 sudo: false
-install: mvn -Pstaging install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+install: mvn -Pstaging install -DskipTests=true -B -V
 script: mvn -Pstaging test -B
 jdk:
   - openjdk8
