@@ -31,4 +31,45 @@
 		<defaultGoal>clean package</defaultGoal>
 	</build>
 
+	<properties>
+		<sonatypeOssDistMgmtNexusUrl>https://jakarta.oss.sonatype.org/</sonatypeOssDistMgmtNexusUrl>
+		<sonatypeOssDistMgmtStagingUrl>${sonatypeOssDistMgmtNexusUrl}content/repositories/staging/</sonatypeOssDistMgmtStagingUrl>
+	</properties>
+
+	<profiles>
+		<!-- A profile that allows to consume staged but unreleased Jakarta artifacts -->
+		<profile>
+			<id>staging</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>sonatype-nexus-staging</id>
+					<name>Sonatype Nexus Staging</name>
+					<url>${sonatypeOssDistMgmtStagingUrl}</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sonatype-nexus-staging</id>
+					<name>Sonatype Nexus Staging</name>
+					<url>${sonatypeOssDistMgmtStagingUrl}</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+
 </project>
