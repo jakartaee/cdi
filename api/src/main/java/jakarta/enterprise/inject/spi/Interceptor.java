@@ -24,7 +24,7 @@ import jakarta.interceptor.InvocationContext;
 
 /**
  * <p>
- * Represents an enabled {@linkplain jakarta.interceptor interceptor}.
+ * Represents an enabled {@linkplain jakarta.interceptor.Interceptor interceptor}.
  * </p>
  * <p>
  * Since CDI 2.0, an implementation of this interface may implement {@link Prioritized} in order to enable the interceptor with

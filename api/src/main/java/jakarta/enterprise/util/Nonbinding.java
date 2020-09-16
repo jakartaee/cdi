@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 /**
  * <p>
  * Excludes a member of an annotation type (such as a {@linkplain jakarta.inject.Qualifier qualifier type} or
- * {@linkplain jakarta.interceptor interceptor binding type}) from consideration when the container compares two annotation
+ * {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding type}) from consideration when the container compares two annotation
  * instances.
  * </p>
  *
