@@ -59,7 +59,7 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
      * As of CDI 1.1 this method is deprecated and can safely always return false.
      * </p>
      * 
-     * @return <tt>true</tt> if the {@code create()} method may return a null value, and <tt>false</tt> otherwise
+     * @return <code>true</code> if the {@code create()} method may return a null value, and <code>false</code> otherwise
      */
     public boolean isNullable();
 

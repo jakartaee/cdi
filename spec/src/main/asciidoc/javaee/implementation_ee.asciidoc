@@ -1,24 +1,24 @@
 [[implementation_ee]]
 
-== Addition to programming model for Java EE
+== Addition to programming model for Jakarta EE
 
-When running in Java EE, the container must extend the rules defined in <<implementation>>, and must also provide built-in support for injection and contextual lifecycle management of the following kinds of bean:
+When running in Jakarta EE, the container must extend the rules defined in <<implementation>>, and must also provide built-in support for injection and contextual lifecycle management of the following kinds of bean:
 
 * Session beans
-* Resources (Java EE resources, persistence contexts, persistence units, remote EJBs and web services)
+* Resources (Jakarta EE resources, persistence contexts, persistence units, remote EJBs and web services)
 
-Java EE and embeddable EJB containers are required by the Java EE and EJB specifications to support EJB session beans and the Java EE component environment.
+Jakarta EE and embeddable EJB containers are required by the Jakarta EE and EJB specifications to support EJB session beans and the Jakarta EE component environment.
 Other containers are not required to provide support for injection or lifecycle management of session beans or resources.
 
 [[managed_beans_ee]]
 
-=== Managed beans in Java EE
+=== Managed beans in Jakarta EE
 
 [[what_classes_are_beans_ee]]
 
-==== Which Java classes are managed beans in Java EE?
+==== Which Java classes are managed beans in Jakarta EE?
 
-When running in Java EE, A top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Java EE specification and if
+When running in Jakarta EE, A top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Jakarta EE specification and if
 
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in `ejb-jar.xml`.
 
@@ -193,21 +193,21 @@ A disposer method declaration in an EJB session bean follows the rules defined i
 
 [[javaee_components]]
 
-=== Java EE components
+=== Jakarta EE components
 
-Most Java EE components support injection and interception, as defined in the Java Platform, Enterprise Edition Specification 7, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are the exception.
+Most Jakarta EE components support injection and interception, as defined in the Jakarta EE Platform, Specification, table EE.5-1, but are not considered beans (as defined by this specification). EJBs, as defined in <<session_beans>> are the exception.
 
-The instance used by the container to service an invocation of a Java EE component will not be the same instance obtained when using `@Inject`, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field.
-It is recommended that Java EE components should not define observer methods, producer methods, producer fields or disposer methods.
-It is safe to annotate Java EE components with `@Vetoed` to prevent them being considered beans.
+The instance used by the container to service an invocation of a Jakarta EE component will not be the same instance obtained when using `@Inject`, instantiated by the container to invoke a producer method, observer method or disposer method, or instantiated by the container to access the value of a producer field.
+It is recommended that Jakarta EE components should not define observer methods, producer methods, producer fields or disposer methods.
+It is safe to annotate Jakarta EE components with `@Vetoed` to prevent them being considered beans.
 
 [[resources]]
 
 === Resources
 
-A _resource_ is a bean that represents a reference to a resource, persistence context, persistence unit, remote EJB or web service in the Java EE component environment.
+A _resource_ is a bean that represents a reference to a resource, persistence context, persistence unit, remote EJB or web service in the Jakarta EE component environment.
 
-By declaring a resource, we enable an object from the Java EE component environment to be injected by specifying only its type and qualifiers at the injection point.
+By declaring a resource, we enable an object from the Jakarta EE component environment to be injected by specifying only its type and qualifiers at the injection point.
 For example, if `@CustomerDatabase` is a qualifier:
 
 [source, java]
@@ -238,10 +238,10 @@ A resource may not have a bean name.
 
 ==== Declaring a resource
 
-A resource may be declared by specifying a Java EE component environment injection annotation as part of a producer field declaration.
+A resource may be declared by specifying a Jakarta EE component environment injection annotation as part of a producer field declaration.
 The producer field may be static.
 
-* For a Java EE resource, `@Resource` must be specified.
+* For a Jakarta EE resource, `@Resource` must be specified.
 * For a persistence context, `@PersistenceContext` must be specified.
 * For a persistence unit, `@PersistenceUnit` must be specified.
 * For a remote EJB, `@EJB` must be specified.
@@ -284,7 +284,7 @@ The bean type and qualifiers of the resource are determined by the producer fiel
 
 If the producer field declaration specifies a bean name, the container automatically detects the problem and treats it as a definition error.
 
-If the matching object in the Java EE component environment is not of the same type as the producer field declaration, the container automatically detects the problem and treats it as a definition error.
+If the matching object in the Jakarta EE component environment is not of the same type as the producer field declaration, the container automatically detects the problem and treats it as a definition error.
 
 [[resource_types]]
 
@@ -299,7 +299,7 @@ The resulting set of bean types for a resource consists only of <<legal_bean_typ
 
 === Additional built-in beans
 
-A Java EE or embeddable EJB container must provide the following built-in beans, all of which have qualifier `@Default`:
+A Jakarta EE or embeddable EJB container must provide the following built-in beans, all of which have qualifier `@Default`:
 
 * a bean with bean type `jakarta.transaction.UserTransaction`, allowing injection of a reference to the JTA `UserTransaction`, and
 * a bean with bean type `java.security.Principal`, allowing injection of a `Principal` representing the current caller identity.
@@ -307,33 +307,33 @@ A Java EE or embeddable EJB container must provide the following built-in beans,
 
 A servlet container must provide the following built-in beans, all of which have qualifier `@Default`:
 
-* a bean with bean type `javax.servlet.http.HttpServletRequest`, allowing injection of a reference to the `HttpServletRequest`
-* a bean with bean type `javax.servlet.http.HttpSession`, allowing injection of a reference to the `HttpSession`,
-* a bean with bean type `javax.servlet.ServletContext`, allowing injection of a reference to the `ServletContext`,
+* a bean with bean type `jakarta.servlet.http.HttpServletRequest`, allowing injection of a reference to the `HttpServletRequest`
+* a bean with bean type `jakarta.servlet.http.HttpSession`, allowing injection of a reference to the `HttpSession`,
+* a bean with bean type `jakarta.servlet.ServletContext`, allowing injection of a reference to the `ServletContext`,
 
 
 These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
 
-If a Java EE component class has an injection point of type `UserTransaction` and qualifier `@Default`, and may not validly make use of the JTA `UserTransaction` according to the Java EE platform specification, the container automatically detects the problem and treats it as a definition error.
+If a Jakarta EE component class has an injection point of type `UserTransaction` and qualifier `@Default`, and may not validly make use of the JTA `UserTransaction` according to the Jakarta EE platform specification, the container automatically detects the problem and treats it as a definition error.
 
 [[injected_fields_ee]]
 
-=== Injected fields in Java EE
+=== Injected fields in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for bean classes in <<injected_fields>> to Java EE component classes supporting injection.
+When running in Jakarta EE, the container must extend the rules defined for bean classes in <<injected_fields>> to Jakarta EE component classes supporting injection.
 
 
 [[initializer_methods_ee]]
 
-=== Initializer methods in Java EE
+=== Initializer methods in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for bean classes in <<initializer_methods>> to Java EE component classes supporting injection.
+When running in Jakarta EE, the container must extend the rules defined for bean classes in <<initializer_methods>> to Jakarta EE component classes supporting injection.
 The container must also ensure that:
 
 * An initializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
 
 [[new_ee]]
 
-=== `@New` qualified beans in Java EE
+=== `@New` qualified beans in Jakarta EE
 
-When running in Java EE, the container must extend the rules defined for managed beans in <<new>> to EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined for managed beans in <<new>> to EJB session beans.

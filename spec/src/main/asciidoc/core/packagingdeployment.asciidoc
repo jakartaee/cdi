@@ -42,7 +42,7 @@ When determining which archives are bean archives, the container must consider:
 * Library jars
 * Directories in the JVM classpath
 
-Non Java EE containers may or may not provide support for war, EJB jar or rar bean archives.
+Non Jakarta EE containers may or may not provide support for war, EJB jar or rar bean archives.
 
 The `beans.xml` file must be named:
 
@@ -138,15 +138,16 @@ For example, consider the follow `beans.xml` file:
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all" version="2.0">
+       xsi:schemaLocation="xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+       bean-discovery-mode="all" version="3.0">
 
     <scan>
         <exclude name="com.acme.rest.*" />
 
         <exclude name="com.acme.faces.**">
-            <if-class-not-available name="javax.faces.context.FacesContext"/>
+            <if-class-not-available name="jakarta.faces.context.FacesContext"/>
         </exclude>
 
         <exclude name="com.acme.verbose.*">
@@ -174,9 +175,10 @@ An explicit bean archive may be marked as 'trimmed' by adding the `<trim />` ele
 [source, xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd" bean-discovery-mode="all" version="2.0">
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+        version="3.0">
 
     <trim/>
 </beans>

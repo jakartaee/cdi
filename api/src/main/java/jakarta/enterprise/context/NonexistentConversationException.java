@@ -24,7 +24,7 @@ package jakarta.enterprise.context;
  * 
  * <p>
  * If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation
- * and throw an exception of type <tt>NonexistentConversationException</tt>.
+ * and throw an exception of type <code>NonexistentConversationException</code>.
  * </p>
  * 
  * @see ConversationScoped

@@ -36,7 +36,7 @@ public interface Producer<T> {
      * </p>
      * <p>
      * If the {@code Producer} represents a class, this will invoke the constructor annotated {@link jakarta.inject.Inject} if it
-     * exists, or the constructor with no parameters otherwise. If the class has interceptors, <tt>produce()</tt> is responsible
+     * exists, or the constructor with no parameters otherwise. If the class has interceptors, <code>produce()</code> is responsible
      * for building the interceptors and decorators of the instance.
      * </p>
      * <p>

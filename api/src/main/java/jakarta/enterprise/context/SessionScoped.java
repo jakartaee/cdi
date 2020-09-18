@@ -34,7 +34,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * Specifies that a bean is session scoped.
  * </p>
  * <p>
- * While <tt>SessionScoped</tt> must be associated with the built-in session context required by the specification,
+ * While <code>SessionScoped</code> must be associated with the built-in session context required by the specification,
  * third-party extensions are
  * allowed to also associate it with their own context. Behavior described below is only related to the built-in session context.
  * </p>
@@ -43,10 +43,10 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <ul>
- * <li>during the <tt>service()</tt> method of any servlet in the web application,
+ * <li>during the <code>service()</code> method of any servlet in the web application,
  * <li>during the doFilter() method of any servlet filter, and</li>
- * <li>when the container calls any <tt>HttpSessionListener</tt>, <tt>AsyncListener</tt> or
- * <tt>ServletRequestListener</tt>.</li>
+ * <li>when the container calls any <code>HttpSessionListener</code>, <code>AsyncListener</code> or
+ * <code>ServletRequestListener</code>.</li>
  * </ul>
  *
  * <p>
@@ -57,17 +57,17 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <ul>
- * <li>when the HTTPSession times out, after all <tt>HttpSessionListeners</tt> have been called, or</li>
+ * <li>when the HTTPSession times out, after all <code>HttpSessionListeners</code> have been called, or</li>
  * <li>at the very end of
- * any request in which <tt>invalidate()</tt> was called, after all filters and <tt>ServletRequestListeners</tt> have been
+ * any request in which <code>invalidate()</code> was called, after all filters and <code>ServletRequestListeners</code> have been
  * called.</Li>
  * </ul>
  *
  * <p>
- * An event with qualifier <tt>@Initialized(SessionScoped.class)</tt> is fired when the session context is initialized and an
+ * An event with qualifier <code>@Initialized(SessionScoped.class)</code> is fired when the session context is initialized and an
  * event
- * with qualifier <tt>@Destroyed(SessionScoped.class)</tt> when the session context is destroyed. The event payload is
- * the <tt>HttpSession</tt>
+ * with qualifier <code>@Destroyed(SessionScoped.class)</code> when the session context is destroyed. The event payload is
+ * the <code>HttpSession</code>
  *
  * @author Gavin King
  * @author Pete Muir

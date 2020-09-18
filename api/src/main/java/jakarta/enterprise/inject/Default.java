@@ -38,12 +38,12 @@ import jakarta.inject.Qualifier;
  *
  * <p>
  * If a bean does not explicitly declare a qualifier other than {@link jakarta.inject.Named &#064;Named}, the bean has the
- * qualifier <tt>&#064;Default</tt>.
+ * qualifier <code>&#064;Default</code>.
  * </p>
  *
  * <p>
  * If an injection point declares no qualifier, the injection point has exactly one qualifier, the default qualifier
- * <tt>&#064;Default</tt>.
+ * <code>&#064;Default</code>.
  * </p>
  *
  * <p>

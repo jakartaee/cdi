@@ -31,7 +31,7 @@ import java.util.TreeSet;
  *
  * <p>
  * CDI implements {@link Instance} and therefore might be used to perform programmatic lookup.
- * If no qualifier is passed to {@link #select} method, the <tt>@Default</tt> qualifier is assumed.
+ * If no qualifier is passed to {@link #select} method, the <code>@Default</code> qualifier is assumed.
  * </p>
  *
  *
@@ -66,27 +66,39 @@ public abstract class CDI<T> implements Instance<T> {
 
     /**
      *
-     * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)}, or if it wasn't set, use the
-     * serviceloader the retrieve the {@link CDIProvider} with the highest priority.
+     * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)} or the last returned
+     * {@link CDIProvider} if it returns valid CDI container. Otherwise use the serviceloader to retrieve the
+     * {@link CDIProvider} with the highest priority.
      *
      * @return the {@link CDIProvider} set by user or retrieved by serviceloader
      */
     private static CDIProvider getCDIProvider() {
-        if (configuredProvider != null) {
-            return configuredProvider;
-        } else {
-            // Discover providers and cache
-            if (discoveredProviders == null) {
-                synchronized (lock) {
-                    if (discoveredProviders == null) {
-                        findAllProviders();
-                    }
+        try {
+            if (configuredProvider != null && configuredProvider.getCDI() != null) {
+                return configuredProvider;
+            }
+        } catch (IllegalStateException ignored) {
+        }
+        configuredProvider = null;
+        // Discover providers and cache
+        if (discoveredProviders == null) {
+            synchronized (lock) {
+                if (discoveredProviders == null) {
+                    findAllProviders();
                 }
             }
-            configuredProvider = discoveredProviders.stream()
-                    .filter(c -> c.getCDI() != null)
-                    .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
-            return configuredProvider;
+        }
+        configuredProvider = discoveredProviders.stream()
+                .filter(CDI::checkProvider)
+                .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
+        return configuredProvider;
+    }
+
+    private static boolean checkProvider(CDIProvider c) {
+        try {
+            return c.getCDI() != null;
+        } catch (IllegalStateException e) {
+            return false;
         }
     }
 

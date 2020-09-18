@@ -124,7 +124,7 @@ import java.lang.annotation.Target;
  * stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
  * </p>
  * 
- * @see Model the built-in stereotype <tt>&#064;Model</tt>
+ * @see Model the built-in stereotype <code>&#064;Model</code>
  * 
  * @author Pete Muir
  * @author Gavin King

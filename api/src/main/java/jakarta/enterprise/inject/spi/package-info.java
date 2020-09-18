@@ -29,7 +29,7 @@
  * metadata from some other source</li>
  * </ul>
  * 
- * <h3>The <tt>BeanManager</tt> object</h3>
+ * <h3>The <code>BeanManager</code> object</h3>
  * 
  * <p>Portable extensions sometimes interact directly with the container 
  * via programmatic API call. The interface 
@@ -44,7 +44,7 @@
  * portable extensions to integrate with the container initialization 
  * process. Observer methods of these events must belong to
  * {@linkplain jakarta.enterprise.inject.spi.Extension extensions} declared 
- * in <tt>META-INF/services</tt>.</p>
+ * in <code>META-INF/services</code>.</p>
  * 
  * <p>Lifecycle events include
  * {@link jakarta.enterprise.inject.spi.BeforeBeanDiscovery},
@@ -62,17 +62,17 @@
  * define everything the container needs to manage instances of 
  * a bean, interceptor, decorator or observer method.</p>
  * 
- * <p>An instance of <tt>Bean</tt> exists for every  
+ * <p>An instance of <code>Bean</code> exists for every
  * {@linkplain jakarta.enterprise.inject enabled bean}. A portable 
  * extension may add support for new kinds of beans by implementing 
- * <tt>Bean</tt>, observing the event
+ * <code>Bean</code>, observing the event
  * {@link jakarta.enterprise.inject.spi.AfterBeanDiscovery} event 
  * {@linkplain jakarta.enterprise.inject.spi.AfterBeanDiscovery#addBean(Bean) 
  * registering beans} with the container. An instance of 
- * <tt>ObserverMethod</tt> exists for every 
+ * <code>ObserverMethod</code> exists for every
  * {@linkplain jakarta.enterprise.event observer method} of every 
  * enabled bean. A portable extension may add observers by implementing 
- * <tt>ObserverMethod</tt> and 
+ * <code>ObserverMethod</code> and
  * {@linkplain jakarta.enterprise.inject.spi.AfterBeanDiscovery#addObserverMethod(ObserverMethod) 
  * registering an instance} with the container.</p>
  * 
@@ -95,7 +95,7 @@
  * bean class. The portable extension is responsible for 
  * implementing the interfaces, thereby exposing the metadata 
  * to the container. The container must use the operations of 
- * <tt>Annotated</tt> and its subinterfaces to discover program 
+ * <code>Annotated</code> and its subinterfaces to discover program
  * element types and annotations, instead of directly calling the 
  * Java Reflection API.</p>
  * 
@@ -105,7 +105,7 @@
  * {@linkplain jakarta.enterprise.inject.spi.ProcessAnnotatedType#setAnnotatedType(AnnotatedType)
  * wrapping} the {@link jakarta.enterprise.inject.spi.AnnotatedType}.</p>
  * 
- * <h3><tt>Producer</tt> and <tt>InjectionTarget</tt></h3>
+ * <h3><code>Producer</code> and <code>InjectionTarget</code></h3>
  * 
  * <p>The interfaces {@link jakarta.enterprise.inject.spi.Producer} and
  * {@link jakarta.enterprise.inject.spi.InjectionTarget} abstract the 

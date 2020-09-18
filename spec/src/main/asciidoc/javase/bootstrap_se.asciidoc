@@ -52,7 +52,7 @@ public abstract class SeContainerInitializer {
 Unless specified differently each method of `SeContainerInitializer` returns the current `SeContainerInitializer` object.
 
 * `newInstance()` static method returns an instance of the implementation of `SeContainerInitializer` discovered by Java service provider.
-Each call returns a new instance of `SeContainerInitializer`. This method throws `IllegalStateException` if called in Java EE container.
+Each call returns a new instance of `SeContainerInitializer`. This method throws `IllegalStateException` if called in Jakarta EE container.
 * `addBeanClasses()` adds classes to the the synthetic bean archive
 * `addPackages()` adds packages content to the synthetic bean archive.
 There are other versions of this method, which enables user to add a package according to class or classes it contains and also to add packages recursively.

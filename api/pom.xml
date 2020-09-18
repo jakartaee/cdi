@@ -20,14 +20,12 @@
 
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
-		<artifactId>cdi-parent</artifactId>
+		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
 		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>jakarta.enterprise</groupId>
 	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.0-SNAPSHOT</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -131,12 +129,17 @@
 
 
 	<properties>
-		<atinject.api.version>2.0.0-RC3</atinject.api.version>
-		<uel.api.version>4.0.0-SNAPSHOT</uel.api.version>
-		<interceptor.api.version>2.0.0-RC2</interceptor.api.version>
+		<atinject.api.version>2.0.0</atinject.api.version>
+		<uel.api.version>4.0.0</uel.api.version>
+		<interceptor.api.version>2.0.0</interceptor.api.version>
+		<!-- These are only used in javadoc links -->
+		<ejb.api.version>4.0.0-RC2</ejb.api.version>
+		<transaction.api.version>2.0.0-RC2</transaction.api.version>
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
+		<maven-javadoc-plugin>3.2.0</maven-javadoc-plugin>
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -169,6 +172,12 @@
 				<version>${interceptor.api.version}</version>
 			</dependency>
 
+			<!-- Only for javadoc references -->
+			<dependency>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
+				<version>${transaction.api.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -184,8 +193,14 @@
 		</dependency>
 
 		<dependency>
-                        <groupId>jakarta.inject</groupId>
-                        <artifactId>jakarta.inject-api</artifactId>
+			<groupId>jakarta.inject</groupId>
+			<artifactId>jakarta.inject-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.transaction</groupId>
+			<artifactId>jakarta.transaction-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -242,43 +257,6 @@
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
-
-		<!--
-            This profile enables consuming artifacts from the ossrh staging
-            repository group.
-        -->
-		<profile>
-			<id>staging</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>https://oss.sonatype.org/content/repositories/staging</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>https://oss.sonatype.org/content/repositories/staging</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories>
-		</profile>
 	</profiles>
 
 	<build>
@@ -317,6 +295,7 @@
 				</executions>
 				<configuration>
 					<instructions>
+						<Automatic-Module-Name>jakarta.cdi</Automatic-Module-Name>
 						<Export-Package>
 							jakarta.decorator;version=3.0,
 							jakarta.enterprise.*;version=3.0,
@@ -332,6 +311,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -368,7 +348,42 @@
 								<include>**/privileged/**</include>
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
+							<forkCount>0</forkCount>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin}</version>
+				<configuration>
+					<docfilessubdirs>true</docfilessubdirs>
+					<description>Jakarta Context Dependency Injection API</description>
+					<doctitle>Jakarta Context Dependency Injection API</doctitle>
+					<windowtitle>Jakarta Context Dependency Injection API</windowtitle>
+					<header><![CDATA[<br>Jakarta Context Dependency Injection ${project.version}]]>
+					</header>
+					<bottom><![CDATA[
+Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
+Copyright &#169; 2018,2020 Eclipse Foundation.<br>
+Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
+					</bottom>
+					<additionalDependencies>
+						<additionalDependency>
+							<groupId>jakarta.ejb</groupId>
+							<artifactId>jakarta.ejb-api</artifactId>
+							<version>${ejb.api.version}</version>
+						</additionalDependency>
+					</additionalDependencies>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

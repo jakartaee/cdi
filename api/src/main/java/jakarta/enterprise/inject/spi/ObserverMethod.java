@@ -130,8 +130,8 @@ public interface ObserverMethod<T> extends Prioritized {
      * Determines if this observer method is asynchronous 
      * </p>
      * 
-     * @return returns <tt>true</tt> if the method is an asynchronous observer method (i.e. defined with {@link ObservesAsync}),
-     *         otherwise returns <tt>false</tt>
+     * @return returns <code>true</code> if the method is an asynchronous observer method (i.e. defined with {@link ObservesAsync}),
+     *         otherwise returns <code>false</code>
      * 
      */
     public default boolean isAsync() {
