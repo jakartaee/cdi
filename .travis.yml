@@ -1,7 +1,18 @@
 language: java
 sudo: false
+
+matrix:
+  include:
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk8
+    - arch: ppc64le
+      addons: [ apt: [ packages: maven ]]
+      jdk: openjdk11
+
 install: mvn -Pstaging install -DskipTests=true -B -V
 script: mvn -Pstaging test -B
+
 jdk:
   - openjdk8
   - openjdk11
