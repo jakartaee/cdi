@@ -225,6 +225,8 @@ For a custom implementation of the `ObserverMethod` interface defined in <<obser
 
 An event type is considered assignable to a type variable if the event type is assignable to the upper bound, if any.
 
+A raw event type is considered assignable to a parameterized observed event type if the raw types are identical and all type parameters of the required type are either unbounded type variables or java.lang.Object.
+
 A parameterized event type is considered assignable to a raw observed event type if the raw types are identical.
 
 A parameterized event type is considered assignable to a parameterized observed event type if they have identical raw type and for each parameter:
