@@ -1,0 +1,3 @@
+[[implementation_full]]
+
+== Programming model in {cdi_full}

@@ -3,6 +3,12 @@
 
 == Preface
 
+[NOTE]
+====
+This part has to be rewritten to present a consitent history of the spec
+====
+
+
 === Evaluation license
 
 include::license-{license}.asciidoc[]
@@ -10,6 +16,10 @@ include::license-{license}.asciidoc[]
 === Foreword
 
 Jakarta Contexts and Dependency Injection 3.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 3.0]) is an update to Jakarta Contexts and Dependency Injection 2.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 2.0]).
+
+Contexts and Dependency Injection 4.0 introduce a new feature with the CDI Lite specification.
+
+CDI Lite is a subset of CDI that doesn't require a CDI container at runtime and thus is a good candidate to develop cloud native or resources constraint applications.
 
 Starting with version 2.0 CDI targets Java SE and Jakarta EE platforms.
 CDI in Java SE and CDI in a Jakarta EE container share the features defined in core CDI.
@@ -22,6 +32,8 @@ This document is organized in 4 parts:
 
 * An introduction (this part), which is not part of the specification but introduces CDI concepts and give examples.
 * The core CDI specification: <<part_1>>.
+** The CDI Lite specification which contains CDI features that contains features that could be implemented at build time
+** The CDI Full specification that add all advanced CDI features to CDI Lite to make the standard CDI platform
 * Specific CDI features for Java SE: <<part_2>>.
 * Specific CDI features for Jakarta EE: <<part_3>>.
 
@@ -37,4 +49,3 @@ beans_3_0.xsd schema file has changed from xmlns:javaee="http://xmlns.jcp.org/xm
 xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee".
 
 :numbered:
-<<<

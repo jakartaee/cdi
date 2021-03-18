@@ -16,6 +16,8 @@
 ifdef::backend-pdf[]
 :pagenums:
 endif::[]
+:cdi_lite: CDI Lite
+:cdi_full: CDI Full
 
 
 
@@ -31,11 +33,13 @@ include::architecture.asciidoc[]
 [[part_1]]
 = Part I - Core CDI
 
+== {cdi_lite}
+
+:leveloffset: +1
+
 include::core/definition.asciidoc[]
 
 include::core/implementation.asciidoc[]
-
-include::core/inheritance.asciidoc[]
 
 include::core/injectionandresolution.asciidoc[]
 
@@ -43,16 +47,27 @@ include::core/scopescontexts.asciidoc[]
 
 include::core/lifecycle.asciidoc[]
 
-include::core/decorators.asciidoc[]
-
 include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
+
+include::core/spi_lite.asciidoc[]
+
+:leveloffset: -1
+
+== {cdi_full}
+
+:leveloffset: +1
+
+include::core/inheritance.asciidoc[]
+
+include::core/decorators.asciidoc[]
 
 include::core/spi.asciidoc[]
 
 include::core/packagingdeployment.asciidoc[]
 
+:leveloffset: -1
 
 [[part_2]]
 = Part II - CDI in Java SE

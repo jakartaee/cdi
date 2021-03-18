@@ -1,0 +1,41 @@
+[[concepts_full]]
+
+== Extended Concepts for {cdi_full}
+
+[[capabilities_full]]
+
+=== Functionality provided by the container to the bean in {cdi_full}
+
+When running in {cdi_full}, the container must extend the capabilities defined in <<capabilities>>, by providing the additional capability:
+
+* method decoration, as defined in <<decorators>>
+
+[[qualifiers_full]]
+
+=== Qualifiers in {cdi_full}
+
+In {cdi_full} qualifier types are also used to bind decorators to beans, as specified in <<decorators>>.
+
+[[scopes_full]]
+
+=== Scopes in {cdi_full}
+
+[[builtin_scopes_full]]
+
+==== Built-in scope types in {cdi_full}
+
+{cdi_full} adds a new standard scope to those defined in <<builtin_scopes>>
+
+* The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
+
+If a decorator has any scope other than `@Dependent`, non-portable behavior results.
+
+[[stereotypes_full]]
+
+=== Stereotypes in {cdi_full}
+
+[[builtin_stereotypes_full]]
+
+==== Built-in stereotypes in {cdi_full}
+
+In addition to built-in stereotypes defined in <<builtin_stereotypes>>, {cdi_full} provides the special-purpose `@Decorator` stereotype, defined in <<decorator_annotation>>.
