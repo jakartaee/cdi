@@ -2,6 +2,14 @@
 
 == Scopes and contexts
 
+[NOTE]
+====
+
+This section makes reference to passivation multiple time. These mention should be moved in a dedicated section in CDI Full
+Conversation Context should be moved to CDI full as well
+
+====
+
 Associated with every scope type is a _context object_.
 The context object determines the lifecycle and visibility of instances of all beans with that scope. In particular, the context object defines:
 

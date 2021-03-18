@@ -2,6 +2,11 @@
 
 == Programming model
 
+[NOTE]
+====
+this section contains part about specialization. It should be moved in a dedicated section in CDI Full.
+====
+
 The container provides built-in support for injection and contextual lifecycle management of the following kinds of bean:
 
 * Managed beans
@@ -236,17 +241,17 @@ If the method is static or does not directly override another producer method, t
 public class MockShop extends Shop {
 
    @Override @Specializes
-   @Produces 
-   PaymentProcessor getPaymentProcessor() { 
-      return new MockPaymentProcessor(); 
+   @Produces
+   PaymentProcessor getPaymentProcessor() {
+      return new MockPaymentProcessor();
    }
 
    @Override @Specializes
-   @Produces 
+   @Produces
    List<Product> getProducts() {
       return PRODUCTS;
    }
-   
+
    ...
 
 }

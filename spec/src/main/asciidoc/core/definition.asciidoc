@@ -2,6 +2,11 @@
 
 == Concepts
 
+[NOTE]
+====
+This part still contains references to decorators and a few comments that should be moved to the CDI Full "concept" section to add specific features to full
+====
+
 A bean is a source of contextual objects which define application state and/or logic.
 These objects are called _contextual instances of the bean_.
 The container creates and destroys these instances and associates them with the appropriate context.
@@ -40,7 +45,7 @@ A bean is provided by the container with the following capabilities:
 * transparent creation and destruction and scoping to a particular context, specified in <<contexts>> and <<lifecycle>>,
 * scoped resolution by bean type and qualifier annotation type when injected into a Java-based client, as defined by <<typesafe_resolution>>,
 * lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_and_resolution>>,
-* method interception, callback interception, and decoration, as defined in <<interceptors>> and <<decorators>>, and
+* method interception, callback interception, as defined in <<interceptors>>, and
 * event notification, as defined in <<events>>.
 
 
@@ -207,7 +212,7 @@ The container inspects the qualifier annotations and type of the injected attrib
 
 An injection point may even specify multiple qualifiers.
 
-Qualifier types are also used as event selectors by event consumers, as defined in <<events>>, and to bind decorators to beans, as specified in <<decorators>>.
+Qualifier types are also used as event selectors by event consumers, as defined in <<events>>.
 
 [[builtin_qualifiers]]
 
@@ -464,14 +469,6 @@ For example, an object that represents the current user is represented by a sess
 @Produces @SessionScoped User getCurrentUser() { ... }
 ----
 
-An object that represents an order is represented by a conversation scoped object:
-
-[source, java]
-----
-@ConversationScoped 
-public class Order { ... }
-----
-
 A list that contains the results of a search screen might be represented by a request scoped object:
 
 [source, java]
@@ -486,15 +483,14 @@ The set of scope types is extensible.
 
 ==== Built-in scope types
 
-There are five standard scope types defined by this specification, all defined in the package `jakarta.enterprise.context`.
+There are four standard scope types defined in {cdi_lite}, all defined in the package `jakarta.enterprise.context`.
 
 * The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>.
 Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
-* The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
 * Finally, there is a `@Dependent` pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
 
-If an interceptor or decorator has any scope other than `@Dependent`, non-portable behavior results.
+If an interceptor has any scope other than `@Dependent`, non-portable behavior results.
 
 [[defining_new_scope_type]]
 
@@ -591,7 +587,8 @@ The set of bean defining annotations contains:
 
 * `@ApplicationScoped`, `@SessionScoped`, `@ConversationScoped` and `@RequestScoped` annotations,  
 * all other normal scope types,
-* `@Interceptor` and `@Decorator` annotations,
+//* `@Interceptor` and `@Decorator` annotations,
+* `@Interceptor` annotation,
 * all stereotype annotations (i.e. annotations annotated with `@Stereotype`),
 * and the `@Dependent` scope annotation.
 
@@ -885,7 +882,7 @@ The built-in stereotype `@jakarta.enterprise.inject.Model` is intended for use w
 public @interface Model {}
 ----
 
-In addition, the special-purpose `@Interceptor` and `@Decorator` stereotypes are defined in <<declaring_interceptor>> and <<decorator_annotation>>.
+In addition, the special-purpose `@Interceptor` stereotype is defined in <<declaring_interceptor>>.
 
 [[exceptions]]
 

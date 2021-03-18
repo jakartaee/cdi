@@ -1,0 +1,8 @@
+[[spi_lite]]
+
+== Build time extensions
+
+[NOTE]
+====
+TBD
+====
