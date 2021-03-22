@@ -19,18 +19,9 @@ package jakarta.enterprise.inject.spi;
 
 import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
-import jakarta.enterprise.context.ContextNotActiveException;
 import jakarta.enterprise.context.Dependent;
-import jakarta.enterprise.context.spi.Context;
-import jakarta.enterprise.context.spi.Contextual;
 import jakarta.enterprise.context.spi.CreationalContext;
-import jakarta.enterprise.event.Event;
-import jakarta.enterprise.event.ObserverException;
-import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.InjectionException;
-import jakarta.enterprise.inject.Default;
-import jakarta.enterprise.inject.Instance;
-import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.util.Nonbinding;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -43,6 +34,10 @@ import jakarta.enterprise.inject.Stereotype;
  * <p>
  * Allows a portable extension to interact directly with the container. Provides operations for obtaining contextual references
  * for beans, along with many other operations of use to portable extensions.
+ * </p>
+ *
+ * <p>
+ * In CDI Lite environment, attempting to obtain a {@link BeanManager} or invoking methods on it results in non-portable behavior.
  * </p>
  * 
  * <p>
@@ -93,86 +88,7 @@ import jakarta.enterprise.inject.Stereotype;
  * @author David Allen
  * @author Antoine Sabot-Durand
  */
-public interface BeanManager {
-
-
-    /**
-     * <p>
-     * Obtains a contextual reference for a certain {@linkplain Bean bean} and a certain bean type of the bean.
-     * </p>
-     * 
-     * @param bean the {@link Bean} object representing the bean
-     * @param beanType a bean type that must be implemented by any client proxy that is returned
-     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
-     *        {@link Dependent} that is created
-     * @return a contextual reference representing the bean
-     * @throws IllegalArgumentException if the given type is not a bean type of the given bean
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired.
-     */
-    public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
-
-    /**
-     * <p>
-     * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
-     * </p>
-     * 
-     * @param ij the target injection point
-     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
-     *        {@link Dependent} that is created
-     * @return the injectable reference
-     * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
-     * @throws AmbiguousResolutionException typesafe resolution results in an unresolvable ambiguous dependency
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired.
-     */
-    public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
-
-    /**
-     * Obtain an instance of a {@link CreationalContext} for the given
-     * {@linkplain Contextual contextual type}, or for a non-contextual object.
-     *
-     * @param <T> type of the instance
-     * @param contextual the {@link Contextual}, or a null value in the case of a non-contextual
-     *        object
-     * @return the new {@link CreationalContext}
-     */
-    public <T> CreationalContext<T> createCreationalContext(Contextual<T> contextual);
-
-    /**
-     * Return the set of beans which have the given required type and qualifiers and are available for injection in the module
-     * or library containing the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI
-     * environment namespace the <code>BeanManager</code> was obtained, according to the rules of typesafe resolution. If no
-     * qualifiers are given, the {@linkplain Default default qualifier} is assumed.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
-     * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     *
-     * @param beanType the required bean type
-     * @param qualifiers the required qualifiers
-     * @return the resulting set of {@linkplain Bean beans}
-     * @throws IllegalArgumentException if the given type represents a type variable
-     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
-     * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
-     *         event is fired.
-     */
-    public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
-
-    /**
-     * Return the set of beans which have the given EL name and are available for injection in the module or library containing
-     * the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI environment namespace
-     * the <code>BeanManager</code> was obtained, according to the rules of EL name resolution.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
-     * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     * 
-     * @param name the EL name
-     * @return the resulting set of {@linkplain Bean beans}
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
-     *         event is fired.
-     */
-    public Set<Bean<?>> getBeans(String name);
+public interface BeanManager extends BeanContainer {
 
     /**
      * Returns the {@link PassivationCapable} bean with the given identifier.
@@ -187,21 +103,6 @@ public interface BeanManager {
      *         event is fired.
      */
     public Bean<?> getPassivationCapableBean(String id);
-
-    /**
-     * Apply the ambiguous dependency resolution rules to a set of {@linkplain Bean beans}.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     * 
-     * @param <X> a common type of the beans
-     * @param beans a set of {@linkplain Bean beans} of the given type
-     * @return the resolved bean, or null if null or an empty set is passed
-     * @throws AmbiguousResolutionException if the ambiguous dependency resolution rules fail
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
-     *         event is fired.
-     */
-    public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
 
     /**
      * Validate a certain {@linkplain InjectionPoint injection point}.
@@ -256,74 +157,12 @@ public interface BeanManager {
     public List<Decorator<?>> resolveDecorators(Set<Type> types, Annotation... qualifiers);
 
     /**
-     * Return an ordered list of enabled {@linkplain Interceptor interceptors} for a set of interceptor bindings and a type of
-     * interception and which are enabled in the module or library containing the class into which the <code>BeanManager</code> was
-     * injected or the Java EE component from whose JNDI environment namespace the <code>BeanManager</code> was obtained.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * this method will only return interceptors discovered by the container before the {@link AfterBeanDiscovery} event is 
-     * fired.
-     * 
-     * @param type the type of the interception
-     * @param interceptorBindings the interceptor bindings
-     * @return the resulting set of {@linkplain Interceptor interceptors}
-     * @throws IllegalArgumentException if no interceptor binding type is given
-     * @throws IllegalArgumentException if two instances of the same interceptor binding type are given
-     * @throws IllegalArgumentException if an instance of an annotation that is not an interceptor binding type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
-     *         event is fired.
-     */
-    public List<Interceptor<?>> resolveInterceptors(InterceptionType type, Annotation... interceptorBindings);
-
-    /**
-     * Test the given annotation type to determine if it is a {@linkplain jakarta.enterprise.context scope type}.
-     * 
-     * @param annotationType the annotation type
-     * @return true if the annotation type is a {@linkplain jakarta.enterprise.context scope type}
-     */
-    public boolean isScope(Class<? extends Annotation> annotationType);
-
-    /**
-     * Test the given annotation type to determine if it is a {@linkplain jakarta.enterprise.context normal scope type}.
-     * 
-     * @param annotationType the annotation type
-     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.enterprise.context normal scope type}
-     */
-    public boolean isNormalScope(Class<? extends Annotation> annotationType);
-
-    /**
      * Test the given annotation type to determine if it is a passivating {@linkplain jakarta.enterprise.context scope type}.
      * 
      * @param annotationType the annotation type
      * @return <code>true</code> if the annotation type is a passivating scope type
      */
     public boolean isPassivatingScope(Class<? extends Annotation> annotationType);
-
-    /**
-     * Test the given annotation type to determine if it is a {@linkplain jakarta.inject.Qualifier qualifier type}.
-     * 
-     * @param annotationType the annotation type
-     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.inject.Qualifier qualifier type}
-     */
-    public boolean isQualifier(Class<? extends Annotation> annotationType);
-
-    /**
-     * Test the given annotation type to determine if it is an {@linkplain jakarta.interceptor.InterceptorBinding interceptor
-     * binding type} .
-     * 
-     * @param annotationType the annotation to test
-     * @return <code>true</code> if the annotation type is a {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding
-     *         type}
-     */
-    public boolean isInterceptorBinding(Class<? extends Annotation> annotationType);
-
-    /**
-     * Test the given annotation type to determine if it is a {@linkplain Stereotype stereotype}.
-     * 
-     * @param annotationType the annotation type
-     * @return <code>true</code> if the annotation type is a {@linkplain Stereotype stereotype}
-     */
-    public boolean isStereotype(Class<? extends Annotation> annotationType);
 
     /**
      * Obtains the set of meta-annotations for a certain {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding
@@ -383,17 +222,6 @@ public interface BeanManager {
      * @since 1.1
      */
     public int getInterceptorBindingHashCode(Annotation interceptorBinding);
-
-    /**
-     * Obtains an active {@linkplain Context context object} for the given
-     * {@linkplain jakarta.enterprise.context scope} .
-     * 
-     * @param scopeType the {@linkplain jakarta.enterprise.context scope}
-     * @return the {@linkplain Context context object}
-     * @throws ContextNotActiveException if there is no active context object for the given scope
-     * @throws IllegalArgumentException if there is more than one active context object for the given scope
-     */
-    public Context getContext(Class<? extends Annotation> scopeType);
 
     /**
      * Returns a {@link jakarta.el.ELResolver} that resolves beans by EL name.
@@ -589,40 +417,5 @@ public interface BeanManager {
      * @since 2.0
      */
     <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
-
-
-    /**
-     *
-     * Returns an instance of Event with specified type <code>java.lang.Object</code> and specified qualifier <code>@Default</code>
-     * It allows typesafe synchronous or asynchronous event firing without injection of {@link Event} built-in bean requirement.
-     *
-     * @return a new {@link Event} object whose event type is <code>Object</code> and qualifier <code>@Default</code>
-     * @since 2.0
-     */
-    Event<Object> getEvent();
-
-
-    /**
-     *
-     * Obtains an {@link Instance} object to access to beans instances.
-     *
-     * The returned <code>Instance</code> object can only access instances of  beans that are available for injection in the module
-     * or library containing the class into which the <code>BeanManager</code> was injected or the Java EE component from whose JNDI
-     * environment namespace the <code>BeanManager</code> was obtained, according to the rules of typesafe resolution.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * the <code>Instance</code> returned by this method will only give access to instances of beans discovered by the container
-     * before the {@link AfterBeanDiscovery} event is fired.
-     *
-     * Instances of dependent scoped beans obtained with this <code>Instance</code> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
-     *
-     * If no qualifier is passed to {@link Instance#select} method, the <code>@Default</code> qualifier is assumed.
-     *
-     * @return an {@link Instance} object to request beans instances
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
-     *         event is fired.
-     * @since 2.0
-     */
-    Instance<Object> createInstance();
 
 }
