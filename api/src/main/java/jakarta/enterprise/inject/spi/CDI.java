@@ -152,8 +152,19 @@ public abstract class CDI<T> implements Instance<T> {
     /**
      * Get the CDI BeanManager for the current context
      *
-     * @return the BeanManager
+     * @return the {@link BeanManager}
      */
     public abstract BeanManager getBeanManager();
+
+    /**
+     * Get the CDI {@link BeanContainer} for the current context.
+     *
+     * Default implementation just forwards the call to {@link #getBeanManager()}.
+     *
+     * @return the {@link BeanContainer}
+     */
+    public BeanContainer getBeanContainer() {
+        return getBeanManager();
+    }
 
 }
