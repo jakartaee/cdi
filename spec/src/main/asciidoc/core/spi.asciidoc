@@ -38,13 +38,11 @@ The interface `jakarta.enterprise.inject.spi.Bean` defines everything the contai
 public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
     public Class<?> getBeanClass();
     public Set<InjectionPoint> getInjectionPoints();
-    public boolean isNullable();
 }
 ----
 
 * `getBeanClass()` returns the bean class of the managed bean or of the bean that declares the producer method or field.
 * `getInjectionPoints()` returns a set of `InjectionPoint` objects, defined in <<injection_point>>, representing injection points of the bean, that will be validated by the container at initialization time.
-* `isNullable()` is deprecated in CDI 1.1 and should be ignored by the container.
 
 Note that implementations of `Bean` must also implement the inherited operations defined by the `Contextual` interface defined in <<contextual>>.
 
