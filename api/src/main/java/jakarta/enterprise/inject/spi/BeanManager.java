@@ -219,25 +219,6 @@ public interface BeanManager {
     public void validate(InjectionPoint injectionPoint);
 
     /**
-     * Fire an event and notify observers.
-     *
-     * <p>
-     * This method is deprecated from CDI 2.0 and {@link #getEvent()} should be used instead.
-     * </p>
-     *
-     * @param event the event object
-     * @param qualifiers the event qualifiers
-     * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
-     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
-     * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
-     * @throws IllegalArgumentException if the runtime type of the event object is assignable to the type of a container
-     *         lifecycle event
-     * @throws ObserverException if a notified observer throws a checked exception, it will be wrapped and rethrown as an
-     *         (unchecked) {@link ObserverException}
-     */
-    public void fireEvent(Object event, Annotation... qualifiers);
-
-    /**
      * Return an ordered set of {@linkplain ObserverMethod observer methods} for an event.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
