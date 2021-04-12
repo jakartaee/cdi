@@ -591,8 +591,6 @@ Null should be passed to `InjectionTargetFactory.createInjectionTarget()` to cre
 Subsequent invocations of the `configure()` method within one `InjectionTargetFactory` instance will always return the same `AnnotatedTypeConfigurator` instance.
 Once `createInjectionTarget()` method has been invoked, any invocations of `configure()` throws an `IllegalStateException`.
 
-The method `BeanManager.createInjectionTarget()` is deprecated since version 1.1 of Contexts and Dependency Injection.
-
 [[bm_obtain_producer]]
 
 ==== Obtaining a `Producer` for a field or method

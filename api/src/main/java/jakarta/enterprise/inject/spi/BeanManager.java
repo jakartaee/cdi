@@ -426,24 +426,6 @@ public interface BeanManager {
 
     /**
      * <p>
-     * Obtains an {@link InjectionTarget} for the given {@link AnnotatedType}. The container ignores the annotations and types
-     * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
-     * instead.
-     * </p>
-     * 
-     * <p>
-     * This method is deprecated from CDI 1.1 and {@link #getInjectionTargetFactory(AnnotatedType)} should be used instead.
-     * </p>
-     * 
-     * @param <T> the type
-     * @param type the {@link AnnotatedType}
-     * @return a container provided implementation of {@link InjectionTarget}
-     * @throws IllegalArgumentException if there is a definition error associated with any injection point of the type
-     */
-    public <T> InjectionTarget<T> createInjectionTarget(AnnotatedType<T> type);
-
-    /**
-     * <p>
      * An implementation of {@link InjectionTargetFactory} that provides container created {@link InjectionTarget} instances.
      * </p>
      * 

@@ -114,9 +114,9 @@
  * and lifecycle callbacks.</p>
  * 
  * <p>An instance of {@link jakarta.enterprise.inject.spi.InjectionTarget} 
- * may be 
- * {@linkplain jakarta.enterprise.inject.spi.BeanManager#createInjectionTarget(AnnotatedType) 
- * obtained} from the {@link jakarta.enterprise.inject.spi.BeanManager},
+ * may be product of
+ * {@linkplain jakarta.enterprise.inject.spi.BeanManager#getInjectionTargetFactory(AnnotatedType)}
+ * obtained from the {@link jakarta.enterprise.inject.spi.BeanManager},
  * allowing a portable extension to request these container services for
  * objects under the control of the portable extension.</p>
  * 
