@@ -20,8 +20,7 @@ package jakarta.enterprise.inject.spi;
 /**
  * <p>
  * The container fires an event of this type for each Java class or interface added by
- * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType)}, 
- * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType, String)} or 
+ * {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType, String)} or
  * {@link AfterTypeDiscovery#addAnnotatedType(AnnotatedType, String)}
  * </p>
  * <p>
@@ -31,7 +30,7 @@ package jakarta.enterprise.inject.spi;
  * </p>
  * <p>
  * For example, the following observer decorates the {@link AnnotatedType} for every class that is
- * added by {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType)}.
+ * added by {@link BeforeBeanDiscovery#addAnnotatedType(AnnotatedType, String)}.
  * </p>
  * 
  * <pre>

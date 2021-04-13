@@ -144,21 +144,6 @@ public interface BeforeBeanDiscovery {
      * </p>
      * 
      * <p>
-     * This method is deprecated from CDI 1.1 and {@link #addAnnotatedType(AnnotatedType, String)} should be used instead.
-     * </p>
-     * 
-     * @throws IllegalStateException if called outside of the observer method invocation
-     * @param type The {@link AnnotatedType} to add for later scanning
-     */
-    public void addAnnotatedType(AnnotatedType<?> type);
-
-    /**
-     * <p>
-     * Adds a given {@link AnnotatedType} to the set of types which will be scanned during bean
-     * discovery.
-     * </p>
-     * 
-     * <p>
      * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
      * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
      * type.

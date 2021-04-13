@@ -1065,7 +1065,6 @@ public interface BeforeBeanDiscovery {
     public void addStereotype(Class<? extends Annotation> stereotype, Annotation... stereotypeDef);
     public void addInterceptorBinding(Class<? extends Annotation> bindingType, Annotation... bindingTypeDef);
     public void addInterceptorBinding(AnnotatedType<? extends Annotation> bindingType);
-    public void addAnnotatedType(AnnotatedType<?> type);
     public void addAnnotatedType(AnnotatedType<?> type, String id);
     public AnnotatedTypeConfigurator<?> addAnnotatedType(Class<T> type,String id);
     <T extends Annotation> AnnotatedTypeConfigurator<T> configureQualifier(Class<T> qualifier);
@@ -1078,9 +1077,8 @@ public interface BeforeBeanDiscovery {
 * `addStereotype()` declares an annotation type as a stereotype, and specifies its meta-annotations.
 * `addInterceptorBinding()` declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
 * `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an optional identifier.
-The first version of the method is deprecated since version 1.1 of Contexts and Dependency Injection.
 +
-The third version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
+Second version of the method returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
 The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
 * `configureQualifier()` returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure a new `AnnotatedType` and declares it as a qualifier type.
 * `configureInterceptorBinding()` returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to configure a new `AnnotatedType` and declares it as an interceptor binding.
