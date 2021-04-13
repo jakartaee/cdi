@@ -72,17 +72,6 @@ import jakarta.inject.Provider;
  * </pre>
  * 
  * <p>
- * Finally, the {@link New &#064;New} qualifier may be used, allowing the application to obtain a
- * {@link New &#064;New} qualified bean:
- * </p>
- * 
- * <pre>
- * &#064;Inject
- * &#064;New(ChequePaymentProcessor.class)
- * Instance&lt;PaymentProcessor&gt; chequePaymentProcessor;
- * </pre>
- * 
- * <p>
  * For an injected <code>Instance</code>:
  * </p>
  * 

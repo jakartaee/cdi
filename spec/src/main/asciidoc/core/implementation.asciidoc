@@ -697,57 +697,6 @@ For example, the following field has the qualifier `@Named("paymentService")`:
 
 If any other injection point declares a `@Named` annotation that does not specify the `value` member, the container automatically detects the problem and treats it as a definition error.
 
-[[new]]
-
-=== `@New` qualified beans
-
-_The @New qualifier was deprecated in CDI 1.1.
-CDI applications are encouraged to inject @Dependent scoped beans instead._
-
-For each managed bean, a second bean exists which:
-
-* has the same bean class,
-* has the same bean types,
-* has the same bean constructor, initializer methods and injected fields, and
-* has the same interceptor bindings.
-
-
-However, this second bean:
-
-* has scope `@Dependent`,
-* has exactly one qualifier: `@jakarta.enterprise.inject.New(X.class)` where `X` is the bean class,
-* has no bean name,
-* has no stereotypes,
-* has no observer methods, producer methods or fields or disposer methods, and
-* is not an alternative, and
-* is enabled, in the sense of <<enablement>>, if and only if some other enabled bean has an injection point with the qualifier `@New(X.class)` where `X` is the bean class.
-
-
-This bean is called the _@New qualified bean_ for the class `X`.
-
-Note that this second bean exists - and may be enabled and available for injection - even if the first bean is disabled, as defined by <<enablement>>, or if the bean class is deployed outside of a bean archive, as defined in <<bean_archive>>, and is therefore not discovered during the bean discovery process defined in <<packaging_deployment>>.
-The container discovers `@New` qualified beans by inspecting injection points of other enabled beans.
-
-This allows the application to obtain a new instance of a bean which is not bound to the declared scope, but has had dependency injection performed.
-
-[source, java]
-----
-@Produces @ConversationScoped 
-@Special Order getSpecialOrder(@New(Order.class) Order order) {
-    ...
-    return order;
-}
-----
-
-When the qualifier `@New` is specified at an injection point and no `value` member is explicitly specified, the container defaults the `value` to the declared type of the injection point.
-So the following injection point has qualifier `@New(Order.class)`:
-
-[source, java]
-----
-@Produces @ConversationScoped 
-@Special Order getSpecialOrder(@New Order order) { ... }
-----
-
 [[unproxyable]]
 
 === Unproxyable bean types

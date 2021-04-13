@@ -1426,7 +1426,6 @@ If any `ProcessInjectionTarget` method is called outside of the observer method 
 The container must fire an event for each managed bean, producer, interceptor or decorator deployed in a bean archive, before registering the `Bean` object.
 No event is fired for any:
 
-* `@New` qualified bean, defined in <<new>>, or,
 * beans added programmatically using `AfterBeanDiscovery.addBean()`, or,
 * for any built-in beans.
 
@@ -1499,7 +1498,6 @@ With `BeanAttributesConfigurator` you can perform the following operations :
 ==== `ProcessBean` event
 
 The container must fire an event for each bean, interceptor or decorator deployed in a bean archive, after firing the `ProcessBeanAttributes` for the bean and before registering the `Bean` object.
-No event is fired for any `@New` qualified bean, defined in <<new>>.
 
 The event object type in the package `jakarta.enterprise.inject.spi` depends upon what kind of bean was discovered:
 
