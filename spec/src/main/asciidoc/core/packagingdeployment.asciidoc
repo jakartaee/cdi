@@ -48,8 +48,6 @@ The `beans.xml` file must be named:
 
 * `META-INF/beans.xml`.
 
-For compatibility with Contexts and Dependency 1.0, products must contain an option to cause an archive to be ignored by the container when no `beans.xml` is present.
-
 The container searches for beans in all bean archives in the application classpath.
 
 If a bean class is deployed in two different bean archives, non-portable behavior results.
