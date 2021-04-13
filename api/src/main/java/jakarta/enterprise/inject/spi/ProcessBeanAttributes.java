@@ -17,16 +17,12 @@
 
 package jakarta.enterprise.inject.spi;
 
-import jakarta.enterprise.inject.New;
 import jakarta.enterprise.inject.spi.configurator.BeanAttributesConfigurator;
 
 /**
  * <p>
  * The container fires an event of this type for each enabled bean, interceptor or decorator deployed in a bean archive before
  * registering the {@link Bean} object.
- * </p>
- * <p>
- * No event is fired for {@link New} qualified beans.
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link BeanAttributes} by calling either {@link #setBeanAttributes(BeanAttributes)} or {@link #configureBeanAttributes()}.

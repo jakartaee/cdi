@@ -37,8 +37,7 @@ import jakarta.inject.Qualifier;
  * </p>
  *
  * <p>
- * Every bean has the qualifier <code>&#064;Any</code>, even if it does not explicitly declare this qualifier, except for the
- * special {@link New &#064;New qualified beans}.
+ * Every bean has the qualifier <code>&#064;Any</code>, even if it does not explicitly declare this qualifier.
  * </p>
  *
  * <p>

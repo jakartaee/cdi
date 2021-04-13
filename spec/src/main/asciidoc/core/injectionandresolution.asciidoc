@@ -106,9 +106,6 @@ A bean is said to be _enabled_ if:
 
 Otherwise, the bean is said to be disabled.
 
-Note that <<new>> defines a special rule that determines whether a `@New` qualified bean is enabled or disabled.
-This rule applies as only to `@New` qualified beans, as an exception to the normal rule defined here.
-
 [[inconsistent_specialization]]
 
 ==== Inconsistent specialization
@@ -650,13 +647,6 @@ PaymentProcessor pp = anyPaymentProcessor.select(qualifier).get().process(paymen
 
 In this example, the returned bean has qualifier `@Synchronous` or `@Asynchronous` depending upon the value of `synchronously`.
 
-Finally, the `@New` qualifier may be used, allowing the application to obtain a `@New` qualified bean, as defined in <<new>>:
-
-[source, java]
-----
-@Inject @New(ChequePaymentProcessor.class) Instance<PaymentProcessor> chequePaymentProcessor;
-----
-
 It's even possible to iterate over a set of beans:
 
 [source, java]
@@ -807,7 +797,6 @@ The following built-in annotations define a `Literal` static nested class to sup
 
 * `jakarta.enterprise.inject.Any`
 * `jakarta.enterprise.inject.Default`
-* `jakarta.enterprise.inject.New`
 * `jakarta.enterprise.inject.Specializes`
 * `jakarta.enterprise.inject.Vetoed`
 * `jakarta.enterprise.util.Nonbinding`
