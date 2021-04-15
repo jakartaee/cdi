@@ -44,6 +44,7 @@ import java.util.TreeSet;
 public abstract class CDI<T> implements Instance<T> {
 
     private static final Object lock = new Object();
+    private static volatile boolean providerSetManually = false;
     protected static volatile Set<CDIProvider> discoveredProviders = null;
     protected static volatile CDIProvider configuredProvider = null;
 
@@ -77,7 +78,11 @@ public abstract class CDI<T> implements Instance<T> {
             if (configuredProvider != null && configuredProvider.getCDI() != null) {
                 return configuredProvider;
             }
-        } catch (IllegalStateException ignored) {
+        } catch (IllegalStateException e) {
+            //if the provider is set manually we do not look for a different provider.
+            if (providerSetManually) {
+                throw e;
+            }
         }
         configuredProvider = null;
         // Discover providers and cache
@@ -116,6 +121,7 @@ public abstract class CDI<T> implements Instance<T> {
      */
     public static void setCDIProvider(CDIProvider provider) {
         if (provider != null) {
+            providerSetManually = true;
             configuredProvider = provider;
         } else {
             throw new IllegalStateException("CDIProvider must not be null");

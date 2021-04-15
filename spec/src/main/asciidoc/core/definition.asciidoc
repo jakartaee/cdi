@@ -619,7 +619,7 @@ public class CoffeeShop
 }
 ----
 
-Note that to ensure compatibility with other JSR-330 implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations.
+Note that to ensure compatibility with other Jakarta Dependency Injection implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations.
 However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
 [[names]]
