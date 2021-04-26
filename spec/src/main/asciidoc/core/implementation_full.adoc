@@ -1,3 +1,68 @@
 [[implementation_full]]
 
 == Programming model in {cdi_full}
+
+[[managed_beans_full]]
+
+=== Managed beans in {cdi_full}
+
+In addition to rules defined in <<managed_beans>>, the following applies when running in {cdi_full}:
+
+If the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
+
+[[what_classes_are_beans_full]]
+
+==== Which Java classes are managed beans in {cdi_full}?
+
+When running in {cdi_full}, a Java class may also be a manged bean if it meets all conditions defined in <<what_classes_are_beans>> and the following:
+
+* It is a non-abstract class, or is annotated `@Decorator`.
+
+[[producer_method_full]]
+
+=== Producer methods in {cdi_full}
+
+[[declaring_producer_method_full]]
+
+==== Declaring a producer method in {cdi_full}
+
+In addition to rules defined in <<declaring_producer_method>>, when running in {cdi_full}, the following applies:
+
+Decorators may not declare producer methods.
+If a decorator has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+[[producer_field_full]]
+
+=== Producer fields in {cdi_full}
+
+[[declaring_producer_field_full]]
+
+==== Declaring a producer field in {cdi_full}
+
+In addition to rules defined in <<declaring_producer_field>>, when running in {cdi_full}, the following applies:
+
+Decorators may not declare producer fields.
+If a decorator has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+[[disposer_method_full]]
+
+=== Disposer methods in {cdi_full}
+
+[[declaring_disposer_method_full]]
+
+==== Declaring a disposer method in {cdi_full}
+
+In addition to rules defined in <<declaring_disposer_method>>, when running in {cdi_full}, the following applies:
+
+Decorators may not declare disposer methods.
+If a decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
+
+[[unproxyable_full]]
+
+=== Unproxyable bean types in {cdi_full}
+
+In addition to rules defined in <<unproxyable>>, when running in {cdi_full}, the following applies:
+
+A bean type must be proxyable if an injection point resolves to a bean:
+
+* that has an associated decorator.

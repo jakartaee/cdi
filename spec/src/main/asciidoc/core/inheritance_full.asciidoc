@@ -1,0 +1,16 @@
+[[inheritance_full]]
+
+== Inheritance and specialization in {cdi_full}
+
+[[specialization_full]]
+
+=== Specialization in {cdi_full}
+
+[[direct_and_indirect_specialization_full]]
+
+==== Direct and indirect specialization in {cdi_full}
+
+In addition to rules defined in <<direct_and_indirect_specialization>>, the following apply when running in {cdi_full}:
+
+If decorator is annotated `@Specializes`, non-portable behavior results.
+

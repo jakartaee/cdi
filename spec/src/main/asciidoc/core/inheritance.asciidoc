@@ -216,5 +216,5 @@ public class AsynchronousService implements Service{
 
 Then the bean name would also automatically be inherited by `MockAsynchronousService`.
 
-If an interceptor or decorator is annotated `@Specializes`, non-portable behavior results.
+If an interceptor is annotated `@Specializes`, non-portable behavior results.
 

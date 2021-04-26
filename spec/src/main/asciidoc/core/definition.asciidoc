@@ -2,11 +2,6 @@
 
 == Concepts
 
-[NOTE]
-====
-This part still contains references to decorators and a few comments that should be moved to the CDI Full "concept" section to add specific features to full
-====
-
 A bean is a source of contextual objects which define application state and/or logic.
 These objects are called _contextual instances of the bean_.
 The container creates and destroys these instances and associates them with the appropriate context.
@@ -30,11 +25,9 @@ The developer then defines the remaining attributes by explicitly annotating the
 
 The bean types and qualifiers of a bean determine where its instances will be injected by the container, as defined in <<injection_and_resolution>>.
 
-The bean developer may also create interceptors and/or decorators or reuse existing interceptors and/or decorators.
+The bean developer may also create interceptors or reuse existing interceptors.
 The interceptor bindings of a bean determine which interceptors will be applied at runtime.
-The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
-Interceptors are defined by Java interceptors specification, and interceptor bindings are specified in <<interceptors>>.
-Decorators are defined in <<decorators>>.
+Interceptors are defined by Jakarta EE interceptors specification, and interceptor bindings are specified in <<interceptors>>.
 
 [[capabilities]]
 
@@ -381,7 +374,7 @@ For example, when the container encounters the following producer method, an ins
 [source, java]
 ----
 @Produces
-PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync, 
+PaymentProcessor getPaymentProcessor(@Synchronous PaymentProcessor sync,
                                      @Asynchronous PaymentProcessor async) {
     return isSynchronous() ? sync : async;
 }
@@ -585,9 +578,8 @@ A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
 
 The set of bean defining annotations contains:
 
-* `@ApplicationScoped`, `@SessionScoped`, `@ConversationScoped` and `@RequestScoped` annotations,  
+* `@ApplicationScoped`, `@SessionScoped` and `@RequestScoped` annotations,
 * all other normal scope types,
-//* `@Interceptor` and `@Decorator` annotations,
 * `@Interceptor` annotation,
 * all stereotype annotations (i.e. annotations annotated with `@Stereotype`),
 * and the `@Dependent` scope annotation.
@@ -672,7 +664,7 @@ The rules for determining the default name for a bean are defined in <<managed_b
 
 If `@Named` is not declared by the bean, nor by its stereotypes, a bean has no name.
 
-If an interceptor or decorator has a name, non-portable behavior results.
+If an interceptor has a name, non-portable behavior results.
 
 [[alternatives]]
 
@@ -694,7 +686,7 @@ public class MockOrder extends Order { ... }
 
 Alternatively, an alternative may be declared by annotating a bean, producer method or producer field with a stereotype that declares an `@Alternative` annotation.
 
-If an interceptor or decorator is an alternative, non-portable behavior results.
+If an interceptor is an alternative, non-portable behavior results.
 
 [[stereotypes]]
 

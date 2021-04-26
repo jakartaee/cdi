@@ -2,6 +2,12 @@
 
 == Extended Concepts for {cdi_full}
 
+When running in {cdi_full}, beans must extend their capabilities defined in <<concepts>>, by providing these additional capabilities:
+
+The bean developer may also create decorators or reuse existing decorators.
+The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
+Decorators are defined in <<decorators>>.
+
 [[capabilities_full]]
 
 === Functionality provided by the container to the bean in {cdi_full}
@@ -29,6 +35,39 @@ In {cdi_full} qualifier types are also used to bind decorators to beans, as spec
 * The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
 
 If a decorator has any scope other than `@Dependent`, non-portable behavior results.
+
+[[bean_defining_annotations_full]]
+
+==== Bean defining annotations in {cdi_full}
+
+{cdi_full} adds the following annotations to the set of bean defining annotations :
+
+* `@ConversationScoped` annotation,
+* `@Decorator` annotation.
+
+[[names_full]]
+
+=== Bean names in {cdi_full}
+
+[[beans_with_no_name_full]]
+
+==== Beans with no name  in {cdi_full}
+
+In addition to rules defined in <<beans_with_no_name>>, when running in {cdi_full} bean names have also the following restriction:
+
+If a decorator has a name, non-portable behavior results.
+
+[[alternatives_full]]
+
+=== Alternatives in {cdi_full}
+
+[[declaring_alternative_full]]
+
+==== Declaring an alternative in {cdi_full}
+
+In addition to rules defined in <<declaring_alternative>>, when running in {cdi_full} alternative have also the following restriction:
+
+If a decorator is an alternative, non-portable behavior results.
 
 [[stereotypes_full]]
 
