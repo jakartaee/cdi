@@ -2,11 +2,6 @@
 
 == Programming model
 
-[NOTE]
-====
-this section contains part about specialization. It should be moved in a dedicated section in CDI Full.
-====
-
 The container provides built-in support for injection and contextual lifecycle management of the following kinds of bean:
 
 * Managed beans
@@ -25,7 +20,6 @@ A _managed bean_ is a bean that is implemented by a Java class.
 This class is called the _bean class_ of the managed bean.
 The basic lifecycle and semantics of managed beans are defined by the Managed Beans specification.
 
-If the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
 
 If a managed bean has a non-static public field, it must have scope `@Dependent`. If a managed bean with a non-static public field declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
@@ -38,7 +32,7 @@ If the managed bean class is a generic type, it must have scope `@Dependent`. If
 A Java class is a managed bean if it meets all of the following conditions:
 
 * It is not an inner class.
-* It is a non-abstract class, or is annotated `@Decorator`.
+* It is a non-abstract class,
 * It does not implement `jakarta.enterprise.inject.spi.Extension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
@@ -207,8 +201,8 @@ public class Shop {
 If a producer method is annotated `@Inject`, has a parameter annotated `@Disposes`, has a parameter annotated `@Observes`, or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 
-Interceptors and decorators may not declare producer methods.
-If an interceptor or decorator has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+Interceptors may not declare producer methods.
+If an interceptor has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
 
 A producer method may have any number of parameters.
 All producer method parameters are injection points.
@@ -345,8 +339,8 @@ public class Shop {
 
 If a producer field is annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.
 
-Interceptors and decorators may not declare producer fields.
-If an interceptor or decorator has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+Interceptors may not declare producer fields.
+If an interceptor has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
 
 [[producer_field_name]]
 
@@ -433,8 +427,8 @@ If a method has more than one parameter annotated `@Disposes`, the container aut
 
 If a disposer method is annotated `@Produces` or `@Inject` has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
-Interceptors and decorators may not declare disposer methods.
-If an interceptor or decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
+Interceptors may not declare disposer methods.
+If an interceptor has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify qualifiers.
 These additional parameters are injection points.
@@ -719,7 +713,6 @@ Certain legal bean types cannot be proxied by the container:
 A bean type must be proxyable if an injection point resolves to a bean:
 
 * that requires a client proxy, or
-* that has an associated decorator, or
 * that has a bound interceptor.
 
 

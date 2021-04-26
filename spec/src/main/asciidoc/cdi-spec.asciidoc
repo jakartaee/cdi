@@ -41,6 +41,8 @@ include::core/definition.asciidoc[]
 
 include::core/implementation.asciidoc[]
 
+include::core/inheritance.asciidoc[]
+
 include::core/injectionandresolution.asciidoc[]
 
 include::core/scopescontexts.asciidoc[]
@@ -59,7 +61,15 @@ include::core/spi_lite.asciidoc[]
 
 :leveloffset: +1
 
-include::core/inheritance.asciidoc[]
+include::core/definition_full.asciidoc[]
+
+include::core/implementation_full.adoc[]
+
+include::core/inheritance_full.asciidoc[]
+
+include::core/injectionandresolution_full.asciidoc[]
+
+include::core/scopescontexts_full.asciidoc[]
 
 include::core/decorators.asciidoc[]
 

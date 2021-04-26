@@ -1,0 +1,128 @@
+[[injection_and_resolution_full]]
+
+== Dependency injection and lookup in {cdi_full}
+
+
+[[selection_full]]
+
+=== Modularity in {cdi_full}
+
+[[declaring_selected_alternatives_full]]
+
+==== Declaring selected alternatives in {cdi_full}
+
+{cdi_full} provides an additional way to declare alternatives to the one defined in <<declaring_selected_alternatives_application>>:
+
+[[declaring_selected_alternatives_bean_archive]]
+
+===== Declaring selected alternatives for a bean archive
+
+An alternative may be explicitly declared using the `<alternatives>` element of the `beans.xml` file of the bean archive.
+The `<alternatives>` element contains a list of bean classes and stereotypes.
+An alternative is selected for the bean archive if either:
+
+* the alternative is a managed bean and the bean class of the bean is listed,
+* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
+* any `@Alternative` stereotype of the alternative is listed.
+
+[source,xml]
+----
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+        version="3.0">
+   <alternatives>
+      <class>com.acme.myfwk.InMemoryDatabase</class>
+      <stereotype>com.acme.myfwk.Mock</stereotype>
+      <stereotype>com.acme.site.Australian</stereotype>
+   </alternatives>
+</beans>
+----
+
+For each child `<class>` element the container verifies that either:
+
+* a class with the specified name exists and is annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* a class with the specified name exists and declares a field or method annotated with `@Produces` and, at the same time, annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* an alternative bean whose bean class has the specified name exists.
+
+Otherwise, the container automatically detects the problem and treats it as a deployment problem.
+
+Each child `<stereotype>` element must specify the name of an `@Alternative` stereotype annotation.
+If there is no annotation with the specified name, or the annotation is not an `@Alternative` stereotype, the container automatically detects the problem and treats it as a deployment problem.
+
+If the same type is listed twice under the `<alternatives>` element, the container automatically detects the problem and treats it as a deployment problem.
+
+For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
+
+
+
+[[inter_module_injection_full]]
+
+==== Inter-module injection in {cdi_full}
+
+In addition to rules defined in <<inter_module_injection>>, when running in {cdi_full}, the following apply:
+
+A bean is also _available for injection_ in a certain module if:
+
+* the bean is not a decorator
+
+[[typesafe_resolution_full]]
+
+=== Typesafe resolution in {cdi_full}
+
+[[unsatisfied_and_ambig_dependencies_full]]
+
+==== Unsatisfied and ambiguous dependencies in {cdi_full}
+
+In addition to rules defined in <<unsatisfied_and_ambig_dependencies>>, when running in {cdi_full}, the following apply:
+
+An unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
+
+
+[[assignable_parameters_full]]
+
+==== Assignability of raw and parameterized types in {cdi_full}
+
+In addition to rules defined in <<assignable_parameters>>, when running in {cdi_full}, the following apply:
+
+A special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
+
+[[injection_point_full]]
+
+==== Injection point metadata in {cdi_full}
+
+When running in {cdi_full}, the behaviour of `InjectionPoint` metadata is overrided as follow:
+
+* The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
+If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
+
+[[bean_metadata_full]]
+
+==== Bean metadata in {cdi_full}
+
+In addition to rules defined in <<bean_metadata>>, when running in {cdi_full}, the following apply:
+
+The interfaces `Decorator` also provide metadata about a bean.
+
+The container must provide beans allowing a bean instance to obtain a `Decorator` instance containing its metadata:
+
+* a bean with scope `@Dependent`, qualifier `@Default` and type `Decorator`  which can be injected into any decorator instance
+
+Additionally, the container must provide beans allowing decorators to obtain information about the beans they decorate:
+
+* a bean with scope `@Dependent`, qualifier `@Decorated` and type `Bean` which can be injected into any decorator instance.
+
+
+These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
+
+
+If a `Decorator` instance is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
+
+If a `Bean` instance with qualifier `@Decorated` is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
+
+If:
+
+* the injection point is a field, an initializer method parameter or a bean constructor, with qualifier `@Default`, then the type parameter of the injected `Decorator` must be the same as the type declaring the injection point, or
+* the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier `@Decorated`, then the type parameter of the injected `Bean` must be the same as the delegate type.
+
+Otherwise, the container automatically detects the problem and treats it as a definition error.

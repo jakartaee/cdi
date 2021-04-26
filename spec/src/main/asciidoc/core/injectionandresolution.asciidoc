@@ -2,10 +2,6 @@
 
 == Dependency injection and lookup
 
-[NOTE]
-====
-This section contains parts about modulartity, specialization and bean archive config. It should be moved to a CDI full section
-====
 
 The container injects references to contextual instances to the following kinds of _injection point_:
 
@@ -39,10 +35,6 @@ An alternative is not available for injection, lookup or name resolution to clas
 
 ==== Declaring selected alternatives
 
-This specification defines two methods of selecting alternatives.
-From Contexts and Dependency Injection 1.1 onwards the `@Priority` annotation allows an alternative to be selected for an entire application.
-Contexts and Dependency Injection 1.0 allowed only for an alternative to be selected for a bean archive.
-
 [[declaring_selected_alternatives_application]]
 
 ===== Declaring selected alternatives for an application
@@ -54,48 +46,6 @@ An alternative may be given a priority for the application:
 
 Custom bean implementations which are also alternatives may implement <<prioritized, Prioritized interface>> in which case they will be enabled for entire application with given priority.
 
-
-[[declaring_selected_alternatives_bean_archive]]
-
-===== Declaring selected alternatives for a bean archive
-
-
-An alternative may be explicitly declared using the `<alternatives>` element of the `beans.xml` file of the bean archive.
-The `<alternatives>` element contains a list of bean classes and stereotypes.
-An alternative is selected for the bean archive if either:
-
-* the alternative is a managed bean and the bean class of the bean is listed,
-* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
-* any `@Alternative` stereotype of the alternative is listed.
-
-[source,xml]
-----
-<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
-        version="3.0">
-   <alternatives>
-      <class>com.acme.myfwk.InMemoryDatabase</class>
-      <stereotype>com.acme.myfwk.Mock</stereotype>
-      <stereotype>com.acme.site.Australian</stereotype>
-   </alternatives>
-</beans>
-----
-
-For each child `<class>` element the container verifies that either:
-
-* a class with the specified name exists and is annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
-* a class with the specified name exists and declares a field or method annotated with `@Produces` and, at the same time, annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
-* an alternative bean whose bean class has the specified name exists.
-
-Otherwise, the container automatically detects the problem and treats it as a deployment problem.
-
-Each child `<stereotype>` element must specify the name of an `@Alternative` stereotype annotation.
-If there is no annotation with the specified name, or the annotation is not an `@Alternative` stereotype, the container automatically detects the problem and treats it as a deployment problem.
-
-If the same type is listed twice under the `<alternatives>` element, the container automatically detects the problem and treats it as a deployment problem.
-
-For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
 
 [[enablement]]
 
@@ -125,7 +75,7 @@ The container automatically detects inconsistent specialization and treats it as
 
 A bean is _available for injection_ in a certain module if:
 
-* the bean is not an interceptor or decorator,
+* the bean is not an interceptor
 * the bean is enabled,
 * the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive, or the bean is a selected alternative of the application,  and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
@@ -170,8 +120,6 @@ For a custom implementation of the `Bean` interface defined in <<bean>>, the con
 
 An _unsatisfied dependency_ exists at an injection point when no bean is eligible for injection to the injection point.
 An _ambiguous dependency_ exists at an injection point when multiple beans are eligible for injection to the injection point.
-
-Note that an unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
 
 When an ambiguous dependency exists, the container attempts to resolve the ambiguity.
 The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives.
@@ -226,8 +174,6 @@ public class UserDao extends Dao<User> { ... }
 ----
 
 A raw bean type is considered assignable to a parameterized required type if the raw types are identical and all type parameters of the required type are either unbounded type variables or java.lang.Object.
-
-Note that a special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
 
 [[primitive_types_and_null_values]]
 
@@ -528,8 +474,7 @@ If the injection point represents a dynamically obtained instance, the `getType(
 If the injection point represents a dynamically obtained instance, the `getMember()` method returns the `Field` object representing the field that defines the `Instance` injection point in the case of field injection, the `Method` object representing the method that defines the `Instance` injection point in the case of method parameter injection, or the `Constructor` object representing the constructor that defines the `Instance` injection point in the case of constructor parameter injection.
 * The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
 If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
-* The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
-If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
+* The `isDelegate()` method always returns `false`.
 * The `isTransient()` method returns `true` if the injection point is a transient field, and `false` otherwise.
 If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise. If this injection point is declared as transient, after bean's passivation, the value will not be restored. Instance<> injection point is the preferred approach.
 
@@ -558,36 +503,31 @@ If a class supporting injection that is not a bean has an injection point of typ
 
 ==== Bean metadata
 
-The interfaces `Bean`, `Interceptor` and `Decorator` provide metadata about a bean.
+The interfaces `Bean` and `Interceptor`  provide metadata about a bean.
 
-The container must provide beans allowing a bean instance to obtain a `Bean`, `Interceptor` or `Decorator` instance containing its metadata:
+The container must provide beans allowing a bean instance to obtain a `Bean` or `Interceptor`  instance containing its metadata:
 
 * a bean with scope `@Dependent`, qualifier `@Default` and type `Bean`  which can be injected into any bean instance
 * a bean with scope `@Dependent`, qualifier `@Default` and type `Interceptor`  which can be injected into any interceptor instance
-* a bean with scope `@Dependent`, qualifier `@Default` and type `Decorator`  which can be injected into any decorator instance
 
-Additionally, the container must provide beans allowing interceptors and decorators to obtain information about the beans they intercept and decorate:
 
-* a bean with scope `@Dependent`, qualifier `@Intercepted` and type `Bean` which can be injected into any interceptor instance, and
-* a bean with scope `@Dependent`, qualifier `@Decorated` and type `Bean` which can be injected into any decorator instance.
+Additionally, the container must provide beans allowing interceptors to obtain information about the beans they intercept:
+
+* a bean with scope `@Dependent`, qualifier `@Intercepted` and type `Bean` which can be injected into any interceptor instance.
 
 
 These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
 
 If an `Interceptor` instance is injected into a bean instance other than an interceptor instance, the container automatically detects the problem and treats it as a definition error.
 
-If a `Decorator` instance is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
-
 If a `Bean` instance with qualifier `@Intercepted` is injected into a bean instance other than an interceptor instance, the container automatically detects the problem and treats it as a definition error.
 
-If a `Bean` instance with qualifier `@Decorated` is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
 
 The injection of bean metadata is restricted.
 If:
 
-* the injection point is a field, an initializer method parameter or a bean constructor, with qualifier `@Default`, then the type parameter of the injected `Bean`, `Interceptor` or `Decorator` must be the same as the type declaring the injection point, or
+* the injection point is a field, an initializer method parameter or a bean constructor, with qualifier `@Default`, then the type parameter of the injected `Bean`, or `Interceptor` must be the same as the type declaring the injection point, or
 * the injection point is a field, an initializer method parameter or a bean constructor of an interceptor, with qualifier `@Intercepted`, then the type parameter of the injected `Bean` must be an unbounded wildcard, or
-* the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier `@Decorated`, then the type parameter of the injected `Bean` must be the same as the delegate type, or
 * the injection point is a producer method parameter then the type parameter of the injected `Bean` must be the same as the producer method return type, or
 * the injection point is a parameter of a disposer method then the container automatically detects the problem and treats it as a definition error.
 
