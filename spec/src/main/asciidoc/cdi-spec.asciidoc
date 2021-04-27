@@ -55,6 +55,8 @@ include::core/events.asciidoc[]
 
 include::core/spi_lite.asciidoc[]
 
+include::core/packagingdeployment_lite.asciidoc[]
+
 :leveloffset: -1
 
 == {cdi_full}

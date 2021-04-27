@@ -49,13 +49,13 @@ If a managed bean which declares a passivating scope type, has a decorator which
 
 === Context management for built-in scopes in {cdi_full}
 
-[[conversation_context]]
+[[conversation_context_full]]
 
 ==== Conversation context lifecycle
 
 The _conversation context_ is provided by a built-in context object for the built-in passivating scope type `@ConversationScoped`.
 
-[[conversation]]
+[[conversation_full]]
 
 ==== The `Conversation` interface
 

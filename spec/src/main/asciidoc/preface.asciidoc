@@ -13,39 +13,35 @@ This part has to be rewritten to present a consitent history of the spec
 
 include::license-{license}.asciidoc[]
 
-=== Foreword
-
-Jakarta Contexts and Dependency Injection 3.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 3.0]) is an update to Jakarta Contexts and Dependency Injection 2.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 2.0]).
-
-Contexts and Dependency Injection 4.0 introduce a new feature with the CDI Lite specification.
-
-CDI Lite is a subset of CDI that doesn't require a CDI container at runtime and thus is a good candidate to develop cloud native or resources constraint applications.
-
-Starting with version 2.0 CDI targets Java SE and Jakarta EE platforms.
-CDI in Java SE and CDI in a Jakarta EE container share the features defined in core CDI.
-
 [[doc_organisation]]
 
 === Organisation of this document
 
 This document is organized in 4 parts:
 
-* An introduction (this part), which is not part of the specification but introduces CDI concepts and give examples.
-* The core CDI specification: <<part_1>>.
-** The CDI Lite specification which contains CDI features that contains features that could be implemented at build time
-** The CDI Full specification that add all advanced CDI features to CDI Lite to make the standard CDI platform
+* An introduction (this part), which is not part of the specification but introduces CDI concepts and gives examples.
+* Core CDI specification: <<part_1>>.
+** CDI Lite specification which contains a subset of CDI features a which can be implemented in more restricted environments
+** CDI Full specification that builds on top of Lite and adds all advanced CDI features; this is the standard Jakarta EE CDI platform
 * Specific CDI features for Java SE: <<part_2>>.
 * Specific CDI features for Jakarta EE: <<part_3>>.
 
 
 === Major changes
 
-This CDI 3.0 includes a change in the base namespace used by the APIs from
+CDI 4.0 splits the core CDI into Lite and Full. Lite contains a subset of original features which are designed to work under more restricted environments. CDI Full contains everything that is in Lite plus all other features that were formerly in core CDI and are not in Lite.
+
+Jakarta Contexts and Dependency Injection 3.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 3.0]) is an update to Jakarta Contexts and Dependency Injection 2.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 2.0]).
+
+CDI 3.0 includes a change in the base namespace used by the APIs from
 javax to jakarta. For example, the `BeanManager` interface has moved from
 `javax.enterprise.inject.spi.BeanManager` to `jakarta.enterprise.inject.spi.BeanManager`.
 
 There is a new beans.xml 3.0 schema file has been added and the namespace of the
 beans_3_0.xsd schema file has changed from xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee" to
 xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee".
+
+Starting with version 2.0 CDI targets Java SE and Jakarta EE platforms.
+CDI in Java SE and CDI in a Jakarta EE container share the features defined in core CDI.
 
 :numbered:
