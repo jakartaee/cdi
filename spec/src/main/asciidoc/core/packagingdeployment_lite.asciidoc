@@ -1,0 +1,8 @@
+[[packaging_deployment_lite]]
+
+== Packaging and deployment
+
+[NOTE]
+====
+TBD based on what approach we choose
+====

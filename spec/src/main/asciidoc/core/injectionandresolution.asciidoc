@@ -2,7 +2,6 @@
 
 == Dependency injection and lookup
 
-
 The container injects references to contextual instances to the following kinds of _injection point_:
 
 * Any injected field of a bean class

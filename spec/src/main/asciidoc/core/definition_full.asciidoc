@@ -1,5 +1,7 @@
 [[concepts_full]]
 
+CDI Full contains all the functionality defined in {cdi_lite} and adds some more features such as decorators or conversation scope which are described in following paragraphs.
+
 == Extended Concepts for {cdi_full}
 
 When running in {cdi_full}, beans must extend their capabilities defined in <<concepts>>, by providing these additional capabilities:
@@ -12,7 +14,7 @@ Decorators are defined in <<decorators>>.
 
 === Functionality provided by the container to the bean in {cdi_full}
 
-When running in {cdi_full}, the container must extend the capabilities defined in <<capabilities>>, by providing the additional capability:
+When running in {cdi_full}, the container must extend the capabilities defined in <<capabilities>>, by providing an additional capability:
 
 * method decoration, as defined in <<decorators>>
 
@@ -33,8 +35,6 @@ In {cdi_full} qualifier types are also used to bind decorators to beans, as spec
 {cdi_full} adds a new standard scope to those defined in <<builtin_scopes>>
 
 * The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context>>.
-
-If a decorator has any scope other than `@Dependent`, non-portable behavior results.
 
 [[bean_defining_annotations_full]]
 
