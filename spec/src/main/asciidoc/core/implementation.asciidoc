@@ -39,6 +39,10 @@ A Java class is a managed bean if it meets all of the following conditions:
 ** the class has a constructor with no parameters, or
 ** the class declares a constructor annotated `@Inject`.
 
+In {cdi_full}, a Java class is a managed bean if:
+
+* It is a non-abstract class, or is annotated `@Decorator`.
+
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
 If packages annotated `@Vetoed` are split across classpath entries, non-portable behavior results.
@@ -714,6 +718,10 @@ A bean type must be proxyable if an injection point resolves to a bean:
 
 * that requires a client proxy, or
 * that has a bound interceptor.
+
+In {cdi_full}, a bean be proxyable if an injection point resolves to a bean:
+
+* that has an associated decorator.
 
 
 Otherwise, the container automatically detects the problem, and treats it as a deployment problem.

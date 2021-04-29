@@ -65,8 +65,6 @@ include::core/packagingdeployment_lite.asciidoc[]
 
 include::core/definition_full.asciidoc[]
 
-include::core/implementation_full.adoc[]
-
 include::core/inheritance_full.asciidoc[]
 
 include::core/injectionandresolution_full.asciidoc[]

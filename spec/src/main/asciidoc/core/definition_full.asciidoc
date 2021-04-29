@@ -1,36 +1,15 @@
 [[concepts_full]]
 
-CDI Full contains all the functionality defined in {cdi_lite} and adds some more features such as decorators or conversation scope which are described in following paragraphs.
-
-== Extended Concepts for {cdi_full}
-
-When running in {cdi_full}, beans must extend their capabilities defined in <<concepts>>, by providing these additional capabilities:
-
-The bean developer may also create decorators or reuse existing decorators.
-The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
-Decorators are defined in <<decorators>>.
-
-[[capabilities_full]]
-
-=== Functionality provided by the container to the bean in {cdi_full}
-
-When running in {cdi_full}, the container must extend the capabilities defined in <<capabilities>>, by providing an additional capability:
-
-* method decoration, as defined in <<decorators>>
-
-[[qualifiers_full]]
-
-=== Qualifiers in {cdi_full}
-
-In {cdi_full} qualifier types are also used to bind decorators to beans, as specified in <<decorators>>.
+CDI Full contains all the functionality defined in {cdi_lite} and adds some additional features such as decorators or conversation scope.
+Some of these concepts were briefly mentioned in the previous {cdi_lite} chapter and this section of specification defines them in depth.
 
 [[scopes_full]]
 
-=== Scopes in {cdi_full}
+== Scopes in {cdi_full}
 
 [[builtin_scopes_full]]
 
-==== Built-in scope types in {cdi_full}
+=== Built-in scope types in {cdi_full}
 
 {cdi_full} adds a new standard scope to those defined in <<builtin_scopes>>
 
@@ -38,43 +17,9 @@ In {cdi_full} qualifier types are also used to bind decorators to beans, as spec
 
 [[bean_defining_annotations_full]]
 
-==== Bean defining annotations in {cdi_full}
+=== Bean defining annotations in {cdi_full}
 
 {cdi_full} adds the following annotations to the set of bean defining annotations :
 
 * `@ConversationScoped` annotation,
 * `@Decorator` annotation.
-
-[[names_full]]
-
-=== Bean names in {cdi_full}
-
-[[beans_with_no_name_full]]
-
-==== Beans with no name  in {cdi_full}
-
-In addition to rules defined in <<beans_with_no_name>>, when running in {cdi_full} bean names have also the following restriction:
-
-If a decorator has a name, non-portable behavior results.
-
-[[alternatives_full]]
-
-=== Alternatives in {cdi_full}
-
-[[declaring_alternative_full]]
-
-==== Declaring an alternative in {cdi_full}
-
-In addition to rules defined in <<declaring_alternative>>, when running in {cdi_full} alternative have also the following restriction:
-
-If a decorator is an alternative, non-portable behavior results.
-
-[[stereotypes_full]]
-
-=== Stereotypes in {cdi_full}
-
-[[builtin_stereotypes_full]]
-
-==== Built-in stereotypes in {cdi_full}
-
-In addition to built-in stereotypes defined in <<builtin_stereotypes>>, {cdi_full} provides the special-purpose `@Decorator` stereotype, defined in <<decorator_annotation>>.
