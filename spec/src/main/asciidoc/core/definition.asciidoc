@@ -29,6 +29,8 @@ The bean developer may also create interceptors or reuse existing interceptors.
 The interceptor bindings of a bean determine which interceptors will be applied at runtime.
 Interceptors are defined by Jakarta EE interceptors specification, and interceptor bindings are specified in <<interceptors>>.
 
+When running in {cdi_full}, the bean developer may also create decorators or reuse existing decorators as defined in <<decorators>>.
+
 [[capabilities]]
 
 === Functionality provided by the container to the bean
@@ -40,6 +42,10 @@ A bean is provided by the container with the following capabilities:
 * lifecycle callbacks and automatic injection of other bean instances, specified in <<implementation>> and <<injection_and_resolution>>,
 * method interception, callback interception, as defined in <<interceptors>>, and
 * event notification, as defined in <<events>>.
+
+When running {cdi_full}, the container has to also provide the following capabilities:
+
+* method decoration, as defined in <<decorators>>
 
 
 [[bean_types]]
@@ -206,6 +212,8 @@ The container inspects the qualifier annotations and type of the injected attrib
 An injection point may even specify multiple qualifiers.
 
 Qualifier types are also used as event selectors by event consumers, as defined in <<events>>.
+
+In {cdi_full} qualifier types are also used to bind decorators to beans, as specified in <<decorators>>.
 
 [[builtin_qualifiers]]
 
