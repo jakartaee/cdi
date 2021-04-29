@@ -14,7 +14,7 @@
 
 In addition to rules defined in <<dependent_objects>>, when running in {cdi_full}, the following apply:
 
-* Instances of decorators and interceptors are dependent objects of the bean instance they decorate.
+* Instances of decorators are dependent objects of the bean instance they decorate.
 
 
 [[passivating_scope_full]]

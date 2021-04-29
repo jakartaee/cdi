@@ -7,6 +7,10 @@
 
 === Modularity in {cdi_full}
 
+In module architecture, a library may be an explicit bean archive or an implicit bean archive, as defined in <<bean_archive>>.
+
+Additionally, an alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
+
 [[declaring_selected_alternatives_full]]
 
 ==== Declaring selected alternatives in {cdi_full}
@@ -54,7 +58,13 @@ If the same type is listed twice under the `<alternatives>` element, the contain
 
 For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
 
+[[inconsistent_specialization]]
 
+==== Inconsistent specialization
+
+Suppose an enabled bean X specializes a second bean Y.
+If there is another enabled bean that specializes Y we say that _inconsistent specialization_ exists.
+The container automatically detects inconsistent specialization and treats it as a deployment problem.
 
 [[inter_module_injection_full]]
 
