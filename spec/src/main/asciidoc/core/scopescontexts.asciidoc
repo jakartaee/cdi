@@ -187,6 +187,7 @@ The `@Dependent` scope is always active.
 
 Many instances of beans with scope `@Dependent` belong to some other bean and are called _dependent objects_.
 
+* Instances interceptors are dependent objects of the bean instance they decorate.
 * An instance of a bean with scope `@Dependent` injected into a field, bean constructor or initializer method is a dependent object of the bean into which it was injected.
 * An instance of a bean with scope `@Dependent` injected into a producer method is a dependent object of the producer method bean instance that is being produced.
 * An instance of a bean with scope `@Dependent` obtained by direct invocation of an `Instance` is a dependent object of the instance of `Instance`.
