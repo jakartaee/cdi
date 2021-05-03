@@ -1,0 +1,52 @@
+[[interceptors_full]]
+
+== Interceptors in CDI Full
+
+In CDI Full environment, interceptors are supported to the extent defined in Java Interceptors specification. That includes, for instance, `@Interceptors` annotation.
+
+There is also few more features available in CDI Full environment including the ability to override interceptor order defined by `@Priority` annotation.
+
+[[binding_interceptor_to_bean_full]]
+
+=== Binding an interceptor to a bean in CDI Full
+
+Interceptor bindings may be used to associate interceptors with any managed bean that is not a decorator.
+
+It is possible to apply interceptors programmatically to the return value of a producer method, with the `InterceptionFactory` interface as defined in <<interception_factory>>.
+
+[[enabled_interceptors_full]]
+
+=== Interceptor enablement and ordering in CDI Full
+
+This specification extends the Java Interceptors specification and defines:
+
+* support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
+* the ability to override the interceptor order using the portable extension SPI, defined in <<after_type_discovery>>.
+
+An interceptor may be explicitly enabled for a bean archive by listing its class under the `<interceptors>` element of the `beans.xml` file of the bean archive.
+
+[source,xml]
+----
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+        version="3.0">
+   <interceptors>
+      <class>com.acme.myfwk.TransactionInterceptor</class>
+      <class>com.acme.myfwk.LoggingInterceptor</class>
+   </interceptors>
+</beans>
+----
+
+The order of the interceptor declarations determines the interceptor ordering. Interceptors which occur earlier in the list are called first.
+
+Each child `<class>` element must specify the name of an interceptor class.
+If there is no class with the specified name, or if the class with the specified name is not an interceptor class, the container automatically detects the problem and treats it as a deployment problem.
+
+If the same class is listed twice under the `<interceptors>` element, the container automatically detects the problem and treats it as a deployment problem.
+
+Interceptors enabled using `@Priority` are called before interceptors enabled using `beans.xml`.
+
+An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<after_type_discovery>>.
+
+If an interceptor is enabled for the application and for the bean archive, then the enablement from the bean archive is ignored by the container.  The interceptor will only be executed once based on the `@Priority` annotation's invocation chain.
