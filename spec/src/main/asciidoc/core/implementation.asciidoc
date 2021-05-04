@@ -10,7 +10,7 @@ The container provides built-in support for injection and contextual lifecycle m
 
 All containers must support managed beans, producer methods and producer fields.
 
-A portable extension may provide other kinds of beans by implementing the interface `Bean` defined in <<bean>>.
+A portable extension, as well as a build compatible extension, may provide other kinds of beans.
 
 [[managed_beans]]
 
@@ -32,16 +32,16 @@ If the managed bean class is a generic type, it must have scope `@Dependent`. If
 A Java class is a managed bean if it meets all of the following conditions:
 
 * It is not an inner class.
-* It is a non-abstract class,
+* It is a non-abstract class.
 * It does not implement `jakarta.enterprise.inject.spi.Extension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
 ** the class has a constructor with no parameters, or
 ** the class declares a constructor annotated `@Inject`.
 
-In {cdi_full}, a Java class is a managed bean if:
+In {cdi_full} environment, a Java class is a managed bean also if:
 
-* It is a non-abstract class, or is annotated `@Decorator`.
+* It is an abstract or non-abstract class annotated `@Decorator`.
 
 All Java classes that meet these conditions are managed beans and thus no special declaration is required to define a managed bean.
 
@@ -102,28 +102,6 @@ public class MockLoginAction extends LoginAction { ... }
 
 The second bean is a "mock object" that overrides the implementation of `LoginAction` when running in an embedded CDI based integration testing environment.
 
-[[specialize_managed_bean]]
-
-==== Specializing a managed bean
-
-If a bean class of a managed bean X is annotated `@Specializes`, then the bean class of X must directly extend the bean class of another managed bean Y.
-Then X _directly specializes_ Y, as defined in <<specialization>>.
-
-If the bean class of X does not directly extend the bean class of another managed bean, the container automatically detects the problem and treats it as a definition error.
-
-For example, `MockLoginAction` directly specializes `LoginAction`:
-
-[source, java]
-----
-public class LoginAction { ... }
-----
-
-[source, java]
-----
-@Mock @Specializes
-public class MockLoginAction extends LoginAction { ... }
-----
-
 [[managed_bean_name]]
 
 ==== Default bean name for a managed bean
@@ -156,7 +134,7 @@ If a producer method return type contains a wildcard type parameter or is an arr
 
 If the producer method return type is a parameterized type with a type variable, it must have scope `@Dependent`. If a producer method with a parameterized return type with a type variable declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
-If a producer method return type is a type variable or an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
+If a producer method return type is a type variable or an array type whose component type is a type variable, the container automatically detects the problem and treats it as a definition error.
 
 The application may call producer methods directly.
 However, if the application calls a producer method directly, no parameters will be passed to the producer method by the container; the returned object is not bound to any context; and its lifecycle is not managed by the container.
@@ -224,37 +202,6 @@ public class OrderFactory {
 }
 ----
 
-[[specialize_producer_method]]
-
-==== Specializing a producer method
-
-If a producer method X is annotated `@Specializes`, then it must be non-static and directly override another producer method Y.
-Then X _directly specializes_ Y, as defined in <<specialization>>.
-
-If the method is static or does not directly override another producer method, the container automatically detects the problem and treats it as a definition error.
-
-[source, java]
-----
-@Mock
-public class MockShop extends Shop {
-
-   @Override @Specializes
-   @Produces
-   PaymentProcessor getPaymentProcessor() {
-      return new MockPaymentProcessor();
-   }
-
-   @Override @Specializes
-   @Produces
-   List<Product> getProducts() {
-      return PRODUCTS;
-   }
-
-   ...
-
-}
-----
-
 [[producer_method_name]]
 
 ==== Default bean name for a producer method
@@ -295,7 +242,7 @@ If a producer field type contains a wildcard type parameter or is an array type 
 
 If the producer field type is a parameterized type with a type variable, it must have scope `@Dependent`. If a producer field with a parameterized type with a type variable declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
-If a producer field type is a type variable or is an array type whose component type is a type variable the container automatically detects the problem and treats it as a definition error.
+If a producer field type is a type variable or is an array type whose component type is a type variable, the container automatically detects the problem and treats it as a definition error.
 
 The application may access producer fields directly.
 However, if the application accesses a producer field directly, the returned object is not bound to any context; and its lifecycle is not managed by the container.
@@ -376,7 +323,7 @@ A bean may declare multiple disposer methods.
 ==== Disposed parameter of a disposer method
 
 Each disposer method must have exactly one _disposed parameter_, of the same type as the corresponding producer method return type or producer field type.
-When searching for disposer methods for a producer method or producer field the container considers the type and qualifiers of the disposed parameter.
+When searching for disposer methods for a producer method or producer field, the container considers the type and qualifiers of the disposed parameter.
 If a producer method or producer field declared by the same bean class is assignable to the disposed parameter, according to the rules of typesafe resolution defined in <<typesafe_resolution>>, the container must call this method when destroying any instance returned by that producer method or producer field.
 
 A disposer method may resolve to multiple producer methods or producer fields declared by the bean class, in which case the container must call it when destroying any instance returned by any of these producer methods or producer fields.
@@ -429,7 +376,7 @@ public class Resources {
 
 If a method has more than one parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
-If a disposer method is annotated `@Produces` or `@Inject` has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
+If a disposer method is annotated `@Produces` or `@Inject`, has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors may not declare disposer methods.
 If an interceptor has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
@@ -719,10 +666,4 @@ A bean type must be proxyable if an injection point resolves to a bean:
 * that requires a client proxy, or
 * that has a bound interceptor.
 
-In {cdi_full}, a bean be proxyable if an injection point resolves to a bean:
-
-* that has an associated decorator.
-
-
 Otherwise, the container automatically detects the problem, and treats it as a deployment problem.
-

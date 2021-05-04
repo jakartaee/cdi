@@ -29,7 +29,9 @@ The bean developer may also create interceptors or reuse existing interceptors.
 The interceptor bindings of a bean determine which interceptors will be applied at runtime.
 Interceptors are defined by Jakarta EE interceptors specification, and interceptor bindings are specified in <<interceptors>>.
 
-When running in {cdi_full}, the bean developer may also create decorators or reuse existing decorators as defined in <<decorators>>.
+In {cdi_full} environment, the bean developer may also create decorators or reuse existing decorators.
+The bean types and qualifiers of a bean determine which decorators will be applied at runtime.
+Decorators are defined in <<decorators>>.
 
 [[capabilities]]
 
@@ -43,9 +45,9 @@ A bean is provided by the container with the following capabilities:
 * method interception, callback interception, as defined in <<interceptors>>, and
 * event notification, as defined in <<events>>.
 
-When running {cdi_full}, the container has to also provide the following capabilities:
+In {cdi_full} environment, the container also provides the following capabilities:
 
-* method decoration, as defined in <<decorators>>
+* decoration, as defined in <<decorators>>.
 
 
 [[bean_types]]
@@ -213,7 +215,7 @@ An injection point may even specify multiple qualifiers.
 
 Qualifier types are also used as event selectors by event consumers, as defined in <<events>>.
 
-In {cdi_full} qualifier types are also used to bind decorators to beans, as specified in <<decorators>>.
+In {cdi_full} environment, qualifier types are also used to bind decorators to beans, as specified in <<decorators>>.
 
 [[builtin_qualifiers]]
 
@@ -470,6 +472,19 @@ For example, an object that represents the current user is represented by a sess
 @Produces @SessionScoped User getCurrentUser() { ... }
 ----
 
+An object that represents an order is represented by a conversation scoped object:
+
+[source, java]
+----
+@ConversationScoped
+public class Order { ... }
+----
+
+[NOTE]
+====
+Conversations are only available in {cdi_full}.
+====
+
 A list that contains the results of a search screen might be represented by a request scoped object:
 
 [source, java]
@@ -486,7 +501,7 @@ The set of scope types is extensible.
 
 There are four standard scope types defined in {cdi_lite}, all defined in the package `jakarta.enterprise.context`.
 
-* The container must provide an implementation of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations defined in <<builtin_contexts>>.
+* The container must provide an implementation of the `@RequestScoped`, `@ApplicationScoped` and `@SessionScoped` annotations defined in <<builtin_contexts>>.
 Note that these standard scopes can be extended by third-party extensions as defined in <<context>>
 * Finally, there is a `@Dependent` pseudo-scope for dependent objects, as defined in <<dependent_context>>.
 
@@ -500,7 +515,7 @@ If an interceptor has any scope other than `@Dependent`, non-portable behavior r
 A scope type is a Java annotation defined as `@Retention(RUNTIME)`. Typically a scope type is defined as `@Target({TYPE, METHOD, FIELD})`. All scope types must also specify the `@jakarta.inject.Scope` or `@jakarta.enterprise.context.NormalScope` meta-annotation.
 
 A scope type must not have any attributes.
-If a scope type has attributes non-portable behavior results.
+If a scope type has attributes, non-portable behavior results.
 
 For example, the following annotation declares a "business process scope":
 
@@ -514,6 +529,8 @@ public @interface BusinessProcessScoped {}
 ----
 
 Custom scopes are normally defined by portable extensions, which must also provide a _context object_, as defined in <<context>>, that implements the custom scope.
+
+// TODO mention build compatible extensions, as they require providing a _class_, not an object
 
 [[declaring_bean_scope]]
 
@@ -619,6 +636,8 @@ public class CoffeeShop
 Note that to ensure compatibility with other Jakarta Dependency Injection implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations.
 However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
+// TODO we might be able to make `@Singleton` a bean defining annotation in Lite? depending on how we decide on the beans.xml thing
+
 [[names]]
 
 === Bean names
@@ -716,6 +735,8 @@ A stereotype may also specify that:
 
 
 A bean may declare zero, one or multiple stereotypes.
+
+// TODO how about we finally allowed declaring `@Priority` on stereotypes?
 
 [[defining_new_stereotype]]
 
@@ -893,7 +914,7 @@ There are three kinds of problem:
 
 * Definition errors - occur when a single bean definition violates the rules of this specification.
 If a definition error exists, the container must throw a subclass of `jakarta.enterprise.inject.spi.DefinitionException`.
-* Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization, in a particular deployment.
+* Deployment problems - occur when there are problems resolving dependencies, or inconsistent specialization (in {cdi_full}), in a particular deployment.
 If a deployment problem occurs, the container must throw a subclass of `jakarta.enterprise.inject.spi.DeploymentException`.
 * Exceptions - occur at runtime
 

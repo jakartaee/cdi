@@ -9,7 +9,7 @@
 When running in Jakarta EE, the container must extend the rules defined in <<bean_archive>> with:
 
 * An _implicit bean archive_ may also contain EJB session beans, and
-* EJB session bean should be considered as bean class with bean defining annotation when determining if and archive is an _implicit bean archive_.
+* EJB session bean should be considered as bean class with bean defining annotation when determining if an archive is an _implicit bean archive_.
 
 When determining which archives are bean archives, the container must also consider:
 
@@ -49,7 +49,7 @@ In Jakarta EE, the container automatically discovers EJB session beans and other
 
 ==== Bean discovery in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session beans.
+When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session bean.
 
 [[trimmed_bean_archive_ee]]
 

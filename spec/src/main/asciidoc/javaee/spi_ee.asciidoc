@@ -6,13 +6,13 @@
  
 === The `Bean` interface in Jakarta EE
  
-When Running in Jakarta EE, the container must extend the rules defined in <<bean>> for managed bean to EJB session bean.
+When running in Jakarta EE, the container must extend the rules defined in <<bean>> for managed bean to EJB session bean.
 
 [[interceptor_ee]]
 
 ==== The `Interceptor` interface in Jakarta EE
 
-When Running in Jakarta EE, the container must extend the rules defined in <<interceptor>> and must also ensure that
+When running in Jakarta EE, the container must extend the rules defined in <<interceptor>> and must also ensure that
  
 `PRE_PASSIVATE`, `POST_ACTIVATE` and `AROUND_TIMEOUT` InterceptorType values are linked to EJB lifecycle callback or timeout method.
 
@@ -23,7 +23,7 @@ When Running in Jakarta EE, the container must extend the rules defined in <<int
 
 When running in Jakarta EE, the container must extend the rules defined for `InjectionTarget` in <<injectiontarget>> and must also ensure that:
 
-* when `inject()` is called, The container performs Jakarta EE component environment injection, according to the semantics required by the Jakarta EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods_ee>>.
+* when `inject()` is called, the container performs Jakarta EE component environment injection, according to the semantics required by the Jakarta EE platform specification, sets the value of all injected fields, and calls all initializer methods, as defined in <<fields_initializer_methods_ee>>.
 * `@PostConstruct` callback is called according to the semantics required by the Jakarta EE platform specification.
 * `@PreDestroy` callback is called according to the semantics required by the Jakarta EE platform specification.
 
@@ -110,7 +110,7 @@ In addition to definition given in <<process_bean>> the following apply:
 
 Resources are considered to be producer fields.
 
-When running in Jakarta EE, the interface `jakarta.enterprise.inject.spi.ProcessBean` is also a supertype of `jakarta.enterprise.inject.spi.ProcessSession` :
+When running in Jakarta EE, the interface `jakarta.enterprise.inject.spi.ProcessBean` is also a supertype of `jakarta.enterprise.inject.spi.ProcessSessionBean` :
 
 [source, java]
 ----

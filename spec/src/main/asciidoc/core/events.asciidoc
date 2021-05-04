@@ -2,11 +2,6 @@
 
 == Events
 
-[NOTE]
-====
-This section has reference to extension. They should be moved in a specific "event" section in full section
-====
-
 Beans may produce and consume events.
 This facility allows beans to interact in a completely decoupled fashion, with no compile-time dependency between the interacting beans.
 Most importantly, it allows stateful beans in one architectural tier of the application to synchronize their internal state with state changes that occur in a different tier.
@@ -177,7 +172,7 @@ The following elements are container specific:
 
 * the default `Executor` used by the container when `fireAsync()` is called without specifying an `Executor`,
 * the `CompletionStage` returned by `fireAsync` methods, and
-* all dependent stages of this initial CompletionStage.
+* all dependent stages of this initial `CompletionStage`.
 
 If the runtime type of the event object contains an unresolvable type variable, an `IllegalArgumentException` is thrown.
 
@@ -199,6 +194,7 @@ The container must provide a built-in bean with:
 If an injection point of raw type `Event` is defined, the container automatically detects the problem and treats it as a definition error.
 
 The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
+// TODO move passivation to Full?
 
 [[observer_resolution]]
 
@@ -223,6 +219,7 @@ An observer method has an event qualifier if it has an observed event qualifier 
 If the runtime type of the event object contains an unresolvable type variable, the container must throw an `IllegalArgumentException`.
 
 For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers, and `isAsync()` to determine whether the observer is asynchronous or synchronous.
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
 
 [[observers_assignability]]
 
@@ -230,7 +227,7 @@ For a custom implementation of the `ObserverMethod` interface defined in <<obser
 
 An event type is considered assignable to a type variable if the event type is assignable to the upper bound, if any.
 
-A raw event type is considered assignable to a parameterized observed event type if the raw types are identical and all type parameters of the required type are either unbounded type variables or java.lang.Object.
+A raw event type is considered assignable to a parameterized observed event type if the raw types are identical and all type parameters of the required type are either unbounded type variables or `java.lang.Object`.
 
 A parameterized event type is considered assignable to a raw observed event type if the raw types are identical.
 
@@ -352,12 +349,12 @@ documentDefaultEvent.fire(document);
 
 An observer method allows the application to receive and respond to event notifications.
 
-An observer method is a non-abstract method of a managed bean class or of an extension, as defined in <<init_events>>.
+An observer method is a non-abstract method of a managed bean class.
 An observer method may be either static or non-static.
 
 There may be arbitrarily many observer methods with the same event parameter type and qualifiers.
 
-A bean (or extension) may declare multiple observer methods.
+A bean may declare multiple observer methods.
 
 [[observer_method_event_parameter]]
 
@@ -409,8 +406,8 @@ public void afterLogin(@Observes @Admin LoggedInEvent event) { ... }
 
 If an observer method is annotated `@Produces` or `@Inject` or has a parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
-Interceptors and decorators may not declare observer methods.
-If an interceptor or decorator has a method with a parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
+Interceptors may not declare observer methods.
+If an interceptor has a method with a parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the event parameter, observer methods may declare additional parameters, which may declare qualifiers.
 These additional parameters are injection points.
@@ -438,6 +435,7 @@ public interface EventMetadata {
 
 * `getQualifiers()` returns the set of qualifiers with which the event was fired.
 * `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanManager.getEvent()`.
+// TODO BeanManagerLite
 * `getType()` returns the type representing runtime class of the event object with type variables resolved.
 
 
@@ -544,6 +542,7 @@ If the exception is a checked exception, it is wrapped and rethrown as an (unche
 
 
 For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `jakarta.enterprise.inject.spi.EventContext` to invoke the method.
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
 
 [[async_exception]]
 
@@ -551,7 +550,7 @@ For a custom implementation of the `ObserverMethod` interface defined in <<obser
 
 If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `java.util.concurrent.CompletionException` exception.
 `CompletionException` contains all exceptions thrown by observers as suppressed exceptions.
-They can be accessed as an array of `throwable` with the `getSuppressed` method.
+They can be accessed as an array of `Throwable` with the `getSuppressed` method.
 
 It can be handled with one of the `CompletionStage` methods related to exceptions:
 
@@ -569,7 +568,7 @@ myEvent.fireAsync(anEventObject)
            } });
 ----
 
-If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event object.
+If no exception is thrown by observers then the resulting `CompletionStage` is completed normally with the event object.
 
 [[observer_ordering]]
 

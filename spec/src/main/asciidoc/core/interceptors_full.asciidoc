@@ -1,14 +1,16 @@
 [[interceptors_full]]
 
-== Interceptors in CDI Full
+== Interceptor bindings in {cdi_full}
 
-In CDI Full environment, interceptors are supported to the extent defined in Java Interceptors specification. That includes, for instance, `@Interceptors` annotation.
+This specification defines various extensions to the Jakarta Interceptors specification, including how to override the interceptor order defined by the `@Priority` annotation.
 
-There is also few more features available in CDI Full environment including the ability to override interceptor order defined by `@Priority` annotation.
+{cdi_full} implementations are required to support the entire Jakarta Interceptors specification, including associating interceptors with classes and methods using the `@jakarta.interceptor.Interceptors` annotation.
 
 [[binding_interceptor_to_bean_full]]
 
-=== Binding an interceptor to a bean in CDI Full
+=== Binding an interceptor to a bean in {cdi_full}
+
+In addition to rules defined in <<binding_interceptor_to_bean>>, the following rules apply.
 
 Interceptor bindings may be used to associate interceptors with any managed bean that is not a decorator.
 
@@ -16,9 +18,9 @@ It is possible to apply interceptors programmatically to the return value of a p
 
 [[enabled_interceptors_full]]
 
-=== Interceptor enablement and ordering in CDI Full
+=== Interceptor enablement and ordering in {cdi_full}
 
-This specification extends the Java Interceptors specification and defines:
+This specification extends the Jakarta Interceptors specification and defines:
 
 * support for enabling interceptors only for a bean archive, as defined by Contexts and Dependency Injection 1.0, and
 * the ability to override the interceptor order using the portable extension SPI, defined in <<after_type_discovery>>.

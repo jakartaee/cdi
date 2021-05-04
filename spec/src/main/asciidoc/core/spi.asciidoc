@@ -202,11 +202,16 @@ The container sets the value of all injected fields, and calls all initializer m
 
 Implementations of `Producer` and `InjectionTarget` must ensure that the set of injection points returned by `getInjectionPoints()` are injected by `produce()` or `inject()`.
 
-[[beanmanager]]
+[[beanmanager_full]]
 
 === The `BeanManager` object
 
-The interface `jakarta.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to portable extensions.
+In addition to rules defined in <<beanmanager>>, the following rules apply.
+
+The interface `jakarta.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to applications and portable extensions.
+
+The interface `jakarta.enterprise.inject.spi.BeanManager` extends `jakarta.enterprise.inject.spi.BeanManagerLite`.
+In {cdi_full} environment, `BeanManagerLite` is subject to the same rules as `BeanManager`.
 
 The container provides a built-in bean with bean type `BeanManager`, scope `@Dependent` and qualifier `@Default`. The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 Thus, any bean may obtain an instance of `BeanManager` by injecting it:
@@ -234,87 +239,28 @@ and if the following operations are called before the `AfterDeploymentValidation
 * `getReference(Bean, Type, CreationalContext)`,
 * `getInjectableReference(InjectionPoint, CreationalContext)`.
 
-All other operations of BeanManager may be called at any time during the execution of the application.
+All other operations of `BeanManager` may be called at any time during the execution of the application.
 
-[[provider]]
+[[provider_full]]
 
-==== Obtaining a reference to the CDI container
+==== Obtaining a reference to the CDI container in {cdi_full}
+
+In addition to rules defined in <<provider>>, the following rules apply.
 
 Portable extensions and other objects sometimes interact directly with the container via programmatic API call.
 The abstract `jakarta.enterprise.inject.spi.CDI` provides access to the `BeanManager` as well providing lookup of bean instances.
 
-[source, java]
-----
-public abstract class CDI<T> implements Instance<T> {
-   public static CDI<Object> current() { ... }
-   public static void setCDIProvider(CDIProvider provider);
-   public abstract BeanManager getBeanManager();
-}
-----
-
 A portable extension or other object may obtain a reference to the current container by calling `CDI.current()`.
-`CDI.getBeanManager()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
-Other methods on `CDI` may be called after the application initialization is completed until the application shutdown starts.
+`CDI.getBeanManager()` and `CDI.getBeanManagerLite()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
-CDI implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
-If no qualifier is passed to `CDI.select()` method, the `@Default` qualifier is assumed.
+[[bm_obtain_injectable_reference_full]]
 
-When `CDI.current()` is called, `getCDI()` method is called on `jakarta.enterprise.inject.spi.CDIProvider`.
+==== Obtaining an injectable reference in {cdi_full}
 
-The `CDIProvider` to use may be set by the application or container using the `setCDIProvider()` method.
-If the `setCDIProvider()` has not been called, the service provider with highest priority of the service `jakarta.enterprise.inject.spi.CDIProvider` declared in META-INF/services is used.
-The order of more than one `CDIProvider` with the same priority is undefined.
-If no provider is available an `IllegalStateException` is thrown.
-
-[source, java]
-----
-public interface CDIProvider extends Prioritized {
-   CDI<Object> getCDI();
-   default int getPriority();
-}
-----
-
-* `getPriority()` method is inherited from <<prioritized, `Prioritized` interface>> and returns the priority for the `CDIProvider`.
-If this method is not implemented the default priority `0` is assumed.
-
-
-[[bm_obtain_contextual_reference]]
-
-==== Obtaining a contextual reference for a bean
-
-The method `BeanManager.getReference()` returns a contextual reference for a given bean and bean type, as defined in <<contextual_reference>>.
-
-[source, java]
-----
-public Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
-----
-
-The first parameter is the `Bean` object representing the bean.
-The second parameter represents a bean type that must be implemented by any client proxy that is returned.
-The third parameter is an instance of `CreationalContext` that may be used to destroy any object with scope `@Dependent` that is created.
-
-If the given type is not a bean type of the given bean, an `IllegalArgumentException` is thrown.
-
-[[bm_obtain_injectable_reference]]
-
-==== Obtaining an injectable reference
-
-The method `BeanManager.getInjectableReference()` returns an injectable reference for a given injection point, as defined in <<injectable_reference>>.
-
-[source, java]
-----
-public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
-----
-
-The first parameter represents the target injection point.
-The second parameter is an instance of `CreationalContext` that may be used to destroy any object with scope `@Dependent` that is created.
+In addition to rules defined in <<bm_obtain_injectable_reference>>, the following rules apply.
 
 If the `InjectionPoint` represents a decorator delegate injection point, `getInjectableReference()` returns a delegate, as defined in <<delegate_attribute>>.
-
-If typesafe resolution results in an unsatisfied dependency, the container must throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, the container must throw an `AmbiguousResolutionException`.
-
-Implementations of `Bean` usually maintain a reference to an instance of `BeanManager`. When the `Bean` implementation performs dependency injection, it must obtain the contextual instances to inject by calling `BeanManager.getInjectableReference()`, passing an instance of `InjectionPoint` that represents the injection point and the instance of `CreationalContext` that was passed to `Bean.create()`.
 
 [[bm_obtain_unmanaged_instance]]
 
@@ -334,52 +280,21 @@ Foo foo = fooInstance.produce().inject().postConstruct().get();
 fooInstance.preDestroy().dispose();
 ----
 
-[[bm_obtain_creationalcontext]]
+[[bm_obtain_bean_by_type_full]]
 
-==== Obtaining a `CreationalContext`
+==== Obtaining a `Bean` by type in {cdi_full}
 
-An instance of `CreationalContext` for a certain instance of `Contextual` may be obtained by calling `BeanManager.createCreationalContext()`.
-
-[source, java]
-----
-public <T> CreationalContext<T> createCreationalContext(Contextual<T> contextual);
-----
-
-An instance of `CreationalContext` for a non-contextual object may be obtained by passing a null value to `createCreationalContext()`.
-
-[[bm_obtain_bean_by_type]]
-
-==== Obtaining a `Bean` by type
+In addition to rules defined in <<bm_obtain_bean_by_type>>, the following rules apply.
 
 The method `BeanManager.getBeans()` returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the `BeanManager` was injected or the class from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
 
-[source, java]
-----
-public Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
-----
+[[bm_obtain_bean_by_name_full]]
 
-The first parameter is a required bean type. The remaining parameters are required qualifiers.
+==== Obtaining a `Bean` by name in {cdi_full}
 
-If no qualifiers are passed to `getBeans()`, the default qualifier `@Default` is assumed.
-
-If the given type represents a type variable, an `IllegalArgumentException` is thrown.
-
-If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
-
-If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
-
-[[bm_obtain_bean_by_name]]
-
-==== Obtaining a `Bean` by name
+In addition to rules defined in <<bm_obtain_bean_by_name>>, the following rules apply.
 
 The method `BeanManager.getBeans()` which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the `BeanManager` was injected or the class from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules of name resolution defined in <<name_resolution>>.
-
-[source, java]
-----
-public Set<Bean<?>> getBeans(String name);
-----
-
-The parameter is a bean name.
 
 [[bm_obtain_passivation_capable_bean]]
 
@@ -392,24 +307,6 @@ The method `BeanManager.getPassivationCapableBean()` returns the `PassivationCap
 public Bean<?> getPassivationCapableBean(String id);
 ----
 
-[[bm_resolve_ambiguous_dep]]
-
-==== Resolving an ambiguous dependency
-
-The method `BeanManager.resolve()` applies the ambiguous dependency resolution rules defined in <<unsatisfied_and_ambig_dependencies>> to a set of `Bean` s.
-
-[source, java]
-----
-public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
-----
-
-If the ambiguous dependency resolution rules fail (as defined in <<unsatisfied_and_ambig_dependencies>>, the container must throw an `AmbiguousResolutionException`.
-
-`BeanManager.resolve()` must return null if:
-
-* null is passed to `resolve()`, or
-* no beans are passed to `resolve()`.
-
 [[bm_validate_ip]]
 
 ==== Validating an injection point
@@ -420,39 +317,6 @@ The `BeanManager.validate()` operation validates an injection point and throws a
 ----
 public void validate(InjectionPoint injectionPoint);
 ----
-
-[[bm_fire_event]]
-
-==== Firing an event
-
-The method `BeanManager.getEvent()` returns an instance of `Event` with specified type `java.lang.Object` and specified qualifier `@Default`.
-
-[source, java]
-----
-Event<Object> getEvent();
-----
-
-The returned instance can be used like a standard `Event` as described in <<events>>.
-
-[[bm_observer_method_resolution]]
-
-==== Observer method resolution
-
-The method `BeanManager.resolveObserverMethods()` resolves observer methods for an event according to the rules of observer resolution defined in <<observer_resolution>>.
-
-[source, java]
-----
-public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);
-----
-
-The first parameter of `resolveObserverMethods()` is the event object.
-The remaining parameters are event qualifiers.
-
-If the runtime type of the event object contains a type variable, an `IllegalArgumentException` is thrown.
-
-If two instances of the same non repeating qualifier type are given, an `IllegalArgumentException` is thrown.
-
-If an instance of an annotation that is not a qualifier type is given, an `IllegalArgumentException` is thrown.
 
 [[bm_decorator_resolution]]
 
@@ -474,27 +338,19 @@ If an instance of an annotation that is not a qualifier type is given, an `Illeg
 
 If the set of bean types is empty, an `IllegalArgumentException` is thrown.
 
-[[bm_interceptor_resolution]]
+[[bm_interceptor_resolution_full]]
 
-==== Interceptor resolution
+==== Interceptor resolution in {cdi_full}
+
+In addition to rules defined in <<bm_interceptor_resolution>>, the following rules apply.
 
 The method `BeanManager.resolveInterceptors()` returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the `BeanManager` was injected or the class from whose JNDI environment namespace the `BeanManager` was obtained, as defined in <<interceptor_resolution>>.
 
-[source, java]
-----
-List<Interceptor<?>> resolveInterceptors(InterceptionType type,
-                                         Annotation... interceptorBindings);
-----
+[[bm_determining_annotation_full]]
 
-If two instances of the same non repeating interceptor binding type are given, an `IllegalArgumentException` is thrown.
+==== Determining if an annotation is a qualifier type, scope type, stereotype or interceptor binding type in {cdi_full}
 
-If no interceptor binding type instance is given, an `IllegalArgumentException` is thrown.
-
-If an instance of an annotation that is not an interceptor binding type is given, an `IllegalArgumentException` is thrown.
-
-[[bm_determining_annotation]]
-
-==== Determining if an annotation is a qualifier type, scope type, stereotype or interceptor binding type
+In addition to rules defined in <<bm_determining_annotation>>, the following rules apply.
 
 A portable extension may test an annotation to determine if it is a qualifier type, scope type, stereotype or interceptor binding type, obtain the set of meta-annotations declared by a stereotype or interceptor binding type, or determine if a scope type is a normal or passivating scope.
 
@@ -529,17 +385,6 @@ A portable extension may determine the hash code of a qualifier or interceptor b
 ----
 public int getQualifierHashCode(Annotation qualifier);
 public int getInterceptorBindingHashCode(Annotation interceptorBinding);
-----
-
-[[bm_obtain_active_context]]
-
-==== Obtaining the active `Context` for a scope
-
-The method `BeanManager.getContext()` retrieves an active context object associated with the given scope, as defined in <<active_context>>.
-
-[source, java]
-----
-public Context getContext(Class<? extends Annotation> scopeType);
 ----
 
 [[bm_obtain_elresolver]]
@@ -694,23 +539,13 @@ The method `BeanManager.getInterceptionFactory()` returns an `InterceptionFactor
 
 If the actual type parameter of the method is not a Java class, non-portable behavior results.
 
-[[bm_obtain_instance]]
+[[bm_obtain_instance_full]]
 
-==== Obtain an `Instance`
+==== Obtain an `Instance` in {cdi_full}
 
-The method `BeanManager.createInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
+In addition to rules defined in <<bm_obtain_instance>>, the following rules apply.
 
 The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Jakarta EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
-
-[source, java]
-----
-Instance<Object> createInstance();
-----
-
-Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
-
-If no qualifier is passed to `Instance.select()` method, the `@Default` qualifier is assumed.
-
 
 [[alternative_metadata_sources]]
 
@@ -1030,7 +865,7 @@ void beforeBeanDiscovery(@Observes @Priority(jakarta.interceptor.Interceptor.Pri
 
 For each service provider, the container must provide a bean of scope `@ApplicationScoped` and qualifier `@Default`, supporting injection of a reference to the service provider instance. The bean types of this bean include the class of the service provider and all superclasses and interfaces.
 
-Lifecycle events described below can be grouped in to two categories:
+Lifecycle events described below can be grouped into two categories:
 
 * Application lifecycle events, that are fired once:
  ** BeforeBeanDiscovery
