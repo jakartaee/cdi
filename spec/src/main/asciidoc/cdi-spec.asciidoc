@@ -53,7 +53,7 @@ include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
 
-include::core/beanmanager_lite.asciidoc
+include::core/beanmanager_lite.asciidoc[]
 
 include::core/spi_lite.asciidoc[]
 
