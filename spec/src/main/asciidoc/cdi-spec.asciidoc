@@ -77,8 +77,6 @@ include::core/interceptors_full.asciidoc[]
 
 include::core/decorators.asciidoc[]
 
-include::core/interceptors_full.asciidoc[]
-
 include::core/events_full.asciidoc[]
 
 include::core/spi.asciidoc[]
