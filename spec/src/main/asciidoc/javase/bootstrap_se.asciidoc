@@ -5,7 +5,7 @@
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
 This is performed by the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
-`SeContainerInitializer` is a `ServiceProvider` of the service `jakarta.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
+`SeContainerInitializer` is a service provider of the service `jakarta.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
 This class allows a user to configure the CDI container before it is bootstrapped.
 The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
 
@@ -19,7 +19,7 @@ CDI container can be configured and bootstrapped from `jakarta.enterprise.inject
 
 A CDI implementation is required to provide an implementation of `SeContainerInitializer` declared as a service provider.
 Static method `newInstance()` uses Java service provider mechanism to obtain an implementation of `SeContainerInitializer` and return an instance of it.
-There must be exactly one provider available, otherwise an IllegalStateException is thrown.
+There must be exactly one provider available, otherwise an `IllegalStateException` is thrown.
 
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
 These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
@@ -101,7 +101,7 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 * `getBeanManager()` method returns the `BeanManager` (as defined in <<beanmanager>>) for the running container.
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
-SeContainer implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
+`SeContainer` implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
 If no qualifier is passed to `SeContainer.select()` method, the `@Default` qualifier is assumed.
 
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.

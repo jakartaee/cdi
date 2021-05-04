@@ -1,0 +1,22 @@
+[[events_full]]
+
+== Events in {cdi_full}
+
+[[observer_methods_full]]
+
+=== Observer methods in {cdi_full}
+
+In addition to rules defined in <<observer_methods>>, the following rules apply.
+
+An observer method is a non-abstract method of a portable extension, as defined in <<init_events>>.
+
+A portable extension may declare multiple observer methods.
+
+[[observes_full]]
+
+==== Declaring an observer method in {cdi_full}
+
+In addition to rules defined in <<observes>>, the following rules apply.
+
+Decorators may not declare observer methods.
+If a decorator has a method with a parameter annotated `@Observes` or `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.

@@ -2,52 +2,135 @@
 
 == Scopes and contexts in {cdi_full}
 
-
 [[dependent_context_full]]
 
 === Dependent pseudo-scope in {cdi_full}
-
 
 [[dependent_objects_full]]
 
 ==== Dependent objects in {cdi_full}
 
-In addition to rules defined in <<dependent_objects>>, when running in {cdi_full}, the following apply:
+In addition to rules defined in <<dependent_objects>>, the following rules apply.
 
 * Instances of decorators are dependent objects of the bean instance they decorate.
 
+[[passivating_scope]]
 
-[[passivating_scope_full]]
+=== Passivation and passivating scopes
 
-=== Passivation and passivating scopes in {cdi_full}
+The temporary transfer of the state of an idle object held in memory to some form of secondary storage is called _passivation_.
+The transfer of the passivated state back into memory is called _activation_.
 
-
-[[passivation_capable_full]]
+[[passivation_capable]]
 
 ==== Passivation capable beans
 
-In addition to rules defined in <<passivation_capable>>, when running in {cdi_full}, the following apply:
-
+A bean is called _passivation capable_ if the container is able to temporarily transfer the state of any idle instance to secondary storage.
 
 * A managed bean is passivation capable if and only if the bean class is serializable and all interceptors and decorators of the bean are passivation capable.
+* A producer method is passivation capable if and only if it never returns a value which is not passivation capable at runtime.
+* A producer field is passivation capable if and only if it never refers to a value which is not passivation capable at runtime.
 
 
-[[passivation_validation_full]]
+A custom implementation of `Bean` is passivation capable if it implements the interface `PassivationCapable`. An implementation of `Contextual` that is not a bean is passivation capable if it implements both `PassivationCapable` and `Serializable`.
 
-==== Validation of passivation capable beans and dependencies in {cdi_full}
+[source, java]
+----
+public interface PassivationCapable {
+    public String getId();
+}
+----
 
-In addition to rules defined in <<passivation_validation>>, when running in {cdi_full}, the following apply:
+The `getId()` method must return a value that uniquely identifies the instance of `Bean` or `Contextual`. It is recommended that the string contain the package name of the class that implements `Bean` or `Contextual`.
+
+[[passivation_capable_injection_points]]
+
+==== Passivation capable injection points
+
+We call an injection point of a bean _passivation capable_ if the injection point is:
+
+* a transient field, or
+* a non-transient field which resolves to a bean that is a passivation capable dependency, or
+* a bean constructor parameter which is annotated with `@TransientReference`, or
+* a bean constructor parameter which resolves to a bean that is a passivation capable dependency, or
+* a method parameter which is annotated with `@TransientReference`, or
+* a method parameter which resolves to a bean that is a passivation capable dependency.
+
+[[passivation_capable_dependency]]
+
+==== Passivation capable dependencies
+
+A bean is called a _passivation capable dependency_ if any contextual reference for that bean is preserved when the object holding the reference is passivated and then activated.
+
+The container must guarantee that:
+
+* all beans with normal scope are passivation capable dependencies,
+* all passivation capable beans with scope `@Dependent` are passivation capable dependencies,
+* the built-in beans of type `Instance`, `Event`, `InjectionPoint` and `BeanManager` are passivation capable dependencies.
+
+
+A custom implementation of `Bean` is a passivation capable dependency if it implements `PassivationCapable`.
+
+[[passivating_scopes]]
+
+==== Passivating scopes
+
+A _passivating scope_ requires that:
+
+* beans with the scope are passivation capable, and
+* implementations of `Contextual` passed to any context object for the scope are passivation capable.
+
+
+Passivating scopes must be explicitly declared `@NormalScope(passivating=true)`.
+
+For example, the built-in session and conversation scopes defined in <<builtin_contexts>> are passivating scopes.
+No other built-in scopes are passivating scopes.
+
+[[passivation_validation]]
+
+==== Validation of passivation capable beans and dependencies
+
+For every bean which declares a passivating scope, the container must validate that the bean truly is passivation capable and that, in addition, its dependencies are passivation capable.
+
 If a managed bean which declares a passivating scope, or a built-in bean:
 
-* has a decorator that is not passivation capable
-* has a decorator with an injection point that is not passivation capable
+* is not passivation capable,
+* has an injection point that is not passivation capable,
+* has an interceptor or decorator that is not passivation capable,
+* has an interceptor or decorator with an injection point that is not passivation capable,
 
+then the container automatically detects the problem and treats it as a deployment problem.
 
-If a managed bean which declares a passivating scope type, has a decorator which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
+If a producer method declares a passivating scope and:
+
+* has a return type that is declared final and does not implement or extend `Serializable`, or,
+* has an injection point that is not passivation capable
+
+then the container automatically detects the problem and treats it as a deployment problem.
+
+If a producer method declares a passivating scope and doesn't only return `Serializable` types at runtime, then the container must throw an `IllegalProductException`.
+
+If a producer field declares a passivating scope and has a type that is declared final and does not implement or extend `Serializable` then the container automatically detects the problem and treats it as a deployment problem.
+
+If a producer field declares a passivating scope and doesn't only contain `Serializable` values at runtime then the container must throw an `IllegalProductException`.
+
+If a producer method or field of scope `@Dependent` returns an unserializable object for injection into an injection point that requires a passivation capable dependency, the container must throw an `IllegalProductException`
+
+For a custom implementation of `Bean`, the container calls `getInjectionPoints()` to determine the injection points, and `InjectionPoint.isTransient()` to determine whether the injection point is a transient field.
+
+If a managed bean which declares a passivating scope type, has a decorator or interceptor which is not a passivation capable dependency, the container automatically detects the problem and treats it as a deployment problem.
 
 [[builtin_contexts_full]]
 
 === Context management for built-in scopes in {cdi_full}
+
+[[session_context_full]]
+
+==== Session context lifecycle in {cdi_full}
+
+The rules defined in <<session_context>> are overridden as follows.
+
+The _session context_ is provided by a built-in context object for the built-in passivating scope type `@SessionScoped`.
 
 [[conversation_context_full]]
 
@@ -81,7 +164,6 @@ If no conversation identifier is specified, an identifier is generated by the co
 * `getTimeout()` returns the timeout, in milliseconds, of the current conversation.
 * `setTimeout()` sets the timeout of the current conversation.
 * `isTransient()` returns `true` if the conversation is marked transient, or `false` if it is marked long-running.
-
 
 If any method of `Conversation` is called when the conversation scope is not active, a `ContextNotActiveException` is thrown.
 

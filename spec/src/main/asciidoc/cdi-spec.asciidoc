@@ -53,6 +53,8 @@ include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
 
+include::core/beanmanager_lite.asciidoc
+
 include::core/spi_lite.asciidoc[]
 
 include::core/packagingdeployment_lite.asciidoc[]
@@ -74,6 +76,10 @@ include::core/scopescontexts_full.asciidoc[]
 include::core/interceptors_full.asciidoc[]
 
 include::core/decorators.asciidoc[]
+
+include::core/interceptors_full.asciidoc[]
+
+include::core/events_full.asciidoc[]
 
 include::core/spi.asciidoc[]
 

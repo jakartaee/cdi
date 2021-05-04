@@ -52,7 +52,7 @@ CDI scopes add to Jakarta EE these missing well-defined lifecycle context as def
 
 ==== Built-in scope types in Jakarta EE
 
-When running in Jakarta EE, the implementations of the @RequestScoped, @ApplicationScoped and @SessionScoped annotations provided by the container, represent the standard scopes defined by the Java Servlets specification.
+When running in Jakarta EE, the implementations of the `@RequestScoped`, `@ApplicationScoped` and `@SessionScoped` annotations provided by the container, represent the standard scopes defined by the Java Servlets specification.
 
 
 [[default_bean_discovery_ee]]

@@ -29,7 +29,6 @@ If a decorator declares any scope other than `@Dependent`, the container automat
 ==== Declaring a decorator
 
 A decorator is declared by annotating the bean class with the `@jakarta.decorator.Decorator` stereotype.
-{cdi_full} provides this stereotype as a built-in stereotype in addition to other stereotypes defined in <<builtin_stereotypes>>.
 
 [source, java]
 ----
@@ -237,21 +236,49 @@ This chapter congregates various rules and limitations that apply to decorators 
 
 ==== Bean names
 
-In addition to rules defined in <<beans_with_no_name>>, if a decorator has a name, non-portable behavior results.
+In addition to rules defined in <<beans_with_no_name>>, the following rules apply.
 
-==== Declaring alternatives
+If a decorator has a name, non-portable behavior results.
 
-In addition to rules defined in <<declaring_alternative>>, if a decorator is an alternative, non-portable behavior results.
+==== Alternatives
+
+In addition to rules defined in <<declaring_alternative>>, the following rules apply.
+
+If a decorator is an alternative, non-portable behavior results.
 
 === Managed beans
 
-In addition to rules defined in <<managed_beans>>, if the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
+In addition to rules defined in <<managed_beans>>, the following rules apply.
 
-=== Producer and disposer methods
+If the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
 
-Decorators may not declare producer methods or fields.
-If a decorator has a method or a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+=== Producer methods
+
+In addition to rules defined in <<declaring_producer_method>>, the following rules apply.
+
+Decorators may not declare producer methods.
+If a decorator has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+=== Producer fields
+
+In addition to rules defined in <<declaring_producer_field>>, the following rules apply.
+
+Decorators may not declare producer fields.
+If a decorator has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+=== Disposer methods
+
+In addition to rules defined in <<declaring_disposer_method>>, the following rules apply.
 
 Decorators may not declare disposer methods.
 If a decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
+=== Unproxyable bean types
+
+In addition to rules defined in <<unproxyable>>, the following rules apply.
+
+A bean type must be proxyable if an injection point resolves to a bean:
+
+* that has an associated decorator.
+
+Otherwise, the container automatically detects the problem, and treats it as a deployment problem.

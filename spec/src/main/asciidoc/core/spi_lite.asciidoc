@@ -2,7 +2,11 @@
 
 == Build time extensions
 
+// TODO
 [NOTE]
 ====
 TBD
 ====
+
+// Must mention that Build Compatible Extensions do not have access to the CDI container,
+// as there may not be one running! Calling `CDI.current()` inside them results in non-portable behavior.

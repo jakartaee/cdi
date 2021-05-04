@@ -2,6 +2,63 @@
 
 == Inheritance and specialization in {cdi_full}
 
+[[specialize_managed_bean]]
+
+=== Specializing a managed bean
+
+In addition to rules defined in <<managed_beans>>, the following rules apply.
+
+If a bean class of a managed bean X is annotated `@Specializes`, then the bean class of X must directly extend the bean class of another managed bean Y.
+Then X _directly specializes_ Y, as defined in <<specialization>>.
+
+If the bean class of X does not directly extend the bean class of another managed bean, the container automatically detects the problem and treats it as a definition error.
+
+For example, `MockLoginAction` directly specializes `LoginAction`:
+
+[source, java]
+----
+public class LoginAction { ... }
+----
+
+[source, java]
+----
+@Mock @Specializes
+public class MockLoginAction extends LoginAction { ... }
+----
+
+[[specialize_producer_method]]
+
+=== Specializing a producer method
+
+In addition to rules defined in <<producer_method>>, the following rules apply.
+
+If a producer method X is annotated `@Specializes`, then it must be non-static and directly override another producer method Y.
+Then X _directly specializes_ Y, as defined in <<specialization>>.
+
+If the method is static or does not directly override another producer method, the container automatically detects the problem and treats it as a definition error.
+
+[source, java]
+----
+@Mock
+public class MockShop extends Shop {
+
+   @Override @Specializes
+   @Produces
+   PaymentProcessor getPaymentProcessor() {
+      return new MockPaymentProcessor();
+   }
+
+   @Override @Specializes
+   @Produces
+   List<Product> getProducts() {
+      return PRODUCTS;
+   }
+
+   ...
+
+}
+----
+
 [[specialization]]
 
 === Specialization

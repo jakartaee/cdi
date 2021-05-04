@@ -7,15 +7,15 @@
 
 === Modularity in {cdi_full}
 
-In module architecture, a library may be an explicit bean archive or an implicit bean archive, as defined in <<bean_archive>>.
+In addition to rules defined in <<selection>>, the following rules apply.
 
-Additionally, an alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
+An alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
 
 [[declaring_selected_alternatives_full]]
 
 ==== Declaring selected alternatives in {cdi_full}
 
-{cdi_full} provides an additional way to declare alternatives to the one defined in <<declaring_selected_alternatives_application>>:
+{cdi_full} provides an additional way to select alternatives to the one defined in <<declaring_selected_alternatives_application>>:
 
 [[declaring_selected_alternatives_bean_archive]]
 
@@ -43,7 +43,7 @@ An alternative is selected for the bean archive if either:
 </beans>
 ----
 
-For each child `<class>` element the container verifies that either:
+For each child `<class>` element, the container verifies that either:
 
 * a class with the specified name exists and is annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
 * a class with the specified name exists and declares a field or method annotated with `@Produces` and, at the same time, annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
@@ -57,6 +57,24 @@ If there is no annotation with the specified name, or the annotation is not an `
 If the same type is listed twice under the `<alternatives>` element, the container automatically detects the problem and treats it as a deployment problem.
 
 For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
+
+[[enablement_full]]
+
+==== Enabled and disabled beans in {cdi_full}
+
+The rules defined in <<enablement>> are overridden as follows.
+
+A bean is said to be _enabled_ if:
+
+* it is deployed in a bean archive, and
+* it is not a producer method or field of a disabled bean, and
+* it is not specialized by any other enabled bean, as defined in <<specialization>>, and either
+* it is not an alternative, or it is a selected alternative of at least one bean archive or the application.
+
+
+Otherwise, the bean is said to be disabled.
+
 
 [[inconsistent_specialization]]
 
@@ -70,39 +88,60 @@ The container automatically detects inconsistent specialization and treats it as
 
 ==== Inter-module injection in {cdi_full}
 
-In addition to rules defined in <<inter_module_injection>>, when running in {cdi_full}, the following apply:
+In addition to rules defined in <<inter_module_injection>>, the following rules apply.
 
 A bean is also _available for injection_ in a certain module if:
 
-* the bean is not a decorator
+* the bean is not a decorator,
+* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive.
+
+// TODO here, maybe we shouldn't do "in addition to", but "is overridden" and spell out the full rules again
 
 [[typesafe_resolution_full]]
 
 === Typesafe resolution in {cdi_full}
 
+[[performing_typesafe_resolution_full]]
+
+==== Performing typesafe resolution in {cdi_full}
+
+In addition to rules defined in <<performing_typesafe_resolution>>, the following rules apply.
+
+* Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignable_parameters>> or <<delegate_assignable_parameters>>.
+
 [[unsatisfied_and_ambig_dependencies_full]]
 
 ==== Unsatisfied and ambiguous dependencies in {cdi_full}
 
-In addition to rules defined in <<unsatisfied_and_ambig_dependencies>>, when running in {cdi_full}, the following apply:
+In addition to rules defined in <<unsatisfied_and_ambig_dependencies>>, the following rules apply.
 
 An unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
-
 
 [[assignable_parameters_full]]
 
 ==== Assignability of raw and parameterized types in {cdi_full}
 
-In addition to rules defined in <<assignable_parameters>>, when running in {cdi_full}, the following apply:
+In addition to rules defined in <<assignable_parameters>>, the following rules apply.
 
 A special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
 
 [[injection_point_full]]
 
+[[ambig_names_full]]
+
+==== Ambiguous names in {cdi_full}
+
+In addition to rules defined in <<ambig_names>>, the following rules apply.
+
+When an ambiguous name exists, the container attempts to resolve the ambiguity.
+The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives.
+
 ==== Injection point metadata in {cdi_full}
 
-When running in {cdi_full}, the behaviour of `InjectionPoint` metadata is overrided as follow:
+The behavior of `InjectionPoint` metadata is overridden as follows:
 
+* The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
+If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
 * The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
 If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
 
@@ -110,9 +149,9 @@ If the injection point represents a dynamically obtained instance then `isDelega
 
 ==== Bean metadata in {cdi_full}
 
-In addition to rules defined in <<bean_metadata>>, when running in {cdi_full}, the following apply:
+In addition to rules defined in <<bean_metadata>>, the following rules apply.
 
-The interfaces `Decorator` also provide metadata about a bean.
+The interfaces `Decorator` also provides metadata about a bean.
 
 The container must provide beans allowing a bean instance to obtain a `Decorator` instance containing its metadata:
 
@@ -122,9 +161,7 @@ Additionally, the container must provide beans allowing decorators to obtain inf
 
 * a bean with scope `@Dependent`, qualifier `@Decorated` and type `Bean` which can be injected into any decorator instance.
 
-
 These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
-
 
 If a `Decorator` instance is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
 

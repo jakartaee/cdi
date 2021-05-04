@@ -4,16 +4,17 @@
 
 Managed beans support interception.
 _Interceptors_ are used to separate cross-cutting concerns from business logic.
-The Java Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes.
+The Jakarta Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes.
 This specification defines various extensions to the Java Interceptors specification, including non-binding annotation values in interceptor resolution.
 
-In CDI Lite environment, the only portable way to bind an interceptor to a bean is via interceptor bindings. `@Interceptors` annotation is not supported.
+{cdi_lite} implementations are not required to support associating interceptors with classes and methods using the `@jakarta.interceptor.Interceptors` annotation.
+They are required to support interceptor binding annotations.
 
 [[interceptor_bindings]]
 
 === Interceptor binding types
 
-This specification extends the Java Interceptors specification and allows interceptor bindings to be applied to CDI stereotypes.
+This specification extends the Jakarta Interceptors specification and allows interceptor bindings to be applied to CDI stereotypes.
 
 [[stereotype_interceptor_bindings]]
 
@@ -40,7 +41,7 @@ If a stereotype declares interceptor bindings, it must be defined as `@Target(TY
 
 === Declaring the interceptor bindings of an interceptor
 
-This specification extends the Java Interceptors specification and defines how the container must behave if a definition error is encountered.
+This specification extends the Jakarta Interceptors specification and defines how the container must behave if a definition error is encountered.
 
 If an interceptor declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
@@ -48,11 +49,13 @@ If an interceptor declares any scope other than `@Dependent`, the container auto
 
 === Binding an interceptor to a bean
 
-This specification extends the Java Interceptors specification and defines:
+This specification extends the Jakarta Interceptors specification and defines:
 
 * additional restrictions about the type of bean to which an interceptor can be bound, and
 * how the container must behave if a definition error is encountered, and
 * how interceptors are bound using stereotypes.
+
+Interceptor bindings may be used to associate interceptors with any managed bean.
 
 The set of interceptor bindings for a method declared at class level includes those declared on stereotypes.
 An interceptor binding declared on a bean class replaces an interceptor binding of the same type declared by a stereotype that is applied to the bean class.
@@ -65,7 +68,7 @@ If a managed bean has a class-level or method-level interceptor binding, the man
 
 === Interceptor resolution
 
-This specification extends the Java Interceptors specification and defines:
+This specification extends the Jakarta Interceptors specification and defines:
 
 * the effect of applying `@Nonbinding` to an interceptor binding member, and
 * how the interceptor bindings of a custom implementation of the `Interceptor` interface are determined.
@@ -73,7 +76,7 @@ This specification extends the Java Interceptors specification and defines:
 If any interceptor binding has a member annotated `@jakarta.enterprise.util.Nonbinding`, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
 
 For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
 
 A custom implementation of the `Interceptor` interface may implement the <<prioritized, `Prioritized` interface>> to be enabled for the entire application with a priority value.
-
-
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?

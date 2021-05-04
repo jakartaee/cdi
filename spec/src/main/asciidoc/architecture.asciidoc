@@ -7,10 +7,10 @@ This specification defines a powerful set of complementary services that help to
 * A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration
 * Support for Jakarta EE modularity and the Jakarta EE component architecture - the modular structure of a Jakarta EE application is taken into account when resolving dependencies between Jakarta EE components
 * Integration with the Jakarta Unified Expression Language (EL), allowing any contextual object to be used directly within a Jakarta Server Faces or JSP page
-* The ability to _decorate_ injected objects
+* The ability to _decorate_ injected objects (only in {cdi_full} environment)
 * The ability to associate interceptors to objects via typesafe _interceptor bindings_
 * An _event notification_ model
-* A web _conversation context_ in addition to the three standard web contexts defined by the Jakarta Servlets specification
+* A web _conversation context_ in addition to the three standard web contexts defined by the Jakarta Servlets specification (only in {cdi_full} environment)
 * An SPI allowing _portable extensions_ to integrate cleanly with the container
 
 
@@ -27,7 +27,7 @@ In particular, Jakarta Enterprise Bean components may be used as Jakarta Server 
 It's even possible to integrate with third-party frameworks.
 A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
 
-An application that takes advantage of these services may be designed to execute in either the Jakarta EE environment or the Java SE environment.
+An application that takes advantage of these services may be designed to execute in the Jakarta EE environment, the Java SE environment, or in other environments that implement {cdi_lite}.
 If the application uses Jakarta EE services such as transaction management and persistence in the Java SE environment, the services are usually restricted to, at most, the subset defined for embedded usage by the Jakarta Enterprise Bean specification.
 
 === Contracts
@@ -41,13 +41,15 @@ This specification defines the responsibilities of:
 This runtime environment is called the _container_.
 For example, the container might be a Jakarta EE container or an embeddable Jakarta Enterprise Bean container.
 
-<<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>>, <<decorator_bean>> and <<observer_methods>> define the programming model for Jakarta EE components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
+<<concepts>>, <<implementation>>, <<inheritance>>, <<interceptors>> and <<observer_methods>> define the programming model for application components that take advantage of the services defined by this specification, the responsibilities of the component developer, and the annotations used by the component developer to specify metadata.
+{cdi_full} adds <<specialization>> and <<decorator_bean>>.
 
-<<injection_and_resolution>>, <<contexts>>, <<lifecycle>>, <<decorators>>, <<events>> and <<interceptor_resolution>> define the semantics and behavior of the services, the responsibilities of the container implementation and the APIs used by the application to interact directly with the container.
+<<injection_and_resolution>>, <<contexts>>, <<lifecycle>>, <<events>> and <<interceptor_resolution>> define the semantics and behavior of the services, the responsibilities of the container implementation and the APIs used by the application to interact directly with the container.
+{cdi_full} adds <<decorators>>.
 
-<<packaging_deployment>> defines how Jakarta EE applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
+<<packaging_deployment_lite>> and <<packaging_deployment>> defines how applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
 
-<<spi>>, <<contextual>> and <<context>> define an SPI that allows portable extensions to integrate with the container.
+<<spi>>, <<spi_lite>>, <<contextual>> and <<context>> define an SPI that allows portable extensions to integrate with the container.
 
 === Relationship to other specifications
 
@@ -549,6 +551,11 @@ When the `save()` method is invoked, the `authorize()` method of the interceptor
 The invocation will proceed to the `DocumentEditor` class only if the authorization check is successful.
 
 ==== Decorator example
+
+[NOTE]
+====
+Decorators are only available in {cdi_full}.
+====
 
 _Decorators_ are similar to interceptors, but apply only to beans of a particular Java interface. Like interceptors, decorators may be easily enabled or disabled at deployment time. Unlike interceptors, decorators are aware of the semantics of the intercepted method.
 

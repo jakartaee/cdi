@@ -29,6 +29,8 @@ Then the second bean inherits, and may not override, the qualifiers and bean nam
 The second bean is able to serve the same role in the system as the first.
 In a particular deployment, only one of the two beans may fulfill that role.
 
+Specialization is only present in {cdi_full} and is specified therein.
+
 [[type_level_inheritance]]
 
 === Inheritance of type-level metadata

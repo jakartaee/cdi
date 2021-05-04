@@ -85,9 +85,9 @@ When running in Jakarta EE, the container must extend the rules defined for mana
 
 The container is also required to ensure that:
 
--* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
--* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Jakarta EE component environment resource dependencies have been injected.
+* Initializer methods declared by a class X in the type hierarchy of the bean are called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+* Any `@PostConstruct` callback declared by a class X in the type hierarchy of the bean is called after all Jakarta EE component environment resource dependencies declared by X or by superclasses of X have been injected.
+* Any servlet `init()` method is called after all initializer methods have been called, all injected fields have been initialized and all Jakarta EE component environment resource dependencies have been injected.
 
 [[dependent_objects_destruction_ee]]
 
