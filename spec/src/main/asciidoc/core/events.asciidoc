@@ -435,7 +435,7 @@ public interface EventMetadata {
 
 * `getQualifiers()` returns the set of qualifiers with which the event was fired.
 * `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanManager.getEvent()`.
-// TODO BeanManagerLite
+// TODO BeanContainer
 * `getType()` returns the type representing runtime class of the event object with type variables resolved.
 
 

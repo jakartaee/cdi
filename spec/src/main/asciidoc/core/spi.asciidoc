@@ -210,8 +210,8 @@ In addition to rules defined in <<beanmanager>>, the following rules apply.
 
 The interface `jakarta.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to applications and portable extensions.
 
-The interface `jakarta.enterprise.inject.spi.BeanManager` extends `jakarta.enterprise.inject.spi.BeanManagerLite`.
-In {cdi_full} environment, `BeanManagerLite` is subject to the same rules as `BeanManager`.
+The interface `jakarta.enterprise.inject.spi.BeanManager` extends `jakarta.enterprise.inject.spi.BeanContainer`.
+In {cdi_full} environment, `BeanContainer` is subject to the same rules as `BeanManager`.
 
 The container provides a built-in bean with bean type `BeanManager`, scope `@Dependent` and qualifier `@Default`. The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 Thus, any bean may obtain an instance of `BeanManager` by injecting it:
@@ -251,7 +251,7 @@ Portable extensions and other objects sometimes interact directly with the conta
 The abstract `jakarta.enterprise.inject.spi.CDI` provides access to the `BeanManager` as well providing lookup of bean instances.
 
 A portable extension or other object may obtain a reference to the current container by calling `CDI.current()`.
-`CDI.getBeanManager()` and `CDI.getBeanManagerLite()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
+`CDI.getBeanManager()` and `CDI.getBeanContainer()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
 [[bm_obtain_injectable_reference_full]]
