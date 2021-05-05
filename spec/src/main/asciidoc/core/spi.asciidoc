@@ -202,11 +202,11 @@ The container sets the value of all injected fields, and calls all initializer m
 
 Implementations of `Producer` and `InjectionTarget` must ensure that the set of injection points returned by `getInjectionPoints()` are injected by `produce()` or `inject()`.
 
-[[beanmanager_full]]
+[[beanmanager]]
 
 === The `BeanManager` object
 
-In addition to rules defined in <<beanmanager>>, the following rules apply.
+In addition to rules defined in <<beancontainer>>, the following rules apply.
 
 The interface `jakarta.enterprise.inject.spi.BeanManager` provides operations for obtaining contextual references for beans, along with many other operations of use to applications and portable extensions.
 

@@ -2,18 +2,17 @@
 
 == Programmatic access to container
 
-CDI 3.0 used to provide a single `BeanManager` object, which allows access to many useful operations.
-In CDI 4.0, this is split into `BeanContainer` and `BeanManager`.
+The `BeanContainer` and `BeanManager` interfaces allow programmatic access to the CDI container.
 
-`BeanContainer` provides access to a subset of `BeanManager` features which can be implemented in more restricted environments;
-It is available in {cdi_lite} environments.
+`BeanContainer` provides features that can be implemented in more restricted environments.
+It is available in {cdi_lite} environment, and therefore also in {cdi_full} environment.
 
-`BeanManager` extends `BeanContainer` and provides the remaining features.
-It is available in {cdi_full} environments.
+`BeanManager` extends `BeanContainer` and provides additional features.
+It is only available in {cdi_full} environment.
 
 In {cdi_lite} environment, attempting to obtain a `BeanManager` or invoking methods on it results in non-portable behavior.
 
-[[beanmanager]]
+[[beancontainer]]
 
 === The `BeanContainer` object
 
@@ -24,10 +23,11 @@ Thus, any bean may obtain an instance of `BeanContainer` by injecting it:
 
 [source, java]
 ----
-@Inject BeanContainer manager;
+@Inject BeanContainer container;
 ----
 
 The operations of `BeanContainer` may be called at any time during the execution of the application.
+// TODO Full has restrictions on when BeanManager methods can be called, do we want to reflect them here in some way?
 
 [[provider]]
 
