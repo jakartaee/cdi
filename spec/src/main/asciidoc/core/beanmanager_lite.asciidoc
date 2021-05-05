@@ -3,51 +3,51 @@
 == Programmatic access to container
 
 CDI 3.0 used to provide a single `BeanManager` object, which allows access to many useful operations.
-In CDI 4.0, this is split into `BeanManagerLite` and `BeanManager`.
+In CDI 4.0, this is split into `BeanContainer` and `BeanManager`.
 
-`BeanManagerLite` provides access to a subset of `BeanManager` features which can be implemented in more restricted environments;
+`BeanContainer` provides access to a subset of `BeanManager` features which can be implemented in more restricted environments;
 It is available in {cdi_lite} environments.
 
-`BeanManager` extends `BeanManagerLite` and provides the remaining features.
+`BeanManager` extends `BeanContainer` and provides the remaining features.
 It is available in {cdi_full} environments.
 
 In {cdi_lite} environment, attempting to obtain a `BeanManager` or invoking methods on it results in non-portable behavior.
 
 [[beanmanager]]
 
-=== The `BeanManagerLite` object
+=== The `BeanContainer` object
 
-The interface `jakarta.enterprise.inject.spi.BeanManagerLite` provides operations for obtaining contextual references for beans, along with many other operations of use to applications.
+The interface `jakarta.enterprise.inject.spi.BeanContainer` provides operations for obtaining contextual references for beans, along with many other operations of use to applications.
 
-The container provides a built-in bean with bean type `BeanManagerLite`, scope `@Dependent` and qualifier `@Default`.
-Thus, any bean may obtain an instance of `BeanManagerLite` by injecting it:
+The container provides a built-in bean with bean type `BeanContainer`, scope `@Dependent` and qualifier `@Default`.
+Thus, any bean may obtain an instance of `BeanContainer` by injecting it:
 
 [source, java]
 ----
-@Inject BeanManagerLite manager;
+@Inject BeanContainer manager;
 ----
 
-The operations of `BeanManagerLite` may be called at any time during the execution of the application.
+The operations of `BeanContainer` may be called at any time during the execution of the application.
 
 [[provider]]
 
 ==== Obtaining a reference to the CDI container
 
 Application objects sometimes interact directly with the container via programmatic API call.
-The abstract class `jakarta.enterprise.inject.spi.CDI` provides access to the `BeanManagerLite` as well providing lookup of bean instances.
+The abstract class `jakarta.enterprise.inject.spi.CDI` provides access to the `BeanContainer` as well providing lookup of bean instances.
 
 [source, java]
 ----
 public abstract class CDI<T> implements Instance<T> {
    public static CDI<Object> current() { ... }
    public static void setCDIProvider(CDIProvider provider);
-   public abstract BeanManagerLite getBeanManagerLite();
+   public abstract BeanContainer getBeanContainer();
    public abstract BeanManager getBeanManager();
 }
 ----
 
 An object may obtain a reference to the current container by calling `CDI.current()`.
-`CDI.getBeanManagerLite()`, as well as other methods on `CDI`, may be called after the application initialization is completed until the application shutdown starts.
+`CDI.getBeanContainer()`, as well as other methods on `CDI`, may be called after the application initialization is completed until the application shutdown starts.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
 `CDI` implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
@@ -76,7 +76,7 @@ If this method is not implemented the default priority `0` is assumed.
 
 ==== Obtaining a contextual reference for a bean
 
-The method `BeanManagerLite.getReference()` returns a contextual reference for a given bean and bean type, as defined in <<contextual_reference>>.
+The method `BeanContainer.getReference()` returns a contextual reference for a given bean and bean type, as defined in <<contextual_reference>>.
 
 [source, java]
 ----
@@ -93,7 +93,7 @@ If the given type is not a bean type of the given bean, an `IllegalArgumentExcep
 
 ==== Obtaining an injectable reference
 
-The method `BeanManagerLite.getInjectableReference()` returns an injectable reference for a given injection point, as defined in <<injectable_reference>>.
+The method `BeanContainer.getInjectableReference()` returns an injectable reference for a given injection point, as defined in <<injectable_reference>>.
 
 [source, java]
 ----
@@ -105,13 +105,13 @@ The second parameter is an instance of `CreationalContext` that may be used to d
 
 If typesafe resolution results in an unsatisfied dependency, the container must throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, the container must throw an `AmbiguousResolutionException`.
 
-Implementations of `Bean` usually maintain a reference to an instance of `BeanManagerLite`. When the `Bean` implementation performs dependency injection, it must obtain the contextual instances to inject by calling `BeanManagerLite.getInjectableReference()`, passing an instance of `InjectionPoint` that represents the injection point and the instance of `CreationalContext` that was passed to `Bean.create()`.
+Implementations of `Bean` usually maintain a reference to an instance of `BeanContainer`. When the `Bean` implementation performs dependency injection, it must obtain the contextual instances to inject by calling `BeanContainer.getInjectableReference()`, passing an instance of `InjectionPoint` that represents the injection point and the instance of `CreationalContext` that was passed to `Bean.create()`.
 
 [[bm_obtain_creationalcontext]]
 
 ==== Obtaining a `CreationalContext`
 
-An instance of `CreationalContext` for a certain instance of `Contextual` may be obtained by calling `BeanManagerLite.createCreationalContext()`.
+An instance of `CreationalContext` for a certain instance of `Contextual` may be obtained by calling `BeanContainer.createCreationalContext()`.
 
 [source, java]
 ----
@@ -124,7 +124,7 @@ An instance of `CreationalContext` for a non-contextual object may be obtained b
 
 ==== Obtaining a `Bean` by type
 
-The method `BeanManagerLite.getBeans()` returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the `BeanManagerLite` was injected, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
+The method `BeanContainer.getBeans()` returns the set of beans which have the given required type and qualifiers and are available for injection in the module or library containing the class into which the `BeanContainer` was injected, according to the rules for candidates of typesafe resolution defined in <<performing_typesafe_resolution>>.
 
 [source, java]
 ----
@@ -145,7 +145,7 @@ If an instance of an annotation that is not a qualifier type is given, an `Illeg
 
 ==== Obtaining a `Bean` by name
 
-The method `BeanManagerLite.getBeans()` which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the `BeanManagerLite` was injected, according to the rules of name resolution defined in <<name_resolution>>.
+The method `BeanContainer.getBeans()` which accepts a string returns the set of beans which have the given bean name and are available for injection in the module or library containing the class into which the `BeanContainer` was injected, according to the rules of name resolution defined in <<name_resolution>>.
 
 [source, java]
 ----
@@ -158,7 +158,7 @@ The parameter is a bean name.
 
 ==== Resolving an ambiguous dependency
 
-The method `BeanManagerLite.resolve()` applies the ambiguous dependency resolution rules defined in <<unsatisfied_and_ambig_dependencies>> to a set of `Bean` s.
+The method `BeanContainer.resolve()` applies the ambiguous dependency resolution rules defined in <<unsatisfied_and_ambig_dependencies>> to a set of `Bean` s.
 
 [source, java]
 ----
@@ -167,7 +167,7 @@ public <X> Bean<? extends X> resolve(Set<Bean<? extends X>> beans);
 
 If the ambiguous dependency resolution rules fail (as defined in <<unsatisfied_and_ambig_dependencies>>, the container must throw an `AmbiguousResolutionException`.
 
-`BeanManagerLite.resolve()` must return null if:
+`BeanContainer.resolve()` must return null if:
 
 * null is passed to `resolve()`, or
 * no beans are passed to `resolve()`.
@@ -176,7 +176,7 @@ If the ambiguous dependency resolution rules fail (as defined in <<unsatisfied_a
 
 ==== Firing an event
 
-The method `BeanManagerLite.getEvent()` returns an instance of `Event` with specified type `java.lang.Object` and specified qualifier `@Default`.
+The method `BeanContainer.getEvent()` returns an instance of `Event` with specified type `java.lang.Object` and specified qualifier `@Default`.
 
 [source, java]
 ----
@@ -189,7 +189,7 @@ The returned instance can be used like a standard `Event` as described in <<even
 
 ==== Observer method resolution
 
-The method `BeanManagerLite.resolveObserverMethods()` resolves observer methods for an event according to the rules of observer resolution defined in <<observer_resolution>>.
+The method `BeanContainer.resolveObserverMethods()` resolves observer methods for an event according to the rules of observer resolution defined in <<observer_resolution>>.
 
 [source, java]
 ----
@@ -209,7 +209,7 @@ If an instance of an annotation that is not a qualifier type is given, an `Illeg
 
 ==== Interceptor resolution
 
-The method `BeanManagerLite.resolveInterceptors()` returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the `BeanManagerLite` was injected, as defined in <<interceptor_resolution>>.
+The method `BeanContainer.resolveInterceptors()` returns the ordered list of interceptors for a set of interceptor bindings and a type of interception and which are enabled in the module or library containing the class into which the `BeanContainer` was injected, as defined in <<interceptor_resolution>>.
 
 [source, java]
 ----
@@ -243,7 +243,7 @@ public boolean isStereotype(Class<? extends Annotation> annotationType);
 
 ==== Obtaining the active `Context` for a scope
 
-The method `BeanManagerLite.getContext()` retrieves an active context object associated with the given scope, as defined in <<active_context>>.
+The method `BeanContainer.getContext()` retrieves an active context object associated with the given scope, as defined in <<active_context>>.
 
 [source, java]
 ----
@@ -254,9 +254,9 @@ public Context getContext(Class<? extends Annotation> scopeType);
 
 ==== Obtain an `Instance`
 
-The method `BeanManagerLite.createInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
+The method `BeanContainer.createInstance()` returns an `Instance<Object>` to request bean instances programmatically as described in <<dynamic_lookup>>.
 
-The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManagerLite` was injected, according to the rules defined in <<typesafe_resolution>>.
+The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanContainer` was injected, according to the rules defined in <<typesafe_resolution>>.
 
 [source, java]
 ----
