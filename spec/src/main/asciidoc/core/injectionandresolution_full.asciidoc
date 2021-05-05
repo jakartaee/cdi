@@ -15,7 +15,7 @@ An alternative is not available for injection, lookup or name resolution to clas
 
 ==== Declaring selected alternatives in {cdi_full}
 
-{cdi_full} provides an additional way to select alternatives to the one defined in <<declaring_selected_alternatives_application>>:
+{cdi_full} provides an additional way to select alternatives to the one defined in <<declaring_selected_alternatives_application>>.
 
 [[declaring_selected_alternatives_bean_archive]]
 

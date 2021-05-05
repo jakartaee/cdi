@@ -16,7 +16,7 @@ Interceptor bindings may be used to associate interceptors with any managed bean
 
 It is possible to apply interceptors programmatically to the return value of a producer method, with the `InterceptionFactory` interface as defined in <<interception_factory>>.
 
-[[enabled_interceptors_full]]
+[[enabled_interceptors]]
 
 === Interceptor enablement and ordering in {cdi_full}
 
