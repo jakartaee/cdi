@@ -6,6 +6,12 @@
 complementary services that help improve the structure of application
 code.</p>
 
+<p>Core CDI specification is split into Lite and Full. Lite includes
+most of the features and is tailored for runtimes that don't intend
+to implement the entire Jakarta EE platform. Full includes features
+that are not deemed necessary for all CDI implementations. Jakarta EE
+implementations are required to support Full.</p>
+
 <ul>
 <li>A well-defined lifecycle for stateful
 {@linkplain jakarta.enterprise.inject beans} bound to well-defined 
@@ -17,24 +23,25 @@ extensible}</li>
     dependencies at either {@linkplain jakarta.inject.Qualifier development}
     or {@linkplain jakarta.enterprise.inject.Alternative deployment} time,
     without verbose configuration</li>
-<li>Support for Java EE modularity and the Java EE component
-architecture&mdash;the modular structure of a Java EE application is 
-taken into account when resolving dependencies between Java EE 
+<li>Support for Jakarta EE modularity and the Jakarta EE component
+architecture&mdash;the modular structure of a Jakarta EE application is
+taken into account when resolving dependencies between Jakarta EE
 components</li>
 <li>{@linkplain jakarta.enterprise.inject Integration} with the 
 Unified Expression Language, allowing any bean to be used directly 
-within a JSF or JSP page</li>
+within a JSF or JSP page (only in Full)</li>
 <li>The ability to {@linkplain jakarta.decorator decorate} injected 
-beans</li>
+beans (only in Full)</li>
 <li>The ability to associate
 {@code jakarta.interceptor.Interceptor} with beans via typesafe
 {@linkplain jakarta.enterprise.inject interceptor bindings}</li>
 <li>An {@linkplain jakarta.enterprise.event event} notification model</li>
 <li>A web {@linkplain jakarta.enterprise.context.ConversationScoped
     conversation context} in addition to the three standard
-    web contexts defined by the Java Servlets specification</li>
-<li>An {@linkplain jakarta.enterprise.inject.spi SPI} allowing portable 
-extensions to integrate cleanly with the container</li>
+    web contexts defined by the Java Servlets specification (only in Full)</li>
+<li>A {@linkplain jakarta.enterprise.inject.build.compatible.spi build-compatible SPI}
+and a {@linkplain jakarta.enterprise.inject.spi runtime SPI} allowing portable
+extensions to integrate cleanly with the container (runtime SPI only in Full)</li>
 </ul>
 
 <p>CDI allows objects to be bound to lifecycle contexts, to be
@@ -45,7 +52,7 @@ extensions to integrate cleanly with the container</li>
     {@linkplain jakarta.enterprise.inject Various kinds} of objects are
     injectable, including EJB 3 session beans, managed beans,
     {@linkplain jakarta.enterprise.inject.Produces producer methods} and
-    Java EE resources. We refer to these objects in general terms as beans
+    Jakarta EE resources. We refer to these objects in general terms as beans
     and to instances of beans that are bound to contexts as contextual
     instances.</p>
 
