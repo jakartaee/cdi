@@ -18,6 +18,7 @@
 package jakarta.enterprise.inject.se;
 
 import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.spi.BeanContainer;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 /**
@@ -30,6 +31,7 @@ import jakarta.enterprise.inject.spi.BeanManager;
  *
  * @author Antoine Sabot-Durand
  * @author John D. Ament
+ * @author Graeme Rocher
  * @since 2.0
  */
 public interface SeContainer extends Instance<Object>,AutoCloseable {
@@ -60,4 +62,15 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      */
      BeanManager getBeanManager();
 
+    /**
+     * Get the CDI {@link BeanContainer} for this container.
+     *
+     * Default implementation just forwards the call to {@link #getBeanManager()}.
+     *
+     * @return the {@link BeanContainer}
+     * @since 4.0.0
+     */
+    default BeanContainer getBeanContainer() {
+        return getBeanManager();
+    }
 }
