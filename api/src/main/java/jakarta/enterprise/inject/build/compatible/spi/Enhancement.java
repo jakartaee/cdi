@@ -14,10 +14,8 @@ import java.lang.annotation.Target;
  * <li>{@link ClassConfig ClassConfig}</li>
  * <li>{@link MethodConfig MethodConfig}</li>
  * <li>{@link FieldConfig FieldConfig}</li>
- * <li>{@link AppArchiveConfig AppArchiveConfig}</li>
  * </ul>
- * If the parameter is {@code ClassConfig}, {@code MethodConfig} or {@code FieldConfig}, the method
- * must have at least one annotation {@link ExactType @ExactType} or {@link SubtypesOf @SubtypesOf}.
+ * The method must also have at least one annotation {@link ExactType @ExactType} or {@link SubtypesOf @SubtypesOf}.
  * <p>
  * You can also declare a parameter of type {@link Messages Messages} to produce log messages and validation errors.
  * <p>

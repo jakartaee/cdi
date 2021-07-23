@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
  * <p>
  * Methods annotated {@code @Synthesis} can define parameters of these types:
  * <ul>
- * <li>{@link AppArchive}: to find declarations in the application</li>
- * <li>{@link AppDeployment}: to find beans and observers in the application</li>
  * <li>{@link SyntheticComponents}: to add synthetic beans and observers to the application</li>
  * <li>{@link Messages}: to produce log messages and validation errors</li>
  * </ul>

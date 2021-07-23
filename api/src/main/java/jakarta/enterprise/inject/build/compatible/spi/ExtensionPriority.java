@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
  *
  * @see BuildCompatibleExtension
  */
+// TODO this should be removed and @Priority should be used instead;
+//  see https://github.com/eclipse-ee4j/common-annotations-api/pull/87
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExtensionPriority {
-    // TODO propose allowing @Priority to be present on methods
-
     /**
      * @return the priority value
      */

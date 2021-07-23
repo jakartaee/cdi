@@ -2,6 +2,10 @@ package jakarta.enterprise.inject.build.compatible.spi;
 
 import jakarta.enterprise.lang.model.AnnotationTarget;
 
+/**
+ * Allows logging and producing errors during {@link BuildCompatibleExtension} execution.
+ * If an error is produced, application deployment will fail.
+ */
 public interface Messages {
     /**
      * Add a generic information message that is not related to any particular element, or that information is not known.
@@ -85,6 +89,7 @@ public interface Messages {
 
     /**
      * Add an error which is related to given {@link BeanInfo}.
+     *
      * @param message error message
      * @param relatedTo bean to which the message is related
      */
@@ -92,6 +97,7 @@ public interface Messages {
 
     /**
      * Add an error which is related to given {@link ObserverInfo}.
+     *
      * @param message error message
      * @param relatedTo observer to which the message is related
      */

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * Constraints the {@link Enhancement @Enhancement} or {@link Processing @Processing} method to given types.
  * <p>
- * If the {@code Enhancement} method has a parameter of type {@code ClassConfig},
+ * If the {@code @Enhancement} method has a parameter of type {@code ClassConfig},
  * the method is called once for each given type.
  * If the {@code @Enhancement} method has a parameter of type {@code MethodConfig} or {@code FieldConfig},
  * the method is called once for each method or field of each given type.
