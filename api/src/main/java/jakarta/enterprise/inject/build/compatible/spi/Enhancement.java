@@ -25,8 +25,8 @@ import java.lang.annotation.Target;
  * a parameter of type {@link Types Types}. It provides factory methods for the void type, primitive types,
  * class types, array types, parameterized types and wildcard types.
  * <p>
- * If you need to create instances of {@link jakarta.enterprise.lang.model.AnnotationAttribute AnnotationAttribute} or
- * {@link jakarta.enterprise.lang.model.AnnotationMember AnnotationAttributeValue}, you can also declare
+ * If you need to create instances of {@link jakarta.enterprise.lang.model.AnnotationMember AnnotationAttribute} or
+ * {@link jakarta.enterprise.lang.model.AnnotationMemberValue AnnotationAttributeValue}, you can also declare
  * a parameter of type {@link Annotations Annotations}. It provides factory methods for all kinds of annotation attributes.
  */
 @Target(ElementType.METHOD)

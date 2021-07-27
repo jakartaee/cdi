@@ -7,7 +7,7 @@ import java.lang.annotation.Repeatable;
 import java.util.Collection;
 
 /**
- * Models an annotation definition, providing access to the {@link jakarta.enterprise.lang.model.AnnotationMember}
+ * Models an annotation definition, providing access to the {@link AnnotationMemberValue}
  * instances.
  *
  * @param <T>  The annotation type.
@@ -72,7 +72,7 @@ public interface AnnotationInfo<T extends Annotation> {
      * @return value of this annotation's attribute with given {@code name} or {@code null} if it doesn't exist.
      * @throws java.lang.IllegalArgumentException if the argument is {@code null}
      */
-    AnnotationMember member(String name);
+    AnnotationMemberValue member(String name);
 
     /**
      * Returns whether this annotation has a value defined using the {@link #MEMBER_VALUE} member.
@@ -84,11 +84,11 @@ public interface AnnotationInfo<T extends Annotation> {
     }
 
     /**
-     * Returns the {@link AnnotationMember} instance that represents
+     * Returns the {@link AnnotationMemberValue} instance that represents
      * the value of the {@link #MEMBER_VALUE} member.
-     * @return An {@link AnnotationMember} instance or {@code null} if none exists.
+     * @return An {@link AnnotationMemberValue} instance or {@code null} if none exists.
      */
-    default AnnotationMember value() {
+    default AnnotationMemberValue value() {
         return member(MEMBER_VALUE);
     }
 
@@ -97,5 +97,5 @@ public interface AnnotationInfo<T extends Annotation> {
      *
      * @return An immutable collection of all members of this annotation. Never {@code null}.
      */
-    Collection<AnnotationAttribute> members();
+    Collection<AnnotationMember> members();
 }

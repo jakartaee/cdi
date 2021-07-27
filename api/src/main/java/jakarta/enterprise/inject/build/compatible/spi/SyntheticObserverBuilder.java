@@ -1,6 +1,6 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationAttribute;
+import jakarta.enterprise.lang.model.AnnotationMember;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
@@ -40,9 +40,9 @@ public interface SyntheticObserverBuilder {
 
     // can be called multiple times and is additive
     // TODO methods to add multiple qualifiers at once?
-    SyntheticObserverBuilder qualifier(Class<? extends Annotation> qualifierAnnotation, AnnotationAttribute... attributes);
+    SyntheticObserverBuilder qualifier(Class<? extends Annotation> qualifierAnnotation, AnnotationMember... attributes);
 
-    SyntheticObserverBuilder qualifier(ClassInfo<?> qualifierAnnotation, AnnotationAttribute... attributes);
+    SyntheticObserverBuilder qualifier(ClassInfo<?> qualifierAnnotation, AnnotationMember... attributes);
 
     SyntheticObserverBuilder qualifier(AnnotationInfo qualifierAnnotation);
 
