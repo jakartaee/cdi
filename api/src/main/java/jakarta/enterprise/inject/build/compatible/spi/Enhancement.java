@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * class types, array types, parameterized types and wildcard types.
  * <p>
  * If you need to create instances of {@link jakarta.enterprise.lang.model.AnnotationAttribute AnnotationAttribute} or
- * {@link jakarta.enterprise.lang.model.AnnotationAttributeValue AnnotationAttributeValue}, you can also declare
+ * {@link jakarta.enterprise.lang.model.AnnotationMember AnnotationAttributeValue}, you can also declare
  * a parameter of type {@link Annotations Annotations}. It provides factory methods for all kinds of annotation attributes.
  */
 @Target(ElementType.METHOD)

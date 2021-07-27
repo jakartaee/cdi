@@ -1,7 +1,7 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
 import jakarta.enterprise.lang.model.AnnotationAttribute;
-import jakarta.enterprise.lang.model.AnnotationAttributeValue;
+import jakarta.enterprise.lang.model.AnnotationMember;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import java.lang.annotation.Annotation;
@@ -9,39 +9,39 @@ import java.util.List;
 
 // TODO devise a builder-style API instead (see also AnnotationConfig)
 public interface Annotations {
-    AnnotationAttributeValue value(boolean value);
+    AnnotationMember value(boolean value);
 
-    AnnotationAttributeValue value(byte value);
+    AnnotationMember value(byte value);
 
-    AnnotationAttributeValue value(short value);
+    AnnotationMember value(short value);
 
-    AnnotationAttributeValue value(int value);
+    AnnotationMember value(int value);
 
-    AnnotationAttributeValue value(long value);
+    AnnotationMember value(long value);
 
-    AnnotationAttributeValue value(float value);
+    AnnotationMember value(float value);
 
-    AnnotationAttributeValue value(double value);
+    AnnotationMember value(double value);
 
-    AnnotationAttributeValue value(char value);
+    AnnotationMember value(char value);
 
-    AnnotationAttributeValue value(String value);
+    AnnotationMember value(String value);
 
-    AnnotationAttributeValue value(Enum<?> enumValue);
+    AnnotationMember value(Enum<?> enumValue);
 
-    AnnotationAttributeValue value(Class<? extends Enum<?>> enumType, String enumValue);
+    AnnotationMember value(Class<? extends Enum<?>> enumType, String enumValue);
 
-    AnnotationAttributeValue value(ClassInfo<?> enumType, String enumValue);
+    AnnotationMember value(ClassInfo<?> enumType, String enumValue);
 
-    AnnotationAttributeValue value(Class<?> value);
+    AnnotationMember value(Class<?> value);
 
-    AnnotationAttributeValue annotationValue(Class<? extends Annotation> annotationType, AnnotationAttribute... attributes);
+    AnnotationMember annotationValue(Class<? extends Annotation> annotationType, AnnotationAttribute... attributes);
 
-    AnnotationAttributeValue annotationValue(ClassInfo<?> annotationType, AnnotationAttribute... attributes);
+    AnnotationMember annotationValue(ClassInfo<?> annotationType, AnnotationAttribute... attributes);
 
-    AnnotationAttributeValue annotationValue(AnnotationInfo annotation);
+    AnnotationMember annotationValue(AnnotationInfo annotation);
 
-    AnnotationAttributeValue annotationValue(Annotation annotation);
+    AnnotationMember annotationValue(Annotation annotation);
 
     AnnotationAttribute attribute(String name, boolean value);
 
@@ -69,9 +69,9 @@ public interface Annotations {
 
     AnnotationAttribute attribute(String name, Class<?> value);
 
-    AnnotationAttribute arrayAttribute(String name, AnnotationAttributeValue... values);
+    AnnotationAttribute arrayAttribute(String name, AnnotationMember... values);
 
-    AnnotationAttribute arrayAttribute(String name, List<AnnotationAttributeValue> values);
+    AnnotationAttribute arrayAttribute(String name, List<AnnotationMember> values);
 
     AnnotationAttribute annotationAttribute(String name, Class<? extends Annotation> annotationType,
             AnnotationAttribute... attributes);

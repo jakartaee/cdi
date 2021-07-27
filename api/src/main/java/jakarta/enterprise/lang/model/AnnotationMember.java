@@ -5,7 +5,7 @@ import jakarta.enterprise.lang.model.types.Type;
 import java.util.List;
 
 // TODO "attribute" is a colloquial expression, perhaps use something closer to the JLS? AnnotationMember?
-public interface AnnotationAttributeValue {
+public interface AnnotationMember {
     // TODO is there a better API for this than the is*/as* style?
 
     enum Kind {
@@ -105,7 +105,7 @@ public interface AnnotationAttributeValue {
 
     Type asClass(); // can be a VoidType, PrimitiveType or ClassType
 
-    List<AnnotationAttributeValue> asArray();
+    List<AnnotationMember> asArray();
 
-    AnnotationInfo asNestedAnnotation();
+    AnnotationInfo<?> asNestedAnnotation();
 }

@@ -4,5 +4,5 @@ package jakarta.enterprise.lang.model;
 public interface AnnotationAttribute {
     String name();
 
-    AnnotationAttributeValue value();
+    AnnotationMember value();
 }
