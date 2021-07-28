@@ -2,261 +2,319 @@ package jakarta.enterprise.lang.model;
 
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
+
 import java.util.List;
 
 /**
- * Models the value of an {@link jakarta.enterprise.lang.model.AnnotationMember}.
+ * The value of an {@link AnnotationMember}. Annotation member values are of several kinds:
+ * <ul>
+ *     <li>primitive types;</li>
+ *     <li>{@link String}s;</li>
+ *     <li>{@link Enum}s;</li>
+ *     <li>{@link Class}es;</li>
+ *     <li>nested {@link java.lang.annotation.Annotation Annotation}s;</li>
+ *     <li>arrays of previously mentioned types.</li>
+ * </ul>
+ * The {@link #kind()} method returns the kind of this annotation member value.
+ * The {@code is*} methods (such as {@link #isBoolean()}) allow checking
+ * if this annotation member value is of given kind. The {@code as*} methods
+ * (such as {@link #asBoolean()} allow "unwrapping" this annotation member value,
+ * if it is of the corresponding kind.
+ *
+ * TODO do the as* methods allow coercion or not? E.g., does asLong return a long
+ *  if the value is of kind int, or does it throw? Fortunately, this only applies
+ *  to the numeric primitive types and maybe String. I currently left the numeric
+ *  as* methods documented as coercing, while asString as not coercing, but this
+ *  needs more discussion. I personally don't like coercion here and would always
+ *  throw if the type mismatches.
  */
 public interface AnnotationMemberValue {
     /**
-     * The kind of the member.
+     * The kind of the annotation member value.
      */
     enum Kind {
         /**
-         * A primitive {@link java.lang.Boolean}.
+         * A primitive {@code boolean}.
          */
         BOOLEAN,
         /**
-         * A primitive {@link java.lang.Byte}.
+         * A primitive {@code byte}.
          */
         BYTE,
         /**
-         * A primitive {@link java.lang.Short}.
+         * A primitive {@code short}.
          */
         SHORT,
         /**
-         * A primitive {@link java.lang.Integer}.
+         * A primitive {@code int}.
          */
         INT,
         /**
-         * A primitive {@link java.lang.Long}.
+         * A primitive {@code long}.
          */
         LONG,
         /**
-         * A primitive {@link java.lang.Float}.
+         * A primitive {@code float}.
          */
         FLOAT,
         /**
-         * A primitive {@link java.lang.Double}.
+         * A primitive {@code double}.
          */
         DOUBLE,
         /**
-         * A primitive {@link java.lang.Character}.
+         * A primitive {@code char}.
          */
         CHAR,
         /**
-         * A {@link java.lang.String} value.
+         * A {@link String} value.
          */
         STRING,
         /**
-         * An {@link java.lang.Enum} value.
+         * An {@link Enum} value.
          */
         ENUM,
         /**
-         * A {@link java.lang.Class} value modelled as {@link jakarta.enterprise.lang.model.types.Type}.
+         * A {@link Class} value. Represented as {@link jakarta.enterprise.lang.model.types.Type}.
          */
         CLASS,
+        /**
+         * A nested {@link java.lang.annotation.Annotation Annotation} value.
+         * Represented as {@link AnnotationInfo}.
+         */
+        NESTED_ANNOTATION,
         /**
          * An array value.
          */
         ARRAY,
-        /**
-         * A nested annotation definition.
-         */
-        NESTED_ANNOTATION,
     }
 
     /**
-     * @return The kind of the annotation member. Never {@code null}.
+     * Returns the kind of the annotation member value.
+     *
+     * @return the kind of the annotation member value, never {@code null}
      */
     Kind kind();
 
     /**
-     * @return Returns {@code true} if the kind is a {@code boolean}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code boolean}, {@code false} otherwise
      */
     default boolean isBoolean() {
         return kind() == Kind.BOOLEAN;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code byte}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code byte}, {@code false} otherwise
      */
     default boolean isByte() {
         return kind() == Kind.BYTE;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code short}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code short}, {@code false} otherwise
      */
     default boolean isShort() {
         return kind() == Kind.SHORT;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code int}, {@code false} otherwise.
+     * @return {@code true} if the kind is an {@code int}, {@code false} otherwise
      */
     default boolean isInt() {
         return kind() == Kind.INT;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code long}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code long}, {@code false} otherwise
      */
     default boolean isLong() {
         return kind() == Kind.LONG;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code float}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code float}, {@code false} otherwise
      */
     default boolean isFloat() {
         return kind() == Kind.FLOAT;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code double}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code double}, {@code false} otherwise
      */
     default boolean isDouble() {
         return kind() == Kind.DOUBLE;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@code char}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@code char}, {@code false} otherwise
      */
     default boolean isChar() {
         return kind() == Kind.CHAR;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@link String}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@link String}, {@code false} otherwise
      */
     default boolean isString() {
         return kind() == Kind.STRING;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@link Enum}, {@code false} otherwise.
+     * @return {@code true} if the kind is an {@link Enum}, {@code false} otherwise
      */
     default boolean isEnum() {
         return kind() == Kind.ENUM;
     }
 
     /**
-     * @return Returns {@code true} if the kind is a {@link Class}, {@code false} otherwise.
+     * @return {@code true} if the kind is a {@link Class}, {@code false} otherwise
      */
     default boolean isClass() {
         return kind() == Kind.CLASS;
     }
 
     /**
-     * @return Returns {@code true} if the kind is an array, {@code false} otherwise.
-     */
-    default boolean isArray() {
-        return kind() == Kind.ARRAY;
-    }
-
-    /**
-     * @return Returns {@code true} if the kind is an {@link java.lang.annotation.Annotation}, {@code false} otherwise.
+     * @return {@code true} if the kind is a nested {@link java.lang.annotation.Annotation Annotation}, {@code false} otherwise
      */
     default boolean isNestedAnnotation() {
         return kind() == Kind.NESTED_ANNOTATION;
     }
 
     /**
-     * Return the value as a boolean.
-     * @return The boolean value
+     * @return {@code true} if the kind is an array, {@code false} otherwise
+     */
+    default boolean isArray() {
+        return kind() == Kind.ARRAY;
+    }
+
+    /**
+     * Returns the value as a boolean.
+     *
+     * @return the boolean value
+     * @throws IllegalStateException if this annotation member value is not a boolean
      */
     boolean asBoolean();
 
     /**
-     * Return the value as a byte.
-     * @return The byte value
-     * @throws NumberFormatException if the value cannot be represented as a byte.
+     * Returns the value as a byte.
+     *
+     * @return the byte value
+     * @throws IllegalStateException if the value cannot be represented as a byte
      */
     byte asByte();
 
     /**
-     * Return the value as a short.
-     * @return The short value
-     * @throws NumberFormatException if the value cannot be represented as a short.
+     * Returns the value as a short.
+     *
+     * @return the short value
+     * @throws IllegalStateException if the value cannot be represented as a short.
      */
     short asShort();
 
     /**
-     * Return the value as an int.
-     * @return The int value
-     * @throws java.lang.IllegalStateException if the value cannot be represented as an int.
+     * Returns the value as an int.
+     *
+     * @return the int value
+     * @throws IllegalStateException if the value cannot be represented as an int.
      */
     int asInt();
 
     /**
-     * Return the value as a long.
-     * @return The long value
-     * @throws java.lang.IllegalStateException if the value cannot be represented as a long.
+     * Returns the value as a long.
+     *
+     * @return the long value
+     * @throws IllegalStateException if the value cannot be represented as a long.
      */
     long asLong();
 
     /**
-     * Return the value as a float.
-     * @return The float value
-     * @throws java.lang.IllegalStateException if the value cannot be represented as a float.
+     * Returns the value as a float.
+     *
+     * @return the float value
+     * @throws IllegalStateException if the value cannot be represented as a float.
      */
     float asFloat();
 
     /**
-     * Return the value as a double.
-     * @return The double value
-     * @throws java.lang.IllegalStateException if the value cannot be represented as a double.
+     * Returns the value as a double.
+     *
+     * @return the double value
+     * @throws IllegalStateException if the value cannot be represented as a double.
      */
     double asDouble();
 
     /**
-     * Return the value as a char.
-     * @return The char value
-     * @throws java.lang.IllegalStateException if the value cannot be represented as a double.
+     * Returns the value as a char.
+     *
+     * @return the char value
+     * @throws IllegalStateException if this annotation member value is not a char
      */
     char asChar();
 
     /**
-     * Return the value as a string.
-     * @return A string representing the value. Never {@code null}.
+     * Returns the value as a String.
+     *
+     * @return the String value
+     * @throws IllegalStateException if this annotation member value is not a String
      */
     String asString();
 
     /**
-     * Return the value to an enum instance.
-     * @param enumType The enum type
-     * @param <E> The enum generic type
-     * @return The enum instance
-     * @throws java.lang.IllegalStateException if the enum value cannot be established from the given argument
+     * Returns the value as an enum instance.
+     *
+     * @param enumType the enum type
+     * @param <E> the enum generic type
+     * @return the enum instance
+     * @throws IllegalArgumentException if given {@code enumType} is not an enum type
+     * @throws IllegalStateException if this annotation member value is not an enum value
      */
+    // TODO we should be able to remove the Class<E> parameter
     <E extends Enum<E>> E asEnum(Class<E> enumType);
 
     /**
-     * Return the enum type that an enum value represents.
+     * Returns the enum type of the annotation member value.
      *
-     * @return A {@link jakarta.enterprise.lang.model.declarations.ClassInfo} representing the type of an enum value.
+     * @return a {@link ClassInfo} representing the enum type
+     * @throws IllegalStateException if this annotation member value is not an enum value
      */
     ClassInfo<?> asEnumClass();
 
     /**
-     * Return the type of the value. Valid types include {@link jakarta.enterprise.lang.model.types.PrimitiveType}, {@link jakarta.enterprise.lang.model.types.VoidType} and {@link jakarta.enterprise.lang.model.types.ClassType}.
+     * Returns the enum constant of the annotation member value.
      *
-     * @return The {@link jakarta.enterprise.lang.model.types.Type} of the value.
+     * @return the enum constant
+     * @throws IllegalStateException if this annotation member value is not an enum value
      */
-    Type asType(); // can be a VoidType, PrimitiveType or ClassType
+    String asEnumConstant();
 
     /**
-     * Allows retrieving the values of an array when {@link #isArray()} returns {@code true}.
+     * Returns the class value, represented as a {@link Type}. It can possibly be:
+     * <ul>
+     *     <li>the {@link jakarta.enterprise.lang.model.types.VoidType void} type;</li>
+     *     <li>a {@link jakarta.enterprise.lang.model.types.PrimitiveType primitive} type;</li>
+     *     <li>a {@link jakarta.enterprise.lang.model.types.ClassType class} type;</li>
+     *     <li>an {@link jakarta.enterprise.lang.model.types.ArrayType array} type, whose component type
+     *     is one of the previously mentioned types.</li>
+     * </ul>
      *
-     * @return An immutable list of {@link jakarta.enterprise.lang.model.AnnotationMemberValue} representing the array values.
+     * @return the class value, as a {@link Type}
+     * @throws IllegalStateException if this annotation member value is not a class value
      */
-    List<AnnotationMemberValue> asArray();
+    Type asType();
 
     /**
-     * Allows retrieving the a nested annotation value as an an instance of {@link jakarta.enterprise.lang.model.AnnotationInfo} when {@link #isNestedAnnotation()} returns {@code true}.
-     * @return The {@link jakarta.enterprise.lang.model.AnnotationInfo} instance.
-     * @throws java.lang.IllegalStateException If the value is not an annotation.
+     * Returns the nested annotation value as an {@link AnnotationInfo}.
+     *
+     * @return an {@link AnnotationInfo} instance
+     * @throws IllegalStateException if this annotation member value is not a nested annotation
      */
     AnnotationInfo<?> asNestedAnnotation();
+
+    /**
+     * Returns the array value as an immutable {@link List} of {@link AnnotationMemberValue}s.
+     * Returns an empty list if the array value is an empty array.
+     *
+     * @return an immutable list of {@link AnnotationMemberValue}s
+     * @throws IllegalStateException if this annotation member value is not an array
+     */
+    List<AnnotationMemberValue> asArray();
 }

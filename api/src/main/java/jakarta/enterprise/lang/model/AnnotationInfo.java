@@ -7,29 +7,31 @@ import java.lang.annotation.Repeatable;
 import java.util.Collection;
 
 /**
- * Models an annotation definition, providing access to the {@link AnnotationMemberValue}
- * instances.
+ * An annotation instance, typically obtained from an {@link AnnotationTarget}.
+ * Provides access to annotation members and their values.
  *
- * @param <T>  The annotation type.
+ * @param <T> the annotation type
  */
+// TODO does this have to be parameterized?
 public interface AnnotationInfo<T extends Annotation> {
     /**
-     * The commonly used {@code value()} member.
+     * Name of the commonly used {@code value()} annotation member.
      */
     String MEMBER_VALUE = "value";
 
     /**
      * Declaration of this annotation's type.
      *
-     * @return declaration of this annotation, never {@code null}
+     * @return declaration of this annotation's type, never {@code null}
      */
     ClassInfo<T> declaration();
 
     /**
-     * Fully qualified name of this annotation.
+     * Binary name of this annotation's type, as defined by <cite>The Java&trade; Language Specification</cite>;
+     * in other words, the annotation type name as returned by {@link Class#getName()}.
      * Equivalent to {@code declaration().name()}.
      *
-     * @return fully qualified name of this annotation, never {@code null}
+     * @return binary name of this annotation's type, never {@code null}
      */
     default String name() {
         return declaration().name();
@@ -37,7 +39,7 @@ public interface AnnotationInfo<T extends Annotation> {
 
     /**
      * Returns whether this annotation is repeatable. In other words, returns whether
-     * this annotation's type is meta-annotated with {@code @Repeatable}.
+     * this annotation's type is meta-annotated {@code @Repeatable}.
      *
      * @return whether this annotation is repeatable
      */
@@ -46,45 +48,44 @@ public interface AnnotationInfo<T extends Annotation> {
     }
 
     /**
-     * Whether this annotation has a member with given {@code name}.
+     * Returns whether this annotation has a member with given {@code name}.
      *
-     * @param name member name, never {@code null}
-     * @return whether this annotation has a member with given {@code name}
-     * @throws java.lang.NullPointerException if the argument is {@code null}
+     * @param name member name, must not be {@code null}
+     * @return {@code true} if this annotation has a member with given {@code name}, {@code false} otherwise
      */
     boolean hasMember(String name);
 
     /**
-     * Value of this annotation's attribute with given {@code name}.
+     * Returns the {@link AnnotationMemberValue value} of this annotation's member with given {@code name}.
      *
-     * @param name attribute name, never {@code null}
-     * @return value of this annotation's attribute with given {@code name} or {@code null} if it doesn't exist.
-     * @throws java.lang.NullPointerException if the argument is {@code null}
+     * @param name member name, must not be {@code null}
+     * @return value of this annotation's member with given {@code name} or {@code null} if such member doesn't exist
      */
     AnnotationMemberValue member(String name);
 
     /**
-     * Returns whether this annotation has the {@link #MEMBER_VALUE} member.
+     * Returns whether this annotation has the {@link #MEMBER_VALUE value} member.
      *
-     * @return Returns {@code true} if the {@link #MEMBER_VALUE} is set, {@code false} otherwise
+     * @return {@code true} if this annotation has the {@link #MEMBER_VALUE value} member, {@code false} otherwise
      */
     default boolean hasValue() {
         return hasMember(MEMBER_VALUE);
     }
 
     /**
-     * Returns the {@link AnnotationMemberValue} instance that represents
-     * the value of the {@link #MEMBER_VALUE} member.
-     * @return An {@link AnnotationMemberValue} instance or {@code null} if none exists.
+     * Returns the {@link AnnotationMemberValue value} of this annotation's {@link #MEMBER_VALUE value} member.
+     *
+     * @return value of this annotation's {@link #MEMBER_VALUE value} member or {@code null} if the member doesn't exist
      */
     default AnnotationMemberValue value() {
         return member(MEMBER_VALUE);
     }
 
     /**
-     * All members of this annotation.
+     * Returns all members of this annotation. Returns an empty collection
+     * if this annotation has no members.
      *
-     * @return An immutable collection of all members of this annotation. Never {@code null}.
+     * @return an immutable collection of all members of this annotation, never {@code null}
      */
     Collection<AnnotationMember> members();
 }

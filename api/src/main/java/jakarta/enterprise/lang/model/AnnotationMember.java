@@ -1,18 +1,24 @@
 package jakarta.enterprise.lang.model;
 
 /**
- * Represents an annotation member and associated {@link jakarta.enterprise.lang.model.AnnotationMemberValue}.
+ * An annotation member: name and {@link AnnotationMemberValue value}.
+ *
+ * @see #name()
+ * @see #value()
  */
+// TODO maybe remove this and let AnnotationInfo.members() return Map<String, AnnotationMemberValue>?
 public interface AnnotationMember {
     /**
-     * @return The name of the annotation member. Never {@code null}.
+     * Returns the name of this annotation member.
+     *
+     * @return the name of this annotation member, never {@code null}
      */
     String name();
 
     /**
-     * Supplies the {@link jakarta.enterprise.lang.model.AnnotationMemberValue} associated with the annotation member.
+     * Returns the {@link AnnotationMemberValue value} of this annotation member.
      *
-     * @return The value of the annotation member. Never {@code null}.
+     * @return the value of this annotation member, never {@code null}
      */
     AnnotationMemberValue value();
 }

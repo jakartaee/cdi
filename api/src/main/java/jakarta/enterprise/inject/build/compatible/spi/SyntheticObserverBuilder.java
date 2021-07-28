@@ -1,12 +1,12 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationMember;
+import jakarta.enterprise.event.Reception;
+import jakarta.enterprise.event.TransactionPhase;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
+
 import java.lang.annotation.Annotation;
-import jakarta.enterprise.event.Reception;
-import jakarta.enterprise.event.TransactionPhase;
 
 /**
  * Instances are not reusable. For each synthetic observer, new instance
@@ -40,11 +40,9 @@ public interface SyntheticObserverBuilder {
 
     // can be called multiple times and is additive
     // TODO methods to add multiple qualifiers at once?
-    SyntheticObserverBuilder qualifier(Class<? extends Annotation> qualifierAnnotation, AnnotationMember... attributes);
+    SyntheticObserverBuilder qualifier(Class<? extends Annotation> annotationType); // for marker annotations
 
-    SyntheticObserverBuilder qualifier(ClassInfo<?> qualifierAnnotation, AnnotationMember... attributes);
-
-    SyntheticObserverBuilder qualifier(AnnotationInfo qualifierAnnotation);
+    SyntheticObserverBuilder qualifier(AnnotationInfo<?> qualifierAnnotation);
 
     SyntheticObserverBuilder qualifier(Annotation qualifierAnnotation);
 

@@ -45,6 +45,8 @@ public interface MetaAnnotations {
 
     /**
      * Registers custom context as configured by the returned {@link ContextConfig}.
+     *
+     * @return custom context configurator, never {@code null}
      */
     ContextConfig addContext();
 }
