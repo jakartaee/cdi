@@ -19,17 +19,6 @@ public interface AnnotationInfo<T extends Annotation> {
     String MEMBER_VALUE = "value";
 
     /**
-     * Target of this annotation.
-     * That is, the declaration, the type parameter or the type use on which this annotation is present.
-     * TODO what if this annotation is a nested annotation?
-     * TODO what if this annotation doesn't have a known target (e.g. qualifier of a synthetic bean)?
-     * TODO Do we need this? Retrieving the target from an annotation value is not supported in Micronaut
-     *
-     * @return target of this annotation
-     */
-    AnnotationTarget target();
-
-    /**
      * Declaration of this annotation's type.
      *
      * @return declaration of this annotation, never {@code null}
@@ -61,7 +50,7 @@ public interface AnnotationInfo<T extends Annotation> {
      *
      * @param name member name, never {@code null}
      * @return whether this annotation has a member with given {@code name}
-     * @throws java.lang.IllegalArgumentException if the argument is {@code null}
+     * @throws java.lang.NullPointerException if the argument is {@code null}
      */
     boolean hasMember(String name);
 
@@ -70,12 +59,12 @@ public interface AnnotationInfo<T extends Annotation> {
      *
      * @param name attribute name, never {@code null}
      * @return value of this annotation's attribute with given {@code name} or {@code null} if it doesn't exist.
-     * @throws java.lang.IllegalArgumentException if the argument is {@code null}
+     * @throws java.lang.NullPointerException if the argument is {@code null}
      */
     AnnotationMemberValue member(String name);
 
     /**
-     * Returns whether this annotation has a value defined using the {@link #MEMBER_VALUE} member.
+     * Returns whether this annotation has the {@link #MEMBER_VALUE} member.
      *
      * @return Returns {@code true} if the {@link #MEMBER_VALUE} is set, {@code false} otherwise
      */

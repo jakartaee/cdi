@@ -23,7 +23,6 @@ public interface AnnotationTarget {
     // TODO specify equals/hashCode (for the entire .lang.model hierarchy)
     // TODO settle on using Optional everywhere, or allowing null everywhere; it's a mix right now
     // TODO what about declared vs not declared annotations?
-    // TODO I am wondering why we are deviating from javax.lang.model names here like AnnotatedConstruct, Element etc.
 
     /**
      * Returns whether this annotation target a {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo}.
