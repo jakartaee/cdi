@@ -2,6 +2,7 @@ package jakarta.enterprise.lang.model.declarations;
 
 import jakarta.enterprise.lang.model.types.Type;
 import jakarta.enterprise.lang.model.types.TypeVariable;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -12,8 +13,20 @@ public interface ClassInfo<T> extends DeclarationInfo {
     // TODO remove the type parameter?
     // TODO nested classes don't provide access to enclosing class, but that might be OK for our purposes?
 
+    /**
+     * Returns the binary name of this class, as defined by <cite>The Java&trade; Language Specification</cite>;
+     * in other words, the class name as returned by {@link Class#getName()}.
+     *
+     * @return binary name of this class, never {@code null}
+     */
     String name();
 
+    /**
+     * Returns the simple name of this class, as defined by <cite>The Java&trade; Language Specification</cite>;
+     * in other words, the class name as returned by {@link Class#getSimpleName()}.
+     *
+     * @return simple name of this class, never {@code null}
+     */
     String simpleName();
 
     PackageInfo packageInfo();

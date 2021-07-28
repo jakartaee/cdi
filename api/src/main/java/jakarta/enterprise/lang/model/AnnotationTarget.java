@@ -2,12 +2,13 @@ package jakarta.enterprise.lang.model;
 
 import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
 import jakarta.enterprise.lang.model.types.Type;
+
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.function.Predicate;
 
 /**
- * An Annotation target is anything that can be annotated.
+ * An annotation target is anything that can be annotated.
  * That is:
  *
  * <ul>
@@ -16,88 +17,100 @@ import java.util.function.Predicate;
  * <li>a <i>type use</i>, such as a type of method parameter, a type of field, a type argument, etc. See {@link jakarta.enterprise.lang.model.types.Type}.</li>
  * </ul>
  *
+ * Annotations are represented as {@link AnnotationInfo}, so that implementations of this API are not required
+ * to instantiate the annotation type.
  *
  * @since 4.0.0
  */
 public interface AnnotationTarget {
     // TODO specify equals/hashCode (for the entire .lang.model hierarchy)
-    // TODO settle on using Optional everywhere, or allowing null everywhere; it's a mix right now
-    // TODO what about declared vs not declared annotations?
+    // TODO we decided that we won't use Optional and will just return null; need to make this consistent everywhere
+    // TODO what about declared vs not declared (inherited) annotations?
+    //  probably should always return all, including inherited, that's what Portable Extensions do
 
     /**
-     * Returns whether this annotation target a {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo}.
+     * Returns whether this annotation target is a {@link DeclarationInfo declaration}.
      *
+     * @return {@code true} if this is a declaration, {@code false} otherwise
      * @see jakarta.enterprise.lang.model.declarations.DeclarationInfo
-     * @return Will return {@code true} if it is a {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo} and {@code false} otherwise
      */
     boolean isDeclaration();
 
     /**
-     * Returns whether this annotation target is a {@link jakarta.enterprise.lang.model.types.Type}.
-     * @return Will return {@code true} if it is a {@link jakarta.enterprise.lang.model.types.Type} and {@code false} otherwise
+     * Returns whether this annotation target is a {@link Type type}.
+     *
+     * @return {@code true} if this is a type, {@code false} otherwise
+     * @see jakarta.enterprise.lang.model.types.Type
      */
     boolean isType();
 
     /**
-     * Coerce this annotation target to a {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo}.
-     * @return The {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo} instance, never {@code null}
-     * @throws java.lang.IllegalStateException If {@link #isDeclaration()} returns {@code false}
+     * Returns this annotation target as a {@link DeclarationInfo declaration}.
+     *
+     * @return this declaration, never {@code null}
+     * @throws IllegalStateException if {@link #isDeclaration()} returns {@code false}
      */
     DeclarationInfo asDeclaration();
 
     /**
-     * Coerce this annotation target to a {@link jakarta.enterprise.lang.model.types.Type}.
-     * @return The {@link jakarta.enterprise.lang.model.types.Type} instance, never {@code null}
-     * @throws java.lang.IllegalStateException If {@link #isType()} returns {@code false}
+     * Returns this annotation target as a {@link Type type}.
+     *
+     * @return this type, never {@code null}
+     * @throws IllegalStateException if {@link #isType()} returns {@code false}
      */
     Type asType();
 
     /**
-     * Return with the given annotation type is present on this annotation target.
+     * Returns whether an annotation of given type is present on this annotation target.
      *
-     * @param annotationType The annotation type, never {@code null}
-     * @return Returns {@code true} if the given annotation type is present on this annotation info, {@code false} otherwise.
-     * @throws java.lang.IllegalArgumentException If {@code null} is passed as an argument
+     * @param annotationType the annotation type, must not be {@code null}
+     * @return {@code true} if given annotation type is present on this annotation target, {@code false} otherwise
      */
     boolean hasAnnotation(Class<? extends Annotation> annotationType);
 
     /**
-     * Evaluate the given predicate, returning {@code true} if the predicate matches any {@link jakarta.enterprise.lang.model.AnnotationInfo} present on this annotation target.
-     * @param predicate The predicate, never {@code null}
-     * @return Returns {@code true} if the given predicate matches any {@link jakarta.enterprise.lang.model.AnnotationInfo} instance, {@code false} otherwise.
-     * @throws java.lang.IllegalArgumentException If {@code null} is passed as an argument
+     * Returns whether given predicate matches any annotation present on this annotation target.
+     *
+     * @param predicate annotation predicate, must not be {@code null}
+     * @return {@code true} if given predicate matches any annotation present on this annotation target, {@code false} otherwise.
      */
     boolean hasAnnotation(Predicate<AnnotationInfo<?>> predicate);
 
     /**
-     * Obtains an {@link jakarta.enterprise.lang.model.AnnotationInfo} for the given annotation type if it is present on this annotation target.
-     * @param annotationType The annotation type, never {@code null}
-     * @param <T> The annotation generic type
-     * @return The {@link jakarta.enterprise.lang.model.AnnotationInfo} or {@code null} if it doesn't exist.
-     * @throws java.lang.IllegalArgumentException If {@code null} is passed as an argument
+     * Returns an annotation of given type, if it is present on this annotation target.
+     *
+     * @param annotationType the annotation type, must not be {@code null}
+     * @param <T> the annotation generic type
+     * @return the {@link AnnotationInfo} or {@code null} if no such annotation is present on this annotation target
      */
     <T extends Annotation> AnnotationInfo<T> annotation(Class<T> annotationType);
 
     /**
-     * Obtains a collection of the repeatable {@link jakarta.enterprise.lang.model.AnnotationInfo} instances for the given repeatable annotation type (An annotation type that is annotated with {@link java.lang.annotation.Repeatable}).
+     * Returns a collection of annotations of given repeatable annotation type
+     * (an annotation type that is meta-annotated {@link java.lang.annotation.Repeatable @Repeatable})
+     * present on this annotation target. Returns an empty collection if no such
+     * annotation is present.
      *
-     * @param annotationType The annotation type
-     * @return An immutable collection of {@link jakarta.enterprise.lang.model.AnnotationInfo}, never {@code null}
+     * @param annotationType the {@code @Repeatable} annotation type, must not be {@code null}
+     * @param <T> the annotation generic type
+     * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
     <T extends Annotation> Collection<AnnotationInfo<T>> repeatableAnnotation(Class<T> annotationType);
 
     /**
-     * Obtains a collection of the {@link jakarta.enterprise.lang.model.AnnotationInfo} instances that match the given predicate.
+     * Returns a collection of all annotations present on this annotation target that match given predicate.
+     * Returns an empty collection if no such annotation is present.
      *
-     * @param predicate The predicate used to evaluate matching {@link jakarta.enterprise.lang.model.AnnotationInfo} instances.
-     * @return An immutable collection of {@link jakarta.enterprise.lang.model.AnnotationInfo}, never {@code null}
-     * @throws java.lang.IllegalArgumentException If {@code null} is passed as an argument
+     * @param predicate annotation predicate, must not be {@code null}
+     * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
     Collection<AnnotationInfo<?>> annotations(Predicate<AnnotationInfo<?>> predicate);
 
     /**
-     * Obtains all of the {@link jakarta.enterprise.lang.model.AnnotationInfo} instances for the given annotation target.
-     * @return An immutable collection of {@link jakarta.enterprise.lang.model.AnnotationInfo}, never {@code null}
+     * Returns a collection of all annotations present on this annotation target.
+     * Returns an empty collection if no annotation is present.
+     *
+     * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
     Collection<AnnotationInfo<?>> annotations();
 }
