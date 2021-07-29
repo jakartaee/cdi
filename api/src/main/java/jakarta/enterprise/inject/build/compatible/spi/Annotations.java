@@ -1,7 +1,7 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationAttribute;
-import jakarta.enterprise.lang.model.AnnotationAttributeValue;
+import jakarta.enterprise.lang.model.AnnotationMember;
+import jakarta.enterprise.lang.model.AnnotationMemberValue;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import java.lang.annotation.Annotation;
@@ -9,76 +9,76 @@ import java.util.List;
 
 // TODO devise a builder-style API instead (see also AnnotationConfig)
 public interface Annotations {
-    AnnotationAttributeValue value(boolean value);
+    AnnotationMemberValue value(boolean value);
 
-    AnnotationAttributeValue value(byte value);
+    AnnotationMemberValue value(byte value);
 
-    AnnotationAttributeValue value(short value);
+    AnnotationMemberValue value(short value);
 
-    AnnotationAttributeValue value(int value);
+    AnnotationMemberValue value(int value);
 
-    AnnotationAttributeValue value(long value);
+    AnnotationMemberValue value(long value);
 
-    AnnotationAttributeValue value(float value);
+    AnnotationMemberValue value(float value);
 
-    AnnotationAttributeValue value(double value);
+    AnnotationMemberValue value(double value);
 
-    AnnotationAttributeValue value(char value);
+    AnnotationMemberValue value(char value);
 
-    AnnotationAttributeValue value(String value);
+    AnnotationMemberValue value(String value);
 
-    AnnotationAttributeValue value(Enum<?> enumValue);
+    AnnotationMemberValue value(Enum<?> enumValue);
 
-    AnnotationAttributeValue value(Class<? extends Enum<?>> enumType, String enumValue);
+    AnnotationMemberValue value(Class<? extends Enum<?>> enumType, String enumValue);
 
-    AnnotationAttributeValue value(ClassInfo<?> enumType, String enumValue);
+    AnnotationMemberValue value(ClassInfo<?> enumType, String enumValue);
 
-    AnnotationAttributeValue value(Class<?> value);
+    AnnotationMemberValue value(Class<?> value);
 
-    AnnotationAttributeValue annotationValue(Class<? extends Annotation> annotationType, AnnotationAttribute... attributes);
+    AnnotationMemberValue annotationValue(Class<? extends Annotation> annotationType, AnnotationMember... attributes);
 
-    AnnotationAttributeValue annotationValue(ClassInfo<?> annotationType, AnnotationAttribute... attributes);
+    AnnotationMemberValue annotationValue(ClassInfo<?> annotationType, AnnotationMember... attributes);
 
-    AnnotationAttributeValue annotationValue(AnnotationInfo annotation);
+    AnnotationMemberValue annotationValue(AnnotationInfo annotation);
 
-    AnnotationAttributeValue annotationValue(Annotation annotation);
+    AnnotationMemberValue annotationValue(Annotation annotation);
 
-    AnnotationAttribute attribute(String name, boolean value);
+    AnnotationMember attribute(String name, boolean value);
 
-    AnnotationAttribute attribute(String name, byte value);
+    AnnotationMember attribute(String name, byte value);
 
-    AnnotationAttribute attribute(String name, short value);
+    AnnotationMember attribute(String name, short value);
 
-    AnnotationAttribute attribute(String name, int value);
+    AnnotationMember attribute(String name, int value);
 
-    AnnotationAttribute attribute(String name, long value);
+    AnnotationMember attribute(String name, long value);
 
-    AnnotationAttribute attribute(String name, float value);
+    AnnotationMember attribute(String name, float value);
 
-    AnnotationAttribute attribute(String name, double value);
+    AnnotationMember attribute(String name, double value);
 
-    AnnotationAttribute attribute(String name, char value);
+    AnnotationMember attribute(String name, char value);
 
-    AnnotationAttribute attribute(String name, String value);
+    AnnotationMember attribute(String name, String value);
 
-    AnnotationAttribute attribute(String name, Enum<?> enumValue);
+    AnnotationMember attribute(String name, Enum<?> enumValue);
 
-    AnnotationAttribute attribute(String name, Class<? extends Enum<?>> enumType, String enumValue);
+    AnnotationMember attribute(String name, Class<? extends Enum<?>> enumType, String enumValue);
 
-    AnnotationAttribute attribute(String name, ClassInfo<?> enumType, String enumValue);
+    AnnotationMember attribute(String name, ClassInfo<?> enumType, String enumValue);
 
-    AnnotationAttribute attribute(String name, Class<?> value);
+    AnnotationMember attribute(String name, Class<?> value);
 
-    AnnotationAttribute arrayAttribute(String name, AnnotationAttributeValue... values);
+    AnnotationMember arrayAttribute(String name, AnnotationMemberValue... values);
 
-    AnnotationAttribute arrayAttribute(String name, List<AnnotationAttributeValue> values);
+    AnnotationMember arrayAttribute(String name, List<AnnotationMemberValue> values);
 
-    AnnotationAttribute annotationAttribute(String name, Class<? extends Annotation> annotationType,
-            AnnotationAttribute... attributes);
+    AnnotationMember annotationAttribute(String name, Class<? extends Annotation> annotationType,
+                                         AnnotationMember... attributes);
 
-    AnnotationAttribute annotationAttribute(String name, ClassInfo<?> annotationType, AnnotationAttribute... attributes);
+    AnnotationMember annotationAttribute(String name, ClassInfo<?> annotationType, AnnotationMember... attributes);
 
-    AnnotationAttribute annotationAttribute(String name, AnnotationInfo annotation);
+    AnnotationMember annotationAttribute(String name, AnnotationInfo annotation);
 
-    AnnotationAttribute annotationAttribute(String name, Annotation annotation);
+    AnnotationMember annotationAttribute(String name, Annotation annotation);
 }

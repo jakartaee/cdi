@@ -1,6 +1,6 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationAttribute;
+import jakarta.enterprise.lang.model.AnnotationMember;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
@@ -25,9 +25,9 @@ public interface SyntheticBeanBuilder<T> {
 
     // can be called multiple times and is additive
     // TODO methods to add multiple qualifiers at once?
-    SyntheticBeanBuilder<T> qualifier(Class<? extends Annotation> qualifierAnnotation, AnnotationAttribute... attributes);
+    SyntheticBeanBuilder<T> qualifier(Class<? extends Annotation> qualifierAnnotation, AnnotationMember... attributes);
 
-    SyntheticBeanBuilder<T> qualifier(ClassInfo<?> qualifierAnnotation, AnnotationAttribute... attributes);
+    SyntheticBeanBuilder<T> qualifier(ClassInfo<?> qualifierAnnotation, AnnotationMember... attributes);
 
     SyntheticBeanBuilder<T> qualifier(AnnotationInfo qualifierAnnotation);
 
