@@ -6,7 +6,7 @@ import jakarta.enterprise.lang.model.types.Type;
 import java.util.List;
 
 /**
- * The value of an {@link AnnotationMember}. Annotation member values are of several kinds:
+ * The value of an annotation member. Annotation member values are of several kinds:
  * <ul>
  *     <li>primitive types;</li>
  *     <li>{@link String}s;</li>
@@ -34,35 +34,35 @@ public interface AnnotationMemberValue {
      */
     enum Kind {
         /**
-         * A primitive {@code boolean}.
+         * A primitive {@code boolean} value.
          */
         BOOLEAN,
         /**
-         * A primitive {@code byte}.
+         * A primitive {@code byte} value.
          */
         BYTE,
         /**
-         * A primitive {@code short}.
+         * A primitive {@code short} value.
          */
         SHORT,
         /**
-         * A primitive {@code int}.
+         * A primitive {@code int} value.
          */
         INT,
         /**
-         * A primitive {@code long}.
+         * A primitive {@code long} value.
          */
         LONG,
         /**
-         * A primitive {@code float}.
+         * A primitive {@code float} value.
          */
         FLOAT,
         /**
-         * A primitive {@code double}.
+         * A primitive {@code double} value.
          */
         DOUBLE,
         /**
-         * A primitive {@code char}.
+         * A primitive {@code char} value.
          */
         CHAR,
         /**
@@ -74,7 +74,7 @@ public interface AnnotationMemberValue {
          */
         ENUM,
         /**
-         * A {@link Class} value. Represented as {@link jakarta.enterprise.lang.model.types.Type}.
+         * A {@link Class} value. Represented as {@link Type}.
          */
         CLASS,
         /**
@@ -89,9 +89,9 @@ public interface AnnotationMemberValue {
     }
 
     /**
-     * Returns the kind of the annotation member value.
+     * Returns the kind of this annotation member value.
      *
-     * @return the kind of the annotation member value, never {@code null}
+     * @return the kind of this annotation member value, never {@code null}
      */
     Kind kind();
 
@@ -187,7 +187,7 @@ public interface AnnotationMemberValue {
     }
 
     /**
-     * Returns the value as a boolean.
+     * Returns this value as a boolean.
      *
      * @return the boolean value
      * @throws IllegalStateException if this annotation member value is not a boolean
@@ -195,7 +195,7 @@ public interface AnnotationMemberValue {
     boolean asBoolean();
 
     /**
-     * Returns the value as a byte.
+     * Returns this value as a byte.
      *
      * @return the byte value
      * @throws IllegalStateException if the value cannot be represented as a byte
@@ -203,7 +203,7 @@ public interface AnnotationMemberValue {
     byte asByte();
 
     /**
-     * Returns the value as a short.
+     * Returns this value as a short.
      *
      * @return the short value
      * @throws IllegalStateException if the value cannot be represented as a short.
@@ -211,7 +211,7 @@ public interface AnnotationMemberValue {
     short asShort();
 
     /**
-     * Returns the value as an int.
+     * Returns this value as an int.
      *
      * @return the int value
      * @throws IllegalStateException if the value cannot be represented as an int.
@@ -219,7 +219,7 @@ public interface AnnotationMemberValue {
     int asInt();
 
     /**
-     * Returns the value as a long.
+     * Returns this value as a long.
      *
      * @return the long value
      * @throws IllegalStateException if the value cannot be represented as a long.
@@ -227,7 +227,7 @@ public interface AnnotationMemberValue {
     long asLong();
 
     /**
-     * Returns the value as a float.
+     * Returns this value as a float.
      *
      * @return the float value
      * @throws IllegalStateException if the value cannot be represented as a float.
@@ -235,7 +235,7 @@ public interface AnnotationMemberValue {
     float asFloat();
 
     /**
-     * Returns the value as a double.
+     * Returns this value as a double.
      *
      * @return the double value
      * @throws IllegalStateException if the value cannot be represented as a double.
@@ -243,7 +243,7 @@ public interface AnnotationMemberValue {
     double asDouble();
 
     /**
-     * Returns the value as a char.
+     * Returns this value as a char.
      *
      * @return the char value
      * @throws IllegalStateException if this annotation member value is not a char
@@ -251,7 +251,7 @@ public interface AnnotationMemberValue {
     char asChar();
 
     /**
-     * Returns the value as a String.
+     * Returns this value as a String.
      *
      * @return the String value
      * @throws IllegalStateException if this annotation member value is not a String
@@ -259,7 +259,7 @@ public interface AnnotationMemberValue {
     String asString();
 
     /**
-     * Returns the value as an enum instance.
+     * Returns this enum value as an instance of the enum type.
      *
      * @param enumType the enum type
      * @param <E> the enum generic type
@@ -267,11 +267,10 @@ public interface AnnotationMemberValue {
      * @throws IllegalArgumentException if given {@code enumType} is not an enum type
      * @throws IllegalStateException if this annotation member value is not an enum value
      */
-    // TODO we should be able to remove the Class<E> parameter
     <E extends Enum<E>> E asEnum(Class<E> enumType);
 
     /**
-     * Returns the enum type of the annotation member value.
+     * Returns the type of this enum value.
      *
      * @return a {@link ClassInfo} representing the enum type
      * @throws IllegalStateException if this annotation member value is not an enum value
@@ -279,7 +278,7 @@ public interface AnnotationMemberValue {
     ClassInfo<?> asEnumClass();
 
     /**
-     * Returns the enum constant of the annotation member value.
+     * Returns the name (also known as enum constant) of this enum value.
      *
      * @return the enum constant
      * @throws IllegalStateException if this annotation member value is not an enum value
@@ -287,13 +286,13 @@ public interface AnnotationMemberValue {
     String asEnumConstant();
 
     /**
-     * Returns the class value, represented as a {@link Type}. It can possibly be:
+     * Returns this class value as a {@link Type}. It can possibly be:
      * <ul>
      *     <li>the {@link jakarta.enterprise.lang.model.types.VoidType void} type;</li>
      *     <li>a {@link jakarta.enterprise.lang.model.types.PrimitiveType primitive} type;</li>
      *     <li>a {@link jakarta.enterprise.lang.model.types.ClassType class} type;</li>
      *     <li>an {@link jakarta.enterprise.lang.model.types.ArrayType array} type, whose component type
-     *     is one of the previously mentioned types.</li>
+     *     is a primitive type or a class type.</li>
      * </ul>
      *
      * @return the class value, as a {@link Type}
@@ -302,7 +301,7 @@ public interface AnnotationMemberValue {
     Type asType();
 
     /**
-     * Returns the nested annotation value as an {@link AnnotationInfo}.
+     * Returns this nested annotation value as an {@link AnnotationInfo}.
      *
      * @return an {@link AnnotationInfo} instance
      * @throws IllegalStateException if this annotation member value is not a nested annotation
@@ -310,8 +309,8 @@ public interface AnnotationMemberValue {
     AnnotationInfo<?> asNestedAnnotation();
 
     /**
-     * Returns the array value as an immutable {@link List} of {@link AnnotationMemberValue}s.
-     * Returns an empty list if the array value is an empty array.
+     * Returns this array value as an immutable {@link List} of {@link AnnotationMemberValue}s.
+     * Returns an empty list if the array is empty.
      *
      * @return an immutable list of {@link AnnotationMemberValue}s
      * @throws IllegalStateException if this annotation member value is not an array
