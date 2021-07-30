@@ -4,7 +4,7 @@ import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Repeatable;
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * An annotation instance, typically obtained from an {@link AnnotationTarget}.
@@ -82,10 +82,10 @@ public interface AnnotationInfo<T extends Annotation> {
     }
 
     /**
-     * Returns all members of this annotation. Returns an empty collection
-     * if this annotation has no members.
+     * Returns all members of this annotation as a map, where the key is the member name
+     * and the value is the member value. Returns an empty map if this annotation has no members.
      *
-     * @return an immutable collection of all members of this annotation, never {@code null}
+     * @return an immutable map of all members of this annotation, never {@code null}
      */
-    Collection<AnnotationMember> members();
+    Map<String, AnnotationMemberValue> members();
 }
