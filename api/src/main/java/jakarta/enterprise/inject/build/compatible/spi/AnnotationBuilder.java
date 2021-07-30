@@ -1,7 +1,7 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
 import jakarta.enterprise.lang.model.AnnotationInfo;
-import jakarta.enterprise.lang.model.AnnotationMemberValue;
+import jakarta.enterprise.lang.model.AnnotationMember;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
 
@@ -45,7 +45,7 @@ public interface AnnotationBuilder {
      * @param value value of the annotation member
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(AnnotationMemberValue value) {
+    default AnnotationBuilder value(AnnotationMember value) {
         return member(AnnotationInfo.MEMBER_VALUE, value);
     }
 
@@ -420,7 +420,7 @@ public interface AnnotationBuilder {
      * @param value value of the annotation member, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, AnnotationMemberValue value);
+    AnnotationBuilder member(String name, AnnotationMember value);
 
     /**
      * Adds a boolean-valued annotation member with given {@code name}.

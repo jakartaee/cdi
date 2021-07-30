@@ -56,12 +56,12 @@ public interface AnnotationInfo<T extends Annotation> {
     boolean hasMember(String name);
 
     /**
-     * Returns the {@link AnnotationMemberValue value} of this annotation's member with given {@code name}.
+     * Returns the {@link AnnotationMember value} of this annotation's member with given {@code name}.
      *
      * @param name member name, must not be {@code null}
      * @return value of this annotation's member with given {@code name} or {@code null} if such member doesn't exist
      */
-    AnnotationMemberValue member(String name);
+    AnnotationMember member(String name);
 
     /**
      * Returns whether this annotation has the {@link #MEMBER_VALUE value} member.
@@ -73,11 +73,11 @@ public interface AnnotationInfo<T extends Annotation> {
     }
 
     /**
-     * Returns the {@link AnnotationMemberValue value} of this annotation's {@link #MEMBER_VALUE value} member.
+     * Returns the {@link AnnotationMember value} of this annotation's {@link #MEMBER_VALUE value} member.
      *
      * @return value of this annotation's {@link #MEMBER_VALUE value} member or {@code null} if the member doesn't exist
      */
-    default AnnotationMemberValue value() {
+    default AnnotationMember value() {
         return member(MEMBER_VALUE);
     }
 
@@ -87,5 +87,5 @@ public interface AnnotationInfo<T extends Annotation> {
      *
      * @return an immutable map of all members of this annotation, never {@code null}
      */
-    Map<String, AnnotationMemberValue> members();
+    Map<String, AnnotationMember> members();
 }
