@@ -28,7 +28,7 @@ import java.util.List;
  *  needs more discussion. I personally don't like coercion here and would always
  *  throw if the type mismatches.
  */
-public interface AnnotationMemberValue {
+public interface AnnotationMember {
     /**
      * The kind of the annotation member value.
      */
@@ -309,11 +309,11 @@ public interface AnnotationMemberValue {
     AnnotationInfo<?> asNestedAnnotation();
 
     /**
-     * Returns this array value as an immutable {@link List} of {@link AnnotationMemberValue}s.
+     * Returns this array value as an immutable {@link List} of {@link AnnotationMember}s.
      * Returns an empty list if the array is empty.
      *
-     * @return an immutable list of {@link AnnotationMemberValue}s
+     * @return an immutable list of {@link AnnotationMember}s
      * @throws IllegalStateException if this annotation member value is not an array
      */
-    List<AnnotationMemberValue> asArray();
+    List<AnnotationMember> asArray();
 }
