@@ -275,12 +275,12 @@ public interface AnnotationMember {
      * @return a {@link ClassInfo} representing the enum type
      * @throws IllegalStateException if this annotation member value is not an enum value
      */
-    ClassInfo<?> asEnumClass();
+    ClassInfo asEnumClass();
 
     /**
-     * Returns the name (also known as enum constant) of this enum value.
+     * Returns the name of this enum value (also known as enum constant).
      *
-     * @return the enum constant
+     * @return the name of this enum constant
      * @throws IllegalStateException if this annotation member value is not an enum value
      */
     String asEnumConstant();
@@ -306,7 +306,7 @@ public interface AnnotationMember {
      * @return an {@link AnnotationInfo} instance
      * @throws IllegalStateException if this annotation member value is not a nested annotation
      */
-    AnnotationInfo<?> asNestedAnnotation();
+    AnnotationInfo asNestedAnnotation();
 
     /**
      * Returns this array value as an immutable {@link List} of {@link AnnotationMember}s.

@@ -4,7 +4,7 @@ import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import java.util.List;
 
 public interface ParameterizedType extends Type {
-    ClassInfo<?> declaration();
+    ClassInfo declaration();
 
     List<Type> typeArguments();
 

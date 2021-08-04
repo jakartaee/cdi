@@ -2,18 +2,14 @@ package jakarta.enterprise.lang.model;
 
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
-import java.lang.annotation.Annotation;
 import java.lang.annotation.Repeatable;
 import java.util.Map;
 
 /**
  * An annotation instance, typically obtained from an {@link AnnotationTarget}.
  * Provides access to annotation members and their values.
- *
- * @param <T> the annotation type
  */
-// TODO does this have to be parameterized?
-public interface AnnotationInfo<T extends Annotation> {
+public interface AnnotationInfo {
     /**
      * Name of the commonly used {@code value()} annotation member.
      */
@@ -24,7 +20,7 @@ public interface AnnotationInfo<T extends Annotation> {
      *
      * @return declaration of this annotation's type, never {@code null}
      */
-    ClassInfo<T> declaration();
+    ClassInfo declaration();
 
     /**
      * Binary name of this annotation's type, as defined by <cite>The Java&trade; Language Specification</cite>;

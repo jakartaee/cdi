@@ -47,45 +47,105 @@ public interface DeclarationInfo extends AnnotationTarget {
         FIELD,
     }
 
+    /**
+     * Returns the {@link Kind kind} of this declaration.
+     *
+     * @return the kind of this declaration
+     */
     Kind kind();
 
+    /**
+     * Returns whether this declaration is a {@link PackageInfo package}.
+     *
+     * @return {@code true} if this is a package, {@code false} otherwise
+     */
     default boolean isPackage() {
         return kind() == Kind.PACKAGE;
     }
 
+    /**
+     * Returns whether this declaration is a {@link ClassInfo class}.
+     *
+     * @return {@code true} if this is a class, {@code false} otherwise
+     */
     default boolean isClass() {
         return kind() == Kind.CLASS;
     }
 
+    /**
+     * Returns whether this declaration is a {@link MethodInfo method}.
+     *
+     * @return {@code true} if this is a method, {@code false} otherwise
+     */
     default boolean isMethod() {
         return kind() == Kind.METHOD;
     }
 
+    /**
+     * Returns whether this declaration is a {@link ParameterInfo method parameter}.
+     *
+     * @return {@code true} if this is a parameter, {@code false} otherwise
+     */
     default boolean isParameter() {
         return kind() == Kind.PARAMETER;
     }
 
+    /**
+     * Returns whether this declaration is a {@link FieldInfo field}.
+     *
+     * @return {@code true} if this is a field, {@code false} otherwise
+     */
     default boolean isField() {
         return kind() == Kind.FIELD;
     }
 
+    /**
+     * Returns this declaration as a {@link PackageInfo package}.
+     *
+     * @return this package, never {@code null}
+     * @throws IllegalStateException if {@link #isPackage()} returns {@code false}
+     */
     default PackageInfo asPackage() {
         throw new IllegalStateException("Not a package");
     }
 
-    default ClassInfo<?> asClass() {
+    /**
+     * Returns this declaration as a {@link ClassInfo class}.
+     *
+     * @return this class, never {@code null}
+     * @throws IllegalStateException if {@link #isClass()} returns {@code false}
+     */
+    default ClassInfo asClass() {
         throw new IllegalStateException("Not a class");
     }
 
-    default MethodInfo<?> asMethod() {
+    /**
+     * Returns this declaration as a {@link MethodInfo method}.
+     *
+     * @return this method, never {@code null}
+     * @throws IllegalStateException if {@link #isMethod()} returns {@code false}
+     */
+    default MethodInfo asMethod() {
         throw new IllegalStateException("Not a method");
     }
 
+    /**
+     * Returns this declaration as a {@link ParameterInfo method parameter}.
+     *
+     * @return this parameter, never {@code null}
+     * @throws IllegalStateException if {@link #isParameter()} returns {@code false}
+     */
     default ParameterInfo asParameter() {
         throw new IllegalStateException("Not a parameter");
     }
 
-    default FieldInfo<?> asField() {
+    /**
+     * Returns this declaration as a {@link FieldInfo field}.
+     *
+     * @return this field, never {@code null}
+     * @throws IllegalStateException if {@link #isField()} returns {@code false}
+     */
+    default FieldInfo asField() {
         throw new IllegalStateException("Not a field");
     }
 }

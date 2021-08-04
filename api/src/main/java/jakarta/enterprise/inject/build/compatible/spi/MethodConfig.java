@@ -3,10 +3,20 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.lang.model.declarations.MethodInfo;
 
 /**
- * @param <T> type of whomever declares the configured method or constructor
+ * Allows adding annotations to and removing annotations from a method.
+ * Note that the method is not physically altered, the modifications
+ * are only seen by the CDI container.
+ *
+ * @see Enhancement
  */
-public interface MethodConfig<T> extends MethodInfo<T>, AnnotationConfig {
-    // TODO remove the type parameter?
+public interface MethodConfig extends DeclarationConfig<MethodConfig> {
     // TODO split MethodConfig into MethodConfig/ConstructorConfig?
-    // TODO even if MethodInfo has equals/hashCode, MethodConfig probably shouldn't
+
+    /**
+     * Returns the {@link MethodInfo read-only information} about this transformed method.
+     *
+     * @return the {@link MethodInfo} corresponding to this transformed method, never {@code null}
+     */
+    @Override
+    MethodInfo info();
 }

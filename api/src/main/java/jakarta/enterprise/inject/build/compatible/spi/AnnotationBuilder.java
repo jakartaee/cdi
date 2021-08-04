@@ -35,7 +35,7 @@ public interface AnnotationBuilder {
      * @param annotationType the annotation type, must not be {@code null}
      * @return a new {@code AnnotationBuilder}
      */
-    static AnnotationBuilder of(ClassInfo<?> annotationType) {
+    static AnnotationBuilder of(ClassInfo annotationType) {
         return AnnotationBuilderFactoryResolver.get().create(annotationType);
     }
 
@@ -278,7 +278,7 @@ public interface AnnotationBuilder {
      * @param enumValue name of the enum constant, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(ClassInfo<?> enumType, String enumValue) {
+    default AnnotationBuilder value(ClassInfo enumType, String enumValue) {
         return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValue);
     }
 
@@ -289,7 +289,7 @@ public interface AnnotationBuilder {
      * @param enumValues names of the enum constants, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(ClassInfo<?> enumType, String... enumValues) {
+    default AnnotationBuilder value(ClassInfo enumType, String... enumValues) {
         return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValues);
     }
 
@@ -319,7 +319,7 @@ public interface AnnotationBuilder {
      * @param value the class value, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(ClassInfo<?> value) {
+    default AnnotationBuilder value(ClassInfo value) {
         return member(AnnotationInfo.MEMBER_VALUE, value);
     }
 
@@ -329,7 +329,7 @@ public interface AnnotationBuilder {
      * @param values the class array, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(ClassInfo<?>... values) {
+    default AnnotationBuilder value(ClassInfo... values) {
         return member(AnnotationInfo.MEMBER_VALUE, values);
     }
 
@@ -379,7 +379,7 @@ public interface AnnotationBuilder {
      * @param value the annotation value, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(AnnotationInfo<?> value) {
+    default AnnotationBuilder value(AnnotationInfo value) {
         return member(AnnotationInfo.MEMBER_VALUE, value);
     }
 
@@ -389,7 +389,7 @@ public interface AnnotationBuilder {
      * @param values the annotation array, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    default AnnotationBuilder value(AnnotationInfo<?>... values) {
+    default AnnotationBuilder value(AnnotationInfo... values) {
         return member(AnnotationInfo.MEMBER_VALUE, values);
     }
 
@@ -630,7 +630,7 @@ public interface AnnotationBuilder {
      * @param enumValue name of the enum constant, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, ClassInfo<?> enumType, String enumValue);
+    AnnotationBuilder member(String name, ClassInfo enumType, String enumValue);
 
     /**
      * Adds an enum array-valued annotation member with given {@code name}.
@@ -640,7 +640,7 @@ public interface AnnotationBuilder {
      * @param enumValues names of the enum constants, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, ClassInfo<?> enumType, String... enumValues);
+    AnnotationBuilder member(String name, ClassInfo enumType, String... enumValues);
 
     /**
      * Adds a class-valued annotation member with given {@code name}.
@@ -667,7 +667,7 @@ public interface AnnotationBuilder {
      * @param value the class value, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, ClassInfo<?> value);
+    AnnotationBuilder member(String name, ClassInfo value);
 
     /**
      * Adds a class array-valued annotation member with given {@code name}.
@@ -676,7 +676,7 @@ public interface AnnotationBuilder {
      * @param values the class array, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, ClassInfo<?>... values);
+    AnnotationBuilder member(String name, ClassInfo... values);
 
     /**
      * Adds a class-valued annotation member with given {@code name}.
@@ -724,7 +724,7 @@ public interface AnnotationBuilder {
      * @param value the annotation value, must not be {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, AnnotationInfo<?> value);
+    AnnotationBuilder member(String name, AnnotationInfo value);
 
     /**
      * Adds an annotation array-valued annotation member with given {@code name}.
@@ -733,7 +733,7 @@ public interface AnnotationBuilder {
      * @param values the annotation array, must not be {@code null} or contain {@code null}
      * @return this {@code AnnotationBuilder}
      */
-    AnnotationBuilder member(String name, AnnotationInfo<?>... values);
+    AnnotationBuilder member(String name, AnnotationInfo... values);
 
     /**
      * Adds an annotation-valued annotation member with given {@code name}.
@@ -759,5 +759,5 @@ public interface AnnotationBuilder {
      *
      * @return the built {@link AnnotationInfo}, never {@code null}
      */
-    AnnotationInfo<?> build();
+    AnnotationInfo build();
 }

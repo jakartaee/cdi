@@ -3,11 +3,9 @@ package jakarta.enterprise.lang.model.declarations;
 import jakarta.enterprise.lang.model.types.Type;
 
 /**
- * @param <T> type of whomever declares the inspected field
+ * Provides read-only information about a field.
  */
-public interface FieldInfo<T> extends DeclarationInfo {
-    // TODO remove the type parameter?
-
+public interface FieldInfo extends DeclarationInfo {
     String name();
 
     Type type();
@@ -18,7 +16,7 @@ public interface FieldInfo<T> extends DeclarationInfo {
 
     int modifiers();
 
-    ClassInfo<T> declaringClass();
+    ClassInfo declaringClass();
 
     // ---
 
@@ -28,7 +26,7 @@ public interface FieldInfo<T> extends DeclarationInfo {
     }
 
     @Override
-    default FieldInfo<?> asField() {
+    default FieldInfo asField() {
         return this;
     }
 }
