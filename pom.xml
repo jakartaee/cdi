@@ -22,6 +22,13 @@
 		</license>
 	</licenses>
 
+	<scm>
+		<connection>scm:git:git://github.com/eclipse-ee4j/cdi.git</connection>
+		<developerConnection>scm:git:git@github.com:eclipse-ee4j/cdi.git</developerConnection>
+		<url>https://github.com/eclipse-ee4j/cdi</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<modules>
 		<module>spec</module>
 		<module>api</module>
