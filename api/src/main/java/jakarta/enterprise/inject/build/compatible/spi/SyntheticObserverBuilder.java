@@ -28,13 +28,13 @@ public interface SyntheticObserverBuilder {
     // if called multiple times, last call wins
     SyntheticObserverBuilder declaringClass(Class<?> declaringClass);
 
-    SyntheticObserverBuilder declaringClass(ClassInfo<?> declaringClass);
+    SyntheticObserverBuilder declaringClass(ClassInfo declaringClass);
 
     // if called multiple times, last call wins
     // TODO methods to add multiple types at once?
     SyntheticObserverBuilder type(Class<?> type);
 
-    SyntheticObserverBuilder type(ClassInfo<?> type);
+    SyntheticObserverBuilder type(ClassInfo type);
 
     SyntheticObserverBuilder type(Type type);
 
@@ -42,7 +42,7 @@ public interface SyntheticObserverBuilder {
     // TODO methods to add multiple qualifiers at once?
     SyntheticObserverBuilder qualifier(Class<? extends Annotation> annotationType); // for marker annotations
 
-    SyntheticObserverBuilder qualifier(AnnotationInfo<?> qualifierAnnotation);
+    SyntheticObserverBuilder qualifier(AnnotationInfo qualifierAnnotation);
 
     SyntheticObserverBuilder qualifier(Annotation qualifierAnnotation);
 

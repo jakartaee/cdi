@@ -19,7 +19,7 @@ public interface SyntheticBeanBuilder<T> {
     // TODO methods to add multiple types at once?
     SyntheticBeanBuilder<T> type(Class<?> type);
 
-    SyntheticBeanBuilder<T> type(ClassInfo<?> type);
+    SyntheticBeanBuilder<T> type(ClassInfo type);
 
     SyntheticBeanBuilder<T> type(Type type);
 
@@ -27,7 +27,7 @@ public interface SyntheticBeanBuilder<T> {
     // TODO methods to add multiple qualifiers at once?
     SyntheticBeanBuilder<T> qualifier(Class<? extends Annotation> annotationType); // for marker annotations
 
-    SyntheticBeanBuilder<T> qualifier(AnnotationInfo<?> qualifierAnnotation);
+    SyntheticBeanBuilder<T> qualifier(AnnotationInfo qualifierAnnotation);
 
     SyntheticBeanBuilder<T> qualifier(Annotation qualifierAnnotation);
 
@@ -50,7 +50,7 @@ public interface SyntheticBeanBuilder<T> {
     // can be called multiple times and is additive
     SyntheticBeanBuilder<T> stereotype(Class<? extends Annotation> stereotypeAnnotation);
 
-    SyntheticBeanBuilder<T> stereotype(ClassInfo<?> stereotypeAnnotation);
+    SyntheticBeanBuilder<T> stereotype(ClassInfo stereotypeAnnotation);
 
     // params for creation and destruction functions
     SyntheticBeanBuilder<T> withParam(String key, boolean value);

@@ -23,7 +23,7 @@ public interface MetaAnnotations {
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
      */
-    void addQualifier(Class<? extends Annotation> annotation, Consumer<ClassConfig<?>> config);
+    void addQualifier(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
 
     /**
      * Registers {@code annotation} as an interceptor binding annotation. Only makes sense if the annotation
@@ -32,7 +32,7 @@ public interface MetaAnnotations {
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
      */
-    void addInterceptorBinding(Class<? extends Annotation> annotation, Consumer<ClassConfig<?>> config);
+    void addInterceptorBinding(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
 
     /**
      * Registers {@code annotation} as a stereotype annotation. Only makes sense if the annotation
@@ -41,7 +41,7 @@ public interface MetaAnnotations {
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
      */
-    void addStereotype(Class<? extends Annotation> annotation, Consumer<ClassConfig<?>> config);
+    void addStereotype(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
 
     /**
      * Registers custom context as configured by the returned {@link ContextConfig}.

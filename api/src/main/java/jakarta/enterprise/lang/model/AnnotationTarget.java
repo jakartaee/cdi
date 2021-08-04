@@ -74,7 +74,7 @@ public interface AnnotationTarget {
      * @param predicate annotation predicate, must not be {@code null}
      * @return {@code true} if given predicate matches any annotation present on this annotation target, {@code false} otherwise.
      */
-    boolean hasAnnotation(Predicate<AnnotationInfo<?>> predicate);
+    boolean hasAnnotation(Predicate<AnnotationInfo> predicate);
 
     /**
      * Returns an annotation of given type, if it is present on this annotation target.
@@ -83,7 +83,7 @@ public interface AnnotationTarget {
      * @param <T> the annotation generic type
      * @return the {@link AnnotationInfo} or {@code null} if no such annotation is present on this annotation target
      */
-    <T extends Annotation> AnnotationInfo<T> annotation(Class<T> annotationType);
+    <T extends Annotation> AnnotationInfo annotation(Class<T> annotationType);
 
     /**
      * Returns a collection of annotations of given repeatable annotation type
@@ -95,7 +95,7 @@ public interface AnnotationTarget {
      * @param <T> the annotation generic type
      * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
-    <T extends Annotation> Collection<AnnotationInfo<T>> repeatableAnnotation(Class<T> annotationType);
+    <T extends Annotation> Collection<AnnotationInfo> repeatableAnnotation(Class<T> annotationType);
 
     /**
      * Returns a collection of all annotations present on this annotation target that match given predicate.
@@ -104,7 +104,7 @@ public interface AnnotationTarget {
      * @param predicate annotation predicate, must not be {@code null}
      * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
-    Collection<AnnotationInfo<?>> annotations(Predicate<AnnotationInfo<?>> predicate);
+    Collection<AnnotationInfo> annotations(Predicate<AnnotationInfo> predicate);
 
     /**
      * Returns a collection of all annotations present on this annotation target.
@@ -112,5 +112,5 @@ public interface AnnotationTarget {
      *
      * @return immutable collection of {@link AnnotationInfo}, never {@code null}
      */
-    Collection<AnnotationInfo<?>> annotations();
+    Collection<AnnotationInfo> annotations();
 }

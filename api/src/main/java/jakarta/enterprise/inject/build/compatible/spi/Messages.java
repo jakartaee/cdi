@@ -29,7 +29,7 @@ public interface Messages {
      * @param message information message
      * @param relatedTo bean to which the message is related
      */
-    void info(String message, BeanInfo<?> relatedTo);
+    void info(String message, BeanInfo relatedTo);
 
     /**
      * Add an information message which is related to given {@link ObserverInfo}.
@@ -37,7 +37,7 @@ public interface Messages {
      * @param message information message
      * @param relatedTo observer to which the message is related
      */
-    void info(String message, ObserverInfo<?> relatedTo);
+    void info(String message, ObserverInfo relatedTo);
 
     /**
      * Add a generic warning that is not related to any particular element, or that information is not known.
@@ -61,7 +61,7 @@ public interface Messages {
      * @param message warning message
      * @param relatedTo bean to which the message is related
      */
-    void warn(String message, BeanInfo<?> relatedTo);
+    void warn(String message, BeanInfo relatedTo);
 
     /**
      * Add a warning which is related to given {@link ObserverInfo}.
@@ -69,7 +69,7 @@ public interface Messages {
      * @param message warning message
      * @param relatedTo observer to which the message is related
      */
-    void warn(String message, ObserverInfo<?> relatedTo);
+    void warn(String message, ObserverInfo relatedTo);
 
     /**
      * Add a generic error that is not related to any particular element, or that information is not known.
@@ -93,7 +93,7 @@ public interface Messages {
      * @param message error message
      * @param relatedTo bean to which the message is related
      */
-    void error(String message, BeanInfo<?> relatedTo);
+    void error(String message, BeanInfo relatedTo);
 
     /**
      * Add an error which is related to given {@link ObserverInfo}.
@@ -101,7 +101,7 @@ public interface Messages {
      * @param message error message
      * @param relatedTo observer to which the message is related
      */
-    void error(String message, ObserverInfo<?> relatedTo);
+    void error(String message, ObserverInfo relatedTo);
 
     /**
      * Add a generic error that is represented by an exception.

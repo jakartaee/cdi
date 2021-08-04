@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @param <T> type of whomever declares the inspected method or constructor
+ * Provides read-only information about a method.
  */
-public interface MethodInfo<T> extends DeclarationInfo {
-    // TODO remove the type parameter?
+public interface MethodInfo extends DeclarationInfo {
     // TODO split MethodInfo into MethodInfo/ConstructorInfo? a lot of methods here don't make sense for constructors,
     //  plus existing APIs (Core Reflection, CDI Portable Extensions) also make this distinction
 
@@ -37,7 +36,7 @@ public interface MethodInfo<T> extends DeclarationInfo {
 
     int modifiers();
 
-    ClassInfo<T> declaringClass();
+    ClassInfo declaringClass();
 
     // ---
 
@@ -47,7 +46,7 @@ public interface MethodInfo<T> extends DeclarationInfo {
     }
 
     @Override
-    default MethodInfo<?> asMethod() {
+    default MethodInfo asMethod() {
         return this;
     }
 }

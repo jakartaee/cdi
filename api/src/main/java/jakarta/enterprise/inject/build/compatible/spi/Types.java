@@ -26,7 +26,7 @@ public interface Types {
 
     Type ofPrimitive(PrimitiveType.PrimitiveKind kind);
 
-    Type ofClass(ClassInfo<?> clazz);
+    Type ofClass(ClassInfo clazz);
 
     Type ofArray(Type componentType, int dimensions);
 

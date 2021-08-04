@@ -24,5 +24,5 @@ public interface AnnotationBuilderFactory extends Prioritized {
      * @param annotationType the annotation type
      * @return a new {@link AnnotationBuilder}
      */
-    AnnotationBuilder create(ClassInfo<?> annotationType);
+    AnnotationBuilder create(ClassInfo annotationType);
 }
