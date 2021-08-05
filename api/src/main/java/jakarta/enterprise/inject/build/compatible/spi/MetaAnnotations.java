@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * @see #addQualifier(Class, Consumer)
  * @see #addInterceptorBinding(Class, Consumer)
  * @see #addStereotype(Class, Consumer)
- * @see #addContext()
+ * @see #addContext(Class)
  */
 public interface MetaAnnotations {
     // TODO this API style is not very common, and makes addContext too different
@@ -46,7 +46,8 @@ public interface MetaAnnotations {
     /**
      * Registers custom context as configured by the returned {@link ContextConfig}.
      *
+     * @param annotationType The annotation type, never {@code null}
      * @return custom context configurator, never {@code null}
      */
-    ContextConfig addContext();
+    <A extends Annotation> ContextConfig<A> addContext(Class<A> annotationType);
 }
