@@ -14,17 +14,8 @@ import jakarta.enterprise.lang.model.types.VoidType;
 public interface Types {
 
     /**
-     * Returns the type for the given canonical name as defined by {@link Class#getCanonicalName()} or {@code null}
-     * if the type is not present on the classpath or cannot be resolved.
-     *
-     * @param name The name of the type, never {@code null}
-     * @return {@link Type} object representing the type or {@code null}
-     */
-    Type forName(String name);
-
-    /**
      * Returns a type from the given class literal.
-     * 
+     *
      * For example:
      * <ul>
      * <li>{@code of(void.class)}: same as {@code ofVoid()}</li>
@@ -34,7 +25,7 @@ public interface Types {
      * <li>{@code of(String[][].class)}: same as {@code ofArray(ofClass(... ClassInfo for String ...), 2)}</li>
      * </ul>
      *
-     * @param clazz class literal
+     * @param clazz class literal, must not be {@code null}
      * @return {@link Type} object representing the given class literal
      */
     Type of(Class<?> clazz);
@@ -46,21 +37,21 @@ public interface Types {
 
     /**
      * Returns a {@link PrimitiveType} for the given {@link jakarta.enterprise.lang.model.types.PrimitiveType.PrimitiveKind kind}.
-     * @param kind The kind, never {@code null}
+     * @param kind The kind, must not be {@code null}
      * @return The {@link PrimitiveType}, never {@code null}
      */
     PrimitiveType ofPrimitive(PrimitiveType.PrimitiveKind kind);
 
     /**
      * Returns a {@link Type} for the given {@link ClassInfo clazz}.
-     * @param clazz The {@link ClassInfo}, never {@code null}
+     * @param clazz The {@link ClassInfo}, must not be {@code null}
      * @return A {@link Type}, never {@code null}
      */
     Type ofClass(ClassInfo clazz);
 
     /**
      * Returns an {@link ArrayType} for the given {@link Type componentType} and dimensions
-     * @param componentType The component {@link Type}
+     * @param componentType The component {@link Type}, must not be {@code null}
      * @param dimensions The dimensions
      * @return The {@link ArrayType}, never {@code null}
      */
@@ -69,7 +60,7 @@ public interface Types {
     /**
      * Returns a parameterized {@link Type} for the given type and type arguments.
      *
-     * @param parameterizedType The type to parametrize, never {@code null}
+     * @param parameterizedType The type to parametrize, must not be {@code null}
      * @param typeArguments Zero or more type arguments
      * @return A potentially parameterized type, never {@code null}
      */
@@ -78,7 +69,7 @@ public interface Types {
     /**
      * Returns a parameterized {@link Type} for the given type and type arguments.
      *
-     * @param parameterizedType The type to parametrize, never {@code null}
+     * @param parameterizedType The type to parametrize, must not be {@code null}
      * @param typeArguments Zero or more type arguments
      * @return A potentially parameterized type, never {@code null}
      */
@@ -87,7 +78,7 @@ public interface Types {
     /**
      * Returns a parameterized {@link Type} for the given type and type arguments.
      *
-     * @param parameterizedType The type to parametrize, never {@code null}
+     * @param parameterizedType The type to parametrize, must not be {@code null}
      * @param typeArguments Zero or more type arguments
      * @return A potentially parameterized type, never {@code null}
      */
@@ -96,7 +87,7 @@ public interface Types {
     /**
      * Equivalent of {@code ? extends upperBound}.
      *
-     * @param upperBound upper bound type
+     * @param upperBound upper bound type, must not be {@code null}
      * @return {@link Type} object representing a wildcard type with given upper bound
      */
     Type wildcardWithUpperBound(Type upperBound);
@@ -104,7 +95,7 @@ public interface Types {
     /**
      * Equivalent of {@code ? super lowerBound}.
      *
-     * @param lowerBound lower bound type
+     * @param lowerBound lower bound type, must not be {@code null}
      * @return {@link Type} object representing a wildcard type with given lower bound
      */
     Type wildcardWithLowerBound(Type lowerBound);
