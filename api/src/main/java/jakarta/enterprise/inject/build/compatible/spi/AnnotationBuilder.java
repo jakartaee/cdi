@@ -26,7 +26,7 @@ public interface AnnotationBuilder {
      * @return a new {@code AnnotationBuilder}, never {@code null}
      */
     static AnnotationBuilder of(Class<? extends Annotation> annotationType) {
-        return AnnotationBuilderFactoryResolver.get().create(annotationType);
+        return BuildServicesResolver.get().annotationBuilderFactory().create(annotationType);
     }
 
     /**
@@ -36,7 +36,7 @@ public interface AnnotationBuilder {
      * @return a new {@code AnnotationBuilder}
      */
     static AnnotationBuilder of(ClassInfo annotationType) {
-        return AnnotationBuilderFactoryResolver.get().create(annotationType);
+        return BuildServicesResolver.get().annotationBuilderFactory().create(annotationType);
     }
 
     /**
