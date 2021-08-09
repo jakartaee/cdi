@@ -74,11 +74,6 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private transient Integer cachedHashCode;
 
     protected AnnotationLiteral() {
-        if (getMembers().length == 0) {
-            this.cachedHashCode = 0;
-        } else {
-            this.cachedHashCode = null;
-        }
     }
 
     private Method[] getMembers() {
@@ -87,6 +82,11 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
             if (members.length > 0 && !annotationType().isAssignableFrom(this.getClass())) {
                 throw new RuntimeException(getClass() + " does not implement the annotation type with members "
                         + annotationType().getName());
+            }
+            if (members.length == 0) {
+                this.cachedHashCode = 0;
+            } else {
+                this.cachedHashCode = null;
             }
         }
         return members;
@@ -183,7 +183,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     }
 
     private void appendInBraces(StringBuilder buf, String s) {
-        buf.append('{').append(s.substring(1, s.length() - 1)).append('}');
+        buf.append('{').append(s, 1, s.length() - 1).append('}');
     }
 
     @Override
@@ -240,11 +240,12 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     @Override
     public int hashCode() {
+        Method[] members = getMembers(); // init cachedHashCode
         if (cachedHashCode != null) {
             return cachedHashCode;
         } else {
             int hashCode = 0;
-            for (Method member : getMembers()) {
+            for (Method member : members) {
                 int memberNameHashCode = 127 * member.getName().hashCode();
                 Object value = getMemberValue(member, this);
                 int memberValueHashCode;
