@@ -2,6 +2,7 @@ package jakarta.enterprise.inject.build.compatible.spi;
 
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.ArrayType;
+import jakarta.enterprise.lang.model.types.ClassType;
 import jakarta.enterprise.lang.model.types.PrimitiveType;
 import jakarta.enterprise.lang.model.types.Type;
 import jakarta.enterprise.lang.model.types.VoidType;
@@ -29,6 +30,16 @@ public interface Types {
      * @return {@link Type} object representing the given class literal
      */
     Type of(Class<?> clazz);
+
+    /**
+     * Returns a {@link ClassType type} for the given {@link Class#getName() binary class name}.
+     *
+     * <p>Note that only {@link ClassType} instances can be returned from this method, for primitives use {@link #ofPrimitive(PrimitiveType.PrimitiveKind)}.</p>
+     *
+     * @param name The binary class name, must not be {@code null}
+     * @return The {@link ClassType} or {@code null} if the type doesn't exist on the application classpath
+     */
+    ClassType ofClass(String name);
 
     /**
      * @return An instance of {@link jakarta.enterprise.lang.model.types.VoidType}, never {@code null}
