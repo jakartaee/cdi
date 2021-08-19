@@ -8,17 +8,22 @@ import java.util.Map;
 /**
  * An annotation instance, typically obtained from an {@link AnnotationTarget}.
  * Provides access to annotation members and their values.
+ * <p>
+ * Implementations of this interface are required to define the {@code equals} and {@code hashCode} methods.
+ * Implementations of this interface are encouraged to define the {@code toString} method such that
+ * it returns a text resembling the corresponding Java&trade; syntax.
+ * <p>
+ * There is no guarantee that any particular annotation instance, represented by an implementation of this interface,
+ * will always be represented by the same object. That includes natural singletons such as the {@code jakarta.inject.Singleton}
+ * annotation. Instances should always be compared using {@code equals}.
+ *
+ * @since 4.0
  */
 public interface AnnotationInfo {
     /**
-     * Name of the commonly used {@code value()} annotation member.
-     */
-    String MEMBER_VALUE = "value";
-
-    /**
-     * Declaration of this annotation's type.
+     * Returns the {@linkplain ClassInfo declaration} of this annotation's type.
      *
-     * @return declaration of this annotation's type, never {@code null}
+     * @return the {@linkplain ClassInfo declaration} of this annotation's type, never {@code null}
      */
     ClassInfo declaration();
 
@@ -52,7 +57,7 @@ public interface AnnotationInfo {
     boolean hasMember(String name);
 
     /**
-     * Returns the {@link AnnotationMember value} of this annotation's member with given {@code name}.
+     * Returns the {@linkplain AnnotationMember value} of this annotation's member with given {@code name}.
      *
      * @param name member name, must not be {@code null}
      * @return value of this annotation's member with given {@code name} or {@code null} if such member doesn't exist
@@ -60,21 +65,21 @@ public interface AnnotationInfo {
     AnnotationMember member(String name);
 
     /**
-     * Returns whether this annotation has the {@link #MEMBER_VALUE value} member.
+     * Returns whether this annotation has the {@link AnnotationMember#VALUE value} member.
      *
-     * @return {@code true} if this annotation has the {@link #MEMBER_VALUE value} member, {@code false} otherwise
+     * @return {@code true} if this annotation has the {@link AnnotationMember#VALUE value} member, {@code false} otherwise
      */
     default boolean hasValue() {
-        return hasMember(MEMBER_VALUE);
+        return hasMember(AnnotationMember.VALUE);
     }
 
     /**
-     * Returns the {@link AnnotationMember value} of this annotation's {@link #MEMBER_VALUE value} member.
+     * Returns the {@linkplain AnnotationMember value} of this annotation's {@link AnnotationMember#VALUE value} member.
      *
-     * @return value of this annotation's {@link #MEMBER_VALUE value} member or {@code null} if the member doesn't exist
+     * @return value of this annotation's {@link AnnotationMember#VALUE value} member or {@code null} if the member doesn't exist
      */
     default AnnotationMember value() {
-        return member(MEMBER_VALUE);
+        return member(AnnotationMember.VALUE);
     }
 
     /**

@@ -8,27 +8,41 @@ import java.util.List;
 /**
  * The value of an annotation member. Annotation member values are of several kinds:
  * <ul>
- *     <li>primitive types;</li>
- *     <li>{@link String}s;</li>
- *     <li>{@link Enum}s;</li>
- *     <li>{@link Class}es;</li>
- *     <li>nested {@link java.lang.annotation.Annotation Annotation}s;</li>
- *     <li>arrays of previously mentioned types.</li>
+ * <li>primitive constants;</li>
+ * <li>{@link String} constants;</li>
+ * <li>{@link Enum} constants;</li>
+ * <li>{@link Class} literals;</li>
+ * <li>nested {@link java.lang.annotation.Annotation Annotation}s;</li>
+ * <li>arrays of previously mentioned types.</li>
  * </ul>
  * The {@link #kind()} method returns the kind of this annotation member value.
  * The {@code is*} methods (such as {@link #isBoolean()}) allow checking
  * if this annotation member value is of given kind. The {@code as*} methods
  * (such as {@link #asBoolean()} allow "unwrapping" this annotation member value,
  * if it is of the corresponding kind.
+ * <p>
+ * Implementations of this interface are required to define the {@code equals} and {@code hashCode} methods.
+ * Implementations of this interface are encouraged to define the {@code toString} method such that
+ * it returns a text resembling the corresponding Java&trade; syntax.
+ * <p>
+ * There is no guarantee that any particular annotation member, represented by an implementation of this interface,
+ * will always be represented by the same object. This includes natural singletons such as {@code boolean} values.
+ * Instances should always be compared using {@code equals}.
  *
- * TODO do the as* methods allow coercion or not? E.g., does asLong return a long
- *  if the value is of kind int, or does it throw? Fortunately, this only applies
- *  to the numeric primitive types and maybe String. I currently left the numeric
- *  as* methods documented as coercing, while asString as not coercing, but this
- *  needs more discussion. I personally don't like coercion here and would always
- *  throw if the type mismatches.
+ * @since 4.0
  */
+// TODO do the as* methods allow coercion or not? E.g., does asLong return a long
+//  if the value is of kind int, or does it throw? Fortunately, this only applies
+//  to the numeric primitive types and maybe String. I currently left the numeric
+//  as* methods documented as coercing, while asString as not coercing, but this
+//  needs more discussion. I personally don't like coercion here and would always
+//  throw if the type mismatches.
 public interface AnnotationMember {
+    /**
+     * Name of the commonly used {@code value()} annotation member.
+     */
+    String VALUE = "value";
+
     /**
      * The kind of the annotation member value.
      */
@@ -278,21 +292,21 @@ public interface AnnotationMember {
     ClassInfo asEnumClass();
 
     /**
-     * Returns the name of this enum value (also known as enum constant).
+     * Returns the name of this enum value.
      *
-     * @return the name of this enum constant
+     * @return the name of this enum value
      * @throws IllegalStateException if this annotation member value is not an enum value
      */
     String asEnumConstant();
 
     /**
-     * Returns this class value as a {@link Type}. It can possibly be:
+     * Returns this class value as a {@link Type}. It can be:
      * <ul>
-     *     <li>the {@link jakarta.enterprise.lang.model.types.VoidType void} type;</li>
-     *     <li>a {@link jakarta.enterprise.lang.model.types.PrimitiveType primitive} type;</li>
-     *     <li>a {@link jakarta.enterprise.lang.model.types.ClassType class} type;</li>
-     *     <li>an {@link jakarta.enterprise.lang.model.types.ArrayType array} type, whose component type
-     *     is a primitive type or a class type.</li>
+     * <li>the {@linkplain jakarta.enterprise.lang.model.types.VoidType void} pseudo-type;</li>
+     * <li>a {@linkplain jakarta.enterprise.lang.model.types.PrimitiveType primitive} type;</li>
+     * <li>a {@linkplain jakarta.enterprise.lang.model.types.ClassType class} type;</li>
+     * <li>an {@linkplain jakarta.enterprise.lang.model.types.ArrayType array} type, whose element type
+     * is a primitive type or a class type.</li>
      * </ul>
      *
      * @return the class value, as a {@link Type}

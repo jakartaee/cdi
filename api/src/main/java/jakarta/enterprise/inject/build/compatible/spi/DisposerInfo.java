@@ -4,20 +4,23 @@ import jakarta.enterprise.lang.model.declarations.MethodInfo;
 import jakarta.enterprise.lang.model.declarations.ParameterInfo;
 
 /**
- * Provides read-only information about a disposer method.
+ * Disposer methods may exist for producer-based beans. Each disposer method
+ * has a {@linkplain #disposedParameter() disposed parameter}.
+ *
+ * @since 4.0
  */
 public interface DisposerInfo {
     /**
-     * Returns this disposer method represented as {@link MethodInfo}.
+     * Returns the {@linkplain MethodInfo declaration} of this disposer method.
      *
-     * @return the {@link MethodInfo}, never {@code null}
+     * @return the {@linkplain MethodInfo declaration} of this disposer method, never {@code null}
      */
     MethodInfo disposerMethod();
 
     /**
-     * Returns the disposed parameter of this disposer method.
+     * Returns the {@linkplain ParameterInfo declaration} of the disposed parameter of this disposer method.
      *
-     * @return the disposed parameter, never {@code null}
+     * @return the {@linkplain ParameterInfo declaration} of the disposed parameter of this disposer method, never {@code null}
      */
     ParameterInfo disposedParameter();
 }

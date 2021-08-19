@@ -3,7 +3,10 @@ package jakarta.enterprise.lang.model.declarations;
 import jakarta.enterprise.lang.model.types.Type;
 
 /**
- * Provides read-only information about a method parameter.
+ * A method parameter or a constructor parameter, {@linkplain #declaringMethod() declared} in some method
+ * or constructor.
+ *
+ * @since 4.0
  */
 public interface ParameterInfo extends DeclarationInfo {
     /**
@@ -16,16 +19,16 @@ public interface ParameterInfo extends DeclarationInfo {
     String name();
 
     /**
-     * Returns the {@link Type type} of this parameter.
+     * Returns the {@linkplain Type type} of this parameter.
      *
-     * @return the type of this parameter, never {@code null}
+     * @return the {@linkplain Type type} of this parameter, never {@code null}
      */
     Type type();
 
     /**
-     * Returns the {@link MethodInfo method} that declares this parameter.
+     * Returns the {@linkplain MethodInfo method} that declares this parameter.
      *
-     * @return the method that declares this parameter, never {@code null}
+     * @return the {@linkplain MethodInfo method} that declares this parameter, never {@code null}
      */
     MethodInfo declaringMethod();
 

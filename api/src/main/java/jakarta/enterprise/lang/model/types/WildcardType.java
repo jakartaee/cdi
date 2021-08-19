@@ -1,29 +1,32 @@
 package jakarta.enterprise.lang.model.types;
 
-import java.util.Optional;
-
 /**
- * In case the wildcard type is unbounded (i.e., declared as {@code ?}), both {@code upperBound}
- * and {@code lowerBound} are empty.
+ * A wildcard type. May have 3 forms:
+ * <ul>
+ * <li>{@code ? extends Number}: has an upper bound</li>
+ * <li>{@code ? super Number}: has a lower bound</li>
+ * <li>{@code ?}: unbounded, has neither upper bound nor lower bound</li>
+ * </ul>
+ * Note that {@code ? extends Object} is equivalent to {@code ?} and is represented as such.
  */
+// TODO another option is that unbounded wildcards and wildcards with lower bound would always have
+//  java.lang.Object as an upper bound
 public interface WildcardType extends Type {
     /**
-     * Present when the wildcard type has a form of {@code ? extends Number}.
-     * The upper bound in this case is {@code Number}.
-     * Otherwise empty.
+     * Returns the upper bound of this wildcard type.
+     * Returns {@code null} if this wildcard type doesn't have an upper bound.
      *
-     * @return upper bound of this wildcard type, if present
+     * @return upper bound of this wildcard type, or {@code null} if this wildcard type doesn't have an upper bound
      */
-    Optional<Type> upperBound();
+    Type upperBound();
 
     /**
-     * Present when the wildcard type has a form of {@code ? super Number}.
-     * The lower bound in this case is {@code Number}.
-     * Otherwise empty.
+     * Returns the lower bound of this wildcard type.
+     * Returns {@code null} if this wildcard type doesn't have a lower bound.
      *
-     * @return lower bound of this wildcard type, if present
+     * @return lower bound of this wildcard type, or {@code null} if this wildcard type doesn't have a lower bound
      */
-    Optional<Type> lowerBound();
+    Type lowerBound();
 
     // ---
 

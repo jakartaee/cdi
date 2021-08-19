@@ -21,11 +21,13 @@ import java.lang.annotation.Target;
  * You can also declare a parameter of type {@link Messages Messages} to produce log messages and validation errors.
  * <p>
  * If you need to create instances of {@link jakarta.enterprise.lang.model.types.Type Type}, you can also declare
- * a parameter of type {@link Types}. It provides factory methods for the void type, primitive types,
+ * a parameter of type {@link Types}. It provides factory methods for the void pseudo-type, primitive types,
  * class types, array types, parameterized types and wildcard types.
  * <p>
  * If you need to create instances of {@link jakarta.enterprise.lang.model.AnnotationInfo AnnotationInfo},
  * use {@link AnnotationBuilder}.
+ *
+ * @since 4.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

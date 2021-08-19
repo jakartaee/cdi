@@ -29,6 +29,8 @@ package jakarta.enterprise.inject.build.compatible.spi;
  * <p>
  * Extension classes can be annotated {@link SkipIfPortableExtensionPresent @SkipIfPortablExtensionPresent}
  * when they are supposed to be ignored in presence of a given portable extension.
+ *
+ * @since 4.0
  */
 public interface BuildCompatibleExtension {
     // TODO rename? "build compatible" is too long; ideally, we'd have a single word that describes

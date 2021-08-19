@@ -8,12 +8,11 @@ import jakarta.enterprise.lang.model.declarations.MethodInfo;
  * are only seen by the CDI container.
  *
  * @see Enhancement
+ * @since 4.0
  */
 public interface MethodConfig extends DeclarationConfig<MethodConfig> {
-    // TODO split MethodConfig into MethodConfig/ConstructorConfig?
-
     /**
-     * Returns the {@link MethodInfo read-only information} about this transformed method.
+     * Returns the {@link MethodInfo} corresponding to this transformed method.
      *
      * @return the {@link MethodInfo} corresponding to this transformed method, never {@code null}
      */

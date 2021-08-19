@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
  * <p>
  * If the {@code annotatedWith} attribute is set, only types that use given annotations are considered.
  * The annotations can appear on the type, or on any member of the type, or any parameter of any member of the type.
+ *
+ * @since 4.0
  */
 // TODO should the given type itself also match? (in theory yes, as subtyping is reflexive)
 @Target(ElementType.METHOD)

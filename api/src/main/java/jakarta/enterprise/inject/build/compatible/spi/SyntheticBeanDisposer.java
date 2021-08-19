@@ -7,6 +7,7 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * Implementations must be {@code public} classes with a {@code public} zero-parameter constructor.
  *
  * @param <T> type of disposed instances
+ * @since 4.0
  */
 public interface SyntheticBeanDisposer<T> {
     // TODO maybe a more high-level API that takes an Instance?

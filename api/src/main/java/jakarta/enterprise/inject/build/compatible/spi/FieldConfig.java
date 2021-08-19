@@ -8,10 +8,11 @@ import jakarta.enterprise.lang.model.declarations.FieldInfo;
  * are only seen by the CDI container.
  *
  * @see Enhancement
+ * @since 4.0
  */
 public interface FieldConfig extends DeclarationConfig<FieldConfig> {
     /**
-     * Returns the {@link FieldInfo read-only information} about this transformed field.
+     * Returns the {@link FieldInfo} corresponding to this transformed field.
      *
      * @return the {@link FieldInfo} corresponding to this transformed field, never {@code null}
      */

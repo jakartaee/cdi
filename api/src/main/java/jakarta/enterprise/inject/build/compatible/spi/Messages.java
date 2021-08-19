@@ -5,6 +5,8 @@ import jakarta.enterprise.lang.model.AnnotationTarget;
 /**
  * Allows logging and producing errors during {@link BuildCompatibleExtension} execution.
  * If an error is produced, application deployment will fail.
+ *
+ * @since 4.0
  */
 public interface Messages {
     /**

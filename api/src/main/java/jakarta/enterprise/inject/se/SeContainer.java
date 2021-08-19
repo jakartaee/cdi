@@ -68,7 +68,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * Default implementation just forwards the call to {@link #getBeanManager()}.
      *
      * @return the {@link BeanContainer}
-     * @since 4.0.0
+     * @since 4.0
      */
     default BeanContainer getBeanContainer() {
         return getBeanManager();

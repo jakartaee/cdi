@@ -6,7 +6,10 @@ import jakarta.enterprise.lang.model.types.Type;
 import java.util.Collection;
 
 /**
- * Provides read-only information about an injection point.
+ * An injection point defined on some bean. Injection points may be fields
+ * or method parameters.
+ *
+ * @since 4.0
  */
 public interface InjectionPointInfo {
     /**

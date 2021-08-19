@@ -12,40 +12,47 @@ import java.util.function.Predicate;
  * That is:
  *
  * <ul>
- * <li>a <i>declaration</i>, such as a class, method, field, etc. See {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo}.</li>
- * <li>a <i>type parameter</i>, occurring in class declarations and method declarations.</li>
- * <li>a <i>type use</i>, such as a type of method parameter, a type of field, a type argument, etc. See {@link jakarta.enterprise.lang.model.types.Type}.</li>
+ * <li>a {@linkplain DeclarationInfo declaration}, such as a class, a method, a field, etc.</li>
+ * <li>a {@linkplain Type type}, such as the type of a method parameter, the type of a field, a type argument,
+ * a type parameter, present in a declaration of a generic class or method, etc.</li>
  * </ul>
  *
- * Annotations are represented as {@link AnnotationInfo}, so that implementations of this API are not required
+ * The {@code hasAnnotation}, {@code annotation}, {@code repeatableAnnotation} and {@code annotations} methods
+ * may be used to obtain information about annotations present on this annotation target. The phrase
+ * "present on this annotation target" means: either the annotation is directly declared on this annotation
+ * target, or this annotation target is a class declaration and the annotation is
+ * {@linkplain java.lang.annotation.Inherited inherited} from a superclass.
+ * <p>
+ * Annotations are represented as {@link AnnotationInfo}, so that implementations of this interface are not required
  * to instantiate the annotation type.
+ * <p>
+ * Implementations of this interface are required to define the {@code equals} and {@code hashCode} methods.
+ * Implementations of this interface are encouraged to define the {@code toString} method such that
+ * it returns a text resembling the corresponding Java&trade; syntax.
+ * <p>
+ * There is no guarantee that any particular construct, represented by an implementation of this interface,
+ * will always be represented by the same object. That includes natural singletons such as the {@code java.lang.Object}
+ * class declaration, or the {@code void} pseudo-type. Instances should always be compared using {@code equals}.
  *
- * @since 4.0.0
+ * @since 4.0
  */
 public interface AnnotationTarget {
-    // TODO specify equals/hashCode (for the entire .lang.model hierarchy)
-    // TODO we decided that we won't use Optional and will just return null; need to make this consistent everywhere
-    // TODO what about declared vs not declared (inherited) annotations?
-    //  probably should always return all, including inherited, that's what Portable Extensions do
-
     /**
-     * Returns whether this annotation target is a {@link DeclarationInfo declaration}.
+     * Returns whether this annotation target is a {@linkplain DeclarationInfo declaration}.
      *
      * @return {@code true} if this is a declaration, {@code false} otherwise
-     * @see jakarta.enterprise.lang.model.declarations.DeclarationInfo
      */
     boolean isDeclaration();
 
     /**
-     * Returns whether this annotation target is a {@link Type type}.
+     * Returns whether this annotation target is a {@linkplain Type type}.
      *
      * @return {@code true} if this is a type, {@code false} otherwise
-     * @see jakarta.enterprise.lang.model.types.Type
      */
     boolean isType();
 
     /**
-     * Returns this annotation target as a {@link DeclarationInfo declaration}.
+     * Returns this annotation target as a {@linkplain DeclarationInfo declaration}.
      *
      * @return this declaration, never {@code null}
      * @throws IllegalStateException if {@link #isDeclaration()} returns {@code false}
@@ -53,7 +60,7 @@ public interface AnnotationTarget {
     DeclarationInfo asDeclaration();
 
     /**
-     * Returns this annotation target as a {@link Type type}.
+     * Returns this annotation target as a {@linkplain Type type}.
      *
      * @return this type, never {@code null}
      * @throws IllegalStateException if {@link #isType()} returns {@code false}
@@ -78,10 +85,11 @@ public interface AnnotationTarget {
 
     /**
      * Returns an annotation of given type, if it is present on this annotation target.
+     * Returns {@code null} if no such annotation is present.
      *
      * @param annotationType the annotation type, must not be {@code null}
      * @param <T> the annotation generic type
-     * @return the {@link AnnotationInfo} or {@code null} if no such annotation is present on this annotation target
+     * @return the {@link AnnotationInfo} or {@code null} if no such annotation is present
      */
     <T extends Annotation> AnnotationInfo annotation(Class<T> annotationType);
 

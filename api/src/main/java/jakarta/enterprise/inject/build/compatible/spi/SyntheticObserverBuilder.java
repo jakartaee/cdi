@@ -11,6 +11,8 @@ import java.lang.annotation.Annotation;
 /**
  * Instances are not reusable. For each synthetic observer, new instance
  * must be created by {@link SyntheticComponents#addObserver()}.
+ *
+ * @since 4.0
  */
 public interface SyntheticObserverBuilder {
     // TODO should add a type parameter? (see also SyntheticBeanBuilder and SyntheticComponents)
