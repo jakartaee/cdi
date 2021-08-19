@@ -12,10 +12,11 @@ import java.util.function.Predicate;
  * are only seen by the CDI container.
  *
  * @see Enhancement
+ * @since 4.0
  */
 public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
     /**
-     * Returns the {@link DeclarationInfo read-only information} about this transformed declaration.
+     * Returns the {@link DeclarationInfo} corresponding to this transformed declaration.
      *
      * @return the {@link DeclarationInfo} corresponding to this transformed declaration, never {@code null}
      */

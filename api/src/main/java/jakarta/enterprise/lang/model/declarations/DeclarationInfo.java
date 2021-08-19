@@ -4,15 +4,18 @@ import jakarta.enterprise.lang.model.AnnotationTarget;
 import jakarta.enterprise.lang.model.types.Type;
 
 /**
+ * Declarations directly correspond to an element of a program source code.
  * Declarations are:
  *
  * <ul>
- * <li>a <i>package</i>, as declared in {@code package-info.java}</li>
- * <li>a <i>class</i>, including interfaces, enums, and annotations</li>
- * <li>a <i>field</i></li>
- * <li>a <i>method</i>, including constructors</li>
- * <li>a <i>method parameter</i></li>
+ * <li>{@linkplain PackageInfo packages}</li>
+ * <li>{@linkplain ClassInfo classes}, including interfaces, enums, and annotations</li>
+ * <li>{@linkplain FieldInfo fields}</li>
+ * <li>{@linkplain MethodInfo methods}, including constructors</li>
+ * <li>{@linkplain ParameterInfo method parameters}, including constructor parameters</li>
  * </ul>
+ *
+ * @since 4.0
  */
 public interface DeclarationInfo extends AnnotationTarget {
     // TODO reevaluate the is*/as*/kind() approach (everywhere!); maybe type checks and casts are better, maybe
@@ -39,7 +42,6 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     enum Kind {
-        /** Packages can be annotated in {@code package-info.java}. */
         PACKAGE,
         CLASS,
         METHOD,
@@ -48,14 +50,14 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns the {@link Kind kind} of this declaration.
+     * Returns the {@linkplain Kind kind} of this declaration.
      *
      * @return the kind of this declaration
      */
     Kind kind();
 
     /**
-     * Returns whether this declaration is a {@link PackageInfo package}.
+     * Returns whether this declaration is a {@linkplain PackageInfo package}.
      *
      * @return {@code true} if this is a package, {@code false} otherwise
      */
@@ -64,7 +66,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this declaration is a {@link ClassInfo class}.
+     * Returns whether this declaration is a {@linkplain ClassInfo class}.
      *
      * @return {@code true} if this is a class, {@code false} otherwise
      */
@@ -73,7 +75,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this declaration is a {@link MethodInfo method}.
+     * Returns whether this declaration is a {@linkplain MethodInfo method}.
      *
      * @return {@code true} if this is a method, {@code false} otherwise
      */
@@ -82,7 +84,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this declaration is a {@link ParameterInfo method parameter}.
+     * Returns whether this declaration is a {@linkplain ParameterInfo method parameter}.
      *
      * @return {@code true} if this is a parameter, {@code false} otherwise
      */
@@ -91,7 +93,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this declaration is a {@link FieldInfo field}.
+     * Returns whether this declaration is a {@linkplain FieldInfo field}.
      *
      * @return {@code true} if this is a field, {@code false} otherwise
      */
@@ -100,7 +102,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns this declaration as a {@link PackageInfo package}.
+     * Returns this declaration as a {@linkplain PackageInfo package}.
      *
      * @return this package, never {@code null}
      * @throws IllegalStateException if {@link #isPackage()} returns {@code false}
@@ -110,7 +112,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns this declaration as a {@link ClassInfo class}.
+     * Returns this declaration as a {@linkplain ClassInfo class}.
      *
      * @return this class, never {@code null}
      * @throws IllegalStateException if {@link #isClass()} returns {@code false}
@@ -120,7 +122,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns this declaration as a {@link MethodInfo method}.
+     * Returns this declaration as a {@linkplain MethodInfo method}.
      *
      * @return this method, never {@code null}
      * @throws IllegalStateException if {@link #isMethod()} returns {@code false}
@@ -130,7 +132,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns this declaration as a {@link ParameterInfo method parameter}.
+     * Returns this declaration as a {@linkplain ParameterInfo method parameter}.
      *
      * @return this parameter, never {@code null}
      * @throws IllegalStateException if {@link #isParameter()} returns {@code false}
@@ -140,7 +142,7 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
-     * Returns this declaration as a {@link FieldInfo field}.
+     * Returns this declaration as a {@linkplain FieldInfo field}.
      *
      * @return this field, never {@code null}
      * @throws IllegalStateException if {@link #isField()} returns {@code false}

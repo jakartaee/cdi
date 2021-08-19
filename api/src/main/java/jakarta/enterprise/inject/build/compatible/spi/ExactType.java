@@ -23,6 +23,8 @@ import java.lang.annotation.Target;
  * If the {@code annotatedWith} attribute is set, only types that use given annotations are considered.
  * The annotations can appear on the type, or on any member of the type, or any parameter of any member of the type.
  * This is ignored for {@code @Processing}.
+ *
+ * @since 4.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -3,19 +3,21 @@ package jakarta.enterprise.lang.model.types;
 import jakarta.enterprise.lang.model.AnnotationTarget;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
-import jakarta.enterprise.lang.model.declarations.PackageInfo;
 
 /**
+ * A type is an abstract entity that may be <i>used</i> in a program, but doesn't necessarily have to
+ * correspond to a <i>declaration</i> in a program. Types that are declared in a program source code have a method
+ * to obtain the corresponding {@linkplain DeclarationInfo declaration}.
  * Types are:
  *
  * <ul>
- * <li>the <i>void</i> type</li>
- * <li>a <i>primitive</i> type, such as {@code int}</li>
- * <li>a <i>class</i> type, such as {@code String}</li>
- * <li>an <i>array</i> type, such as {@code int[]} or {@code String[][]}</li>
- * <li>a <i>parameterized type</i>, such as {@code List<String>}</li>
- * <li>a <i>type variable</i>, such as {@code T} when used in a class that declares a type parameter {@code T}</li>
- * <li>a <i>wildcard</i> type, such as the type argument declared in {@code List<? extends Number>}</li>
+ * <li>the {@linkplain VoidType void} pseudo-type</li>
+ * <li>a {@linkplain PrimitiveType primitive} type, such as {@code int}</li>
+ * <li>a {@linkplain ClassType class} type, such as {@code String}</li>
+ * <li>an {@linkplain ArrayType array} type, such as {@code int[]} or {@code String[][]}</li>
+ * <li>a {@linkplain ParameterizedType parameterized} type, such as {@code List<String>}</li>
+ * <li>a {@linkplain TypeVariable type variable}, such as {@code T} when used in a class that declares a type parameter {@code T}</li>
+ * <li>a {@linkplain WildcardType wildcard} type, such as the type argument in {@code List<? extends Number>}</li>
  * </ul>
  */
 public interface Type extends AnnotationTarget {
@@ -60,14 +62,14 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns the {@link Kind kind} of this type.
+     * Returns the {@linkplain Kind kind} of this type.
      *
      * @return the kind of this type
      */
     Kind kind();
 
     /**
-     * Returns whether this type is the {@link VoidType void} type.
+     * Returns whether this type is the {@linkplain VoidType void} pseudo-type.
      *
      * @return {@code true} if this is void, {@code false} otherwise
      */
@@ -76,7 +78,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is a {@link PrimitiveType primitive} type.
+     * Returns whether this type is a {@linkplain PrimitiveType primitive} type.
      *
      * @return {@code true} if this is a primitive type, {@code false} otherwise
      */
@@ -85,7 +87,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is a {@link ClassType class} type.
+     * Returns whether this type is a {@linkplain ClassType class} type.
      *
      * @return {@code true} if this is a class type, {@code false} otherwise
      */
@@ -94,7 +96,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is an {@link ArrayType array} type.
+     * Returns whether this type is an {@linkplain ArrayType array} type.
      *
      * @return {@code true} if this is an array type, {@code false} otherwise
      */
@@ -103,7 +105,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is a {@link ParameterizedType parameterized} type.
+     * Returns whether this type is a {@linkplain ParameterizedType parameterized} type.
      *
      * @return {@code true} if this is a parameterized type, {@code false} otherwise
      */
@@ -112,7 +114,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is a {@link TypeVariable type variable}.
+     * Returns whether this type is a {@linkplain TypeVariable type variable}.
      * Type variables are also used to represent type parameters in declarations
      * of parameterized types.
      *
@@ -123,7 +125,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns whether this type is a {@link WildcardType wildcard} type.
+     * Returns whether this type is a {@linkplain WildcardType wildcard} type.
      *
      * @return {@code true} if this is a wildcard type, {@code false} otherwise
      */
@@ -132,7 +134,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as the {@link VoidType void} type.
+     * Returns this type as the {@linkplain VoidType void} pseudo-type.
      *
      * @return this void type, never {@code null}
      * @throws IllegalStateException if {@link #isVoid()} returns {@code false}
@@ -142,7 +144,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as a {@link PrimitiveType primitive} type.
+     * Returns this type as a {@linkplain PrimitiveType primitive} type.
      *
      * @return this primitive type, never {@code null}
      * @throws IllegalStateException if {@link #isPrimitive()} returns {@code false}
@@ -152,7 +154,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as a {@link ClassType class} type.
+     * Returns this type as a {@linkplain ClassType class} type.
      *
      * @return this class type, never {@code null}
      * @throws IllegalStateException if {@link #isClass()} returns {@code false}
@@ -162,7 +164,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as an {@link ArrayType array} type.
+     * Returns this type as an {@linkplain ArrayType array} type.
      *
      * @return this array type, never {@code null}
      * @throws IllegalStateException if {@link #isArray()} returns {@code false}
@@ -172,7 +174,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as a {@link ParameterizedType parameterized} type.
+     * Returns this type as a {@linkplain ParameterizedType parameterized} type.
      *
      * @return this parameterized type, never {@code null}
      * @throws IllegalStateException if {@link #isParameterizedType()} returns {@code false}
@@ -182,7 +184,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as a {@link TypeVariable type variable}.
+     * Returns this type as a {@linkplain TypeVariable type variable}.
      * Type variables are also used to represent type parameters in declarations
      * of parameterized types.
      *
@@ -194,7 +196,7 @@ public interface Type extends AnnotationTarget {
     }
 
     /**
-     * Returns this type as a {@link WildcardType wildcard} type.
+     * Returns this type as a {@linkplain WildcardType wildcard} type.
      *
      * @return this wildcard type, never {@code null}
      * @throws IllegalStateException if {@link #isWildcardType()} returns {@code false}

@@ -8,6 +8,7 @@ import jakarta.enterprise.inject.spi.InjectionPoint;
  * Implementations must be {@code public} classes with a {@code public} zero-parameter constructor.
  *
  * @param <T> type of created instances
+ * @since 4.0
  */
 public interface SyntheticBeanCreator<T> {
     // TODO maybe a more high-level API that takes an Instance?

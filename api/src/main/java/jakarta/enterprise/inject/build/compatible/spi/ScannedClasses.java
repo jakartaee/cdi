@@ -3,6 +3,8 @@ package jakarta.enterprise.inject.build.compatible.spi;
 /**
  * Allows registering additional classes to be scanned during bean discovery.
  * Annotations on these classes can later be transformed using {@link Enhancement @Enhancement}.
+ *
+ * @since 4.0
  */
 public interface ScannedClasses {
     /**

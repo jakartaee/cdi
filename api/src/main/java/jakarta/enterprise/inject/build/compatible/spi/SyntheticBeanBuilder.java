@@ -11,6 +11,7 @@ import java.lang.annotation.Annotation;
  * must be created by {@link SyntheticComponents#addBean(Class)}.
  *
  * @param <T> type of bean instances
+ * @since 4.0
  */
 public interface SyntheticBeanBuilder<T> {
     // TODO should have the type parameter? (see also SyntheticObserverBuilder and SyntheticComponents)

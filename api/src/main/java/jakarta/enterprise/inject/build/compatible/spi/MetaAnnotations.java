@@ -1,16 +1,16 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import jakarta.enterprise.context.spi.AlterableContext;
+
 import java.lang.annotation.Annotation;
 import java.util.function.Consumer;
 
 /**
  * Allows registering custom CDI meta-annotations: qualifiers, interceptor bindings,
- * stereotypes, and custom scopes.
+ * stereotypes, and scopes. When registering a custom scope, a context class must
+ * also be provided.
  *
- * @see #addQualifier(Class, Consumer)
- * @see #addInterceptorBinding(Class, Consumer)
- * @see #addStereotype(Class, Consumer)
- * @see #addContext()
+ * @since 4.0
  */
 public interface MetaAnnotations {
     // TODO this API style is not very common, and makes addContext too different
@@ -44,9 +44,29 @@ public interface MetaAnnotations {
     void addStereotype(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
 
     /**
-     * Registers custom context as configured by the returned {@link ContextConfig}.
+     * Registers custom context for given {@code scopeAnnotation} and given {@code contextClass}.
+     * The context class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * <p>
+     * Whether the scope is normal is discovered from the scope annotation. This means that the scope
+     * annotation must be meta-annotated either {@link jakarta.enterprise.context.NormalScope @NormalScope}
+     * or {@link jakarta.inject.Scope @Scope}.
      *
-     * @return custom context configurator, never {@code null}
+     * @param scopeAnnotation the scope annotation type, must not be {@code null}
+     * @param contextClass the context class, must not be {@code null}
+     * @throws IllegalArgumentException if the {@code scopeAnnotation} isn't meta-annotated {@code @NormalScope}
+     * or {@code @Scope}
      */
-    ContextConfig addContext();
+    void addContext(Class<? extends Annotation> scopeAnnotation, Class<? extends AlterableContext> contextClass);
+
+    /**
+     * Registers custom context for given {@code scopeAnnotation} and given {@code contextClass}.
+     * The context class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * <p>
+     * The {@code isNormal} parameter determines whether the scope is a normal scope or a pseudo-scope.
+     *
+     * @param scopeAnnotation the scope annotation type, must not be {@code null}
+     * @param isNormal whether the scope is normal
+     * @param contextClass the context class, must not be {@code null}
+     */
+    void addContext(Class<? extends Annotation> scopeAnnotation, boolean isNormal, Class<? extends AlterableContext> contextClass);
 }

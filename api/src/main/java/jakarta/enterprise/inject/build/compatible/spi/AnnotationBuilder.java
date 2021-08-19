@@ -11,11 +11,13 @@ import java.lang.annotation.Annotation;
  * Builder for annotations of given type.
  * Expected usage is:
  * <ol>
- *     <li>create the builder using {@link #of(Class)} or {@link #of(ClassInfo)};</li>
- *     <li>use the {@code value()} and {@code member()} methods to define annotation members;</li>
- *     <li>call {@link #build()} to create an {@link AnnotationInfo}.</li>
+ * <li>create the builder using {@link #of(Class)} or {@link #of(ClassInfo)};</li>
+ * <li>use the {@code value()} and {@code member()} methods to define annotation members;</li>
+ * <li>call {@link #build()} to create an {@link AnnotationInfo}.</li>
  * </ol>
  * One builder instance should not be used to create multiple annotations.
+ *
+ * @since 4.0
  */
 // TODO not sure if all the methods taking ClassInfo are needed, maybe they're not
 public interface AnnotationBuilder {
@@ -46,7 +48,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(AnnotationMember value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -56,7 +58,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(boolean value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -66,7 +68,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(boolean... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -76,7 +78,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(byte value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -86,7 +88,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(byte... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -96,7 +98,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(short value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -106,7 +108,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(short... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -116,7 +118,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(int value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -126,7 +128,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(int... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -136,7 +138,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(long value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -146,7 +148,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(long... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -156,7 +158,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(float value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -166,7 +168,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(float... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -176,7 +178,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(double value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -186,7 +188,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(double... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -196,7 +198,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(char value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -206,7 +208,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(char... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -216,7 +218,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(String value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -226,7 +228,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(String... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -236,7 +238,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Enum<?> value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -246,7 +248,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Enum<?>... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -257,7 +259,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Class<? extends Enum<?>> enumType, String enumValue) {
-        return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValue);
+        return member(AnnotationMember.VALUE, enumType, enumValue);
     }
 
     /**
@@ -268,7 +270,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Class<? extends Enum<?>> enumType, String... enumValues) {
-        return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValues);
+        return member(AnnotationMember.VALUE, enumType, enumValues);
     }
 
     /**
@@ -279,7 +281,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(ClassInfo enumType, String enumValue) {
-        return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValue);
+        return member(AnnotationMember.VALUE, enumType, enumValue);
     }
 
     /**
@@ -290,7 +292,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(ClassInfo enumType, String... enumValues) {
-        return member(AnnotationInfo.MEMBER_VALUE, enumType, enumValues);
+        return member(AnnotationMember.VALUE, enumType, enumValues);
     }
 
     /**
@@ -300,7 +302,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Class<?> value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -310,7 +312,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Class<?>... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -320,7 +322,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(ClassInfo value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -330,19 +332,19 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(ClassInfo... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
      * Adds a class-valued annotation member called {@code value}.
      * The {@code value} parameter may only be:
      * <ul>
-     *     <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
-     *     whose component type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
-     *     or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
+     * whose element type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
+     * or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
      * </ul>
      *
      * @param value the class value, must not be {@code null}
@@ -350,19 +352,19 @@ public interface AnnotationBuilder {
      * @throws IllegalArgumentException if given type is invalid, as described above
      */
     default AnnotationBuilder value(Type value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
      * Adds a class array-valued annotation member called {@code value}.
      * The {@code values} parameter may only contain:
      * <ul>
-     *     <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
-     *     whose component type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
-     *     or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
+     * whose element type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
+     * or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
      * </ul>
      *
      * @param values the class array, must not be {@code null} or contain {@code null}
@@ -370,7 +372,7 @@ public interface AnnotationBuilder {
      * @throws IllegalArgumentException if any given type is invalid, as described above
      */
     default AnnotationBuilder value(Type... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -380,7 +382,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(AnnotationInfo value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -390,7 +392,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(AnnotationInfo... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -400,7 +402,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Annotation value) {
-        return member(AnnotationInfo.MEMBER_VALUE, value);
+        return member(AnnotationMember.VALUE, value);
     }
 
     /**
@@ -410,7 +412,7 @@ public interface AnnotationBuilder {
      * @return this {@code AnnotationBuilder}
      */
     default AnnotationBuilder value(Annotation... values) {
-        return member(AnnotationInfo.MEMBER_VALUE, values);
+        return member(AnnotationMember.VALUE, values);
     }
 
     /**
@@ -682,12 +684,12 @@ public interface AnnotationBuilder {
      * Adds a class-valued annotation member with given {@code name}.
      * The {@code value} parameter may only be:
      * <ul>
-     *     <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
-     *     whose component type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
-     *     or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
+     * whose element type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
+     * or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
      * </ul>
      * Any other value results in an exception.
      *
@@ -702,12 +704,12 @@ public interface AnnotationBuilder {
      * Adds a class array-valued annotation member with given {@code name}.
      * The {@code values} parameter may only include:
      * <ul>
-     *     <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
-     *     <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
-     *     whose component type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
-     *     or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.VoidType VoidType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ClassType ClassType};</li>
+     * <li>{@link jakarta.enterprise.lang.model.types.ArrayType ArrayType}
+     * whose element type is either {@link jakarta.enterprise.lang.model.types.PrimitiveType PrimitiveType}
+     * or {@link jakarta.enterprise.lang.model.types.ClassType ClassType}.</li>
      * </ul>
      *
      * @param name the member name, must not be {@code null}

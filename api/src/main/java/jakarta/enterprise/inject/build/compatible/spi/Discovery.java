@@ -14,9 +14,11 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>{@link ScannedClasses}: to register classes to be scanned during bean discovery</li>
  * <li>{@link MetaAnnotations}: to register custom meta-annotations:
- *   qualifiers, interceptor bindings, stereotypes and scopes</li>
+ * qualifiers, interceptor bindings, stereotypes and scopes</li>
  * <li>{@link Messages}: to produce log messages and validation errors</li>
  * </ul>
+ *
+ * @since 4.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

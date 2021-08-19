@@ -10,11 +10,20 @@ import jakarta.enterprise.event.Reception;
 import jakarta.enterprise.event.TransactionPhase;
 
 /**
- * Provides read-only information about an observer.
+ * Observers are:
+ *
+ * <ul>
+ * <li>observer methods</li>
+ * <li>synthetic observers</li>
+ * </ul>
+ *
+ * Observer methods directly correspond to a method declaration in program source code.
+ * Synthetic observers don't and are instead defined through other mechanisms, such as
+ * {@linkplain BuildCompatibleExtension extensions}.
+ *
+ * @since 4.0
  */
 public interface ObserverInfo {
-    String id(); // TODO remove entirely?
-
     /**
      * Returns the type of events observed by this observer.
      *
@@ -31,7 +40,7 @@ public interface ObserverInfo {
     Collection<AnnotationInfo> qualifiers();
 
     /**
-     * Returns the {@link ClassInfo class} that declares this observer.
+     * Returns the {@linkplain ClassInfo class} that declares this observer.
      * In case of synthetic observers, returns the class that was designated
      * as a declaring class during synthetic observer registration.
      *
@@ -40,33 +49,31 @@ public interface ObserverInfo {
     ClassInfo declaringClass();
 
     /**
-     * Returns the observer method, if this observer corresponds to an observer method.
+     * Returns the {@linkplain MethodInfo declaration} of this observer method.
      * Returns {@code null} if this is a synthetic observer.
      *
-     * @return the observer method, or {@code null} if this is a synthetic observer
+     * @return this observer method, or {@code null} if this is a synthetic observer
      */
     MethodInfo observerMethod();
 
     /**
-     * Returns the event parameter of the observer method, if this observer corresponds to an observer method.
+     * Returns the {@linkplain ParameterInfo event parameter} of this observer method.
      * Returns {@code null} if this is a synthetic observer.
      *
-     * @return the event parameter of the observer method, or {@code null} if this is a synthetic observer
+     * @return the event parameter of this observer method, or {@code null} if this is a synthetic observer
      */
     ParameterInfo eventParameter();
 
     /**
-     * Returns the {@link BeanInfo bean} that declares this observer, if it corresponds to an observer method.
+     * Returns the {@link BeanInfo bean} that declares this observer method.
      * Returns {@code null} if this is a synthetic observer.
      *
-     * @return the bean declaring this observer, or {@code null} if this is a synthetic observer
+     * @return the bean declaring this observer method, or {@code null} if this is a synthetic observer
      */
     BeanInfo bean();
 
     /**
-     * Returns whether this observer is synthetic. In other words, whether this observer
-     * doesn't correspond to a declaration in some source code and was created
-     * through other means (e.g. using an extension).
+     * Returns whether this observer is synthetic.
      *
      * @return whether this observer is synthetic
      */
@@ -76,7 +83,7 @@ public interface ObserverInfo {
 
     /**
      * Returns the priority of this observer. This is typically defined by adding
-     * the {@link jakarta.annotation.Priority @Priority} annotation to the event parameter of the observer.
+     * the {@link jakarta.annotation.Priority @Priority} annotation to the event parameter of the observer method.
      * If the annotation is not used, the default priority, as defined by the CDI specification, is returned,
      *
      * @return the priority of this observer
@@ -84,8 +91,8 @@ public interface ObserverInfo {
     int priority();
 
     /**
-     * Returns whether this observer is asynchronous, that is, whether this observer
-     * was declared using {@link jakarta.enterprise.event.ObservesAsync @ObservesAsync}.
+     * Returns whether this observer is asynchronous. For observer methods, this means whether
+     * this observer method uses {@link jakarta.enterprise.event.ObservesAsync @ObservesAsync}.
      *
      * @return whether this observer is asynchronous
      */

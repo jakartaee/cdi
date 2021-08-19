@@ -8,18 +8,34 @@ import jakarta.enterprise.lang.model.types.Type;
 import java.util.Collection;
 
 /**
- * Provides read-only information about a bean.
+ * Beans are:
+ *
+ * <ul>
+ * <li>managed beans</li>
+ * <li>beans defined by producer methods</li>
+ * <li>beans defined by producer fields</li>
+ * <li>synthetic beans</li>
+ * </ul>
+ *
+ * Managed beans are also known as class-based beans, while beans defined by producer methods
+ * and producer fields are together also known as producer-based beans.
+ * <p>
+ * Class-based and producer-based beans directly correspond to a declaration in program source code.
+ * Synthetic beans don't and are instead defined through other mechanisms, such as
+ * {@linkplain BuildCompatibleExtension extensions}.
+ *
+ * @since 4.0
  */
 public interface BeanInfo {
     /**
-     * Returns the {@link ScopeInfo scope} of this bean.
+     * Returns the {@linkplain ScopeInfo scope} of this bean.
      *
-     * @return the {@link ScopeInfo scope} of this bean, never {@code null}
+     * @return the {@linkplain ScopeInfo scope} of this bean, never {@code null}
      */
     ScopeInfo scope();
 
     /**
-     * Returns a collection of all {@link Type type}s of this bean.
+     * Returns a collection of all {@linkplain Type types} of this bean.
      *
      * @return immutable collection of bean types, never {@code null}
      */
@@ -44,7 +60,7 @@ public interface BeanInfo {
     ClassInfo declaringClass();
 
     /**
-     * Returns whether this bean is a managed bean, sometimes also called class-based bean.
+     * Returns whether this bean is a managed bean, also known as class-based bean.
      *
      * @return whether this bean is a managed bean
      */
@@ -66,7 +82,7 @@ public interface BeanInfo {
 
     /**
      * Returns whether this bean is synthetic. In other words, whether this bean
-     * doesn't correspond to a declaration in some source code and was created
+     * doesn't correspond to a declaration in program source code and was created
      * through other means (e.g. using an extension).
      *
      * @return whether this bean is synthetic
@@ -74,7 +90,7 @@ public interface BeanInfo {
     boolean isSynthetic();
 
     /**
-     * Returns the producer {@link MethodInfo method} that defines this bean.
+     * Returns the producer {@linkplain MethodInfo method} that defines this bean.
      * Returns {@code null} if this bean isn't defined by a producer method.
      *
      * @return producer method that defines this bean, or {@code null} if this bean isn't defined by a producer method
@@ -82,7 +98,7 @@ public interface BeanInfo {
     MethodInfo producerMethod();
 
     /**
-     * Returns the producer {@link FieldInfo field} that defines this bean.
+     * Returns the producer {@linkplain FieldInfo field} that defines this bean.
      * Returns {@code null} if this bean isn't defined by a producer field.
      *
      * @return producer field that defines this bean, or {@code null} if this bean isn't defined by a producer field
@@ -90,19 +106,20 @@ public interface BeanInfo {
     FieldInfo producerField();
 
     /**
-     * Returns whether this bean is an {@link jakarta.enterprise.inject.Alternative alternative}.
+     * Returns whether this bean is an {@linkplain jakarta.enterprise.inject.Alternative alternative}.
      *
-     * @return whether this bean is an {@link jakarta.enterprise.inject.Alternative alternative}
+     * @return whether this bean is an {@linkplain jakarta.enterprise.inject.Alternative alternative}
      */
     boolean isAlternative();
 
     /**
-     * Returns the {@link jakarta.annotation.Priority priority} of this alternative bean.
+     * Returns the {@linkplain jakarta.annotation.Priority priority} of this alternative bean.
      * If this bean is not an alternative, the return value is undefined.
      *
      * @return the priority of this alternative bean
      * @see #isAlternative()
      */
+    // TODO maybe specify that if this bean is not an alternative, this returns 0?
     int priority();
 
     /**
@@ -115,16 +132,16 @@ public interface BeanInfo {
     String getName();
 
     /**
-     * Returns the {@link DisposerInfo disposer method} of this producer-based bean.
+     * Returns the {@linkplain DisposerInfo disposer} method of this producer-based bean.
      * Returns {@code null} if this bean is not a defined by a producer method or a producer field,
      * or if this producer-based bean doesn't have a corresponding disposer method.
      *
-     * @return the {@link DisposerInfo disposer}, or {@code null} if this bean doesn't have a disposer
+     * @return the {@linkplain DisposerInfo disposer}, or {@code null} if this bean doesn't have a disposer
      */
     DisposerInfo disposer();
 
     /**
-     * Returns a collection of this bean's {@link StereotypeInfo stereotype}s.
+     * Returns a collection of this bean's {@linkplain StereotypeInfo stereotypes}.
      *
      * @return immutable collection of stereotypes, never {@code null}
      */
@@ -133,7 +150,7 @@ public interface BeanInfo {
     // TODO interceptors?
 
     /**
-     * Returns a collection of this bean's {@link InjectionPointInfo injection point}s.
+     * Returns a collection of this bean's {@linkplain InjectionPointInfo injection points}.
      *
      * @return immutable collection of injection points, never {@code null}
      */

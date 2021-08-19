@@ -3,7 +3,10 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
- * Provides read-only information about bean's scope.
+ * A scope of some bean. Scopes are expressed using {@linkplain #annotation() scope annotations}. Lifecycle
+ * of beans with given scope is determined by a {@linkplain jakarta.enterprise.context.spi.Context context}.
+ *
+ * @since 4.0
  */
 public interface ScopeInfo {
     /**
