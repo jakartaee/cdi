@@ -1,0 +1,175 @@
+[[injection_and_resolution_full]]
+
+== Dependency injection and lookup in {cdi_full}
+
+
+[[selection_full]]
+
+=== Modularity in {cdi_full}
+
+In addition to rules defined in <<selection>>, the following rules apply.
+
+An alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
+
+[[declaring_selected_alternatives_full]]
+
+==== Declaring selected alternatives in {cdi_full}
+
+{cdi_full} provides an additional way to select alternatives to the one defined in <<declaring_selected_alternatives_application>>.
+
+[[declaring_selected_alternatives_bean_archive]]
+
+===== Declaring selected alternatives for a bean archive
+
+An alternative may be explicitly declared using the `<alternatives>` element of the `beans.xml` file of the bean archive.
+The `<alternatives>` element contains a list of bean classes and stereotypes.
+An alternative is selected for the bean archive if either:
+
+* the alternative is a managed bean and the bean class of the bean is listed,
+* the alternative is a producer method, field or resource, and the bean class that declares the method or field is listed, or
+* any `@Alternative` stereotype of the alternative is listed.
+
+[source,xml]
+----
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+        version="3.0">
+   <alternatives>
+      <class>com.acme.myfwk.InMemoryDatabase</class>
+      <stereotype>com.acme.myfwk.Mock</stereotype>
+      <stereotype>com.acme.site.Australian</stereotype>
+   </alternatives>
+</beans>
+----
+
+For each child `<class>` element, the container verifies that either:
+
+* a class with the specified name exists and is annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* a class with the specified name exists and declares a field or method annotated with `@Produces` and, at the same time, annotated with `@Alternative` or an <<alternative_stereotype,`@Alternative` stereotype>>, or
+* an alternative bean whose bean class has the specified name exists.
+
+Otherwise, the container automatically detects the problem and treats it as a deployment problem.
+
+Each child `<stereotype>` element must specify the name of an `@Alternative` stereotype annotation.
+If there is no annotation with the specified name, or the annotation is not an `@Alternative` stereotype, the container automatically detects the problem and treats it as a deployment problem.
+
+If the same type is listed twice under the `<alternatives>` element, the container automatically detects the problem and treats it as a deployment problem.
+
+For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
+// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
+
+[[enablement_full]]
+
+==== Enabled and disabled beans in {cdi_full}
+
+The rules defined in <<enablement>> are overridden as follows.
+
+A bean is said to be _enabled_ if:
+
+* it is deployed in a bean archive, and
+* it is not a producer method or field of a disabled bean, and
+* it is not specialized by any other enabled bean, as defined in <<specialization>>, and either
+* it is not an alternative, or it is a selected alternative of at least one bean archive or the application.
+
+
+Otherwise, the bean is said to be disabled.
+
+
+[[inconsistent_specialization]]
+
+==== Inconsistent specialization
+
+Suppose an enabled bean X specializes a second bean Y.
+If there is another enabled bean that specializes Y we say that _inconsistent specialization_ exists.
+The container automatically detects inconsistent specialization and treats it as a deployment problem.
+
+[[inter_module_injection_full]]
+
+==== Inter-module injection in {cdi_full}
+
+In addition to rules defined in <<inter_module_injection>>, the following rules apply.
+
+A bean is also _available for injection_ in a certain module if:
+
+* the bean is not a decorator,
+* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive.
+
+// TODO here, maybe we shouldn't do "in addition to", but "is overridden" and spell out the full rules again
+
+[[typesafe_resolution_full]]
+
+=== Typesafe resolution in {cdi_full}
+
+[[performing_typesafe_resolution_full]]
+
+==== Performing typesafe resolution in {cdi_full}
+
+In addition to rules defined in <<performing_typesafe_resolution>>, the following rules apply.
+
+* Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignable_parameters>> or <<delegate_assignable_parameters>>.
+
+[[unsatisfied_and_ambig_dependencies_full]]
+
+==== Unsatisfied and ambiguous dependencies in {cdi_full}
+
+In addition to rules defined in <<unsatisfied_and_ambig_dependencies>>, the following rules apply.
+
+An unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
+
+[[assignable_parameters_full]]
+
+==== Assignability of raw and parameterized types in {cdi_full}
+
+In addition to rules defined in <<assignable_parameters>>, the following rules apply.
+
+A special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
+
+[[injection_point_full]]
+
+[[ambig_names_full]]
+
+==== Ambiguous names in {cdi_full}
+
+In addition to rules defined in <<ambig_names>>, the following rules apply.
+
+When an ambiguous name exists, the container attempts to resolve the ambiguity.
+The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives.
+
+==== Injection point metadata in {cdi_full}
+
+The behavior of `InjectionPoint` metadata is overridden as follows:
+
+* The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
+If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
+* The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
+If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
+
+[[bean_metadata_full]]
+
+==== Bean metadata in {cdi_full}
+
+In addition to rules defined in <<bean_metadata>>, the following rules apply.
+
+The interfaces `Decorator` also provides metadata about a bean.
+
+The container must provide beans allowing a bean instance to obtain a `Decorator` instance containing its metadata:
+
+* a bean with scope `@Dependent`, qualifier `@Default` and type `Decorator`  which can be injected into any decorator instance
+
+Additionally, the container must provide beans allowing decorators to obtain information about the beans they decorate:
+
+* a bean with scope `@Dependent`, qualifier `@Decorated` and type `Bean` which can be injected into any decorator instance.
+
+These beans are passivation capable dependencies, as defined in <<passivation_capable_dependency>>.
+
+If a `Decorator` instance is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
+
+If a `Bean` instance with qualifier `@Decorated` is injected into a bean instance other than a decorator instance, the container automatically detects the problem and treats it as a definition error.
+
+If:
+
+* the injection point is a field, an initializer method parameter or a bean constructor, with qualifier `@Default`, then the type parameter of the injected `Decorator` must be the same as the type declaring the injection point, or
+* the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier `@Decorated`, then the type parameter of the injected `Bean` must be the same as the delegate type.
+
+Otherwise, the container automatically detects the problem and treats it as a definition error.

@@ -18,7 +18,7 @@ Other containers are not required to provide support for injection or lifecycle 
 
 ==== Which Java classes are managed beans in Jakarta EE?
 
-When running in Jakarta EE, A top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Jakarta EE specification and if
+When running in Jakarta EE, a top-level Java class is a managed bean if it meets requirements described in <<what_classes_are_beans>> or if it is defined to be a managed bean by any other Jakarta EE specification and if
 
 * It is not annotated with an EJB component-defining annotation or declared as an EJB bean class in `ejb-jar.xml`.
 
@@ -331,9 +331,3 @@ When running in Jakarta EE, the container must extend the rules defined for bean
 The container must also ensure that:
 
 * An initializer method defined in an EJB session bean is _not_ required to be a business method of the session bean.
-
-[[new_ee]]
-
-=== `@New` qualified beans in Jakarta EE
-
-When running in Jakarta EE, the container must extend the rules defined for managed beans in <<new>> to EJB session beans.

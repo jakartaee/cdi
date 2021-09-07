@@ -14,7 +14,6 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Any;
 import jakarta.enterprise.inject.Default;
-import jakarta.enterprise.inject.New;
 import jakarta.enterprise.inject.Specializes;
 import jakarta.enterprise.inject.TransientReference;
 import jakarta.enterprise.inject.Typed;
@@ -53,13 +52,6 @@ public class AnnotationLiteralTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testNullMemberValueOnToString() {
         new FooLiteral(null).hashCode();
-    }
-
-    @Test
-    public void testNewLiteral() {
-        New literal = New.Literal.INSTANCE;
-        assertEquals(literal.value(), New.class);
-        assertEquals(New.Literal.of(Boolean.class).value(), Boolean.class);
     }
 
     @SuppressWarnings("serial")

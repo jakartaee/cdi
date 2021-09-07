@@ -32,10 +32,12 @@ is not a bean archive.
 An _explicit bean archive_ is an archive which contains a `beans.xml` file:
 
 * with a version number of `1.1` (or later), with the `bean-discovery-mode` of `all`, or,
-* with no version number, or,
-* that is an empty file.
+* with no version number.
 
-An _implicit bean archive_ is any other archive which contains one or more bean classes with a bean defining annotation as defined in <<bean_defining_annotations>>.
+An _implicit bean archive_ is:
+
+* an archive which contains a `beans.xml` file that is empty, or,
+* any other archive which contains one or more bean classes with a bean defining annotation as defined in <<bean_defining_annotations>>.
 
 When determining which archives are bean archives, the container must consider:
 
@@ -48,7 +50,7 @@ The `beans.xml` file must be named:
 
 * `META-INF/beans.xml`.
 
-For compatibility with Contexts and Dependency 1.0, products must contain an option to cause an archive to be ignored by the container when no `beans.xml` is present.
+For compatibility with CDI versions prior to 4.0, {cdi_full} products must contain an option that causes an archive with empty beans.xml to be considered an explicit bean archive.
 
 The container searches for beans in all bean archives in the application classpath.
 

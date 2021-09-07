@@ -27,7 +27,7 @@ import jakarta.enterprise.event.Observes;
 /**
  * <p>
  * Provides access to metadata about an observed event payload. The metadata may be for events fired with either of
- * {@link Event} or {@link BeanManager#fireEvent(Object, Annotation...)}.
+ * {@link Event} or {@link BeanManager#getEvent()}
  * </p>
  * <p>
  * {@link EventMetadata} may only be injected into an observer method. For example:
@@ -51,8 +51,7 @@ public interface EventMetadata {
     public Set<Annotation> getQualifiers();
 
     /**
-     * Get the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event, or
-     * <code>null</code> if it was fired from {@link BeanManager#fireEvent(Object, Annotation...)};
+     * Get the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event
      *
      * @return InjectionPoint of the Event
      */

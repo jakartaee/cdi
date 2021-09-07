@@ -228,3 +228,57 @@ The container intercepts the delegate invocation and searches for the first deco
 If no such decorator exists, the container invokes the business method of the intercepted instance.
 Otherwise, the container calls the method of the decorator.
 
+[[decorator_additional_rules]]
+
+=== Additional decorator rules
+
+This chapter congregates various rules and limitations that apply to decorators in regard to other chapters of the specification.
+
+==== Bean names
+
+In addition to rules defined in <<beans_with_no_name>>, the following rules apply.
+
+If a decorator has a name, non-portable behavior results.
+
+==== Alternatives
+
+In addition to rules defined in <<declaring_alternative>>, the following rules apply.
+
+If a decorator is an alternative, non-portable behavior results.
+
+=== Managed beans
+
+In addition to rules defined in <<managed_beans>>, the following rules apply.
+
+If the bean class of a managed bean is annotated with both `@Interceptor` and `@Decorator`, the container automatically detects the problem and treats it as a definition error.
+
+=== Producer methods
+
+In addition to rules defined in <<declaring_producer_method>>, the following rules apply.
+
+Decorators may not declare producer methods.
+If a decorator has a method annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+=== Producer fields
+
+In addition to rules defined in <<declaring_producer_field>>, the following rules apply.
+
+Decorators may not declare producer fields.
+If a decorator has a field annotated `@Produces`, the container automatically detects the problem and treats it as a definition error.
+
+=== Disposer methods
+
+In addition to rules defined in <<declaring_disposer_method>>, the following rules apply.
+
+Decorators may not declare disposer methods.
+If a decorator has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
+
+=== Unproxyable bean types
+
+In addition to rules defined in <<unproxyable>>, the following rules apply.
+
+A bean type must be proxyable if an injection point resolves to a bean:
+
+* that has an associated decorator.
+
+Otherwise, the container automatically detects the problem, and treats it as a deployment problem.

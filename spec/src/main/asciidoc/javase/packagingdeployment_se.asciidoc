@@ -8,7 +8,7 @@
 
 When running in Java SE, the container must extend the rules defined in <<bean_archive>> and also ensure that :
 
-An archive which doesn't contain a beans.xml file can't be discovered as an _implicit bean archive_ unless:
+An archive which doesn't contain a `beans.xml` file can't be discovered as an _implicit bean archive_ unless:
 
 * the application is launched with system property `jakarta.enterprise.inject.scan.implicit` set to `true`, or
 * the container was initialized with a map containing an entry parameter with `jakarta.enterprise.inject.scan.implicit` as key and `Boolean.TRUE` as value.
