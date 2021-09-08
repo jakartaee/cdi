@@ -75,7 +75,7 @@
         the war. A directory in the JVM classpath is a bean archive
         if it has a file named beans.xml in the META-INF directory.
 
-        When running in a CDI-lite environment, this is the only configuration value
+        When running in a CDI Lite environment, this is the only configuration value
         read from a beans.xml file is the beans bean-discovery-mode attribute.
       </xs:documentation>
     </xs:annotation>
@@ -105,7 +105,7 @@
           <xs:documentation>
             It is strongly recommended you use "annotated". This is now the default and it
             is also the default as of 4.0 when an empty beans.xml file is seen. When running
-            in a CDI-lite  environment, this is the only aspect of the beans.xml file that
+            in a CDI Lite  environment, this is the only aspect of the beans.xml file that
             is used.
 
             If the bean discovery mode is "all", then all types in this
