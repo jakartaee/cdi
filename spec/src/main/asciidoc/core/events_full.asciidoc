@@ -2,6 +2,13 @@
 
 == Events in {cdi_full}
 
+[[builtin_event_full]]
+
+=== The built-in `Event`
+
+In addition to the built-in `Event` requirements defined in <<builtin_event>>, in {cdi_full} the built-in implementation
+must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
+
 [[observer_methods_full]]
 
 === Observer methods in {cdi_full}

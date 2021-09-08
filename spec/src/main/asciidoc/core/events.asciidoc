@@ -193,9 +193,6 @@ The container must provide a built-in bean with:
 
 If an injection point of raw type `Event` is defined, the container automatically detects the problem and treats it as a definition error.
 
-The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
-// TODO move passivation to Full?
-
 [[observer_resolution]]
 
 === Observer resolution
@@ -220,6 +217,7 @@ If the runtime type of the event object contains an unresolvable type variable, 
 
 For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers, and `isAsync()` to determine whether the observer is asynchronous or synchronous.
 // TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
+// https://github.com/eclipse-ee4j/cdi/issues/485
 
 [[observers_assignability]]
 
@@ -436,6 +434,7 @@ public interface EventMetadata {
 * `getQualifiers()` returns the set of qualifiers with which the event was fired.
 * `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanManager.getEvent()`.
 // TODO BeanContainer
+// https://github.com/eclipse-ee4j/cdi/issues/493
 * `getType()` returns the type representing runtime class of the event object with type variables resolved.
 
 
@@ -543,6 +542,7 @@ If the exception is a checked exception, it is wrapped and rethrown as an (unche
 
 For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `jakarta.enterprise.inject.spi.EventContext` to invoke the method.
 // TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
+// https://github.com/eclipse-ee4j/cdi/issues/485
 
 [[async_exception]]
 
