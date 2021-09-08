@@ -531,6 +531,7 @@ public @interface BusinessProcessScoped {}
 Custom scopes are normally defined by portable extensions, which must also provide a _context object_, as defined in <<context>>, that implements the custom scope.
 
 // TODO mention build compatible extensions, as they require providing a _class_, not an object
+// https://github.com/eclipse-ee4j/cdi/issues/452
 
 [[declaring_bean_scope]]
 
@@ -637,6 +638,7 @@ Note that to ensure compatibility with other Jakarta Dependency Injection implem
 However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
 // TODO we might be able to make `@Singleton` a bean defining annotation in Lite? depending on how we decide on the beans.xml thing
+// https://github.com/eclipse-ee4j/cdi/issues/487
 
 [[names]]
 
@@ -737,6 +739,7 @@ A stereotype may also specify that:
 A bean may declare zero, one or multiple stereotypes.
 
 // TODO how about we finally allowed declaring `@Priority` on stereotypes?
+// https://github.com/eclipse-ee4j/cdi/issues/495
 
 [[defining_new_stereotype]]
 
