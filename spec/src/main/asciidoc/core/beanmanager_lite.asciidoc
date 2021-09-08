@@ -27,7 +27,20 @@ Thus, any bean may obtain an instance of `BeanContainer` by injecting it:
 ----
 
 The operations of `BeanContainer` may be called at any time during the execution of the application.
-// TODO Full has restrictions on when BeanManager methods can be called, do we want to reflect them here in some way?
+
+Note that, an exception is thrown if the following operations are called before the `AfterBeanDiscovery` event is fired:
+
+* `getBeans(String)`,
+* `getBeans(Type, Annotation...)`,
+* `resolve(Set)`,
+* `resolveInterceptors(InterceptionType, Annotation...)`,
+* `resolveObserverMethods(Object, Annotation...)`.
+
+and if the following operations are called before the `AfterDeploymentValidation` event is fired:
+
+* `createInstance()`,
+* `getReference(Bean, Type, CreationalContext)`,
+* `getInjectableReference(InjectionPoint, CreationalContext)`.
 
 [[provider]]
 
