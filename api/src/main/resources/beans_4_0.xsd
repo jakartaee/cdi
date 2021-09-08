@@ -57,7 +57,7 @@
         the schema using the xsi:schemaLocation attribute for the Java EE
         namespace with the following location:
 
-        https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd
+        https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd
 
      ]]>
     </xs:documentation>
@@ -75,8 +75,8 @@
         the war. A directory in the JVM classpath is a bean archive
         if it has a file named beans.xml in the META-INF directory.
 
-        When running in a CDI Lite environment, this is the only configuration value
-        read from a beans.xml file is the beans bean-discovery-mode attribute.
+        When running in a CDI Lite environment, the bean-discovery-mode
+        attribute is the only configuration value read from a beans.xml file.
       </xs:documentation>
     </xs:annotation>
     <xs:complexType>
