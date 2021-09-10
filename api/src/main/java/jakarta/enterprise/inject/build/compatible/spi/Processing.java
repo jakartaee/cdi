@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 3rd phase of CDI Lite extension processing.
+ * 3rd phase of CDI Lite extension execution.
  * Allows processing registered beans and observers.
  * Note that synthetic beans and observers, registered in {@link Synthesis @Synthesis}, will <i>not</i> be processed.
  * <p>

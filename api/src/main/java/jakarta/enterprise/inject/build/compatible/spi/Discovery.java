@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 1st phase of CDI Lite extension processing.
+ * 1st phase of CDI Lite extension execution.
  * Allow registering additional classes to be scanned during bean discovery.
  * Also allows registering custom CDI meta-annotations.
  * <p>

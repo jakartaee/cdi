@@ -9,59 +9,302 @@ import jakarta.enterprise.lang.model.types.Type;
 import java.lang.annotation.Annotation;
 
 /**
+ * Builder for synthetic observers.
  * Instances are not reusable. For each synthetic observer, new instance
- * must be created by {@link SyntheticComponents#addObserver()}.
+ * must be created by {@link SyntheticComponents#addObserver(Class)}.
  *
+ * @param <T> the observed event type of this synthetic observer
  * @since 4.0
  */
-public interface SyntheticObserverBuilder {
-    // TODO should add a type parameter? (see also SyntheticBeanBuilder and SyntheticComponents)
+public interface SyntheticObserverBuilder<T> {
+    /**
+     * Sets the bean class that "declares" this synthetic observer.
+     * <p>
+     * If not called, the class declaring the extension which creates this synthetic observer is used.
+     *
+     * @param declaringClass bean class that "declares" this synthetic observer, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> declaringClass(Class<?> declaringClass);
 
     /**
-     * Class that, hypothetically, "declares" the synthetic observer.
-     * If not called, the class declaring the extension which creates this synthetic observer is used.
+     * Sets the bean class that "declares" this synthetic observer.
      * <p>
-     * Used to identify an observer when multiple synthetic observers are otherwise identical.
-     * TODO can this have implementation consequences? e.g., must the class be added to the bean archive?
+     * If not called, the class declaring the extension which creates this synthetic observer is used.
      *
-     * @param declaringClass class that, hypothetically, "declares" the synthetic observer
+     * @param declaringClass bean class that "declares" this synthetic observer, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> declaringClass(ClassInfo declaringClass);
+
+    /**
+     * Adds a marker annotation of given type to the set of qualifiers of this synthetic observer.
+     * This method may be called multiple times to add multiple qualifiers.
+     * <p>
+     * If not called, this synthetic observer will have no qualifier.
+     *
+     * @param annotationType the type of the marker annotation, must not be {@code null}
      * @return this {@code SyntheticObserverBuilder}
      */
-    // if called multiple times, last call wins
-    SyntheticObserverBuilder declaringClass(Class<?> declaringClass);
+    SyntheticObserverBuilder<T> qualifier(Class<? extends Annotation> annotationType);
 
-    SyntheticObserverBuilder declaringClass(ClassInfo declaringClass);
+    /**
+     * Adds given annotation to the set of qualifiers of this synthetic observer.
+     * This method may be called multiple times to add multiple qualifiers.
+     * <p>
+     * If not called, this synthetic observer will have no qualifier.
+     *
+     * @param qualifierAnnotation the annotation, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticObserverBuilder<T> qualifier(AnnotationInfo qualifierAnnotation);
 
-    // if called multiple times, last call wins
-    // TODO methods to add multiple types at once?
-    SyntheticObserverBuilder type(Class<?> type);
+    /**
+     * Adds given annotation to the set of qualifiers of this synthetic observer.
+     * This method may be called multiple times to add multiple qualifiers.
+     * <p>
+     * If not called, this synthetic observer will have no qualifier.
+     *
+     * @param qualifierAnnotation the annotation, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticObserverBuilder<T> qualifier(Annotation qualifierAnnotation);
 
-    SyntheticObserverBuilder type(ClassInfo type);
+    /**
+     * Sets a priority of this synthetic observer.
+     * <p>
+     * If not called, this synthetic observer will have a default priority
+     * of {@link jakarta.interceptor.Interceptor.Priority#APPLICATION Priority.APPLICATION} + 500.
+     *
+     * @param priority the priority of this synthetic observer
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> priority(int priority);
 
-    SyntheticObserverBuilder type(Type type);
+    /**
+     * Marks this synthetic observer as asynchronous if desired.
+     * <p>
+     * If not called, this synthetic observer will not be asynchronous.
+     *
+     * @param isAsync whether this synthetic observer should be asynchronous
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> async(boolean isAsync);
 
-    // can be called multiple times and is additive
-    // TODO methods to add multiple qualifiers at once?
-    SyntheticObserverBuilder qualifier(Class<? extends Annotation> annotationType); // for marker annotations
+    /**
+     * Sets the {@link TransactionPhase} during which this synthetic observer should be notified.
+     * If anything else than {@link TransactionPhase#IN_PROGRESS} is passed, this synthetic observer
+     * will be a transactional observer.
+     * <p>
+     * If not called, this synthetic observer will not be a transactional observer.
+     * In other words, the default is {@link TransactionPhase#IN_PROGRESS}.
+     * <p>
+     * Note that transactional observers can't be asynchronous. If this synthetic observer
+     * is configured to be both transactional and asynchronous, its registration will fail.
+     *
+     * @param transactionPhase the {@link Reception} mode, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> transactionPhase(TransactionPhase transactionPhase);
 
-    SyntheticObserverBuilder qualifier(AnnotationInfo qualifierAnnotation);
+    /**
+     * Adds a {@code boolean}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, boolean value);
 
-    SyntheticObserverBuilder qualifier(Annotation qualifierAnnotation);
+    /**
+     * Adds a {@code boolean} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, boolean[] value);
 
-    // if called multiple times, last call wins
-    SyntheticObserverBuilder priority(int priority);
+    /**
+     * Adds an {@code int}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, int value);
 
-    // if called multiple times, last call wins
-    SyntheticObserverBuilder async(boolean isAsync);
+    /**
+     * Adds an {@code int} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, int[] value);
 
-    // if called multiple times, last call wins
-    // TODO this probably doesn't make sense for synthetic observers? but Portable Extensions have it?
-    SyntheticObserverBuilder reception(Reception reception);
+    /**
+     * Adds a {@code long}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, long value);
 
-    // if called multiple times, last call wins
-    SyntheticObserverBuilder transactionPhase(TransactionPhase transactionPhase);
+    /**
+     * Adds a {@code long} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, long[] value);
 
-    // TODO params? ArC doesn't have them for observers, only for beans, do they make sense here?
+    /**
+     * Adds a {@code double}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, double value);
 
-    SyntheticObserverBuilder observeWith(Class<? extends SyntheticObserver<?>> syntheticObserverClass);
+    /**
+     * Adds a {@code double} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, double[] value);
+
+    /**
+     * Adds a {@code String}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, String value);
+
+    /**
+     * Adds a {@code String} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, String[] value);
+
+    /**
+     * Adds a {@code Class}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, Class<?> value);
+    // TODO add a variant that takes a `ClassInfo`? the value would be `Class` at runtime
+
+    /**
+     * Adds a {@code Class} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, Class<?>[] value);
+    // TODO add a variant that takes a `ClassInfo[]`? the value would be `Class[]` at runtime
+
+    /**
+     * Adds an {@code annotation}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     * <p>
+     * When looked up from the parameter map in the event notification function, the value will be
+     * an instance of the annotation type, <em>not</em> an {@code AnnotationInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo value);
+
+    /**
+     * Adds an {@code annotation}-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, Annotation value);
+
+    /**
+     * Adds an {@code annotation} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     * <p>
+     * When looked up from the parameter map in the event notification function, the values will be
+     * instances of the corresponding annotation types, <em>not</em> {@code AnnotationInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo[] value);
+
+    /**
+     * Adds an {@code annotation} array-valued parameter to the map of event notification parameters.
+     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
+     * when the event is fired.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticObserverBuilder}
+     */
+    SyntheticBeanBuilder<T> withParam(String key, Annotation[] value);
+
+    /**
+     * Sets the class of the synthetic observer {@linkplain SyntheticObserver event notification} function.
+     * The class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * <p>
+     * If not called, the synthetic observer registration will fail.
+     *
+     * @param observerClass the {@linkplain SyntheticObserver event notification} function class, must not be {@code null}
+     * @return this {@code SyntheticObserverBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     */
+    SyntheticObserverBuilder<T> observeWith(Class<? extends SyntheticObserver<T>> observerClass);
 }

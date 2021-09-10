@@ -59,6 +59,13 @@ public interface MethodInfo extends DeclarationInfo {
     List<TypeVariable> typeParameters();
 
     /**
+     * Returns whether this method is, in fact, a constructor.
+     *
+     * @return whether this method is, in fact, a constructor
+     */
+    boolean isConstructor();
+
+    /**
      * Returns whether this method is {@code static}.
      *
      * @return whether this method is {@code static}.

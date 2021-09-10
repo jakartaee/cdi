@@ -15,11 +15,13 @@ import java.util.List;
  * <li>nested {@link java.lang.annotation.Annotation Annotation}s;</li>
  * <li>arrays of previously mentioned types.</li>
  * </ul>
- * The {@link #kind()} method returns the kind of this annotation member value.
- * The {@code is*} methods (such as {@link #isBoolean()}) allow checking
- * if this annotation member value is of given kind. The {@code as*} methods
- * (such as {@link #asBoolean()} allow "unwrapping" this annotation member value,
+ * The {@link #kind()} method returns the kind of this annotation member value. The {@code is*} methods
+ * (such as {@link #isBoolean()}) allow checking if this annotation member value is of given kind.
+ * The {@code as*} methods (such as {@link #asBoolean()}) allow "unwrapping" this annotation member value,
  * if it is of the corresponding kind.
+ * <p>
+ * Note that the {@code as*} methods do not perform type conversion, so if this annotation member value
+ * is an {@code int}, calling {@code asLong()} will throw an exception.
  * <p>
  * Implementations of this interface are required to define the {@code equals} and {@code hashCode} methods.
  * Implementations of this interface are encouraged to define the {@code toString} method such that
@@ -31,12 +33,6 @@ import java.util.List;
  *
  * @since 4.0
  */
-// TODO do the as* methods allow coercion or not? E.g., does asLong return a long
-//  if the value is of kind int, or does it throw? Fortunately, this only applies
-//  to the numeric primitive types and maybe String. I currently left the numeric
-//  as* methods documented as coercing, while asString as not coercing, but this
-//  needs more discussion. I personally don't like coercion here and would always
-//  throw if the type mismatches.
 public interface AnnotationMember {
     /**
      * Name of the commonly used {@code value()} annotation member.
@@ -201,74 +197,74 @@ public interface AnnotationMember {
     }
 
     /**
-     * Returns this value as a boolean.
+     * Returns this value as a {@code boolean}.
      *
      * @return the boolean value
-     * @throws IllegalStateException if this annotation member value is not a boolean
+     * @throws IllegalStateException if this annotation member value is not a {@code boolean}
      */
     boolean asBoolean();
 
     /**
-     * Returns this value as a byte.
+     * Returns this value as a {@code byte}.
      *
      * @return the byte value
-     * @throws IllegalStateException if the value cannot be represented as a byte
+     * @throws IllegalStateException if this annotation member value is not a {@code byte}
      */
     byte asByte();
 
     /**
-     * Returns this value as a short.
+     * Returns this value as a {@code short}.
      *
      * @return the short value
-     * @throws IllegalStateException if the value cannot be represented as a short.
+     * @throws IllegalStateException if this annotation member value is not a {@code short}
      */
     short asShort();
 
     /**
-     * Returns this value as an int.
+     * Returns this value as an {@code int}.
      *
      * @return the int value
-     * @throws IllegalStateException if the value cannot be represented as an int.
+     * @throws IllegalStateException if this annotation member value is not an {@code int}
      */
     int asInt();
 
     /**
-     * Returns this value as a long.
+     * Returns this value as a {@code long}.
      *
      * @return the long value
-     * @throws IllegalStateException if the value cannot be represented as a long.
+     * @throws IllegalStateException if this annotation member value is not a {@code long}
      */
     long asLong();
 
     /**
-     * Returns this value as a float.
+     * Returns this value as a {@code float}.
      *
      * @return the float value
-     * @throws IllegalStateException if the value cannot be represented as a float.
+     * @throws IllegalStateException if this annotation member value is not a {@code float}
      */
     float asFloat();
 
     /**
-     * Returns this value as a double.
+     * Returns this value as a {@code double}.
      *
      * @return the double value
-     * @throws IllegalStateException if the value cannot be represented as a double.
+     * @throws IllegalStateException if this annotation member value is not a {@code double}
      */
     double asDouble();
 
     /**
-     * Returns this value as a char.
+     * Returns this value as a {@code char}.
      *
      * @return the char value
-     * @throws IllegalStateException if this annotation member value is not a char
+     * @throws IllegalStateException if this annotation member value is not a {@code char}
      */
     char asChar();
 
     /**
-     * Returns this value as a String.
+     * Returns this value as a {@code String}.
      *
      * @return the String value
-     * @throws IllegalStateException if this annotation member value is not a String
+     * @throws IllegalStateException if this annotation member value is not a {@code String}
      */
     String asString();
 
