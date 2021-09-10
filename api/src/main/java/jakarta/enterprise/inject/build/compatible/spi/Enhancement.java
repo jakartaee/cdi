@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 2nd phase of CDI Lite extension processing.
+ * 2nd phase of CDI Lite extension execution.
  * Allows transforming annotations.
  * <p>
  * Methods annotated {@code @Enhancement} must define exactly one parameter of one of these types:

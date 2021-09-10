@@ -9,8 +9,6 @@ import jakarta.enterprise.lang.model.types.Type;
 import jakarta.enterprise.lang.model.types.VoidType;
 import jakarta.enterprise.lang.model.types.WildcardType;
 
-// TODO move to jakarta.enterprise.lang.model.types? probably not, it doesn't model any part of Java language
-
 /**
  * A factory interface for creating instances of {@link Type}.
  *

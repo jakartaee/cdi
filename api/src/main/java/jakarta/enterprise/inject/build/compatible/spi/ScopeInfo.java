@@ -3,8 +3,9 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
- * A scope of some bean. Scopes are expressed using {@linkplain #annotation() scope annotations}. Lifecycle
- * of beans with given scope is determined by a {@linkplain jakarta.enterprise.context.spi.Context context}.
+ * A scope of a bean. Scope type is an {@linkplain #annotation() annotation}, meta-annotated
+ * {@link jakarta.inject.Scope @Scope} or {@link jakarta.enterprise.context.NormalScope @NormalScope}.
+ * Lifecycle of beans with given scope is determined by a {@linkplain jakarta.enterprise.context.spi.Context context}.
  *
  * @since 4.0
  */
@@ -28,10 +29,10 @@ public interface ScopeInfo {
     }
 
     /**
-     * Returns whether this scope is normal. In other words, returns whether
+     * Returns whether this scope type is normal. In other words, returns whether
      * this scope annotation is meta-annotated {@code @NormalScope}.
      *
-     * @return whether this scope is normal
+     * @return whether this scope type is normal
      */
     boolean isNormal();
 }

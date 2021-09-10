@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * @see Enhancement
  * @since 4.0
  */
-public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
+public interface DeclarationConfig {
     /**
      * Returns the {@link DeclarationInfo} corresponding to this transformed declaration.
      *
@@ -29,7 +29,7 @@ public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
      * @param annotationType the annotation type, must not be {@code null}
      * @return this configurator object, to allow fluent usage
      */
-    THIS addAnnotation(Class<? extends Annotation> annotationType);
+    DeclarationConfig addAnnotation(Class<? extends Annotation> annotationType);
 
     /**
      * Adds given annotation to this declaration. The {@link AnnotationInfo} can be obtained
@@ -38,7 +38,7 @@ public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
      * @param annotation the annotation to add to this declaration, must not be {@code null}
      * @return this configurator object, to allow fluent usage
      */
-    THIS addAnnotation(AnnotationInfo annotation);
+    DeclarationConfig addAnnotation(AnnotationInfo annotation);
 
     /**
      * Adds given annotation to this declaration. The annotation instance is typically
@@ -47,7 +47,7 @@ public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
      * @param annotation the annotation to add to this declaration, must not be {@code null}
      * @return this configurator object, to allow fluent usage
      */
-    THIS addAnnotation(Annotation annotation);
+    DeclarationConfig addAnnotation(Annotation annotation);
 
     /**
      * Removes all annotations matching given predicate from this declaration.
@@ -55,12 +55,12 @@ public interface DeclarationConfig<THIS extends DeclarationConfig<THIS>> {
      * @param predicate an annotation predicate, must not be {@code null}
      * @return this configurator object, to allow fluent usage
      */
-    THIS removeAnnotation(Predicate<AnnotationInfo> predicate);
+    DeclarationConfig removeAnnotation(Predicate<AnnotationInfo> predicate);
 
     /**
      * Removes all annotations from this declaration.
      *
      * @return this configurator object, to allow fluent usage
      */
-    THIS removeAllAnnotations();
+    DeclarationConfig removeAllAnnotations();
 }

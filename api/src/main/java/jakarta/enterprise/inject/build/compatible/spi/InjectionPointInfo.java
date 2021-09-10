@@ -28,8 +28,9 @@ public interface InjectionPointInfo {
     Collection<AnnotationInfo> qualifiers();
 
     /**
-     * Returns the declaration of this injection point. That is a {@link jakarta.enterprise.lang.model.declarations.FieldInfo FieldInfo}
-     * for field injection, or {@link jakarta.enterprise.lang.model.declarations.ParameterInfo ParameterInfo} for:
+     * Returns the declaration of this injection point.
+     * That is a {@link jakarta.enterprise.lang.model.declarations.FieldInfo FieldInfo} for field injection,
+     * or {@link jakarta.enterprise.lang.model.declarations.ParameterInfo ParameterInfo} for:
      * <ul>
      * <li>constructor injection,</li>
      * <li>initializer method,</li>

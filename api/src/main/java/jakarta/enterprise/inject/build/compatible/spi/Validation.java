@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 5th phase of CDI Lite extension processing.
+ * 5th phase of CDI Lite extension execution.
  * Allows custom validation.
  * <p>
  * Methods annotated {@code @Validation} can define parameters of these types:
