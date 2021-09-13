@@ -97,10 +97,11 @@ public interface ObserverInfo {
     boolean isAsync();
 
     /**
-     * Returns the {@link Reception reception type} of this observer. Allows distinguishing
+     * Returns the {@linkplain Reception reception type} of this observer. Allows distinguishing
      * conditional observer methods from always notified observer methods.
+     * Returns {@link Reception#ALWAYS} if this is a synthetic observer.
      *
-     * @return the reception type of this observer
+     * @return the reception type of this observer, never {@code null}
      */
     Reception reception();
 

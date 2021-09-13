@@ -1,10 +1,8 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.event.Reception;
 import jakarta.enterprise.event.TransactionPhase;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
-import jakarta.enterprise.lang.model.types.Type;
 
 import java.lang.annotation.Annotation;
 
@@ -106,7 +104,7 @@ public interface SyntheticObserverBuilder<T> {
      * Note that transactional observers can't be asynchronous. If this synthetic observer
      * is configured to be both transactional and asynchronous, its registration will fail.
      *
-     * @param transactionPhase the {@link Reception} mode, must not be {@code null}
+     * @param transactionPhase the {@link TransactionPhase}, must not be {@code null}
      * @return this {@code SyntheticObserverBuilder}
      * @throws IllegalStateException if this method is called multiple times
      */
@@ -121,7 +119,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, boolean value);
+    SyntheticObserverBuilder<T> withParam(String key, boolean value);
 
     /**
      * Adds a {@code boolean} array-valued parameter to the map of event notification parameters.
@@ -132,7 +130,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, boolean[] value);
+    SyntheticObserverBuilder<T> withParam(String key, boolean[] value);
 
     /**
      * Adds an {@code int}-valued parameter to the map of event notification parameters.
@@ -143,7 +141,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, int value);
+    SyntheticObserverBuilder<T> withParam(String key, int value);
 
     /**
      * Adds an {@code int} array-valued parameter to the map of event notification parameters.
@@ -154,7 +152,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, int[] value);
+    SyntheticObserverBuilder<T> withParam(String key, int[] value);
 
     /**
      * Adds a {@code long}-valued parameter to the map of event notification parameters.
@@ -165,7 +163,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, long value);
+    SyntheticObserverBuilder<T> withParam(String key, long value);
 
     /**
      * Adds a {@code long} array-valued parameter to the map of event notification parameters.
@@ -176,7 +174,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, long[] value);
+    SyntheticObserverBuilder<T> withParam(String key, long[] value);
 
     /**
      * Adds a {@code double}-valued parameter to the map of event notification parameters.
@@ -187,7 +185,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, double value);
+    SyntheticObserverBuilder<T> withParam(String key, double value);
 
     /**
      * Adds a {@code double} array-valued parameter to the map of event notification parameters.
@@ -198,7 +196,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, double[] value);
+    SyntheticObserverBuilder<T> withParam(String key, double[] value);
 
     /**
      * Adds a {@code String}-valued parameter to the map of event notification parameters.
@@ -209,7 +207,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, String value);
+    SyntheticObserverBuilder<T> withParam(String key, String value);
 
     /**
      * Adds a {@code String} array-valued parameter to the map of event notification parameters.
@@ -220,7 +218,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, String[] value);
+    SyntheticObserverBuilder<T> withParam(String key, String[] value);
 
     /**
      * Adds a {@code Class}-valued parameter to the map of event notification parameters.
@@ -231,7 +229,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, Class<?> value);
+    SyntheticObserverBuilder<T> withParam(String key, Class<?> value);
     // TODO add a variant that takes a `ClassInfo`? the value would be `Class` at runtime
 
     /**
@@ -243,7 +241,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, Class<?>[] value);
+    SyntheticObserverBuilder<T> withParam(String key, Class<?>[] value);
     // TODO add a variant that takes a `ClassInfo[]`? the value would be `Class[]` at runtime
 
     /**
@@ -258,7 +256,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo value);
+    SyntheticObserverBuilder<T> withParam(String key, AnnotationInfo value);
 
     /**
      * Adds an {@code annotation}-valued parameter to the map of event notification parameters.
@@ -269,7 +267,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, Annotation value);
+    SyntheticObserverBuilder<T> withParam(String key, Annotation value);
 
     /**
      * Adds an {@code annotation} array-valued parameter to the map of event notification parameters.
@@ -283,7 +281,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo[] value);
+    SyntheticObserverBuilder<T> withParam(String key, AnnotationInfo[] value);
 
     /**
      * Adds an {@code annotation} array-valued parameter to the map of event notification parameters.
@@ -294,7 +292,7 @@ public interface SyntheticObserverBuilder<T> {
      * @param value the parameter value
      * @return this {@code SyntheticObserverBuilder}
      */
-    SyntheticBeanBuilder<T> withParam(String key, Annotation[] value);
+    SyntheticObserverBuilder<T> withParam(String key, Annotation[] value);
 
     /**
      * Sets the class of the synthetic observer {@linkplain SyntheticObserver event notification} function.
