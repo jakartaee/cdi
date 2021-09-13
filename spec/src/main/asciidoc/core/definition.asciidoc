@@ -731,12 +731,11 @@ A stereotype encapsulates any combination of:
 A stereotype may also specify that:
 
 * all beans with the stereotype have defaulted bean names, or that
-* all beans with the stereotype are alternatives.
+* all beans with the stereotype are alternatives, or that
+* all beans with the stereotype have predefined `@Priority`.
 
 
 A bean may declare zero, one or multiple stereotypes.
-
-// TODO how about we finally allowed declaring `@Priority` on stereotypes?
 
 [[defining_new_stereotype]]
 
@@ -833,6 +832,28 @@ We may specify that all mock objects are alternatives:
 [source, java]
 ----
 @Alternative
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface Mock {}
+----
+
+[[priority_stereotype]]
+
+===== Declaring stereotype with `@Priority`
+
+A stereotype may declare a `@Priority` annotation which functions as a means of enabling and ordering affected alternatives, interceptors, and decorators (in {cdi_full}).
+
+If a bean declares two different stereotypes that declare different priority values, the bean must explicitly declare a `@Priority` annotation. If the bean does not explicitly declare priority, the container automatically detects the problem and treats it as a definition error.
+
+If a bean explicitly declares priority, any priority values declared by stereotypes are ignored.
+
+Following sample shows a stereotype that can be used to mark bean as globally enabled alternative:
+
+[source, java]
+----
+@Alternative
+@Priority(Interceptor.Priority.APPLICATION + 5)
 @Stereotype
 @Target(TYPE)
 @Retention(RUNTIME)
