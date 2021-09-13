@@ -636,8 +636,6 @@ public class CoffeeShop
 Note that to ensure compatibility with other Jakarta Dependency Injection implementations, all pseudo-scope annotations except `@Dependent` *are not* bean defining annotations.
 However, a stereotype annotation including a pseudo-scope annotation *is* a bean defining annotation.
 
-// TODO we might be able to make `@Singleton` a bean defining annotation in Lite? depending on how we decide on the beans.xml thing
-
 [[names]]
 
 === Bean names
