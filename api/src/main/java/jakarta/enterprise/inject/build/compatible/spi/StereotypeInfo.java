@@ -32,18 +32,27 @@ public interface StereotypeInfo {
      * Returns whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Alternative @Alternative}.
      * This means that all beans with this stereotype are alternatives.
      *
-     * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Alternative @Alternative}.
+     * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Alternative @Alternative}
      */
     boolean isAlternative();
 
-    // TODO https://github.com/eclipse-ee4j/cdi/issues/495
-    //int priority();
+    /**
+     * Returns the priority value this stereotype declares using the {@link jakarta.annotation.Priority @Priority}
+     * meta-annotation. All alternatives and interceptors with this stereotype will be enabled for the application
+     * and ordered using this priority value (unless they declare priority explicitly).
+     * <p>
+     * Returns {@code null} if this stereotype is not meta-annotated {@code @Priority}.
+     *
+     * @return the {@link jakarta.annotation.Priority @Priority} value declared by this stereotype, or {@code null}
+     * if this stereotype is not meta-annotated {@code @Priority}
+     */
+    Integer priority();
 
     /**
      * Returns whether this stereotype is meta-annotated {@link jakarta.inject.Named @Named}.
      * This means that all beans with this stereotype have default bean names.
      *
-     * @return whether this stereotype is meta-annotated {@link jakarta.inject.Named @Named}.
+     * @return whether this stereotype is meta-annotated {@link jakarta.inject.Named @Named}
      */
     boolean isNamed();
 }

@@ -113,14 +113,13 @@ public interface BeanInfo {
     boolean isAlternative();
 
     /**
-     * Returns the {@linkplain jakarta.annotation.Priority priority} of this alternative bean.
-     * If this bean is not an alternative, the return value is undefined.
+     * Returns the {@linkplain jakarta.annotation.Priority priority} declared on this bean, or {@code null}
+     * if this bean does not declare a priority. Declaring a priority on an alternative bean makes it an enabled
+     * alternative. Similarly, declaring a priority on an interceptor makes it an enabled interceptor.
      *
-     * @return the priority of this alternative bean
-     * @see #isAlternative()
+     * @return the priority of this bean, or {@code null} if this bean does not declare a priority
      */
-    // TODO maybe specify that if this bean is not an alternative, this returns 0?
-    int priority();
+    Integer priority();
 
     /**
      * Returns the bean name of this bean. A bean name is usually defined
