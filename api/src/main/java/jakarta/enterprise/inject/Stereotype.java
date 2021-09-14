@@ -85,7 +85,8 @@ import java.lang.annotation.Target;
  * 
  * <ul>
  * <li>all beans with the stereotype have defaulted bean EL names, or that</li>
- * <li>all beans with the stereotype are alternatives.</li>
+ * <li>all beans with the stereotype are alternatives, or that</li>
+ * <li>all beans with the stereotype have predefined {@code @Priority}.</li>
  * </ul>
  * 
  * <p>
@@ -119,6 +120,21 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  * 
+ * <p>
+ * A stereotype may declare a {@link jakarta.annotation.Priority &#064;Priority} annotation, which specifies that
+ * every bean with the stereotype has given priority. This enables and orders alternatives, interceptors, and decorators.
+ * </p>
+ *
+ * <pre>
+ * &#064;Alternative
+ * &#064;Priority(1)
+ * &#064;Stereotype
+ * &#064;Target(TYPE)
+ * &#064;Retention(RUNTIME)
+ * public @interface Mock {
+ * }
+ * </pre>
+ *
  * <p>
  * A stereotype may declare other stereotypes. Stereotype declarations are transitive. A stereotype declared by a second
  * stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
