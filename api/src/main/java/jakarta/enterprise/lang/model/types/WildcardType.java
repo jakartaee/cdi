@@ -14,17 +14,17 @@ package jakarta.enterprise.lang.model.types;
 public interface WildcardType extends Type {
     /**
      * Returns the upper bound of this wildcard type.
-     * Returns {@code null} if this wildcard type doesn't have an upper bound.
+     * Returns {@code null} if this wildcard type does not have an upper bound.
      *
-     * @return upper bound of this wildcard type, or {@code null} if this wildcard type doesn't have an upper bound
+     * @return upper bound of this wildcard type, or {@code null} if this wildcard type does not have an upper bound
      */
     Type upperBound();
 
     /**
      * Returns the lower bound of this wildcard type.
-     * Returns {@code null} if this wildcard type doesn't have a lower bound.
+     * Returns {@code null} if this wildcard type does not have a lower bound.
      *
-     * @return lower bound of this wildcard type, or {@code null} if this wildcard type doesn't have a lower bound
+     * @return lower bound of this wildcard type, or {@code null} if this wildcard type does not have a lower bound
      */
     Type lowerBound();
 

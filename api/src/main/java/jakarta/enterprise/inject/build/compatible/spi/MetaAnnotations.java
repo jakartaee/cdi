@@ -18,7 +18,7 @@ public interface MetaAnnotations {
 
     /**
      * Registers {@code annotation} as a qualifier annotation. Only makes sense if the annotation
-     * isn't meta-annotated {@code @Qualifier}.
+     * is not meta-annotated {@code @Qualifier}.
      *
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
@@ -27,7 +27,7 @@ public interface MetaAnnotations {
 
     /**
      * Registers {@code annotation} as an interceptor binding annotation. Only makes sense if the annotation
-     * isn't meta-annotated {@code @InterceptorBinding}.
+     * is not meta-annotated {@code @InterceptorBinding}.
      *
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
@@ -36,7 +36,7 @@ public interface MetaAnnotations {
 
     /**
      * Registers {@code annotation} as a stereotype annotation. Only makes sense if the annotation
-     * isn't meta-annotated {@code @Stereotype}.
+     * is not meta-annotated {@code @Stereotype}.
      *
      * @param annotation annotation type
      * @param config allows transforming annotations on the {@code annotation}
@@ -53,7 +53,7 @@ public interface MetaAnnotations {
      *
      * @param scopeAnnotation the scope annotation type, must not be {@code null}
      * @param contextClass the context class, must not be {@code null}
-     * @throws IllegalArgumentException if the {@code scopeAnnotation} isn't meta-annotated {@code @NormalScope}
+     * @throws IllegalArgumentException if the {@code scopeAnnotation} is not meta-annotated {@code @NormalScope}
      * or {@code @Scope}
      */
     void addContext(Class<? extends Annotation> scopeAnnotation, Class<? extends AlterableContext> contextClass);

@@ -25,7 +25,7 @@ public interface MethodConfig extends DeclarationConfig {
 
     /**
      * Adds a marker annotation of given type to this method.
-     * Doesn't allow configuring annotation members.
+     * Does not allow configuring annotation members.
      *
      * @param annotationType the annotation type, must not be {@code null}
      * @return this configurator object, to allow fluent usage

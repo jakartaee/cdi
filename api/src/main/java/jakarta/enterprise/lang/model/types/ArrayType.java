@@ -8,7 +8,7 @@ package jakarta.enterprise.lang.model.types;
  */
 public interface ArrayType extends Type {
     // TODO this model (the element type + number of dimensions) might not be the best;
-    //  specifically, it doesn't allow access to type-use annotations on component types
+    //  specifically, it does not allow access to type-use annotations on component types
     //  (for example: @C int @A [] @B [] f;)
 
     /**

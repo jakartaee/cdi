@@ -4,7 +4,7 @@ import jakarta.enterprise.lang.model.AnnotationTarget;
 import jakarta.enterprise.lang.model.types.Type;
 
 /**
- * Declarations directly correspond to an element of a program source code.
+ * A declaration is an element of a program source code.
  * Declarations are:
  *
  * <ul>

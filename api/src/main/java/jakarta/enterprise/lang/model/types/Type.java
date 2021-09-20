@@ -5,9 +5,20 @@ import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
 
 /**
- * A type is an abstract entity that may be <i>used</i> in a program, but doesn't necessarily have to
- * correspond to a <i>declaration</i> in a program. Types that are declared in a program source code have a method
- * to obtain the corresponding {@linkplain DeclarationInfo declaration}.
+ * A type is <i>used</i> in a program source code, but does not have to be <i>declared</i> anywhere.
+ * <p>
+ * For example, the {@code int} type exists even if it is not declared in any Java source file, while
+ * the {@code java.lang.String} type is declared by the class of the same name. Array types,
+ * such as {@code int[]} or {@code String[][]}, are not declared anywhere either, but their
+ * element types may be. A generic class, such as {@code java.util.List}, declares a raw type
+ * of the same name, but it does not declare the parameterized types, such as {@code List<String>}.
+ * Parameterized types are created by applying type arguments to generic classes. For example,
+ * the {@code List<String>} type is created by applying {@code String} to {@code List<T>}.
+ * <p>
+ * Types occur on many places. A field has a type, a method has a return type, a method parameter
+ * has a type, even the {@code extends} clause in a class declaration contains a type.
+ * Occurences of types may be annotated.
+ * <p>
  * Types are:
  *
  * <ul>
@@ -19,6 +30,8 @@ import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
  * <li>a {@linkplain TypeVariable type variable}, such as {@code T} when used in a class that declares a type parameter {@code T}</li>
  * <li>a {@linkplain WildcardType wildcard} type, such as the type argument in {@code List<? extends Number>}</li>
  * </ul>
+ *
+ * Class types and parameterized types allow obtaining their {@linkplain ClassInfo class declarations}.
  */
 public interface Type extends AnnotationTarget {
     @Override
