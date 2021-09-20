@@ -19,6 +19,8 @@ import java.lang.annotation.Target;
  * <p>
  * If the {@code @Processing} method has a parameter of type {@code BeanInfo},
  * the method is called once for each bean whose set of bean types contains at least one subtype of any given type.
+ * If the {@code @Processing} method has a parameter of type {@code InterceptorInfo},
+ * the method is called once for each interceptor whose set of bean types contains at least one subtype of any given type.
  * If the {@code @Processing} method has a parameter of type {@code ObserverInfo},
  * the method is called once for each observer whose observed event type is present in the set of subtypes of any give type.
  * <p>

@@ -1,6 +1,5 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import java.util.Map;
 import jakarta.enterprise.context.spi.CreationalContext;
 
 /**
@@ -17,14 +16,12 @@ public interface SyntheticBeanDisposer<T> {
     /**
      * Destroys an instance of the synthetic bean.
      * <p>
-     * The parameter map is defined by the {@link SyntheticBeanBuilder}. Note that
-     * annotation-typed parameters are always passed to this function as instances of
-     * the annotation type, even if an instance of {@code AnnotationInfo} was passed
-     * to the {@code SyntheticBeanBuilder}.
+     * The parameter map contains the same values that were passed to
+     * the {@link SyntheticBeanBuilder} that defined the synthetic bean.
      *
      * @param instance the synthetic bean instance, never {@code null} (TODO what if @Dependent?)
      * @param creationalContext the creational context, never {@code null}
-     * @param params immutable map of parameters, never {@code null}
+     * @param params the parameter map, never {@code null}
      */
-    void dispose(T instance, CreationalContext<T> creationalContext, Map<String, Object> params);
+    void dispose(T instance, CreationalContext<T> creationalContext, Parameters params);
 }

@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  * <p>
  * Methods annotated {@code @Enhancement} must define exactly one parameter of one of these types:
  * <ul>
- * <li>{@link DeclarationConfig} or {@link jakarta.enterprise.lang.model.declarations.DeclarationInfo DeclarationInfo}</li>
  * <li>{@link ClassConfig} or {@link jakarta.enterprise.lang.model.declarations.ClassInfo ClassInfo}</li>
  * <li>{@link MethodConfig} or {@link jakarta.enterprise.lang.model.declarations.MethodInfo MethodInfo}</li>
  * <li>{@link FieldConfig} or {@link jakarta.enterprise.lang.model.declarations.FieldInfo FieldInfo}</li>

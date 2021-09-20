@@ -55,8 +55,10 @@ public interface Types {
      * For primitives, use {@link #ofPrimitive(PrimitiveType.PrimitiveKind)}. For arrays, use {@link #ofArray(Type, int)}.
      *
      * @param name the binary name of the class, must not be {@code null}
-     * @return the {@link ClassType} or {@code null} if the type doesn't exist on the application classpath
+     * @return the {@link ClassType} or {@code null} if the type does not exist on the application classpath
      */
+    // TODO using the term "classpath" here seems inappropriate; perhaps replace with "if the type is not present
+    //  in any bean archive" or something like that?
     ClassType ofClass(String name);
 
     /**
@@ -75,7 +77,7 @@ public interface Types {
      * @return the {@link ArrayType}, never {@code null}
      * @throws IllegalArgumentException if the element type is an array type
      */
-    // TODO more error conditions? e.g. void array doesn't make sense either
+    // TODO more error conditions? e.g. void array does not make sense either
     ArrayType ofArray(Type elementType, int dimensions);
 
     /**
@@ -87,7 +89,7 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * doesn't match the number of type parameters declared by {@code genericType}
+     * does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(Class<?> genericType, Class<?>... typeArguments);
 
@@ -100,7 +102,7 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * doesn't match the number of type parameters declared by {@code genericType}
+     * does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(Class<?> genericType, Type... typeArguments);
 
@@ -113,7 +115,7 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * doesn't match the number of type parameters declared by {@code genericType}
+     * does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(ClassType genericType, Type... typeArguments);
 

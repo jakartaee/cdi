@@ -12,9 +12,13 @@ import java.lang.annotation.Target;
  * <p>
  * Methods annotated {@code @Processing} must define exactly one parameter of one of these types:
  * <ul>
- * <li>{@link BeanInfo BeanInfo}</li>
- * <li>{@link ObserverInfo ObserverInfo}</li>
+ * <li>{@link BeanInfo}</li>
+ * <li>{@link InterceptorInfo}</li>
+ * <li>{@link ObserverInfo}</li>
  * </ul>
+ * Note that interceptors are beans, and {@code InterceptorInfo} is a subtype of {@code BeanInfo}, so if the method
+ * has a parameter of type {@code BeanInfo}, it will be called for interceptors as well.
+ * <p>
  * The method must also have at least one annotation {@link ExactType @ExactType} or {@link SubtypesOf @SubtypesOf}.
  * <p>
  * You can also declare a parameter of type {@link Messages Messages} to produce log messages and validation errors.

@@ -5,8 +5,9 @@ import java.util.Collection;
 
 /**
  * A stereotype. May define {@linkplain #defaultScope() default scope},
- * a set of {@linkplain #interceptorBindings() interceptor bindings}, and
- * whether all beans with the stereotype are {@linkplain #isAlternative() alternatives}
+ * a set of {@linkplain #interceptorBindings() interceptor bindings},
+ * default {@linkplain #priority() priority}, and whether all beans
+ * with the stereotype are {@linkplain #isAlternative() alternatives}
  * or have {@linkplain #isNamed() default names}.
  *
  * @since 4.0
@@ -14,7 +15,7 @@ import java.util.Collection;
 public interface StereotypeInfo {
     /**
      * Returns the {@linkplain ScopeInfo default scope} defined by this stereotype.
-     * Returns {@code null} if this stereotype doesn't define a default scope.
+     * Returns {@code null} if this stereotype does not define a default scope.
      *
      * @return the default scope or {@code null}
      */
@@ -22,7 +23,7 @@ public interface StereotypeInfo {
 
     /**
      * Returns the set of {@linkplain AnnotationInfo interceptor binding annotations} defined by this stereotype.
-     * Returns an empty collection if this stereotype doesn't define any interceptor binding.
+     * Returns an empty collection if this stereotype does not define any interceptor binding.
      *
      * @return immutable collection of {@linkplain AnnotationInfo interceptor binding annotations}, never {@code null}
      */

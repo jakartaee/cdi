@@ -129,6 +129,7 @@
 
 
 	<properties>
+		<annotation.api.version>2.1.0-B1</annotation.api.version>
 		<atinject.api.version>2.0.0</atinject.api.version>
 		<uel.api.version>4.0.0</uel.api.version>
 		<interceptor.api.version>2.0.0</interceptor.api.version>
@@ -152,6 +153,12 @@
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
 				<version>6.8.8</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jakarta.annotation</groupId>
+				<artifactId>jakarta.annotation-api</artifactId>
+				<version>${annotation.api.version}</version>
 			</dependency>
 
 			<dependency>
@@ -183,6 +190,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>jakarta.el</groupId>
 			<artifactId>jakarta.el-api</artifactId>
 		</dependency>
@@ -190,6 +202,12 @@
 		<dependency>
 			<groupId>jakarta.interceptor</groupId>
 			<artifactId>jakarta.interceptor-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>jakarta.annotation</groupId>
+					<artifactId>jakarta.annotation-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>

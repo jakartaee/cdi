@@ -60,7 +60,7 @@ public interface AnnotationInfo {
      * Returns the {@linkplain AnnotationMember value} of this annotation's member with given {@code name}.
      *
      * @param name member name, must not be {@code null}
-     * @return value of this annotation's member with given {@code name} or {@code null} if such member doesn't exist
+     * @return value of this annotation's member with given {@code name} or {@code null} if such member does not exist
      */
     AnnotationMember member(String name);
 
@@ -76,7 +76,7 @@ public interface AnnotationInfo {
     /**
      * Returns the {@linkplain AnnotationMember value} of this annotation's {@link AnnotationMember#VALUE value} member.
      *
-     * @return value of this annotation's {@link AnnotationMember#VALUE value} member or {@code null} if the member doesn't exist
+     * @return value of this annotation's {@link AnnotationMember#VALUE value} member or {@code null} if the member does not exist
      */
     default AnnotationMember value() {
         return member(AnnotationMember.VALUE);

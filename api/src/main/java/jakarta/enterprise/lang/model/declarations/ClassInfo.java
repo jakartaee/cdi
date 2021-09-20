@@ -53,7 +53,7 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns a list of {@linkplain TypeVariable type parameters} declared on this class.
-     * Returns an empty list if this class isn't generic and so doesn't declare type parameters.
+     * Returns an empty list if this class is not generic and so does not declare type parameters.
      *
      * @return immutable list of this class's type parameters, never {@code null}
      */
@@ -61,7 +61,7 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns the {@linkplain Type type} of this class's superclass. Returns {@code null} if this class
-     * doesn't have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
+     * does not have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
      *
      * @return the type of this class's superclass, or {@code null} if there's no superclass
      */
@@ -69,7 +69,7 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns the {@linkplain ClassInfo declaration} of this class's superclass. Returns {@code null} if this class
-     * doesn't have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
+     * does not have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
      *
      * @return the declaration of this class's superclass, or {@code null} if there's no superclass
      */
