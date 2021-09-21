@@ -840,7 +840,7 @@ public @interface Mock {}
 
 ===== Declaring stereotype with `@Priority`
 
-A stereotype may declare a `@Priority` annotation which functions as a means of enabling and ordering affected alternatives, interceptors, and decorators (in {cdi_full}).
+A stereotype may declare a `@Priority` annotation which functions as a means of enabling and ordering affected beans.
 
 If a bean declares two different stereotypes that declare different priority values, the bean must explicitly declare a `@Priority` annotation. If the bean does not explicitly declare priority, the container automatically detects the problem and treats it as a definition error.
 
