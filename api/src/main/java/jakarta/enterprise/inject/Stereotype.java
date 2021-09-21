@@ -122,7 +122,7 @@ import java.lang.annotation.Target;
  * 
  * <p>
  * A stereotype may declare a {@link jakarta.annotation.Priority &#064;Priority} annotation, which specifies that
- * every bean with the stereotype has given priority. This enables and orders alternatives, interceptors, and decorators.
+ * every bean with the stereotype is enabled and has given priority.
  * </p>
  *
  * <pre>

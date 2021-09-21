@@ -38,8 +38,8 @@ public interface StereotypeInfo {
 
     /**
      * Returns the priority value this stereotype declares using the {@link jakarta.annotation.Priority @Priority}
-     * meta-annotation. All alternatives and interceptors with this stereotype will be enabled for the application
-     * and ordered using this priority value (unless they declare priority explicitly).
+     * meta-annotation. Beans with this stereotype will be enabled for the application and ordered using this priority
+     * value (unless they declare priority explicitly).
      * <p>
      * Returns {@code null} if this stereotype is not meta-annotated {@code @Priority}.
      *
