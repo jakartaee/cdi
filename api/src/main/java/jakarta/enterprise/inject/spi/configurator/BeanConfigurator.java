@@ -316,4 +316,20 @@ public interface BeanConfigurator<T> {
      */
     BeanConfigurator<T> alternative(boolean value);
 
+    /**
+     * Set the priority of the configured bean.
+     * By default, the configured bean does not have a priority.
+     * <p>
+     * This is equivalent to putting the {@link jakarta.annotation.Priority Priority}
+     * annotation to an actual bean class or making a custom
+     * {@link jakarta.enterprise.inject.spi.Bean Bean} class implement
+     * {@link jakarta.enterprise.inject.spi.Prioritized Prioritized}.
+     * <p>
+     * This method has no effect if the configured bean is not an alternative.
+     *
+     * @param priority the priority value
+     * @return self
+     */
+    BeanConfigurator<T> priority(int priority);
+
 }
