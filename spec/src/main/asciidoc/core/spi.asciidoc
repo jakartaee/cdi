@@ -1042,6 +1042,7 @@ It can be done from an existing `BeanAttributes`  or by reading metadata on a gi
 * Add multiple injection points for the bean with `addInjectionPoints` methods.
 * Replace all injection points for the bean with `injectionPoints` methods.
 * Make the bean implements `PassivationCapable` and set its id with `id` method.
+* Set the priority of the bean, if it is an alternative, with `priority` method.
 * Set a callback to create a bean instance with `createWith()` or `produceWith()` method.
 * Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
