@@ -81,6 +81,16 @@ public class DummyCDIProvider2 implements CDIProvider {
         }
 
         @Override
+        public Handle<Object> getHandle() {
+            return null;
+        }
+
+        @Override
+        public Iterable<Handle<Object>> handles() {
+            return null;
+        }
+
+        @Override
         public Iterator<Object> iterator() {
             return null;
         }
