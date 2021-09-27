@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.enterprise.util.TypeLiteral;
 import jakarta.inject.Provider;
@@ -226,5 +227,89 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      *         destroying bean instances
      */
     void destroy(T instance);
+
+    /**
+     * Obtains an initialized contextual reference handle for a bean that has the required type and qualifiers and is
+     * eligible for injection. Throws exceptions if there is no such bean or more than one.
+     *
+     * <p>
+     * The contextual reference is obtained lazily, i.e. when first needed.
+     * </p>
+     *
+     * @return a new {@link Handle} instnace
+     * @throws UnsatisfiedResolutionException if there is no bean with given type and qualifiers
+     * @throws AmbiguousResolutionException if there is more than one bean given type and qualifiers
+     */
+    Handle<T> getHandle();
+
+    /**
+     * Allows iterating over contextual reference handles for all beans that have the required type and required qualifiers and are eligible
+     * for injection.
+     *
+     * <p>
+     * Note that the returned {@link Iterable} is stateless. Therefore, each {@link Iterable#iterator()} produces a new set of handles.
+     * </p>
+     *
+     * @return a new iterable
+     */
+    Iterable<Handle<T>> handles();
+
+    /**
+     *  Returns stream of {@link Handle} objects.
+     *
+     * @return a new stream of contextual reference handles
+     */
+    default Stream<Handle<T>> handlesStream() {
+        return StreamSupport.stream(handles().spliterator(), false);
+    }
+
+    /**
+     * This interface represents a contextual reference handle.
+     * <p>
+     * Allows to inspect the metadata of the relevant bean before resolving its contextual reference and also to destroy
+     * the underlying contextual instance.
+     * </p>
+     *
+     * @author Matej Novotny
+     * @param <T> the required bean type
+     */
+    interface Handle<T> extends AutoCloseable {
+
+        /**
+         * The contextual reference is obtained lazily, i.e. when first needed.
+         *
+         * @return the contextual reference
+         * @see Instance#get()
+         * @throws IllegalStateException If the producing {@link Instance} does not exist
+         */
+        T get();
+
+        /**
+         *
+         * @return the bean metadata
+         */
+        Bean<T> getBean();
+
+        /**
+         * Destroy the contextual instance.
+         *
+         * It's a no-op if:
+         * <ul>
+         * <li>called multiple times</li>
+         * <li>if the producing {@link Instance} does not exist</li>
+         * <li>if the handle does not hold a contextual reference, i.e. {@link #get()} was never called</li>
+         * </ul>
+         *
+         * @see Instance#destroy(Object)
+         */
+        void destroy();
+
+        /**
+         * Delegates to {@link #destroy()}.
+         */
+        @Override
+        void close();
+
+    }
 
 }

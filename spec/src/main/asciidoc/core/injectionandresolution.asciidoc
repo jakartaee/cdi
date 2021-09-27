@@ -623,6 +623,9 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     void destroy(T instance);
 
+    Handle<T> getHandle();
+    Iterable<Handle<T>> handles();
+    Stream<Handle<T>> handlesStream();
 
 }
 ----
@@ -686,6 +689,53 @@ The method `destroy()` instructs the container to destroy the instance.
 The bean instance passed to `destroy()` should be a dependent scoped bean instance obtained from the same `Instance` object, or a client proxy for a normal scoped bean.
 Applications are encouraged to always call `destroy()` when they no longer require an instance obtained from `Instance`. All built-in normal scoped contexts support destroying bean instances.
 An `UnsupportedOperationException` is thrown if the active context object for the scope type of the bean does not support destroying bean instances.
+
+The `getHandle()` method must:
+
+* Return an initialized contextual reference `Handle<T>` for a bean that has the required type and qualifiers and is eligible for injection. The contextual reference must be resolved lazily, i.e. when first needed. <<handle_interface>> is described in a separate paragraph.
+* Throw `UnsatisfiedResolutionException` if there is no bean with given type and qualifiers
+* Throw `AmbiguousResolutionException` if there is more than one bean given type and qualifiers
+
+The `handles()` method must:
+
+* Allow iterating over contextual reference handles for all beans that have the required type and required qualifiers and are eligible for injection.
+* Return stateless `Iterable`. Therefore, each `Iterable#iterator()` produces a new set of handles.
+
+The `handlesStream()` is a `Stream` equivalent of the aforementioned `handles()` method.
+
+[[handle_interface]]
+===== The `Handle` interface
+
+`Handle` is an interface representing a contextual reference handle.
+It is an abstraction allowing inspection of bean metadata via `Bean<?>` objects.
+Handles have to resolve their contextual references lazily, i.e. when their `get()` method is invoked.
+Last but not least, this interface can be used to destroy the contextual instance once not needed.
+
+[source, java]
+----
+public interface Handle<T> extends AutoCloseable {
+
+        T get();
+        Bean<T> getBean();
+        void destroy();
+        void close();
+
+}
+----
+
+The `get()` method returns a contextual reference object. The contextual reference is resolved lazily.
+
+The `getBean()` method returns the `Bean` object representing metadata of the given contextual instance.
+
+The `destroy()` method destroys the contextual instance and is a no-op if:
+
+* called multiple times
+* the producing `Instance` does not exist
+* the handle does not hold a contextual reference, i.e. `get()` was never called
+
+The rules for destroying instances are the same as with `Instance#destroy()`.
+
+The `close()` method delegates to the aforementioned `destroy()` method.
 
 [[builtin_instance]]
 
