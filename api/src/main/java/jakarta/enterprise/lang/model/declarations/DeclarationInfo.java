@@ -44,6 +44,7 @@ public interface DeclarationInfo extends AnnotationTarget {
         METHOD,
         PARAMETER,
         FIELD,
+        RECORD_COMPONENT,
     }
 
     /**
@@ -99,6 +100,15 @@ public interface DeclarationInfo extends AnnotationTarget {
     }
 
     /**
+     * Returns whether this declaration is a {@linkplain RecordComponentInfo record component}.
+     *
+     * @return {@code true} if this is a record component, {@code false} otherwise
+     */
+    default boolean isRecordComponent() {
+        return kind() == Kind.RECORD_COMPONENT;
+    }
+
+    /**
      * Returns this declaration as a {@linkplain PackageInfo package}.
      *
      * @return this package, never {@code null}
@@ -146,5 +156,15 @@ public interface DeclarationInfo extends AnnotationTarget {
      */
     default FieldInfo asField() {
         throw new IllegalStateException("Not a field");
+    }
+
+    /**
+     * Returns this declaration as a {@linkplain RecordComponentInfo record component}.
+     *
+     * @return this record component, never {@code null}
+     * @throws IllegalStateException if {@link #isRecordComponent()} returns {@code false}
+     */
+    default RecordComponentInfo asRecordComponent() {
+        throw new IllegalStateException("Not a record component");
     }
 }

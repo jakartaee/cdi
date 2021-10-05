@@ -7,12 +7,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * A class. Four kinds of classes are distinguished:
+ * A class. Five kinds of classes are distinguished:
  * <ul>
  * <li>plain classes</li>
  * <li>interfaces</li>
  * <li>enums (restricted kind of classes)</li>
  * <li>annotations (specialized kind of interfaces)</li>
+ * <li>records (restricted kind of classes)</li>
  * </ul>
  *
  * Classes are represented as isolated units. That is, if this class is nested, it is not possible
@@ -25,7 +26,6 @@ import java.util.List;
  *
  * @since 4.0
  */
-// TODO maybe support records already?
 public interface ClassInfo extends DeclarationInfo {
     /**
      * Returns the binary name of this class, as defined by <cite>The Java&trade; Language Specification</cite>;
@@ -93,7 +93,7 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns whether this class is a plain class. That is, not an interface,
-     * not an enum, and not an annotation.
+     * not an enum, not an annotation, and not a record.
      *
      * @return whether this class is a plain class
      */
@@ -119,6 +119,13 @@ public interface ClassInfo extends DeclarationInfo {
      * @return whether this class is an annotation
      */
     boolean isAnnotation();
+
+    /**
+     * Returns whether this class is a record.
+     *
+     * @return whether this class is a record
+     */
+    boolean isRecord();
 
     /**
      * Returns whether this class is {@code abstract}.
@@ -175,6 +182,14 @@ public interface ClassInfo extends DeclarationInfo {
      * @return immutable collection of fields, never {@code null}
      */
     Collection<FieldInfo> fields();
+
+    /**
+     * Returns a collection of {@linkplain RecordComponentInfo record components} declared in this class.
+     * If this class is not a record, returns an empty collection.
+     *
+     * @return immutable collection of record components, never {@code nul}
+     */
+    Collection<RecordComponentInfo> recordComponents();
 
     // ---
 
