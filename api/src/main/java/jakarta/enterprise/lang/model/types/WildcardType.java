@@ -9,8 +9,6 @@ package jakarta.enterprise.lang.model.types;
  * </ul>
  * Note that {@code ? extends Object} is equivalent to {@code ?} and is represented as such.
  */
-// TODO another option is that unbounded wildcards and wildcards with lower bound would always have
-//  java.lang.Object as an upper bound
 public interface WildcardType extends Type {
     /**
      * Returns the upper bound of this wildcard type.

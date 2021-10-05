@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
  * <li>{@link ClassConfig} or {@link jakarta.enterprise.lang.model.declarations.ClassInfo ClassInfo}</li>
  * <li>{@link MethodConfig} or {@link jakarta.enterprise.lang.model.declarations.MethodInfo MethodInfo}</li>
  * <li>{@link FieldConfig} or {@link jakarta.enterprise.lang.model.declarations.FieldInfo FieldInfo}</li>
+ * <li>({@code ParameterConfig} or {@code ParameterInfo} is not possible, parameters must be accessed
+ * through {@code MethodConfig} or {@code MethodInfo})</li>
  * </ul>
  * The method must also have at least one annotation {@link ExactType @ExactType} or {@link SubtypesOf @SubtypesOf}.
  * <p>

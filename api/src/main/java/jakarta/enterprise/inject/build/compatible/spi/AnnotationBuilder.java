@@ -20,12 +20,15 @@ import java.lang.annotation.Annotation;
  * Note that values of all members of given annotation type must be defined before
  * calling {@code build()}, except of annotation members that declare a default value.
  * If a value is not defined for an annotation member that does not have a default value,
- * {@code build()} will throw an exception. Defining values of members that do not
- * exist on given annotation type is possible, but such values will be ignored.
+ * {@code build()} will throw an exception.
+ * <p>
+ * Defining values of members that do not exist on given annotation type is possible,
+ * and such members will be retained in the resulting {@code AnnotationInfo}. However,
+ * if that {@code AnnotationInfo} is later transformed to an instance of the annotation
+ * type, the non-existing members will disappear.
  *
  * @since 4.0
  */
-// TODO not sure if all the methods taking ClassInfo are needed, maybe they're not
 public interface AnnotationBuilder {
     /**
      * Returns a new {@link AnnotationBuilder} that builds an annotation of given type.

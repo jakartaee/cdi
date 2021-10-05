@@ -1,32 +1,32 @@
 package jakarta.enterprise.lang.model.types;
 
 /**
- * An array type. That is, the {@linkplain #elementType() element type} and
- * the {@linkplain #dimensions() number of dimensions}.
+ * An array type is created from a {@linkplain #componentType() component type}.
+ * For a component type {@code T}, the array type is written {@code T[]}.
+ * A component type may itself be an array type. For a component type {@code T[]},
+ * the array type is written {@code T[][]}. Such array type is also called
+ * multi-dimensional array type.
+ * <p>
+ * Array types also have an <em>element type</em>, which is obtained by repeatedly
+ * asking for the component type until a non-array type is returned. For example,
+ * the {@code String[][]} array type has an element type of {@code String}.
  *
  * @since 4.0
  */
 public interface ArrayType extends Type {
-    // TODO this model (the element type + number of dimensions) might not be the best;
-    //  specifically, it does not allow access to type-use annotations on component types
-    //  (for example: @C int @A [] @B [] f;)
-
     /**
-     * Returns the number of dimentions of this array type. In other words, the depth of nesting
-     * of this array type. For example, {@code int[]} has 1 dimension, while {@code String[][]} has 2 dimensions.
+     * Returns the component type of this array type, as defined by <cite>The Java&trade; Language Specification</cite>.
+     * That is, in case of a single-dimensional array, the element type of the array, and in case of a multi-dimensional
+     * array, an array type with one less dimension.
+     * <p>
+     * For example, the component type of {@code int[]} is the {@code int} type. The component type
+     * of {@code String[][]} is the {@code String[]} array type, whose component type is the {@code String} type.
+     * <p>
+     * Each dimension of the array type may be annotated independently.
      *
-     * @return the number of dimensions, never less than 1
+     * @return the component type, never {@code null}
      */
-    int dimensions();
-
-    /**
-     * Returns the element type of this array type, as defined by <cite>The Java&trade; Language Specification</cite>.
-     * That is, the element type is never an array type. Types of multidimensional (nested) arrays are represented
-     * as a single {@code ArrayType} with more than 1 {@linkplain #dimensions() dimension}.
-     *
-     * @return the element type, never {@code null}
-     */
-    Type elementType();
+    Type componentType();
 
     // ---
 

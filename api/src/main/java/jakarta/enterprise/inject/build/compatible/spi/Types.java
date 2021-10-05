@@ -16,14 +16,13 @@ import jakarta.enterprise.lang.model.types.WildcardType;
  */
 public interface Types {
     /**
-     * Returns a type from the given class literal.
-     *
+     * Returns a type from given class literal.
      * For example:
      * <ul>
-     * <li>{@code of(void.class)}: same as {@code ofVoid()}</li>
-     * <li>{@code of(int.class)}: same as {@code ofPrimitive(PrimitiveKind.INT)}</li>
-     * <li>{@code of(String.class)}: same as {@code ofClass(... ClassInfo for String ...)}</li>
-     * <li>{@code of(int[].class)}: same as {@code ofArray(ofPrimitive(PrimitiveKind.INT), 1)}</li>
+     * <li>{@code of(void.class)}: same as {@link #ofVoid() ofVoid}{@code ()}</li>
+     * <li>{@code of(int.class)}: same as {@link #ofPrimitive(PrimitiveType.PrimitiveKind) ofPrimitive}{@code (PrimitiveKind.INT)}</li>
+     * <li>{@code of(String.class)}: same as {@link #ofClass(ClassInfo) ofClass}{@code (... ClassInfo for String ...)}</li>
+     * <li>{@code of(int[].class)}: same as {@link #ofArray(Type, int) ofArray}{@code (ofPrimitive(PrimitiveKind.INT), 1)}</li>
      * <li>{@code of(String[][].class)}: same as {@code ofArray(ofClass(... ClassInfo for String ...), 2)}</li>
      * </ul>
      *
@@ -51,14 +50,12 @@ public interface Types {
      * Returns a {@link ClassType} for the given binary name, as defined by <cite>The Java&trade; Language Specification</cite>;
      * in other words, the class name as returned by {@link Class#getName()}.
      * <p>
-     * Note that this method returns {@link ClassType}, so {@code name} can only be a name of a class.
+     * Note that this method returns {@link ClassType}, so {@code name} may only be a name of a class.
      * For primitives, use {@link #ofPrimitive(PrimitiveType.PrimitiveKind)}. For arrays, use {@link #ofArray(Type, int)}.
      *
      * @param name the binary name of the class, must not be {@code null}
-     * @return the {@link ClassType} or {@code null} if the type does not exist on the application classpath
+     * @return the {@link ClassType} or {@code null} if the class is not present in any bean archive
      */
-    // TODO using the term "classpath" here seems inappropriate; perhaps replace with "if the type is not present
-    //  in any bean archive" or something like that?
     ClassType ofClass(String name);
 
     /**
@@ -71,13 +68,16 @@ public interface Types {
 
     /**
      * Returns an {@link ArrayType} for the given {@linkplain Type element type} and number of dimensions.
+     * <p>
+     * Note that this method accepts the <em>element type</em> of an array, even though {@link ArrayType}
+     * uses a <em>component type</em> representation. For example, the component type of {@code String[][]}
+     * is {@code String[]}, while the element type is {@code String}.
      *
      * @param elementType the element {@link Type}, must not be {@code null}
      * @param dimensions the number of dimensions
      * @return the {@link ArrayType}, never {@code null}
-     * @throws IllegalArgumentException if the element type is an array type
+     * @throws IllegalArgumentException if the element type is an array type, a wildcard type, or the void pseudo-type
      */
-    // TODO more error conditions? e.g. void array does not make sense either
     ArrayType ofArray(Type elementType, int dimensions);
 
     /**

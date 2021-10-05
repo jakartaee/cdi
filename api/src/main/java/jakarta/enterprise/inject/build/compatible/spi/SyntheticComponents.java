@@ -27,6 +27,4 @@ public interface SyntheticComponents {
      * @return a new {@link SyntheticObserverBuilder}, never {@code null}
      */
     <T> SyntheticObserverBuilder<T> addObserver(Class<T> eventType);
-    // TODO is the class literal here bad for annotation processors perhaps? it shouldn't,
-    //  we do the same thing in `addBean`
 }
