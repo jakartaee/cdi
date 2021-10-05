@@ -4,6 +4,7 @@ import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.MethodInfo;
 
 import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -69,4 +70,11 @@ public interface MethodConfig extends DeclarationConfig {
      */
     @Override
     MethodConfig removeAllAnnotations();
+
+    /**
+     * Returns a list of {@link ParameterConfig} objects for each parameter of this method.
+     *
+     * @return immutable list of {@link ParameterConfig} objects, never {@code null}
+     */
+    List<ParameterConfig> parameters();
 }

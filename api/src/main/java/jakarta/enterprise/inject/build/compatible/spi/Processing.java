@@ -8,7 +8,10 @@ import java.lang.annotation.Target;
 /**
  * 3rd phase of CDI Lite extension execution.
  * Allows processing registered beans and observers.
- * Note that synthetic beans and observers, registered in {@link Synthesis @Synthesis}, will <i>not</i> be processed.
+ * <p>
+ * This phase is executed twice.
+ * For non-synthetic beans and observer, this phase is executed <em>before</em> {@linkplain Synthesis synthesis}.
+ * For synthetic beans and observers, this phase is executed <em>after</em> {@linkplain Synthesis synthesis}.
  * <p>
  * Methods annotated {@code @Processing} must define exactly one parameter of one of these types:
  * <ul>
@@ -29,10 +32,8 @@ import java.lang.annotation.Target;
  *
  * @since 4.0
  */
-// TODO allow @Processing methods to be executed even for synthetic components? that would break the nice
-//  sequential model, but being able to observe synthetic components is important
 // TODO add a way to _modify_ beans? at least veto-ing should be possible
-//  (add BeanConfig extending BeanInfo? or some other way?)
+//  (add BeanConfig and/or BeanAttributesConfig, similarly to Portable Extensions? or some other way?)
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Processing {

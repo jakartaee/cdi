@@ -19,6 +19,8 @@ public interface SyntheticBeanCreator<T> {
      * <p>
      * The parameter map contains the same values that were passed to
      * the {@link SyntheticBeanBuilder} that defined the synthetic bean.
+     * <p>
+     * May only return {@code null} if the synthetic bean is {@code @Dependent}.
      *
      * @param creationalContext the creational context, never {@code null}
      * @param injectionPoint the injection point into which the new instance will be injected,

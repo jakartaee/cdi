@@ -18,9 +18,6 @@ import jakarta.enterprise.lang.model.types.Type;
  * @since 4.0
  */
 public interface DeclarationInfo extends AnnotationTarget {
-    // TODO reevaluate the is*/as*/kind() approach (everywhere!); maybe type checks and casts are better, maybe
-    //  something completely different is even better
-
     @Override
     default boolean isDeclaration() {
         return true;

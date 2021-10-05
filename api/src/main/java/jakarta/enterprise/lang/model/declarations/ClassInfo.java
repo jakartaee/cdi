@@ -11,7 +11,7 @@ import java.util.List;
  * <ul>
  * <li>plain classes</li>
  * <li>interfaces</li>
- * <li>enums (specialized kind of plain classes)</li>
+ * <li>enums (restricted kind of classes)</li>
  * <li>annotations (specialized kind of interfaces)</li>
  * </ul>
  *
@@ -97,7 +97,6 @@ public interface ClassInfo extends DeclarationInfo {
      *
      * @return whether this class is a plain class
      */
-    // TODO better name? "plain class" is my invention
     boolean isPlainClass();
 
     /**
@@ -166,7 +165,7 @@ public interface ClassInfo extends DeclarationInfo {
     Collection<MethodInfo> methods();
 
     /**
-     * Returns a collection of {@link FieldInfo fields} declared in this class and all
+     * Returns a collection of {@linkplain FieldInfo fields} declared in this class and all
      * its superclasses up to and excluding {@code java.lang.Object}. This includes
      * {@code private} fields declared in superclasses.
      * <p>

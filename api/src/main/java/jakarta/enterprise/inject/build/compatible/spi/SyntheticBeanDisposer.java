@@ -19,7 +19,7 @@ public interface SyntheticBeanDisposer<T> {
      * The parameter map contains the same values that were passed to
      * the {@link SyntheticBeanBuilder} that defined the synthetic bean.
      *
-     * @param instance the synthetic bean instance, never {@code null} (TODO what if @Dependent?)
+     * @param instance the synthetic bean instance, never {@code null}
      * @param creationalContext the creational context, never {@code null}
      * @param params the parameter map, never {@code null}
      */
