@@ -88,14 +88,16 @@ The container automatically detects inconsistent specialization and treats it as
 
 ==== Inter-module injection in {cdi_full}
 
-In addition to rules defined in <<inter_module_injection>>, the following rules apply.
+Instead of the rules in <<inter_module_injection>>, the following rules apply in {cdi_full}.
 
-A bean is also _available for injection_ in a certain module if:
+A bean is _available for injection_ in a certain module if:
 
-* the bean is not a decorator,
-* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive.
+* the bean is not an interceptor or decorator,
+* the bean is enabled,
+* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative of the bean archive, or the bean is a selected alternative of the application, and
+* the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
-// TODO here, maybe we shouldn't do "in addition to", but "is overridden" and spell out the full rules again
+For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getBeanClass()` to determine the bean class of the bean and `InjectionPoint.getMember()` and then `Member.getDeclaringClass()` to determine the class that declares an injection point.
 
 [[typesafe_resolution_full]]
 
