@@ -24,9 +24,8 @@ The container is not required to support circular chains of dependencies where e
 
 Beans and their clients may be deployed in _modules_ in a module architecture.
 In a module architecture, certain modules are considered _bean archives_.
-The library may be an explicit bean archive or an implicit bean archive, as defined in <<bean_archive>>.
-In {cdi_lite}, libraries that are bean archives are always implicit bean archives.
-// TODO this all depends on how we define packaging and deployment for Lite, so this paragraph must be revisited!
+In {cdi_lite}, a library that is a bean archive is always an implicit bean archive, as defined in <<bean_archive_lite>>.
+Other kinds of bean archives exist in {cdi_full}.
 
 A bean packaged in a certain module is available for injection, lookup and name resolution to classes packaged in some other module if and only if the bean class of the bean is required to be _accessible_ to the other module by the class accessibility requirements of the module architecture.
 
