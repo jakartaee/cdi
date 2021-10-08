@@ -1,6 +1,9 @@
 [[packaging_deployment]]
 
-== Packaging and deployment
+== Packaging and deployment in {cdi_full}
+
+This chapter replaces <<packaging_deployment_lite>> for the purpose of {cdi_full}.
+In case of overlap, the <<packaging_deployment_lite>> chapter should be considered merely informative.
 
 When an application is started, the container must perform _bean discovery_, detect definition errors and deployment problems and raise events that allow portable extensions to integrate with the deployment lifecycle.
 
@@ -16,7 +19,7 @@ Portable extensions may even integrate with the process of building the `Bean` o
 
 [[bean_archive]]
 
-=== Bean archives
+=== Bean archives in {cdi_full}
 
 Bean classes of enabled beans must be deployed in _bean archives_.
 
@@ -66,7 +69,7 @@ An extension may be deployed in any archive, including those that are not bean a
 
 [[initialization]]
 
-=== Application initialization lifecycle
+=== Application initialization lifecycle in {cdi_full}
 
 When an application is started, the container performs the following steps:
 
@@ -83,7 +86,7 @@ When an application is started, the container performs the following steps:
 
 [[shutdown]]
 
-=== Application shutdown lifecycle
+=== Application shutdown lifecycle in {cdi_full}
 
 When an application is stopped, the container performs the following steps:
 
@@ -93,13 +96,13 @@ When an application is stopped, the container performs the following steps:
 
 [[type_bean_discovery]]
 
-=== Type and Bean discovery
+=== Type and Bean discovery in {cdi_full}
 
 The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
 
 [[type_discovery_steps]]
 
-==== Type discovery
+==== Type discovery in {cdi_full}
 
 First the container must discover types.
 The container discovers:
@@ -192,7 +195,7 @@ If an explicit bean archive contains the `<trim/>` element in its `beans.xml` fi
 
 [[bean_discovery_steps]]
 
-==== Bean discovery
+==== Bean discovery in {cdi_full}
 
 For every type in the set of discovered types (as defined in <<type_discovery_steps>>), the container must:
 
