@@ -3,13 +3,6 @@
 
 == Preface
 
-// TODO
-[NOTE]
-====
-This part has to be rewritten to present a consitent history of the spec
-====
-
-
 === Evaluation license
 
 include::license-{license}.asciidoc[]
