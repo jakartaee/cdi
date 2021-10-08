@@ -74,9 +74,6 @@ A bean is _available for injection_ in a certain module if:
 * the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative for the application,  and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
-For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getBeanClass()` to determine the bean class of the bean and `InjectionPoint.getMember()` and then `Member.getDeclaringClass()` to determine the class that declares an injection point.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
-
 [[typesafe_resolution]]
 
 === Typesafe resolution
