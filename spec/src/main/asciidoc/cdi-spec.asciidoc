@@ -73,6 +73,8 @@ include::core/injectionandresolution_full.asciidoc[]
 
 include::core/scopescontexts_full.asciidoc[]
 
+include::core/lifecycle_full.asciidoc[]
+
 include::core/interceptors_full.asciidoc[]
 
 include::core/decorators.asciidoc[]

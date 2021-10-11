@@ -17,6 +17,14 @@ An alternative is not available for injection, lookup or name resolution to clas
 
 {cdi_full} provides an additional way to select alternatives to the one defined in <<declaring_selected_alternatives_application>>.
 
+[[declaring_selected_alternatives_application_full]]
+
+===== Declaring selected alternatives for an application in {cdi_full}
+
+In addition to rules defined in <<declaring_selected_alternatives_application>>, the following rule applies.
+
+Custom bean implementations which are also alternatives may implement <<prioritized, Prioritized interface>> in which case they will be enabled for entire application with given priority.
+
 [[declaring_selected_alternatives_bean_archive]]
 
 ===== Declaring selected alternatives for a bean archive
@@ -57,7 +65,6 @@ If there is no annotation with the specified name, or the annotation is not an `
 If the same type is listed twice under the `<alternatives>` element, the container automatically detects the problem and treats it as a deployment problem.
 
 For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `isAlternative()` to determine whether the bean is an alternative, and `getBeanClass()` and `getStereotypes()` to determine whether an alternative is selected in a certain bean archive.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
 
 [[enablement_full]]
 
@@ -111,6 +118,8 @@ In addition to rules defined in <<performing_typesafe_resolution>>, the followin
 
 * Parameterized and raw types are considered to match if they are identical or if the bean type is _assignable_ to the required type, as defined in <<assignable_parameters>> or <<delegate_assignable_parameters>>.
 
+Furthermore, for a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getTypes()` and `getQualifiers()` to determine the bean types and qualifiers.
+
 [[unsatisfied_and_ambig_dependencies_full]]
 
 ==== Unsatisfied and ambiguous dependencies in {cdi_full}
@@ -118,6 +127,8 @@ In addition to rules defined in <<performing_typesafe_resolution>>, the followin
 In addition to rules defined in <<unsatisfied_and_ambig_dependencies>>, the following rules apply.
 
 An unsatisfied or ambiguous dependency cannot exist for a decorator delegate injection point, defined in <<delegate_attribute>>.
+
+Furthermore, for a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getInjectionPoints()` to determine the set of injection points.
 
 [[assignable_parameters_full]]
 
@@ -138,6 +149,18 @@ In addition to rules defined in <<ambig_names>>, the following rules apply.
 When an ambiguous name exists, the container attempts to resolve the ambiguity.
 The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives.
 
+[[client_proxies_full]]
+
+=== Client proxies in {cdi_full}
+
+In addition to the reasons for indirection defined in <<client_proxies>>, in {cdi_full} client proxies may be passivated, even when the bean itself may not be.
+Therefore, the container must use a client proxy whenever a bean with normal scope is injected into a bean with a passivating scope, as defined in <<passivating_scope>>.
+(On the other hand, beans with scope `@Dependent` must be serialized along with their client.)
+
+[[injection_full]]
+
+=== Dependency injection in {cdi_full}
+
 ==== Injection point metadata in {cdi_full}
 
 The behavior of `InjectionPoint` metadata is overridden as follows:
@@ -146,6 +169,10 @@ The behavior of `InjectionPoint` metadata is overridden as follows:
 If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
 * The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
 If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
+
+If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise. If this injection point is declared as transient, after bean's passivation, the value will not be restored. Instance<> injection point is the preferred approach.
+
+In {cdi_full}, the built-in implementation of `InjectionPoint` must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 
 [[bean_metadata_full]]
 
@@ -175,3 +202,17 @@ If:
 * the injection point is a field, an initializer method parameter or a bean constructor of a decorator, with qualifier `@Decorated`, then the type parameter of the injected `Bean` must be the same as the delegate type.
 
 Otherwise, the container automatically detects the problem and treats it as a definition error.
+
+[[programmatic_lookup_full]]
+
+=== Programmatic lookup in {cdi_full}
+
+[[dynamic_lookup_full]]
+
+==== The `Instance` interface in {cdi_full}
+
+[[builtin_instance_full]]
+
+==== The built-in `Instance` in {cdi_full}
+
+In addition to rules defined in <<builtin_instance>>, the built-in implementation of `Instance` must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.

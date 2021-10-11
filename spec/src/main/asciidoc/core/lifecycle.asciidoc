@@ -83,28 +83,17 @@ In this case, any object returned by the producer method will not have any depen
 
 === Container invocations and interception
 
-When the application invokes:
-
-* a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>,
-* a method of a bean via a non-contextual reference to the bean, if the instance was created by the container (e.g. using  `InjectionTarget.produce()` or `UnmanagedInstance.produce()`), or
-// TODO mentions Full-only concepts
-* a method of a bean via a non-contextual reference to the bean, if the instance was enhanced with the `InterceptionFactory` interface as defined in <<interception_factory>>,
-// TODO mentions Full-only concepts
-
-the invocation is treated as a _business method invocation_.
+When the application invokes a method of a bean via a contextual reference to the bean, as defined in <<contextual_reference>>, the invocation is treated as a _business method invocation_.
 
 When the container invokes a method of a bean, the invocation may or may not be treated as a business method invocation:
 
 * Invocations of initializer methods by the container are not business method invocations.
-* Invocations of producer, disposer and observer methods by the container are business method invocations and are intercepted by method interceptors and decorators.
-// TODO mentions decorators
+* Invocations of producer, disposer and observer methods by the container are business method invocations and are intercepted by method interceptors.
 * Invocation of lifecycle callbacks by the container are not business method invocations, but are intercepted by interceptors for lifecycle callbacks.
-* Invocations of interceptors and decorator methods during method or lifecycle callback interception are not business method invocations, and therefore no recursive interception occurs.
-// TODO mentions decorators
+* Invocations of interceptor methods during method or lifecycle callback interception are not business method invocations, and therefore no recursive interception occurs.
 * Invocations of methods declared by `java.lang.Object` are not business method invocations.
 
-A method invocation passes through method interceptors and decorators if, and only if, it is a business method invocation.
-// TODO mentions decorators
+A method invocation passes through method interceptors if, and only if, it is a business method invocation.
 
 Otherwise, the invocation is treated as a normal Java method call and is not intercepted by the container.
 
