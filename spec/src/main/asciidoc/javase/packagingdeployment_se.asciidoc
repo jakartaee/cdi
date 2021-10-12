@@ -6,7 +6,7 @@
 [[bean_archive_se]]
 === Bean archive in Java SE
 
-When running in Java SE, the container must extend the rules defined in <<bean_archive>> and also ensure that :
+When running in Java SE, the container must extend the rules defined in <<bean_archive_full>> and also ensure that :
 
 An archive which doesn't contain a `beans.xml` file can't be discovered as an _implicit bean archive_ unless:
 

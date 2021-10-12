@@ -24,7 +24,7 @@ There must be exactly one provider available, otherwise an `IllegalStateExceptio
 `SeContainerInitializer` configuration allows explicit addition of elements to the set of automatically discovered elements.
 These additions are done in an internal synthetic bean archive that is added to the set of bean archives discovered by the container during deployment.
 
-This synthetic bean archive behaves like an explicit bean archive (as defined in <<bean_archive>>).
+This synthetic bean archive behaves like an explicit bean archive (as defined in <<bean_archive_full>>).
 
 [source, java]
 ----

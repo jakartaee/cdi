@@ -584,7 +584,7 @@ If a bean explicitly declares a scope, any default scopes declared by stereotype
 
 === Default bean discovery mode
 
-The default _bean discovery mode_ for a bean archive is `annotated`, and such a bean archive is said to be an _implicit bean archive_ as defined in <<bean_archive>>.
+The default _bean discovery mode_ for a bean archive is `annotated`, and such a bean archive is said to be an _implicit bean archive_ as defined in <<bean_archive_full>>.
 
 If the _bean discovery mode_ is `annotated` then:
 
@@ -598,7 +598,7 @@ If the _bean discovery mode_ is `annotated` then:
 
 ==== Bean defining annotations
 
-A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive>>.
+A bean class may have a _bean defining annotation_, allowing it to be placed anywhere in an application, as defined in <<bean_archive_full>>.
 A bean class with a _bean defining annotation_ is said to be an _implicit bean_.
 
 The set of bean defining annotations contains:

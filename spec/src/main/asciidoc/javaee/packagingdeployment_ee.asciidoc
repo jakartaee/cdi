@@ -6,7 +6,7 @@
 [[bean_archive_ee]]
 === Bean archive with EJB Session Beans
 
-When running in Jakarta EE, the container must extend the rules defined in <<bean_archive>> with:
+When running in Jakarta EE, the container must extend the rules defined in <<bean_archive_full>> with:
 
 * An _implicit bean archive_ may also contain EJB session beans, and
 * EJB session bean should be considered as bean class with bean defining annotation when determining if an archive is an _implicit bean archive_.
@@ -43,13 +43,13 @@ The bean archives might be directories, library jars or EJB jars.
 
 === Type and Bean discovery for EJB
 
-In Jakarta EE, the container automatically discovers EJB session beans and other Jakarta EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery>>.
+In Jakarta EE, the container automatically discovers EJB session beans and other Jakarta EE component class supporting injection, in bean archives like it does for managed bean as defined in <<type_bean_discovery_full>>.
 
 [[bean_discovery_steps_ee]]
 
 ==== Bean discovery in Jakarta EE
 
-When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps>> and must also discover each EJB session bean.
+When running in Jakarta EE, the container must extend the rules defined in <<bean_discovery_steps_full>> and must also discover each EJB session bean.
 
 [[trimmed_bean_archive_ee]]
 
