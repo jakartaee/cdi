@@ -2,6 +2,14 @@
 
 == Scopes and contexts in {cdi_full}
 
+[[context_full]]
+
+=== The `Context` interface in {cdi_full}
+
+In addition to rules defined in <<context>>, the following rule applies.
+
+When the container calls `get()` or `destroy()` for a context that is associated with a passivating scope it must ensure that the given instance of `Contextual`  and the instance of `CreationalContext`, if given, are serializable.
+
 [[dependent_context_full]]
 
 === Dependent pseudo-scope in {cdi_full}

@@ -123,9 +123,6 @@ Extensions providing context implementations for normal scopes should implement 
 
 If the context object is inactive, the `get()` and `destroy()` methods must throw a `ContextNotActiveException`.
 
-When the container calls `get()` or `destroy()` for a context that is associated with a passivating scope it must ensure that the given instance of `Contextual`  and the instance of `CreationalContext`, if given, are serializable.
-// TODO move passivation to Full?
-
 The context object is responsible for destroying any contextual instance it creates by passing the instance to the `destroy()` method of the `Contextual` object representing the contextual type. A destroyed instance must not subsequently be returned by the `get()` method.
 
 The context object must pass the same instance of `CreationalContext` to `Contextual.destroy()` that it passed to `Contextual.create()` when it created the instance.
