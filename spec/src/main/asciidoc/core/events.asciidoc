@@ -193,9 +193,6 @@ The container must provide a built-in bean with:
 
 If an injection point of raw type `Event` is defined, the container automatically detects the problem and treats it as a definition error.
 
-The built-in implementation must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
-// TODO move passivation to Full?
-
 [[observer_resolution]]
 
 === Observer resolution
