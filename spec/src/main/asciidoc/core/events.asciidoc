@@ -596,4 +596,33 @@ As specified in <<builtin_contexts>>, contexts associated with built-in normal s
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same lifecycle contexts as the transaction that just completed.
 * Otherwise, the observer method is called in the same transaction context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.getEvent()`.
 
+[[observable_container_lifecycle_events]]
+
+=== Observable container lifecycle events
+
+[[startup_event]]
+
+==== Startup event
+
+Implementations are required to _synchronously_ fire an event with payload `jakarta.enterprise.event.Startup` and qualifier `jakarta.enterprise.inject.Any` during application initialization.
+This event is fired after the event with qualifier `@Initialized(ApplicationScope.class)` but before processing requests.
+
+This event can be observed by integrators and libraries to perform any kind of early initialization as well as by users as a reliable entry point for when the CDI container is ready.
+
+Observer methods for this event are encouraged to specify `@Priority` to determine ordering with lower priority numbers being recommended for platform/framework/library integration and higher numbers for user applications.
+
+Applications must never manually fire any events with payload type `jakarta.enterprise.event.Startup`.
+
+[[shutdown_event]]
+==== Shutdown event
+
+Implementations are required to _synchronously_ fire an event with payload `jakarta.enterprise.event.Shutdown` and qualifier `jakarta.enterprise.inject.Any` during application shutdown.
+This event is fired during CDI container shutdown but not later than the event with qualifier `@BeforeDestroyed(ApplicationScoped.class)`.
+
+This event can be observed by integrators and libraries to perform any kind of pre-shutdown operation as well as by users as a reliable entry point for when the CDI container is about to shut down.
+
+Observer methods for this event are encouraged to specify `@Priority` to determine ordering with lower priority numbers being recommended for user applications and higher numbers for platform/framework/library integration.
+
+Applications must never manually fire any events with payload type `jakarta.enterprise.event.Shutdown`.
+
 
