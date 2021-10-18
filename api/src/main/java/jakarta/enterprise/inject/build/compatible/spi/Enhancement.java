@@ -1,36 +1,92 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 2nd phase of CDI Lite extension execution.
+ * 2nd phase of {@linkplain BuildCompatibleExtension build compatible extension} execution.
  * Allows transforming annotations.
  * <p>
- * Methods annotated {@code @Enhancement} must define exactly one parameter of one of these types:
+ * In the following text, the term <em>expected types</em> denotes the set of types defined by
+ * the {@link #types() types}, {@link #withSubtypes() withSubtypes} and {@link #withAnnotations() withAnnotations}
+ * members of the {@code @Enhancement} annotation. The term <em>discovered types</em> denotes
+ * the subset of <em>expected types</em> that were discovered during bean discovery.
+ * <p>
+ * Methods annotated {@code @Enhancement} must declare exactly one parameter of one of these types:
  * <ul>
  * <li>{@link ClassConfig} or {@link jakarta.enterprise.lang.model.declarations.ClassInfo ClassInfo}</li>
  * <li>{@link MethodConfig} or {@link jakarta.enterprise.lang.model.declarations.MethodInfo MethodInfo}</li>
  * <li>{@link FieldConfig} or {@link jakarta.enterprise.lang.model.declarations.FieldInfo FieldInfo}</li>
- * <li>({@code ParameterConfig} or {@code ParameterInfo} is not possible, parameters must be accessed
- * through {@code MethodConfig} or {@code MethodInfo})</li>
  * </ul>
- * The method must also have at least one annotation {@link ExactType @ExactType} or {@link SubtypesOf @SubtypesOf}.
+ * If an {@code @Enhancement} method has a parameter of type {@code ClassConfig} or {@code ClassInfo},
+ * the method is called once for each <em>discovered type</em>.
  * <p>
- * You can also declare a parameter of type {@link Messages Messages} to produce log messages and validation errors.
+ * If an {@code @Enhancement} method has a parameter of type {@code MethodConfig} or {@code MethodInfo},
+ * the method is called once for each constructor or method that is declared on each <em>discovered type</em>,
+ * as defined in {@link jakarta.enterprise.lang.model.declarations.ClassInfo#constructors() ClassInfo.constructors}
+ * and {@link jakarta.enterprise.lang.model.declarations.ClassInfo#methods() ClassInfo.methods}.
  * <p>
- * If you need to create instances of {@link jakarta.enterprise.lang.model.types.Type Type}, you can also declare
- * a parameter of type {@link Types}. It provides factory methods for the void pseudo-type, primitive types,
- * class types, array types, parameterized types and wildcard types.
+ * If an {@code @Enhancement} method has a parameter of type {@code FieldConfig} or {@code FieldInfo},
+ * the method is called once for each field that is declared on each <em>discovered type</em>, as defined
+ * in {@link jakarta.enterprise.lang.model.declarations.ClassInfo#fields() ClassInfo.fields}.
  * <p>
- * If you need to create instances of {@link jakarta.enterprise.lang.model.AnnotationInfo AnnotationInfo},
- * use {@link AnnotationBuilder}.
+ * Additionally, methods annotated {@code @Enhancement} may declare parameters of these types:
+ * <ul>
+ * <li>{@link Messages}</li>
+ * <li>{@link Types}</li>
+ * </ul>
+ * <p>
+ * Finally, {@link AnnotationBuilder} may be used to create instances
+ * of {@link jakarta.enterprise.lang.model.AnnotationInfo AnnotationInfo}.
  *
  * @since 4.0
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Enhancement {
+    /**
+     * Defines the set of <em>expected types</em>. If {@link #withSubtypes() withSubtypes}
+     * is {@code true}, the set of <em>expected types</em> includes all direct and indirect
+     * subtypes of these types. If {@link #withAnnotations() withAnnotations} is defined,
+     * the set of <em>expected types</em> only includes types that use given annotations.
+     *
+     * @return the set of <em>expected types</em>
+     */
+    Class<?>[] types();
+
+    /**
+     * If {@code true}, the set of <em>expected types</em> includes all direct and
+     * indirect subtypes of given {@link #types() types}.
+     *
+     * @return whether subtypes should be included in the set of <em>expected types</em>
+     */
+    boolean withSubtypes() default false;
+
+    /**
+     * Narrows down the set of <em>expected types</em>, defined by {@link #types() types}
+     * and {@link #withSubtypes() withSubtypes}, to types that use any of given annotations.
+     * The annotation can appear on the type, or on any member of the type, or on any
+     * parameter of any member of the type, or as a meta-annotation on any annotation
+     * that is considered by these rules.
+     * <p>
+     * Defaults to the {@linkplain BeanDefiningAnnotations set of bean defining annotations}.
+     * <p>
+     * If empty, or if {@code java.lang.Annotation} is present, all annotations are used.
+     * That is, the set of <em>expected types</em> is narrowed down to the set of types
+     * that use any annotation.
+     *
+     * @return types of annotations that must be present on the <em>expected types</em>
+     */
+    Class<? extends Annotation>[] withAnnotations() default BeanDefiningAnnotations.class;
+
+    /**
+     * Marker annotation type that represents set of bean defining annotations after
+     * the {@link Discovery @Discovery} phase is finished. That is, it includes custom
+     * normal scope annotations as well as custom stereotypes.
+     */
+    @interface BeanDefiningAnnotations {
+    }
 }

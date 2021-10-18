@@ -3,8 +3,9 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.lang.model.AnnotationTarget;
 
 /**
- * Allows logging and producing errors during {@link BuildCompatibleExtension} execution.
- * If an error is produced, application deployment will fail.
+ * Allows logging and producing errors during {@linkplain BuildCompatibleExtension build compatible extension}
+ * execution. If an error is produced, using any of the {@code error} methods, the container treats it
+ * as a deployment problem.
  *
  * @since 4.0
  */

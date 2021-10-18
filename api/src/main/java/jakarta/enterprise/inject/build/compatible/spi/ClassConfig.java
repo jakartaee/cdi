@@ -16,9 +16,6 @@ import java.util.function.Predicate;
  * @since 4.0
  */
 public interface ClassConfig extends DeclarationConfig {
-    // TODO now that ClassInfo also returns inherited annotations, need to think about what happens
-    //  when we add an annotation that collides with an inherited one, or when we remove an inherited annotation
-
     /**
      * Returns the {@link ClassInfo} corresponding to this transformed class.
      *
@@ -75,26 +72,29 @@ public interface ClassConfig extends DeclarationConfig {
     ClassConfig removeAllAnnotations();
 
     /**
-     * Returns a collection of {@link MethodConfig} objects for each constructor of this class.
+     * Returns a collection of {@link MethodConfig} objects for each constructor of this class,
+     * as defined by {@link ClassInfo#constructors() ClassInfo.constructors}.
      *
      * @return immutable collection of {@link MethodConfig} objects, never {@code null}
      */
-    // TODO specify whether inherited constructors are also included; probably mirror what ClassInfo does
     Collection<MethodConfig> constructors();
 
     /**
-     * Returns a collection of {@link MethodConfig} objects for each method of this class.
+     * Returns a collection of {@link MethodConfig} objects for each method of this class,
+     * as defined by {@link ClassInfo#methods() ClassInfo.methods}.
      *
      * @return immutable collection of {@link MethodConfig} objects, never {@code null}
      */
-    // TODO specify whether inherited methods are also included; probably mirror what ClassInfo does
     Collection<MethodConfig> methods();
 
     /**
-     * Returns a collection of {@link FieldConfig} objects for each field of this class.
+     * Returns a collection of {@link FieldConfig} objects for each field of this class,
+     * as defined by {@link ClassInfo#fields() ClassInfo.fields}.
      *
      * @return immutable collection of {@link FieldConfig} objects, never {@code null}
      */
-    // TODO specify whether inherited fields are also included; probably mirror what ClassInfo does
     Collection<FieldConfig> fields();
+
+    // there's no `Collection<RecordComponentConfig> recordComponents()`, because CDI
+    // doesn't know anything about records and treats them as plain classes
 }

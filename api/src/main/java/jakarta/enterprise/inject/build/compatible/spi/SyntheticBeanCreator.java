@@ -1,32 +1,35 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.context.spi.CreationalContext;
-import jakarta.enterprise.inject.spi.InjectionPoint;
+import jakarta.enterprise.inject.Instance;
 
 /**
  * Creation function for a synthetic bean defined by {@link SyntheticBeanBuilder}.
- * Implementations must be {@code public} classes with a {@code public} zero-parameter constructor.
+ * CDI container will create an instance of the creation function every time when it needs
+ * to obtain an instance of the synthetic bean. Implementations must be {@code public}
+ * classes with a {@code public} zero-parameter constructor; they must not be beans.
  *
  * @param <T> the bean class of the synthetic bean
  * @since 4.0
  */
 public interface SyntheticBeanCreator<T> {
-    // TODO maybe a more high-level API that takes an Instance?
-    //  compare with BeanConfigurator.createWith and BeanConfigurator.produceWith
-
     /**
      * Creates an instance of the synthetic bean.
-     * <p>
-     * The parameter map contains the same values that were passed to
-     * the {@link SyntheticBeanBuilder} that defined the synthetic bean.
-     * <p>
      * May only return {@code null} if the synthetic bean is {@code @Dependent}.
+     * <p>
+     * The {@link Instance} parameter may be used to simulate producer method parameter injection.
+     * However, {@code @Dependent} bean instances obtained from the {@code Instance} during execution
+     * remain managed until the synthetic bean instance is destroyed. Therefore, implementations
+     * are encouraged to destroy unneeded {@code @Dependent} bean instances obtained from the {@code Instance}.
+     * <p>
+     * If the synthetic bean is {@code @Dependent}, the {@code InjectionPoint} to which it is injected
+     * may be looked up from the {@code Instance} parameter.
+     * <p>
+     * The parameter map contains the same values that were passed to the {@link SyntheticBeanBuilder}
+     * that defined the synthetic bean.
      *
-     * @param creationalContext the creational context, never {@code null}
-     * @param injectionPoint the injection point into which the new instance will be injected,
-     * or {@code null} if the synthetic bean is not {@code @Dependent}
+     * @param lookup an {@link Instance} that can be used to lookup other beans, never {@code null}
      * @param params the parameter map, never {@code null}
      * @return an instance of the bean, may only be {@code null} if the synthetic bean is {@code @Dependent}
      */
-    T create(CreationalContext<T> creationalContext, InjectionPoint injectionPoint, Parameters params);
+    T create(Instance<Object> lookup, Parameters params);
 }

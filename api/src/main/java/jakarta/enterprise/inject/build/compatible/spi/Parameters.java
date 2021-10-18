@@ -2,7 +2,7 @@ package jakarta.enterprise.inject.build.compatible.spi;
 
 /**
  * A {@code String}-keyed parameter map. The parameter mappings are defined
- * by a synthetic component builder. The CDI container passes the map
+ * by a synthetic component builder. The CDI container passes the parameter map
  * to functions defined by the same synthetic component builder, whenever
  * it needs to invoke those functions. That is:
  *

@@ -111,9 +111,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> transactionPhase(TransactionPhase transactionPhase);
 
     /**
-     * Adds a {@code boolean}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code boolean}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -122,9 +121,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, boolean value);
 
     /**
-     * Adds a {@code boolean} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code boolean} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -133,9 +131,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, boolean[] value);
 
     /**
-     * Adds an {@code int}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an {@code int}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -144,9 +141,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, int value);
 
     /**
-     * Adds an {@code int} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an {@code int} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -155,9 +151,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, int[] value);
 
     /**
-     * Adds a {@code long}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code long}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -166,9 +161,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, long value);
 
     /**
-     * Adds a {@code long} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code long} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -177,9 +171,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, long[] value);
 
     /**
-     * Adds a {@code double}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code double}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -188,9 +181,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, double value);
 
     /**
-     * Adds a {@code double} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code double} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -199,9 +191,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, double[] value);
 
     /**
-     * Adds a {@code String}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code String}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -210,9 +201,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, String value);
 
     /**
-     * Adds a {@code String} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code String} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -221,9 +211,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, String[] value);
 
     /**
-     * Adds an enum-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an enum-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -232,9 +221,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Enum<?> value);
 
     /**
-     * Adds an enum array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an enum array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -243,9 +231,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Enum<?>[] value);
 
     /**
-     * Adds a {@code Class}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code Class}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -254,9 +241,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Class<?> value);
 
     /**
-     * Adds a {@code Class}-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code Class}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      * <p>
      * When looked up from the parameter map in the event notification function, the value will be
      * an instance of {@link Class}, <em>not</em> a {@code ClassInfo}.
@@ -268,9 +254,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, ClassInfo value);
 
     /**
-     * Adds a {@code Class} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code Class} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -279,9 +264,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Class<?>[] value);
 
     /**
-     * Adds a {@code Class} array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds a {@code Class} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      * <p>
      * When looked up from the parameter map in the event notification function, the values will be
      * instances of {@link Class}, <em>not</em> {@code ClassInfo}.
@@ -293,9 +277,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, ClassInfo[] value);
 
     /**
-     * Adds an annotation-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an annotation-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      * <p>
      * When looked up from the parameter map in the event notification function, the value will be
      * an instance of the annotation type, <em>not</em> an {@code AnnotationInfo}.
@@ -307,9 +290,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, AnnotationInfo value);
 
     /**
-     * Adds an annotation-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an annotation-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -318,9 +300,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Annotation value);
 
     /**
-     * Adds an annotation array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an annotation array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      * <p>
      * When looked up from the parameter map in the event notification function, the values will be
      * instances of the corresponding annotation types, <em>not</em> {@code AnnotationInfo}.
@@ -332,9 +313,8 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, AnnotationInfo[] value);
 
     /**
-     * Adds an annotation array-valued parameter to the map of event notification parameters.
-     * The parameter map is passed to the {@linkplain SyntheticObserver event notification} function
-     * when the event is fired.
+     * Adds an annotation array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -344,7 +324,9 @@ public interface SyntheticObserverBuilder<T> {
 
     /**
      * Sets the class of the synthetic observer {@linkplain SyntheticObserver event notification} function.
-     * The class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * CDI container will create an instance of the event notification function every time when it needs
+     * to notify the synthetic observer. The class must be {@code public} and have a {@code public}
+     * zero-parameter constructor; it must not be a bean.
      * <p>
      * If not called, the synthetic observer registration will fail.
      *

@@ -46,7 +46,6 @@ public interface BeanInfo {
      *
      * @return immutable collection of qualifiers, never {@code null}
      */
-    // TODO method(s) for getting AnnotationInfo for given qualifier class?
     Collection<AnnotationInfo> qualifiers();
 
     /**

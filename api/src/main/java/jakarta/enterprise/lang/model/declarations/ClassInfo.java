@@ -21,7 +21,8 @@ import java.util.List;
  * nested in this class.
  * <p>
  * At the same time, it is possible to obtain the set of {@linkplain #constructors() constructors},
- * {@linkplain #methods() methods} and {@linkplain #fields() fields} declared in this class.
+ * {@linkplain #methods() methods} and {@linkplain #fields() fields} declared in this class, as well
+ * as the set of {@linkplain #recordComponents() record components} if this class is a record.
  * It is also possible to obtain the {@linkplain #packageInfo() package} this class is declared in.
  *
  * @since 4.0
@@ -152,6 +153,8 @@ public interface ClassInfo extends DeclarationInfo {
     /**
      * Returns a collection of {@linkplain MethodInfo constructors} declared in this class.
      * Constructors declared in direct or indirect superclasses are not included.
+     * <p>
+     * If this class is an interface, returns an empty collection.
      *
      * @return immutable collection of constructors, never {@code null}
      */
@@ -159,13 +162,15 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns a collection of {@linkplain MethodInfo methods} declared in this class and all
-     * its superclasses up to and excluding {@code java.lang.Object}. This includes
-     * {@code private} methods declared by superclasses. Constructors are not included.
+     * its superclasses up to and excluding {@code java.lang.Object}, as well as all direct and
+     * indirect superinterfaces. If this class is an interface, only superinterfaces are considered.
      * <p>
-     * Also, {@code default} methods declared in all direct and indirect superinterfaces
-     * of this class are included. Abstract or {@code private} methods declared in interfaces
-     * are not included.
-     * TODO this rule about interface methods comes from current Weld implementation and needs more thinking
+     * If the collection of methods described above contains multiple methods with the same signature,
+     * all such methods are returned. {@link MethodInfo#declaringClass() MethodInfo.declaringClass}
+     * should be used to distinguish such methods.
+     * <p>
+     * Iteration order of the resulting collection is not defined and does not have to correspond
+     * to the inheritance hierarchy of this class.
      *
      * @return immutable collection of methods, never {@code null}
      */
@@ -173,11 +178,15 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns a collection of {@linkplain FieldInfo fields} declared in this class and all
-     * its superclasses up to and excluding {@code java.lang.Object}. This includes
-     * {@code private} fields declared in superclasses.
+     * its superclasses up to and excluding {@code java.lang.Object}, as well as all direct and
+     * indirect superinterfaces. If this class is an interface, only superinterfaces are considered.
      * <p>
-     * Fields declared in superinterfaces are not included.
-     * TODO this rule about interface fields comes from current Weld implementation and needs more thinking
+     * If the collection of fields described above contains multiple fields with the same name,
+     * all such fields are returned. {@link FieldInfo#declaringClass() FieldInfo.declaringClass}
+     * should be used to distinguish such fields
+     * <p>
+     * Iteration order of the resulting collection is not defined and does not have to correspond
+     * to the inheritance hierarchy of this class.
      *
      * @return immutable collection of fields, never {@code null}
      */
