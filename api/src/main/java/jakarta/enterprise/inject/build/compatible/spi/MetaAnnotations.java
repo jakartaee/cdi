@@ -13,39 +13,47 @@ import java.util.function.Consumer;
  * @since 4.0
  */
 public interface MetaAnnotations {
-    // TODO this API style is not very common, and makes addContext too different
-    //  I only added it to make Quarkus implementation easier, but should definitely be reconsidered
-
     /**
      * Registers {@code annotation} as a qualifier annotation. Only makes sense if the annotation
      * is not meta-annotated {@code @Qualifier}.
+     * <p>
+     * Returns a {@linkplain ClassConfig class configurator} object that allows transforming meta-annotations
+     * on the {@code annotation}.
      *
      * @param annotation annotation type
-     * @param config allows transforming annotations on the {@code annotation}
+     * @return the {@linkplain ClassConfig class configurator}, never {@code null}
      */
-    void addQualifier(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
+    ClassConfig addQualifier(Class<? extends Annotation> annotation);
 
     /**
      * Registers {@code annotation} as an interceptor binding annotation. Only makes sense if the annotation
      * is not meta-annotated {@code @InterceptorBinding}.
+     * <p>
+     * Returns a {@linkplain ClassConfig class configurator} object that allows transforming meta-annotations
+     * on the {@code annotation}.
      *
      * @param annotation annotation type
-     * @param config allows transforming annotations on the {@code annotation}
+     * @return the {@linkplain ClassConfig class configurator}, never {@code null}
      */
-    void addInterceptorBinding(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
+    ClassConfig addInterceptorBinding(Class<? extends Annotation> annotation);
 
     /**
      * Registers {@code annotation} as a stereotype annotation. Only makes sense if the annotation
      * is not meta-annotated {@code @Stereotype}.
+     * <p>
+     * Returns a {@linkplain ClassConfig class configurator} object that allows transforming meta-annotations
+     * on the {@code annotation}.
      *
      * @param annotation annotation type
-     * @param config allows transforming annotations on the {@code annotation}
+     * @return the {@linkplain ClassConfig class configurator}, never {@code null}
      */
-    void addStereotype(Class<? extends Annotation> annotation, Consumer<ClassConfig> config);
+    ClassConfig addStereotype(Class<? extends Annotation> annotation);
 
     /**
      * Registers custom context for given {@code scopeAnnotation} and given {@code contextClass}.
-     * The context class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * CDI container will create an instance of the context class once to obtain the context object.
+     * The context class must be {@code public} and have a {@code public} zero-parameter constructor;
+     * it must not be a bean.
      * <p>
      * Whether the scope is normal is discovered from the scope annotation. This means that the scope
      * annotation must be meta-annotated either {@link jakarta.enterprise.context.NormalScope @NormalScope}
@@ -60,7 +68,9 @@ public interface MetaAnnotations {
 
     /**
      * Registers custom context for given {@code scopeAnnotation} and given {@code contextClass}.
-     * The context class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * CDI container will create an instance of the context class once to obtain the context object.
+     * The context class must be {@code public} and have a {@code public} zero-parameter constructor;
+     * it must not be a bean.
      * <p>
      * The {@code isNormal} parameter determines whether the scope is a normal scope or a pseudo-scope.
      *

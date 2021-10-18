@@ -36,7 +36,6 @@ public interface ObserverInfo {
      *
      * @return immutable collection of observed event qualifiers, never {@code null}
      */
-    // TODO method(s) for getting AnnotationInfo for given qualifier class?
     Collection<AnnotationInfo> qualifiers();
 
     /**

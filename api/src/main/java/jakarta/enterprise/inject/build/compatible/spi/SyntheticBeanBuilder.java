@@ -164,9 +164,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> stereotype(ClassInfo stereotypeAnnotation);
 
     /**
-     * Adds a {@code boolean}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code boolean}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -175,9 +175,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, boolean value);
 
     /**
-     * Adds a {@code boolean} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code boolean} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -186,9 +186,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, boolean[] value);
 
     /**
-     * Adds an {@code int}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an {@code int}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -197,9 +197,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, int value);
 
     /**
-     * Adds an {@code int} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an {@code int} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -208,9 +208,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, int[] value);
 
     /**
-     * Adds a {@code long}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code long}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -219,9 +219,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, long value);
 
     /**
-     * Adds a {@code long} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code long} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -230,9 +230,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, long[] value);
 
     /**
-     * Adds a {@code double}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code double}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -241,9 +241,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, double value);
 
     /**
-     * Adds a {@code double} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code double} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -252,9 +252,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, double[] value);
 
     /**
-     * Adds a {@code String}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code String}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -263,9 +263,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, String value);
 
     /**
-     * Adds a {@code String} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code String} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -274,9 +274,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, String[] value);
 
     /**
-     * Adds an enum-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an enum-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -285,9 +285,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Enum<?> value);
 
     /**
-     * Adds an enum array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an enum array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -296,9 +296,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Enum<?>[] value);
 
     /**
-     * Adds a {@code Class}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code Class}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -307,9 +307,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Class<?> value);
 
     /**
-     * Adds a {@code Class}-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code Class}-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      * <p>
      * When looked up from the parameter map in the creation/destruction function, the value will be
      * an instance of {@link Class}, <em>not</em> a {@code ClassInfo}.
@@ -321,9 +321,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, ClassInfo value);
 
     /**
-     * Adds a {@code Class} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code Class} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -332,9 +332,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Class<?>[] value);
 
     /**
-     * Adds a {@code Class} array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds a {@code Class} array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      * <p>
      * When looked up from the parameter map in the creation/destruction function, the values will be
      * instances of {@link Class}, <em>not</em> {@code ClassInfo}.
@@ -346,9 +346,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, ClassInfo[] value);
 
     /**
-     * Adds an annotation-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an annotation-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      * <p>
      * When looked up from the parameter map in the creation/destruction function, the value will be
      * an instance of the annotation type, <em>not</em> an {@code AnnotationInfo}.
@@ -360,9 +360,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo value);
 
     /**
-     * Adds an annotation-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an annotation-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -371,9 +371,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Annotation value);
 
     /**
-     * Adds an annotation array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an annotation array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      * <p>
      * When looked up from the parameter map in the creation/destruction function, the values will be
      * instances of the corresponding annotation types, <em>not</em> {@code AnnotationInfo}.
@@ -385,9 +385,9 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, AnnotationInfo[] value);
 
     /**
-     * Adds an annotation array-valued parameter to the map of construction/destruction parameters.
-     * The parameter map is passed to the {@linkplain SyntheticBeanCreator creation} and
-     * {@linkplain SyntheticBeanDisposer destruction} function when the bean is instantiated/disposed.
+     * Adds an annotation array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
      *
      * @param key the parameter key, must not be {@code null}
      * @param value the parameter value
@@ -397,7 +397,9 @@ public interface SyntheticBeanBuilder<T> {
 
     /**
      * Sets the class of the synthetic bean {@linkplain SyntheticBeanCreator creation} function.
-     * The class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * CDI container will create an instance of the creation function every time when it needs
+     * to obtain an instance of the synthetic bean. The class must be {@code public} and have
+     * a {@code public} zero-parameter constructor; it must not be a bean.
      * <p>
      * If not called, the synthetic bean registration will fail.
      *
@@ -409,7 +411,9 @@ public interface SyntheticBeanBuilder<T> {
 
     /**
      * Sets the class of the synthetic bean {@linkplain SyntheticBeanDisposer destruction} function.
-     * The class must be {@code public} and have a {@code public} zero-parameter constructor.
+     * CDI container will create an instance of the destruction function every time when it needs
+     * to destruction an instance of the synthetic bean. The class must be {@code public} and have
+     * a {@code public} zero-parameter constructor; it must not be a bean.
      * <p>
      * If not called, a noop destruction function will be used.
      *

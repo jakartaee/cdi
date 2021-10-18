@@ -10,7 +10,8 @@ import jakarta.enterprise.lang.model.types.VoidType;
 import jakarta.enterprise.lang.model.types.WildcardType;
 
 /**
- * A factory interface for creating instances of {@link Type}.
+ * Factory for {@linkplain Type types}. Allows creating representations of the void pseudo-type,
+ * primitive types, class types, array types, parameterized types and wildcard types.
  *
  * @since 4.0
  */

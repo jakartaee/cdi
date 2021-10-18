@@ -6,16 +6,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 1st phase of CDI Lite extension execution.
+ * 1st phase of {@linkplain BuildCompatibleExtension build compatible extension} execution.
  * Allow registering additional classes to be scanned during bean discovery.
  * Also allows registering custom CDI meta-annotations.
  * <p>
- * Methods annotated {@code @Discovery} can define parameters of these types:
+ * Methods annotated {@code @Discovery} may declare parameters of these types:
  * <ul>
- * <li>{@link ScannedClasses}: to register classes to be scanned during bean discovery</li>
- * <li>{@link MetaAnnotations}: to register custom meta-annotations:
- * qualifiers, interceptor bindings, stereotypes and scopes</li>
- * <li>{@link Messages}: to produce log messages and validation errors</li>
+ * <li>{@link ScannedClasses}</li>
+ * <li>{@link MetaAnnotations}</li>
+ * <li>{@link Messages}</li>
  * </ul>
  *
  * @since 4.0

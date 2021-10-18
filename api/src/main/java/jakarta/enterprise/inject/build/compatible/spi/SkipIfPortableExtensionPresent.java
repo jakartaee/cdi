@@ -6,9 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * If a {@link BuildCompatibleExtension} is annotated {@code @SkipIfPortablExtensionPresent},
- * it is ignored when the CDI implementation can execute portable extensions and
- * determines that a portable extension of {@linkplain #value() given class} is present.
+ * If a {@linkplain BuildCompatibleExtension build compatible extension} is annotated
+ * {@code @SkipIfPortableExtensionPresent}, it is ignored when the CDI container
+ * can execute portable extensions and determines that a portable extension
+ * of {@linkplain #value() given class} is present.
  * <p>
  * It is expected that the specified portable extension class will mirror the functionality
  * of the annotated build compatible extension. This allows portable extensions
