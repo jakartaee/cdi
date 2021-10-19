@@ -2,8 +2,8 @@
 
 == Packaging and deployment in {cdi_full}
 
-This chapter replaces <<packaging_deployment_lite>> for the purpose of {cdi_full}.
-In case of overlap, the <<packaging_deployment_lite>> chapter should be considered merely informative.
+This chapter replaces <<packaging_deployment>> for the purpose of {cdi_full}.
+In case of overlap, the <<packaging_deployment>> chapter should be considered merely informative.
 
 When an application is started, the container must perform _bean discovery_, detect definition errors and deployment problems and raise events that allow portable extensions to integrate with the deployment lifecycle.
 

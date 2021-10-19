@@ -47,7 +47,7 @@ For example, the container might be a Jakarta EE container or an embeddable Jaka
 <<injection_and_resolution>>, <<contexts>>, <<lifecycle>>, <<events>> and <<interceptor_resolution>> define the semantics and behavior of the services, the responsibilities of the container implementation and the APIs used by the application to interact directly with the container.
 {cdi_full} adds <<decorators>>.
 
-<<packaging_deployment_lite>> and <<packaging_deployment_full>> defines how applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
+<<packaging_deployment>> and <<packaging_deployment_full>> defines how applications that use the services defined by this specification must be packaged into bean archives, and the responsibilities of the container implementation at application initialization time.
 
 <<spi_lite>>, <<spi_full>>, <<contextual>> and <<context>> define an SPI that allows portable extensions to integrate with the container.
 
