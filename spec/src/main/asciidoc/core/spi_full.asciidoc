@@ -1,4 +1,4 @@
-[[spi]]
+[[spi_full]]
 
 == Portable extensions
 
@@ -827,7 +827,7 @@ public interface AnnotatedFieldConfigurator<T> {
 
 === Container lifecycle events
 
-During the application initialization process, the container fires a series of events, allowing portable extensions to integrate with the container initialization process defined in <<initialization>>.
+During the application initialization process, the container fires a series of events, allowing portable extensions to integrate with the container initialization process defined in <<initialization_full>>.
 These events are fired synchronously.
 
 Observer methods of these events must belong to _extensions_.
@@ -882,7 +882,7 @@ Lifecycle events described below can be grouped into two categories:
  ** ProcessProducer
  ** ProcessObserverMethod
 
-Note that the chronological order of these events is specified in <<initialization>>.
+Note that the chronological order of these events is specified in <<initialization_full>>.
 
 [[before_bean_discovery]]
 
@@ -1120,7 +1120,7 @@ If any observer method of the `BeforeShutdown` event throws an exception, the ex
 
 ==== `ProcessAnnotatedType` event
 
-The container must fire an event, before it processes a type, for every Java class, interface (excluding _annotation type_, a special kind of interface type) or enum discovered as defined in <<type_discovery_steps>>.
+The container must fire an event, before it processes a type, for every Java class, interface (excluding _annotation type_, a special kind of interface type) or enum discovered as defined in <<type_discovery_steps_full>>.
 
 An event is not fired for any type annotated with `@Vetoed`, or in a package annotated with `@Vetoed`.
 

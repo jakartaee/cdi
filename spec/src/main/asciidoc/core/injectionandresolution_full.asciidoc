@@ -9,7 +9,7 @@
 
 In addition to rules defined in <<selection>>, the following rules apply.
 
-A library may be an explicit bean archive or an implicit bean archive, as defined in <<bean_archive>>.
+A library may be an explicit bean archive or an implicit bean archive, as defined in <<bean_archive_full>>.
 
 An alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the bean archive or the application.
 

@@ -10,7 +10,7 @@ When resolving a name in an EL expression, the container considers the bean name
 
 === Modularity in Jakarta EE
 
-In the Jakarta EE module architecture, any Jakarta EE module or library is a module. The Jakarta EE module is a bean archive if it contains a `beans.xml` file, as defined in <<bean_archive>>.
+In the Jakarta EE module architecture, any Jakarta EE module or library is a module. The Jakarta EE module is a bean archive if it contains a `beans.xml` file, as defined in <<bean_archive_full>>.
 
 When running in Jakarta EE, the container must follow the same accessibility rules for beans and alternatives defined in <<selection>> for JSP/JSF pages using EL resolution and make sure that only beans available from injection in the module that defines the JSP/JSF pages are resolved.
 
