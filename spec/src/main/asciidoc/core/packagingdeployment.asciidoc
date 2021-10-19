@@ -1,4 +1,4 @@
-[[packaging_deployment_lite]]
+[[packaging_deployment]]
 
 == Packaging and deployment
 
@@ -12,7 +12,7 @@ Bean discovery is the process of determining:
 
 Additional beans may be registered programmatically via <<spi_lite>>.
 
-[[bean_archive_lite]]
+[[bean_archive]]
 
 === Bean archives
 
@@ -50,7 +50,7 @@ Implicit bean archives are likely to contain classes which are not deployed as b
 
 An extension may be deployed in any archive, including those that are not bean archives.
 
-[[initialization_lite]]
+[[initialization]]
 
 === Application initialization lifecycle
 
@@ -59,19 +59,19 @@ An extension may be deployed in any archive, including those that are not bean a
 // Capture init process WRT build compatible extensions + type discovery + bean discovery
 // see <<initialization>> for format that is used for CDI Full
 
-[[shutdown_lite]]
+[[shutdown]]
 
 === Application shutdown lifecycle
 
 When an application is stopped, the container must destroy all contexts.
 
-[[type_bean_discovery_lite]]
+[[type_bean_discovery]]
 
 === Type and Bean discovery
 
 The container automatically discovers managed beans (according to the rules of <<what_classes_are_beans>>) in bean archives and searches the bean classes for producer methods, producer fields, disposer methods and observer methods.
 
-[[type_discovery_steps_lite]]
+[[type_discovery_steps]]
 
 ==== Type discovery
 
@@ -82,11 +82,11 @@ The container discovers each Java class with a bean defining annotation in an im
 // we should mention Enhancement phase here and link to the relevant doc part
 // related to https://github.com/eclipse-ee4j/cdi/issues/483
 
-[[bean_discovery_steps_lite]]
+[[bean_discovery_steps]]
 
 ==== Bean discovery
 
-For every type in the set of discovered types (as defined in <<type_discovery_steps_lite>>), the container must:
+For every type in the set of discovered types (as defined in <<type_discovery_steps>>), the container must:
 
 * inspect the type metadata to determine if it is a bean, and then
 * detect definition errors by validating the class and its metadata, and then
