@@ -2,7 +2,8 @@
 --
 This part of the document specifies additional rules and features when using CDI in Java SE.
 All content defined in <<part_1>> applies to this part.
-In particular, implementations must provide support for the entire {cdi_full} specification.
+
+CDI implementations that support the Java SE API are required to support {cdi_full}.
 --
 
 include::bootstrap_se.asciidoc[]
