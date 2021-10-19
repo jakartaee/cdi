@@ -68,15 +68,6 @@ If a managed bean has a class-level or method-level interceptor binding, the man
 
 === Interceptor resolution
 
-This specification extends the Jakarta Interceptors specification and defines:
-
-* the effect of applying `@Nonbinding` to an interceptor binding member, and
-* how the interceptor bindings of a custom implementation of the `Interceptor` interface are determined.
+This specification extends the Jakarta Interceptors specification and defines the effect of applying `@Nonbinding` to an interceptor binding member.
 
 If any interceptor binding has a member annotated `@jakarta.enterprise.util.Nonbinding`, the member is ignored when performing interceptor resolution, and the method does not need to have the same annotation member value.
-
-For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
-
-A custom implementation of the `Interceptor` interface may implement the <<prioritized, `Prioritized` interface>> to be enabled for the entire application with a priority value.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?

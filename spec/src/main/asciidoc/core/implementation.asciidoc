@@ -10,7 +10,7 @@ The container provides built-in support for injection and contextual lifecycle m
 
 All containers must support managed beans, producer methods and producer fields.
 
-A portable extension, as well as a build compatible extension, may provide other kinds of beans.
+Portable extensions and build compatible extensions may provide other kinds of beans.
 
 [[managed_beans]]
 

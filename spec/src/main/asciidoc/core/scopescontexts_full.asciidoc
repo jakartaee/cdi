@@ -2,13 +2,25 @@
 
 == Scopes and contexts in {cdi_full}
 
+[[contextual_full]]
+
+=== The `Contextual` interface in {cdi_full}
+
+In addition to rules defined in <<contextual>>, the following rule applies.
+
+Portable extensions may define implementations of the `Contextual` interface that do not extend `Bean`.
+
 [[context_full]]
 
 === The `Context` interface in {cdi_full}
 
-In addition to rules defined in <<context>>, the following rule applies.
+In addition to rules defined in <<context>>, the following rules apply.
 
 When the container calls `get()` or `destroy()` for a context that is associated with a passivating scope it must ensure that the given instance of `Contextual`  and the instance of `CreationalContext`, if given, are serializable.
+
+The `Context` interface may be called by portable extensions.
+
+A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
 
 [[dependent_context_full]]
 
@@ -21,6 +33,18 @@ When the container calls `get()` or `destroy()` for a context that is associated
 In addition to rules defined in <<dependent_objects>>, the following rules apply.
 
 * Instances of decorators are dependent objects of the bean instance they decorate.
+
+[[contextual_instances_and_references_full]]
+
+=== Contextual instances and contextual references in {cdi_full}
+
+[[contextual_instance_full]]
+
+==== Contextual instance of a bean in {cdi_full}
+
+In addition to rules defined in <<contextual_instance>>, the following rule applies.
+
+For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getScope()` to determine the bean scope.
 
 [[passivating_scope]]
 
@@ -131,6 +155,11 @@ If a managed bean which declares a passivating scope type, has a decorator or in
 [[builtin_contexts_full]]
 
 === Context management for built-in scopes in {cdi_full}
+
+In addition to rules defined in <<builtin_contexts>>, the following rule applies.
+
+A portable extension may define a custom context object for any or all of the built-in scopes.
+For example, a remoting framework might provide a request context object for the built-in request scope.
 
 [[session_context_full]]
 

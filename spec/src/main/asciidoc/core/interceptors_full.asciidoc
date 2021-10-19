@@ -52,3 +52,15 @@ Interceptors enabled using `@Priority` are called before interceptors enabled us
 An interceptor is said to be *enabled* if it is enabled in at least one bean archive or is listed in the final list of interceptors for the application, as defined in <<after_type_discovery>>.
 
 If an interceptor is enabled for the application and for the bean archive, then the enablement from the bean archive is ignored by the container.  The interceptor will only be executed once based on the `@Priority` annotation's invocation chain.
+
+[[interceptor_resolution_full]]
+
+=== Interceptor resolution in {cdi_full}
+
+In addition to rules defined in <<interceptor_resolution>>, the following rules apply.
+
+This specification extends the Jakarta Interceptors specification and defines how the interceptor bindings of a custom implementation of the `Interceptor` interface are determined.
+
+For a custom implementation of the `Interceptor` interface defined in <<interceptor>>, the container calls `getInterceptorBindings()` to determine the interceptor bindings of the interceptor and `intercepts()` to determine if the interceptor intercepts a given kind of lifecycle callback or business method.
+
+A custom implementation of the `Interceptor` interface may implement the <<prioritized, `Prioritized` interface>> to be enabled for the entire application with a priority value.

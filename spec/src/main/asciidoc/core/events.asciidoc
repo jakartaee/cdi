@@ -215,9 +215,6 @@ An observer method has an event qualifier if it has an observed event qualifier 
 
 If the runtime type of the event object contains an unresolvable type variable, the container must throw an `IllegalArgumentException`.
 
-For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getObservedType()` and `getObservedQualifiers()` to determine the observed event type and qualifiers, and `isAsync()` to determine whether the observer is asynchronous or synchronous.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
-
 [[observers_assignability]]
 
 ==== Assignability of type variables, raw and parameterized types
@@ -536,9 +533,6 @@ No other observer methods of that event will be called.
 The `BeanManager.getEvent()` or `Event.fire()` method rethrows the exception.
 If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) `ObserverException`.
 
-
-For a custom implementation of the `ObserverMethod` interface defined in <<observer_method>>, the container must call `getTransactionPhase()` to determine if the observer method is transactional observer method, and `notify()` which accepts `jakarta.enterprise.inject.spi.EventContext` to invoke the method.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
 
 [[async_exception]]
 
