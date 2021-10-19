@@ -1,6 +1,6 @@
 [[spi_lite]]
 
-== Build time extensions
+== Build compatible extensions
 
 // TODO
 [NOTE]

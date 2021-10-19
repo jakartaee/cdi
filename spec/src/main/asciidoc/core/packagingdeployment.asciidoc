@@ -25,7 +25,7 @@ Default value for this attribute is `annotated`.
 An archive which:
 
 * contains a `beans.xml` file with the `bean-discovery-mode` of `none`, or,
-* contains a portable or build compatible extension and no `beans.xml` file
+* contains a portable extension or a build compatible extension and no `beans.xml` file
 
 is not a bean archive.
 

@@ -528,9 +528,8 @@ For example, the following annotation declares a "business process scope":
 public @interface BusinessProcessScoped {}
 ----
 
-Custom scopes are normally defined by portable extensions, which must also provide a _context object_, as defined in <<context>>, that implements the custom scope.
-
-// TODO mention build compatible extensions, as they require providing a _class_, not an object
+Custom scopes are normally defined by extensions, which must also provide an implementation of the `Context` interface, as defined in <<context>>, that implements the custom scope.
+Portable extensions provide a _context object_ directly, while build compatible extensions provide a class that the container has to instantiate to obtain the context object.
 
 [[declaring_bean_scope]]
 

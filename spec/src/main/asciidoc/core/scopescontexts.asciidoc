@@ -38,8 +38,7 @@ If an exception occurs while destroying an instance, the exception must be caugh
 
 If the application invokes a contextual instance after it has been destroyed, the behavior is undefined.
 
-The container and portable extensions may define implementations of the `Contextual` interface that do not extend `Bean`, but it is not recommended that applications directly implement `Contextual`.
-// TODO move the mention of Portable Extensions to full? mention Build Compatible Extensions?
+The container may define implementations of the `Contextual` interface that do not extend `Bean`, but it is not recommended that applications directly implement `Contextual`.
 
 [[creational_context]]
 
@@ -76,8 +75,7 @@ The `jakarta.enterprise.context.spi.Context` interface provides an operation for
 
 The context object is responsible for creating and destroying contextual instances by calling operations of the `Contextual` interface.
 
-The `Context` interface is called by the container and may be called by portable extensions.
-// TODO move the mention of Portable Extensions to full? mention Build Compatible Extensions?
+The `Context` interface is called by the container.
 It should not be called directly by the application.
 
 [source, java]
@@ -98,9 +96,6 @@ public interface AlterableContext extends Context {
 ----
 
 The method `getScope()` returns the scope type of the context object.
-
-A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
-// TODO move the mention of Portable Extensions to full? mention Build Compatible Extensions?
 
 At a particular point in the execution of the program a context object may be _active_ with respect to the current thread.
 When a context object is active the `isActive()` method returns `true`. Otherwise, we say that the context object is _inactive_ and the `isActive()` method returns `false`.
@@ -284,9 +279,6 @@ If the scope is not active, or if `Context.get()` returns a null value, there is
 A contextual instance of any of the built-in kinds of bean defined in <<implementation>> is considered an internal container construct, and it is therefore not strictly required that a contextual instance of a built-in kind of bean directly implement the bean types of the bean.
 However, in this case, the container is required to transform its internal representation to an object that does implement the bean types expected by the application before injecting or returning a contextual instance to the application.
 
-For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getScope()` to determine the bean scope.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
-
 [[contextual_reference]]
 
 ==== Contextual reference for a bean
@@ -362,15 +354,10 @@ The application should not invoke a method of an invalid injected reference. If 
 The container must provide an implementation of the `Context` interface for each of the built-in scopes defined in <<builtin_scopes>>.
 These implementations depend on the platform the container is running.
 
-A portable extension may define a custom context object for any or all of the built-in scopes.
-For example, a remoting framework might provide a request context object for the built-in request scope.
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
-
 The context associated with a built-in normal scope propagates across local, synchronous Java method calls.
 The context does not propagate across remote method invocations or to asynchronous processes.
 
-Portable extensions are encouraged to synchronously fire:
-// TODO this refers to Portable Extensions, maybe move to Full? maybe mention Build Compatible Extensions?
+Custom context implementations are encouraged to synchronously fire:
 
 * an event with qualifier `@Initialized(X.class)` when a custom context is initialized, i.e. ready for use,
 * an event with qualifier `@BeforeDestroyed(X.class)` when a custom context is about to be destroyed, i.e. before the actual destruction,
@@ -379,6 +366,8 @@ Portable extensions are encouraged to synchronously fire:
 where `X` is the scope type associated with the context.
 
 A suitable event payload should be chosen.
+
+A build compatible extensions may not define custom context class for any of the built-in scopes.
 
 [[request_context]]
 
