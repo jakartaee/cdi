@@ -18,9 +18,10 @@ package jakarta.enterprise.inject.build.compatible.spi;
  * <li>{@link Validation @Validation}</li>
  * </ul>
  * <p>
- * Extension methods may declare arbitrary number of parameters. Which parameters may be declared depends
- * on the particular execution phase and is documented in the corresponding extension annotation.
- * All the parameters will be provided by the container when the extension method is executed.
+ * Extension methods may declare arbitrary number of parameters. In each execution phase, different types
+ * of parameters may be declared, as documented in the corresponding extension annotation. All the parameters
+ * will be provided by the container when the extension method is invoked. If an extension method declares
+ * a parameter of a type unsupported in the execution phase, the container treats it as a deployment problem.
  * <p>
  * Extension methods may be assigned a priority using {@link jakarta.annotation.Priority @Priority}.
  * Extension methods with smaller priority values are invoked first. Extension methods without specified priority
@@ -28,7 +29,8 @@ package jakarta.enterprise.inject.build.compatible.spi;
  * If two extension methods have equal priority, the ordering between them is undefined. Note that priority
  * only affects order of extension methods in a single phase.
  * <p>
- * If the extension declares multiple extension methods, they are all invoked on the same instance of the class.
+ * For each build compatible extension, the container creates a single instance. All extension methods
+ * are invoked on the same instance.
  * <p>
  * When extension methods are invoked, a CDI container does not have to be running, so calling {@code CDI.current()}
  * from an extension method, or attempting to access a running CDI container in any other way, results in

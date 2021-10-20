@@ -3,7 +3,8 @@
 == Packaging and deployment in {cdi_full}
 
 This chapter replaces <<packaging_deployment>> for the purpose of {cdi_full}.
-In case of overlap, the <<packaging_deployment>> chapter should be considered merely informative.
+The <<packaging_deployment>> chapter should be considered merely informative.
+In {cdi_full}, the term _deployment time_ always means during application startup.
 
 When an application is started, the container must perform _bean discovery_, detect definition errors and deployment problems and raise events that allow portable extensions to integrate with the deployment lifecycle.
 
@@ -108,7 +109,7 @@ First the container must discover types.
 The container discovers:
 
 * each Java class, interface (excluding the special kind of interface declaration _annotation type_) or enum deployed in an explicit bean archive, and
-* each Java class with a bean defining annotation in an implicit bean archive.
+* each Java class with a bean defining annotation in an implicit bean archive,
 
 that is not excluded from discovery by an _exclude filter_ as defined in <<exclude_filters>>.
 

@@ -2,11 +2,387 @@
 
 == Build compatible extensions
 
-// TODO
-[NOTE]
-====
-TBD
-====
+A build compatible extension may integrate with the container during deployment time, as defined in <<initialization>>.
 
-// Must mention that Build Compatible Extensions do not have access to the CDI container,
-// as there may not be one running! Calling `CDI.current()` inside them results in non-portable behavior.
+[[bce]]
+
+=== The `BuildCompatibleExtension` interface
+
+A build compatible extension is a service provider of the `jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension` interface, declared in `META-INF/services`.
+
+[source, java]
+----
+public interface BuildCompatibleExtension {}
+----
+
+Build compatible extensions can define arbitrary `public`, non-`static`, `void`-returning methods without type parameters, annotated with one of the extension annotations.
+Such methods are called _extension methods_.
+
+Extension annotations correspond to extension execution phases:
+
+* `@Discovery`
+* `@Enhancement`
+* `@Registration`
+* `@Synthesis`
+* `@Validation`
+
+Extension methods may declare arbitrary number of parameters.
+In each execution phase, different types of parameters may be declared.
+All the parameters will be provided by the container when the extension method is invoked.
+If an extension method declares a parameter of a type unsupported in the execution phase, the container treats it as a deployment problem.
+
+For each build compatible extension, the container creates a single instance.
+All extension methods are invoked on the same instance.
+
+The invocation order for extension methods may be controlled using the `@Priority` annotation.
+If an extension method does not have the `@Priority` annotation, the default priority `jakarta.interceptor.Interceptor.Priority.APPLICATION + 500` is assumed.
+If two extension methods have equal priority, the ordering between them is undefined.
+Note that priority only affects order of extension methods in a single phase.
+
+If an extension method throws an exception, the container treats it as a deployment problem.
+
+At deployment time, CDI container does not have to be running, so calling `CDI.current()` from an extension method, or attempting to access a running CDI container in any other way, results in non-portable behavior.
+
+[[bce_discovery]]
+
+=== The `@Discovery` phase
+
+In this phase, build compatible extensions may register additional classes to be scanned during type discovery, and register custom CDI meta-annotations.
+
+Extension methods annotated `@Discovery` may declare parameters of the following types:
+
+* `ScannedClasses`
+* `MetaAnnotations`
+* `Messages` (see <<bce_validation>>)
+
+[source, java]
+----
+public interface ScannedClasses {
+    void add(String className);
+}
+----
+
+[source, java]
+----
+public interface MetaAnnotations {
+    ClassConfig addQualifier(Class<? extends Annotation> annotation);
+    ClassConfig addInterceptorBinding(Class<? extends Annotation> annotation);
+    ClassConfig addStereotype(Class<? extends Annotation> annotation);
+
+    void addContext(Class<? extends Annotation> scopeAnnotation, Class<? extends AlterableContext> contextClass);
+    void addContext(Class<? extends Annotation> scopeAnnotation, boolean isNormal, Class<? extends AlterableContext> contextClass);
+}
+----
+
+If the `addQualifier`, `addInterceptorBinding` or `addStereotype` method is called, the return value allows configuring meta-annotations on the qualifier, interceptor binding or stereotype annotation and its members.
+
+[[bce_enhancement]]
+
+=== The `@Enhancement` phase
+
+In this phase, build compatible extensions may alter annotations on discovered types.
+
+Extension methods annotated `@Enhancement` must declare exactly one parameter of one of the following types:
+
+* `ClassConfig` or `ClassInfo`
+* `MethodConfig` or `MethodInfo`
+* `FieldConfig` or `FieldInfo`
+
+[source, java]
+----
+public interface ClassConfig extends DeclarationConfig {
+    ClassInfo info();
+
+    ClassConfig addAnnotation(Class<? extends Annotation> annotationType);
+    ClassConfig addAnnotation(AnnotationInfo annotation);
+    ClassConfig addAnnotation(Annotation annotation);
+    ClassConfig removeAnnotation(Predicate<AnnotationInfo> predicate);
+    ClassConfig removeAllAnnotations();
+
+    Collection<MethodConfig> constructors();
+    Collection<MethodConfig> methods();
+    Collection<FieldConfig> fields();
+}
+
+public interface ClassInfo extends DeclarationInfo {
+    String name();
+    String simpleName();
+    PackageInfo packageInfo();
+    List<TypeVariable> typeParameters();
+
+    Type superClass();
+    ClassInfo superClassDeclaration();
+    List<Type> superInterfaces();
+    List<ClassInfo> superInterfacesDeclarations();
+
+    boolean isPlainClass();
+    boolean isInterface();
+    boolean isEnum();
+    boolean isAnnotation();
+    boolean isRecord();
+    boolean isAbstract();
+    boolean isFinal();
+    int modifiers();
+
+    Collection<MethodInfo> constructors();
+    Collection<MethodInfo> methods();
+    Collection<FieldInfo> fields();
+    Collection<RecordComponentInfo> recordComponents();
+}
+----
+
+When an extension method declares a parameter of type `ClassConfig` or `ClassInfo`, it will be called for each discovered class matching the criteria defined on the `@Enhancement` annotation.
+It is possible to navigate to constructors, methods and fields from a `ClassConfig` and configure them.
+
+[source, java]
+----
+public interface MethodConfig extends DeclarationConfig {
+    MethodInfo info();
+
+    MethodConfig addAnnotation(Class<? extends Annotation> annotationType);
+    MethodConfig addAnnotation(AnnotationInfo annotation);
+    MethodConfig addAnnotation(Annotation annotation);
+    MethodConfig removeAnnotation(Predicate<AnnotationInfo> predicate);
+    MethodConfig removeAllAnnotations();
+
+    List<ParameterConfig> parameters();
+}
+
+public interface ParameterConfig extends DeclarationConfig {
+    ParameterInfo info();
+
+    ParameterConfig addAnnotation(Class<? extends Annotation> annotationType);
+    ParameterConfig addAnnotation(AnnotationInfo annotation);
+    ParameterConfig addAnnotation(Annotation annotation);
+    ParameterConfig removeAnnotation(Predicate<AnnotationInfo> predicate);
+    ParameterConfig removeAllAnnotations();
+}
+
+public interface MethodInfo extends DeclarationInfo {
+    String name();
+    List<ParameterInfo> parameters();
+    Type returnType();
+    Type receiverType();
+    List<Type> throwsTypes();
+    List<TypeVariable> typeParameters();
+
+    boolean isConstructor();
+    boolean isStatic();
+    boolean isAbstract();
+    boolean isFinal();
+    int modifiers();
+
+    ClassInfo declaringClass();
+}
+
+public interface ParameterInfo extends DeclarationInfo {
+    String name();
+    Type type();
+
+    MethodInfo declaringMethod();
+}
+----
+
+When an extension method declares a parameter of type `MethodConfig` or `MethodInfo`, it will be called for each method and constructor of each discovered class matching the criteria defined on the `@Enhancement` annotation.
+It is possible to navigate to method parameters from a `MethodConfig` and configure them.
+
+[source, java]
+----
+public interface FieldConfig extends DeclarationConfig {
+    FieldInfo info();
+
+    FieldConfig addAnnotation(Class<? extends Annotation> annotationType);
+    FieldConfig addAnnotation(AnnotationInfo annotation);
+    FieldConfig addAnnotation(Annotation annotation);
+    FieldConfig removeAnnotation(Predicate<AnnotationInfo> predicate);
+    FieldConfig removeAllAnnotations();
+}
+
+public interface FieldInfo extends DeclarationInfo {
+    String name();
+    Type type();
+
+    boolean isStatic();
+    boolean isFinal();
+    int modifiers();
+
+    ClassInfo declaringClass();
+}
+----
+
+When an extension method declares a parameter of type `FieldConfig` or `FieldInfo`, it will be called for each field of each discovered class matching the criteria defined on the `@Enhancement` annotation.
+
+Additionally, extension methods annotated `@Enhancement` may declare parameters of the following types:
+
+* `Types`
+* `Messages` (see <<bce_validation>>)
+
+[source, java]
+----
+public interface Types {
+    Type of(Class<?> clazz);
+    VoidType ofVoid();
+    PrimitiveType ofPrimitive(PrimitiveType.PrimitiveKind kind);
+    ClassType ofClass(String name);
+    ClassType ofClass(ClassInfo clazz);
+    ArrayType ofArray(Type elementType, int dimensions);
+    ParameterizedType parameterized(Class<?> genericType, Class<?>... typeArguments);
+    ParameterizedType parameterized(Class<?> genericType, Type... typeArguments);
+    ParameterizedType parameterized(ClassType genericType, Type... typeArguments);
+    WildcardType wildcardWithUpperBound(Type upperBound);
+    WildcardType wildcardWithLowerBound(Type lowerBound);
+    WildcardType wildcardUnbounded();
+}
+----
+
+The `Types` interface allows creating representations of the void pseudo-type, primitive types, class types, array types, parameterized types and wildcard types.
+
+To create instances of `AnnotationInfo`, `AnnotationBuilder` can be used.
+
+[[bce_registration]]
+
+=== The `@Registration` phase
+
+In this phase, build compatible extensions may observe registered beans and observers.
+
+Extension methods annotated `@Registration` must declare exactly one parameter of one of the following types:
+
+* `BeanInfo`
+* `InterceptorInfo`
+* `ObserverInfo`
+
+[source, java]
+----
+public interface BeanInfo {
+    ScopeInfo scope();
+    Collection<Type> types();
+    Collection<AnnotationInfo> qualifiers();
+    ClassInfo declaringClass();
+    boolean isClassBean();
+    boolean isProducerMethod();
+    boolean isProducerField();
+    boolean isSynthetic();
+    MethodInfo producerMethod();
+    FieldInfo producerField();
+    boolean isAlternative();
+    Integer priority();
+    String getName();
+    DisposerInfo disposer();
+    Collection<StereotypeInfo> stereotypes();
+    Collection<InjectionPointInfo> injectionPoints();
+}
+----
+
+When an extension method declares a parameter of type `BeanInfo`, it will be called for each bean whose set of bean types matches the criteria defined on the `@Registration` annotation.
+
+[source, java]
+----
+public interface InterceptorInfo extends BeanInfo {
+    Collection<AnnotationInfo> interceptorBindings();
+    boolean intercepts(InterceptionType interceptionType);
+}
+----
+
+When an extension method declares a parameter of type `InterceptorInfo`, it will be called for each interceptor whose set of bean types matches the criteria defined on the `@Registration` annotation.
+
+[source, java]
+----
+public interface ObserverInfo {
+    Type observedType();
+    Collection<AnnotationInfo> qualifiers();
+    ClassInfo declaringClass();
+    MethodInfo observerMethod();
+    ParameterInfo eventParameter();
+    BeanInfo bean();
+    boolean isSynthetic();
+    int priority();
+    boolean isAsync();
+    Reception reception();
+    TransactionPhase transactionPhase();
+}
+----
+
+When an extension method declares a parameter of type `ObserverInfo`, it will be called for each observer whose observed event type matches the criteria defined on the `@Registration` annotation.
+
+Additionally, extension methods annotated `@Registration` may declare parameters of the following types:
+
+* `Types`
+* `Messages` (see <<bce_validation>>)
+
+[[bce_synthesis]]
+
+=== The `@Synthesis` phase
+
+In this phase, build compatible extensions may register synthetic beans and observers.
+
+Extension methods annotated `@Synthesis` may declare parameters of the following types:
+
+* `SyntheticComponents`
+* `Types`
+* `Messages` (see <<bce_validation>>)
+
+[source, java]
+----
+public interface SyntheticComponents {
+    <T> SyntheticBeanBuilder<T> addBean(Class<T> beanClass);
+    <T> SyntheticObserverBuilder<T> addObserver(Class<T> eventType);
+}
+----
+
+The `SyntheticBeanBuilder` and `SyntheticObserverBuilder` interfaces are used to configure:
+
+* bean or observer attributes, such as scope, bean types, qualifiers, or observed event type;
+* class of a bean creation/destruction function or observer notification function;
+* a string-keyed parameter map.
+
+The container creates an instance of the bean creation/destruction function or observer notification function whenever it needs to create an instance of the bean, destroy the instance of the bean, or notify the observer.
+When invoking the bean creation/destruction function or observer notification function, the container passes the parameter map to it.
+
+The parameter map may contain values of the following types:
+
+* `boolean`
+* `int`
+* `long`
+* `double`
+* `String`
+* `Class`
+* `Enum`
+* any annotation type
+* array of any previously mentioned type
+
+When defining the parameter map on `SyntheticBeanBuilder` or `SyntheticObserverBuilder`, it is possible to use `ClassInfo` or `AnnotationInfo` to define parameter values.
+When such parameter is looked up from the parameter map in the synthetic bean creation/destruction function or the synthetic observer notification function, the value will be of type `Class` or the respective annotation type.
+
+[[bce_validation]]
+
+=== The `@Validation` phase
+
+In this phase, build compatible extensions may perform custom validation.
+
+Extension methods annotated `@Validation` may declare parameters of the following types:
+
+* `Types`
+* `Messages`
+
+[source, java]
+----
+public interface Messages {
+    void info(String message);
+    void info(String message, AnnotationTarget relatedTo);
+    void info(String message, BeanInfo relatedTo);
+    void info(String message, ObserverInfo relatedTo);
+
+    void warn(String message);
+    void warn(String message, AnnotationTarget relatedTo);
+    void warn(String message, BeanInfo relatedTo);
+    void warn(String message, ObserverInfo relatedTo);
+
+    void error(String message);
+    void error(String message, AnnotationTarget relatedTo);
+    void error(String message, BeanInfo relatedTo);
+    void error(String message, ObserverInfo relatedTo);
+    void error(Exception exception);
+}
+----
+
+Calling any of the `Messages.error()` methods registers a deployment problem.

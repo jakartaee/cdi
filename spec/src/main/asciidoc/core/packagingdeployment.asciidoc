@@ -2,7 +2,8 @@
 
 == Packaging and deployment
 
-Before an application is started, or during application startup, the container must perform _bean discovery_, execute build compatible extensions, and detect definition errors and deployment problems.
+At deployment time, the container must perform _bean discovery_, execute <<spi_lite,build compatible extensions>>, and detect definition errors and deployment problems.
+The term _deployment time_ in {cdi_lite} means before the application is started, such as during application compilation, or during application startup at latest.
 
 Bean discovery is the process of determining:
 
@@ -10,7 +11,7 @@ Bean discovery is the process of determining:
 * Which alternatives and interceptors are _enabled_
 * The _ordering_ of enabled interceptors
 
-Additional beans may be registered programmatically via <<spi_lite>>.
+Additional beans may be registered programmatically using build compatible extensions.
 
 [[bean_archive]]
 
@@ -34,8 +35,11 @@ An _implicit bean archive_ is:
 * an archive which contains a `beans.xml` file that is empty, or,
 * an archive which contains a `beans.xml` file that has `bean-discovery-mode` attribute set to `annotated`
 
-When determining which archives are bean archives, the container must consider all JAR archives available through implementation-specific means.
-Implementations are required to document how the candidate JAR archives are found.
+Any other archive which contains a `beans.xml` file is not portable in {cdi_lite}.
+More kinds of bean archives exist in {cdi_full}.
+
+When determining which archives are bean archives, the container must consider all archives that constitute the application.
+Implementations are encouraged to document how the candidate archives are found in more detail.
 
 The `beans.xml` file must be named:
 
@@ -50,14 +54,27 @@ Implicit bean archives are likely to contain classes which are not deployed as b
 
 An extension may be deployed in any archive, including those that are not bean archives.
 
+[[deployment]]
+
+=== Deployment
+
+At deployment time, the container performs the following steps:
+
+* First, the container must perform type discovery, as defined in <<type_discovery_steps>>.
+  As part of that, the container must execute the <<bce_discovery,`@Discovery`>> and <<bce_enhancement,`@Enhancement`>> phases of build compatible extensions.
+* Next, the container must perform bean discovery, as defined in <<bean_discovery_steps>>.
+  As part of that, the container must execute the <<bce_registration,`@Registration`>> and <<bce_synthesis,`@Synthesis`>> phases of build compatible extensions.
+* Finally, the container must detect deployment problems by validating bean dependencies.
+  As part of that, the container must execute the <<bce_validation,`@Validation`>> phase of build compatible extensions.
+
+At any step, the container must abort deployment if any definition errors or deployment problems exist, as defined in <<exceptions>>.
+
 [[initialization]]
 
 === Application initialization lifecycle
 
-// TODO related to https://github.com/eclipse-ee4j/cdi/issues/482
-// also related to https://github.com/eclipse-ee4j/cdi/issues/496
-// Capture init process WRT build compatible extensions + type discovery + bean discovery
-// see <<initialization>> for format that is used for CDI Full
+{cdi_lite} does not require the container to perform any other initialization during application startup.
+With deployment complete, the container begins directing requests to the application.
 
 [[shutdown]]
 
@@ -78,9 +95,9 @@ The container automatically discovers managed beans (according to the rules of <
 First the container must discover types.
 The container discovers each Java class with a bean defining annotation in an implicit bean archive.
 
-// TODO at this point, we should probably mention build compatible extensions and how you can get notified of events and change these types
-// we should mention Enhancement phase here and link to the relevant doc part
-// related to https://github.com/eclipse-ee4j/cdi/issues/483
+The container must also execute the `@Discovery` phase of build compatible extensions and discover all classes added using the `ScannedClasses` API.
+
+When all types are discovered, the container must execute the `@Enhancement` phase of build compatible extensions and alter its metadata representation of discovered types accordingly.
 
 [[bean_discovery_steps]]
 
@@ -91,24 +108,19 @@ For every type in the set of discovered types (as defined in <<type_discovery_st
 * inspect the type metadata to determine if it is a bean, and then
 * detect definition errors by validating the class and its metadata, and then
 * determine which alternatives and interceptors are enabled, according to the rules defined in <<enablement>>.
-// TODO mention any events we fire for build compatible extensions at this point - Processing
-// e.g. if we have an equivalent of ProcessBeanAttributes and/or ProcessBean
-// related to https://github.com/eclipse-ee4j/cdi/issues/483
 
-For each enabled bean, the container must search the class for producer methods and fields, as defined in <<producer_method>> and in <<producer_field>>, including resources, and for each producer:
-
-// TODO mention any events we fire for build compatible extensions at this point - Processing
-// e.g. if we have an equivalent of ProcessInjectionPoint and/or ProcessProducer and/or ProcessBeanAttributes and/or ProcessBean
-// related to https://github.com/eclipse-ee4j/cdi/issues/483
-
-For each enabled bean, the container must search the class for observer methods, and for each observer method:
-
-// TODO mention build compatible extension equivalent - Processing
-// e.g. if we have an equivalent of ProcessObserverMethod
-// related to https://github.com/eclipse-ee4j/cdi/issues/483
+For each enabled bean, the container must search the class for producer methods and fields, as defined in <<producer_method>> and in <<producer_field>>, including resources, and for disposer methods as defined in <<disposer_method>>, and for observer methods.
 
 Then, the container registers the `Bean` and `ObserverMethod` objects:
 
 * For each enabled bean that is not an interceptor, the container registers an instance of the `Bean` interface defined in <<bean>>.
 * For each enabled interceptor, the container registers an instance of the `Interceptor` interface defined in <<interceptor>>.
 * For each observer method of every enabled bean, the container registers an instance of the `ObserverMethod` interface defined in <<observer_method>>.
+
+The container must execute the `@Registration` phase of build compatible extensions for each registered bean, interceptor, and observer method.
+
+Next, the container must execute the `@Synthesis` phase of build compatible extensions.
+For each registered synthetic bean, the container registers an instance of the `Bean` interface.
+For each registered synthetic observer, the container registers an instance of the `ObserverMethod` interface.
+
+Finally, the container must execute the `@Registration` phase of build compatible extensions for each synthetic bean and synthetic observer method.

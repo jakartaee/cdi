@@ -884,6 +884,10 @@ Lifecycle events described below can be grouped into two categories:
 
 Note that the chronological order of these events is specified in <<initialization_full>>.
 
+As these lifecycle events are fired, the container must also execute <<spi_lite,build compatible extensions>>.
+Which phase of build compatible extensions should be executed when is indicated in the description of the corresponding lifecycle events.
+Build compatible extensions annotated `@SkipIfPortableExtensionPresent` must be ignored in {cdi_full}, if given portable extension is present.
+
 [[before_bean_discovery]]
 
 ==== `BeforeBeanDiscovery` event
@@ -928,6 +932,7 @@ If any observer method of the `BeforeBeanDiscovery` event throws an exception, t
 
 If any `BeforeBeanDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
 
+The container must execute the `@Discovery` phase of build compatible extensions at this time.
 
 [[after_type_discovery]]
 
@@ -1026,6 +1031,7 @@ If any observer method of the `AfterBeanDiscovery` event throws an exception, th
 
 If any `AfterBeanDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
 
+The container must execute the `@Synthesis` phase of build compatible extensions at this time.
 
 [[bean_configurator]]
 
@@ -1095,6 +1101,8 @@ If any observer method of the `AfterDeploymentValidation` event throws an except
 If any `AfterDeploymentValidation` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
 
 The container must not allow any request to be processed by the deployment until all observers of this event return.
+
+The container must execute the `@Validation` phase of build compatible extensions at this time.
 
 [[before_shutdown]]
 
@@ -1174,6 +1182,8 @@ For example, the following observer decorates the `AnnotatedType` for every clas
 If any observer method of a `ProcessAnnotatedType` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessAnnotatedType` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+The container must execute the `@Enhancement` phase of build compatible extensions at this time.
 
 [[process_injection_point]]
 
@@ -1397,6 +1407,8 @@ If any observer method of a `ProcessBean` event throws an exception, the excepti
 
 If any `ProcessBean` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
 
+The container must execute the bean-related part of `@Registration` phase of build compatible extensions at this time.
+
 [[process_producer]]
 
 ==== `ProcessProducer` event
@@ -1496,6 +1508,8 @@ The container must use the final value of this property, after all observers hav
 If any observer method of a `ProcessObserverMethod` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `ProcessObserverMethod` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
+
+The container must execute the observer-related part of `@Registration` phase of build compatible extensions at this time.
 
 [[configurators]]
 
