@@ -156,11 +156,6 @@ If a managed bean which declares a passivating scope type, has a decorator or in
 
 === Context management for built-in scopes in {cdi_full}
 
-In addition to rules defined in <<builtin_contexts>>, the following rule applies.
-
-A portable extension may define a custom context object for any or all of the built-in scopes.
-For example, a remoting framework might provide a request context object for the built-in request scope.
-
 [[session_context_full]]
 
 ==== Session context lifecycle in {cdi_full}
@@ -209,3 +204,12 @@ If `end()` is called, and the current conversation is marked transient, an `Ille
 If `begin()` is called, and the current conversation is already marked long-running, an `IllegalStateException` is thrown.
 
 If `begin()` is called with an explicit conversation identifier, and a long-running conversation with that identifier already exists, an `IllegalArgumentException` is thrown.
+
+[[custom_contexts_full]]
+
+=== Context management for custom scopes in {cdi_full}
+
+In addition to rules defined in <<custom_contexts>>, the following rule applies.
+
+A portable extension may define a custom context object for built-in scopes and custom scopes.
+For example, a remoting framework might provide a request context object for the built-in request scope.
