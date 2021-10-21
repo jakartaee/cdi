@@ -10,7 +10,8 @@ It is available in {cdi_lite} environment, and therefore also in {cdi_full} envi
 `BeanManager` extends `BeanContainer` and provides additional features.
 It is only available in {cdi_full} environment.
 
-In {cdi_lite} environment, attempting to obtain a `BeanManager` or invoking methods on it results in non-portable behavior.
+In {cdi_lite} environment, obtaining a `BeanManager` is possible, but only methods inherited from `BeanContainer` may be invoked.
+Invoking `BeanManager` methods that are not inherited from `BeanContainer` results in non-portable behavior.
 
 [[beancontainer]]
 
