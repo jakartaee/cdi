@@ -357,18 +357,6 @@ These implementations depend on the platform the container is running.
 The context associated with a built-in normal scope propagates across local, synchronous Java method calls.
 The context does not propagate across remote method invocations or to asynchronous processes.
 
-Custom context implementations are encouraged to synchronously fire:
-
-* an event with qualifier `@Initialized(X.class)` when a custom context is initialized, i.e. ready for use,
-* an event with qualifier `@BeforeDestroyed(X.class)` when a custom context is about to be destroyed, i.e. before the actual destruction,
-* an event with qualifier `@Destroyed(X.class)` when a custom context is destroyed, i.e. after the actual destruction,
-
-where `X` is the scope type associated with the context.
-
-A suitable event payload should be chosen.
-
-A build compatible extensions may not define custom context class for any of the built-in scopes.
-
 [[request_context]]
 
 ==== Request context lifecycle
@@ -404,3 +392,19 @@ The _application context_ is provided by a built-in context object for the built
 An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously fired when the application context is initialized.
 An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired when the application context is about to be destroyed, i.e. before the actual destruction.
 An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired when the application context is destroyed, i.e. after the actual destruction.
+
+[[custom_contexts]]
+
+=== Context management for custom scopes
+
+Custom context implementations are encouraged to synchronously fire:
+
+* an event with qualifier `@Initialized(X.class)` when a custom context is initialized, i.e. ready for use,
+* an event with qualifier `@BeforeDestroyed(X.class)` when a custom context is about to be destroyed, i.e. before the actual destruction,
+* an event with qualifier `@Destroyed(X.class)` when a custom context is destroyed, i.e. after the actual destruction,
+
+where `X` is the scope type associated with the context.
+
+A suitable event payload should be chosen.
+
+Build compatible extensions may define custom context classes for custom scopes, but they may not define custom context classes for built-in scopes.
