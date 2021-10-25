@@ -4,7 +4,16 @@
 
 This specification defines various extensions to the Jakarta Interceptors specification, including how to override the interceptor order defined by the `@Priority` annotation.
 
-{cdi_full} implementations are required to support the entire Jakarta Interceptors specification, including associating interceptors with classes and methods using the `@jakarta.interceptor.Interceptors` annotation.
+{cdi_full} implementations are required to support the entire Jakarta Interceptors specification, including:
+
+* associating interceptors with classes and methods using the `@jakarta.interceptor.Interceptors` annotation,
+* declaring `@AroundInvoke` interceptor methods on _target classes_ (i.e. on beans).
+
+Furthermore, {cdi_full} implementations are required to support additional features, including:
+
+* custom implementations of `Interceptor`,
+* usage of `InterceptionFactory` as described in <<interception_factory>>,
+* enablement and ordering of interceptors per bean archive via `beans.xml` as described in <<enabled_interceptors>>.
 
 [[binding_interceptor_to_bean_full]]
 

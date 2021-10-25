@@ -57,7 +57,7 @@ include::core/beanmanager_lite.asciidoc[]
 
 include::core/spi_lite.asciidoc[]
 
-include::core/packagingdeployment_lite.asciidoc[]
+include::core/packagingdeployment.asciidoc[]
 
 :leveloffset: -1
 
