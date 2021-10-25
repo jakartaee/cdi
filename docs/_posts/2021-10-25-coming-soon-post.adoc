@@ -1,0 +1,11 @@
+---
+layout: post
+title: 'CDI Pages Coming Soon'
+date: 2021-10-25
+tags: announcement
+synopsis: CDI test post
+author: starksm64
+---
+
+= Coming Soon
+The GitHub pages for Jakarta CDI is coming soon
