@@ -5,10 +5,18 @@
 Managed beans support interception.
 _Interceptors_ are used to separate cross-cutting concerns from business logic.
 The Jakarta Interceptors specification defines the basic programming model and semantics, and how to associate interceptors with target classes.
-This specification defines various extensions to the Java Interceptors specification, including non-binding annotation values in interceptor resolution.
+This specification defines an extent to which {cdi_lite} supports Jakarta Interceptors specification, including extending it with non-binding annotation values in interceptor resolution.
 
-{cdi_lite} implementations are not required to support associating interceptors with classes and methods using the `@jakarta.interceptor.Interceptors` annotation.
-They are required to support interceptor binding annotations.
+{cdi_lite} implementations are required to support following forms of interception:
+
+* Interceptors declared on interceptor classes and associated with target class using interceptor binding annotations
+** `@AroundInvoke`, `@PostConstruct`, `@PreDestroy` and `@AroundConstruct` are all supported
+** Enablement and ordering of interceptors using `@Priority` annotation
+* `@PostConstruct` and `@PreDestroy` declared on target class (i.e. on a bean)
+
+Using other forms of interception results in non-portable behavior.
+
+{cdi_full} implementations are required to support all forms of interception, as described in <<interceptors_full>>.
 
 [[interceptor_bindings]]
 
