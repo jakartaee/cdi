@@ -37,16 +37,15 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 ## Writing a Blog Post
 To write a blog:
 
-- create an author entry in [_data/authors.yaml](https://github.com/quarkusio/quarkusio.github.io/blob/develop/_data/authors.yaml)
-   - `emailhash` you can get by running `echo your@email.org | md5` using an email you have registered from the [Gravatar service](https://gravatar.com),
+- create an author entry in [_authors](https://github.com/eclipse-ee4j/cdi/tree/master/docs/_authors)
 - create an blog entry under [_posts](https://github.com/eclipse-ee4j/cdi/tree/master/docs/_posts)
   -the file name is `yyyy-mm-dd-slug.adoc`
 - `tags` should be used with some care as an archive page is created for of them. Below are some basic rules to try follow:
-   - `cdi-release` used for Quarkus release blogs
+   - `cdi-release` used for CDI release blogs
    - `announcement` used for general announcement with some impact.
-   - `development-tips` used for blogs with tips to develop using Quarkus or Quarkus itself.
+   - `development-tips` used for blogs with tips to develop with CDI.
    - tags are space separated list `tags:cdi-release announcement`
    - tags must be in lowercase
-- it's in asciidoc format, there is an example as shown with [2019-06-05-quarkus-and-web-ui-development-mode.adoc](https://github.com/quarkusio/quarkusio.github.io/blob/develop/_posts/2019-06-05-quarkus-and-web-ui-development-mode.adoc)
+- it's in markdown format, there is an example as shown with [2021-10-25-way-to-cdi4.md](https://github.com/eclipse-ee4j/cdi/blob/master/docs/_posts/2021-10-25-way-to-cdi4.md)
    - Be aware that the `date` attribute in the asciidoc preamble defines when the article will be published. Use a present date while writing your article to test locally, then switch to the actual target date before submitting.
 - send a pull request against the master branch and when it is merged it will be automatically incorporated into the pages site.
