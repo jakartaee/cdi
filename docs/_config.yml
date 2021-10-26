@@ -22,8 +22,8 @@ title: Jakarta CDI
 email: cdi-dev@eclipse.org
 description: >- # this means to ignore newlines until "baseurl:"
   This is the pages site for the Jakarta Contents and Dependency Injection API and Specifications project.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://eclipse-ee4j.github.io/cdi/" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/cdi" # the subpath of your site, e.g. /blog
+url: "https://eclipse-ee4j.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username:
 #github_username:
 
