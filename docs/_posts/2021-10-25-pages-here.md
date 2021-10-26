@@ -8,5 +8,4 @@ author: starksm
 
 # CDI GitHub Pages
 
-The GitHub pages for Jakarta CDI has arrived. See the https://github.com/eclipse-ee4j/cdi/tree/master/docs/README.md[README.md] file for how to build the pages site locally, and how to create a blog entry.
-
+The GitHub pages for Jakarta CDI has arrived. See the [README.md](https://github.com/eclipse-ee4j/cdi/tree/master/docs/README.md) file for how to build the pages site locally, and how to create a blog entry.
