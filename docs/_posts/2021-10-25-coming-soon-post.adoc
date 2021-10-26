@@ -1,11 +1,11 @@
----
-layout: post
-title: 'CDI Pages Coming Soon'
-date: 2021-10-25
-tags: announcement
-synopsis: CDI test post
-author: starksm64
----
+= CDI GitHub Pages
+Scott Stark
+:revdate: 2021-10-25
+:page-laout: post
+:page-short-name: CDI Pages Are Here
+:page-tags: announcement
+:page-synopsis: CDI first post
 
-= Coming Soon
-The GitHub pages for Jakarta CDI is coming soon
+
+The GitHub pages for Jakarta CDI has arrived. See the https://github.com/eclipse-ee4j/cdi/tree/master/docs/README.md[README.md] file for how to build the pages site locally, and how to create a blog entry.
+

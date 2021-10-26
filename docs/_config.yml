@@ -7,165 +7,55 @@
 #
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
+#
+# If you need help with YAML syntax, here are some quick references for you: 
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
 # Site settings
 # These are used to personalize your new site. If you look in the HTML files,
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+
 title: Jakarta CDI
-email: 
-description: Jakarta Context & Dependency Injection
-url: "https://github.com/eclipse-ee4j/cdi"
-github_fork_url: "https://github.com/eclipse-ee4j/cdi"
+email: cdi-dev@eclipse.org
+description: >- # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: jekyllrb
+github_username:  jekyll
 
 # Build settings
-error_mode: strict
-markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-archives
+  - jekyll-asciidoc
 
-sass:
-  style: compressed
-
-collections:
-  guides:
-    output: true
-  versions:
-    output: true
-    permalink: /version/:path
+asciidoctor:
+  base_dir: :docdir
+  attributes:
+    source-highlighter: highlightjs
 
 # Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
 # exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
 #   - Gemfile
 #   - Gemfile.lock
-#   - node_modules
+#   - node_modules/
 #   - vendor/bundle/
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-
-asciidoctor:
-  base_dir: :docdir
-  safe: unsafe
-  attributes:
-    source-highlighter: highlightjs
-    sectanchors: ''
-    icons: font
-    outfilesuffix: ''
-
-# Pages permalink
-defaults:
-  -
-    scope:
-      path: "" # an empty string here means all files in the project
-      type: "guides" # previously `post` in Jekyll 2.2.
-    values:
-      layout: "guides"
-      permalink: /guides/:name
-  -
-    scope:
-      path: "" # an empty string here means all files in the project
-      type: "versions"
-    values:
-      layout: "guides"
-      permalink: /version/:path
-  -
-    scope:
-      type: "posts"
-    values:
-      permalink: /blog/:title/
-  -
-    scope:
-      type: redirects
-    values:
-      layout: redirect
-
-############################################################
-# Site configuration for the Jekyll 3 Pagination Gem
-# The values here represent the defaults if nothing is set
-pagination:
-  
-  # Site-wide kill switch, disabled here it doesn't run at all 
-  enabled: true
-
-  # Set to 'true' to enable pagination debugging. This can be enabled in the site config or only for individual pagination pages
-  debug: false
-
-  # The default document collection to paginate if nothing is specified ('posts' is default)
-  collection: 'posts'
-
-  # How many objects per paginated page, used to be `paginate` (default: 0, means all)
-  per_page: 10
-
-  # The permalink structure for the paginated pages (this can be any level deep)
-  permalink: '/page/:num/' # Pages are index.html inside this folder (default)
-  #permalink: '/page/:num.html' # Pages are simple html files 
-  #permalink: '/page/:num' # Pages are html files, linked jekyll extensionless permalink style.
-
-  # Optional the title format for the paginated pages (supports :title for original page title, :num for pagination page number, :max for total number of pages)
-  title: ':title - page :num'
-
-  # Limit how many pagenated pages to create (default: 0, means all)
-  limit: 0
-  
-  # Optional, defines the field that the posts should be sorted on (omit to default to 'date')
-  sort_field: 'date'
-
-  # Optional, sorts the posts in reverse order (omit to default descending or sort_reverse: true)
-  sort_reverse: true
-
-  # Optional, the default category to use, omit or just leave this as 'posts' to get a backwards-compatible behavior (all posts)
-  category: 'posts'
-
-  # Optional, the default tag to use, omit to disable
-  tag: ''
-
-  # Optional, the default locale to use, omit to disable (depends on a field 'locale' to be specified in the posts, 
-  # in reality this can be any value, suggested are the Microsoft locale-codes (e.g. en_US, en_GB) or simply the ISO-639 language code )
-  locale: '' 
-
- # Optional,omit or set both before and after to zero to disable. 
- # Controls how the pagination trail for the paginated pages look like. 
-  trail: 
-    before: 2
-    after: 2
-
-  # Optional, the default file extension for generated pages (e.g html, json, xml).
-  # Internally this is set to html by default
-  # extension: html
-
-  # Optional, the default name of the index file for generated pages (e.g. 'index.html')
-  # Without file extension
-  # indexpage: 'index'
-
-############################################################
-
-# Scholar / Bibliography
-publication: 
-  group_by: type
-  sort_by: date
-  #order: descending
-  #group_order: type
-  #type_order: [article, video, podcast]
-  type_names: 
-    article: Article & Blogs
-    book: Books
-
-############################################################
-
-# https://github.com/jekyll/jekyll-archives/blob/master/docs/configuration.md
-jekyll-archives:
-  enabled: 
-    - tags
-  layouts: 
-    tag: tag-archive
-  permalinks:
-    tag: '/blog/tag/:name/'
-  
-
-############################################################
