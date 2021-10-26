@@ -29,14 +29,7 @@ url: "https://eclipse-ee4j.github.io" # the base hostname & protocol for your si
 
 # Build settings
 theme: minima
-plugins:
-  - jekyll-feed
-  - jekyll-asciidoc
 
-asciidoctor:
-  base_dir: :docdir
-  attributes:
-    source-highlighter: highlightjs
 
 # Exclude from processing.
 # The following items will not be processed, by default.
