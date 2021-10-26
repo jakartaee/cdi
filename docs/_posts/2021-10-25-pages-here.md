@@ -3,6 +3,7 @@ layout: post
 title:  "Jakarta CDI GitHub Pages"
 date:   2021-10-25 22:08:50 -0500
 categories: announcement
+author: starksm
 ---
 
 # CDI GitHub Pages
