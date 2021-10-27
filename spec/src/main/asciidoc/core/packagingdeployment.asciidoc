@@ -38,6 +38,11 @@ An _implicit bean archive_ is:
 Any other archive which contains a `beans.xml` file is not portable in {cdi_lite}.
 More kinds of bean archives exist in {cdi_full}.
 
+To ensure portability between {cdi_lite} and {cdi_full}, applications are encouraged to:
+
+* always add a `beans.xml` file to an archive which contains classes with bean defining annotations;
+* never add classes with bean defining annotations to an archive without `beans.xml`.
+
 When determining which archives are bean archives, the container must consider all archives that constitute the application.
 Implementations are encouraged to document how the candidate archives are found in more detail.
 
