@@ -9,7 +9,7 @@ import jakarta.enterprise.lang.model.types.Type;
  *
  * <ul>
  * <li>{@linkplain PackageInfo packages}</li>
- * <li>{@linkplain ClassInfo classes}, including interfaces, enums, and annotations</li>
+ * <li>{@linkplain ClassInfo classes}, including interfaces, enums, annotations, and records</li>
  * <li>{@linkplain FieldInfo fields}</li>
  * <li>{@linkplain MethodInfo methods}, including constructors</li>
  * <li>{@linkplain ParameterInfo method parameters}, including constructor parameters</li>

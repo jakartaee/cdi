@@ -68,8 +68,8 @@ public interface Type extends AnnotationTarget {
         /** E.g. when method returns {@code T} and {@code T} is a type parameter of the declaring class. */
         TYPE_VARIABLE,
         /**
-         * E.g. when method returns {@code List<? extends Number>}. On the first level, we have a {@code PARAMETERIZED_TYPE},
-         * but on the second level, the first (and only) type argument is a {@code WILDCARD_TYPE}.
+         * E.g. when method returns {@code List<? extends Number>}. The kind of such type is {@code PARAMETERIZED_TYPE},
+         * but the first (and only) type argument is a {@code WILDCARD_TYPE}.
          */
         WILDCARD_TYPE,
     }

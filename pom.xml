@@ -31,6 +31,7 @@
 
 	<modules>
 		<module>spec</module>
+		<module>lang-model</module>
 		<module>api</module>
 	</modules>
 	<build>
