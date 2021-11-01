@@ -701,7 +701,8 @@ public interface Handle<T> extends AutoCloseable {
 }
 ----
 
-The `get()` method returns a contextual reference object. The contextual reference is resolved lazily.
+The `get()` method returns a contextual reference object. The contextual reference is resolved lazily. Throws
+`IllegalStateException` if invoked on `Handle` that previously successfully destroyed its underlying contextual reference.
 
 The `getBean()` method returns the `Bean` object representing metadata of the given contextual instance.
 
