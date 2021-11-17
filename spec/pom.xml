@@ -14,8 +14,8 @@
 	<description>CDI Specification documentation</description>
 
 	<properties>
-		<asciidoctor-maven.version>1.5.6</asciidoctor-maven.version>
-		<asciidoctorj-pdf.version>1.5.0-alpha.14</asciidoctorj-pdf.version>
+		<asciidoctor-maven.version>2.2.1</asciidoctor-maven.version>
+		<asciidoctorj-pdf.version>1.6.0</asciidoctorj-pdf.version>
 		<!-- asl2 for non-final releases, or final for EFSL -->
 		<license-file>asl2</license-file>
 		<!-- Draft for non-final releases, or Final for spec release -->
@@ -190,10 +190,10 @@
 				</executions>
 				<configuration>
 					<sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
-					<sourceHighlighter>coderay</sourceHighlighter>
 					<attributes>
 						<license>${license-file}</license>
 						<revremark>${revremark}</revremark>
+						<source-highlighter>coderay</source-highlighter>
 					</attributes>
 				</configuration>
 			</plugin>
