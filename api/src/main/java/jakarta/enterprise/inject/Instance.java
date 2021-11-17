@@ -281,6 +281,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
          * @return the contextual reference
          * @see Instance#get()
          * @throws IllegalStateException If the producing {@link Instance} does not exist
+         * @throws IllegalStateException If invoked on {@link Handle} that previously successfully destroyed its
+         * underlying contextual reference
          */
         T get();
 

@@ -573,7 +573,7 @@ The _default scope_ for a bean which does not explicitly declare a scope depends
 
 * If the bean does not declare any stereotype with a declared default scope, the default scope for the bean is `@Dependent`.
 * If all stereotypes declared by the bean that have some declared default scope have the same default scope, then that scope is the default scope for the bean.
-* If there are two different stereotypes declared by the bean that declare different default scopes, then there is no default scope and the bean must explicitly declare a scope.
+* If there are two different stereotypes present on the bean, directly, indirectly, or transitively, that declare different default scopes, then there is no default scope and the bean must explicitly declare a scope.
 If it does not explicitly declare a scope, the container automatically detects the problem and treats it as a definition error.
 
 
@@ -841,7 +841,8 @@ public @interface Mock {}
 
 A stereotype may declare a `@Priority` annotation which functions as a means of enabling and ordering affected beans.
 
-If a bean declares two different stereotypes that declare different priority values, the bean must explicitly declare a `@Priority` annotation. If the bean does not explicitly declare priority, the container automatically detects the problem and treats it as a definition error.
+If there are two different stereotypes present on a bean, directly, indirectly, or transitively, that declare different priority values, then the bean must explicitly declare a `@Priority` annotation.
+If the bean does not explicitly declare priority, the container automatically detects the problem and treats it as a definition error.
 
 If a bean explicitly declares priority, any priority values declared by stereotypes are ignored.
 
