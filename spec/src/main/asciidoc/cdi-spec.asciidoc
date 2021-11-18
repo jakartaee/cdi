@@ -1,8 +1,8 @@
 = Jakarta Contexts and Dependency Injection
 :author: Jakarta Contexts and Dependency Injection Spec Project lead by Antoine Sabot-Durand
 :email: cdi-dev@eclipse.org
-:revnumber: 3.0
-:revdate: July 30 2020
+:revnumber: 4.0
+:revdate: November 18 2021
 :revremark: Draft
 :version-label!:
 :sectanchors:
