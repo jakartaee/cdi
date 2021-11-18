@@ -14,8 +14,9 @@
 	<description>CDI Specification documentation</description>
 
 	<properties>
-		<asciidoctor-maven.version>1.5.6</asciidoctor-maven.version>
-		<asciidoctorj-pdf.version>1.5.0-alpha.14</asciidoctorj-pdf.version>
+		<asciidoctor-maven.version>2.2.1</asciidoctor-maven.version>
+		<asciidoctorj.version>2.5.2</asciidoctorj.version>
+		<asciidoctorj-pdf.version>1.6.0</asciidoctorj-pdf.version>
 		<!-- asl2 for non-final releases, or final for EFSL -->
 		<license-file>asl2</license-file>
 		<!-- Draft for non-final releases, or Final for spec release -->
@@ -158,6 +159,11 @@
 				<dependencies>
 					<dependency>
 						<groupId>org.asciidoctor</groupId>
+						<artifactId>asciidoctorj</artifactId>
+						<version>${asciidoctorj.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.asciidoctor</groupId>
 						<artifactId>asciidoctorj-pdf</artifactId>
 						<version>${asciidoctorj-pdf.version}</version>
 					</dependency>
@@ -189,11 +195,13 @@
 					</execution>
 				</executions>
 				<configuration>
+					<sourceDirectory>src/main/asciidoc</sourceDirectory>
 					<sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
-					<sourceHighlighter>coderay</sourceHighlighter>
 					<attributes>
 						<license>${license-file}</license>
 						<revremark>${revremark}</revremark>
+						<imagesdir>images</imagesdir>
+						<source-highlighter>coderay</source-highlighter>
 					</attributes>
 				</configuration>
 			</plugin>
