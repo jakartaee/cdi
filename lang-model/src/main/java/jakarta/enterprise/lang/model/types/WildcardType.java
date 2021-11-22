@@ -5,9 +5,10 @@ package jakarta.enterprise.lang.model.types;
  * <ul>
  * <li>{@code ? extends Number}: has an upper bound</li>
  * <li>{@code ? super Number}: has a lower bound</li>
- * <li>{@code ?}: unbounded, has neither upper bound nor lower bound</li>
+ * <li>{@code ?}: unbounded, has an implicit upper bound of {@code java.lang.Object}</li>
  * </ul>
- * Note that {@code ? extends Object} is equivalent to {@code ?} and is represented as such.
+ * Note that {@code ?} is equivalent to {@code ? extends Object} and is represented as such.
+ * Therefore, either {@link #upperBound()} or {@link #lowerBound()} always returns non-{@code null}.
  */
 public interface WildcardType extends Type {
     /**

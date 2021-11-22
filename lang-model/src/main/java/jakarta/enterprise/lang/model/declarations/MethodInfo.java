@@ -18,7 +18,7 @@ public interface MethodInfo extends DeclarationInfo {
     String name();
 
     /**
-     * Returns a list of {@linkplain ParameterInfo parameters} declared on this method.
+     * Returns a list of {@linkplain ParameterInfo parameters} declared or implicitly declared on this method.
      *
      * @return immutable list of {@linkplain ParameterInfo parameterts}, never {@code null}
      */
@@ -73,7 +73,13 @@ public interface MethodInfo extends DeclarationInfo {
     boolean isStatic();
 
     /**
-     * Returns whether this method is {@code abstract}.
+     * Returns whether this method is abstract.
+     * <p>
+     * A {@code static} method is never abstract.
+     * An instance method declared on a plain class or an enum is abstract if declared {@code abstract}.
+     * An instance method declared on an interface is abstract unless declared {@code default}.
+     * An instance method declared on an annotation type is always abstract.
+     * An instance method declared on a record type is never abstract.
      *
      * @return whether this method is {@code abstract}.
      */

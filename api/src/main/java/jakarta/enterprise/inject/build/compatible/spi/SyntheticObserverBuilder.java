@@ -3,13 +3,15 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.event.TransactionPhase;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
+import jakarta.enterprise.lang.model.types.Type;
 
 import java.lang.annotation.Annotation;
 
 /**
  * Builder for synthetic observers.
  * Instances are not reusable. For each synthetic observer, new instance
- * must be created by {@link SyntheticComponents#addObserver(Class)}.
+ * must be created by {@link SyntheticComponents#addObserver(Class)}
+ * or {@link SyntheticComponents#addObserver(Type)}.
  *
  * @param <T> the observed event type of this synthetic observer
  * @since 4.0
