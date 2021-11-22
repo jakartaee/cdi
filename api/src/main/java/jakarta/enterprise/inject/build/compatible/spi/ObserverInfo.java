@@ -29,7 +29,7 @@ public interface ObserverInfo {
      *
      * @return the observed event type of this observer, never {@code null}
      */
-    Type observedType();
+    Type eventType();
 
     /**
      * Returns a collection of observed event qualifiers, represented as {@link AnnotationInfo}.

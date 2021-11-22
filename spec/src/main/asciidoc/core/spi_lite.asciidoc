@@ -266,7 +266,7 @@ public interface BeanInfo {
     FieldInfo producerField();
     boolean isAlternative();
     Integer priority();
-    String getName();
+    String name();
     DisposerInfo disposer();
     Collection<StereotypeInfo> stereotypes();
     Collection<InjectionPointInfo> injectionPoints();
@@ -288,7 +288,7 @@ When an extension method declares a parameter of type `InterceptorInfo`, it will
 [source, java]
 ----
 public interface ObserverInfo {
-    Type observedType();
+    Type eventType();
     Collection<AnnotationInfo> qualifiers();
     ClassInfo declaringClass();
     MethodInfo observerMethod();
@@ -326,6 +326,7 @@ Extension methods annotated `@Synthesis` may declare parameters of the following
 public interface SyntheticComponents {
     <T> SyntheticBeanBuilder<T> addBean(Class<T> beanClass);
     <T> SyntheticObserverBuilder<T> addObserver(Class<T> eventType);
+    <T> SyntheticObserverBuilder<T> addObserver(Type eventType);
 }
 ----
 

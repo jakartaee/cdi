@@ -1,5 +1,7 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import jakarta.enterprise.lang.model.types.Type;
+
 /**
  * Allows registering synthetic beans and observers.
  *
@@ -27,4 +29,23 @@ public interface SyntheticComponents {
      * @return a new {@link SyntheticObserverBuilder}, never {@code null}
      */
     <T> SyntheticObserverBuilder<T> addObserver(Class<T> eventType);
+
+    /**
+     * Creates a {@link SyntheticObserverBuilder} that allows configuring a new synthetic observer
+     * for given {@code eventType}. The synthetic observer will be registered at the end of
+     * the {@link Synthesis @Synthesis} method.
+     * <p>
+     * This method is supposed to be called with explicitly provided type arguments. For example,
+     * to define a synthetic observer of event type {@code List<String>}, one would call:
+     * <pre>{@code
+     * // types is of type Types
+     * // syntheticComponents is of type SyntheticComponents
+     * syntheticComponents.<List<String>>addObserver(types.parameterized(List.class, String.class))
+     *     ...
+     * }</pre>
+     *
+     * @param eventType the observed event type of the new synthetic observer, must not be {@code null}
+     * @return a new {@link SyntheticObserverBuilder}, never {@code null}
+     */
+    <T> SyntheticObserverBuilder<T> addObserver(Type eventType);
 }

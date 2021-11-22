@@ -19,9 +19,14 @@ import java.util.function.Predicate;
  *
  * The {@code hasAnnotation}, {@code annotation}, {@code repeatableAnnotation} and {@code annotations} methods
  * may be used to obtain information about annotations present on this annotation target. The phrase
- * "present on this annotation target" means: either the annotation is directly declared on this annotation
- * target, or this annotation target is a class declaration and the annotation is
+ * "present on this annotation target" means: either the annotation is declared or implicitly declared
+ * directly on this annotation target, or this annotation target is a class declaration and the annotation is
  * {@linkplain java.lang.annotation.Inherited inherited} from a superclass.
+ * <p>
+ * Note that if more than one annotation of a {@linkplain java.lang.annotation.Repeatable repeatable} annotation type
+ * is declared on an annotation target, only an implicitly declared <em>container annotation</em> is present
+ * on the annotation target; the originally declared annotations are not. If exactly one annotation of a repeatable
+ * annotation type is declared on an annotation target, that annotation is present.
  * <p>
  * Annotations are represented as {@link AnnotationInfo}, so that implementations of this interface are not required
  * to instantiate the annotation type.
@@ -94,10 +99,13 @@ public interface AnnotationTarget {
     <T extends Annotation> AnnotationInfo annotation(Class<T> annotationType);
 
     /**
-     * Returns a collection of annotations of given repeatable annotation type
-     * (an annotation type that is meta-annotated {@link java.lang.annotation.Repeatable @Repeatable})
-     * present on this annotation target. Returns an empty collection if no such
-     * annotation is present.
+     * Returns a collection of annotations of given {@linkplain java.lang.annotation.Repeatable repeatable}
+     * {@code annotationType} that are present on this annotation target. Returns an empty collection if
+     * no such annotation is present.
+     * <p>
+     * For the purpose of this method, annotations in the {@code value} member of a container annotation,
+     * as defined using {@link java.lang.annotation.Repeatable @Repeatable}, are considered to be present
+     * on the annotation target on which the container annotation is present.
      *
      * @param annotationType the {@code @Repeatable} annotation type, must not be {@code null}
      * @param <T> the annotation generic type

@@ -127,7 +127,7 @@ public interface BeanInfo {
      *
      * @return the bean name, or {@code null} if the bean does not have a name
      */
-    String getName();
+    String name();
 
     /**
      * Returns the {@linkplain DisposerInfo disposer} method of this producer-based bean.
