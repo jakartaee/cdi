@@ -45,6 +45,7 @@ public interface SyntheticComponents {
      * }</pre>
      *
      * @param eventType the observed event type of the new synthetic observer, must not be {@code null}
+     * @param <T> the observed event type of the new synthetic observer
      * @return a new {@link SyntheticObserverBuilder}, never {@code null}
      */
     <T> SyntheticObserverBuilder<T> addObserver(Type eventType);
