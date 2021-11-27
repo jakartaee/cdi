@@ -102,6 +102,7 @@ public interface ClassInfo extends DeclarationInfo {
 
     /**
      * Returns whether this class is an interface.
+     * If this class is an annotation, returns {@code false}.
      *
      * @return whether this class is an interface
      */
@@ -129,7 +130,12 @@ public interface ClassInfo extends DeclarationInfo {
     boolean isRecord();
 
     /**
-     * Returns whether this class is {@code abstract}.
+     * Returns whether this class is abstract.
+     * <p>
+     * A plain class is abstract if declared {@code abstract}.
+     * An enum is abstract if it declares {@code abstract} methods.
+     * An interface or an annotation is always abstract.
+     * A record is never abstract.
      *
      * @return whether this class is {@code abstract}
      */
@@ -151,19 +157,20 @@ public interface ClassInfo extends DeclarationInfo {
     int modifiers();
 
     /**
-     * Returns a collection of {@linkplain MethodInfo constructors} declared in this class.
-     * Constructors declared in direct or indirect superclasses are not included.
+     * Returns a collection of {@linkplain MethodInfo constructors} declared or implicitly declared
+     * in this class. Constructors declared in direct or indirect superclasses are not included.
      * <p>
-     * If this class is an interface, returns an empty collection.
+     * If this class is an interface or an annotation, returns an empty collection.
      *
      * @return immutable collection of constructors, never {@code null}
      */
     Collection<MethodInfo> constructors();
 
     /**
-     * Returns a collection of {@linkplain MethodInfo methods} declared in this class and all
-     * its superclasses up to and excluding {@code java.lang.Object}, as well as all direct and
-     * indirect superinterfaces. If this class is an interface, only superinterfaces are considered.
+     * Returns a collection of {@linkplain MethodInfo methods} declared or implicitly declared
+     * in this class and all its superclasses up to and excluding {@code java.lang.Object},
+     * as well as all direct and indirect superinterfaces. If this class is an interface,
+     * only superinterfaces are considered. Methods implicitly declared in interfaces are omitted.
      * <p>
      * If the collection of methods described above contains multiple methods with the same signature,
      * all such methods are returned. {@link MethodInfo#declaringClass() MethodInfo.declaringClass}
@@ -177,9 +184,10 @@ public interface ClassInfo extends DeclarationInfo {
     Collection<MethodInfo> methods();
 
     /**
-     * Returns a collection of {@linkplain FieldInfo fields} declared in this class and all
-     * its superclasses up to and excluding {@code java.lang.Object}, as well as all direct and
-     * indirect superinterfaces. If this class is an interface, only superinterfaces are considered.
+     * Returns a collection of {@linkplain FieldInfo fields} declared or implicitly declared
+     * in this class and all its superclasses up to and excluding {@code java.lang.Object},
+     * as well as all direct and indirect superinterfaces. If this class is an interface,
+     * only superinterfaces are considered.
      * <p>
      * If the collection of fields described above contains multiple fields with the same name,
      * all such fields are returned. {@link FieldInfo#declaringClass() FieldInfo.declaringClass}
