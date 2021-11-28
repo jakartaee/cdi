@@ -130,18 +130,17 @@
 
 	<properties>
 		<annotation.api.version>2.1.0-B1</annotation.api.version>
-		<atinject.api.version>2.0.0</atinject.api.version>
-		<uel.api.version>4.0.0</uel.api.version>
-		<interceptor.api.version>2.0.0</interceptor.api.version>
+		<atinject.api.version>2.0.1</atinject.api.version>
+		<uel.api.version>5.0.0</uel.api.version>
+		<interceptor.api.version>2.0.1-RC1</interceptor.api.version>
 		<!-- These are only used in javadoc links -->
 		<ejb.api.version>4.0.0-RC2</ejb.api.version>
 		<transaction.api.version>2.0.0-RC2</transaction.api.version>
 
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
-		<maven-javadoc-plugin>3.2.0</maven-javadoc-plugin>
-		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+		<maven.compiler.release>11</maven.compiler.release>
+		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
+		<maven-javadoc-plugin>3.3.0</maven-javadoc-plugin>
+		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -311,6 +310,15 @@
 		</testResources>
 		<plugins>
 			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-Xlint:all</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<version>${maven-bundle-plugin.version}</version>
@@ -362,6 +370,7 @@
 							<excludes>
 								<exclude>**/privileged/**</exclude>
 							</excludes>
+							<useModulePath>false</useModulePath>
 						</configuration>
 					</execution>
 					<execution>
@@ -379,6 +388,7 @@
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
 							<forkCount>0</forkCount>
+							<useModulePath>false</useModulePath>
 						</configuration>
 					</execution>
 				</executions>
@@ -391,6 +401,7 @@
 					<docfilessubdirs>true</docfilessubdirs>
 					<description>Jakarta Context Dependency Injection API</description>
 					<doctitle>Jakarta Context Dependency Injection API</doctitle>
+					<detectJavaApiLink>false</detectJavaApiLink>
 					<windowtitle>Jakarta Context Dependency Injection API</windowtitle>
 					<header><![CDATA[<br>Jakarta Context Dependency Injection ${project.version}]]>
 					</header>
