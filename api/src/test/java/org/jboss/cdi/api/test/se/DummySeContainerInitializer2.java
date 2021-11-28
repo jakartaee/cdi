@@ -60,8 +60,9 @@ public class DummySeContainerInitializer2 extends SeContainerInitializer {
         return null;
     }
 
+    @SafeVarargs
     @Override
-    public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions) {
+    public final SeContainerInitializer addExtensions(Class<? extends Extension>... extensions) {
         return null;
     }
 
@@ -80,8 +81,9 @@ public class DummySeContainerInitializer2 extends SeContainerInitializer {
         return null;
     }
 
+    @SafeVarargs
     @Override
-    public SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
+    public final SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
         return null;
     }
 
