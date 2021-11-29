@@ -79,11 +79,12 @@ public @interface Enhancement {
      * be used to narrow down the set of <em>expected types</em> to types that use
      * any bean defining annotation.
      * <p>
-     * Defaults to the {@linkplain BeanDefiningAnnotations set of bean defining annotations}.
+     * Defaults to an empty array, so that the set of <em>expected types</em> is not
+     * narrowed down in any way.
      *
      * @return types of annotations that must be present on the <em>expected types</em>
      */
-    Class<? extends Annotation>[] withAnnotations() default BeanDefiningAnnotations.class;
+    Class<? extends Annotation>[] withAnnotations() default {};
 
     /**
      * Marker annotation type that, for the purpose of {@link Enhancement#withAnnotations()},
