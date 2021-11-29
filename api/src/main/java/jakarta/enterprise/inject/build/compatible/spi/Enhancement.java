@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * In the following text, the term <em>expected types</em> denotes the set of types defined by
  * the {@link #types() types}, {@link #withSubtypes() withSubtypes} and {@link #withAnnotations() withAnnotations}
  * members of the {@code @Enhancement} annotation. The term <em>discovered types</em> denotes
- * the subset of <em>expected types</em> that were discovered during bean discovery.
+ * the subset of <em>expected types</em> that were discovered during type discovery.
  * <p>
  * Methods annotated {@code @Enhancement} must declare exactly one parameter of one of these types:
  * <ul>
