@@ -14,7 +14,7 @@ module jakarta.cdi {
 
     requires transitive jakarta.annotation;
     requires transitive jakarta.interceptor;
-    requires transitive jakarta.cdi.model;
+    requires transitive jakarta.cdi.lang.model;
     requires transitive jakarta.inject;
     requires static jakarta.el;
     // For javadoc
@@ -23,4 +23,5 @@ module jakarta.cdi {
 
     uses jakarta.enterprise.inject.se.SeContainerInitializer;
     uses jakarta.enterprise.inject.spi.CDIProvider;
+    uses jakarta.enterprise.inject.build.compatible.spi.BuildServices;
 }
