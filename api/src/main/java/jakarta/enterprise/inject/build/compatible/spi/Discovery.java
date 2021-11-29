@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 1st phase of {@linkplain BuildCompatibleExtension build compatible extension} execution.
- * Allow registering additional classes to be scanned during bean discovery.
+ * Allow adding additional classes to the set of types discovered during type discovery.
  * Also allows registering custom CDI meta-annotations.
  * <p>
  * Methods annotated {@code @Discovery} may declare parameters of these types:
