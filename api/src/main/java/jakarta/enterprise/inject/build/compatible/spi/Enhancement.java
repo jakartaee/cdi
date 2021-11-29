@@ -72,20 +72,24 @@ public @interface Enhancement {
      * parameter of any member of the type, or as a meta-annotation on any annotation
      * that is considered by these rules.
      * <p>
-     * Defaults to the {@linkplain BeanDefiningAnnotations set of bean defining annotations}.
+     * If empty, the set of <em>expected types</em> is not narrowed down in any way.
+     * If {@code java.lang.Annotation} is present, the set of <em>expected types</em>
+     * is narrowed down to types that use any annotation.
+     * The {@link BeanDefiningAnnotations @BeanDefiningAnnotations} marker type may
+     * be used to narrow down the set of <em>expected types</em> to types that use
+     * any bean defining annotation.
      * <p>
-     * If empty, or if {@code java.lang.Annotation} is present, all annotations are used.
-     * That is, the set of <em>expected types</em> is narrowed down to the set of types
-     * that use any annotation.
+     * Defaults to the {@linkplain BeanDefiningAnnotations set of bean defining annotations}.
      *
      * @return types of annotations that must be present on the <em>expected types</em>
      */
     Class<? extends Annotation>[] withAnnotations() default BeanDefiningAnnotations.class;
 
     /**
-     * Marker annotation type that represents set of bean defining annotations after
-     * the {@link Discovery @Discovery} phase is finished. That is, it includes custom
-     * normal scope annotations as well as custom stereotypes.
+     * Marker annotation type that, for the purpose of {@link Enhancement#withAnnotations()},
+     * represents set of bean defining annotations after the {@link Discovery @Discovery}
+     * phase is finished. That is, it includes custom normal scope annotations as well as
+     * custom stereotypes.
      */
     @interface BeanDefiningAnnotations {
     }
