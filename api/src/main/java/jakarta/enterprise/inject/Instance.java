@@ -252,14 +252,14 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      *
      * @return a new iterable
      */
-    Iterable<Handle<T>> handles();
+    Iterable<? extends Handle<T>> handles();
 
     /**
      *  Returns stream of {@link Handle} objects.
      *
      * @return a new stream of contextual reference handles
      */
-    default Stream<Handle<T>> handlesStream() {
+    default Stream<? extends Handle<T>> handlesStream() {
         return StreamSupport.stream(handles().spliterator(), false);
     }
 
