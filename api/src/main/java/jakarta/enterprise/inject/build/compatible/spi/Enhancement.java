@@ -75,9 +75,6 @@ public @interface Enhancement {
      * If empty, the set of <em>expected types</em> is not narrowed down in any way.
      * If {@code java.lang.Annotation} is present, the set of <em>expected types</em>
      * is narrowed down to types that use any annotation.
-     * The {@link BeanDefiningAnnotations @BeanDefiningAnnotations} marker type may
-     * be used to narrow down the set of <em>expected types</em> to types that use
-     * any bean defining annotation.
      * <p>
      * Defaults to an empty array, so that the set of <em>expected types</em> is not
      * narrowed down in any way.
@@ -85,13 +82,4 @@ public @interface Enhancement {
      * @return types of annotations that must be present on the <em>expected types</em>
      */
     Class<? extends Annotation>[] withAnnotations() default {};
-
-    /**
-     * Marker annotation type that, for the purpose of {@link Enhancement#withAnnotations()},
-     * represents set of bean defining annotations after the {@link Discovery @Discovery}
-     * phase is finished. That is, it includes custom normal scope annotations as well as
-     * custom stereotypes.
-     */
-    @interface BeanDefiningAnnotations {
-    }
 }
