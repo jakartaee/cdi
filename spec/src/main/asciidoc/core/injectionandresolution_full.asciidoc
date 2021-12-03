@@ -149,7 +149,7 @@ A special set of rules, defined in <<delegate_assignable_parameters>>, apply if 
 In addition to rules defined in <<ambig_names>>, the following rules apply.
 
 When an ambiguous name exists, the container attempts to resolve the ambiguity.
-The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives.
+The container eliminates all eligible beans that are not alternatives selected for the application, and selects only those producer methods and fields of beans that are alternatives.
 
 [[client_proxies_full]]
 

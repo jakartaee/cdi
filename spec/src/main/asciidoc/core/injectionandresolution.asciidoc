@@ -106,7 +106,7 @@ An _unsatisfied dependency_ exists at an injection point when no bean is eligibl
 An _ambiguous dependency_ exists at an injection point when multiple beans are eligible for injection to the injection point.
 
 When an ambiguous dependency exists, the container attempts to resolve the ambiguity.
-The container eliminates all eligible beans that are not alternatives selected for the application, except for producer methods and fields of beans that are alternatives.
+The container eliminates all eligible beans that are not alternatives selected for the application, and selects only those producer methods and fields of beans that are alternatives.
 If:
 
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
