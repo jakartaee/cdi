@@ -21,7 +21,9 @@ import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.spi.CreationalContext;
+import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.InjectionException;
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.util.Nonbinding;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -418,4 +420,19 @@ public interface BeanManager extends BeanContainer {
      */
     <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 
+    /**
+     * <p>
+     * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
+     * </p>
+     *
+     * @param ij  the target injection point
+     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
+     *            {@link Dependent} that is created
+     * @return the injectable reference
+     * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
+     * @throws AmbiguousResolutionException   typesafe resolution results in an unresolvable ambiguous dependency
+     * @throws IllegalStateException          if called during application initialization, before the {@link AfterDeploymentValidation}
+     *                                        event is fired.
+     */
+    Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 }
