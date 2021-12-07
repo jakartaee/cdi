@@ -33,6 +33,9 @@ import java.lang.annotation.Target;
  * the method is called once for each field that is declared on each <em>discovered type</em>, as defined
  * in {@link jakarta.enterprise.lang.model.declarations.ClassInfo#fields() ClassInfo.fields}.
  * <p>
+ * If the {@code @Enhancement} method doesn't declare any parameter of one of these types,
+ * or if it declares more than one, the container treats it as a deployment problem.
+ * <p>
  * Additionally, methods annotated {@code @Enhancement} may declare parameters of these types:
  * <ul>
  * <li>{@link Messages}</li>
