@@ -1,6 +1,6 @@
 [[concepts_full]]
 
-{cdi_full} contains all the functionality defined in {cdi_lite} and adds some additional features such as specialization, decorators or conversation scope.
+{cdi_full} contains all the functionality defined in {cdi_lite} and adds some additional features such as specialization, decorators, session scope or conversation scope.
 Some of these concepts were briefly mentioned in the previous {cdi_lite} chapter and this section of specification defines them in depth.
 
 [[scopes_full]]
@@ -11,8 +11,9 @@ Some of these concepts were briefly mentioned in the previous {cdi_lite} chapter
 
 === Built-in scope types in {cdi_full}
 
-In addition to built-in scope types defined in <<builtin_scopes>>, the following built-in scope is present:
+In addition to built-in scope types defined in <<builtin_scopes>>, the following two built-in scopes are present:
 
+* The `@SessionScoped` annotation represents the session scope defined in <<session_context_full>>.
 * The `@ConversationScoped` annotation represents the conversation scope defined in <<conversation_context_full>>.
 
 In addition to rules defined in <<builtin_scopes>>, the following rules apply.
@@ -25,7 +26,7 @@ If a decorator has any scope other than `@Dependent`, non-portable behavior resu
 
 In addition to bean defining annotations defined in <<bean_defining_annotations>>, the following bean defining annotations are present:
 
-* `@ConversationScoped` annotation,
+* `@SessionScoped` and `@ConversationScoped` annotations,
 * `@Decorator` annotation.
 
 [[builtin_stereotypes_full]]

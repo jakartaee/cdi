@@ -377,12 +377,6 @@ The request context is destroyed:
 * after the invocation of an asynchronous observer method completes, and
 * after the `@PostConstruct` callback completes, if it did not already exist when the `@PostConstruct` callback occurred.
 
-[[session_context]]
-
-==== Session context lifecycle
-
-The _session context_ is provided by a built-in context object for the built-in scope type `@SessionScoped`.
-
 [[application_context]]
 
 ==== Application context lifecycle
