@@ -22,9 +22,8 @@
 	</licenses>
 
 	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
+		<maven.compiler.release>11</maven.compiler.release>
+		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
 		<maven-javadoc-plugin>3.2.0</maven-javadoc-plugin>
 		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,6 +45,15 @@
 		</resources>
 
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<compilerArgs>
+						<arg>-Xlint:all</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
