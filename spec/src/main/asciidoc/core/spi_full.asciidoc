@@ -114,6 +114,7 @@ The interface `jakarta.enterprise.inject.spi.ObserverMethod` defines everything 
 ----
 public interface ObserverMethod<T> extends Prioritized {
     public Class<?> getBeanClass();
+    public Bean<?> getDeclaringBean();
     public Type getObservedType();
     public Set<Annotation> getObservedQualifiers();
     public Reception getReception();
@@ -126,6 +127,7 @@ public interface ObserverMethod<T> extends Prioritized {
 ----
 
 * `getBeanClass()` returns the class of the type that declares the observer method.
+* `getDeclaringBean()` returns the `Bean` object that declares the observer method. Return value is undefined for synthetic observers.
 * `getObservedType()` and `getObservedQualifiers()` return the observed event type and qualifiers.
 * `getReception()` returns `IF_EXISTS` for a conditional observer and `ALWAYS` otherwise.
 * `getTransactionPhase()` returns the appropriate transaction phase for a transactional observer method or `IN_PROGRESS` otherwise.

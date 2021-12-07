@@ -56,6 +56,16 @@ public interface ObserverMethod<T> extends Prioritized {
     public Class<?> getBeanClass();
 
     /**
+     * <p>
+     * Obtains the {@linkplain Bean bean} that declares the observer method.
+     * For synthetic observers, the return value is undefined.
+     * </p>
+     *
+     * @return the declaring {@linkplain Bean bean}
+     */
+    public Bean<?> getDeclaringBean();
+
+    /**
      * Obtains the {@linkplain jakarta.enterprise.event observed event type}.
      * 
      * @return the observed event {@linkplain Type type}
