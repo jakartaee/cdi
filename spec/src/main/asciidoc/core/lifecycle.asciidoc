@@ -27,7 +27,7 @@ In the following example, a producer method returns instances of other beans:
 
 [source, java]
 ----
-@SessionScoped
+@RequestScoped
 public class PaymentStrategyProducer implements Serializable {
    
    private PaymentStrategyType paymentStrategyType;
@@ -56,7 +56,7 @@ But in this example, the returned objects are not contextual instances:
 
 [source, java]
 ----
-@SessionScoped
+@RequestScoped
 public class PaymentStrategyProducer implements Serializable {
    
    private PaymentStrategyType paymentStrategyType;

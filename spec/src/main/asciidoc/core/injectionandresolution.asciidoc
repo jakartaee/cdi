@@ -293,7 +293,7 @@ A client proxy implements/extends some or all of the bean types of the bean and 
 There are a number of reasons for this indirection:
 
 * The container must guarantee that when any valid injected reference to a bean of normal scope is invoked, the invocation is always processed by the current instance of the injected bean.
-In certain scenarios, for example if a request scoped bean is injected into a session scoped bean, or into a servlet, this rule requires an indirect reference.
+In certain scenarios, for example if a request scoped bean is injected into an application scoped bean, or into a servlet, this rule requires an indirect reference.
 (Note that the `@Dependent` pseudo-scope is not a normal scope.)
 * The container may use a client proxy when creating beans with circular dependencies.
 This is only necessary when the circular dependencies are initialized via a managed bean constructor or producer method parameter.

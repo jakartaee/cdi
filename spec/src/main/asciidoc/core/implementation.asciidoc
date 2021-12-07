@@ -469,6 +469,11 @@ public class Order {
 }
 ----
 
+[NOTE]
+====
+Session scope and conversation scope are only available in {cdi_full}.
+====
+
 If a bean class does not explicitly declare a constructor using `@Inject`, the constructor that accepts no parameters is the bean constructor.
 
 If a bean class has more than one constructor annotated `@Inject`, the container automatically detects the problem and treats it as a definition error.

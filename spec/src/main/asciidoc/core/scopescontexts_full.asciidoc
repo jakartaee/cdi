@@ -115,7 +115,7 @@ A _passivating scope_ requires that:
 
 Passivating scopes must be explicitly declared `@NormalScope(passivating=true)`.
 
-For example, the built-in session and conversation scopes defined in <<builtin_contexts>> are passivating scopes.
+For example, the built-in session and conversation scopes defined in <<builtin_contexts_full>> are passivating scopes.
 No other built-in scopes are passivating scopes.
 
 [[passivation_validation]]
@@ -158,9 +158,7 @@ If a managed bean which declares a passivating scope type, has a decorator or in
 
 [[session_context_full]]
 
-==== Session context lifecycle in {cdi_full}
-
-The rules defined in <<session_context>> are overridden as follows.
+==== Session context lifecycle
 
 The _session context_ is provided by a built-in context object for the built-in passivating scope type `@SessionScoped`.
 
