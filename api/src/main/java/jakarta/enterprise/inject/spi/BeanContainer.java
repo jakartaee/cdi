@@ -10,7 +10,6 @@ import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Stereotype;
-import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -56,22 +55,6 @@ public interface BeanContainer {
      *                                  event is fired.
      */
     Object getReference(Bean<?> bean, Type beanType, CreationalContext<?> ctx);
-
-    /**
-     * <p>
-     * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
-     * </p>
-     *
-     * @param ij  the target injection point
-     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
-     *            {@link Dependent} that is created
-     * @return the injectable reference
-     * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
-     * @throws AmbiguousResolutionException   typesafe resolution results in an unresolvable ambiguous dependency
-     * @throws IllegalStateException          if called during application initialization, before the {@link AfterDeploymentValidation}
-     *                                        event is fired.
-     */
-    Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 
     /**
      * Obtain an instance of a {@link CreationalContext} for the given
