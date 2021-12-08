@@ -79,6 +79,8 @@ import jakarta.enterprise.inject.spi.Extension;
  * SeContainer container = container.initialize();
  * </pre>
  *
+ * <p>CDI Lite implementations are not required to provide support for CDI in Java SE.</p>
+ *
  * @author Antoine Sabot-Durand
  * @author Martin Kouba
  * @author John D. Ament

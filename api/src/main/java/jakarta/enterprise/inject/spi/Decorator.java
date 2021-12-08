@@ -32,6 +32,8 @@ import jakarta.decorator.Delegate;
  * given priority value for entire application.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for decorators.</p>
+ *
  * @author Gavin King
  * @author Pete Muir
  * 

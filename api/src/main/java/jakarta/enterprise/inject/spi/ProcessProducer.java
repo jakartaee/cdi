@@ -45,7 +45,9 @@ import jakarta.enterprise.inject.spi.configurator.ProducerConfigurator;
  * If any observer method of a {@code ProcessProducer} event throws an exception, the exception is treated as a definition error
  * by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see Producer
  * @author David Allen
  * @param <T> The bean class of the bean that declares the producer method or field

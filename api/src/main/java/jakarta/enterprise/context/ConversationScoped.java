@@ -126,6 +126,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * Servlet request, in order to conserve resources.</li>
  * </ul>
  *
+ * <p>CDI Lite implementations are not required to provide support for conversations.</p>
+ *
  * @see Conversation
  * @see NonexistentConversationException
  * @see BusyConversationException

@@ -44,7 +44,9 @@ import jakarta.decorator.Decorator;
  * If any observer method of a {@code ProcessBean} event throws an exception, the exception is treated as a definition error by
  * the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see Bean
  * @author David Allen
  * @param <X> The class of the bean

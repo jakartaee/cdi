@@ -22,6 +22,8 @@ import jakarta.enterprise.context.spi.Contextual;
 /**
  * Indicates that a custom implementation of {@link Bean} or
  * {@link Contextual} is passivation capable.
+ *
+ * <p>CDI Lite implementations are not required to provide support for passivation.</p>
  * 
  * @author Gavin King
  * @author David Allen

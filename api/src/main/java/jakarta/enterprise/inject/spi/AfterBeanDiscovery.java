@@ -43,6 +43,8 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * If any observer method of the {@code AfterBeanDiscovery} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
  * 
  * @author David Allen
  * @author Antoine Sabot-Durand

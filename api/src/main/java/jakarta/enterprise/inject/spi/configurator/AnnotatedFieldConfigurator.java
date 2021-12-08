@@ -23,7 +23,9 @@ import jakarta.enterprise.inject.spi.AnnotatedField;
 
 /**
  * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedField}
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
  * @since 2.0

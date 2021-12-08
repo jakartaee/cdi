@@ -74,6 +74,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * Instances of this class are neither reusable nor suitable for sharing between threads.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for {@code InterceptionFactory}.</p>
+ *
  * @author Antoine Sabot-Durand
  * @since 2.0
  * @param <T> type for which the wrapper is created

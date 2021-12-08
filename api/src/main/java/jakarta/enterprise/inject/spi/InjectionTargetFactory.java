@@ -43,6 +43,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *     }
  * });
  * </pre>
+ *
+ * <p>CDI Lite implementations are not required to provide support for {@code InjectionTargetFactory}.</p>
  * 
  * @author Pete Muir
  * @author Antoine Sabot-Durand

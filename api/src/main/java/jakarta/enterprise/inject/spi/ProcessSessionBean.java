@@ -33,6 +33,8 @@ package jakarta.enterprise.inject.spi;
  * allows you access to the {@link Bean}, which in turn allows you to instantiate an instance, which, for interface-view EJBs
  * will not be an instance of X.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
  * 
  * @author David Allen
  * @param <X> session bean type

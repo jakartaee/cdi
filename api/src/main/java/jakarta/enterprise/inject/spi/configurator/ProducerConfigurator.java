@@ -33,6 +33,8 @@ import jakarta.enterprise.inject.spi.Producer;
  * This configurator is not thread safe and shall not be used concurrently.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @param <T> The return type of the producer method or the type of the producer field
  * @author Martin Kouba
  * @see ProcessProducer#configureProducer()

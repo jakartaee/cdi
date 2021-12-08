@@ -25,7 +25,9 @@ package jakarta.enterprise.inject.spi;
  * <p>
  * No requests will be processed by the deployment until all observers of this event return.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author David Allen
  */
 public interface AfterDeploymentValidation {

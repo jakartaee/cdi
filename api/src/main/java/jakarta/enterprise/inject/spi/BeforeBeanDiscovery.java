@@ -32,7 +32,9 @@ import jakarta.enterprise.util.Nonbinding;
  * This event type is thrown by the container before the bean discovery process begins. If any observer method of the
  * {@code BeforeBeanDiscovery} event throws an exception, the exception is treated as a definition error by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Pete Muir
  * @author David Allen
  * @author Antoine Sabot-Durand

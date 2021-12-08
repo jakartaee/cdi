@@ -36,6 +36,8 @@ package jakarta.enterprise.context;
  * The conversation timeout is a hint to the container that a conversation should not be destroyed if it has been active within
  * the last given interval in milliseconds.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for conversations.</p>
  * 
  * @see ConversationScoped &#064;ConversationScoped
  * 

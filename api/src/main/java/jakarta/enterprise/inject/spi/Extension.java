@@ -41,6 +41,8 @@ import jakarta.enterprise.inject.Default;
  * Service providers are made available for injection as beans with the qualifier {@link Default
  * &#064;Default}.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
  * 
  * @author Gavin King
  * @author Pete Muir

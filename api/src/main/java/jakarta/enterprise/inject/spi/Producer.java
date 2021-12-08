@@ -24,6 +24,8 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * <p>
  * Provides a generic operation for producing an instance of a type.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for {@code Producer}.</p>
  * 
  * @author Pete Muir
  * @author David Allen

@@ -41,9 +41,11 @@ import jakarta.enterprise.inject.Stereotype;
  * Decorators of a stateful session bean must comply with the rules for instance passivation and conversational state defined by
  * the EJB specification.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for decorators.</p>
+ *
  * @see Delegate &#064;Delegate identifies the delegate injection point of a decorator.
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
  */

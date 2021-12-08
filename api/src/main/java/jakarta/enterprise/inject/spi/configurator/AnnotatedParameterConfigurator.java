@@ -25,6 +25,8 @@ import jakarta.enterprise.inject.spi.AnnotatedParameter;
  *
  * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedParameter}
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
  * @since 2.0

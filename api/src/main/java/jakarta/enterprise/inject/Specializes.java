@@ -61,6 +61,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * If a bean is specialized by any enabled bean, the first bean is disabled.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for specialization.</p>
  * 
  * @author Gavin King
  * @author Pete Muir

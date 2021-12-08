@@ -39,6 +39,8 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * error by the container.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen

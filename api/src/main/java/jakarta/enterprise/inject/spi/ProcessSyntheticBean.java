@@ -26,7 +26,9 @@ package jakarta.enterprise.inject.spi;
  * If any observer method of a {@code ProcessSyntheticBean} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Martin Kouba
  * @param <X> The class of the bean
  * @since 2.0
