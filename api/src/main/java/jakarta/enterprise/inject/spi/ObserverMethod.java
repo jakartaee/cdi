@@ -61,9 +61,16 @@ public interface ObserverMethod<T> extends Prioritized {
      * For synthetic observers, the return value is undefined.
      * </p>
      *
+     * <p>
+     * For the sake of compatibility with existing custom {@link ObserverMethod} implementations, this method by default
+     * returns {@code null}.
+     * </p>
+     *
      * @return the declaring {@linkplain Bean bean}
      */
-    public Bean<?> getDeclaringBean();
+    default Bean<?> getDeclaringBean() {
+        return null;
+    }
 
     /**
      * Obtains the {@linkplain jakarta.enterprise.event observed event type}.
