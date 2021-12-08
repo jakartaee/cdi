@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  * has a parameter of type {@code BeanInfo}, it will be called for interceptors as well.
  * <p>
  * If the {@code @Registration} method doesn't declare any parameter of one of these types,
- * or if it declares more than one, the container treats it as a deployment problem.
+ * or if it declares more than one, the container treats it as a definition error.
  * <p>
  * Additionally, methods annotated {@code @Registration} may declare parameters of these types:
  * <ul>
