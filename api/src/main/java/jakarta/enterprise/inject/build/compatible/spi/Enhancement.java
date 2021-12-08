@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * in {@link jakarta.enterprise.lang.model.declarations.ClassInfo#fields() ClassInfo.fields}.
  * <p>
  * If the {@code @Enhancement} method doesn't declare any parameter of one of these types,
- * or if it declares more than one, the container treats it as a deployment problem.
+ * or if it declares more than one, the container treats it as a definition error.
  * <p>
  * Additionally, methods annotated {@code @Enhancement} may declare parameters of these types:
  * <ul>
