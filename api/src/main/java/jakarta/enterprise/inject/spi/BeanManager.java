@@ -39,7 +39,8 @@ import jakarta.enterprise.inject.Stereotype;
  * </p>
  *
  * <p>
- * In CDI Lite environment, attempting to obtain a {@link BeanManager} or invoking methods on it results in non-portable behavior.
+ * In CDI Lite environment, applications may obtain a {@code BeanManager}, but invoking methods that are not inherited
+ * from {@link BeanContainer} results in non-portable behavior.
  * </p>
  * 
  * <p>

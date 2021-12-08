@@ -44,6 +44,8 @@ import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
  * This configurator is not thread safe and shall not be used concurrently.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see BeforeBeanDiscovery#addAnnotatedType(Class, String)
  * @see AfterTypeDiscovery#addAnnotatedType(Class, String)
  * @see ProcessAnnotatedType#configureAnnotatedType()

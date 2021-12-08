@@ -23,6 +23,8 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * Provides operations for performing {@linkplain jakarta.enterprise.inject dependency injection} and lifecycle callbacks on an
  * instance of a type.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for {@code InjectionTarget}.</p>
  * 
  * @see jakarta.annotation.PostConstruct
  * @see jakarta.annotation.PreDestroy

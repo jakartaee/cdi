@@ -32,6 +32,8 @@ import java.util.List;
  * Changes made to these lists after the invocation of the last observer method of the {@code AfterTypeDiscovery} are ignored.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Pete Muir
  * @author Antoine Sabot-Durand
  * @since 1.1

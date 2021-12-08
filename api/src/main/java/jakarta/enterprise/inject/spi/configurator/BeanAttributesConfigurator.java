@@ -29,6 +29,8 @@ import java.util.Set;
  *
  * This configurator is not thread safe and shall not be used concurrently.
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see ProcessBeanAttributes#configureBeanAttributes()
  * @param <T> the class of the bean instance
  * @author Antoine Sabot-Durand

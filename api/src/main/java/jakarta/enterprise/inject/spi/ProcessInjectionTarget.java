@@ -40,7 +40,9 @@ package jakarta.enterprise.inject.spi;
  * If any observer method of a {@code ProcessInjectionTarget} event throws an exception, the exception is treated as a
  * definition error by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see InjectionTarget
  * @author David Allen
  * @param <X> The managed bean class, session bean class or Java EE component class supporting injection

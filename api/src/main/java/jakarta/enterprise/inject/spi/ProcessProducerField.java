@@ -25,7 +25,9 @@ package jakarta.enterprise.inject.spi;
  * If any observer method of a {@code ProcessProducerField} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author David Allen
  * @param <T> The type of the producer field
  * @param <X> The class of the bean declaring the producer field

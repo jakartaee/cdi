@@ -49,6 +49,8 @@ import jakarta.inject.Qualifier;
  *    }
  * }
  * </pre>
+ *
+ * <p>CDI Lite implementations are not required to provide support for decorators.</p>
  * 
  * @author Pete Muir
  * @since 1.1

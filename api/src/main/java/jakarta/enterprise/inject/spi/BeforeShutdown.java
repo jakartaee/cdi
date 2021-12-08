@@ -21,7 +21,9 @@ package jakarta.enterprise.inject.spi;
  * The type of the final event the container fires after it has finished processing requests and destroyed all contexts. If any
  * observer method of the {@code BeforeShutdown} event throws an exception, the exception is ignored by the container.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author David Allen
  */
 public interface BeforeShutdown {

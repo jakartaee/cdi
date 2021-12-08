@@ -69,6 +69,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * with qualifier <code>@Destroyed(SessionScoped.class)</code> when the session context is destroyed. The event payload is
  * the <code>HttpSession</code>
  *
+ * <p>CDI Lite implementations are not required to provide support for the session scope.</p>
+ *
  * @author Gavin King
  * @author Pete Muir
  * @author Antoine Sabot-Durand

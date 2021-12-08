@@ -26,6 +26,8 @@ package jakarta.enterprise.context;
  * If the propagated conversation cannot be restored, the container must associate the request with a new transient conversation
  * and throw an exception of type <code>NonexistentConversationException</code>.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for conversations.</p>
  * 
  * @see ConversationScoped
  * 

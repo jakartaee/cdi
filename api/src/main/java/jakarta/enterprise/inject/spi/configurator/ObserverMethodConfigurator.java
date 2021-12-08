@@ -41,6 +41,8 @@ import jakarta.enterprise.inject.spi.ProcessObserverMethod;
  * This configurator is not thread safe and shall not be used concurrently.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @param <T> type of the event the configured ObserverMethod will observe
  * @author Antoine Sabot-Durand
  * @see ProcessObserverMethod#configureObserverMethod()

@@ -41,6 +41,8 @@ package jakarta.enterprise.inject.spi;
  *     }
  * });
  * </pre>
+ *
+ * <p>CDI Lite implementations are not required to provide support for {@code ProducerFactory}.</p>
  * 
  * @author Pete Muir
  * @since 1.1

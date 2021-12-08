@@ -28,6 +28,8 @@ package jakarta.enterprise.inject.spi;
  * error by the container.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see ObserverMethod
  * @author Martin Kouba
  * @param <T> The type of the event being observed

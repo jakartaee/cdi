@@ -29,6 +29,8 @@ package jakarta.enterprise.context;
  * conversation and throw an exception of type <code>BusyConversationException</code> from the restore view phase of the JSF
  * lifecycle.
  * </p>
+ *
+ * <p>CDI Lite implementations are not required to provide support for conversations.</p>
  * 
  * @see ConversationScoped
  * 

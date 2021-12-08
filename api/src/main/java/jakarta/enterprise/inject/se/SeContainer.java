@@ -29,6 +29,8 @@ import jakarta.enterprise.inject.spi.BeanManager;
  * If no qualifier is passed to {@link #select} method, the <code>@Default</code> qualifier is assumed.
  * </p>
  *
+ * <p>CDI Lite implementations are not required to provide support for CDI in Java SE.</p>
+ *
  * @author Antoine Sabot-Durand
  * @author John D. Ament
  * @author Graeme Rocher

@@ -18,7 +18,7 @@ import java.util.Set;
 
 /**
  * <p>
- * {@link BeanContainer} is a superclass of {@link BeanManager} containing capabilities that are portable across
+ * {@code BeanContainer} is a superclass of {@link BeanManager} containing capabilities that are portable across
  * all CDI environments.
  * </p>
  *
@@ -33,7 +33,7 @@ import java.util.Set;
  *
  * <pre>
  * &#064;Inject
- * BeanContainer manager;
+ * BeanContainer container;
  * </pre>
  *
  * @author Matej Novotny

@@ -29,6 +29,8 @@ import java.util.Set;
  *
  * This builder is not thread safe and shall not be used concurrently.
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @see ProcessInjectionPoint#configureInjectionPoint()
  * @author Antoine Sabot-Durand
  * @since 2.0

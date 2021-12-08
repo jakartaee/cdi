@@ -37,6 +37,8 @@ import java.lang.annotation.Target;
  * in section <a href="https://docs.jboss.org/cdi/spec/1.2/cdi-spec.html#alternative_metadata_sources">11.4 Alternative metadata sources</a>.
  * The annotation may be applied as a meta-annotation on any annotation considered.
  *
+ * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ *
  * @author Pete Muir
  * @since 1.1
  */

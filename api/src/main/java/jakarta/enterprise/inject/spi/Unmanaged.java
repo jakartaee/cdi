@@ -39,7 +39,9 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * <p>
  * {@link UnmanagedInstance}s created by this class are not suitable for sharing between threads.
  * </p>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for {@code Unmanaged}.</p>
+ *
  * @author Pete Muir
  * @since 1.1
  * @param <T> type of unmanaged instances

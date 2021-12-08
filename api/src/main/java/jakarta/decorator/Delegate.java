@@ -75,7 +75,9 @@ import java.lang.annotation.Target;
  *    ...
  * }
  * </pre>
- * 
+ *
+ * <p>CDI Lite implementations are not required to provide support for decorators.</p>
+ *
  * @see Decorator &#064;Decorator specifies that a class is a decorator.
  * 
  * @author Gavin King
