@@ -1,4 +1,5 @@
 :numbered!:
+:license: asl2
 ["preface",sectnum="0"]
 
 == Preface
@@ -23,19 +24,66 @@ This document is organized in 4 parts:
 
 === Major changes
 
-CDI 4.0 splits the CDI core into Lite and Full. Lite contains a subset of original features which are designed to work in more restricted environments. CDI Full contains everything that is in Lite plus all other features that were formerly in core CDI and are not in Lite.
+==== Jakarta Contexts and Dependency Injection 4.0
+link:https://jakarta.ee/specifications/cdi/4.0/[CDI 4.0] splits the CDI core into Lite and Full. Lite contains a subset of original features which are designed to work in more restricted environments. CDI Full contains everything that is in Lite plus all other features that were formerly in core CDI and are not in Lite.
 
-Jakarta Contexts and Dependency Injection 3.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 3.0]) is an update to Jakarta Contexts and Dependency Injection 2.0 (link:https://jakarta.ee/specifications/cdi/3.0/[CDI 2.0]).
+A new `beans.xml` 4.0 schema file has been added and the namespace of the
+`beans_4_0.xsd` schema file is `xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee"`, the same as 3.0. The key changes in the schema are to make the `bean-discovery-mode` attribute default to `annotated` and to use `annotated` as the default when an empty beans.xml is seen in a deployment. When running in a CDI Lite  environment, only the `bean-discovery-mode attribute` is read from the beans.xml file. This means that by default, only those types with <<bean_defining_annotations>> will be considered. Deployment relying on discovery of all types will either need to include a beans.xml with `bean-discovery-mode=all`, or introduce bean defining annotations to beans in the deployment.
+
+A new jakarta.enterprise:jakarta.enterprise.lang-model API artifact has been aded for the Build Compatible (Reflection-Free) Java Language Model for CDI introduced by CDI Lite, and used in the new jakarta.enterprise.inject.build.compatible.spi package of the main jakarta.enterprise:jakarta.enterprise.cdi-api artifact. This new package is described in the <<spi_lite>> section.
+
+Java Platform Module System(JPMS) module-info.class files have been added to the CDI API artifacts. The cdi-api artifact defines a `jakarta.cdi` module with the following descriptor:
+
+```java
+module jakarta.cdi {
+    exports jakarta.decorator;
+    exports jakarta.enterprise.context;
+    exports jakarta.enterprise.context.control;
+    exports jakarta.enterprise.context.spi;
+    exports jakarta.enterprise.event;
+    exports jakarta.enterprise.inject;
+    exports jakarta.enterprise.inject.build.compatible.spi;
+    exports jakarta.enterprise.inject.literal;
+    exports jakarta.enterprise.inject.se;
+    exports jakarta.enterprise.inject.spi;
+    exports jakarta.enterprise.inject.spi.configurator;
+    exports jakarta.enterprise.util;
+
+    requires transitive jakarta.annotation;
+    requires transitive jakarta.interceptor;
+    requires transitive jakarta.cdi.lang.model;
+    requires transitive jakarta.inject;
+    requires static jakarta.el;
+    // For javadoc
+    requires static java.naming;
+    //TODO: requires static jakarta.transation;
+
+    uses jakarta.enterprise.inject.se.SeContainerInitializer;
+    uses jakarta.enterprise.inject.spi.CDIProvider;
+    uses jakarta.enterprise.inject.build.compatible.spi.BuildServices;
+}
+```
+
+The lang-model artifact defines a `jakarta.cdi.lang.model` module with the following descriptor:
+
+```java
+module jakarta.cdi.lang.model {
+    exports jakarta.enterprise.lang.model;
+    exports jakarta.enterprise.lang.model.declarations;
+    exports jakarta.enterprise.lang.model.types;
+}
+```
+
+==== Jakarta Contexts and Dependency Injection 3.0
+link:https://jakarta.ee/specifications/cdi/3.0/[CDI 3.0] is an incompatible update to Jakarta Contexts and Dependency Injection 2.0 (link:https://jakarta.ee/specifications/cdi/2.0/[CDI 2.0]).
 
 CDI 3.0 includes a change in the base namespace used by the APIs from
 `javax` to `jakarta`. For example, the `BeanManager` interface has moved from
 `javax.enterprise.inject.spi.BeanManager` to `jakarta.enterprise.inject.spi.BeanManager`.
 
-New `beans.xml` 3.0 schema file has been added and the namespace of the
+A new `beans.xml` 3.0 schema file was added and the namespace of the
 `beans_3_0.xsd` schema file has changed from `xmlns:javaee="http://xmlns.jcp.org/xml/ns/javaee"` to
 `xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee"`.
 
-Starting with version 2.0, CDI targets Java SE and Jakarta EE platforms.
-CDI in Java SE and CDI in a Jakarta EE container share the features defined in core CDI.
 
 :numbered:

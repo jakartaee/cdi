@@ -129,13 +129,13 @@
 
 
 	<properties>
-		<annotation.api.version>2.1.0-B1</annotation.api.version>
+		<annotation.api.version>2.1.0</annotation.api.version>
 		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>5.0.0</uel.api.version>
 		<interceptor.api.version>2.0.1-RC1</interceptor.api.version>
 		<!-- These are only used in javadoc links -->
-		<ejb.api.version>4.0.0-RC2</ejb.api.version>
-		<transaction.api.version>2.0.0-RC2</transaction.api.version>
+		<ejb.api.version>4.0.0</ejb.api.version>
+		<transaction.api.version>2.0.0</transaction.api.version>
 
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
@@ -387,7 +387,7 @@
 								<include>**/privileged/**</include>
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
-							<forkCount>0</forkCount>
+							<forkCount>1</forkCount>
 							<useModulePath>false</useModulePath>
 						</configuration>
 					</execution>
