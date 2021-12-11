@@ -5,7 +5,6 @@ module jakarta.cdi {
     exports jakarta.enterprise.context.spi;
     exports jakarta.enterprise.event;
     exports jakarta.enterprise.inject;
-    exports jakarta.enterprise.inject.build.compatible.spi;
     exports jakarta.enterprise.inject.literal;
     exports jakarta.enterprise.inject.se;
     exports jakarta.enterprise.inject.spi;
@@ -23,5 +22,4 @@ module jakarta.cdi {
 
     uses jakarta.enterprise.inject.se.SeContainerInitializer;
     uses jakarta.enterprise.inject.spi.CDIProvider;
-    uses jakarta.enterprise.inject.build.compatible.spi.BuildServices;
 }

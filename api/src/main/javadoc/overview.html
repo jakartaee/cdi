@@ -10,7 +10,9 @@ code.</p>
 most of the features and is tailored for runtimes that don't intend
 to implement the entire Jakarta EE platform. Full includes features
 that are not deemed necessary for all CDI implementations. Jakarta EE
-implementations are required to support Full.</p>
+implementations are required to support Full.
+Lite adds additional APIs to support build-time generators and is not required to be implemented with Full.
+</p>
 
 <ul>
 <li>A well-defined lifecycle for stateful
@@ -39,9 +41,6 @@ beans (only in Full)</li>
 <li>A web {@linkplain jakarta.enterprise.context.ConversationScoped
     conversation context} in addition to the three standard
     web contexts defined by the Java Servlets specification (only in Full)</li>
-<li>A {@linkplain jakarta.enterprise.inject.build.compatible.spi build-compatible SPI}
-and a {@linkplain jakarta.enterprise.inject.spi runtime SPI} allowing portable
-extensions to integrate cleanly with the container (runtime SPI only in Full)</li>
 </ul>
 
 <p>CDI allows objects to be bound to lifecycle contexts, to be
@@ -55,7 +54,6 @@ extensions to integrate cleanly with the container (runtime SPI only in Full)</l
     Jakarta EE resources. We refer to these objects in general terms as beans
     and to instances of beans that are bound to contexts as contextual
     instances.</p>
-
 </body>
 
 </html>

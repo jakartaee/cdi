@@ -33,6 +33,7 @@
 		<module>spec</module>
 		<module>lang-model</module>
 		<module>api</module>
+		<module>cdi-light-api</module>
 	</modules>
 	<build>
 		<defaultGoal>clean package</defaultGoal>

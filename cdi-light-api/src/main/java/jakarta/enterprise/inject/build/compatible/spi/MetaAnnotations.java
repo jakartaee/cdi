@@ -3,7 +3,6 @@ package jakarta.enterprise.inject.build.compatible.spi;
 import jakarta.enterprise.context.spi.AlterableContext;
 
 import java.lang.annotation.Annotation;
-import java.util.function.Consumer;
 
 /**
  * Allows registering custom CDI meta-annotations: qualifiers, interceptor bindings,
