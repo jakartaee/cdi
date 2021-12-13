@@ -1,4 +1,4 @@
-module jakarta.cdilight {
+module jakarta.cdilite {
     exports jakarta.enterprise.inject.build.compatible.spi;
 
     requires transitive jakarta.annotation;
