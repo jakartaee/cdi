@@ -1,5 +1,7 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import jakarta.enterprise.inject.spi.Extension;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,12 +23,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SkipIfPortableExtensionPresent {
     /**
-     * Binary name of a portable extension class, as defined by <cite>The Java&trade; Language Specification</cite>;
-     * in other words, the class name as returned by {@link Class#getName()}.
-     * <p>
-     * Non-portable behavior occurs if given class exists but is not a portable extension.
+     * A class implementing {@link Extension} that is expected to mirror the functionality of the annotated
+     * build compatible extension.
      *
-     * @return binary name of a portable extension class
+     * @return a portable extension class
      */
-    String value();
+    Class<? extends Extension> value();
 }
