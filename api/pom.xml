@@ -34,14 +34,14 @@
 	<licenses>
 		<license>
 			<name>Apache License 2.0</name>
-			<url>https://repository.jboss.org/licenses/apache-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
 
 	<issueManagement>
-		<system>JIRA</system>
-		<url>https://jira.jboss.org/browse/CDI</url>
+		<system>Jakarta CDI Issues</system>
+		<url>https://github.com/eclipse-ee4j/cdi/issues</url>
 	</issueManagement>
 
 	<organization>
