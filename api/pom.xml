@@ -131,7 +131,7 @@
 	<properties>
 		<annotation.api.version>2.1.0-B1</annotation.api.version>
 		<atinject.api.version>2.0.1</atinject.api.version>
-		<uel.api.version>5.0.0</uel.api.version>
+		<uel.api.version>5.0.0-RC1</uel.api.version>
 		<interceptor.api.version>2.1.0-RC3</interceptor.api.version>
 		<!-- These are only used in javadoc links -->
 		<ejb.api.version>4.0.0</ejb.api.version>
