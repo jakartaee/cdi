@@ -21,12 +21,11 @@
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
 		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jakarta.enterprise.cdi-api</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.0</version>
 
 	<name>CDI APIs</name>
 	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
@@ -130,17 +129,16 @@
 
 
 	<properties>
-		<atinject.api.version>2.0.0</atinject.api.version>
+		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>4.0.0</uel.api.version>
-		<interceptor.api.version>2.0.0</interceptor.api.version>
+		<interceptor.api.version>2.0.1</interceptor.api.version>
 		<!-- These are only used in javadoc links -->
-		<ejb.api.version>4.0.0-RC2</ejb.api.version>
-		<transaction.api.version>2.0.0-RC2</transaction.api.version>
+		<ejb.api.version>4.0.0</ejb.api.version>
+		<transaction.api.version>2.0.0</transaction.api.version>
 
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
-		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
+		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+		<maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -305,7 +303,6 @@
 				</executions>
 				<configuration>
 					<instructions>
-						<Automatic-Module-Name>jakarta.cdi</Automatic-Module-Name>
 						<Export-Package>
 							jakarta.decorator;version=3.0,
 							jakarta.enterprise.*;version=3.0,
@@ -342,6 +339,7 @@
 							<excludes>
 								<exclude>**/privileged/**</exclude>
 							</excludes>
+							<useModulePath>false</useModulePath>
 						</configuration>
 					</execution>
 					<execution>
@@ -359,6 +357,38 @@
 							</includes>
 							<argLine>-Djava.security.manager -Djava.security.policy=${project.build.testOutputDirectory}/java.policy</argLine>
 							<forkCount>0</forkCount>
+							<useModulePath>false</useModulePath>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--
+			Use the JDK 11+ compiler but with -source 1.8 for all
+			but the module-info.java file.
+			-->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<release>9</release>
+					<compilerArgs>
+						<arg>-Xlint:all</arg>
+					</compilerArgs>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+				<executions>
+					<execution>
+						<id>base-compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<release>8</release>
+							<excludes>
+								<exclude>module-info.java</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>
@@ -366,6 +396,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<description>Jakarta Context Dependency Injection API</description>
