@@ -335,8 +335,8 @@
 					<instructions>
 						<Automatic-Module-Name>jakarta.cdi</Automatic-Module-Name>
 						<Export-Package>
-							jakarta.decorator;version=3.0,
-							jakarta.enterprise.*;version=3.0,
+							jakarta.decorator;version=4.0,
+							jakarta.enterprise.*;version=4.0,
 						</Export-Package>
 						<Import-Package>
 							jakarta.el; version=4.0,
