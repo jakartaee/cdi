@@ -38,6 +38,9 @@ An _implicit bean archive_ is:
 Any other archive which contains a `beans.xml` file is not portable in {cdi_lite}.
 More kinds of bean archives exist in {cdi_full}.
 
+Implementations that do not support {cdi_full} are required to ignore the content of the `beans.xml` file, except for the `bean-discovery-mode` attribute.
+Implementations that do not support {cdi_full} are required to detect presence of an archive which contains a `beans.xml` file that has `bean-discovery-mode` attribute set to `all` and treat it as a deployment problem.
+
 To ensure portability between {cdi_lite} and {cdi_full}, applications are encouraged to:
 
 * always add a `beans.xml` file to an archive which contains classes with bean defining annotations;
