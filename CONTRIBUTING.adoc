@@ -1,0 +1,72 @@
+= Contributing to Jakarta Contexts and Dependency Injection
+
+Thanks for your interest in this project.
+
+== Project description
+
+The Jakarta Contexts and Dependency Injection project contains the CDI and DI projects.
+
+== Developer resources
+
+You can use the code from these repositories to experiment, test, build, create patches, issue pull requests, etc.
+
+=== Current Respositories
+cdi - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/cdi.git`
+
+injection-api - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/injection-api.git`
+
+injection-spec - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/injection-spec.git`
+
+injection-tck - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/injection-tck.git`
+
+cdi-tck - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/cdi-tck.git`
+
+=== Legacy CPL Licensed CDI Respositories
+cdi-tck-cpl - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/cdi-tck-cpl.git`
+
+cdi-cpl - Project repository hosted on GitHub.
+`clone: https://github.com/eclipse-ee4j/cdi-cpl.git`
+
+== Eclipse Contributor Agreement
+
+Before your contribution can be accepted by the project team contributors must
+electronically sign the Eclipse Contributor Agreement (ECA).
+
+* http://www.eclipse.org/legal/ECA.php
+
+Commits that are provided by non-committers must have a Signed-off-by field in
+the footer indicating that the author is aware of the terms by which the
+contribution has been provided to the project. The non-committer must
+additionally have an Eclipse Foundation account and must have a signed Eclipse
+Contributor Agreement (ECA) on file.
+
+For more information, please see the Eclipse Committer Handbook:
+https://www.eclipse.org/projects/handbook/#resources-commit
+
+## Eclipse Development Process
+
+This Eclipse Foundation open project is governed by the Eclipse Foundation
+Development Process and operates under the terms of the Eclipse IP Policy.
+
+The Jakarta EE Specification Committee has adopted the Jakarta EE Specification
+Process (JESP) in accordance with the Eclipse Foundation Specification Process
+v1.2 (EFSP) to ensure that the specification process is complied with by all
+Jakarta EE specification projects.
+
+* https://eclipse.org/projects/dev_process
+* https://www.eclipse.org/org/documents/Eclipse_IP_Policy.pdf
+* https://jakarta.ee/about/jesp/
+* https://www.eclipse.org/legal/efsp_non_assert.php
+
+== Contact
+
+Contact the project developers via the project's "dev" list.
+
+* https://accounts.eclipse.org/mailing-list/cdi-dev
+
