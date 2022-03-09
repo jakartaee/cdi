@@ -2,7 +2,7 @@
 :author: Jakarta Contexts and Dependency Injection Specification Project
 :email: cdi-dev@eclipse.org
 :revnumber: 4.0
-:revdate: December 10 2021
+:revdate: Feburary 7 2022
 :revremark: Draft
 :version-label!:
 :sectanchors:
