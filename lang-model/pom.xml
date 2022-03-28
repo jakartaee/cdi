@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
 		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>4.0.1-SNAPSHOT</version>
+		<version>4.0.0</version>
 	</parent>
 
 	<artifactId>jakarta.enterprise.lang-model</artifactId>
