@@ -536,9 +536,9 @@ If the exception is a checked exception, it is wrapped and rethrown as an (unche
 
 [[async_exception]]
 
-==== Handling multiple exceptions thrown during an asynchronous event
+==== Handling exceptions thrown during an asynchronous event
 
-If an event is asynchronous, and an exception is thrown by any of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `java.util.concurrent.CompletionException` exception.
+If an event is asynchronous, and an exception is thrown by one or more of its notified observers, the `CompletionStage` returned by `fireAsync` will complete exceptionally with `java.util.concurrent.CompletionException`.
 `CompletionException` contains all exceptions thrown by observers as suppressed exceptions.
 They can be accessed as an array of `Throwable` with the `getSuppressed` method.
 
