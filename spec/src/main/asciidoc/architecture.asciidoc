@@ -53,7 +53,7 @@ For example, the container might be a Jakarta EE container or an embeddable Jaka
 
 === Relationship to other specifications
 
-An application developer creates container-managed components such as Jakarta Enterprise Beans, Jakarta Enterprise Beans or servlets and then provides additional metadata that declares additional behavior defined by this specification.
+An application developer creates container-managed components such as Jakarta Enterprise Beans or servlets and then provides additional metadata that declares additional behavior defined by this specification.
 These components may take advantage of the services defined by this specification, together with the enterprise and presentational aspects defined by other Jakarta EE platform technologies.
 
 In addition, this specification defines an SPI that allows alternative, non-platform technologies to integrate with the container and the Jakarta EE environment, for example, alternative web presentation technologies.
