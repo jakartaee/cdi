@@ -135,7 +135,6 @@
 		<interceptor.api.version>2.1.0</interceptor.api.version>
 		<!-- These are only used in javadoc links -->
 		<ejb.api.version>4.0.0</ejb.api.version>
-		<transaction.api.version>2.0.0</transaction.api.version>
 
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
@@ -183,13 +182,6 @@
 				<artifactId>jakarta.interceptor-api</artifactId>
 				<version>${interceptor.api.version}</version>
 			</dependency>
-
-			<!-- Only for javadoc references -->
-			<dependency>
-				<groupId>jakarta.transaction</groupId>
-				<artifactId>jakarta.transaction-api</artifactId>
-				<version>${transaction.api.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -223,12 +215,6 @@
 		<dependency>
 			<groupId>jakarta.inject</groupId>
 			<artifactId>jakarta.inject-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>jakarta.transaction</groupId>
-			<artifactId>jakarta.transaction-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
