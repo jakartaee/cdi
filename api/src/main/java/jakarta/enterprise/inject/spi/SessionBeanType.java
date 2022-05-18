@@ -24,15 +24,15 @@ package jakarta.enterprise.inject.spi;
  */
 public enum SessionBeanType {
     /**
-     * A {@linkplain jakarta.ejb.Stateless stateless} session bean
+     * A stateless ({@code jakarta.ejb.Stateless}) session bean
      */
     STATELESS,
     /**
-     * A {@linkplain jakarta.ejb.Stateful stateful} session bean
+     * A stateful ({@code jakarta.ejb.Stateful}) session bean
      */
     STATEFUL,
     /**
-     * A {@linkplain jakarta.ejb.Singleton singleton} session bean
+     * A singleton ({@code jakarta.ejb.Singleton}) session bean
      */
     SINGLETON
 }

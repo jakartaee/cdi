@@ -133,8 +133,6 @@
 		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>5.0.0</uel.api.version>
 		<interceptor.api.version>2.1.0</interceptor.api.version>
-		<!-- These are only used in javadoc links -->
-		<ejb.api.version>4.0.0</ejb.api.version>
 
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
@@ -396,13 +394,6 @@ Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
 Copyright &#169; 2018,2022 Eclipse Foundation.<br>
 Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
 					</bottom>
-					<additionalDependencies>
-						<additionalDependency>
-							<groupId>jakarta.ejb</groupId>
-							<artifactId>jakarta.ejb-api</artifactId>
-							<version>${ejb.api.version}</version>
-						</additionalDependency>
-					</additionalDependencies>
 				</configuration>
 
 				<executions>
