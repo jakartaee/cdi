@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
 		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>4.0.1</version>
+		<version>4.0.2-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jakarta.enterprise.cdi-api</artifactId>
@@ -227,7 +227,7 @@
 		<connection>scm:git:git@github.com:cdi-spec/cdi.git</connection>
 		<url>scm:git:git@github.com:cdi-spec/cdi.git</url>
 		<developerConnection>scm:git:git@github.com:cdi-spec/cdi.git</developerConnection>
-	  <tag>4.0.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<profiles>
