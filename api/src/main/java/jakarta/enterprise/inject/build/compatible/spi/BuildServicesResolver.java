@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Red Hat and others
+ * Copyright (c) 2021, 2022 Red Hat and others
  *
  * This program and the accompanying materials are made available under the
  * Apache Software License 2.0 which is available at:
@@ -45,10 +45,15 @@ final class BuildServicesResolver {
                 Comparator.comparingInt(BuildServices::getPriority).reversed());
 
         ServiceLoader<BuildServices> loader = SecurityActions.loadService(
-                BuildServices.class, BuildServicesResolver.class.getClassLoader());
+                BuildServices.class, Thread.currentThread().getContextClassLoader());
 
         if (!loader.iterator().hasNext()) {
-            throw new IllegalStateException("Unable to locate AnnotationBuilderFactory implementation");
+            loader = SecurityActions.loadService(
+                BuildServices.class, BuildServicesResolver.class.getClassLoader());
+        }
+
+        if (!loader.iterator().hasNext()) {
+            throw new IllegalStateException("Unable to locate BuildServices implementation");
         }
 
         try {
