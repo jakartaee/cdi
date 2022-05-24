@@ -12,12 +12,19 @@ package jakarta.enterprise.inject.build.compatible.spi;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 
-final class BuildServicesResolver {
+/**
+ * An internal helper to resolve {@link BuildServices} implementations.
+ * This class is public only for integrators and should <em>not</em> be used by applications.
+ *
+ * @since 4.0
+ */
+public final class BuildServicesResolver {
     private static final Object lock = new Object();
     private static volatile Set<BuildServices> discoveredBuildServices;
     private static volatile BuildServices configuredBuildServices;
@@ -48,7 +55,7 @@ final class BuildServicesResolver {
                 BuildServices.class, BuildServicesResolver.class.getClassLoader());
 
         if (!loader.iterator().hasNext()) {
-            throw new IllegalStateException("Unable to locate AnnotationBuilderFactory implementation");
+            throw new IllegalStateException("Unable to locate BuildServices implementation");
         }
 
         try {
@@ -60,5 +67,17 @@ final class BuildServicesResolver {
         }
 
         BuildServicesResolver.discoveredBuildServices = Collections.unmodifiableSet(factories);
+    }
+
+    /**
+     * This method should <em>not</em> be used by applications. It is only exposed for integrators
+     * with complex classloading architectures, where service loader lookup doesn't work out of the box.
+     * With this method, an integrator may manually provide an instance of {@link BuildServices} and
+     * this class will no longer attempt to look it up using service loader.
+     *
+     * @param instance a {@link BuildServices} instance that should be used, must not be {@code null}
+     */
+    public static void setBuildServices(BuildServices instance) {
+        configuredBuildServices = Objects.requireNonNull(instance, "BuildServices instance must not be null");
     }
 }
