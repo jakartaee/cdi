@@ -68,7 +68,7 @@ public abstract class CDI<T> implements Instance<T> {
     /**
      *
      * Obtain the {@link CDIProvider} the user set with {@link #setCDIProvider(CDIProvider)} or the last returned
-     * {@link CDIProvider} if it returns valid CDI container. Otherwise use the serviceloader to retrieve the
+     * {@link CDIProvider} if it returns valid CDI container. Otherwise, use service loader mechanism to retrieve the
      * {@link CDIProvider} with the highest priority.
      *
      * @return the {@link CDIProvider} set by user or retrieved by serviceloader
@@ -118,13 +118,17 @@ public abstract class CDI<T> implements Instance<T> {
      *
      * @param provider the provider to use
      * @throws IllegalStateException if the {@link CDIProvider} is already set
+     * @throws IllegalArgumentException if the provided argument is null
      */
     public static void setCDIProvider(CDIProvider provider) {
-        if (provider != null) {
+        if (provider == null) {
+            throw new IllegalArgumentException("CDIProvider must not be null");
+        }
+        if (configuredProvider != null) {
             providerSetManually = true;
             configuredProvider = provider;
         } else {
-            throw new IllegalStateException("CDIProvider must not be null");
+            throw new IllegalStateException("CDIProvider cannot be set repeatedly. Existing provider is " + configuredProvider);
         }
     }
 
