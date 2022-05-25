@@ -12,7 +12,6 @@ package jakarta.enterprise.inject.build.compatible.spi;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -76,8 +75,17 @@ public final class BuildServicesResolver {
      * this class will no longer attempt to look it up using service loader.
      *
      * @param instance a {@link BuildServices} instance that should be used, must not be {@code null}
+     * @throws IllegalArgumentException if the provided argument is null
+     * @throws IllegalStateException if the {@link BuildServices} are already set
      */
     public static void setBuildServices(BuildServices instance) {
-        configuredBuildServices = Objects.requireNonNull(instance, "BuildServices instance must not be null");
+        if (instance == null) {
+            throw new IllegalArgumentException("BuildServices instance must not be null");
+        }
+        if (configuredBuildServices != null) {
+            configuredBuildServices = instance;
+        } else {
+            throw new IllegalStateException("BuildServices cannot be set repeatedly. Existing BuildServices are " + configuredBuildServices);
+        }
     }
 }
