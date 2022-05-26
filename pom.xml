@@ -34,49 +34,62 @@
 		<module>lang-model</module>
 		<module>api</module>
 	</modules>
-	<build>
-		<defaultGoal>clean package</defaultGoal>
-	</build>
 
 	<properties>
 		<sonatypeOssDistMgmtNexusUrl>https://jakarta.oss.sonatype.org/</sonatypeOssDistMgmtNexusUrl>
 		<sonatypeOssDistMgmtStagingUrl>${sonatypeOssDistMgmtNexusUrl}content/repositories/staging/</sonatypeOssDistMgmtStagingUrl>
+		<maven-javadoc-plugin>3.3.0</maven-javadoc-plugin>
 	</properties>
 
-	<profiles>
-		<!-- A profile that allows to consume staged but unreleased Jakarta artifacts -->
-		<profile>
-			<id>staging</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>${sonatypeOssDistMgmtStagingUrl}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>${sonatypeOssDistMgmtStagingUrl}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories>
-		</profile>
-	</profiles>
+
+	<build>
+		<defaultGoal>clean package</defaultGoal>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- generate an aggregate javadoc from api and lang-model modules with using:
+			mvn prepare-package javadoc:aggregate
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>aggregate</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+						<configuration>
+							<docfilessubdirs>true</docfilessubdirs>
+							<description>Jakarta Context Dependency Injection API</description>
+							<doctitle>Jakarta Context Dependency Injection API</doctitle>
+							<detectJavaApiLink>false</detectJavaApiLink>
+							<windowtitle>Jakarta Context Dependency Injection API</windowtitle>
+							<header><![CDATA[<br>Jakarta Context Dependency Injection ${project.version}]]>
+							</header>
+							<bottom><![CDATA[
+Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
+Copyright &#169; 2018,2022 Eclipse Foundation.<br>
+Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
+							</bottom>
+							<!-- May want a separate overview and doc-files at root level -->
+							<javadocDirectory>${project.basedir}/api/src/main/javadoc</javadocDirectory>
+							<overview>${project.basedir}/api/src/main/javadoc/overview.html</overview>
+							<outputDirectory>target/apidocs</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
