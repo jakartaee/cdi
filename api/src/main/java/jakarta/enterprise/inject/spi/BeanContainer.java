@@ -13,6 +13,7 @@ import jakarta.enterprise.inject.Stereotype;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -211,6 +212,15 @@ public interface BeanContainer {
      * @throws IllegalArgumentException  if there is more than one active context object for the given scope
      */
     Context getContext(Class<? extends Annotation> scopeType);
+
+    /**
+     * Obtains all {@linkplain Context context objects}, active and inactive, for the given
+     * {@linkplain jakarta.enterprise.context scope}.
+     *
+     * @param scopeType the {@linkplain jakarta.enterprise.context scope}; must not be {@code null}
+     * @return immutable collection of {@linkplain Context context objects}; never {@code null}, but may be empty
+     */
+    Collection<Context> getContexts(Class<? extends Annotation> scopeType);
 
     /**
      * Returns an instance of Event with specified type <code>java.lang.Object</code> and specified qualifier <code>@Default</code>
