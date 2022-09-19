@@ -15,9 +15,9 @@ include::license-{license}.asciidoc[]
 This document is organized in 4 parts:
 
 * An introduction (this part), which is not part of the specification but introduces CDI concepts and gives examples.
-* Core CDI specification: <<part_1>>. This part has two sections:
-** {cdi_lite} specification which contains a subset of CDI features and which can be implemented in more restricted environments;
-** {cdi_full} specification that builds on top of Lite and adds all advanced CDI features; this is the standard Jakarta EE CDI platform.
+* Core CDI specification: <<part_1>>. This part has two subparts:
+** {cdi_lite} specification: <<part_1a>>;
+** {cdi_full} specification: <<part_1b>>.
 * Specific CDI features for Java SE: <<part_2>>.
 * Specific CDI features for Jakarta EE: <<part_3>>.
 
