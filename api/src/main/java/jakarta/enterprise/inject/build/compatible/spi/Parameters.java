@@ -10,6 +10,8 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import jakarta.enterprise.invoke.Invoker;
+
 /**
  * A {@code String}-keyed parameter map. The parameter mappings are defined
  * by a synthetic component builder. The CDI container passes the parameter map
@@ -40,13 +42,16 @@ package jakarta.enterprise.inject.build.compatible.spi;
  * <p>
  * Annotation-typed parameters are available as instances of the annotation type,
  * even if an instance of {@code AnnotationInfo} was passed to the builder.
+ * <p>
+ * Invoker-typed parameters are available as instances of {@link Invoker}, even though
+ * an instance of {@code InvokerInfo} was passed to the builder.
  */
 public interface Parameters {
     /**
      * Returns the value of a parameter with given {@code key}. The value is expected to be of given {@code type}.
      *
-     * @param key the parameter key; must not be {@code null}
-     * @param type the parameter type; must not be {@code null}
+     * @param key the parameter key, must not be {@code null}
+     * @param type the parameter type, must not be {@code null}
      * @param <T> the parameter type
      * @return the parameter value, or {@code null} if parameter with given {@code key} does not exist
      * @throws ClassCastException if the parameter exists, but is of a different type
@@ -57,8 +62,8 @@ public interface Parameters {
      * Returns the value of a parameter with given {@code key}. The value is expected to be of given {@code type}.
      * If the parameter does not exist, returns {@code defaultValue}.
      *
-     * @param key the parameter key; must not be {@code null}
-     * @param type the parameter type; must not be {@code null}
+     * @param key the parameter key, must not be {@code null}
+     * @param type the parameter type, must not be {@code null}
      * @param defaultValue the value to return if parameter with given {@code key} does not exist
      * @param <T> the parameter type
      * @return the parameter value, or {@code defaultValue} if parameter with given {@code key} does not exist
