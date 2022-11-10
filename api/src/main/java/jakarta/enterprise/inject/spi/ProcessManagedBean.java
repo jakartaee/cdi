@@ -15,6 +15,9 @@
  */
 package jakarta.enterprise.inject.spi;
 
+import jakarta.enterprise.invoke.Invoker;
+import jakarta.enterprise.invoke.InvokerBuilder;
+
 /**
  * <p>
  * The container fires an event of this type for each enabled managed bean, before registering the
@@ -38,4 +41,17 @@ public interface ProcessManagedBean<X> extends ProcessBean<X> {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public AnnotatedType<X> getAnnotatedBeanClass();
+
+    /**
+     * Returns a new {@link InvokerBuilder} for given method. The builder eventually produces an invoker
+     * for the given method.
+     * <p>
+     * The {@code method} must be declared on the bean class or inherited from a supertype
+     * of the bean class of the bean being registered, otherwise an exception is thrown.
+     *
+     * @param method method of the bean being registered, must not be {@code null}
+     * @return the invoker builder, never {@code null}
+     * @since 4.1
+     */
+    public InvokerBuilder<Invoker<X, ?>> createInvoker(AnnotatedMethod<? super X> method);
 }

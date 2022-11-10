@@ -406,6 +406,36 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> withParam(String key, Annotation[] value);
 
     /**
+     * Adds an invoker-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
+     * <p>
+     * When looked up from the parameter map in the creation/destruction function, the value will be
+     * an instance of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> an {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticBeanBuilder<T> withParam(String key, InvokerInfo value);
+
+    /**
+     * Adds an invoker array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
+     * <p>
+     * When looked up from the parameter map in the creation/destruction function, the values will be
+     * instances of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticBeanBuilder<T> withParam(String key, InvokerInfo[] value);
+
+    /**
      * Sets the class of the synthetic bean {@linkplain SyntheticBeanCreator creation} function.
      * CDI container will create an instance of the creation function every time when it needs
      * to obtain an instance of the synthetic bean. The class must be {@code public} and have
