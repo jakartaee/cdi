@@ -7,7 +7,7 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 ### Installation
 [Jekyll static site generator docs](https://jekyllrb.com/docs/).
 
-1. Install a full [Ruby development environment](https://jekyllrb.com/docs/installation/) (It is preferred version 2.x)
+1. Install a full [Ruby development environment](https://jekyllrb.com/docs/installation/) (Version 2.x is recommended, version 3.x seems to be incompatible)
 2. Install [bundler](https://jekyllrb.com/docs/ruby-101/#bundler)  [gems](https://jekyllrb.com/docs/ruby-101/#gems)
 
         gem install bundler
