@@ -7,7 +7,7 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 ### Installation
 [Jekyll static site generator docs](https://jekyllrb.com/docs/).
 
-1. Install a full [Ruby development environment](https://jekyllrb.com/docs/installation/)
+1. Install a full [Ruby development environment](https://jekyllrb.com/docs/installation/) (Version 2.7 is recommended, version 3.x seems to be incompatible)
 2. Install [bundler](https://jekyllrb.com/docs/ruby-101/#bundler)  [gems](https://jekyllrb.com/docs/ruby-101/#gems)
 
         gem install bundler
@@ -28,7 +28,7 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 
         bundle exec jekyll serve
 
-7. Now browse to http://localhost:4000
+7. Now browse to http://localhost:4000/cdi/
 
 > If you encounter any unexpected errors during the above, please refer to the [troubleshooting](https://jekyllrb.com/docs/troubleshooting/#configuration-problems) page or the [requirements](https://jekyllrb.com/docs/installation/#requirements) page, as you might be missing development headers or other prerequisites.
 
