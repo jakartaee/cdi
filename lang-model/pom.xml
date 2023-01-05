@@ -21,14 +21,6 @@
 		</license>
 	</licenses>
 
-	<properties>
-		<maven.compiler.release>11</maven.compiler.release>
-		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
-		<maven-javadoc-plugin>3.2.0</maven-javadoc-plugin>
-		<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<build>
 		<resources>
 			<resource>
@@ -46,8 +38,9 @@
 
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<compilerArgs>
 						<arg>-Xlint:all</arg>
@@ -79,7 +72,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -89,7 +82,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin}</version>
+				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<description>Jakarta CDI Language Model</description>

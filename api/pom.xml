@@ -128,12 +128,6 @@
 		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>5.0.0</uel.api.version>
 		<interceptor.api.version>2.1.0</interceptor.api.version>
-
-		<maven.compiler.release>11</maven.compiler.release>
-		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
-		<maven-javadoc-plugin>3.3.0</maven-javadoc-plugin>
-		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -289,8 +283,9 @@
 		</testResources>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<compilerArgs>
 						<arg>-Xlint:all</arg>
@@ -328,7 +323,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -375,14 +370,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin}</version>
+				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
-					<description>Jakarta Context Dependency Injection API</description>
-					<doctitle>Jakarta Context Dependency Injection API</doctitle>
+					<description>Jakarta Contexts and Dependency Injection API</description>
+					<doctitle>Jakarta Contexts and Dependency Injection API</doctitle>
 					<detectJavaApiLink>false</detectJavaApiLink>
-					<windowtitle>Jakarta Context Dependency Injection API</windowtitle>
-					<header><![CDATA[<br>Jakarta Context Dependency Injection ${project.version}]]>
+					<windowtitle>Jakarta Contexts and Dependency Injection API</windowtitle>
+					<header><![CDATA[<br>Jakarta Contexts and Dependency Injection ${project.version}]]>
 					</header>
 					<bottom><![CDATA[
 Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
