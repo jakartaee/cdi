@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>jakarta.enterprise</groupId>
 		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
-		<version>4.0.2-SNAPSHOT</version>
+		<version>4.1.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jakarta.enterprise.lang-model</artifactId>
@@ -63,7 +63,7 @@
 				<configuration>
 					<instructions>
 						<Export-Package>
-							jakarta.enterprise.lang.model.*;version=4.0,
+							jakarta.enterprise.lang.model.*;version=4.1,
 						</Export-Package>
 					</instructions>
 				</configuration>
