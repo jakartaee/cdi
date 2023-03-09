@@ -1300,7 +1300,7 @@ public interface ProcessBeanAttributes<T> {
 * `configureBeanAttributes()` returns a `BeanAttributesConfigurator` (as defined in <<bean_attributes_configurator>>) initialized with the `BeanAttributes` processed by the event to easily configure the  `BeanAttributes` which will be used to replace the original one at the end of observer invocation.
 The method always returns the same `BeanAttributesConfigurator`.
 * `addDefinitionError()` registers a definition error with the container, causing the container to abort deployment after bean discovery is complete.
-* `veto()` forces the container to ignore the bean.
+* `veto()` forces the container to ignore the bean. If invoked on a bean `A` that directly specializes bean `B` (as defined in <<specialize_managed_bean>>), this causes re-enablement of the specialized bean `B` and the container must raise a `ProcessBeanAttribute` event for newly re-enabled bean `B`.
 * `ignoreFinalMethods()` Instructs the container to ignore all non-static, final methods with public, protected or default visibility declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
 These method should never be invoked upon bean instances.
 Otherwise, unpredictable behavior results.
