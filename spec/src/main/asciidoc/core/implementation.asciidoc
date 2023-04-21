@@ -33,7 +33,7 @@ A Java class is a managed bean if it meets all of the following conditions:
 
 * It is not an inner class.
 * It is a non-abstract class.
-* It does not implement `jakarta.enterprise.inject.spi.Extension`.
+* It does not implement `jakarta.enterprise.inject.spi.Extension` or `jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
 ** the class has a constructor with no parameters, or
