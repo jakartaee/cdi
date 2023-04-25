@@ -66,6 +66,7 @@ public interface ObserverMethod<T> extends Prioritized {
      * </p>
      *
      * @return the declaring {@linkplain Bean bean}
+     * @since 4.0
      */
     default Bean<?> getDeclaringBean() {
         return null;

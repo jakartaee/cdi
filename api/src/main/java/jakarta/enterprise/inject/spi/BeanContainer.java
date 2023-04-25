@@ -37,6 +37,7 @@ import java.util.Set;
  * </pre>
  *
  * @author Matej Novotny
+ * @since 4.0
  */
 public interface BeanContainer {
 
