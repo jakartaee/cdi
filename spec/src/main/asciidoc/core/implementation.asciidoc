@@ -379,7 +379,7 @@ If a method has more than one parameter annotated `@Disposes`, the container aut
 If a disposer method is annotated `@Produces` or `@Inject`, has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors may not declare disposer methods.
-If an interceptor has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
+If an interceptor has a method that has a parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify qualifiers.
 These additional parameters are injection points.
