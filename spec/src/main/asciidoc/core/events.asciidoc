@@ -219,9 +219,9 @@ If the runtime type of the event object contains an unresolvable type variable, 
 
 ==== Assignability of type variables, raw and parameterized types
 
-An event type is considered assignable to a type variable if the event type is assignable to the upper bound, if any.
+An event type is considered assignable to an observed event type that is a type variable if the event type is assignable to the upper bound of the type variable, if any.
 
-A raw event type is considered assignable to a parameterized observed event type if the raw types are identical and all type parameters of the required type are either unbounded type variables or `java.lang.Object`.
+A raw event type is considered assignable to a parameterized observed event type if the raw types are identical and all type parameters of the observed event type are either unbounded type variables or `java.lang.Object`.
 
 A parameterized event type is considered assignable to a raw observed event type if the raw types are identical.
 
