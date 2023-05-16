@@ -33,7 +33,7 @@ A Java class is a managed bean if it meets all of the following conditions:
 
 * It is not an inner class.
 * It is a non-abstract class.
-* It does not implement `jakarta.enterprise.inject.spi.Extension`.
+* It does not implement `jakarta.enterprise.inject.spi.Extension` or `jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension`.
 * It is not annotated `@Vetoed` or in a package annotated `@Vetoed`.
 * It has an appropriate constructor - either:
 ** the class has a constructor with no parameters, or
@@ -379,7 +379,7 @@ If a method has more than one parameter annotated `@Disposes`, the container aut
 If a disposer method is annotated `@Produces` or `@Inject`, has a parameter annotated `@Observes` or has a parameter annotated `@ObservesAsync`, the container automatically detects the problem and treats it as a definition error.
 
 Interceptors may not declare disposer methods.
-If an interceptor has a method annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
+If an interceptor has a method that has a parameter annotated `@Disposes`, the container automatically detects the problem and treats it as a definition error.
 
 In addition to the disposed parameter, a disposer method may declare additional parameters, which may also specify qualifiers.
 These additional parameters are injection points.

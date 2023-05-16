@@ -128,7 +128,7 @@ public class MockAsynchronousService extends AsynchronousService {
 }
 ----
 
-When an enabled bean, as defined in <<enablement>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container.
+When an enabled bean, as defined in <<enablement_full>>, specializes a second bean, we can be certain that the second bean is never instantiated or called by the container.
 Even if the second bean defines a producer or observer method, the method will never be called.
 
 [[direct_and_indirect_specialization]]

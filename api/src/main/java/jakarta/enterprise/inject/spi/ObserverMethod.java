@@ -1,5 +1,4 @@
 /*
- * JBoss, Home of Professional Open Source
  * Copyright 2010, 2015 Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
@@ -67,6 +66,7 @@ public interface ObserverMethod<T> extends Prioritized {
      * </p>
      *
      * @return the declaring {@linkplain Bean bean}
+     * @since 4.0
      */
     default Bean<?> getDeclaringBean() {
         return null;

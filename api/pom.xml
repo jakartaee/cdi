@@ -44,11 +44,6 @@
 		<url>https://github.com/eclipse-ee4j/cdi/issues</url>
 	</issueManagement>
 
-	<organization>
-		<name>JBoss by Red Hat, Inc.</name>
-		<url>https://jboss.org</url>
-	</organization>
-
 	<inceptionYear>2008</inceptionYear>
 
 	<developers>

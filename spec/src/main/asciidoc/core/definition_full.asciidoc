@@ -1,7 +1,8 @@
-[[concepts_full]]
-
+[partintro]
+--
 {cdi_full} contains all the functionality defined in {cdi_lite} and adds some additional features such as specialization, decorators, session scope or conversation scope.
 Some of these concepts were briefly mentioned in the previous {cdi_lite} chapter and this section of specification defines them in depth.
+--
 
 [[scopes_full]]
 

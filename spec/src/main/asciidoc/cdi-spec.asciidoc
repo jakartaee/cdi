@@ -33,9 +33,10 @@ include::architecture.asciidoc[]
 [[part_1]]
 = Part I - Core CDI
 
-== {cdi_lite}
+include::core/core_structure.adoc[]
 
-:leveloffset: +1
+[[part_1a]]
+= Part I.A - {cdi_lite}
 
 include::core/definition.asciidoc[]
 
@@ -59,11 +60,8 @@ include::core/spi_lite.asciidoc[]
 
 include::core/packagingdeployment.asciidoc[]
 
-:leveloffset: -1
-
-== {cdi_full}
-
-:leveloffset: +1
+[[part_1b]]
+= Part I.B - {cdi_full}
 
 include::core/definition_full.asciidoc[]
 
@@ -84,8 +82,6 @@ include::core/events_full.asciidoc[]
 include::core/spi_full.asciidoc[]
 
 include::core/packagingdeployment_full.asciidoc[]
-
-:leveloffset: -1
 
 [[part_2]]
 = Part II - CDI in Java SE
