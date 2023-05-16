@@ -29,7 +29,7 @@
  * bean</li>
  * </ul>
  * 
- * <h3>Built-in scopes</h3>
+ * <h2>Built-in scopes</h2>
  * 
  * <p>The following built-in scopes are provided:
  * {@link jakarta.enterprise.context.Dependent &#064;Dependent},

@@ -37,7 +37,7 @@
  * <p>The {@link jakarta.enterprise.event.Event} interface is used to 
  * fire events.</p>
  * 
- * <h3>Event objects and event types</h3>
+ * <h2>Event objects and event types</h2>
  * 
  * <p>The event object acts as a payload, to propagate state from 
  * producer to consumer. An event object is an instance of a concrete 
