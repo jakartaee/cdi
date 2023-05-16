@@ -32,7 +32,7 @@
  * for which interceptors are optimized. Decorators are called 
  * after interceptors.</p>
  * 
- * <h3>Decorated types</h3>
+ * <h2>Decorated types</h2>
  * 
  * <p>The set of decorated types of a decorator includes all 
  * bean types of the managed bean that are Java interfaces, 

@@ -28,7 +28,7 @@
  * metadata from some other source</li>
  * </ul>
  * 
- * <h3>The <code>BeanManager</code> object</h3>
+ * <h2>The <code>BeanManager</code> object</h2>
  * 
  * <p>Portable extensions sometimes interact directly with the container 
  * via programmatic API call. The interface 
@@ -36,7 +36,7 @@
  * for obtaining contextual references for beans, along with many other 
  * operations of use to portable extensions.</p>
  * 
- * <h3>Container lifecycle events</h3>
+ * <h2>Container lifecycle events</h2>
  * 
  * <p>During the application initialization process, the container fires 
  * a series of {@linkplain jakarta.enterprise.event events}, allowing 
@@ -97,14 +97,14 @@
  * <code>Annotated</code> and its subinterfaces to discover program
  * element types and annotations, instead of directly calling the 
  * Java Reflection API.</p>
- * 
+ *
  * <p>A portable extension provides its metadata to the 
  * container by observing the event 
  * {@link jakarta.enterprise.inject.spi.ProcessAnnotatedType} and 
  * {@linkplain jakarta.enterprise.inject.spi.ProcessAnnotatedType#setAnnotatedType(AnnotatedType)
  * wrapping} the {@link jakarta.enterprise.inject.spi.AnnotatedType}.</p>
  * 
- * <h3><code>Producer</code> and <code>InjectionTarget</code></h3>
+ * <h2><code>Producer</code> and <code>InjectionTarget</code></h2>
  * 
  * <p>The interfaces {@link jakarta.enterprise.inject.spi.Producer} and
  * {@link jakarta.enterprise.inject.spi.InjectionTarget} abstract the 
