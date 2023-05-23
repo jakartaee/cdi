@@ -105,8 +105,8 @@ public @interface Observes {
      * 
      * <p>
      * By default, the observer method is notified when the event is fired.
-     * @return phase of the transaction
      * </p>
+     * @return phase of the transaction
      */
     public TransactionPhase during() default TransactionPhase.IN_PROGRESS;
 }

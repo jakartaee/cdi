@@ -37,7 +37,7 @@
  * <p>The {@link jakarta.enterprise.event.Event} interface is used to 
  * fire events.</p>
  * 
- * <h3>Event objects and event types</h3>
+ * <h2>Event objects and event types</h2>
  * 
  * <p>The event object acts as a payload, to propagate state from 
  * producer to consumer. An event object is an instance of a concrete 
@@ -47,13 +47,13 @@
  * interfaces of the runtime class of the event object. An event type 
  * may not contain a type variable.</p>
  * 
- * <h3>Event qualifiers</h3>
+ * <h2>Event qualifiers</h2>
  * 
  * <p>The event qualifiers act as topic selectors, allowing the consumer 
  * to narrow the set of events it observes. An event qualifier may be an
  * instance of any {@linkplain jakarta.inject.Qualifier qualifier type}.</p>
  * 
- * <h3>Observer methods</h3>
+ * <h2>Observer methods</h2>
  * 
  * <p>An {@linkplain jakarta.enterprise.event.Observes observer method} 
  * allows the application to receive and respond synchronously to event notifications.

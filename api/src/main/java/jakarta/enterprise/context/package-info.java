@@ -29,7 +29,7 @@
  * bean</li>
  * </ul>
  * 
- * <h3>Built-in scopes</h3>
+ * <h2>Built-in scopes</h2>
  * 
  * <p>The following built-in scopes are provided:
  * {@link jakarta.enterprise.context.Dependent &#064;Dependent},
@@ -57,7 +57,7 @@
  * method invocations or to asynchronous processes such as JMS message 
  * listeners or EJB timer service timeouts.</p>
  * 
- * <h3>Normal scopes and pseudo-scopes</h3>
+ * <h2>Normal scopes and pseudo-scopes</h2>
  * 
  * <p>Most scopes are <em>normal scopes</em>. Normal scopes are declared 
  * using {@link jakarta.enterprise.context.NormalScope &#064;NormalScope}. 
@@ -80,7 +80,7 @@
  * {@link jakarta.enterprise.context.Dependent &#064;Dependent} and
  * {@link jakarta.inject.Singleton &#064;Singleton} pseudo-scopes.</p>
  * 
- * <h3>Contextual and injected reference validity</h3>
+ * <h2>Contextual and injected reference validity</h2>
  * 
  * <p>A reference to a bean obtained from the container via {@linkplain 
  * jakarta.enterprise.inject.Instance programmatic lookup} is called a 

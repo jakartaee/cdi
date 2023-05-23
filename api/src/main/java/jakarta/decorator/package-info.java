@@ -32,7 +32,7 @@
  * for which interceptors are optimized. Decorators are called 
  * after interceptors.</p>
  * 
- * <h3>Decorated types</h3>
+ * <h2>Decorated types</h2>
  * 
  * <p>The set of decorated types of a decorator includes all 
  * bean types of the managed bean that are Java interfaces, 
@@ -49,7 +49,7 @@
  * <p>A decorator may be an abstract class, and is not required to 
  * implement every method of every decorated type.</p>
  * 
- * <h3>Delegate injection points</h3>
+ * <h2>Delegate injection points</h2>
  * 
  * <p>All decorators have a 
  * {@linkplain jakarta.decorator.Delegate delegate injection point}.  
@@ -60,7 +60,7 @@
  * extend every decorated type. A decorator is not required to 
  * implement the type of the delegate injection point.</p>
  * 
- * <h3>Enabled decorators</h3>
+ * <h2>Enabled decorators</h2>
  *  
  * <p>By default, a bean archive has no enabled decorators. A 
  * decorator must be explicitly enabled by listing its bean class 
