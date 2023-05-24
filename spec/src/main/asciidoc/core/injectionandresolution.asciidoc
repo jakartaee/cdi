@@ -68,7 +68,7 @@ A bean is _available for injection_ in a certain module if:
 
 * the bean is not an interceptor
 * the bean is enabled,
-* the bean is either not an alternative, or the module is a bean archive and the bean is a selected alternative for the application,  and
+* the bean is either not an alternative, or the bean is a selected alternative for the application, and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
 [[typesafe_resolution]]
