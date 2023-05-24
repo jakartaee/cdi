@@ -45,8 +45,12 @@ An alternative is not available for injection, lookup or name resolution to clas
 An alternative may be given a priority for the application:
 
 * by placing the `@Priority` annotation on the bean class of a managed bean, or
+* by placing the `@Priority` annotation on the producer method, field or resource, or
 * by placing the `@Priority` annotation on the bean class that declares the producer method, field or resource, or
 * by placing the `@Priority` annotation on a stereotype that is applied to the bean class, producer method or producer field.
+
+To determine the priority of a producer method or field, the `@Priority` annotation on the producer method or field is considered first.
+If the producer method or field does not declare the `@Priority` annotation, the `@Priority` annotation declared on the bean class is used.
 
 [[enablement]]
 
