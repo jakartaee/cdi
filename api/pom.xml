@@ -313,7 +313,7 @@
 							jakarta.enterprise.*;version=4.0,
 						</Export-Package>
 						<Import-Package>
-							jakarta.el; version=4.0,
+							jakarta.el;version=5.0,
 							*
 						</Import-Package>
 					</instructions>
