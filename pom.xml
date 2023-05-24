@@ -10,7 +10,7 @@
 	<groupId>jakarta.enterprise</groupId>
 	<artifactId>jakarta.enterprise.cdi-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>4.0.2-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 
 	<description>Parent module for CDI Specification</description>
 
@@ -33,12 +33,23 @@
 		<module>spec</module>
 		<module>lang-model</module>
 		<module>api</module>
+		<module>el</module>
 	</modules>
 	<build>
 		<defaultGoal>clean package</defaultGoal>
 	</build>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<maven.compiler.release>11</maven.compiler.release>
+
+		<maven-bundle-plugin.version>5.1.2</maven-bundle-plugin.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+		<maven-javadoc-plugin.version>3.3.0</maven-javadoc-plugin.version>
+		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+
 		<sonatypeOssDistMgmtNexusUrl>https://jakarta.oss.sonatype.org/</sonatypeOssDistMgmtNexusUrl>
 		<sonatypeOssDistMgmtStagingUrl>${sonatypeOssDistMgmtNexusUrl}content/repositories/staging/</sonatypeOssDistMgmtStagingUrl>
 	</properties>

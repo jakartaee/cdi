@@ -227,9 +227,11 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Returns a {@link jakarta.el.ELResolver} that resolves beans by EL name.
-     * 
+     *
+     * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
      * @return the {@link jakarta.el.ELResolver}
      */
+    @Deprecated(since = "4.1", forRemoval = true)
     public ELResolver getELResolver();
 
     /**
@@ -239,10 +241,11 @@ public interface BeanManager extends BeanContainer {
      * {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope
      * {@link Dependent}.
      * 
-     * 
+     * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
      * @param expressionFactory the {@link jakarta.el.ExpressionFactory} to wrap
      * @return the wrapped {@link jakarta.el.ExpressionFactory}
      */
+    @Deprecated(since = "4.1", forRemoval = true)
     public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 
     /**

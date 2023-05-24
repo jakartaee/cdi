@@ -530,7 +530,7 @@ Observer methods may throw exceptions:
 Exception management during an asynchronous event is defined in <<async_exception>>.
 * Otherwise, the exception aborts processing of the event.
 No other observer methods of that event will be called.
-The `BeanManager.getEvent()` or `Event.fire()` method rethrows the exception.
+The `Event.fire()` method rethrows the exception.
 If the exception is a checked exception, it is wrapped and rethrown as an (unchecked) `ObserverException`.
 
 
@@ -588,7 +588,7 @@ The transaction context and lifecycle contexts active when an observer method is
 As specified in <<builtin_contexts>>, contexts associated with built-in normal scope don't propagate across asynchronous observers.
 * If the observer method is a before completion transactional observer method, it is called within the context of the transaction that is about to complete and with the same lifecycle contexts.
 * Otherwise, if the observer method is any other kind of transactional observer method, it is called in an unspecified transaction context, but with the same lifecycle contexts as the transaction that just completed.
-* Otherwise, the observer method is called in the same transaction context and lifecycle contexts as the invocation of `Event.fire()` or `BeanManager.getEvent()`.
+* Otherwise, the observer method is called in the same transaction context and lifecycle contexts as the invocation of `Event.fire()`.
 
 [[observable_container_lifecycle_events]]
 

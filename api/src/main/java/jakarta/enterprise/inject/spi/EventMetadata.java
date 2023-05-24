@@ -25,8 +25,7 @@ import jakarta.enterprise.event.Observes;
 
 /**
  * <p>
- * Provides access to metadata about an observed event payload. The metadata may be for events fired with either of
- * {@link Event} or {@link BeanManager#getEvent()}
+ * Provides access to metadata about an observed event payload.
  * </p>
  * <p>
  * {@link EventMetadata} may only be injected into an observer method. For example:

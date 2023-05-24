@@ -1,0 +1,46 @@
+[[el]]
+== Integration with Unified EL
+
+[[el_resolution]]
+=== Bean name resolution in EL expressions
+
+The container must provide a Unified EL `ELResolver` to the servlet engine and JSF implementation that resolves bean names using the rules of name resolution defined in <<name_resolution>> and resolving ambiguities according to <<ambig_names>>.
+
+* If a name used in an EL expression does not resolve to any bean, the `ELResolver` must return a null value.
+* Otherwise, if a name used in an EL expression resolves to exactly one bean, the `ELResolver` must return a contextual instance of the bean, as defined in <<contextual_instance>>.
+
+[[el_support]]
+=== Unified EL integration API
+
+Since CDI version 4.1, the Unified EL integration API, which is part of the `BeanManager` API, is deprecated.
+The relevant methods are placed in a new interface `jakarta.enterprise.inject.spi.el.ELAwareBeanManager`, which is present in a new supplemental CDI API artifact: `jakarta.enterprise:jakarta.enterprise.cdi-el-api`.
+
+==== Obtaining `ELAwareBeanManager`
+
+The `BeanManager` implementation in Jakarta EE must also implement `ELAwareBeanManager`.
+All rules that apply to the `BeanManager`, as specified in <<beanmanager>> and <<beanmanager_ee>>, also apply to `ELAwareBeanManager`.
+
+It follows that the container provides a built-in bean with bean type `ELAwareBeanManager`, scope `@Dependent` and qualifier `@Default`, which is a passivation capable dependency as defined in <<passivation_capable_dependency>>.
+It also follows that an `ELAwareBeanManager` may be obtained by using `CDI.current().getBeanManager()` and casting.
+
+The EL-related methods of `ELAwareBeanManager` may be called at any time during the execution of the application.
+
+==== Obtaining the `ELResolver`
+
+The method `ELAwareBeanManager.getELResolver()` returns the `jakarta.el.ELResolver` specified in <<el_resolution>>.
+This `ELResolver` is used to satisfy the rules defined in <<names_ee>>.
+
+[source, java]
+----
+public ELResolver getELResolver();
+----
+
+==== Wrapping a Unified EL `ExpressionFactory`
+
+The method `ELAwareBeanManager.wrapExpressionFactory()` returns a wrapper `jakarta.el.ExpressionFactory` that delegates `MethodExpression` and `ValueExpression` creation to the given `ExpressionFactory`.
+When a Unified EL expression is evaluated using a `MethodExpression` or `ValueExpression` returned by the wrapper `ExpressionFactory`, the rules defined in <<dependent_scope_el>> are enforced by the container.
+
+[source, java]
+----
+public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
+----

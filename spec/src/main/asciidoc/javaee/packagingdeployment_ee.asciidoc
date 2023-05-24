@@ -56,13 +56,3 @@ When running in Jakarta EE, the container must extend the rules defined in <<bea
 ==== Trimmed bean archive in Jakarta EE
 
 When running in Jakarta EE, the container must extend the rules defined in <<trimmed_bean_archive>> and must ensure that EJB session beans are not removed from the set of discovered types.
-
-
-[[el]]
-
-=== Integration with Unified EL
-
-The container must provide a Unified EL `ELResolver` to the servlet engine and JSF implementation that resolves bean names using the rules of name resolution defined in <<name_resolution>> and resolving ambiguities according to <<ambig_names>>.
-
-* If a name used in an EL expression does not resolve to any bean, the `ELResolver` must return a null value.
-* Otherwise, if a name used in an EL expression resolves to exactly one bean, the `ELResolver` must return a contextual instance of the bean, as defined in <<contextual_instance>>.
