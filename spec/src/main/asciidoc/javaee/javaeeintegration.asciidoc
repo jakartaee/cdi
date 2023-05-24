@@ -27,3 +27,5 @@ include::events_ee.asciidoc[]
 include::spi_ee.asciidoc[]
 
 include::packagingdeployment_ee.asciidoc[]
+
+include::el.asciidoc[]

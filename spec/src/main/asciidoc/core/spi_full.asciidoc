@@ -389,17 +389,6 @@ public int getQualifierHashCode(Annotation qualifier);
 public int getInterceptorBindingHashCode(Annotation interceptorBinding);
 ----
 
-[[bm_obtain_elresolver]]
-
-==== Obtaining the `ELResolver`
-
-The method `BeanManager.getELResolver()` returns the `jakarta.el.ELResolver` specified in <<el>>.
-
-[source, java]
-----
-public ELResolver getELResolver();
-----
-
 [[bm_obtain_annotatedtype]]
 
 ==== Obtaining an `AnnotatedType` for a class

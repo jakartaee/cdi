@@ -40,17 +40,6 @@ A Jakarta EE container is required to provide a CDI provider that will allow acc
 
 Jakarta EE Components may obtain an instance of `BeanManager` from JNDI by looking up the name `java:comp/BeanManager`.
 
-[[bm_wrap_expressionfactory]]
-
-==== Wrapping a Unified EL `ExpressionFactory`
-
-The method `BeanManager.wrapExpressionFactory()` returns a wrapper `jakarta.el.ExpressionFactory` that delegates `MethodExpression` and `ValueExpression` creation to the given `ExpressionFactory`. When a Unified EL expression is evaluated using a `MethodExpression` or `ValueExpression` returned by the wrapper `ExpressionFactory`, the rules defined in <<dependent_scope_el>> are enforced by the container.
-
-[source, java]
-----
-public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
-----
-
 [[alternative_metadata_sources_ee]]
 
 === Alternative metadata sources and EJB

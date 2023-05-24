@@ -33,6 +33,7 @@
 		<module>spec</module>
 		<module>lang-model</module>
 		<module>api</module>
+		<module>el</module>
 	</modules>
 	<build>
 		<defaultGoal>clean package</defaultGoal>
