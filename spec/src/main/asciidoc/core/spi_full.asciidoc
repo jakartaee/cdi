@@ -256,13 +256,26 @@ A portable extension or other object may obtain a reference to the current conta
 `CDI.getBeanManager()` and `CDI.getBeanContainer()` may be called at any time after the container fires the `BeforeBeanDiscovery` container lifecycle event until the container fires the `BeforeShutdown` container lifecycle event.
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
-[[bm_obtain_injectable_reference_full]]
+[[bm_obtain_injectable_reference]]
 
-==== Obtaining an injectable reference in {cdi_full}
+==== Obtaining an injectable reference
 
-In addition to rules defined in <<bm_obtain_injectable_reference>>, the following rules apply.
+The method `BeanManager.getInjectableReference()` returns an injectable reference for a given injection point, as defined in <<injectable_reference>>.
+
+[source, java]
+----
+public Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
+----
+
+The first parameter represents the target injection point.
+The second parameter is an instance of `CreationalContext` that may be used to destroy any object with scope `@Dependent` that is created.
 
 If the `InjectionPoint` represents a decorator delegate injection point, `getInjectableReference()` returns a delegate, as defined in <<delegate_attribute>>.
+
+If typesafe resolution results in an unsatisfied dependency, the container must throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, the container must throw an `AmbiguousResolutionException`.
+
+Implementations of `Bean` usually maintain a reference to an instance of `BeanManager`. When the `Bean` implementation performs dependency injection, it must obtain the contextual instances to inject by calling `BeanManager.getInjectableReference()`, passing an instance of `InjectionPoint` that represents the injection point and the instance of `CreationalContext` that was passed to `Bean.create()`.
+
 
 [[bm_obtain_unmanaged_instance]]
 
