@@ -93,6 +93,22 @@ import jakarta.enterprise.inject.Stereotype;
 public interface BeanManager extends BeanContainer {
 
     /**
+     * <p>
+     * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
+     * </p>
+     *
+     * @param ij  the target injection point
+     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
+     *            {@link Dependent} that is created
+     * @return the injectable reference
+     * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
+     * @throws AmbiguousResolutionException   typesafe resolution results in an unresolvable ambiguous dependency
+     * @throws IllegalStateException          if called during application initialization, before the {@link AfterDeploymentValidation}
+     *                                        event is fired.
+     */
+    Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
+
+    /**
      * Returns the {@link PassivationCapable} bean with the given identifier.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
@@ -120,24 +136,6 @@ public interface BeanManager extends BeanContainer {
      *         event is fired.
      */
     public void validate(InjectionPoint injectionPoint);
-
-    /**
-     * Return an ordered set of {@linkplain ObserverMethod observer methods} for an event.
-     *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * this method will only return observers discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     * 
-     * @param <T> the type of the event
-     * @param event the event object
-     * @param qualifiers the event qualifiers
-     * @return the resulting set of {@linkplain ObserverMethod observer methods}
-     * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
-     * @throws IllegalArgumentException if two instances of the same non repeating qualifier type are given
-     * @throws IllegalArgumentException if an instance of an annotation that is not a qualifier type is given
-     * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
-     *         event is fired.
-     */
-    public <T> Set<ObserverMethod<? super T>> resolveObserverMethods(T event, Annotation... qualifiers);
 
     /**
      * Return an ordered list of {@linkplain Decorator decorators} for a set of bean types and a set of qualifiers and which are
@@ -423,19 +421,4 @@ public interface BeanManager extends BeanContainer {
      */
     <T> InterceptionFactory<T> createInterceptionFactory(CreationalContext<T> ctx, Class<T> clazz);
 
-    /**
-     * <p>
-     * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
-     * </p>
-     *
-     * @param ij  the target injection point
-     * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
-     *            {@link Dependent} that is created
-     * @return the injectable reference
-     * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
-     * @throws AmbiguousResolutionException   typesafe resolution results in an unresolvable ambiguous dependency
-     * @throws IllegalStateException          if called during application initialization, before the {@link AfterDeploymentValidation}
-     *                                        event is fired.
-     */
-    Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 }
