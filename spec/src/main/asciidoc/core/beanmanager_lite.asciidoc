@@ -233,6 +233,17 @@ The method `BeanContainer.getContext()` retrieves an active context object assoc
 public Context getContext(Class<? extends Annotation> scopeType);
 ----
 
+[[bm_obtain_contexts]]
+
+==== Obtaining ``Context``s for a scope
+
+The method `BeanContainer.getContexts()` retrieves all context objects, active and inactive, associated with the given scope, as defined in <<contexts>>.
+
+[source, java]
+----
+public Collection<Context> getContexts(Class<? extends Annotation> scopeType);
+----
+
 [[bm_obtain_instance]]
 
 ==== Obtain an `Instance`
