@@ -241,10 +241,6 @@ public interface BeanContainer {
      * or, in the Jakarta EE environment, the Jakarta EE component from whose JNDI environment namespace the
      * <code>BeanContainer</code> was obtained, according to the rules of typesafe resolution.
      * <p>
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * the <code>Instance</code> returned by this method will only give access to instances of beans discovered by the container
-     * before the {@link AfterBeanDiscovery} event is fired.
-     * <p>
      * Instances of dependent scoped beans obtained with this <code>Instance</code> must be explicitly destroyed by calling {@link Instance#destroy(Object)}
      * <p>
      * If no qualifier is passed to {@link Instance#select} method, the <code>@Default</code> qualifier is assumed.

@@ -71,12 +71,12 @@ import jakarta.enterprise.inject.Stereotype;
  *     <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
  *     <li>{@link #validate(InjectionPoint)},</li>
- *     <li>{@link #createInstance()}</li>
  * </ul>
  * <p>
  * and the following operations must not be called before the {@link AfterDeploymentValidation} event is fired:
  * </p>
  * <ul>
+ *     <li>{@link #createInstance()}</li>
  *     <li>{@link #getReference(Bean, java.lang.reflect.Type, CreationalContext)},</li>
  *     <li>{@link #getInjectableReference(InjectionPoint, CreationalContext)},</li>
  * </ul>
