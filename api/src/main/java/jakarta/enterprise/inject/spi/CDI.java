@@ -123,7 +123,7 @@ public abstract class CDI<T> implements Instance<T> {
         if (provider == null) {
             throw new IllegalArgumentException("CDIProvider must not be null");
         }
-        if (configuredProvider != null) {
+        if (configuredProvider == null) {
             providerSetManually = true;
             configuredProvider = provider;
         } else {

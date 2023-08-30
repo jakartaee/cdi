@@ -82,7 +82,7 @@ public final class BuildServicesResolver {
         if (instance == null) {
             throw new IllegalArgumentException("BuildServices instance must not be null");
         }
-        if (configuredBuildServices != null) {
+        if (configuredBuildServices == null) {
             configuredBuildServices = instance;
         } else {
             throw new IllegalStateException("BuildServices cannot be set repeatedly. Existing BuildServices are " + configuredBuildServices);
