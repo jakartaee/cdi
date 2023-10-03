@@ -662,6 +662,7 @@ Certain legal bean types cannot be proxied by the container:
 * classes which don't have a non-private constructor with no parameters,
 * classes which are declared final,
 * classes which have non-static, final methods with public, protected or default visibility,
+* sealed classes and sealed interfaces,
 * primitive types,
 * and array types.
 
