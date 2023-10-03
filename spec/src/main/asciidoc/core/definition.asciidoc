@@ -81,7 +81,7 @@ The bean types of a bean are used by the rules of typesafe resolution defined in
 
 Almost any Java type may be a bean type of a bean:
 
-* A bean type may be an interface, a concrete class or an abstract class, and may be declared final or have final methods.
+* A bean type may be an interface, a concrete class or an abstract class, may be declared sealed or non-sealed or final, and may have final methods.
 * A bean type may be a parameterized type with actual type parameters and type variables.
 * A bean type may be an array type.
 Two array types are considered identical only if the element type is identical.
