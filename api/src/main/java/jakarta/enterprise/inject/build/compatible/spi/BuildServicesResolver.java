@@ -76,16 +76,11 @@ public final class BuildServicesResolver {
      *
      * @param instance a {@link BuildServices} instance that should be used, must not be {@code null}
      * @throws IllegalArgumentException if the provided argument is null
-     * @throws IllegalStateException if the {@link BuildServices} are already set
      */
     public static void setBuildServices(BuildServices instance) {
         if (instance == null) {
             throw new IllegalArgumentException("BuildServices instance must not be null");
         }
-        if (configuredBuildServices == null) {
-            configuredBuildServices = instance;
-        } else {
-            throw new IllegalStateException("BuildServices cannot be set repeatedly. Existing BuildServices are " + configuredBuildServices);
-        }
+        configuredBuildServices = instance;
     }
 }
