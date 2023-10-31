@@ -1378,8 +1378,11 @@ The `Bean` may implement `Interceptor` or `Decorator`.
 public interface ProcessManagedBean<X>
         extends ProcessBean<X> {
     public AnnotatedType<X> getAnnotatedBeanClass();
+    public InvokerBuilder<Invoker<X, ?>> createInvoker(AnnotatedMethod<? super X> method);
 }
 ----
+
+The `createInvoker` method allows creating an `InvokerBuilder` for the processed bean and the given target method (see <<invoker_builder_full>>).
 
 [source, java]
 ----

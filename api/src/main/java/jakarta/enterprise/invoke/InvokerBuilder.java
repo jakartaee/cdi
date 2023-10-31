@@ -360,9 +360,8 @@ public interface InvokerBuilder<T> {
     InvokerBuilder<T> setInvocationWrapper(Class<?> clazz, String methodName);
 
     /**
-     * Returns the built {@link Invoker} or some represention of it. Implementations are allowed
-     * but not required to reuse already built invokers for the same target method with the same
-     * configuration.
+     * Returns the built {@link Invoker} or some representation of it. Implementations are allowed
+     * but not required to reuse already built invokers when possible.
      *
      * @return the built invoker
      */

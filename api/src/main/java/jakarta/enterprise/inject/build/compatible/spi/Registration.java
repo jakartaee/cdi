@@ -49,6 +49,7 @@ import java.lang.annotation.Target;
  * <p>
  * Additionally, methods annotated {@code @Registration} may declare parameters of these types:
  * <ul>
+ * <li>{@link InvokerFactory}</li>
  * <li>{@link Messages}</li>
  * <li>{@link Types}</li>
  * </ul>

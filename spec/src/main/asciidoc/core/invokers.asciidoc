@@ -1,0 +1,174 @@
+[[method_invokers]]
+== Method invokers
+
+CDI-based frameworks often need to invoke application methods declared on managed beans.
+Frameworks cannot invoke application methods directly, because they are not compiled against the application code.
+However, during application deployment, frameworks may observe application methods through CDI extensions and build an `Invoker` for each relevant method.
+The invokers can then be used at application runtime to invoke the methods indirectly.
+
+Method invokers are not supposed to be used by application code, as applications may invoke their own methods directly.
+
+[[building_invoker]]
+=== Building an `Invoker`
+
+The CDI container allows building an `Invoker` for a method of an <<enablement,enabled>> <<managed_beans,managed bean>>.
+The method for which the invoker is built is called the _target method_ of the invoker, and the managed bean is called the _target bean_ of the invoker.
+
+Invalid target methods are:
+
+* private methods,
+* constructors,
+* methods declared on the `java.lang.Object` class, except for the `toString()` method,
+* methods that are not declared on the bean class of the target bean or inherited from its supertypes.
+
+Attempting to build an invoker for an invalid target method leads to a deployment problem.
+
+Attempting to build an invoker for a non-static target method declared on a type that is not present in the set of bean types of the target bean leads to non-portable behavior.
+When the target bean is normal scoped, attempting to build an invoker for a non-static target method declared on an <<unproxyable,unproxyable>> bean type of the target bean leads to non-portable behavior.
+
+When the target bean is not a managed bean, attempting to build an invoker leads to a deployment problem.
+When the target bean is an interceptor, attempting to build an invoker leads to a deployment problem.
+
+Multiple managed beans may inherit a method from a common supertype.
+In that case, an invoker must be built for each target bean individually.
+An invoker built for one target bean may not be used to invoke the target method on an instance of another target bean.
+
+The only way to build an invoker is using the `InvokerBuilder`.
+An `InvokerBuilder` can only be obtained in CDI portable extensions and build compatible extensions.
+See <<invoker_builder>> for more information.
+
+[[using_invoker]]
+=== Using an `Invoker`
+
+The `Invoker` interface contains a single method:
+
+[source,java]
+----
+public interface Invoker<T, R> {
+    R invoke(T instance, Object[] arguments) throws Exception;
+}
+----
+
+Calling `invoke()` invokes the target method on given `instance` of the target bean, passing given `arguments`, and propagates back the return value or thrown exception.
+The `instance` and `arguments` may be contextual or non-contextual objects.
+
+A single invoker instance may be used to perform multiple invocations of the target method, possibly on different instances of the target bean, possibly with different arguments.
+Invoker implementations must be thread-safe.
+Whether concurrent invocations of the target method are safe depends on the implementation of the target bean and is not generally guaranteed.
+
+Whenever a direct invocation of a method on an object is a business method invocation, an indirect invocation of that method on that object through an invoker is also a business method invocation.
+
+==== Behavior of `invoke()`
+
+If the target method is `static`, the `instance` is ignored; by convention, it should be `null`.
+If the target method is not `static` and `instance` is `null`, a `RuntimeException` is thrown.
+If the target method is not `static` and the `instance` is not permissible for the target method, a `RuntimeException` is thrown.
+
+The `instance` is permissible for the target method when:
+
+* the `instance` is a contextual reference for the target bean and the bean type that declares the target method, or
+* the `instance` is a contextual reference for the target bean (regardless of the bean type) and the target method is declared on an interface that is present in the set of bean types of the target bean (see <<typecasting_between_bean_types>>), or
+* the `instance` is a non-contextual object and the class of the `instance` declares the target method or inherits it from a supertype, or
+* in other, non-portable (implementation defined) cases.
+
+Correspondence between given `arguments` and declared parameters of the target method is positional: the Nth element of the `arguments` array is passed as the Nth argument to the target method.
+If the target method is a variable arity method, the last element of the `arguments` array corresponds to the variable arity parameter (and therefore must be an array).
+When passing an argument to the method, the applicable method invocation conversion is performed.
+
+If the target method declares no parameter, `arguments` are ignored.
+If the target method declares any parameter and `arguments` is `null`, `RuntimeException` is thrown.
+If the `arguments` array has fewer elements than the number of parameters of the target method, `RuntimeException` is thrown.
+If the `arguments` array has more elements than the number of parameters of the target method, the excess elements are ignored.
+If a method invocation conversion does not exist from the class of some of the `arguments` (or from the null type if the argument is `null`) to the declared type of the corresponding parameter of the target method, `RuntimeException` is thrown.
+
+NOTE: The type checking and conversion rules are aligned with pre-existing mechanisms for indirect method invocations, the Java reflection API and the method handles API.
+
+When the declared type of a parameter of the target method is not a reifiable type, callers of `Invoker.invoke()` must ensure that the corresponding argument is constructed appropriately.
+Otherwise, runtime failures are likely to occur.
+
+If the target method returns normally, its return value is returned (after boxing conversion if the target method's return type is a primitive type), unless the target method is declared `void`, in which case `null` is returned.
+If the target method throws an exception, it is rethrown directly.
+
+// TODO when the `InvokerBuilder` applies transformations, some of the requirements above are no longer strictly necessary, we should reflect that in this text somehow
+
+==== Example
+
+To illustrate how method invokers work, let's take a look at an example.
+Say that the following bean exists in an application and has a method that you, the framework author, want to invoke indirectly:
+
+[source,java]
+----
+@Dependent
+public class MyService {
+    public String hello(String name) {
+        return "Hello " + name + "!";
+    }
+}
+----
+
+In a CDI extension, you obtain an `InvokerBuilder` for the `hello()` method and use it to build an invoker.
+In a portable extension (see <<invoker_builder_full>>), this results in an invoker which should be stored for later usage:
+
+[source,java]
+----
+InvokerBuilder<Invoker<MyService, String>> builder = ...;
+Invoker<MyService, String> invoker = builder.build();
+----
+
+In a build compatible extension (see <<invoker_builder>>), this results in an opaque token that materializes as an `Invoker` at application runtime:
+
+[source,java]
+----
+InvokerBuilder<InvokerInfo> builder = ...;
+InvokerInfo invoker = builder.build();
+----
+
+To call the `hello()` method through this invoker, assuming that `myService` is a contextual reference for the bean, call:
+
+[source,java]
+----
+invoker.invoke(myService, new Object[] {"world"})
+----
+
+The return value is `"Hello world!"`.
+
+An implementation of the invoker above is equivalent to the following class:
+
+[source,java]
+----
+public class TheInvoker implements Invoker<MyService, String> {
+    public String invoke(MyService instance, Object[] arguments) {
+        return instance.hello((String) arguments[0]);
+    }
+}
+----
+
+[[invoker_builder]]
+=== Using `InvokerBuilder`
+
+`InvokerBuilder` can be obtained in build compatible extensions from `InvokerFactory.createInvoker()`:
+
+[source,java]
+----
+public interface InvokerFactory {
+    InvokerBuilder<InvokerInfo> createInvoker(BeanInfo bean, MethodInfo method);
+}
+----
+
+An `InvokerFactory` may be declared as a parameter of `@Registration` extension methods.
+
+The target bean of the created invoker is the bean represented by the `BeanInfo` object passed to `createInvoker()`.
+The target method of the created invoker is the method represented by the `MethodInfo` object passed to `createInvoker()`.
+
+[source,java]
+----
+public interface InvokerBuilder<T> {
+    ...
+
+    T build();
+}
+----
+
+Calling `InvokerBuilder.build()` produces an opaque token (`InvokerInfo`) that can be passed as a parameter to a `SyntheticBeanBuilder` or `SyntheticObserverBuilder` and materializes as an `Invoker` at application runtime.
+
+// TODO lookups, transformers, wrappers

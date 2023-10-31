@@ -306,8 +306,18 @@ When an extension method declares a parameter of type `ObserverInfo`, it will be
 
 Additionally, extension methods annotated `@Registration` may declare parameters of the following types:
 
+* `InvokerFactory`
 * `Types`
 * `Messages` (see <<bce_validation>>)
+
+[source,java]
+----
+public interface InvokerFactory {
+    InvokerBuilder<InvokerInfo> createInvoker(BeanInfo bean, MethodInfo method);
+}
+----
+
+The `InvokerFactory` interface allows creating an `InvokerBuilder` for given target bean and target method (see <<invoker_builder>>).
 
 [[bce_synthesis]]
 
@@ -348,11 +358,12 @@ The parameter map may contain values of the following types:
 * `String`
 * `Class`
 * `Enum`
+* `Invoker`
 * any annotation type
 * array of any previously mentioned type
 
-When defining the parameter map on `SyntheticBeanBuilder` or `SyntheticObserverBuilder`, it is possible to use `ClassInfo` or `AnnotationInfo` to define parameter values.
-When such parameter is looked up from the parameter map in the synthetic bean creation/destruction function or the synthetic observer notification function, the value will be of type `Class` or the respective annotation type.
+When defining the parameter map on `SyntheticBeanBuilder` or `SyntheticObserverBuilder`, it is possible to use `ClassInfo`, `InvokerInfo`, or `AnnotationInfo` to define parameter values.
+When such parameter is looked up from the parameter map in the synthetic bean creation/destruction function or the synthetic observer notification function, the value will be of type `Class`, `Invoker`, or the respective annotation type.
 
 [[bce_validation]]
 

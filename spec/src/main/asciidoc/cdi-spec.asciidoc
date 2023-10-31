@@ -54,6 +54,8 @@ include::core/interceptors.asciidoc[]
 
 include::core/events.asciidoc[]
 
+include::core/invokers.asciidoc[]
+
 include::core/beanmanager_lite.asciidoc[]
 
 include::core/spi_lite.asciidoc[]
@@ -78,6 +80,8 @@ include::core/interceptors_full.asciidoc[]
 include::core/decorators.asciidoc[]
 
 include::core/events_full.asciidoc[]
+
+include::core/invokers_full.asciidoc[]
 
 include::core/spi_full.asciidoc[]
 
