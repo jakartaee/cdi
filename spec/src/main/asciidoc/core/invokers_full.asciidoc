@@ -1,0 +1,30 @@
+[[method_invokers_full]]
+== Method invokers in {cdi_full}
+
+[[building_invoker_full]]
+=== Building an `Invoker` in {cdi_full}
+
+In addition to rules defined in <<building_invoker>>, the following rules apply.
+
+When the target bean is a decorator, attempting to build an invoker leads to a deployment problem.
+
+[[invoker_builder_full]]
+=== Using `InvokerBuilder` in {cdi_full}
+
+In addition to rules defined in <<invoker_builder>>, the following rules apply.
+
+`InvokerBuilder` can be obtained in portable extensions from `ProcessManagedBean.createInvoker()`:
+
+[source,java]
+----
+public interface ProcessManagedBean<X> extends ProcessBean<X> {
+    ...
+
+    InvokerBuilder<Invoker<X, ?>> createInvoker(AnnotatedMethod<? super X> method);
+}
+----
+
+The target bean of the created invoker is the bean for which the `ProcessManagedBean` event was fired.
+The target method of the created invoker is the method represented by the `AnnotatedMethod` object passed to `createInvoker()`.
+
+Calling `InvokerBuilder.build()` produces an `Invoker` which should be stored for usage at application runtime.

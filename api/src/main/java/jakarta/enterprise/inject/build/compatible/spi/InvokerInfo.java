@@ -11,12 +11,13 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
 import jakarta.enterprise.invoke.Invoker;
+import jakarta.enterprise.invoke.InvokerBuilder;
 import jakarta.enterprise.lang.model.declarations.MethodInfo;
 
 /**
- * Opaque token that stands in for an invoker registered using {@link BeanInfo#createInvoker(MethodInfo)}.
- * It can only be used to materialize an {@link Invoker} in a synthetic component; see
- * {@link SyntheticBeanBuilder#withParam(String, InvokerInfo) SyntheticBeanBuilder.withParam()} or
+ * Opaque token that stands in for an invoker registered using {@link InvokerFactory#createInvoker(BeanInfo, MethodInfo)}
+ * and {@link InvokerBuilder#build()}. It can only be used to materialize an {@link Invoker} in a synthetic component;
+ * see {@link SyntheticBeanBuilder#withParam(String, InvokerInfo) SyntheticBeanBuilder.withParam()} or
  * {@link SyntheticObserverBuilder#withParam(String, InvokerInfo) SyntheticObserverBuilder.withParam()}.
  *
  * @since 4.1
