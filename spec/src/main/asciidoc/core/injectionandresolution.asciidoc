@@ -49,9 +49,6 @@ An alternative may be given a priority for the application:
 * by placing the `@Priority` annotation on the bean class that declares the producer method, field or resource, or
 * by placing the `@Priority` annotation on a stereotype that is applied to the bean class, producer method or producer field.
 
-To determine the priority of a producer method or field, the `@Priority` annotation on the producer method or field is considered first.
-If the producer method or field does not declare the `@Priority` annotation, the `@Priority` annotation declared on the bean class is used.
-
 [[enablement]]
 
 ==== Enabled and disabled beans
@@ -115,8 +112,17 @@ The container eliminates all eligible beans that are not alternatives, except fo
 If:
 
 * there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
-* all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for alternatives with the highest priority and producer methods and fields of alternatives with the highest priority value.
+* all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value and eliminate all beans, except for:
++
+--
+** alternatives with the highest priority value,
+** producer methods and fields of alternatives, where either the producer method or field has the highest priority value, or the declaring alternative has the highest priority value.
+--
++
 If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
+
+For the purpose of determining the priority of any producer method or field during ambiguity resolution, the priority of the producer method or field is considered first.
+If the producer method or field does not have a priority, the priority of the managed bean that declares the producer method or field is used.
 
 The container must validate all injection points of all enabled beans, all observer methods and all disposer methods when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies.
 If an unsatisfied or unresolvable ambiguous dependency exists, the container automatically detects the problem and treats it as a deployment problem.
