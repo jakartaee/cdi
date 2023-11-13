@@ -251,4 +251,40 @@ public interface BeanContainer {
      * @since 2.0
      */
     Instance<Object> createInstance();
+
+    /**
+     * Returns true if a bean with given bean types and qualifiers would be assignable
+     * to an injection point with given required type and required qualifiers, false otherwise.
+     * <p>
+     * Callers do not need to include implied qualifiers ({@code @Default}, {@code Any}).
+     * These will be automatically added where applicable.
+     * <p>
+     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
+     *
+     * @param beanTypes bean types of a bean; must not be {@code null}
+     * @param beanQualifiers qualifiers of a bean; must not be {@code null}
+     * @param requiredType required type of an injection point; must not be {@code null}
+     * @param requiredQualifiers required qualifiers of an injection point; must not be {@code null}
+     * @return true if a bean with given bean types and qualifiers would be assignable
+     * to an injection point with given required type and required qualifiers, false otherwise
+     */
+    boolean isMatchingBean(Set<Type> beanTypes, Set<Annotation> beanQualifiers, Type requiredType, Set<Annotation> requiredQualifiers);
+
+    /**
+     * Returns true if an event object with given type and qualifiers would match
+     * an observer method with given observed event type and observed event qualifiers, false otherwise.
+     * <p>
+     * Callers do not need to include implied qualifiers ({@code @Default}, {@code Any}).
+     * These will be automatically added where applicable.
+     * <p>
+     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
+     *
+     * @param eventType type of an event object; must not be {@code null}
+     * @param eventQualifiers event qualifiers; must not be {@code null}
+     * @param observedEventType observed event type of an observer method; must not be {@code null}
+     * @param observedEventQualifiers observed event qualifiers on an observer method; must not be {@code null}
+     * @return true if an event object with given type and qualifiers would result in notifying
+     * an observer method with given observed event type and observed event qualifiers, false otherwise
+     */
+    boolean isMatchingEvent(Type eventType, Set<Annotation> eventQualifiers, Type observedEventType, Set<Annotation> observedEventQualifiers);
 }
