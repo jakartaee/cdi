@@ -260,3 +260,14 @@ Instance<Object> createInstance();
 Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
 
 If no qualifier is passed to `Instance.select()` method, the `@Default` qualifier is assumed.
+
+==== Assignability of beans and observers
+
+The methods `BeanContainer.isMatchingBean()` and `isMatchingObserver()` provide access to assignability rules defined in <<typesafe_resolution>> and <<observer_resolution>>.
+
+[source, java]
+----
+public boolean isMatchingBean(Set<Type> beanTypes, Set<Annotation> beanQualifiers, Type requiredType, Set<Annotation> requiredQualifiers);
+
+public boolean isMatchingEvent(Type eventType, Set<Annotation> eventQualifiers, Type observedEventType, Set<Annotation> observedEventQualifiers);
+----
