@@ -100,7 +100,8 @@ public interface SyntheticBeanBuilder<T> {
     /**
      * Sets the scope of this synthetic bean to given scope type.
      * <p>
-     * If not called, this synthetic bean will be {@code @Dependent}.
+     * If not called, and if no stereotype is added that defines a scope,
+     * this synthetic bean will be {@code @Dependent}.
      *
      * @param scopeAnnotation the scope type, must not be {@code null}
      * @return this {@code SyntheticBeanBuilder}
@@ -131,7 +132,6 @@ public interface SyntheticBeanBuilder<T> {
      * that it is not enabled, which is equivalent to not registering it at all.
      * <p>
      * If not called, this synthetic bean will not have a priority.
-     * If this synthetic bean is not an alternative, the priority is ignored.
      *
      * @param priority the priority of this synthetic bean
      * @return this {@code SyntheticBeanBuilder}

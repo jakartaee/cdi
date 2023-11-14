@@ -20,14 +20,14 @@ import jakarta.enterprise.lang.model.types.Type;
 public interface SyntheticComponents {
     /**
      * Creates a {@link SyntheticBeanBuilder} that allows configuring a new synthetic bean
-     * of given {@code beanClass}. The synthetic bean will be registered at the end of
+     * of given {@code implementationClass}. The synthetic bean will be registered at the end of
      * the {@link Synthesis @Synthesis} method.
      *
-     * @param beanClass the bean class of the new synthetic bean, must not be {@code null}
-     * @param <T> the bean class of the new synthetic bean
+     * @param implementationClass the implementation class of the new synthetic bean, must not be {@code null}
+     * @param <T> the implementation class of the new synthetic bean
      * @return a new {@link SyntheticBeanBuilder}, never {@code null}
      */
-    <T> SyntheticBeanBuilder<T> addBean(Class<T> beanClass);
+    <T> SyntheticBeanBuilder<T> addBean(Class<T> implementationClass);
 
     /**
      * Creates a {@link SyntheticObserverBuilder} that allows configuring a new synthetic observer
