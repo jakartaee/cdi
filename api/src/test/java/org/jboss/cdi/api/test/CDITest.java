@@ -53,7 +53,7 @@ public class CDITest {
     }
 
     @Test(expectedExceptions = IllegalStateException.class)
-    public void testWithoutServiceFile() throws Exception {
+    public void testWithoutServiceFile() throws IllegalStateException {
         CDI.current();
     }
 
@@ -96,7 +96,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
+        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
     }
 
 
@@ -107,7 +107,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
+        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
+        Assert.assertEquals(DummyCDIProvider2.DummyCDI2.class, CDI.current().getClass());
     }
 
 
@@ -130,7 +130,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider.class.getName());
         fw.close();
-        Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
+        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
     }
 
 

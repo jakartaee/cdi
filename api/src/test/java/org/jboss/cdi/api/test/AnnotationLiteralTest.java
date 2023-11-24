@@ -1,7 +1,6 @@
 package org.jboss.cdi.api.test;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.BeforeDestroyed;
@@ -77,8 +76,8 @@ public class AnnotationLiteralTest {
 
     @Test
     public void testTypedLiteral() {
-        assertTrue(Typed.Literal.INSTANCE.value().length == 0);
-        assertTrue(Typed.Literal.of(new Class[] { String.class }).value()[0] == String.class);
+        assertEquals(Typed.Literal.INSTANCE.value().length,  0);
+        assertEquals(Typed.Literal.of(new Class[] { String.class }).value()[0], String.class);
     }
 
     @SuppressWarnings("serial")
