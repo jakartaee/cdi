@@ -1,8 +1,29 @@
 name: Jakarta Contexts and Dependency Injection CI
 
 on:
+  push:
+    branches-ignore:
+      - 'wip/**'
+      - 'draft/**'
+    paths-ignore:
+      - '.gitignore'
+      - 'CONTRIBUTING.adoc'
+      - 'NOTICE.md'
+      - 'LICENSE'
+      - '*.md'
+      - '*.adoc'
+      - '*.txt'
   pull_request:
-    branches: [ master ]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - '.gitignore'
+      - 'CONTRIBUTING.adoc'
+      - 'NOTICE.md'
+      - 'LICENSE'
+      - '*.md'
+      - '*.adoc'
+      - '*.txt'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,12 +32,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11', '17' ]
+        java: [ '11', '17', '21' ]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4.1.1
       - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1.4.3
+        uses: actions/setup-java@v3.13.0
         with:
+          distribution: 'temurin'
           java-version: ${{ matrix.java }}
       - name: "Maven install"
         run: |
