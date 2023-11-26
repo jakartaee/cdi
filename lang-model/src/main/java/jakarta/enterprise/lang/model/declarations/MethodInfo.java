@@ -20,7 +20,7 @@ public interface MethodInfo extends DeclarationInfo {
     /**
      * Returns a list of {@linkplain ParameterInfo parameters} declared or implicitly declared on this method.
      *
-     * @return immutable list of {@linkplain ParameterInfo parameterts}, never {@code null}
+     * @return immutable list of {@linkplain ParameterInfo parameters}, never {@code null}
      */
     List<ParameterInfo> parameters();
 
