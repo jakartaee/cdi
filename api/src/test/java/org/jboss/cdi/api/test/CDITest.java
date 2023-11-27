@@ -96,7 +96,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider.class.getName());
         fw.close();
-        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
+        Assert.assertEquals(CDI.current().getClass(), DummyCDIProvider.DummyCDI.class);
     }
 
 
@@ -107,7 +107,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
+        Assert.assertEquals(CDI.current().getClass(), DummyCDIProvider.DummyCDI.class);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider2.class.getName());
         fw.close();
-        Assert.assertEquals(DummyCDIProvider2.DummyCDI2.class, CDI.current().getClass());
+        Assert.assertEquals(CDI.current().getClass(), DummyCDIProvider2.DummyCDI2.class);
     }
 
 
@@ -130,7 +130,7 @@ public class CDITest {
         fw.write('\n');
         fw.write(DummyCDIProvider.class.getName());
         fw.close();
-        Assert.assertEquals(DummyCDIProvider.DummyCDI.class, CDI.current().getClass());
+        Assert.assertEquals(CDI.current().getClass(), DummyCDIProvider.DummyCDI.class);
     }
 
 
