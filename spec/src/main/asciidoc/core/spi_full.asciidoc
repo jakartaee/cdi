@@ -1081,7 +1081,7 @@ With `ObserverMethodConfigurator` you can perform the following operations:
 
 ==== `AfterDeploymentValidation` event
 
-The container must fire an event after it has validated that there are no deployment problems and before creating contexts or processing requests.
+The container must fire an event after it has validated that there are no deployment problems and before processing requests.
 
 The event object must be of type `jakarta.enterprise.inject.spi.AfterDeploymentValidation`:
 
