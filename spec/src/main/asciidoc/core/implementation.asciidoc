@@ -18,7 +18,7 @@ Portable extensions and build compatible extensions may provide other kinds of b
 
 A _managed bean_ is a bean that is implemented by a Java class.
 This class is called the _bean class_ of the managed bean.
-The basic lifecycle and semantics of managed beans are defined by the Managed Beans specification.
+The basic lifecycle and semantics of managed beans are defined by the CDI specification.
 
 If a managed bean has a non-static public field, its scope must be a <<normal_scope,pseudo-scope>> (for example, `@Dependent` or `@Singleton`).
 If a managed bean with a non-static public field declares a normal scope, the container automatically detects the problem and treats it as a definition error.
