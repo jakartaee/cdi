@@ -114,13 +114,13 @@ Jakarta Server Faces is a web-tier presentation framework that provides a compon
 
 This specification allows any bean to be assigned a name. Thus, a Jakarta Server Faces application may take advantage of the sophisticated context and dependency injection model defined by this specification.
 
-==== Relationship to Jakarta Bean Validation
+==== Relationship to Jakarta Validation
 
-Jakarta Bean Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
+Jakarta Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
 
-The Jakarta Bean Validation specification defines beans for Bean Validation managed objects including `Validator` and `ValidatorFactory`.
-A number of Bean Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
-Bean Validation also provides support for method parameter validation on any bean.
+The Jakarta Validation specification defines beans for Validation managed objects including `Validator` and `ValidatorFactory`.
+A number of Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
+Validation also provides support for method parameter validation on any bean.
 
 === Introductory examples
 
