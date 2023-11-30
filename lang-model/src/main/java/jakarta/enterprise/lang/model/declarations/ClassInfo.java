@@ -61,34 +61,34 @@ public interface ClassInfo extends DeclarationInfo {
     List<TypeVariable> typeParameters();
 
     /**
-     * Returns the {@linkplain Type type} of this class's superclass. Returns {@code null} if this class
+     * Returns the direct superclass {@linkplain Type type} of this class. Returns {@code null} if this class
      * does not have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
      *
-     * @return the type of this class's superclass, or {@code null} if there's no superclass
+     * @return the direct superclass type of this class, or {@code null} if there's no superclass
      */
     Type superClass();
 
     /**
-     * Returns the {@linkplain ClassInfo declaration} of this class's superclass. Returns {@code null} if this class
+     * Returns the direct superclass of this class. Returns {@code null} if this class
      * does not have a superclass; that is, if this class is {@code java.lang.Object} or an interface.
      *
-     * @return the declaration of this class's superclass, or {@code null} if there's no superclass
+     * @return the direct superclass of this class, or {@code null} if there's no superclass
      */
     ClassInfo superClassDeclaration();
 
     /**
-     * Returns a list of {@linkplain Type types} of this class's direct superinterfaces.
+     * Returns a list of direct superinterface {@linkplain Type types} of this class.
      * Returns an empty list if this class has no direct superinterface.
      *
-     * @return immutable list of types of this class's direct superinterfaces, never {@code null}
+     * @return immutable list of direct superinterface types of this class, never {@code null}
      */
     List<Type> superInterfaces();
 
     /**
-     * Returns a list of {@linkplain ClassInfo declarations} of this class's direct superinterfaces.
+     * Returns a list of direct superinterfaces of this class.
      * Returns an empty list if this class has no direct superinterface.
      *
-     * @return immutable list of declarations of this class's direct superinterfaces, never {@code null}
+     * @return immutable list of direct superinterfaces of this class, never {@code null}
      */
     List<ClassInfo> superInterfacesDeclarations();
 
@@ -169,8 +169,10 @@ public interface ClassInfo extends DeclarationInfo {
     /**
      * Returns a collection of {@linkplain MethodInfo methods} declared or implicitly declared
      * in this class and all its superclasses up to and excluding {@code java.lang.Object},
-     * as well as all direct and indirect superinterfaces. If this class is an interface,
-     * only superinterfaces are considered. Methods implicitly declared in interfaces are omitted.
+     * as well as all direct and indirect superinterfaces. If this class is {@code java.lang.Object},
+     * its methods are not excluded. If this class is an interface, only superinterfaces
+     * are considered. Implicitly declared methods corresponding to {@code java.lang.Object}
+     * methods in interfaces are omitted.
      * <p>
      * If the collection of methods described above contains multiple methods with the same signature,
      * all such methods are returned. {@link MethodInfo#declaringClass() MethodInfo.declaringClass}
@@ -186,8 +188,9 @@ public interface ClassInfo extends DeclarationInfo {
     /**
      * Returns a collection of {@linkplain FieldInfo fields} declared or implicitly declared
      * in this class and all its superclasses up to and excluding {@code java.lang.Object},
-     * as well as all direct and indirect superinterfaces. If this class is an interface,
-     * only superinterfaces are considered.
+     * as well as all direct and indirect superinterfaces. If this class is {@code java.lang.Object},
+     * its fields are not excluded. If this class is an interface, only superinterfaces
+     * are considered.
      * <p>
      * If the collection of fields described above contains multiple fields with the same name,
      * all such fields are returned. {@link FieldInfo#declaringClass() FieldInfo.declaringClass}

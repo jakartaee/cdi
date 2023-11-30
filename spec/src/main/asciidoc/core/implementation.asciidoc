@@ -20,8 +20,8 @@ A _managed bean_ is a bean that is implemented by a Java class.
 This class is called the _bean class_ of the managed bean.
 The basic lifecycle and semantics of managed beans are defined by the Managed Beans specification.
 
-
-If a managed bean has a non-static public field, it must have scope `@Dependent`. If a managed bean with a non-static public field declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
+If a managed bean has a non-static public field, its scope must be a <<normal_scope,pseudo-scope>> (for example, `@Dependent` or `@Singleton`).
+If a managed bean with a non-static public field declares a normal scope, the container automatically detects the problem and treats it as a definition error.
 
 If the managed bean class is a generic type, it must have scope `@Dependent`. If a managed bean with a parameterized bean class declares any scope other than `@Dependent`, the container automatically detects the problem and treats it as a definition error.
 
@@ -662,6 +662,7 @@ Certain legal bean types cannot be proxied by the container:
 * classes which don't have a non-private constructor with no parameters,
 * classes which are declared final,
 * classes which have non-static, final methods with public, protected or default visibility,
+* sealed classes and sealed interfaces,
 * primitive types,
 * and array types.
 

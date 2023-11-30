@@ -41,8 +41,8 @@ import java.lang.annotation.Target;
  * If the {@code @Registration} method has a parameter of type {@code ObserverInfo}, the method is called once
  * for each observer whose observed event type is assignable to at least one <em>expected type</em>.
  * <p>
- * Note that interceptors are beans, and {@code InterceptorInfo} is a subtype of {@code BeanInfo}, so if the method
- * has a parameter of type {@code BeanInfo}, it will be called for interceptors as well.
+ * Note that {@code InterceptorInfo} is a subtype of {@code BeanInfo}, so if the method has a parameter
+ * of type {@code BeanInfo}, it will be called for interceptors as well.
  * <p>
  * If the {@code @Registration} method doesn't declare any parameter of one of these types,
  * or if it declares more than one, the container treats it as a definition error.

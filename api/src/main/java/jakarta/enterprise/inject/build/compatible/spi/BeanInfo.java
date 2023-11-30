@@ -10,6 +10,7 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import jakarta.enterprise.invoke.InvokerBuilder;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.declarations.FieldInfo;
@@ -161,6 +162,25 @@ public interface BeanInfo {
      * @return immutable collection of injection points, never {@code null}
      */
     Collection<InjectionPointInfo> injectionPoints();
+
+    /**
+     * Returns a new {@link InvokerBuilder} for given method. The builder eventually produces
+     * an opaque representation of the invoker for the given method.
+     * <p>
+     * The {@code method} must be declared on the bean class or inherited from a supertype
+     * of the bean class of this bean, otherwise an exception is thrown.
+     * <p>
+     * If an invoker may not be obtained for given {@code method} as described
+     * in {@link jakarta.enterprise.invoke.Invoker Invoker}, an exception is thrown.
+     * <p>
+     * If this method is called outside the {@code @Registration} phase, an exception is thrown.
+     *
+     * @param method method of this bean, must not be {@code null}
+     * @return the invoker builder, never {@code null}
+     * @since 4.1
+     */
+    // TODO we may want to introduce another entrypoint for this operation
+    InvokerBuilder<InvokerInfo> createInvoker(MethodInfo method);
 
     // ---
 

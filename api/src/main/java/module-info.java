@@ -10,6 +10,7 @@ module jakarta.cdi {
     exports jakarta.enterprise.inject.se;
     exports jakarta.enterprise.inject.spi;
     exports jakarta.enterprise.inject.spi.configurator;
+    exports jakarta.enterprise.invoke;
     exports jakarta.enterprise.util;
 
     requires transitive jakarta.annotation;

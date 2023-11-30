@@ -49,9 +49,10 @@ package jakarta.enterprise.inject.build.compatible.spi;
  * Build compatible extensions may be annotated {@link SkipIfPortableExtensionPresent @SkipIfPortableExtensionPresent}
  * when they are supposed to be ignored in presence of a given portable extension.
  * <p>
- * CDI implementations are not required to accept custom implementations of any {@code jakarta.enterprise.lang.model}
- * or {@code jakarta.enterprise.inject.build.compatible.spi} interface. In other words, users may only use instances
- * of these interfaces that they previously obtained from the corresponding API. If not, non-portable behavior results.
+ * CDI implementations are not required to accept custom implementations of any {@code jakarta.enterprise.lang.model},
+ * {@code jakarta.enterprise.invoke} or {@code jakarta.enterprise.inject.build.compatible.spi} interface
+ * on the API boundary of build compatible extensions. In other words, users may only use instances of these
+ * interfaces that they previously obtained from the corresponding API. If not, non-portable behavior results.
  * <p>
  * In build compatible extensions, implementations of {@link jakarta.enterprise.lang.model.AnnotationTarget}
  * only return annotations with the {@linkplain java.lang.annotation.RetentionPolicy#RUNTIME runtime} retention policy.

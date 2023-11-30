@@ -100,7 +100,8 @@ public interface SyntheticBeanBuilder<T> {
     /**
      * Sets the scope of this synthetic bean to given scope type.
      * <p>
-     * If not called, this synthetic bean will be {@code @Dependent}.
+     * If not called, and if no stereotype is added that defines a scope,
+     * this synthetic bean will be {@code @Dependent}.
      *
      * @param scopeAnnotation the scope type, must not be {@code null}
      * @return this {@code SyntheticBeanBuilder}
@@ -131,7 +132,6 @@ public interface SyntheticBeanBuilder<T> {
      * that it is not enabled, which is equivalent to not registering it at all.
      * <p>
      * If not called, this synthetic bean will not have a priority.
-     * If this synthetic bean is not an alternative, the priority is ignored.
      *
      * @param priority the priority of this synthetic bean
      * @return this {@code SyntheticBeanBuilder}
@@ -404,6 +404,36 @@ public interface SyntheticBeanBuilder<T> {
      * @return this {@code SyntheticBeanBuilder}
      */
     SyntheticBeanBuilder<T> withParam(String key, Annotation[] value);
+
+    /**
+     * Adds an invoker-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
+     * <p>
+     * When looked up from the parameter map in the creation/destruction function, the value will be
+     * an instance of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> an {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticBeanBuilder<T> withParam(String key, InvokerInfo value);
+
+    /**
+     * Adds an invoker array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticBeanCreator creation} and {@linkplain SyntheticBeanDisposer destruction}
+     * functions when a bean instance is created/destroyed.
+     * <p>
+     * When looked up from the parameter map in the creation/destruction function, the values will be
+     * instances of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticBeanBuilder<T> withParam(String key, InvokerInfo[] value);
 
     /**
      * Sets the class of the synthetic bean {@linkplain SyntheticBeanCreator creation} function.

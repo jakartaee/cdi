@@ -335,6 +335,34 @@ public interface SyntheticObserverBuilder<T> {
     SyntheticObserverBuilder<T> withParam(String key, Annotation[] value);
 
     /**
+     * Adds an invoker-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
+     * <p>
+     * When looked up from the parameter map in the event notification function, the value will be
+     * an instance of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> an {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticObserverBuilder<T> withParam(String key, InvokerInfo value);
+
+    /**
+     * Adds an invoker array-valued parameter to the parameter map. The parameter map is passed
+     * to the {@linkplain SyntheticObserver event notification} function when the event is fired.
+     * <p>
+     * When looked up from the parameter map in the event notification function, the values will be
+     * instances of {@link jakarta.enterprise.invoke.Invoker Invoker}, <em>not</em> {@code InvokerInfo}.
+     *
+     * @param key the parameter key, must not be {@code null}
+     * @param value the parameter value
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 4.1
+     */
+    SyntheticObserverBuilder<T> withParam(String key, InvokerInfo[] value);
+
+    /**
      * Sets the class of the synthetic observer {@linkplain SyntheticObserver event notification} function.
      * CDI container will create an instance of the event notification function every time when it needs
      * to notify the synthetic observer. The class must be {@code public} and have a {@code public}
