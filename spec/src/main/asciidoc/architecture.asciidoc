@@ -118,9 +118,9 @@ This specification allows any bean to be assigned a name. Thus, a Jakarta Server
 
 Jakarta Validation provides a unified way of declaring and defining constraints on an object model, defines a runtime engine to validate objects and provides method validation.
 
-The Jakarta Validation specification defines beans for Validation managed objects including `Validator` and `ValidatorFactory`.
-A number of Validation managed instances, including `ConstraintValidator` s can take advantage of dependency injection.
-Validation also provides support for method parameter validation on any bean.
+The Jakarta Validation specification defines beans for certain managed objects, including `Validator` and `ValidatorFactory`.
+A number of Jakarta Validation managed instances, including ``ConstraintValidator``s, can take advantage of dependency injection.
+Jakarta Validation also provides support for method parameter validation on any bean.
 
 === Introductory examples
 
