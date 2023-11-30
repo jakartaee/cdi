@@ -124,7 +124,7 @@
 
 
 	<properties>
-		<annotation.api.version>2.1.0</annotation.api.version>
+		<annotation.api.version>3.0.0-M1</annotation.api.version>
 		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>5.0.0</uel.api.version>
 		<interceptor.api.version>2.1.0</interceptor.api.version>
@@ -137,7 +137,7 @@
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>6.8.8</version>
+				<version>7.7.0</version>
 			</dependency>
 
 			<dependency>
@@ -323,12 +323,23 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -370,7 +381,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<description>Jakarta Contexts and Dependency Injection API</description>
@@ -381,7 +391,7 @@
 					</header>
 					<bottom><![CDATA[
 Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
-Copyright &#169; 2018,2022 Eclipse Foundation.<br>
+Copyright &#169; 2018,2023 Eclipse Foundation.<br>
 Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
 					</bottom>
 				</configuration>
