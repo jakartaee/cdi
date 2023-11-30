@@ -128,6 +128,7 @@
 		<atinject.api.version>2.0.1</atinject.api.version>
 		<uel.api.version>5.0.0</uel.api.version>
 		<interceptor.api.version>2.1.0</interceptor.api.version>
+		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 	</properties>
 
 	<!-- Configure all dependencies (e.g. testing) -->
@@ -274,6 +275,14 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
+			<resource>
+				<directory>src/main/javadoc</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>overview.html</include>
+				</includes>
+				<targetPath>${project.build.directory}/javadoc</targetPath>
+			</resource>
 		</resources>
 		<testResources>
 			<testResource>
@@ -386,6 +395,7 @@
 					<description>Jakarta Contexts and Dependency Injection API</description>
 					<doctitle>Jakarta Contexts and Dependency Injection API</doctitle>
 					<detectJavaApiLink>false</detectJavaApiLink>
+					<overview>${project.build.directory}/javadoc/overview.html</overview>
 					<windowtitle>Jakarta Contexts and Dependency Injection API</windowtitle>
 					<header><![CDATA[<br>Jakarta Contexts and Dependency Injection ${project.version}]]>
 					</header>
