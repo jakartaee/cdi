@@ -109,9 +109,9 @@ The actual mechanics of bean creation and destruction varies according to what k
 
 ==== Lifecycle of managed beans
 
-When the `create()` method of the `Bean` object that represents a managed bean is called, the container obtains an instance of the bean, as defined by the Managed Beans specification, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
+When the `create()` method of the `Bean` object that represents a managed bean is called, the container obtains an instance of the bean, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
 
-When the `destroy()` method is called, the container destroys the instance, as defined by the Managed Beans specification, and any dependent objects, as defined in <<dependent_objects_destruction>>.
+When the `destroy()` method is called, the container destroys the instance, and any dependent objects, as defined in <<dependent_objects_destruction>>.
 
 
 

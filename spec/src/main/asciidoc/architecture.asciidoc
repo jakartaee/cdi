@@ -15,7 +15,7 @@ This specification defines a powerful set of complementary services that help to
 
 
 The services defined by this specification allow objects to be bound to lifecycle contexts, to be injected, to be associated with interceptors and decorators, and to interact in a loosely coupled fashion by firing and observing events.
-Various kinds of objects are injectable, including Jakarta Enterprise Bean 3 session beans, managed beans and Jakarta EE resources.
+Various kinds of objects are injectable, including Jakarta Enterprise Bean 3 session beans, and Jakarta EE resources.
 We refer to these objects in general terms as _beans_ and to instances of beans that belong to contexts as _contextual instances_.
 Contextual instances may be injected into other objects by the dependency injection service.
 
@@ -83,20 +83,6 @@ When the context ends, the container automatically destroys the instance.
 Message-driven and entity beans are by nature non-contextual objects and may not be injected into other objects.
 
 The container performs dependency injection on all session and message-driven bean instances, even those which are not contextual instances.
-
-==== Relationship to managed beans
-
-The Managed Beans specification defines the basic programming model for application components managed by the Jakarta EE container.
-
-As defined by this specification, most Java classes, including all Jakarta Enterprise Beans, are managed beans.
-
-This specification defines contextual lifecycle management and dependency injection as generic services applicable to all managed beans.
-
-Any managed bean instance obtained via the dependency injection service is a contextual instance. It is bound to a lifecycle context and is available to other objects that execute in that context.
-The container automatically creates the instance when it is needed by a client.
-When the context ends, the container automatically destroys the instance.
-
-The container performs dependency injection on all managed bean instances, even those which are not contextual instances.
 
 ==== Relationship to Jakarta Dependency Injection
 
