@@ -36,7 +36,7 @@ JDK
 JMS
 JNDI
 JPA
-Jakarta Server Faces
+Jakarta Faces
 JSP
 JSR
 JTA

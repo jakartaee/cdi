@@ -6,7 +6,7 @@ This specification defines a powerful set of complementary services that help to
 * A well-defined lifecycle for stateful objects bound to _lifecycle contexts_, where the set of contexts is extensible
 * A sophisticated, typesafe _dependency injection_ mechanism, including the ability to select dependencies at either development or deployment time, without verbose configuration
 * Support for Jakarta EE modularity and the Jakarta EE component architecture - the modular structure of a Jakarta EE application is taken into account when resolving dependencies between Jakarta EE components
-* Integration with the Jakarta Unified Expression Language (EL), allowing any contextual object to be used directly within a Jakarta Server Faces or JSP page
+* Integration with the Jakarta Unified Expression Language (EL), allowing any contextual object to be used directly within a Jakarta Faces or JSP page
 * The ability to _decorate_ injected objects (only in {cdi_full} environment)
 * The ability to associate interceptors to objects via typesafe _interceptor bindings_
 * An _event notification_ model
@@ -22,7 +22,7 @@ Contextual instances may be injected into other objects by the dependency inject
 To take advantage of these facilities, the developer provides additional bean-level metadata in the form of Java annotations and application-level metadata in the form of an XML descriptor.
 
 The use of these services significantly simplifies the task of creating Jakarta EE applications by integrating the Jakarta EE web tier with Jakarta EE enterprise services.
-In particular, Jakarta Enterprise Bean components may be used as Jakarta Server Faces managed beans, thus integrating the programming models of Jakarta Enterprise Bean and Jakarta Server Faces.
+In particular, Jakarta Enterprise Bean components may be used as Jakarta Faces managed beans, thus integrating the programming models of Jakarta Enterprise Bean and Jakarta Faces.
 
 It's even possible to integrate with third-party frameworks.
 A portable extension may provide objects to be injected or obtain contextual instances using the dependency injection service. The framework may even raise and observe events using the event notification service.
@@ -94,11 +94,11 @@ The dependency injection service makes use of these annotations.
 The Jakarta Interceptors specification defines the basic programming model and semantics for interceptors.
 This specification enhances that model by providing the ability to associate interceptors with beans using typesafe interceptor bindings.
 
-==== Relationship to Jakarta Server Faces
+==== Relationship to Jakarta Faces
 
-Jakarta Server Faces is a web-tier presentation framework that provides a component model for graphical user interface components and an event-driven interaction model that binds user interface components to objects accessible via Unified EL.
+Jakarta Faces is a web-tier presentation framework that provides a component model for graphical user interface components and an event-driven interaction model that binds user interface components to objects accessible via Unified EL.
 
-This specification allows any bean to be assigned a name. Thus, a Jakarta Server Faces application may take advantage of the sophisticated context and dependency injection model defined by this specification.
+This specification allows any bean to be assigned a name. Thus, a Jakarta Faces application may take advantage of the sophisticated context and dependency injection model defined by this specification.
 
 ==== Relationship to Jakarta Validation
 
@@ -112,9 +112,9 @@ Jakarta Validation also provides support for method parameter validation on any 
 
 The following examples demonstrate the use of lifecycle contexts and dependency injection.
 
-==== Jakarta Server Faces example
+==== Jakarta Faces example
 
-The following Jakarta Server Faces page defines a login prompt for a web application:
+The following Jakarta Faces page defines a login prompt for a web application:
 
 [source, xml]
 ----
@@ -134,7 +134,7 @@ The following Jakarta Server Faces page defines a login prompt for a web applica
 
 The Jakarta EL expressions in this page refer to beans named `credentials` and `login`.
 
-The `Credentials` bean has a lifecycle that is bound to the Jakarta Server Faces request:
+The `Credentials` bean has a lifecycle that is bound to the Jakarta Faces request:
 
 [source, java]
 ----
@@ -261,8 +261,8 @@ public class DocumentEditor {
 
 The `@Documents` annotation is another application-defined qualifier type. The use of distinct qualifier types enables the container to distinguish which Jakarta Persistence persistence unit is required.
 
-When the login form is submitted, Jakarta Server Faces assigns the entered username and password to an instance of the `Credentials` bean that is automatically instantiated by the container.
-Next, Jakarta Server Faces calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
+When the login form is submitted, Jakarta Faces assigns the entered username and password to an instance of the `Credentials` bean that is automatically instantiated by the container.
+Next, Jakarta Faces calls the `login()` method of an instance of `Login` that is automatically instantiated by the container.
 This instance continues to exist for and be available to other requests in the same HTTP session, and provides the `User` object representing the current user to any other bean that requires it (for example, `DocumentEditor`). If the producer method is called before the `login()` method initializes the user object, it throws a `NotLoggedInException`.
 
 ==== Jakarta Enterprise Bean example
