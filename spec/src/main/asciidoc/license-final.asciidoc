@@ -14,7 +14,7 @@ Release: {revdate}
 
 === Final license
 
-Copyright 2018,2022 Eclipse Foundation.
+Copyright 2018,2023 Eclipse Foundation.
 
 This specification is licensed under the Eclipse Foundation Specification License 1.0; this specification is based on material that is licensed under the Apache License, version 2.0.
 

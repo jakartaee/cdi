@@ -1,9 +1,9 @@
 = Jakarta Contexts and Dependency Injection
 :author: Jakarta Contexts and Dependency Injection Specification Project
 :email: cdi-dev@eclipse.org
-:revnumber: 4.1
-:revdate: May 24 2023
-:revremark: Draft
+:revnumber: {revnumber}
+:revdate: {revdate}
+:revremark: {revremark}
 :version-label!:
 :sectanchors:
 :doctype: book
