@@ -20,7 +20,8 @@
 		<!-- asl2 for non-final releases, or final for EFSL -->
 		<license-file>asl2</license-file>
 		<!-- Draft for non-final releases, or Final for spec release -->
-		<revremark>Draft</revremark>
+		<revremark>Draft(M1)</revremark>
+		<revnumber>4.1</revnumber> <!-- major.minor only -->
 		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 		<revisiondate>${maven.build.timestamp}</revisiondate>
 	</properties>
@@ -200,17 +201,12 @@
 					<sourceDocumentName>cdi-spec.asciidoc</sourceDocumentName>
 					<attributes>
 						<license>${license-file}</license>
+						<revnumber>${revnumber}</revnumber>
 						<revremark>${revremark}</revremark>
+						<revdate>${revisiondate}</revdate>
 						<imagesdir>images</imagesdir>
 						<source-highlighter>coderay</source-highlighter>
 					</attributes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
 				</configuration>
 			</plugin>
 		</plugins>
