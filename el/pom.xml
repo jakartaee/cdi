@@ -22,7 +22,7 @@
 	</licenses>
 
 	<properties>
-		<uel.api.version>5.0.0</uel.api.version>
+		<uel.api.version>5.0.1</uel.api.version>
 	</properties>
 
 	<dependencyManagement>
