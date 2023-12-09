@@ -16,43 +16,52 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.AnnotatedMember;
-import jakarta.enterprise.inject.spi.AnnotatedType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Member;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+import jakarta.enterprise.inject.spi.AnnotatedMember;
+import jakarta.enterprise.inject.spi.AnnotatedType;
+
 public abstract class AnnotatedMemberHolder<T> implements AnnotatedMember<T> {
-    @Override public Member getJavaMember() {
+    @Override
+    public Member getJavaMember() {
         return null;
     }
 
-    @Override public boolean isStatic() {
+    @Override
+    public boolean isStatic() {
         return false;
     }
 
-    @Override public AnnotatedType<T> getDeclaringType() {
+    @Override
+    public AnnotatedType<T> getDeclaringType() {
         return null;
     }
 
-    @Override public Type getBaseType() {
+    @Override
+    public Type getBaseType() {
         return null;
     }
 
-    @Override public Set<Type> getTypeClosure() {
+    @Override
+    public Set<Type> getTypeClosure() {
         return null;
     }
 
-    @Override public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
+    @Override
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return null;
     }
 
-    @Override public Set<Annotation> getAnnotations() {
+    @Override
+    public Set<Annotation> getAnnotations() {
         return null;
     }
 
-    @Override public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
         return false;
     }
 }

@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -24,12 +24,12 @@ import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
  * Provides an operation for obtaining and destroying contextual instances with a particular scope of any contextual type. Any
  * instance of {@code Context} is called a context object.
  * </p>
- * 
+ *
  * <p>
  * {@link AlterableContext} was introduced in CDI 1.1 to allow bean instances to be destroyed by the application. Extensions
  * should implement {@link AlterableContext} instead of {@link Context}.
  * </p>
- * 
+ *
  * <p>
  * The context object is responsible for creating and destroying contextual instances by calling operations of
  * {@link Contextual}. In particular, the context object is responsible for destroying any
@@ -39,12 +39,12 @@ import jakarta.enterprise.inject.spi.AfterBeanDiscovery;
  * {@link CreationalContext} to {@code Contextual.destroy()} that it passed to
  * {@code Contextual.create()} when it created the instance.
  * </p>
- * 
+ *
  * <p>
  * A custom context object may be registered with the container using
  * {@link AfterBeanDiscovery#addContext(Context)}.
  * </p>
- * 
+ *
  * @author Pete Muir
  * @since 1.1
  */
@@ -54,7 +54,7 @@ public interface AlterableContext extends Context {
      * <p>
      * Destroy the existing contextual instance. If there is no existing instance, no action is taken.
      * </p>
-     * 
+     *
      * @param contextual the contextual type
      * @throws ContextNotActiveException if the context is not active
      */

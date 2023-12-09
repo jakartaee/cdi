@@ -27,7 +27,9 @@ import jakarta.enterprise.inject.spi.AnnotatedParameter;
  *
  * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedConstructor}
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
@@ -37,14 +39,14 @@ import jakarta.enterprise.inject.spi.AnnotatedParameter;
 public interface AnnotatedConstructorConfigurator<T> {
 
     /**
-     * 
+     *
      * @return the original {@link AnnotatedConstructor}
      */
     AnnotatedConstructor<T> getAnnotated();
 
     /**
      * Add an annotation to the constructor.
-     * 
+     *
      * @param annotation the annotation to add
      * @return self
      */
@@ -56,32 +58,32 @@ public interface AnnotatedConstructorConfigurator<T> {
      * <p>
      * Example predicates:
      * </p>
-     * 
+     *
      * <pre>
      *  {@code
      * // To remove all the annotations:
      * (a) -> true
-     * 
+     *
      * // To remove annotations with a concrete annotation type:
      * (a) -> a.annotationType().equals(Foo.class)
-     * 
+     *
      * // To remove annotation equal to a specified object:
      * (a) -> a.equals(fooAnnotation)
-     * 
+     *
      * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
      * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
      * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
      * }
      * </pre>
-     * 
+     *
      * @param predicate {@link Predicate} used to filter annotations to remove
      * @return self
      */
     AnnotatedConstructorConfigurator<T> remove(Predicate<Annotation> predicate);
-    
+
     /**
      * Remove all the annotations.
-     * 
+     *
      * @return self
      */
     default AnnotatedConstructorConfigurator<T> removeAll() {
@@ -89,14 +91,14 @@ public interface AnnotatedConstructorConfigurator<T> {
     }
 
     /**
-     * 
+     *
      * @return an immutable list of {@link AnnotatedParameterConfigurator}s reflecting the
      *         {@link AnnotatedConstructor#getParameters()}
      */
     List<AnnotatedParameterConfigurator<T>> params();
 
     /**
-     * 
+     *
      * @param predicate Testing the original {@link AnnotatedParameter}
      * @return a sequence of {@link AnnotatedParameterConfigurator}s matching the given predicate
      * @see AnnotatedParameterConfigurator#getAnnotated()

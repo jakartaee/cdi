@@ -24,6 +24,7 @@ public class RepeatBean {
     public RepeatBean() {
 
     }
+
     @Repeater("e")
     @Repeater("f")
     public void doRepeat(@Repeater("p") @Repeater("q") RepeatBean parameter) {

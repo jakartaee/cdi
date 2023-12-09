@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -23,15 +23,17 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * the declared annotations.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@link AnnotatedType} by calling either {@link #setAnnotatedType(AnnotatedType)} or {@link #configureAnnotatedType()}.
+ * Any observer of this event is permitted to wrap and/or replace the {@link AnnotatedType} by calling either
+ * {@link #setAnnotatedType(AnnotatedType)} or {@link #configureAnnotatedType()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
- * The container must use the final value of this property, after all observers have been called, to discover the types and read the annotations of the program elements.
+ * The container must use the final value of this property, after all observers have been called, to discover the types and read
+ * the annotations of the program elements.
  * </p>
  * <p>
  * For example, the following observer decorates the {@link AnnotatedType} for every class that is
  * discovered by the container.
  * </p>
- * 
+ *
  * <pre>
  * public &lt;T&gt; void decorateAnnotatedType(@Observes ProcessAnnotatedType&lt;T&gt; pat) {
  *     pat.setAnnotatedType(decorate(pat.getAnnotatedType()));
@@ -42,7 +44,9 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author David Allen
  * @author Antoine Sabot-Durand
@@ -53,7 +57,7 @@ public interface ProcessAnnotatedType<X> {
     /**
      * Returns the {@link AnnotatedType} object that will be used by the container to read the
      * declared annotations.
-     * 
+     *
      * @return the {@code AnnotatedType} object
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -61,7 +65,7 @@ public interface ProcessAnnotatedType<X> {
 
     /**
      * Replaces the {@link AnnotatedType}.
-     * 
+     *
      * @param type the new {@link AnnotatedType} object to use
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -81,6 +85,7 @@ public interface ProcessAnnotatedType<X> {
 
     /**
      * Forces the container to ignore this type.
+     *
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();

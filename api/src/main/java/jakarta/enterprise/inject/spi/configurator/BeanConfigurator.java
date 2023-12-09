@@ -38,7 +38,9 @@ import jakarta.enterprise.util.TypeLiteral;
  *
  * This builder is not thread safe and shall not be used concurrently.
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see AfterBeanDiscovery#addBean()
  * @author Martin Kouba

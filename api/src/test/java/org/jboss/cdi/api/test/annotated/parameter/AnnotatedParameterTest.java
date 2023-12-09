@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
 
 /**
  * Test for the default method implementation of {@link AnnotatedParameter#getJavaParameter()}.
- * 
+ *
  * @author Jozef Hartinger
  *
  */
@@ -89,7 +89,7 @@ public class AnnotatedParameterTest {
         public Set<Annotation> getAnnotations() {
             return null;
         }
-        
+
         @Override
         public <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
             return null;
@@ -137,7 +137,7 @@ public class AnnotatedParameterTest {
         public Set<Annotation> getAnnotations() {
             return null;
         }
-        
+
         @Override
         public <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
             return null;

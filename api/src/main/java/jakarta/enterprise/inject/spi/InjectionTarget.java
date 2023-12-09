@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -23,11 +23,13 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * instance of a type.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for {@code InjectionTarget}.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for {@code InjectionTarget}.
+ * </p>
+ *
  * @see jakarta.annotation.PostConstruct
  * @see jakarta.annotation.PreDestroy
- * 
+ *
  * @author Pete Muir
  * @author David Allen
  * @param <T> The class of the instance
@@ -39,7 +41,7 @@ public interface InjectionTarget<T> extends Producer<T> {
      * Performs dependency injection upon the given object. Performs Java EE component environment injection, sets the value of
      * all injected fields, and calls all initializer methods.
      * </p>
-     * 
+     *
      * @param instance The instance upon which to perform injection
      * @param ctx The {@link CreationalContext} to use for creating new instances
      */
@@ -47,20 +49,22 @@ public interface InjectionTarget<T> extends Producer<T> {
 
     /**
      * <p>
-     * Calls the {@link jakarta.annotation.PostConstruct} callback, if it exists, according to the semantics required by the Java
+     * Calls the {@link jakarta.annotation.PostConstruct} callback, if it exists, according to the semantics required by the
+     * Java
      * EE platform specification.
      * </p>
-     * 
+     *
      * @param instance The instance on which to invoke the {@link jakarta.annotation.PostConstruct} method
      */
     public void postConstruct(T instance);
 
     /**
      * <p>
-     * Calls the {@link jakarta.annotation.PreDestroy} callback, if it exists, according to the semantics required by the Java EE
+     * Calls the {@link jakarta.annotation.PreDestroy} callback, if it exists, according to the semantics required by the Java
+     * EE
      * platform specification.
      * </p>
-     * 
+     *
      * @param instance The instance on which to invoke the {@link jakarta.annotation.PreDestroy} method
      */
     public void preDestroy(T instance);

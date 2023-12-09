@@ -17,6 +17,7 @@
 package org.jboss.cdi.api.test.privileged.annotation;
 
 import jakarta.enterprise.util.AnnotationLiteral;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

@@ -26,7 +26,7 @@ public interface ScannedClasses {
      * by the container, leads to non-portable behavior.
      *
      * @param className binary name of the class, as defined by <cite>The Java&trade; Language Specification</cite>;
-     * in other words, the class name as returned by {@link Class#getName()}
+     *        in other words, the class name as returned by {@link Class#getName()}
      */
     void add(String className);
 }

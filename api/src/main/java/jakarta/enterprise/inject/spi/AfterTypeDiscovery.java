@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -16,8 +16,9 @@
 
 package jakarta.enterprise.inject.spi;
 
-import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 import java.util.List;
+
+import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
 
 /**
  * <p>
@@ -31,7 +32,9 @@ import java.util.List;
  * Changes made to these lists after the invocation of the last observer method of the {@code AfterTypeDiscovery} are ignored.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Pete Muir
  * @author Antoine Sabot-Durand
@@ -40,19 +43,22 @@ import java.util.List;
 public interface AfterTypeDiscovery {
 
     /**
-     * @return the list of enabled alternatives for the application, sorted by priority in ascending order. Alternatives enabled for a bean archive are not included.
+     * @return the list of enabled alternatives for the application, sorted by priority in ascending order. Alternatives enabled
+     *         for a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getAlternatives();
 
     /**
-     * @return the list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled for a bean archive are not included.
+     * @return the list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled
+     *         for a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getInterceptors();
 
     /**
-     * @return the list of enabled decorators for the application, sorted by priority in ascending order. Decorators enabled for a bean archive are not included.
+     * @return the list of enabled decorators for the application, sorted by priority in ascending order. Decorators enabled for
+     *         a bean archive are not included.
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getDecorators();
@@ -64,7 +70,8 @@ public interface AfterTypeDiscovery {
      * </p>
      *
      * <p>
-     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
+     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be
+     * defined. {@link AnnotatedType}s
      * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
      * type.
      * </p>
@@ -88,7 +95,8 @@ public interface AfterTypeDiscovery {
      * </p>
      *
      * <p>
-     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be defined. {@link AnnotatedType}s
+     * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be
+     * defined. {@link AnnotatedType}s
      * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
      * type.
      * </p>

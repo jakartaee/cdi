@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -34,7 +34,7 @@ import jakarta.enterprise.inject.spi.configurator.ProducerConfigurator;
  * For example, this observer decorates the {@code Producer} for the all producer methods and field of type
  * {@code EntityManager}.
  * </p>
- * 
+ *
  * <pre>
  * void decorateEntityManager(@Observes ProcessProducer&lt;?, EntityManager&gt; pp) {
  *     pit.setProducer(decorate(pp.getProducer()));
@@ -45,7 +45,9 @@ import jakarta.enterprise.inject.spi.configurator.ProducerConfigurator;
  * by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see Producer
  * @author David Allen
@@ -56,7 +58,7 @@ public interface ProcessProducer<T, X> {
     /**
      * Returns the {@link AnnotatedField} representing the producer field or the
      * {@link AnnotatedMethod} representing the producer method.
-     * 
+     *
      * @return the {@link AnnotatedMember} representing the producer
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -65,7 +67,7 @@ public interface ProcessProducer<T, X> {
     /**
      * Returns the {@link Producer} object that will be used by the container to call the producer
      * method or read the producer field.
-     * 
+     *
      * @return the {@link Producer} invoker object used by the container
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -74,20 +76,20 @@ public interface ProcessProducer<T, X> {
     /**
      * Replaces the {@link Producer} object that will be used by the container to call the producer
      * method or read the producer field.
-     * 
+     *
      * @param producer the new {@link Producer} object to use
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void setProducer(Producer<X> producer);
-    
+
     /**
      * Returns a {@link ProducerConfigurator} initialized with the {@link Producer} processed by this event, to configure a new
      * {@link Producer} that will replace the original one at the end of the observer invocation.
-     * 
+     *
      * <p>
      * Each call returns the same configurator instance within an observer notification.
      * </p>
-     * 
+     *
      * @return a non reusable {@link ProducerConfigurator} to configure the original
      *         {@link Producer}.
      * @throws IllegalStateException if called outside of the observer method invocation
@@ -98,7 +100,7 @@ public interface ProcessProducer<T, X> {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t The definition error to register as a {@link java.lang.Throwable}
      * @throws IllegalStateException if called outside of the observer method invocation
      */

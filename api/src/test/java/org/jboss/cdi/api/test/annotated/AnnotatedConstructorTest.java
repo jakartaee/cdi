@@ -16,27 +16,33 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import org.testng.annotations.BeforeClass;
-
-import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
-public class AnnotatedConstructorTest extends AbstractAnnotatedTest{
+import jakarta.enterprise.inject.spi.Annotated;
+
+import org.testng.annotations.BeforeClass;
+
+public class AnnotatedConstructorTest extends AbstractAnnotatedTest {
     Constructor<RepeatBean> constructor;
+
     @BeforeClass
     public void setupConstructor() throws Exception {
         this.constructor = RepeatBean.class.getConstructor();
     }
-    @Override protected Annotated getAnnotated() {
+
+    @Override
+    protected Annotated getAnnotated() {
         return new AnnotatedConstructorHolder<>(constructor);
     }
 
-    @Override protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
         return constructor.getAnnotationsByType(annotationClass);
     }
 
-    @Override protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
         return constructor.getAnnotation(annotationClass);
     }
 }

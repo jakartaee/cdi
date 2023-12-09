@@ -28,20 +28,22 @@ import jakarta.enterprise.inject.spi.BeanManager;
  * If no qualifier is passed to {@link #select} method, the <code>@Default</code> qualifier is assumed.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for CDI in Java SE.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for CDI in Java SE.
+ * </p>
  *
  * @author Antoine Sabot-Durand
  * @author John D. Ament
  * @author Graeme Rocher
  * @since 2.0
  */
-public interface SeContainer extends Instance<Object>,AutoCloseable {
-
+public interface SeContainer extends Instance<Object>, AutoCloseable {
 
     /**
      * <p>
      * Shuts down this SeContainer instance when it is no longer in scope. Implemented from {@link AutoCloseable},
      * </p>
+     *
      * @throws IllegalStateException if the container is already shutdown
      */
     @Override
@@ -53,7 +55,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      *
      * @return true if called before container shutdown
      */
-     boolean isRunning();
+    boolean isRunning();
 
     /**
      * Get the CDI BeanManager for this container
@@ -61,7 +63,7 @@ public interface SeContainer extends Instance<Object>,AutoCloseable {
      * @return the BeanManager
      * @throws IllegalStateException if called when the container is already shutdown
      */
-     BeanManager getBeanManager();
+    BeanManager getBeanManager();
 
     /**
      * Get the CDI {@link BeanContainer} for this container.

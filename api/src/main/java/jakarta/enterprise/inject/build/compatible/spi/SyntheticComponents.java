@@ -47,6 +47,7 @@ public interface SyntheticComponents {
      * <p>
      * This method is supposed to be called with explicitly provided type arguments. For example,
      * to define a synthetic observer of event type {@code List<String>}, one would call:
+     *
      * <pre>{@code
      * // types is of type Types
      * // syntheticComponents is of type SyntheticComponents

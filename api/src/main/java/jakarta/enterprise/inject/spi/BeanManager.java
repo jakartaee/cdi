@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -16,20 +16,20 @@
 
 package jakarta.enterprise.inject.spi;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Set;
+
 import jakarta.el.ELResolver;
 import jakarta.el.ExpressionFactory;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.InjectionException;
+import jakarta.enterprise.inject.Stereotype;
 import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.util.Nonbinding;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Set;
-
-import jakarta.enterprise.inject.Stereotype;
 
 /**
  * <p>
@@ -41,49 +41,50 @@ import jakarta.enterprise.inject.Stereotype;
  * In CDI Lite environment, applications may obtain a {@code BeanManager}, but invoking methods that are not inherited
  * from {@link BeanContainer} results in non-portable behavior.
  * </p>
- * 
+ *
  * <p>
  * Any bean may obtain an instance of <code>BeanManager</code> by injecting it:
  * </p>
- * 
+ *
  * <pre>
  * &#064;Inject
  * BeanManager manager;
  * </pre>
- * 
+ *
  * <p>
- * Java EE components may obtain an instance of <code>BeanManager</code> from {@linkplain javax.naming JNDI} by looking up the name
+ * Java EE components may obtain an instance of <code>BeanManager</code> from {@linkplain javax.naming JNDI} by looking up the
+ * name
  * {@code java:comp/BeanManager}.
  * </p>
- * 
+ *
  * <p>
  * Most operations of BeanManager may be called at any time during the execution of the application.
  * </p>
- * <p>    
- * However, the following  operations must not be called before the {@link AfterBeanDiscovery} event is fired:
+ * <p>
+ * However, the following operations must not be called before the {@link AfterBeanDiscovery} event is fired:
  * </p>
  * <ul>
- *     <li>{@link #getBeans(String)},</li>
- *     <li>{@link #getBeans(java.lang.reflect.Type, java.lang.annotation.Annotation...)},</li>
- *     <li>{@link #getPassivationCapableBean(String)},</li>
- *     <li>{@link #resolve(java.util.Set)},</li>
- *     <li>{@link #resolveDecorators(java.util.Set, java.lang.annotation.Annotation...)},</li>
- *     <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
- *     <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
- *     <li>{@link #validate(InjectionPoint)},</li>
+ * <li>{@link #getBeans(String)},</li>
+ * <li>{@link #getBeans(java.lang.reflect.Type, java.lang.annotation.Annotation...)},</li>
+ * <li>{@link #getPassivationCapableBean(String)},</li>
+ * <li>{@link #resolve(java.util.Set)},</li>
+ * <li>{@link #resolveDecorators(java.util.Set, java.lang.annotation.Annotation...)},</li>
+ * <li>{@link #resolveInterceptors(InterceptionType, java.lang.annotation.Annotation...)},</li>
+ * <li>{@link #resolveObserverMethods(Object, java.lang.annotation.Annotation...)},</li>
+ * <li>{@link #validate(InjectionPoint)},</li>
  * </ul>
  * <p>
  * and the following operations must not be called before the {@link AfterDeploymentValidation} event is fired:
  * </p>
  * <ul>
- *     <li>{@link #createInstance()}</li>
- *     <li>{@link #getReference(Bean, java.lang.reflect.Type, CreationalContext)},</li>
- *     <li>{@link #getInjectableReference(InjectionPoint, CreationalContext)},</li>
+ * <li>{@link #createInstance()}</li>
+ * <li>{@link #getReference(Bean, java.lang.reflect.Type, CreationalContext)},</li>
+ * <li>{@link #getInjectableReference(InjectionPoint, CreationalContext)},</li>
  * </ul>
  * <p>
  * or the container will throw an Exception.
  * </p>
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
  * @author Clint Popetz
@@ -97,23 +98,23 @@ public interface BeanManager extends BeanContainer {
      * Obtains an injectable reference for a certain {@linkplain InjectionPoint injection point}.
      * </p>
      *
-     * @param ij  the target injection point
+     * @param ij the target injection point
      * @param ctx a {@link CreationalContext} that may be used to destroy any object with scope
-     *            {@link Dependent} that is created
+     *        {@link Dependent} that is created
      * @return the injectable reference
      * @throws UnsatisfiedResolutionException if typesafe resolution results in an unsatisfied dependency
-     * @throws AmbiguousResolutionException   typesafe resolution results in an unresolvable ambiguous dependency
-     * @throws IllegalStateException          if called during application initialization, before the {@link AfterDeploymentValidation}
-     *                                        event is fired.
+     * @throws AmbiguousResolutionException typesafe resolution results in an unresolvable ambiguous dependency
+     * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
+     *         event is fired.
      */
     Object getInjectableReference(InjectionPoint ij, CreationalContext<?> ctx);
 
     /**
      * Returns the {@link PassivationCapable} bean with the given identifier.
      *
-     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer, 
+     * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     * 
+     *
      * @param id the identifier
      * @return a {@link Bean} that implements {@link PassivationCapable} and has the given
      *         identifier, or a null value if there is no such bean
@@ -126,9 +127,9 @@ public interface BeanManager extends BeanContainer {
      * Validate a certain {@linkplain InjectionPoint injection point}.
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
-     * this method will only validate injection points discovered by the container before the {@link AfterBeanDiscovery} 
+     * this method will only validate injection points discovered by the container before the {@link AfterBeanDiscovery}
      * event is fired.
-     * 
+     *
      * @param injectionPoint the {@linkplain InjectionPoint injection point} to validate
      * @throws InjectionException if there is a deployment problem (for example, an unsatisfied or unresolvable ambiguous
      *         dependency) associated with the injection point
@@ -144,7 +145,7 @@ public interface BeanManager extends BeanContainer {
      *
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return decorators discovered by the container before the {@link AfterBeanDiscovery} event is fired.
-     * 
+     *
      * @param types the set of bean types of the decorated bean
      * @param qualifiers the qualifiers declared by the decorated bean
      * @return the resulting set of {@linkplain Decorator decorators}
@@ -158,7 +159,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Test the given annotation type to determine if it is a passivating {@linkplain jakarta.enterprise.context scope type}.
-     * 
+     *
      * @param annotationType the annotation type
      * @return <code>true</code> if the annotation type is a passivating scope type
      */
@@ -167,7 +168,7 @@ public interface BeanManager extends BeanContainer {
     /**
      * Obtains the set of meta-annotations for a certain {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding
      * type} .
-     * 
+     *
      * @param bindingType the {@linkplain jakarta.interceptor.InterceptorBinding interceptor binding type}
      * @return the set of meta-annotations
      */
@@ -175,7 +176,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Obtains meta-annotations for a certain {@linkplain Stereotype stereotype}.
-     * 
+     *
      * @param stereotype the {@linkplain Stereotype stereotype}
      * @return the set of meta-annotations
      */
@@ -184,7 +185,7 @@ public interface BeanManager extends BeanContainer {
     /**
      * Determine if two qualifiers are considered equivalent for the purposes of typesafe resolution, taking into account any
      * members annotated with {@link Nonbinding}.
-     * 
+     *
      * @param qualifier1 a qualifier to check
      * @param qualifier2 a qualifier to check
      * @return true if the two qualifiers are equivalent, otherwise false
@@ -195,7 +196,7 @@ public interface BeanManager extends BeanContainer {
     /**
      * Determine if two interceptor bindings are considered equivalent for the purposes of typesafe resolution, taking into
      * account any members annotated with {@link Nonbinding}.
-     * 
+     *
      * @param interceptorBinding1 an interceptor binding to check
      * @param interceptorBinding2 an interceptor binding to check
      * @return true if the two interceptor bindings are equivalent, otherwise false
@@ -206,7 +207,7 @@ public interface BeanManager extends BeanContainer {
     /**
      * Determine the hash code of a qualifier, using the JDK algorithm for determining an annotation hash code, ignoring any
      * members annotated with {@link Nonbinding}.
-     * 
+     *
      * @param qualifier the qualifier to consider
      * @return the hashCode for the qualifier
      * @since 1.1
@@ -216,7 +217,7 @@ public interface BeanManager extends BeanContainer {
     /**
      * Determine the hash code of an interceptor binding, using the JDK algorithm for determining an annotation hash code,
      * ignoring any members annotated with {@link Nonbinding}.
-     * 
+     *
      * @param interceptorBinding the interceptor binding to consider
      * @return the hashCode for the interceptor binding
      * @since 1.1
@@ -234,11 +235,12 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Returns a wrapper {@link jakarta.el.ExpressionFactory} that delegates {@link jakarta.el.MethodExpression} and
-     * {@link jakarta.el.ValueExpression} creation to the given {@link jakarta.el.ExpressionFactory}. When a Unified EL expression
+     * {@link jakarta.el.ValueExpression} creation to the given {@link jakarta.el.ExpressionFactory}. When a Unified EL
+     * expression
      * is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the wrapper
      * {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope
      * {@link Dependent}.
-     * 
+     *
      * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
      * @param expressionFactory the {@link jakarta.el.ExpressionFactory} to wrap
      * @return the wrapped {@link jakarta.el.ExpressionFactory}
@@ -248,7 +250,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Obtain an {@link AnnotatedType} that may be used to read the annotations of the given class or interface.
-     * 
+     *
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
      * @return the {@link AnnotatedType}
@@ -259,7 +261,7 @@ public interface BeanManager extends BeanContainer {
      * <p>
      * An implementation of {@link InjectionTargetFactory} that provides container created {@link InjectionTarget} instances.
      * </p>
-     * 
+     *
      * <p>
      * This factory can be wrapped to add behavior to container created injection targets.
      * </p>
@@ -276,7 +278,7 @@ public interface BeanManager extends BeanContainer {
      * An implementation of {@link ProducerFactory} that provides container created {@link Producer} instances for the given
      * field.
      * </p>
-     * 
+     *
      * <p>
      * This factory can be wrapped to add behavior to container created producers.
      * </p>
@@ -295,7 +297,7 @@ public interface BeanManager extends BeanContainer {
      * An implementation of {@link ProducerFactory} that provides container created {@link Producer} instances for the given
      * method.
      * </p>
-     * 
+     *
      * <p>
      * This factory can be wrapped to add behavior to container created producers.
      * </p>
@@ -313,7 +315,7 @@ public interface BeanManager extends BeanContainer {
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
      * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
      * instead.
-     * 
+     *
      * @param <T> the type
      * @param type the {@link AnnotatedType}
      * @return a container provided implementation of {@link InjectionTarget}
@@ -325,7 +327,7 @@ public interface BeanManager extends BeanContainer {
      * Obtains a {@link BeanAttributes} for the given {@link AnnotatedType}. The container ignores the annotations and types
      * declared by the elements of the actual Java class and uses the metadata provided via the {@link Annotated} interface
      * instead.
-     * 
+     *
      * @param type the {@link AnnotatedType}
      * @return a container provided implementation of {@link InjectionTarget}
      * @since 1.1
@@ -336,14 +338,15 @@ public interface BeanManager extends BeanContainer {
      * <p>
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link InjectionTarget}.
      * </p>
-     * 
+     *
      * <p>
      * The {@link InjectionTarget} creates and destroys instances of the bean, performs dependency injection and lifecycle
      * callbacks, and determines the return value of {@link Bean#getInjectionPoints()}. The {@link InjectionTarget} is obtained
-     * from the {@link InjectionTargetFactory}. {@link #getInjectionTargetFactory(AnnotatedType)} allows use of a container created
+     * from the {@link InjectionTargetFactory}. {@link #getInjectionTargetFactory(AnnotatedType)} allows use of a container
+     * created
      * {@link InjectionTarget}.
      * </p>
-     * 
+     *
      * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
      *        the returned {@link Bean}, and the return value of {@link Bean#isAlternative()}
@@ -359,14 +362,14 @@ public interface BeanManager extends BeanContainer {
      * <p>
      * Obtains a {@link Bean} for the given {@link BeanAttributes}, bean class and {@link Producer}.
      * </p>
-     * 
+     *
      * <p>
      * The {@link Producer} creates and destroys instances of the decorator, and determines the return value of
      * {@link Bean#getInjectionPoints()}. The {@link Producer} is obtained from the {@link ProducerFactory}.
-     * {@link #getProducerFactory(AnnotatedMethod, Bean)} or {@link #getProducerFactory(AnnotatedField, Bean)} allows use of a 
+     * {@link #getProducerFactory(AnnotatedMethod, Bean)} or {@link #getProducerFactory(AnnotatedField, Bean)} allows use of a
      * container created {@link Producer}.
      * </p>
-     * 
+     *
      * @param <T> the type
      * @param <X> the type of the declaring bean
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
@@ -380,7 +383,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedField}.
-     * 
+     *
      * @param field the {@link AnnotatedField} defining the injection point
      * @return the container provided {@link InjectionPoint}
      * @throws IllegalArgumentException if there is a definition error associated with the injection point
@@ -390,7 +393,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Obtains a container provided implementation of {@link InjectionPoint} for the given {@link AnnotatedParameter}.
-     * 
+     *
      * @param parameter the {@link AnnotatedParameter} defining the injection point
      * @return the container provided {@link InjectionPoint}
      * @throws IllegalArgumentException if there is a definition error associated with the injection point
@@ -400,7 +403,7 @@ public interface BeanManager extends BeanContainer {
 
     /**
      * Obtains the container's instance of an Extension class declared in <code>META-INF/services</code>.
-     * 
+     *
      * @param <T> the type of the extension
      * @param extensionClass the type of the extension class
      * @return the extension instance

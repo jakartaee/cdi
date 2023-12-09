@@ -35,7 +35,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * While <code>ApplicationScoped</code> must be associated with the built-in application context required by the specification,
  * third-party extensions are
- * allowed to also associate it with their own context. Behavior described below is only related to the built-in application context.
+ * allowed to also associate it with their own context. Behavior described below is only related to the built-in application
+ * context.
  * </p>
  *
  * <p>
@@ -43,7 +44,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <ul>
- * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method of any
+ * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method
+ * of any
  * servlet filter and when the container calls any <code>ServletContextListener</code>, <code>HttpSessionListener</code>,
  * <code>AsyncListener</code> or <code>ServletRequestListener</code>,</li>
  * <li>during any Java EE web service invocation,</li>
@@ -64,15 +66,16 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <p>
-  * An event with qualifier <code>@Initialized(ApplicationScoped.class)</code> is fired when the application context is initialized
-  * and an event with qualifier <code>@Destroyed(ApplicationScoped.class)</code> when the application context is destroyed.
-  * The event payload is:
-  * </p>
-  *
-  * <ul>
-  * <li>the <code>ServletContext</code> if the application is a web application deployed to a Servlet container, or</li>
-  * <li>any <code>java.lang.Object</code> for other types of application.</li>
-  * </ul>
+ * An event with qualifier <code>@Initialized(ApplicationScoped.class)</code> is fired when the application context is
+ * initialized
+ * and an event with qualifier <code>@Destroyed(ApplicationScoped.class)</code> when the application context is destroyed.
+ * The event payload is:
+ * </p>
+ *
+ * <ul>
+ * <li>the <code>ServletContext</code> if the application is a web application deployed to a Servlet container, or</li>
+ * <li>any <code>java.lang.Object</code> for other types of application.</li>
+ * </ul>
  *
  * @author Gavin King
  * @author Pete Muir

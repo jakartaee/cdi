@@ -10,12 +10,12 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationInfo;
-import jakarta.enterprise.lang.model.declarations.ClassInfo;
-
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.function.Predicate;
+
+import jakarta.enterprise.lang.model.AnnotationInfo;
+import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
  * Allows adding annotations to and removing annotations from a class.

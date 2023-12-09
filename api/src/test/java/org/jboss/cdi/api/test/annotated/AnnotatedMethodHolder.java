@@ -16,17 +16,19 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.AnnotatedMethod;
 import java.lang.reflect.Method;
 
-public class AnnotatedMethodHolder<T> extends AnnotatedCallableHolder<T> implements AnnotatedMethod<T>{
+import jakarta.enterprise.inject.spi.AnnotatedMethod;
+
+public class AnnotatedMethodHolder<T> extends AnnotatedCallableHolder<T> implements AnnotatedMethod<T> {
     private final Method method;
 
     public AnnotatedMethodHolder(Method method) {
         this.method = method;
     }
 
-    @Override public Method getJavaMember() {
+    @Override
+    public Method getJavaMember() {
         return method;
     }
 }

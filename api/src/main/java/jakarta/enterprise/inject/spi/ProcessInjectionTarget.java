@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -29,7 +29,7 @@ package jakarta.enterprise.inject.spi;
  * <p>
  * For example, this observer decorates the {@code InjectionTarget} for all servlets.
  * </p>
- * 
+ *
  * <pre>
  * public &lt;T extends Servlet&gt; void decorateServlet(@Observes ProcessInjectionTarget&lt;T&gt; pit) {
  *     pit.setInjectionTarget(decorate(pit.getInjectionTarget()));
@@ -40,7 +40,9 @@ package jakarta.enterprise.inject.spi;
  * definition error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see InjectionTarget
  * @author David Allen
@@ -50,7 +52,7 @@ public interface ProcessInjectionTarget<X> {
     /**
      * Returns the {@link AnnotatedType} representing the managed bean class, session bean class or
      * other Java EE component class supporting injection.
-     * 
+     *
      * @return the {@link AnnotatedType} of the bean with an injection target
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -59,7 +61,7 @@ public interface ProcessInjectionTarget<X> {
     /**
      * Returns the {@link InjectionTarget} object that will be used by the container to perform
      * injection.
-     * 
+     *
      * @return the {@link InjectionTarget} object which performs the injection
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -67,7 +69,7 @@ public interface ProcessInjectionTarget<X> {
 
     /**
      * Replaces the {@link InjectionTarget} which performs injection for this target.
-     * 
+     *
      * @param injectionTarget The new {@link InjectionTarget} to use
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -76,7 +78,7 @@ public interface ProcessInjectionTarget<X> {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t A {@link java.lang.Throwable} representing the definition error
      * @throws IllegalStateException if called outside of the observer method invocation
      */

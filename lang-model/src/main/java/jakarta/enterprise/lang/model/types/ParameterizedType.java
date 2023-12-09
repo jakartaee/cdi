@@ -1,7 +1,8 @@
 package jakarta.enterprise.lang.model.types;
 
-import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import java.util.List;
+
+import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
  * A parameterized type. That is, a {@linkplain #genericClass() generic class} together with

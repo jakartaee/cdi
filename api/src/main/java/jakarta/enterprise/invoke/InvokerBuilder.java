@@ -60,12 +60,13 @@ package jakarta.enterprise.invoke;
  *
  * <pre>
  * builder.setInstanceLookup()
- *        .setArgumentTransformer(0, String.class, "toUpperCase")
- *        .setReturnValueTransformer(Transformations.class, "repeatTwice")
- *        .build();
+ *         .setArgumentTransformer(0, String.class, "toUpperCase")
+ *         .setReturnValueTransformer(Transformations.class, "repeatTwice")
+ *         .build();
  * </pre>
  *
  * The resulting invoker will be equivalent to the following class:
+ *
  * <pre>
  * class TheInvoker implements Invoker&lt;MyService, String&gt; {
  *     String invoke(MyService ignored, Object[] arguments) {
@@ -220,7 +221,7 @@ package jakarta.enterprise.invoke;
  * in which case the invoker will return the return value of the exception transformer. If
  * the invoker is supposed to throw an exception, the exception transformer must throw.
  * TODO this requires that implementations catch java.lang.Throwable, which is perhaps a bit too much?
- *  maybe stick with java.lang.Exception?
+ * maybe stick with java.lang.Exception?
  *
  * <h2>Invoker wrapping</h2>
  *
@@ -277,12 +278,12 @@ package jakarta.enterprise.invoke;
  * {@link Invoker#invoke(Object, Object[]) Invoker.invoke()} all hold.
  * <p>
  * TODO specify what happens when a transformer/wrapper declares a parameter of a primitive type
- *  but the actual value passed to the invoker is `null` (the transformer should get a zero value?)
+ * but the actual value passed to the invoker is `null` (the transformer should get a zero value?)
  * TODO specify what happens when a transformer/wrapper declares a parameter of some type
- *  but the actual value passed to the invoker is not assignable to it (CCE?)
+ * but the actual value passed to the invoker is not assignable to it (CCE?)
  *
  * @param <T> type of outcome of this builder; always represents an {@code Invoker},
- *            but does not necessarily have to be an {@code Invoker} instance directly
+ *        but does not necessarily have to be an {@code Invoker} instance directly
  * @since 4.1
  */
 // TODO more kinds of transformations could be defined, expecially for argument handling
@@ -301,7 +302,7 @@ public interface InvokerBuilder<T> {
      * @param position zero-based argument position for which lookup is enabled
      * @return this builder
      * @throws IllegalArgumentException if {@code position} is greather than or equal to
-     * the number of parameters declared by the target method
+     *         the number of parameters declared by the target method
      */
     InvokerBuilder<T> setArgumentLookup(int position);
 
@@ -323,7 +324,7 @@ public interface InvokerBuilder<T> {
      * @param methodName transformer method name
      * @return this builder
      * @throws IllegalArgumentException if {@code position} is greather than or equal to
-     * the number of parameters declared by the target method
+     *         the number of parameters declared by the target method
      * @throws IllegalStateException if this method is called more than once with the same {@code position}
      */
     InvokerBuilder<T> setArgumentTransformer(int position, Class<?> clazz, String methodName);

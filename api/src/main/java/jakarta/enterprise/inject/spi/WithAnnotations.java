@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -28,15 +28,19 @@ import java.lang.annotation.Target;
  * {@link WithAnnotations} may be applied to any portable extension observer method with an event parameter type of
  * {@link ProcessAnnotatedType} to filter the events delivered.
  * </p>
- * 
+ *
  * <p>
  * If the {@link WithAnnotations} annotation is applied to a portable extension observer method, then only
  * {@link ProcessAnnotatedType} events for types which have at least one of the annotations specified are observed. The
- * annotation can appear on the annotated type, or on any member, or any parameter of any member of the annotated type, as defined 
- * in section <a href="https://docs.jboss.org/cdi/spec/1.2/cdi-spec.html#alternative_metadata_sources">11.4 Alternative metadata sources</a>.
+ * annotation can appear on the annotated type, or on any member, or any parameter of any member of the annotated type, as
+ * defined
+ * in section <a href="https://docs.jboss.org/cdi/spec/1.2/cdi-spec.html#alternative_metadata_sources">11.4 Alternative metadata
+ * sources</a>.
  * The annotation may be applied as a meta-annotation on any annotation considered.
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Pete Muir
  * @since 1.1

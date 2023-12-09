@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -25,12 +25,15 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * enabled bean, before registering the {@link ObserverMethod} object.
  * </p>
  * <p>
- * For a custom implementation of {@link ObserverMethod}, the container must raise an event of type {@link ProcessSyntheticObserverMethod}.
+ * For a custom implementation of {@link ObserverMethod}, the container must raise an event of type
+ * {@link ProcessSyntheticObserverMethod}.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@link ObserverMethod} by calling either {@link #setObserverMethod(ObserverMethod)} or {@link #configureObserverMethod()}.
+ * Any observer of this event is permitted to wrap and/or replace the {@link ObserverMethod} by calling either
+ * {@link #setObserverMethod(ObserverMethod)} or {@link #configureObserverMethod()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
- * The container must use the final value of this property, after all observers have been called, he container must use the final
+ * The container must use the final value of this property, after all observers have been called, he container must use the
+ * final
  * value of this property, after all observers have been called, whenever it performs observer resolution.
  * </p>
  * <p>
@@ -38,22 +41,25 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see ObserverMethod
  * @author Gavin King
  * @author David Allen
- * @author  Antoine Sabot-Durand
+ * @author Antoine Sabot-Durand
  * @param <T> The type of the event being observed
  * @param <X> The bean type containing the observer method
  */
 public interface ProcessObserverMethod<T, X> {
-    
+
     /**
      * The {@link AnnotatedMethod} representing the observer method.
-     * 
+     *
      * <p>
-     * If invoked upon a {@link ProcessSyntheticObserverMethod} event, non-portable behavior results and the returned value should be ignored.
+     * If invoked upon a {@link ProcessSyntheticObserverMethod} event, non-portable behavior results and the returned value
+     * should be ignored.
      * </p>
      *
      * @return the {@link AnnotatedMethod} representing the observer method
@@ -74,7 +80,7 @@ public interface ProcessObserverMethod<T, X> {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t A {@link java.lang.Throwable} representing the definition error
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -104,7 +110,7 @@ public interface ProcessObserverMethod<T, X> {
 
     /**
      * Forces the container to ignore the observer method.
-     * 
+     *
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */

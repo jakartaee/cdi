@@ -46,6 +46,7 @@ public @interface Destroyed {
 
     /**
      * The scope for which to observe destruction
+     *
      * @return the scope type class
      */
     Class<? extends Annotation> value();

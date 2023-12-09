@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -20,22 +20,22 @@ package jakarta.enterprise.inject.spi;
  * <p>
  * Thrown when a definition error occurs.
  * </p>
- * 
+ *
  * <p>
  * Definition errors are developer errors. They may be detected by tooling at development time, and are also detected by the
  * container at initialization time. If a definition error exists in a deployment, initialization will be aborted by the
  * container.
  * </p>
- * 
+ *
  * <p>
  * The container is permitted to define a non-portable mode, for use at development time, in which some definition errors do not
  * cause application initialization to abort.
  * </p>
- * 
+ *
  * <p>
  * An implementation is permitted to throw a subclass of {@link DefinitionException} for any definition error which exists.
  * </p>
- * 
+ *
  * @author Pete Muir
  * @since 1.1
  */

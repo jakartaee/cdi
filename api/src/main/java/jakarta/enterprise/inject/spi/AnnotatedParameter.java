@@ -8,13 +8,15 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 
 package jakarta.enterprise.inject.spi;
+
+import static java.util.Arrays.asList;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
@@ -23,17 +25,15 @@ import java.lang.reflect.Parameter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
-
 /**
  * <p>
  * Represents a parameter of a method or constructor.
  * </p>
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
  * @author Jozef Hartinger
- * 
+ *
  * @param <X> the type that declares the method or constructor
  */
 public interface AnnotatedParameter<X> extends Annotated {
@@ -42,7 +42,7 @@ public interface AnnotatedParameter<X> extends Annotated {
      * <p>
      * Get the position of the parameter in the method or constructor argument list.
      * </p>
-     * 
+     *
      * @return the position of the parameter
      */
     public int getPosition();
@@ -51,7 +51,7 @@ public interface AnnotatedParameter<X> extends Annotated {
      * <p>
      * Get the declaring {@linkplain AnnotatedCallable method or constructor}.
      * </p>
-     * 
+     *
      * @return the declaring callable
      */
     public AnnotatedCallable<X> getDeclaringCallable();
@@ -70,7 +70,8 @@ public interface AnnotatedParameter<X> extends Annotated {
         return executable.getParameters()[getPosition()];
     }
 
-    @Override default <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
+    @Override
+    default <T extends Annotation> Set<T> getAnnotations(Class<T> annotationType) {
         T[] annotationsByType = getJavaParameter().getAnnotationsByType(annotationType);
         return new LinkedHashSet<>(asList(annotationsByType));
     }

@@ -10,12 +10,12 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import java.lang.annotation.Annotation;
+
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.AnnotationMember;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
-
-import java.lang.annotation.Annotation;
 
 /**
  * Builder for annotations of given type.
@@ -780,7 +780,7 @@ public interface AnnotationBuilder {
      *
      * @return the built {@link AnnotationInfo}, never {@code null}
      * @throws IllegalStateException if a value of some annotation member was not set, and that member
-     * does not declare a default value
+     *         does not declare a default value
      */
     AnnotationInfo build();
 }

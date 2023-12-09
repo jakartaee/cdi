@@ -16,17 +16,20 @@
 
 package org.jboss.cdi.api.test;
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import jakarta.enterprise.inject.spi.CDI;
-import jakarta.enterprise.inject.spi.CDIProvider;
 import java.io.FileWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.enterprise.inject.spi.CDIProvider;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 /**
  * Test for CDIProvider resolution in CDI abstract class.
+ *
  * @author Antoine Sabot-durand
  *
  */
@@ -42,7 +45,6 @@ public class CDITest {
             discoveredProviders = null;
         }
 
-
     }
 
     @BeforeMethod
@@ -56,7 +58,6 @@ public class CDITest {
     public void testWithoutServiceFile() throws Exception {
         CDI.current();
     }
-
 
     @Test
     public void testWithOneGoodCDIProvider() throws Exception {
@@ -99,7 +100,6 @@ public class CDITest {
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
     }
 
-
     @Test
     public void testWithTwoGoodCDIProviderReverse() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
@@ -120,7 +120,6 @@ public class CDITest {
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider2.DummyCDI2.class));
     }
 
-
     @Test
     public void testWithThreeCDIProviderOneWithNullCDIAndOthersGood() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
@@ -133,7 +132,6 @@ public class CDITest {
         Assert.assertTrue(CDI.current().getClass().equals(DummyCDIProvider.DummyCDI.class));
     }
 
-
     @Test(expectedExceptions = IllegalStateException.class)
     public void testWithFirstGoodCDIProvider() throws Exception {
         FileWriter fw = new FileWriter(SERVICE_FILE_NAME);
@@ -143,7 +141,6 @@ public class CDITest {
         fw.close();
         CDI.current();
     }
-
 
     @Test(expectedExceptions = IllegalStateException.class)
     public void testWithCDIProviderBadClass() throws Exception {

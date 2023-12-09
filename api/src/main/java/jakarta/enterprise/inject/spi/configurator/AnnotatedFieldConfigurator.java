@@ -23,7 +23,9 @@ import jakarta.enterprise.inject.spi.AnnotatedField;
 /**
  * This interface is part of the {@link AnnotatedTypeConfigurator} SPI and helps defining an {@link AnnotatedField}
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Martin Kouba
  * @author Antoine Sabot-Durand
@@ -31,16 +33,16 @@ import jakarta.enterprise.inject.spi.AnnotatedField;
  * @param <T> the class declaring the field
  */
 public interface AnnotatedFieldConfigurator<T> {
-    
+
     /**
-     * 
+     *
      * @return the original {@link AnnotatedField}
      */
     AnnotatedField<T> getAnnotated();
-    
+
     /**
      * Add an annotation to the field.
-     * 
+     *
      * @param annotation the annotation to add
      * @return self
      */
@@ -52,32 +54,32 @@ public interface AnnotatedFieldConfigurator<T> {
      * <p>
      * Example predicates:
      * </p>
-     * 
+     *
      * <pre>
      *  {@code
      * // To remove all the annotations:
      * (a) -> true
-     * 
+     *
      * // To remove annotations with a concrete annotation type:
      * (a) -> a.annotationType().equals(Foo.class)
-     * 
+     *
      * // To remove annotation equal to a specified object:
      * (a) -> a.equals(fooAnnotation)
-     * 
+     *
      * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
      * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
      * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
      * }
      * </pre>
-     * 
+     *
      * @param predicate {@link Predicate} used to filter annotations to remove
      * @return self
      */
     AnnotatedFieldConfigurator<T> remove(Predicate<Annotation> predicate);
-    
+
     /**
      * Remove all the annotations.
-     * 
+     *
      * @return self
      */
     default AnnotatedFieldConfigurator<T> removeAll() {

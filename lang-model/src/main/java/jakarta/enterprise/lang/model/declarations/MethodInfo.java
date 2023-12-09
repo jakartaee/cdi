@@ -1,8 +1,9 @@
 package jakarta.enterprise.lang.model.declarations;
 
+import java.util.List;
+
 import jakarta.enterprise.lang.model.types.Type;
 import jakarta.enterprise.lang.model.types.TypeVariable;
-import java.util.List;
 
 /**
  * A method or a constructor, {@linkplain #declaringClass() declared} in some class.
@@ -38,7 +39,7 @@ public interface MethodInfo extends DeclarationInfo {
      * If this method may declare a receiver parameter but does not, returns a {@link Type} with no annotations.
      *
      * @return the type of the receiver parameter declared by this method, with or without annotations,
-     * or {@code null} if this method cannot declare a receiver parameter
+     *         or {@code null} if this method cannot declare a receiver parameter
      */
     Type receiverType();
 

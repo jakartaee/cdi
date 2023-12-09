@@ -10,9 +10,9 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.declarations.ClassInfo;
-
 import java.lang.annotation.Annotation;
+
+import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
  * Supports instantiating {@link AnnotationBuilder}.

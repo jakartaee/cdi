@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -20,29 +20,31 @@ package jakarta.enterprise.inject.spi;
  * <p>
  * An {@link ProducerFactory} can create an {@link Producer} for a given bean.
  * </p>
- * 
+ *
  * <p>
  * The {@link ProducerFactory} obtained from {@link BeanManager#getProducerFactory(AnnotatedMethod, Bean)} or
  * {@link BeanManager#getProducerFactory(AnnotatedField, Bean)} is capable of providing container created
  * producers. This factory can be wrapped to add behavior to container created producers.
  * </p>
- * 
+ *
  * <p>
  * For example:
  * </p>
- * 
+ *
  * <pre>
  * BeanAttributes&lt;MyBean&gt; myBeanAttributes = beanManager.createBeanAttributes(myBeanAnnotatedFieldField);
  * beanManager.createBean(myBeanAttributes, MyBean.class, new ProducerFactory() {
- * 
+ *
  *     public &lt;T&gt; Producer&lt;T&gt; createProducer(Bean&lt;T&gt; bean) {
  *         return new WrappingProducer&lt;T&gt;(beanManager.getProducerFactory(myBeanAnnotatedField).createProducer(bean));
  *     }
  * });
  * </pre>
  *
- * <p>CDI Lite implementations are not required to provide support for {@code ProducerFactory}.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for {@code ProducerFactory}.
+ * </p>
+ *
  * @author Pete Muir
  * @since 1.1
  * @param <X> type of the bean containing the producer

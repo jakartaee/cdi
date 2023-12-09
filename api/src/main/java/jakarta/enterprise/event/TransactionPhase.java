@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -24,15 +24,17 @@ package jakarta.enterprise.event;
  * Transactional observer methods are observer methods which receive event notifications during the before or after completion
  * phase of the transaction in which the event was fired. If no transaction is in progress when the event is fired, they are
  * notified at the same time as other observers.
- * If the transaction is in progress, but {@code jakarta.transaction.Synchronization} callback cannot be registered due to the transaction being already
- * marked for rollback or in state where {@code jakarta.transaction.Synchronization} callbacks cannot be registered, the {@link #BEFORE_COMPLETION},
+ * If the transaction is in progress, but {@code jakarta.transaction.Synchronization} callback cannot be registered due to the
+ * transaction being already
+ * marked for rollback or in state where {@code jakarta.transaction.Synchronization} callbacks cannot be registered, the
+ * {@link #BEFORE_COMPLETION},
  * {@link #AFTER_COMPLETION} and {@link #AFTER_FAILURE} observer methods are notified at the same time as other observers,
  * but {@link #AFTER_SUCCESS} observer methods get skipped.
  * </p>
  *
  * @author Pete Muir
  * @author Gavin King
- * 
+ *
  */
 @SuppressWarnings("ALL")
 public enum TransactionPhase {
@@ -74,7 +76,8 @@ public enum TransactionPhase {
      * transaction fails.
      * </p>
      * <p>
-     * Transactional observer will be notified will also get invoked if there is no transaction in progress, or the transaction is in progress,
+     * Transactional observer will be notified will also get invoked if there is no transaction in progress, or the transaction
+     * is in progress,
      * but {@code jakarta.transaction.Synchronization} callback cannot be registered due to the transaction being already
      * marked for rollback or in state where {@code jakarta.transaction.Synchronization} callbacks cannot be registered.
      * </p>

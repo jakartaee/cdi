@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -24,8 +24,10 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * Provides a generic operation for producing an instance of a type.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for {@code Producer}.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for {@code Producer}.
+ * </p>
+ *
  * @author Pete Muir
  * @author David Allen
  * @param <T> The class of object produced by the producer
@@ -36,15 +38,17 @@ public interface Producer<T> {
      * Causes an instance to be produced via the {@code Producer}.
      * </p>
      * <p>
-     * If the {@code Producer} represents a class, this will invoke the constructor annotated {@link jakarta.inject.Inject} if it
-     * exists, or the constructor with no parameters otherwise. If the class has interceptors, <code>produce()</code> is responsible
+     * If the {@code Producer} represents a class, this will invoke the constructor annotated {@link jakarta.inject.Inject} if
+     * it
+     * exists, or the constructor with no parameters otherwise. If the class has interceptors, <code>produce()</code> is
+     * responsible
      * for building the interceptors and decorators of the instance.
      * </p>
      * <p>
      * If the {@code Producer} represents a producer field or method, this will invoke the producer method on, or access the
      * producer field of, a contextual instance of the bean that declares the producer.
      * </p>
-     * 
+     *
      * @param ctx The {@link CreationalContext} to use for the produced object
      * @return the instance produced
      */
@@ -62,7 +66,7 @@ public interface Producer<T> {
      * instance of the bean that declares the disposer method or performs any additional required cleanup, if any, to destroy
      * state associated with a resource.
      * </p>
-     * 
+     *
      * @param instance The instance to dispose
      */
     public void dispose(T instance);
@@ -74,7 +78,7 @@ public interface Producer<T> {
      * method parameters. For a producer method, this returns the set of {@code InjectionPoint} objects representing all
      * parameters of the producer method.
      * </p>
-     * 
+     *
      * @return the set of all {@linkplain InjectionPoint injection points} for the producer
      */
     public Set<InjectionPoint> getInjectionPoints();

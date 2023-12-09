@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -25,7 +25,9 @@ package jakarta.enterprise.inject.spi;
  * No requests will be processed by the deployment until all observers of this event return.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author David Allen
  */
@@ -34,7 +36,7 @@ public interface AfterDeploymentValidation {
     /**
      * Registers a deployment problem with the container, causing the container to abort deployment after all observers have
      * been notified.
-     * 
+     *
      * @param t The deployment problem as a {@link java.lang.Throwable}
      * @throws IllegalStateException if called outside of the observer method invocation
      */

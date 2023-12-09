@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -29,19 +29,21 @@ import jakarta.enterprise.inject.Stereotype;
  * <p>
  * Specifies that a class is a decorator. May be applied to a managed bean class.
  * </p>
- * 
+ *
  * <pre>
- * &#064;Decorator 
+ * &#064;Decorator
  * class TimestampLogger implements Logger { ... }
  * </pre>
- * 
+ *
  * <p>
  * Decorators of a session bean must comply with the bean provider programming restrictions defined by the EJB specification.
  * Decorators of a stateful session bean must comply with the rules for instance passivation and conversational state defined by
  * the EJB specification.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for decorators.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for decorators.
+ * </p>
  *
  * @see Delegate &#064;Delegate identifies the delegate injection point of a decorator.
  *

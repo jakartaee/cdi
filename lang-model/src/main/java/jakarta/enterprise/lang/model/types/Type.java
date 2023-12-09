@@ -27,7 +27,8 @@ import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
  * <li>a {@linkplain ClassType class} type, such as {@code String}</li>
  * <li>an {@linkplain ArrayType array} type, such as {@code int[]} or {@code String[][]}</li>
  * <li>a {@linkplain ParameterizedType parameterized} type, such as {@code List<String>}</li>
- * <li>a {@linkplain TypeVariable type variable}, such as {@code T} when used in a class that declares a type parameter {@code T}</li>
+ * <li>a {@linkplain TypeVariable type variable}, such as {@code T} when used in a class that declares a type parameter
+ * {@code T}</li>
  * <li>a {@linkplain WildcardType wildcard} type, such as the type argument in {@code List<? extends Number>}</li>
  * </ul>
  *

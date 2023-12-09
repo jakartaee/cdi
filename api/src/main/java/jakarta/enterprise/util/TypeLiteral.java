@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -29,24 +29,24 @@ import jakarta.enterprise.inject.Instance;
  * <p>
  * Supports inline instantiation of objects that represent parameterized types with actual type parameters.
  * </p>
- * 
+ *
  * <p>
  * An object that represents any parameterized type may be obtained by subclassing <code>TypeLiteral</code>.
  * </p>
- * 
+ *
  * <pre>
  * TypeLiteral&lt;List&lt;String&gt;&gt; stringListType = new TypeLiteral&lt;List&lt;String&gt;&gt;() {
  * };
  * </pre>
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
- * 
+ *
  * @param <T> the type, including all actual type parameters
- * 
+ *
  * @see Instance#select(TypeLiteral, Annotation...)
  * @see Event#select(TypeLiteral, Annotation...)
- * 
+ *
  */
 public abstract class TypeLiteral<T> implements Serializable {
 

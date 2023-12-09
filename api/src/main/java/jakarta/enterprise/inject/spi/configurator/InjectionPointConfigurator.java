@@ -16,11 +16,12 @@
 
 package jakarta.enterprise.inject.spi.configurator;
 
-import jakarta.enterprise.inject.spi.InjectionPoint;
-import jakarta.enterprise.inject.spi.ProcessInjectionPoint;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
+
+import jakarta.enterprise.inject.spi.InjectionPoint;
+import jakarta.enterprise.inject.spi.ProcessInjectionPoint;
 
 /**
  * This API is an helper to configure an existing {@link InjectionPoint} instance.
@@ -28,7 +29,9 @@ import java.util.Set;
  *
  * This builder is not thread safe and shall not be used concurrently.
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see ProcessInjectionPoint#configureInjectionPoint()
  * @author Antoine Sabot-Durand

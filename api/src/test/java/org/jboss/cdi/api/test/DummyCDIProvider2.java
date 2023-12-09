@@ -30,7 +30,6 @@ import jakarta.enterprise.util.TypeLiteral;
  */
 public class DummyCDIProvider2 implements CDIProvider {
 
-
     @Override
     public CDI<Object> getCDI() {
         return new DummyCDI2();
@@ -42,7 +41,6 @@ public class DummyCDIProvider2 implements CDIProvider {
     }
 
     public static class DummyCDI2 extends CDI<Object> {
-
 
         @Override
         public BeanManager getBeanManager() {
@@ -73,7 +71,7 @@ public class DummyCDIProvider2 implements CDIProvider {
         public boolean isAmbiguous() {
             return false;
         }
-        
+
         @Override
         public void destroy(Object instance) {
 

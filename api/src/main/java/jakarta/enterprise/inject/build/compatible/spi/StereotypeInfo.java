@@ -10,8 +10,9 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationInfo;
 import java.util.Collection;
+
+import jakarta.enterprise.lang.model.AnnotationInfo;
 
 /**
  * A stereotype. May define {@linkplain #defaultScope() default scope},
@@ -55,7 +56,7 @@ public interface StereotypeInfo {
      * Returns {@code null} if this stereotype is not meta-annotated {@code @Priority}.
      *
      * @return the {@link jakarta.annotation.Priority @Priority} value declared by this stereotype, or {@code null}
-     * if this stereotype is not meta-annotated {@code @Priority}
+     *         if this stereotype is not meta-annotated {@code @Priority}
      */
     Integer priority();
 

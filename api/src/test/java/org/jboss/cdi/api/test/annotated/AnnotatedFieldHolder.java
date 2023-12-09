@@ -16,8 +16,9 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.AnnotatedField;
 import java.lang.reflect.Field;
+
+import jakarta.enterprise.inject.spi.AnnotatedField;
 
 public class AnnotatedFieldHolder<T> extends AnnotatedMemberHolder<T> implements AnnotatedField<T> {
     private final Field field;
@@ -26,7 +27,8 @@ public class AnnotatedFieldHolder<T> extends AnnotatedMemberHolder<T> implements
         this.field = field;
     }
 
-    @Override public Field getJavaMember() {
+    @Override
+    public Field getJavaMember() {
         return this.field;
     }
 }

@@ -35,7 +35,6 @@ final class SecurityActions {
 
     static <T> ServiceLoader<T> loadService(Class<T> service, ClassLoader classLoader) {
         return AccessController.doPrivileged(
-                (PrivilegedAction<ServiceLoader<T>>) () -> ServiceLoader.load(service, classLoader)
-        );
+                (PrivilegedAction<ServiceLoader<T>>) () -> ServiceLoader.load(service, classLoader));
     }
 }

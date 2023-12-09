@@ -10,12 +10,12 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import java.lang.annotation.Annotation;
+
 import jakarta.enterprise.event.TransactionPhase;
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
-
-import java.lang.annotation.Annotation;
 
 /**
  * Builder for synthetic observers.

@@ -1,9 +1,9 @@
 package jakarta.enterprise.lang.model;
 
+import java.util.List;
+
 import jakarta.enterprise.lang.model.declarations.ClassInfo;
 import jakarta.enterprise.lang.model.types.Type;
-
-import java.util.List;
 
 /**
  * The value of an annotation member. Annotation member values are of several kinds:

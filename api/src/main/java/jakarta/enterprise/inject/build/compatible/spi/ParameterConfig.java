@@ -10,11 +10,11 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.lang.model.AnnotationInfo;
-import jakarta.enterprise.lang.model.declarations.ParameterInfo;
-
 import java.lang.annotation.Annotation;
 import java.util.function.Predicate;
+
+import jakarta.enterprise.lang.model.AnnotationInfo;
+import jakarta.enterprise.lang.model.declarations.ParameterInfo;
 
 /**
  * Allows adding annotations to and removing annotations from a method parameter.

@@ -16,11 +16,12 @@
 
 package org.jboss.cdi.api.test.se;
 
+import java.lang.annotation.Annotation;
+import java.util.Map;
+
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.enterprise.inject.spi.Extension;
-import java.lang.annotation.Annotation;
-import java.util.Map;
 
 /**
  *
@@ -82,7 +83,8 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
 
     @SafeVarargs
     @Override
-    public final SeContainerInitializer selectAlternativeStereotypes(Class<? extends Annotation>... alternativeStereotypeClasses) {
+    public final SeContainerInitializer selectAlternativeStereotypes(
+            Class<? extends Annotation>... alternativeStereotypeClasses) {
         return null;
     }
 
@@ -95,7 +97,6 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
     public SeContainerInitializer setProperties(Map<String, Object> properties) {
         return null;
     }
-
 
     @Override
     public SeContainerInitializer disableDiscovery() {

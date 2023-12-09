@@ -16,13 +16,14 @@
 
 package org.jboss.cdi.api.test.annotated;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.util.Set;
+
 import jakarta.enterprise.inject.spi.AnnotatedConstructor;
 import jakarta.enterprise.inject.spi.AnnotatedField;
 import jakarta.enterprise.inject.spi.AnnotatedMethod;
 import jakarta.enterprise.inject.spi.AnnotatedType;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.util.Set;
 
 final class AnnotatedTypeHolder<T> implements AnnotatedType<T> {
     private final Class<T> clazz;
@@ -31,39 +32,48 @@ final class AnnotatedTypeHolder<T> implements AnnotatedType<T> {
         this.clazz = clazz;
     }
 
-    @Override public Class<T> getJavaClass() {
+    @Override
+    public Class<T> getJavaClass() {
         return clazz;
     }
 
-    @Override public Set<AnnotatedConstructor<T>> getConstructors() {
+    @Override
+    public Set<AnnotatedConstructor<T>> getConstructors() {
         return null;
     }
 
-    @Override public Set<AnnotatedMethod<? super T>> getMethods() {
+    @Override
+    public Set<AnnotatedMethod<? super T>> getMethods() {
         return null;
     }
 
-    @Override public Set<AnnotatedField<? super T>> getFields() {
+    @Override
+    public Set<AnnotatedField<? super T>> getFields() {
         return null;
     }
 
-    @Override public Type getBaseType() {
+    @Override
+    public Type getBaseType() {
         return null;
     }
 
-    @Override public Set<Type> getTypeClosure() {
+    @Override
+    public Set<Type> getTypeClosure() {
         return null;
     }
 
-    @Override public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
+    @Override
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return null;
     }
 
-    @Override public Set<Annotation> getAnnotations() {
+    @Override
+    public Set<Annotation> getAnnotations() {
         return null;
     }
 
-    @Override public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
         return false;
     }
 }

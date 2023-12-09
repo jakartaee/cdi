@@ -1,10 +1,10 @@
 package jakarta.enterprise.lang.model.declarations;
 
-import jakarta.enterprise.lang.model.types.Type;
-import jakarta.enterprise.lang.model.types.TypeVariable;
-
 import java.util.Collection;
 import java.util.List;
+
+import jakarta.enterprise.lang.model.types.Type;
+import jakarta.enterprise.lang.model.types.TypeVariable;
 
 /**
  * A class. Five kinds of classes are distinguished:

@@ -16,17 +16,19 @@
 
 package org.jboss.cdi.api.test.se;
 
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import jakarta.enterprise.inject.se.SeContainerInitializer;
 import java.io.FileWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 
+import jakarta.enterprise.inject.se.SeContainerInitializer;
+
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 /**
  * Test for CDIProvider resolution in CDI abstract class.
+ *
  * @author Antoine Sabot-durand
  *
  */

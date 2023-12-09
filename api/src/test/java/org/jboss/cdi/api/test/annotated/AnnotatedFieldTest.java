@@ -16,28 +16,33 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import org.testng.annotations.BeforeClass;
-
-import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public class AnnotatedFieldTest extends AbstractAnnotatedTest{
+import jakarta.enterprise.inject.spi.Annotated;
+
+import org.testng.annotations.BeforeClass;
+
+public class AnnotatedFieldTest extends AbstractAnnotatedTest {
     private Field field;
+
     @BeforeClass
     public void getField() throws Exception {
         field = RepeatBean.class.getDeclaredField("field");
     }
 
-    @Override protected Annotated getAnnotated() {
+    @Override
+    protected Annotated getAnnotated() {
         return new AnnotatedFieldHolder<>(field);
     }
 
-    @Override protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
         return field.getAnnotationsByType(annotationClass);
     }
 
-    @Override protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
         return field.getAnnotation(annotationClass);
     }
 }
