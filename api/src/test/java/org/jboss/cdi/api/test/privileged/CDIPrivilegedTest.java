@@ -37,7 +37,6 @@ public class CDIPrivilegedTest {
 
     private static final String SERVICE_FILE_NAME = SERVICE_PATH + CDIProvider.class.getName();
 
-
     @Test
     public void cdiCurrentShouldWork() {
         try {

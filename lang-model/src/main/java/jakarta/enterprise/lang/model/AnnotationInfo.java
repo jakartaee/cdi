@@ -1,9 +1,9 @@
 package jakarta.enterprise.lang.model;
 
-import jakarta.enterprise.lang.model.declarations.ClassInfo;
-
 import java.lang.annotation.Repeatable;
 import java.util.Map;
+
+import jakarta.enterprise.lang.model.declarations.ClassInfo;
 
 /**
  * An annotation instance, typically obtained from an {@link AnnotationTarget}.
@@ -76,7 +76,8 @@ public interface AnnotationInfo {
     /**
      * Returns the {@linkplain AnnotationMember value} of this annotation's {@link AnnotationMember#VALUE value} member.
      *
-     * @return value of this annotation's {@link AnnotationMember#VALUE value} member or {@code null} if the member does not exist
+     * @return value of this annotation's {@link AnnotationMember#VALUE value} member or {@code null} if the member does not
+     *         exist
      */
     default AnnotationMember value() {
         return member(AnnotationMember.VALUE);

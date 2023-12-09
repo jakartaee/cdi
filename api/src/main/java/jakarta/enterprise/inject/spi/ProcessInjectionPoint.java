@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -26,9 +26,11 @@ import jakarta.enterprise.inject.spi.configurator.InjectionPointConfigurator;
  * decorator.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@link InjectionPoint} by calling either {@link #setInjectionPoint(InjectionPoint)} or {@link #configureInjectionPoint()}.
+ * Any observer of this event is permitted to wrap and/or replace the {@link InjectionPoint} by calling either
+ * {@link #setInjectionPoint(InjectionPoint)} or {@link #configureInjectionPoint()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
- * The container must use the final value of this property, after all observers have been called, he container must use the final
+ * The container must use the final value of this property, after all observers have been called, he container must use the
+ * final
  * value of this property, after all observers have been called, whenever it performs injection upon the injection point.
  * </p>
  * <p>
@@ -36,7 +38,9 @@ import jakarta.enterprise.inject.spi.configurator.InjectionPointConfigurator;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see InjectionPoint
  * @author Pete Muir
@@ -54,7 +58,7 @@ public interface ProcessInjectionPoint<T, X> {
 
     /**
      * Replaces the InjectionPoint.
-     * 
+     *
      * @param injectionPoint the new injection point
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -75,7 +79,7 @@ public interface ProcessInjectionPoint<T, X> {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t the definition error
      * @throws IllegalStateException if called outside of the observer method invocation
      */

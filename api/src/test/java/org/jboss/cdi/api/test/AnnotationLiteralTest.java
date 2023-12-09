@@ -121,7 +121,7 @@ public class AnnotationLiteralTest {
     public void testDestroyedLiteral() {
         assertEquals(Destroyed.Literal.of(ConversationScoped.class).value(), ConversationScoped.class);
     }
-    
+
     @Test
     public void testBeforeDestroyedLiteral() {
         assertEquals(BeforeDestroyed.Literal.of(RequestScoped.class).value(), RequestScoped.class);
@@ -130,7 +130,7 @@ public class AnnotationLiteralTest {
         assertEquals(BeforeDestroyed.Literal.SESSION.value(), SessionScoped.class);
         assertEquals(BeforeDestroyed.Literal.APPLICATION.value(), ApplicationScoped.class);
     }
-    
+
     @SuppressWarnings("serial")
     @Test
     public void testApplicationScopedLiteral() {
@@ -165,28 +165,28 @@ public class AnnotationLiteralTest {
         assertEquals(new AnnotationLiteral<Dependent>() {
         }, Dependent.Literal.INSTANCE);
     }
-    
+
     @SuppressWarnings("serial")
     @Test
     public void testVetoedLiteral() {
         assertEquals(new AnnotationLiteral<Vetoed>() {
         }, Vetoed.Literal.INSTANCE);
     }
-    
+
     @SuppressWarnings("serial")
     @Test
     public void testInjectLiteral() {
         assertEquals(new AnnotationLiteral<Inject>() {
         }, InjectLiteral.INSTANCE);
     }
-    
+
     @SuppressWarnings("serial")
     @Test
     public void testSpecializesLiteral() {
         assertEquals(new AnnotationLiteral<Specializes>() {
         }, Specializes.Literal.INSTANCE);
     }
-    
+
     @SuppressWarnings("serial")
     @Test
     public void testTransientReferenceLiteral() {

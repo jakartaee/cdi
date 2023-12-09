@@ -10,10 +10,11 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import java.util.Collection;
+
 import jakarta.enterprise.lang.model.AnnotationInfo;
 import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
 import jakarta.enterprise.lang.model.types.Type;
-import java.util.Collection;
 
 /**
  * An injection point defined on some bean. Injection points may be fields

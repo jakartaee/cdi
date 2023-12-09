@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
 
 /**
  * Notification options are used to configure observer notification.
- * 
+ *
  * @author Martin Kouba
  * @see Event#fireAsync(Object, NotificationOptions)
  * @since 2.0
@@ -27,20 +27,20 @@ import java.util.concurrent.Executor;
 public interface NotificationOptions {
 
     /**
-     * 
+     *
      * @return the executor used to execute an asynchronous event
      */
     Executor getExecutor();
 
     /**
-     * 
+     *
      * @param optionName name of the option to get value of
      * @return the value of an option or <code>null</code> if no option for the given name exists
      */
     Object get(String optionName);
 
     /**
-     * 
+     *
      * @param executor a specific {@link Executor} to handle observer notification
      * @return an immutable holder of an executor
      */
@@ -49,7 +49,7 @@ public interface NotificationOptions {
     }
 
     /**
-     * 
+     *
      * @param optionName name of the option to set
      * @param optionValue value for the option
      * @return an immutable holder of a single option
@@ -59,7 +59,7 @@ public interface NotificationOptions {
     }
 
     /**
-     * 
+     *
      * @return the options builder
      */
     static Builder builder() {
@@ -68,7 +68,7 @@ public interface NotificationOptions {
 
     /**
      * Notification options builder.
-     * 
+     *
      * @author Martin Kouba
      * @since 2.0
      */

@@ -16,28 +16,33 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import org.testng.annotations.BeforeClass;
-
-import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-public class AnnotatedMethodTest extends AbstractAnnotatedTest{
+import jakarta.enterprise.inject.spi.Annotated;
+
+import org.testng.annotations.BeforeClass;
+
+public class AnnotatedMethodTest extends AbstractAnnotatedTest {
     private Method method;
+
     @BeforeClass
     public void getMethod() throws Exception {
         method = RepeatBean.class.getMethod("doRepeat", RepeatBean.class);
     }
 
-    @Override protected Annotated getAnnotated() {
+    @Override
+    protected Annotated getAnnotated() {
         return new AnnotatedMethodHolder<>(method);
     }
 
-    @Override protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
         return method.getAnnotationsByType(annotationClass);
     }
 
-    @Override protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
         return method.getAnnotation(annotationClass);
     }
 

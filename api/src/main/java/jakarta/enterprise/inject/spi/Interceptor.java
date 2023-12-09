@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -29,11 +29,11 @@ import jakarta.interceptor.InvocationContext;
  * Since CDI 2.0, an implementation of this interface may implement {@link Prioritized} in order to enable the interceptor with
  * given priority value for entire application.
  * </p>
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
  * @author David Allen
- * 
+ *
  * @param <T> the interceptor bean class
  */
 public interface Interceptor<T> extends Bean<T> {
@@ -42,7 +42,7 @@ public interface Interceptor<T> extends Bean<T> {
      * <p>
      * Obtains the {@linkplain jakarta.interceptor.InterceptorBinding interceptor bindings} of the interceptor.
      * </p>
-     * 
+     *
      * @return the set of {@linkplain jakarta.interceptor.InterceptorBinding interceptor bindings}
      */
     public Set<Annotation> getInterceptorBindings();
@@ -52,7 +52,7 @@ public interface Interceptor<T> extends Bean<T> {
      * Determines if the interceptor intercepts the specified {@linkplain InterceptionType kind of lifecycle callback or method
      * invocation}.
      * </p>
-     * 
+     *
      * @param type the {@linkplain InterceptionType kind of interception}
      * @return returns <code>true</code> if the interceptor intercepts callbacks or business methods of the given type, and
      *         <code>false</code> otherwise.
@@ -64,7 +64,7 @@ public interface Interceptor<T> extends Bean<T> {
      * Invokes the specified {@linkplain InterceptionType kind of lifecycle callback or method invocation interception} upon the
      * given interceptor instance.
      * </p>
-     * 
+     *
      * @param type the {@linkplain InterceptionType kind of interception}
      * @param instance the interceptor instance to invoke
      * @param ctx the context for the invocation

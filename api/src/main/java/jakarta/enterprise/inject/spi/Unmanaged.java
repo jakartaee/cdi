@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -22,7 +22,7 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * <p>
  * Helper class for injecting and calling lifecycle callbacks unmanaged instances for use by framework and library integrators.
  * </p>
- * 
+ *
  * <pre>
  * Unmanaged&lt;Foo&gt; unmanagedFoo = new Unmanaged&lt;Foo&gt;(Foo.class);
  * UnmanagedInstance&lt;Foo&gt; fooInstance = unmanagedFoo.newInstance();
@@ -30,16 +30,18 @@ import jakarta.enterprise.context.spi.CreationalContext;
  * ... // Use the foo instance
  * fooInstance.preDestroy().dispose();
  * </pre>
- * 
+ *
  * <p>
  * An instance of this class can be safely held for the lifetime of the application.
  * </p>
- * 
+ *
  * <p>
  * {@link UnmanagedInstance}s created by this class are not suitable for sharing between threads.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for {@code Unmanaged}.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for {@code Unmanaged}.
+ * </p>
  *
  * @author Pete Muir
  * @since 1.1
@@ -52,6 +54,7 @@ public class Unmanaged<T> {
 
     /**
      * Create an injector for the given class
+     *
      * @param manager the {@link BeanManager}
      * @param clazz class of the unmanaged instances
      */
@@ -63,6 +66,7 @@ public class Unmanaged<T> {
 
     /**
      * Create an injector for the given class, using the current bean manager
+     *
      * @param clazz class of the unmanaged instances
      */
     public Unmanaged(Class<T> clazz) {
@@ -80,7 +84,7 @@ public class Unmanaged<T> {
 
     /**
      * Represents a non-contextual instance.
-     * 
+     *
      * @see Unmanaged
      */
     public static class UnmanagedInstance<T> {
@@ -97,6 +101,7 @@ public class Unmanaged<T> {
 
         /**
          * Get the instance
+         *
          * @return the instance
          */
         public T get() {
@@ -105,7 +110,7 @@ public class Unmanaged<T> {
 
         /**
          * Create the instance
-         * 
+         *
          * @throws IllegalStateException if produce() is called on an already produced instance
          * @throws IllegalStateException if produce() is called on an instance that has already been disposed
          * @return self
@@ -123,7 +128,7 @@ public class Unmanaged<T> {
 
         /**
          * Inject the instance
-         * 
+         *
          * @throws IllegalStateException if inject() is called before produce() is called
          * @throws IllegalStateException if inject() is called on an instance that has already been disposed
          * @return self
@@ -141,7 +146,7 @@ public class Unmanaged<T> {
 
         /**
          * Call the @PostConstruct callback
-         * 
+         *
          * @throws IllegalStateException if postConstruct() is called before produce() is called
          * @throws IllegalStateException if postConstruct() is called on an instance that has already been disposed
          * @return self
@@ -159,7 +164,7 @@ public class Unmanaged<T> {
 
         /**
          * Call the @PreDestroy callback
-         * 
+         *
          * @throws IllegalStateException if preDestroy() is called before produce() is called
          * @throws IllegalStateException if preDestroy() is called on an instance that has already been disposed
          * @return self
@@ -177,7 +182,7 @@ public class Unmanaged<T> {
 
         /**
          * Dispose of the instance, doing any necessary cleanup
-         * 
+         *
          * @throws IllegalStateException if dispose() is called before produce() is called
          * @throws IllegalStateException if dispose() is called on an instance that has already been disposed
          * @return self

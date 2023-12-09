@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -44,7 +44,9 @@ import jakarta.decorator.Decorator;
  * the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see Bean
  * @author David Allen
@@ -56,11 +58,12 @@ public interface ProcessBean<X> {
      * Returns the {@link AnnotatedType} representing the bean class, the
      * {@link AnnotatedMethod} representing the producer method, or the
      * {@link AnnotatedField} representing the producer field.
-     * 
+     *
      * <p>
-     * If invoked upon a {@link ProcessSyntheticBean} event, non-portable behavior results and the returned value should be ignored.
+     * If invoked upon a {@link ProcessSyntheticBean} event, non-portable behavior results and the returned value should be
+     * ignored.
      * </p>
-     * 
+     *
      * @return the {@link Annotated} for the bean being registered
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -70,16 +73,16 @@ public interface ProcessBean<X> {
      * Returns the {@link Bean} object that is about to be registered. The
      * {@link Bean} may implement {@link Interceptor} or
      * {@link Decorator}.
-     * 
+     *
      * @return the {@link Bean} object about to be registered
-     * @throws IllegalStateException if called outside of the observer method invocation 
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public Bean<X> getBean();
 
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t The definition error to register as a {@link java.lang.Throwable}
      * @throws IllegalStateException if called outside of the observer method invocation
      */

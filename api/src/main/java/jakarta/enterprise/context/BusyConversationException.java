@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -21,7 +21,7 @@ package jakarta.enterprise.context;
  * Indicates that the container has rejected a request because a concurrent request is associated with the same conversation
  * context.
  * </p>
- * 
+ *
  * <p>
  * The container ensures that a long-running conversation may be associated with at most one request at a time, by blocking or
  * rejecting concurrent requests. If the container rejects a request, it must associate the request with a new transient
@@ -29,10 +29,12 @@ package jakarta.enterprise.context;
  * lifecycle.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for conversations.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for conversations.
+ * </p>
+ *
  * @see ConversationScoped
- * 
+ *
  * @author Pete Muir
  * @author Gavin King
  */

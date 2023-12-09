@@ -31,7 +31,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Qualifier;
 
 /**
- * An event with this qualifier is fired when a context is about to be destroyed, i.e. before the actual destruction. 
+ * An event with this qualifier is fired when a context is about to be destroyed, i.e. before the actual destruction.
  *
  * @author Pete Muir
  * @author Martin Kouba
@@ -47,6 +47,7 @@ public @interface BeforeDestroyed {
 
     /**
      * The scope for which to observe destruction
+     *
      * @return the scope type class
      */
     Class<? extends Annotation> value();
@@ -56,14 +57,14 @@ public @interface BeforeDestroyed {
      */
     public final static class Literal extends AnnotationLiteral<BeforeDestroyed> implements BeforeDestroyed {
 
-        public static final Literal REQUEST = of(RequestScoped.class); 
-        
+        public static final Literal REQUEST = of(RequestScoped.class);
+
         public static final Literal CONVERSATION = of(ConversationScoped.class);
-        
+
         public static final Literal SESSION = of(SessionScoped.class);
-        
+
         public static final Literal APPLICATION = of(ApplicationScoped.class);
-        
+
         private static final long serialVersionUID = 1L;
 
         private final Class<? extends Annotation> value;

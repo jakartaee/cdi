@@ -16,20 +16,22 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import static java.util.Arrays.asList;
 
-import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
+import jakarta.enterprise.inject.spi.Annotated;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public abstract class AbstractAnnotatedTest {
 
-    @Test public void shouldFindAnnotationsOnAnnotated() {
+    @Test
+    public void shouldFindAnnotationsOnAnnotated() {
         Annotated annotated = getAnnotated();
 
         Set<Repeater> repeaters = annotated.getAnnotations(Repeater.class);
@@ -37,7 +39,8 @@ public abstract class AbstractAnnotatedTest {
         Assert.assertEquals(repeaters, new LinkedHashSet<>(asList(getAnnotationsByType(Repeater.class))));
     }
 
-    @Test public void shouldReturnSingletonForNonRepeatableAnnotation() {
+    @Test
+    public void shouldReturnSingletonForNonRepeatableAnnotation() {
         Annotated annotated = getAnnotated();
 
         Set<Repeaters> repeaters = annotated.getAnnotations(Repeaters.class);
@@ -46,6 +49,8 @@ public abstract class AbstractAnnotatedTest {
     }
 
     protected abstract Annotated getAnnotated();
+
     protected abstract <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass);
+
     protected abstract <T extends Annotation> T getAnnotation(Class<T> annotationClass);
 }

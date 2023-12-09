@@ -1,11 +1,11 @@
 package jakarta.enterprise.lang.model;
 
-import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
-import jakarta.enterprise.lang.model.types.Type;
-
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.function.Predicate;
+
+import jakarta.enterprise.lang.model.declarations.DeclarationInfo;
+import jakarta.enterprise.lang.model.types.Type;
 
 /**
  * An annotation target is anything that can be annotated.
@@ -84,7 +84,8 @@ public interface AnnotationTarget {
      * Returns whether given predicate matches any annotation present on this annotation target.
      *
      * @param predicate annotation predicate, must not be {@code null}
-     * @return {@code true} if given predicate matches any annotation present on this annotation target, {@code false} otherwise.
+     * @return {@code true} if given predicate matches any annotation present on this annotation target, {@code false}
+     *         otherwise.
      */
     boolean hasAnnotation(Predicate<AnnotationInfo> predicate);
 

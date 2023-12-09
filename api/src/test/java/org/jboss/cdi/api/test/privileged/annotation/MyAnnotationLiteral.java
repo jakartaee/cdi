@@ -39,5 +39,4 @@ public class MyAnnotationLiteral extends AnnotationLiteral<MyAnnotation> impleme
 
     private int m2;
 
-
 }

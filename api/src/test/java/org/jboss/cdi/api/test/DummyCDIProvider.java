@@ -42,7 +42,6 @@ public class DummyCDIProvider implements CDIProvider {
 
     public static class DummyCDI extends CDI<Object> {
 
-
         @Override
         public BeanManager getBeanManager() {
             return null;
@@ -72,7 +71,7 @@ public class DummyCDIProvider implements CDIProvider {
         public boolean isAmbiguous() {
             return false;
         }
-        
+
         @Override
         public void destroy(Object instance) {
 

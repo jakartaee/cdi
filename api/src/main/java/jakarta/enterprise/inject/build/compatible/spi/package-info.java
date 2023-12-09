@@ -9,7 +9,9 @@
  */
 
 /**
- * <p>The build compatible extension SPI. See:</p>
+ * <p>
+ * The build compatible extension SPI. See:
+ * </p>
  *
  * <ul>
  * <li>{@link jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension}</li>

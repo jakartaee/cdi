@@ -16,11 +16,12 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.AnnotatedCallable;
-import jakarta.enterprise.inject.spi.AnnotatedParameter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
+
+import jakarta.enterprise.inject.spi.AnnotatedCallable;
+import jakarta.enterprise.inject.spi.AnnotatedParameter;
 
 public class AnnotatedParameterHolder<T> implements AnnotatedParameter<T> {
     private final AnnotatedCallable<T> annotatedCallable;
@@ -29,31 +30,38 @@ public class AnnotatedParameterHolder<T> implements AnnotatedParameter<T> {
         this.annotatedCallable = annotatedCallable;
     }
 
-    @Override public int getPosition() {
+    @Override
+    public int getPosition() {
         return 0;
     }
 
-    @Override public AnnotatedCallable<T> getDeclaringCallable() {
+    @Override
+    public AnnotatedCallable<T> getDeclaringCallable() {
         return this.annotatedCallable;
     }
 
-    @Override public Type getBaseType() {
+    @Override
+    public Type getBaseType() {
         return null;
     }
 
-    @Override public Set<Type> getTypeClosure() {
+    @Override
+    public Set<Type> getTypeClosure() {
         return null;
     }
 
-    @Override public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
+    @Override
+    public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return null;
     }
 
-    @Override public Set<Annotation> getAnnotations() {
+    @Override
+    public Set<Annotation> getAnnotations() {
         return null;
     }
 
-    @Override public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
+    @Override
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationType) {
         return false;
     }
 }

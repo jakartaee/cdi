@@ -12,7 +12,7 @@ import jakarta.enterprise.event.NotificationOptions;
 import org.testng.annotations.Test;
 
 /**
- * 
+ *
  * @author Martin Kouba
  */
 public class NotificationOptionsTest {

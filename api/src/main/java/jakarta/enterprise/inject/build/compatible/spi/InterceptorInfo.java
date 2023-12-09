@@ -10,10 +10,10 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
+import java.util.Collection;
+
 import jakarta.enterprise.inject.spi.InterceptionType;
 import jakarta.enterprise.lang.model.AnnotationInfo;
-
-import java.util.Collection;
 
 /**
  * Interceptors are managed beans annotated {@link jakarta.interceptor.Interceptor @Interceptor}.

@@ -34,16 +34,18 @@ import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
  * This API is a helper to configure a new {@link AnnotatedType} instance. The container must provide an implementation of
  * this interface.
  * </p>
- * 
+ *
  * <p>
  * AnnotatedTypeConfigurator is not reusable.
  * </p>
- * 
+ *
  * <p>
  * This configurator is not thread safe and shall not be used concurrently.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see BeforeBeanDiscovery#addAnnotatedType(Class, String)
  * @see AfterTypeDiscovery#addAnnotatedType(Class, String)
@@ -56,7 +58,7 @@ import jakarta.enterprise.inject.spi.ProcessAnnotatedType;
 public interface AnnotatedTypeConfigurator<T> {
 
     /**
-     * 
+     *
      * @return the original {@link AnnotatedType}
      */
     AnnotatedType<T> getAnnotated();
@@ -75,32 +77,32 @@ public interface AnnotatedTypeConfigurator<T> {
      * <p>
      * Example predicates:
      * </p>
-     * 
+     *
      * <pre>
      *  {@code
      * // To remove all the annotations:
      * (a) -> true
-     * 
+     *
      * // To remove annotations with a concrete annotation type:
      * (a) -> a.annotationType().equals(Foo.class)
-     * 
+     *
      * // To remove annotation equal to a specified object:
      * (a) -> a.equals(fooAnnotation)
-     * 
+     *
      * // To remove annotations that are considered equivalent for the purposes of typesafe resolution:
      * (a) -> beanManager.areQualifiersEquivalent(a, fooQualifier)
      * (a) -> beanManager.areInterceptorBindingsEquivalent(a, fooInterceptorBinding)
      * }
      * </pre>
-     * 
+     *
      * @param predicate {@link Predicate} used to filter annotations to remove
      * @return self
      */
     AnnotatedTypeConfigurator<T> remove(Predicate<Annotation> predicate);
-    
+
     /**
      * Remove all the annotations.
-     * 
+     *
      * @return self
      */
     default AnnotatedTypeConfigurator<T> removeAll() {
@@ -108,7 +110,7 @@ public interface AnnotatedTypeConfigurator<T> {
     }
 
     /**
-     * 
+     *
      * @return an immutable set of {@link AnnotatedMethodConfigurator}s reflecting the {@link AnnotatedType#getMethods()}
      */
     Set<AnnotatedMethodConfigurator<? super T>> methods();
@@ -123,7 +125,7 @@ public interface AnnotatedTypeConfigurator<T> {
     }
 
     /**
-     * 
+     *
      * @return an immutable set of {@link AnnotatedFieldConfigurator}s reflecting the {@link AnnotatedType#getFields()}
      */
     Set<AnnotatedFieldConfigurator<? super T>> fields();
@@ -138,14 +140,14 @@ public interface AnnotatedTypeConfigurator<T> {
     }
 
     /**
-     * 
+     *
      * @return an immutable set of {@link AnnotatedConstructorConfigurator}s reflecting the
      *         {@link AnnotatedType#getConstructors()}
      */
     Set<AnnotatedConstructorConfigurator<T>> constructors();
 
     /**
-     * 
+     *
      * @param predicate Testing the original {@link AnnotatedConstructor}
      * @return a sequence of {@link AnnotatedConstructorConfigurator}s matching the given predicate
      * @see AnnotatedConstructorConfigurator#getAnnotated()

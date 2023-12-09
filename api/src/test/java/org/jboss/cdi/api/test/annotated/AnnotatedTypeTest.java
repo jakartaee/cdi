@@ -16,20 +16,24 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.Annotated;
 import java.lang.annotation.Annotation;
+
+import jakarta.enterprise.inject.spi.Annotated;
 
 public class AnnotatedTypeTest extends AbstractAnnotatedTest {
 
-    @Override protected Annotated getAnnotated() {
+    @Override
+    protected Annotated getAnnotated() {
         return new AnnotatedTypeHolder<>(RepeatBean.class);
     }
 
-    @Override protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass) {
         return RepeatBean.class.getAnnotationsByType(annotationClass);
     }
 
-    @Override protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+    @Override
+    protected <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
         return RepeatBean.class.getAnnotation(annotationClass);
     }
 

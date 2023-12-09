@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -27,31 +27,31 @@ import java.lang.annotation.Target;
  * <p>
  * Specifies that an annotation type is a stereotype.
  * </p>
- * 
+ *
  * <p>
  * In many systems, use of architectural patterns produces a set of recurring bean roles. A stereotype allows a framework
  * developer to identify such a role and declare some common metadata for beans with that role in a central place.
  * </p>
- * 
+ *
  * <p>
  * A bean may declare zero, one or multiple stereotypes, by applying the stereotype annotation to the bean class or producer
  * method or field.
  * </p>
- * 
+ *
  * <p>
  * A stereotype encapsulates any combination of:
  * </p>
- * 
+ *
  * <ul>
  * <li>a default scope, and</li>
  * <li>a set of interceptor bindings.</li>
  * </ul>
- * 
+ *
  * <p>
  * The default scope of a stereotype is defined by annotating the stereotype with a scope type. A stereotype may declare at most
  * one scope. If a bean explicitly declares a scope, any default scopes declared by its stereotypes are ignored.
  * </p>
- * 
+ *
  * <pre>
  * &#064;RequestScoped
  * &#064;Stereotype
@@ -60,13 +60,13 @@ import java.lang.annotation.Target;
  * public @interface Action {
  * }
  * </pre>
- * 
+ *
  * <p>
  * The interceptor bindings of a stereotype are defined by annotating the stereotype with the interceptor binding types. A
  * stereotype may declare zero, one or multiple interceptor bindings. An interceptor binding declared by a stereotype is
  * inherited by any bean that declares that stereotype.
  * </p>
- * 
+ *
  * <pre>
  * &#064;RequestScoped
  * &#064;Secure
@@ -77,22 +77,23 @@ import java.lang.annotation.Target;
  * public @interface Action {
  * }
  * </pre>
- * 
+ *
  * <p>
  * A stereotype may also specify that:
  * </p>
- * 
+ *
  * <ul>
  * <li>all beans with the stereotype have defaulted bean EL names, or that</li>
  * <li>all beans with the stereotype are alternatives, or that</li>
  * <li>all beans with the stereotype have predefined {@code @Priority}.</li>
  * </ul>
- * 
+ *
  * <p>
- * A stereotype may declare an empty {@link jakarta.inject.Named &#064;Named} annotation, which specifies that every bean with the
+ * A stereotype may declare an empty {@link jakarta.inject.Named &#064;Named} annotation, which specifies that every bean with
+ * the
  * stereotype has a defaulted name when a name is not explicitly specified by the bean.
  * </p>
- * 
+ *
  * <pre>
  * &#064;RequestScoped
  * &#064;Named
@@ -104,12 +105,12 @@ import java.lang.annotation.Target;
  * public @interface Action {
  * }
  * </pre>
- * 
+ *
  * <p>
  * A stereotype may declare an {@link Alternative &#064;Alternative} annotation, which specifies that
  * every bean with the stereotype is an alternative.
  * </p>
- * 
+ *
  * <pre>
  * &#064;Alternative
  * &#064;Stereotype
@@ -118,7 +119,7 @@ import java.lang.annotation.Target;
  * public @interface Mock {
  * }
  * </pre>
- * 
+ *
  * <p>
  * A stereotype may declare a {@link jakarta.annotation.Priority &#064;Priority} annotation, which specifies that
  * every bean with the stereotype is enabled and has given priority.
@@ -138,9 +139,9 @@ import java.lang.annotation.Target;
  * A stereotype may declare other stereotypes. Stereotype declarations are transitive. A stereotype declared by a second
  * stereotype is inherited by all beans and other stereotypes that declare the second stereotype.
  * </p>
- * 
+ *
  * @see Model the built-in stereotype <code>&#064;Model</code>
- * 
+ *
  * @author Pete Muir
  * @author Gavin King
  */

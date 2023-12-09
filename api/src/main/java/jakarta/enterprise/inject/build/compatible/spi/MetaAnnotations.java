@@ -10,10 +10,9 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import jakarta.enterprise.context.spi.AlterableContext;
-
 import java.lang.annotation.Annotation;
-import java.util.function.Consumer;
+
+import jakarta.enterprise.context.spi.AlterableContext;
 
 /**
  * Allows registering custom CDI meta-annotations: qualifiers, interceptor bindings,
@@ -72,7 +71,7 @@ public interface MetaAnnotations {
      * @param scopeAnnotation the scope annotation type, must not be {@code null}
      * @param contextClass the context class, must not be {@code null}
      * @throws IllegalArgumentException if the {@code scopeAnnotation} is not meta-annotated {@code @NormalScope}
-     * or {@code @Scope}
+     *         or {@code @Scope}
      */
     void addContext(Class<? extends Annotation> scopeAnnotation, Class<? extends AlterableContext> contextClass);
 
@@ -88,5 +87,6 @@ public interface MetaAnnotations {
      * @param isNormal whether the scope is normal
      * @param contextClass the context class, must not be {@code null}
      */
-    void addContext(Class<? extends Annotation> scopeAnnotation, boolean isNormal, Class<? extends AlterableContext> contextClass);
+    void addContext(Class<? extends Annotation> scopeAnnotation, boolean isNormal,
+            Class<? extends AlterableContext> contextClass);
 }

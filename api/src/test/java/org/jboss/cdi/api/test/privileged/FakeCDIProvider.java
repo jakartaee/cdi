@@ -27,6 +27,7 @@ import jakarta.enterprise.util.TypeLiteral;
 
 /**
  * A fake CDI Provider for testing
+ *
  * @author Antoine Sabot-Durand
  */
 public class FakeCDIProvider implements CDIProvider {
@@ -42,7 +43,6 @@ public class FakeCDIProvider implements CDIProvider {
     }
 
     public static class FakeCDI extends CDI<Object> {
-
 
         @Override
         public BeanManager getBeanManager() {
@@ -73,7 +73,7 @@ public class FakeCDIProvider implements CDIProvider {
         public boolean isAmbiguous() {
             return false;
         }
-        
+
         @Override
         public void destroy(Object instance) {
 

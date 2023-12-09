@@ -119,13 +119,13 @@ public interface Invoker<T, R> {
      * TODO the previous 2 paragraphs refer to "assignability", which needs to be defined somewhere!
      *
      * TODO when the `InvokerBuilder` applies transformations, some of the requirements above
-     *  are no longer strictly necessary, should reflect that in this text somehow (it is already
-     *  mentioned in `InvokerBuilder`, but that likely isn't enough)
+     * are no longer strictly necessary, should reflect that in this text somehow (it is already
+     * mentioned in `InvokerBuilder`, but that likely isn't enough)
      *
      * @param instance the instance on which the target method is to be invoked, may only be {@code null}
-     *                 if the method is {@code static}
+     *        if the method is {@code static}
      * @param arguments arguments to be supplied to the target method, may only be {@code null}
-     *                  if the method declares no parameter
+     *        if the method declares no parameter
      * @return return value of the target method, or {@code null} if the method is declared {@code void}
      */
     R invoke(T instance, Object[] arguments); // TODO throws Exception ?

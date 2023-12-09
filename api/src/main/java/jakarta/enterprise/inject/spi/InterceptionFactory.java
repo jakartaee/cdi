@@ -37,8 +37,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  *     BeanManager bm;
  *
- *     public MyBean(BeanManager bm) {
- *        this.bm = bm;
+ *     public MyBean(BeanManager bm){
+ *     this.bm=bm;
  *     }
  *
  *     public MyClass create(CreationalContext&lt;MyClass&gt; creationalContext) {
@@ -73,7 +73,9 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * Instances of this class are neither reusable nor suitable for sharing between threads.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for {@code InterceptionFactory}.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for {@code InterceptionFactory}.
+ * </p>
  *
  * @author Antoine Sabot-Durand
  * @since 2.0

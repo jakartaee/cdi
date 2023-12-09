@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -26,7 +26,9 @@ package jakarta.enterprise.inject.spi;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Martin Kouba
  * @param <X> The class of the bean
@@ -36,7 +38,7 @@ public interface ProcessSyntheticBean<X> extends ProcessBean<X> {
 
     /**
      * Get the extension instance which added the {@link Bean} for which this event is being fired.
-     * 
+     *
      * @return the extension instance
      * @throws IllegalStateException if called outside of the observer method invocation
      */

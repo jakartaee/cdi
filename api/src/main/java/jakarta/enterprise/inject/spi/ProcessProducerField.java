@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -25,17 +25,19 @@ package jakarta.enterprise.inject.spi;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author David Allen
  * @param <T> The type of the producer field
  * @param <X> The class of the bean declaring the producer field
- * 
+ *
  */
 public interface ProcessProducerField<T, X> extends ProcessBean<X> {
     /**
      * Returns the {@link AnnotatedField} representing the producer field.
-     * 
+     *
      * @return the {@link AnnotatedField} for the producer field being registered
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -44,7 +46,7 @@ public interface ProcessProducerField<T, X> extends ProcessBean<X> {
     /**
      * Returns the {@link AnnotatedParameter} for any matching injection point of the same type as
      * the producer field return type found on a disposal method.
-     * 
+     *
      * @return the disposal method's {@link AnnotatedParameter}
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1

@@ -35,17 +35,17 @@ import jakarta.enterprise.inject.Instance;
  * <p>
  * Reflection operations are using {@link SecurityActions} utility class to support security manager.
  * </p>
- * 
+ *
  * <p>
  * An instance of an annotation type may be obtained by subclassing <code>AnnotationLiteral</code>.
  * The subclass must implement the annotation interface to satisfy the {@link Annotation} contract.
  * </p>
- * 
+ *
  * <pre>
  * public abstract class PayByQualifier extends AnnotationLiteral&lt;PayBy&gt; implements PayBy {
  * }
  * </pre>
- * 
+ *
  * <pre>
  * PayBy payByCheque = new PayByQualifier() {
  *     public PaymentMethod value() {
@@ -53,17 +53,17 @@ import jakarta.enterprise.inject.Instance;
  *     }
  * };
  * </pre>
- * 
+ *
  * @author Pete Muir
  * @author Gavin King
  * @author Marko Luksa
  * @author Antoine Sabot-Durand
- * 
+ *
  * @param <T> the annotation type
- * 
+ *
  * @see Instance#select(Annotation...)
  * @see Event#select(Annotation...)
- * 
+ *
  */
 public abstract class AnnotationLiteral<T extends Annotation> implements Annotation, Serializable {
 

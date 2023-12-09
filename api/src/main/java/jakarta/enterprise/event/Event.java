@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -20,74 +20,75 @@ import java.lang.annotation.Annotation;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
 
-import jakarta.enterprise.util.TypeLiteral;
 import jakarta.enterprise.inject.Any;
+import jakarta.enterprise.util.TypeLiteral;
 
 /**
  * <p>
  * Allows the application to fire events of a particular type.
  * </p>
- * 
+ *
  * <p>
  * Beans fire events via an instance of the <code>Event</code> interface, which may be injected:
  * </p>
- * 
+ *
  * <pre>
  * &#064;Inject
  * &#064;Any
  * Event&lt;LoggedInEvent&gt; loggedInEvent;
  * </pre>
- * 
+ *
  * <p>
  * The <code>fire()</code> method accepts an event object:
  * </p>
- * 
+ *
  * <pre>
- * public void login() { 
+ * public void login() {
  *    ...
  *    loggedInEvent.fire( new LoggedInEvent(user) );
  * }
  * </pre>
- * 
+ *
  * <p>
  * Any combination of qualifiers may be specified at the injection point:
  * </p>
- * 
+ *
  * <pre>
  * &#064;Inject
  * &#064;Admin
  * Event&lt;LoggedInEvent&gt; adminLoggedInEvent;
  * </pre>
- * 
+ *
  * <p>
  * Or, the {@link Any &#064;Any} qualifier may be used, allowing the application to specify qualifiers
  * dynamically:
  * </p>
- * 
+ *
  * <pre>
  * &#064;Inject
  * &#064;Any
  * Event&lt;LoggedInEvent&gt; loggedInEvent;
  * </pre>
- * 
+ *
  * <p>
  * For an injected <code>Event</code>:
  * </p>
- * 
+ *
  * <ul>
  * <li>the <em>specified type</em> is the type parameter specified at the injection point, and</li>
  * <li>the <em>specified qualifiers</em> are the qualifiers specified at the injection point.</li>
  * </ul>
- * 
+ *
  * <p>
- * Events may also be fired asynchronously with {@link #fireAsync(Object)} and {@link #fireAsync(Object, NotificationOptions)} methods
+ * Events may also be fired asynchronously with {@link #fireAsync(Object)} and {@link #fireAsync(Object, NotificationOptions)}
+ * methods
  * </p>
- * 
+ *
  * @author Gavin King
  * @author Pete Muir
  * @author David Allen
  * @author Antoine Sabot-Durand
- * 
+ *
  * @param <T> the type of the event object
  */
 
@@ -97,7 +98,7 @@ public interface Event<T> {
      * <p>
      * Fires an event with the specified qualifiers and notifies observers.
      * </p>
-     * 
+     *
      * @param event the event object
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      * @throws ObserverException if a notified observer throws a checked exception, it will be wrapped and rethrown as an
@@ -115,9 +116,11 @@ public interface Event<T> {
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         Default asynchronous execution facility is container specific.
      *         If any observer notified by this event throws an exception
-     *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
+     *         then the resulting CompletionStage is completed exceptionally with
+     *         {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
-     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
+     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event
+     *         payload.
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      *
      * @since 2.0
@@ -127,7 +130,7 @@ public interface Event<T> {
     /**
      * <p>
      * Fires an event asynchronously with the specified qualifiers and notifies asynchronous observers.
-     * A custom {@link Executor} will be used to make asynchronous calls 
+     * A custom {@link Executor} will be used to make asynchronous calls
      * </p>
      *
      * @param <U> event type
@@ -136,23 +139,26 @@ public interface Event<T> {
      * @return a {@link CompletionStage} allowing further pipeline composition on the asynchronous operation.
      *         Default asynchronous execution facility is container specific.
      *         If any observer notified by this event throws an exception
-     *         then the resulting CompletionStage is completed exceptionally with {@link java.util.concurrent.CompletionException}
+     *         then the resulting CompletionStage is completed exceptionally with
+     *         {@link java.util.concurrent.CompletionException}
      *         that wraps all the exceptions raised by observers as suppressed exception.
-     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event payload.
+     *         If no exception is thrown by observers then the resulting CompletionStage is completed normally with the event
+     *         payload.
      * @throws IllegalArgumentException if the runtime type of the event object contains a type variable
      *
      * @since 2.0
      */
-    public <U extends T> CompletionStage<U>  fireAsync(U event, NotificationOptions options);
+    public <U extends T> CompletionStage<U> fireAsync(U event, NotificationOptions options);
 
     /**
      * <p>
      * Obtains a child <code>Event</code> for the given additional required qualifiers.
      * </p>
-     * 
+     *
      * @param qualifiers the additional specified qualifiers
      * @return the child <code>Event</code>
-     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
+     *         annotation that
      *         is not a qualifier type
      */
     public Event<T> select(Annotation... qualifiers);
@@ -161,12 +167,13 @@ public interface Event<T> {
      * <p>
      * Obtains a child <code>Event</code> for the given required type and additional required qualifiers.
      * </p>
-     * 
+     *
      * @param <U> the specified type
      * @param subtype a {@link java.lang.Class} representing the specified type
      * @param qualifiers the additional specified qualifiers
      * @return the child <code>Event</code>
-     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
+     *         annotation that
      *         is not a qualifier type
      */
     public <U extends T> Event<U> select(Class<U> subtype, Annotation... qualifiers);
@@ -175,12 +182,13 @@ public interface Event<T> {
      * <p>
      * Obtains a child <code>Event</code> for the given required type and additional required qualifiers.
      * </p>
-     * 
+     *
      * @param <U> the specified type
      * @param subtype a {@link TypeLiteral} representing the specified type
      * @param qualifiers the additional specified qualifiers
      * @return the child <code>Event</code>
-     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an annotation that
+     * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
+     *         annotation that
      *         is not a qualifier type
      */
     public <U extends T> Event<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);

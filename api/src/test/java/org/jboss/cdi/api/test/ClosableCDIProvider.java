@@ -16,13 +16,14 @@
 
 package org.jboss.cdi.api.test;
 
+import java.lang.annotation.Annotation;
+import java.util.Iterator;
+
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.inject.spi.CDI;
 import jakarta.enterprise.inject.spi.CDIProvider;
 import jakarta.enterprise.util.TypeLiteral;
-import java.lang.annotation.Annotation;
-import java.util.Iterator;
 
 /**
  * Created by antoine on 16/12/2015.
@@ -46,7 +47,6 @@ public class ClosableCDIProvider implements CDIProvider {
     }
 
     public static class DummyCDI extends CDI<Object> {
-
 
         @Override
         public BeanManager getBeanManager() {
@@ -77,7 +77,7 @@ public class ClosableCDIProvider implements CDIProvider {
         public boolean isAmbiguous() {
             return false;
         }
-        
+
         @Override
         public void destroy(Object instance) {
 

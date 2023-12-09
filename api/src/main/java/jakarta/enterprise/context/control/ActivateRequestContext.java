@@ -16,28 +16,29 @@
 
 package jakarta.enterprise.context.control;
 
-import jakarta.interceptor.InterceptorBinding;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import jakarta.interceptor.InterceptorBinding;
 
 /**
  * The container provides a built in interceptor that may be used to annotate classes and methods to indicate
  * that a request context should be activated when this method is invoked.
  *
  * The request context will be activated before the method is called, and deactivated when the method invocation is
- * complete (regardless of any exceptions being thrown).  If the context is already active, it is ignored, neither
+ * complete (regardless of any exceptions being thrown). If the context is already active, it is ignored, neither
  * activated nor deactivated.
  *
  * @since 2.0
  * @author John D. Ament
  */
 @InterceptorBinding
-@Target({METHOD, TYPE})
+@Target({ METHOD, TYPE })
 @Retention(RUNTIME)
 @Documented
 public @interface ActivateRequestContext {

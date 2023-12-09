@@ -20,21 +20,21 @@ import jakarta.enterprise.context.ContextNotActiveException;
 
 /**
  * The CDI container provides a built in instance of RequestContextController that is dependent scoped for the purposes
- * of activating and deactivating.  For example:
+ * of activating and deactivating. For example:
  *
  * <pre>
- *    &#064;Inject
- *    private RequestContextController requestContextController;
+ * &#064;Inject
+ * private RequestContextController requestContextController;
  *
- *    public void doRequest(String body) {
- *       // activate request context
- *       requestContextController.activate();
+ * public void doRequest(String body) {
+ *     // activate request context
+ *     requestContextController.activate();
  *
- *       // do work in a request context.
+ *     // do work in a request context.
  *
- *       // deactivate the request context
- *       requestContextController.deactivate();
- *    }
+ *     // deactivate the request context
+ *     requestContextController.deactivate();
+ * }
  * </pre>
  *
  * Once the request context has been deactivated, you may activate it once again, creating a brand new request context.
@@ -46,20 +46,21 @@ import jakarta.enterprise.context.ContextNotActiveException;
  */
 public interface RequestContextController {
 
-   /**
-    * Activates a RequestContext for the current thread if one is not already active.
-    * @return true if the context was activated by this invocation, false if not.
-    */
-   boolean activate();
+    /**
+     * Activates a RequestContext for the current thread if one is not already active.
+     *
+     * @return true if the context was activated by this invocation, false if not.
+     */
+    boolean activate();
 
-   /**
-    * Deactivates the current Request Context if it was activated by this context controller.  If the context is active
-    * but was not activated by this controller, then it may not be deactivated by this controller,
-    * meaning this method will do nothing.
-    *
-    * If the context is not active, a {@linkplain ContextNotActiveException} is thrown.
-    *
-    * @throws ContextNotActiveException if the context is not active
-    */
-   void deactivate() throws ContextNotActiveException;
+    /**
+     * Deactivates the current Request Context if it was activated by this context controller. If the context is active
+     * but was not activated by this controller, then it may not be deactivated by this controller,
+     * meaning this method will do nothing.
+     *
+     * If the context is not active, a {@linkplain ContextNotActiveException} is thrown.
+     *
+     * @throws ContextNotActiveException if the context is not active
+     */
+    void deactivate() throws ContextNotActiveException;
 }

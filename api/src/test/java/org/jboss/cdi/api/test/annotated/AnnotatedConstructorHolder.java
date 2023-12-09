@@ -16,8 +16,9 @@
 
 package org.jboss.cdi.api.test.annotated;
 
-import jakarta.enterprise.inject.spi.AnnotatedConstructor;
 import java.lang.reflect.Constructor;
+
+import jakarta.enterprise.inject.spi.AnnotatedConstructor;
 
 public class AnnotatedConstructorHolder<T> extends AnnotatedCallableHolder<T> implements AnnotatedConstructor<T> {
     private final Constructor<T> constructor;
@@ -26,7 +27,8 @@ public class AnnotatedConstructorHolder<T> extends AnnotatedCallableHolder<T> im
         this.constructor = constructor;
     }
 
-    @Override public Constructor<T> getJavaMember() {
+    @Override
+    public Constructor<T> getJavaMember() {
         return constructor;
     }
 }

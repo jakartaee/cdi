@@ -20,10 +20,10 @@ import jakarta.enterprise.invoke.Invoker;
  *
  * <ul>
  * <li>a synthetic bean {@linkplain SyntheticBeanCreator creation} and
- *   {@linkplain SyntheticBeanDisposer destruction} function, defined by
- *   {@link SyntheticBeanBuilder};</li>
+ * {@linkplain SyntheticBeanDisposer destruction} function, defined by
+ * {@link SyntheticBeanBuilder};</li>
  * <li>a synthetic observer {@linkplain SyntheticObserver notification}
- *   function, defined by {@link SyntheticObserverBuilder}.</li>
+ * function, defined by {@link SyntheticObserverBuilder}.</li>
  * </ul>
  *
  * Parameter values are transferred from the builder to the {@code Parameters}-accepting

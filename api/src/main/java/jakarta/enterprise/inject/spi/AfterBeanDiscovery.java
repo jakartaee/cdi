@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -34,7 +34,7 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * {@linkplain Observes observer methods} and {@linkplain jakarta.enterprise.context custom context}
  * objects with the container.
  * </p>
- * 
+ *
  * <pre>
  *     void afterBeanDiscovery(@Observes AfterBeanDiscovery event, BeanManager manager) { ... }
  * </pre>
@@ -43,8 +43,10 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
+ *
  * @author David Allen
  * @author Antoine Sabot-Durand
  */
@@ -52,7 +54,7 @@ public interface AfterBeanDiscovery {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after all observers have been
      * notified.
-     * 
+     *
      * @param t The definition error as a {@link java.lang.Throwable}
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -90,14 +92,15 @@ public interface AfterBeanDiscovery {
      * {@link ObserverMethod} and then registers the
      * {@link ObserverMethod} with the container, thereby making it available for event
      * notifications.
-     * 
+     *
      * @param observerMethod The custom observer method to add to the deployment
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addObserverMethod(ObserverMethod<?> observerMethod);
 
     /**
-     * obtains a new {@link ObserverMethodConfigurator} to configure a new {@link ObserverMethod} and add it at the end of the observer invocation.
+     * obtains a new {@link ObserverMethodConfigurator} to configure a new {@link ObserverMethod} and add it at the end of the
+     * observer invocation.
      * It will then fire an event of type {@link ProcessObserverMethod} containing the built
      * {@link ObserverMethod} from this configuration and then registers the
      * {@link ObserverMethod} with the container, thereby making it available for event
@@ -114,16 +117,16 @@ public interface AfterBeanDiscovery {
 
     /**
      * Registers a custom {@link Context} object with the container.
-     * 
+     *
      * @param context The custom context to add to the deployment
-     * @throws IllegalStateException if called outside of the observer method invocation                
+     * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addContext(Context context);
 
     /**
      * Obtain the {@link AnnotatedType} that may be used to read the annotations of the given class or interface as defined
      * during container initialization.
-     * 
+     *
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
      * @param id the type identifier. If null, the fully qualifier class name of type is used
@@ -136,7 +139,7 @@ public interface AfterBeanDiscovery {
     /**
      * Obtain the {@link AnnotatedType}s that may be used to read the annotations of the given class or interface as defined
      * during container initialization.
-     * 
+     *
      * @param <T> the class or interface
      * @param type the {@link java.lang.Class} object
      * @return the {@link AnnotatedType}s

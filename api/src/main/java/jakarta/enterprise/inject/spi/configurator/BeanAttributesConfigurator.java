@@ -15,12 +15,13 @@
  */
 package jakarta.enterprise.inject.spi.configurator;
 
-import jakarta.enterprise.inject.spi.BeanAttributes;
-import jakarta.enterprise.inject.spi.ProcessBeanAttributes;
-import jakarta.enterprise.util.TypeLiteral;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.Set;
+
+import jakarta.enterprise.inject.spi.BeanAttributes;
+import jakarta.enterprise.inject.spi.ProcessBeanAttributes;
+import jakarta.enterprise.util.TypeLiteral;
 
 /**
  * This API is an helper to configure a new {@link BeanAttributes} instance.
@@ -28,7 +29,9 @@ import java.util.Set;
  *
  * This configurator is not thread safe and shall not be used concurrently.
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @see ProcessBeanAttributes#configureBeanAttributes()
  * @param <T> the class of the bean instance

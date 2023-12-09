@@ -31,7 +31,8 @@ public interface Types {
      * For example:
      * <ul>
      * <li>{@code of(void.class)}: same as {@link #ofVoid() ofVoid}{@code ()}</li>
-     * <li>{@code of(int.class)}: same as {@link #ofPrimitive(PrimitiveType.PrimitiveKind) ofPrimitive}{@code (PrimitiveKind.INT)}</li>
+     * <li>{@code of(int.class)}: same as {@link #ofPrimitive(PrimitiveType.PrimitiveKind)
+     * ofPrimitive}{@code (PrimitiveKind.INT)}</li>
      * <li>{@code of(String.class)}: same as {@link #ofClass(ClassInfo) ofClass}{@code (... ClassInfo for String ...)}</li>
      * <li>{@code of(int[].class)}: same as {@link #ofArray(Type, int) ofArray}{@code (ofPrimitive(PrimitiveKind.INT), 1)}</li>
      * <li>{@code of(String[][].class)}: same as {@code ofArray(ofClass(... ClassInfo for String ...), 2)}</li>
@@ -100,7 +101,7 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * does not match the number of type parameters declared by {@code genericType}
+     *         does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(Class<?> genericType, Class<?>... typeArguments);
 
@@ -113,12 +114,12 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * does not match the number of type parameters declared by {@code genericType}
+     *         does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(Class<?> genericType, Type... typeArguments);
 
     /**
-     * Returns a  {@link ParameterizedType} for the given generic type and type arguments.
+     * Returns a {@link ParameterizedType} for the given generic type and type arguments.
      * The array of type arguments must have the same shape as the generic type's
      * list of type parameters.
      *
@@ -126,7 +127,7 @@ public interface Types {
      * @param typeArguments one or more type arguments
      * @return the parameterized type, never {@code null}
      * @throws IllegalArgumentException if given {@code genericType} is not generic or if the number of type arguments
-     * does not match the number of type parameters declared by {@code genericType}
+     *         does not match the number of type parameters declared by {@code genericType}
      */
     ParameterizedType parameterized(ClassType genericType, Type... typeArguments);
 

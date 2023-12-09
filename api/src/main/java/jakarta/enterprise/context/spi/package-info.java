@@ -8,26 +8,31 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 /**
- * <p>The custom context SPI.</p>
- * 
- * <p>Associated with every 
- * {@linkplain jakarta.enterprise.context scope type} is a 
+ * <p>
+ * The custom context SPI.
+ * </p>
+ *
+ * <p>
+ * Associated with every
+ * {@linkplain jakarta.enterprise.context scope type} is a
  * {@linkplain jakarta.enterprise.context.spi.Context context object}.
- * The context object implements the semantics of the scope type.</p>
- * 
- * <p>The context implementation collaborates with the container via 
- * the {@link jakarta.enterprise.context.spi.Context Context} and 
- * {@link jakarta.enterprise.context.spi.Contextual Contextual} 
- * interfaces to create and destroy contextual instances.</p>
- * 
+ * The context object implements the semantics of the scope type.
+ * </p>
+ *
+ * <p>
+ * The context implementation collaborates with the container via
+ * the {@link jakarta.enterprise.context.spi.Context Context} and
+ * {@link jakarta.enterprise.context.spi.Contextual Contextual}
+ * interfaces to create and destroy contextual instances.
+ * </p>
+ *
  * @see jakarta.enterprise.context
  * @see jakarta.enterprise.inject.spi
  */
 package jakarta.enterprise.context.spi;
-

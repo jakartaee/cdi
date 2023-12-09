@@ -72,7 +72,7 @@ public @interface Typed {
      */
     public final static class Literal extends AnnotationLiteral<Typed> implements Typed {
 
-        public static final Literal INSTANCE = of(new Class<?>[]{});
+        public static final Literal INSTANCE = of(new Class<?>[] {});
 
         private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -31,38 +31,44 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * Indicates that a bean directly specializes another bean. May be applied to a bean class or producer method.
  * </p>
- * 
+ *
  * <p>
  * If a bean directly specializes a second bean, it inherits:
  * </p>
- * 
+ *
  * <ul>
  * <li>all qualifiers of the second bean, and</li>
  * <li>the name, if any, of the second bean.</li>
  * </ul>
- * 
+ *
  * <p>
- * If the second bean has a name, the bean may not declare a name using {@link jakarta.inject.Named &#064;Named}. Furthermore, the
+ * If the second bean has a name, the bean may not declare a name using {@link jakarta.inject.Named &#064;Named}. Furthermore,
+ * the
  * bean must have all the bean types of the second bean.
  * </p>
- * 
+ *
  * <ul>
- * <li>If a bean class of a managed bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend the
+ * <li>If a bean class of a managed bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend
+ * the
  * bean class of a second managed bean. Then the first managed bean directly specializes the second managed bean.</li>
- * 
- * <li>If a bean class of a session bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend the
+ *
+ * <li>If a bean class of a session bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend
+ * the
  * bean class of a second session bean. Then the first session bean directly specializes the second session bean.</li>
- * 
- * <li>If a producer method is annotated <code>&#064;Specializes</code>, then it must be non-static and directly override another
+ *
+ * <li>If a producer method is annotated <code>&#064;Specializes</code>, then it must be non-static and directly override
+ * another
  * producer method. Then the first producer method directly specializes the second producer method.</li>
  * </ul>
- * 
+ *
  * <p>
  * If a bean is specialized by any enabled bean, the first bean is disabled.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for specialization.</p>
- * 
+ * <p>
+ * CDI Lite implementations are not required to provide support for specialization.
+ * </p>
+ *
  * @author Gavin King
  * @author Pete Muir
  */
@@ -71,7 +77,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
 @Retention(RUNTIME)
 @Documented
 public @interface Specializes {
-    
+
     /**
      * Supports inline instantiation of the {@link Specializes} annotation.
      *

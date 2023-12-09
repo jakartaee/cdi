@@ -8,7 +8,7 @@
  * You may obtain a copy of the License at
  * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,  
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -24,16 +24,20 @@ import jakarta.enterprise.inject.spi.configurator.BeanAttributesConfigurator;
  * registering the {@link Bean} object.
  * </p>
  * <p>
- * Any observer of this event is permitted to wrap and/or replace the {@link BeanAttributes} by calling either {@link #setBeanAttributes(BeanAttributes)} or {@link #configureBeanAttributes()}.
+ * Any observer of this event is permitted to wrap and/or replace the {@link BeanAttributes} by calling either
+ * {@link #setBeanAttributes(BeanAttributes)} or {@link #configureBeanAttributes()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
- * The container must use the final value of this property, after all observers have been called, to manage instances of the bean.
+ * The container must use the final value of this property, after all observers have been called, to manage instances of the
+ * bean.
  * </p>
  * <p>
  * If any observer method of a {@code ProcessBeanAttributes} event throws an exception, the exception is treated as a definition
  * error by the container.
  * </p>
  *
- * <p>CDI Lite implementations are not required to provide support for Portable Extensions.</p>
+ * <p>
+ * CDI Lite implementations are not required to provide support for Portable Extensions.
+ * </p>
  *
  * @author Pete Muir
  * @author Antoine Sabot-Durand
@@ -57,7 +61,7 @@ public interface ProcessBeanAttributes<T> {
 
     /**
      * Replaces the {@link BeanAttributes}.
-     * 
+     *
      * @param beanAttributes the new {@link BeanAttributes} to use
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -78,7 +82,7 @@ public interface ProcessBeanAttributes<T> {
     /**
      * Registers a definition error with the container, causing the container to abort deployment after bean discovery is
      * complete.
-     * 
+     *
      * @param t the error to add
      * @throws IllegalStateException if called outside of the observer method invocation
      */
@@ -86,16 +90,20 @@ public interface ProcessBeanAttributes<T> {
 
     /**
      * Forces the container to ignore the bean.
+     *
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void veto();
 
-
     /**
-     * <p>Instructs the container to ignore all non-static, final methods with public, protected or default visibility
-     * declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.</p>
+     * <p>
+     * Instructs the container to ignore all non-static, final methods with public, protected or default visibility
+     * declared on any bean type of the specific bean during validation of injection points that require proxyable bean type.
+     * </p>
      *
-     * <p>These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.</p>
+     * <p>
+     * These method should never be invoked upon bean instances. Otherwise, unpredictable behavior results.
+     * </p>
      *
      *
      * @throws IllegalStateException if called outside of the observer method invocation
