@@ -9,3 +9,4 @@ spec/en/master-filtered.xml
 *.iws
 .idea
 *.swp
+.cache

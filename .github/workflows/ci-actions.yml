@@ -25,11 +25,11 @@ jobs:
       - if: ${{ matrix.java != '11' }}
         name: "Maven install > 11"
         run: |
-          mvn -Pstaging install -DskipTests=true -B -V
+          mvn -Pstaging install -DskipTests=true -Dno-format -B -V
       - if: ${{ matrix.java == '11' }}
         name: "Maven install 11"
         run: |
-          mvn -Pstaging -pl '!el' install -DskipTests=true -B -V
+          mvn -Pstaging -pl '!el' install -DskipTests=true -Dno-format -B -V
       - if: ${{ matrix.java != '11' }}
         name: "Maven test > 11"
         run: |
