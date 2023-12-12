@@ -39,8 +39,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  *     public &lt;T&gt; InjectionTarget&lt;T&gt; createInjectionTarget(Bean&lt;T&gt; bean) {
  *         return new WrappingInjectionTarget&lt;T&gt;(
- *                 beanManager.getInjectionTargetFactory(myBeanAnnotatedType).createInjectionTarget(
- *                         bean));
+ *                 beanManager.getInjectionTargetFactory(myBeanAnnotatedType)
+ *                         .createInjectionTarget(bean));
  *     }
  * });
  * </pre>
