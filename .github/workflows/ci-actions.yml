@@ -35,6 +35,6 @@ jobs:
         run: |
           mvn -Pstaging test -B
       - if: ${{ matrix.java == '11' }}
-        name: "Maven install 11"
+        name: "Maven test 11"
         run: |
           mvn -Pstaging -pl '!el' test -B
