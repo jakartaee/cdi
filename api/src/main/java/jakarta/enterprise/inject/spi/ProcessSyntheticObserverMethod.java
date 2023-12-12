@@ -24,8 +24,7 @@ package jakarta.enterprise.inject.spi;
  * </p>
  * <p>
  * If any observer method of a {@code ProcessSyntheticObserverMethod} event throws an exception, the exception is treated as a
- * definition
- * error by the container.
+ * definition error by the container.
  * </p>
  *
  * <p>

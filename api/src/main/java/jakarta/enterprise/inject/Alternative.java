@@ -47,8 +47,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * By default, a bean archive has no selected alternatives. An alternative must be explicitly declared using the
  * <code>&lt;alternatives&gt;</code> element of the <code>beans.xml</code> file of the bean archive. The
- * <code>&lt;alternatives&gt;</code>
- * element contains a list of bean classes and stereotypes. An alternative is selected for the bean archive if either:
+ * <code>&lt;alternatives&gt;</code> element contains a list of bean classes and stereotypes. An alternative is selected for the
+ * bean archive if either:
  * </p>
  *
  * <ul>

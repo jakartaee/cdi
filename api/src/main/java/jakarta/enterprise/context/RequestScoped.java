@@ -34,9 +34,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  * <p>
  * While <code>RequestScoped</code> must be associated with the built-in request context required by the specification,
- * third-party extensions are
- * allowed to also associate it with their own context. Behavior described below is only related to the built-in request
- * context.
+ * third-party extensions are allowed to also associate it with their own context. Behavior described below is only related to
+ * the built-in request context.
  * </p>
  *
  * <p>
@@ -45,8 +44,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <ul>
  * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method
- * of any
- * servlet filter and when the container calls any <code>ServletRequestListener</code> or <code>AsyncListener</code>,</li>
+ * of any servlet filter and when the container calls any <code>ServletRequestListener</code> or
+ * <code>AsyncListener</code>,</li>
  * <li>during any Java EE web service invocation,</li>
  * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
  * an EJB timeout method and during message delivery to any EJB message-driven bean, and</li>
@@ -61,18 +60,16 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <li>at the end of the servlet request, after the <code>service()</code> method, all <code>doFilter()</code> methods, and all
  * <code>requestDestroyed()</code> and <code>onComplete()</code> notifications return,</li>
  * <li>after the web service invocation completes,</li>
- * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it
- * did not already exist when the invocation occurred, or</li>
+ * <li>after the EJB remote method invocation, asynchronous method invocation, timeout or message delivery completes if it did
+ * not already exist when the invocation occurred, or</li>
  * <li>after the <code>@PostConstruct</code> callback completes, if it did not already exist when the
- * <code>@PostConstruct</code>
- * callback occurred.</li>
+ * <code>@PostConstruct</code> callback occurred.</li>
  * </ul>
  *
  * <p>
  * An event with qualifier <code>@Initialized(RequestScoped.class)</code> is fired when the request context is initialized and
- * an
- * event
- * with qualifier <code>@Destroyed(RequestScoped.class)</code> when the request context is destroyed. The event payload is:
+ * an event with qualifier <code>@Destroyed(RequestScoped.class)</code> when the request context is destroyed. The event payload
+ * is:
  * </p>
  *
  * <ul>

@@ -238,8 +238,7 @@ public interface BeanContainer {
      * Obtains an {@link Instance} object to access to beans instances.
      * <p>
      * The returned <code>Instance</code> object can only access instances of beans that are available for injection in the
-     * module
-     * or library containing the class into which the <code>BeanManager</code>/<code>BeanContainer</code> was injected
+     * module or library containing the class into which the <code>BeanManager</code>/<code>BeanContainer</code> was injected
      * or, in the Jakarta EE environment, the Jakarta EE component from whose JNDI environment namespace the
      * <code>BeanContainer</code> was obtained, according to the rules of typesafe resolution.
      * <p>

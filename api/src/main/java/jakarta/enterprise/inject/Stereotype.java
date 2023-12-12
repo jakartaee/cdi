@@ -90,8 +90,7 @@ import java.lang.annotation.Target;
  *
  * <p>
  * A stereotype may declare an empty {@link jakarta.inject.Named &#064;Named} annotation, which specifies that every bean with
- * the
- * stereotype has a defaulted name when a name is not explicitly specified by the bean.
+ * the stereotype has a defaulted name when a name is not explicitly specified by the bean.
  * </p>
  *
  * <pre>
@@ -107,8 +106,8 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * <p>
- * A stereotype may declare an {@link Alternative &#064;Alternative} annotation, which specifies that
- * every bean with the stereotype is an alternative.
+ * A stereotype may declare an {@link Alternative &#064;Alternative} annotation, which specifies that every bean with the
+ * stereotype is an alternative.
  * </p>
  *
  * <pre>
@@ -121,8 +120,8 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * <p>
- * A stereotype may declare a {@link jakarta.annotation.Priority &#064;Priority} annotation, which specifies that
- * every bean with the stereotype is enabled and has given priority.
+ * A stereotype may declare a {@link jakarta.annotation.Priority &#064;Priority} annotation, which specifies that every bean
+ * with the stereotype is enabled and has given priority.
  * </p>
  *
  * <pre>

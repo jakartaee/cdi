@@ -34,9 +34,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  * <p>
  * While <code>SessionScoped</code> must be associated with the built-in session context required by the specification,
- * third-party extensions are
- * allowed to also associate it with their own context. Behavior described below is only related to the built-in session
- * context.
+ * third-party extensions are allowed to also associate it with their own context. Behavior described below is only related to
+ * the built-in session context.
  * </p>
  * <p>
  * The session scope is active:
@@ -58,18 +57,14 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <ul>
  * <li>when the HTTPSession times out, after all <code>HttpSessionListeners</code> have been called, or</li>
- * <li>at the very end of
- * any request in which <code>invalidate()</code> was called, after all filters and <code>ServletRequestListeners</code> have
- * been
- * called.</Li>
+ * <li>at the very end of any request in which <code>invalidate()</code> was called, after all filters and
+ * <code>ServletRequestListeners</code> have been called.</Li>
  * </ul>
  *
  * <p>
  * An event with qualifier <code>@Initialized(SessionScoped.class)</code> is fired when the session context is initialized and
- * an
- * event
- * with qualifier <code>@Destroyed(SessionScoped.class)</code> when the session context is destroyed. The event payload is
- * the <code>HttpSession</code>
+ * an event with qualifier <code>@Destroyed(SessionScoped.class)</code> when the session context is destroyed. The event payload
+ * is the <code>HttpSession</code>
  *
  * <p>
  * CDI Lite implementations are not required to provide support for the session scope.

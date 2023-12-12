@@ -43,22 +43,18 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <p>
  * If the second bean has a name, the bean may not declare a name using {@link jakarta.inject.Named &#064;Named}. Furthermore,
- * the
- * bean must have all the bean types of the second bean.
+ * the bean must have all the bean types of the second bean.
  * </p>
  *
  * <ul>
  * <li>If a bean class of a managed bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend
- * the
- * bean class of a second managed bean. Then the first managed bean directly specializes the second managed bean.</li>
+ * the bean class of a second managed bean. Then the first managed bean directly specializes the second managed bean.</li>
  *
  * <li>If a bean class of a session bean is annotated <code>&#064;Specializes</code> , then the bean class must directly extend
- * the
- * bean class of a second session bean. Then the first session bean directly specializes the second session bean.</li>
+ * the bean class of a second session bean. Then the first session bean directly specializes the second session bean.</li>
  *
  * <li>If a producer method is annotated <code>&#064;Specializes</code>, then it must be non-static and directly override
- * another
- * producer method. Then the first producer method directly specializes the second producer method.</li>
+ * another producer method. Then the first producer method directly specializes the second producer method.</li>
  * </ul>
  *
  * <p>

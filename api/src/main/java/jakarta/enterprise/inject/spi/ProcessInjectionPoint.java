@@ -30,8 +30,7 @@ import jakarta.enterprise.inject.spi.configurator.InjectionPointConfigurator;
  * {@link #setInjectionPoint(InjectionPoint)} or {@link #configureInjectionPoint()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
  * The container must use the final value of this property, after all observers have been called, he container must use the
- * final
- * value of this property, after all observers have been called, whenever it performs injection upon the injection point.
+ * final value of this property, after all observers have been called, whenever it performs injection upon the injection point.
  * </p>
  * <p>
  * If any observer method of a {@code ProcessInjectionPoint} event throws an exception, the exception is treated as a definition
