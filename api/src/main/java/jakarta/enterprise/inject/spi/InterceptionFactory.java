@@ -37,8 +37,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  *     BeanManager bm;
  *
- *     public MyBean(BeanManager bm){
- *     this.bm=bm;
+ *     public MyCustomBean(BeanManager bm) {
+ *         this.bm = bm;
  *     }
  *
  *     public MyClass create(CreationalContext&lt;MyClass&gt; creationalContext) {
