@@ -39,7 +39,8 @@ final class SecurityActions {
                     (PrivilegedAction<?>) () -> {
                         method.setAccessible(true);
                         return null;
-                    });
+                    }
+            );
         } else {
             method.setAccessible(true);
         }
@@ -48,7 +49,8 @@ final class SecurityActions {
     static Method[] getDeclaredMethods(Class<?> clazz) {
         if (System.getSecurityManager() != null) {
             return AccessController.doPrivileged(
-                    (PrivilegedAction<Method[]>) () -> clazz.getDeclaredMethods());
+                    (PrivilegedAction<Method[]>) () -> clazz.getDeclaredMethods()
+            );
         } else {
             return clazz.getDeclaredMethods();
         }
