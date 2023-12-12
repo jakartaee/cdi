@@ -61,8 +61,7 @@ import jakarta.inject.Provider;
  * </pre>
  *
  * <p>
- * Or, the {@link Any &#064;Any} qualifier may be used, allowing the application to specify qualifiers
- * dynamically:
+ * Or, the {@link Any &#064;Any} qualifier may be used, allowing the application to specify qualifiers dynamically:
  * </p>
  *
  * <pre>
@@ -82,10 +81,8 @@ import jakarta.inject.Provider;
  *
  * <p>
  * The inherited {@link jakarta.inject.Provider#get()} method returns a contextual references for the unique bean that matches
- * the
- * required type and required qualifiers and is eligible for injection into the class into which the parent
- * <code>Instance</code>
- * was injected, or throws an {@link UnsatisfiedResolutionException} or
+ * the required type and required qualifiers and is eligible for injection into the class into which the parent
+ * <code>Instance</code> was injected, or throws an {@link UnsatisfiedResolutionException} or
  * {@link AmbiguousResolutionException}.
  * </p>
  *
@@ -126,8 +123,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @param qualifiers the additional required qualifiers
      * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
-     *         annotation that
-     *         is not a qualifier type
+     *         annotation that is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */
     Instance<T> select(Annotation... qualifiers);
@@ -142,8 +138,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @param qualifiers the additional required qualifiers
      * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
-     *         annotation that
-     *         is not a qualifier type
+     *         annotation that is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */
     <U extends T> Instance<U> select(Class<U> subtype, Annotation... qualifiers);
@@ -158,8 +153,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * @param qualifiers the additional required qualifiers
      * @return the child <code>Instance</code>
      * @throws IllegalArgumentException if passed two instances of the same non repeating qualifier type, or an instance of an
-     *         annotation that
-     *         is not a qualifier type
+     *         annotation that is not a qualifier type
      * @throws IllegalStateException if the container is already shutdown
      */
     <U extends T> Instance<U> select(TypeLiteral<U> subtype, Annotation... qualifiers);
@@ -195,16 +189,15 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
      * </p>
      *
      * @return <code>true</code> if there is more than one bean that matches the required type and qualifiers and is eligible
-     *         for
-     *         injection into the class into which the parent <code>Instance</code> was injected, or <code>false</code>
+     *         for injection into the class into which the parent <code>Instance</code> was injected, or <code>false</code>
      *         otherwise.
      */
     boolean isAmbiguous();
 
     /**
      * <p>
-     * Determines if there is exactly one bean that matches the required type and qualifiers and is eligible for injection
-     * into the class into which the parent <code>Instance</code> was injected.
+     * Determines if there is exactly one bean that matches the required type and qualifiers and is eligible for injection into
+     * the class into which the parent <code>Instance</code> was injected.
      * </p>
      *
      * @since 2.0
@@ -236,8 +229,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
     void destroy(T instance);
 
     /**
-     * Obtains an initialized contextual reference handle for a bean that has the required type and qualifiers and is
-     * eligible for injection. Throws exceptions if there is no such bean or more than one.
+     * Obtains an initialized contextual reference handle for a bean that has the required type and qualifiers and is eligible
+     * for injection. Throws exceptions if there is no such bean or more than one.
      *
      * <p>
      * The contextual reference is obtained lazily, i.e. when first needed.
@@ -251,8 +244,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
     /**
      * Allows iterating over contextual reference handles for all beans that have the required type and required qualifiers and
-     * are eligible
-     * for injection.
+     * are eligible for injection.
      *
      * <p>
      * Note that the returned {@link Iterable} is stateless. Therefore, each {@link Iterable#iterator()} produces a new set of
@@ -275,8 +267,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
     /**
      * This interface represents a contextual reference handle.
      * <p>
-     * Allows to inspect the metadata of the relevant bean before resolving its contextual reference and also to destroy
-     * the underlying contextual instance.
+     * Allows to inspect the metadata of the relevant bean before resolving its contextual reference and also to destroy the
+     * underlying contextual instance.
      * </p>
      *
      * @author Matej Novotny
@@ -290,8 +282,8 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
          * @return the contextual reference
          * @see Instance#get()
          * @throws IllegalStateException If the producing {@link Instance} does not exist
-         * @throws IllegalStateException If invoked on {@link Handle} that previously successfully destroyed its
-         *         underlying contextual reference
+         * @throws IllegalStateException If invoked on {@link Handle} that previously successfully destroyed its underlying
+         *         contextual reference
          */
         T get();
 

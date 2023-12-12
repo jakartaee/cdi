@@ -22,10 +22,8 @@ public interface ELAwareBeanManager extends BeanManager {
     /**
      * Returns a wrapper {@link jakarta.el.ExpressionFactory} that delegates {@link jakarta.el.MethodExpression} and
      * {@link jakarta.el.ValueExpression} creation to the given {@link jakarta.el.ExpressionFactory}. When a Unified EL
-     * expression
-     * is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the wrapper
-     * {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope
-     * {@link Dependent}.
+     * expression is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the
+     * wrapper {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope {@link Dependent}.
      *
      * @param expressionFactory the {@link jakarta.el.ExpressionFactory} to wrap
      * @return the wrapped {@link jakarta.el.ExpressionFactory}

@@ -77,9 +77,9 @@ public enum TransactionPhase {
      * </p>
      * <p>
      * Transactional observer will be notified will also get invoked if there is no transaction in progress, or the transaction
-     * is in progress,
-     * but {@code jakarta.transaction.Synchronization} callback cannot be registered due to the transaction being already
-     * marked for rollback or in state where {@code jakarta.transaction.Synchronization} callbacks cannot be registered.
+     * is in progress, but {@code jakarta.transaction.Synchronization} callback cannot be registered due to the transaction
+     * being already marked for rollback or in state where {@code jakarta.transaction.Synchronization} callbacks cannot be
+     * registered.
      * </p>
      */
     AFTER_FAILURE,

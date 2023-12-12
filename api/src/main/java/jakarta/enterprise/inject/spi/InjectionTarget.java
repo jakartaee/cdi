@@ -50,8 +50,7 @@ public interface InjectionTarget<T> extends Producer<T> {
     /**
      * <p>
      * Calls the {@link jakarta.annotation.PostConstruct} callback, if it exists, according to the semantics required by the
-     * Java
-     * EE platform specification.
+     * Java EE platform specification.
      * </p>
      *
      * @param instance The instance on which to invoke the {@link jakarta.annotation.PostConstruct} method
@@ -61,8 +60,7 @@ public interface InjectionTarget<T> extends Producer<T> {
     /**
      * <p>
      * Calls the {@link jakarta.annotation.PreDestroy} callback, if it exists, according to the semantics required by the Java
-     * EE
-     * platform specification.
+     * EE platform specification.
      * </p>
      *
      * @param instance The instance on which to invoke the {@link jakarta.annotation.PreDestroy} method

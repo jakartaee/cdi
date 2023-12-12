@@ -34,9 +34,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  * <p>
  * While <code>ApplicationScoped</code> must be associated with the built-in application context required by the specification,
- * third-party extensions are
- * allowed to also associate it with their own context. Behavior described below is only related to the built-in application
- * context.
+ * third-party extensions are allowed to also associate it with their own context. Behavior described below is only related to
+ * the built-in application context.
  * </p>
  *
  * <p>
@@ -45,8 +44,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <ul>
  * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method
- * of any
- * servlet filter and when the container calls any <code>ServletContextListener</code>, <code>HttpSessionListener</code>,
+ * of any servlet filter and when the container calls any <code>ServletContextListener</code>, <code>HttpSessionListener</code>,
  * <code>AsyncListener</code> or <code>ServletRequestListener</code>,</li>
  * <li>during any Java EE web service invocation,</li>
  * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
@@ -67,9 +65,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <p>
  * An event with qualifier <code>@Initialized(ApplicationScoped.class)</code> is fired when the application context is
- * initialized
- * and an event with qualifier <code>@Destroyed(ApplicationScoped.class)</code> when the application context is destroyed.
- * The event payload is:
+ * initialized and an event with qualifier <code>@Destroyed(ApplicationScoped.class)</code> when the application context is
+ * destroyed. The event payload is:
  * </p>
  *
  * <ul>

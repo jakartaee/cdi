@@ -65,15 +65,13 @@ public interface AfterTypeDiscovery {
 
     /**
      * <p>
-     * Adds a given {@link AnnotatedType} to the set of types which will be scanned during bean
-     * discovery.
+     * Adds a given {@link AnnotatedType} to the set of types which will be scanned during bean discovery.
      * </p>
      *
      * <p>
      * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be
-     * defined. {@link AnnotatedType}s
-     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
-     * type.
+     * defined. {@link AnnotatedType}s discovered by the container use the fully qualified class name of
+     * {@link AnnotatedType#getJavaClass()} to identify the type.
      * </p>
      *
      * <p>
@@ -89,16 +87,15 @@ public interface AfterTypeDiscovery {
 
     /**
      * <p>
-     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link AnnotatedType} and
-     * add it to the set of types which will be scanned during bean discovery at the end of the observer invocation.
-     * Calling this method multiple times will return a new AnnotatedTypeConfigurator.
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link AnnotatedType} and add it to the set of types
+     * which will be scanned during bean discovery at the end of the observer invocation. Calling this method multiple times
+     * will return a new AnnotatedTypeConfigurator.
      * </p>
      *
      * <p>
      * Thanks to the id parameter, this method allows multiple annotated types, based on the same underlying type, to be
-     * defined. {@link AnnotatedType}s
-     * discovered by the container use the fully qualified class name of {@link AnnotatedType#getJavaClass()} to identify the
-     * type.
+     * defined. {@link AnnotatedType}s discovered by the container use the fully qualified class name of
+     * {@link AnnotatedType#getJavaClass()} to identify the type.
      * </p>
      *
      * <p>

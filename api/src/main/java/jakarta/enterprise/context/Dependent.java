@@ -58,13 +58,13 @@ import jakarta.inject.Scope;
  * </ul>
  *
  * <p>
- * Every invocation of the {@link Context#get(Contextual, CreationalContext)} operation of the
- * context object for the <code>@Dependent</code> scope returns a new instance of the given bean.
+ * Every invocation of the {@link Context#get(Contextual, CreationalContext)} operation of the context object for the
+ * <code>@Dependent</code> scope returns a new instance of the given bean.
  * </p>
  *
  * <p>
- * Every invocation of the {@link Context#get(Contextual)} operation of the context object for the
- * <code>@Dependent</code> scope returns a null value.
+ * Every invocation of the {@link Context#get(Contextual)} operation of the context object for the <code>@Dependent</code> scope
+ * returns a null value.
  * </p>
  *
  * <p>
@@ -73,19 +73,17 @@ import jakarta.inject.Scope;
  *
  * <p>
  * Many instances of beans with scope <code>@Dependent</code> belong to some other bean or Java EE component class instance and
- * are
- * called dependent objects.
+ * are called dependent objects.
  * </p>
  *
  * <ul>
  * <li>Instances of decorators and interceptors are dependent objects of the bean instance they decorate.</li>
  * <li>An instance of a bean with scope <code>@Dependent</code> injected into a field, bean constructor or initializer method is
- * a
- * dependent object of the bean or Java EE component class instance into which it was injected.</li>
+ * a dependent object of the bean or Java EE component class instance into which it was injected.</li>
  * <li>An instance of a bean with scope <code>@Dependent</code> injected into a producer method is a dependent object of the
  * producer method bean instance that is being produced.</li>
- * <li>An instance of a bean with scope <code>@Dependent</code> obtained by direct invocation of an
- * {@link Instance} is a dependent object of the instance of {@link Instance}.</li>
+ * <li>An instance of a bean with scope <code>@Dependent</code> obtained by direct invocation of an {@link Instance} is a
+ * dependent object of the instance of {@link Instance}.</li>
  * </ul>
  *
  * <p>

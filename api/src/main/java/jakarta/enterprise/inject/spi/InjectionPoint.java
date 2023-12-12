@@ -31,8 +31,7 @@ import jakarta.enterprise.inject.Produces;
  * <p>
  * Provides access to metadata about an injection point. May represent an {@linkplain jakarta.inject.Inject injected field} or a
  * parameter of a {@linkplain jakarta.inject.Inject bean constructor}, {@linkplain jakarta.inject.Inject initializer method},
- * {@linkplain Produces producer method}, {@linkplain Disposes disposer method}
- * or {@linkplain Observes observer method}.
+ * {@linkplain Produces producer method}, {@linkplain Disposes disposer method} or {@linkplain Observes observer method}.
  * </p>
  *
  * <p>
@@ -42,15 +41,13 @@ import jakarta.enterprise.inject.Produces;
  * </p>
  *
  * <p>
- * Occasionally, a bean with scope {@link Dependent &#064;Dependent} needs to access metadata relating
- * to the object to which it belongs. The bean may inject an {@code InjectionPoint} representing the injection point into which
- * the bean was injected.
+ * Occasionally, a bean with scope {@link Dependent &#064;Dependent} needs to access metadata relating to the object to which it
+ * belongs. The bean may inject an {@code InjectionPoint} representing the injection point into which the bean was injected.
  * </p>
  *
  * <p>
  * For example, the following producer method creates injectable <code>Logger</code> s. The log category of a
- * <code>Logger</code>
- * depends upon the class of the object into which it is injected.
+ * <code>Logger</code> depends upon the class of the object into which it is injected.
  * </p>
  *
  * <pre>
@@ -61,8 +58,7 @@ import jakarta.enterprise.inject.Produces;
  * </pre>
  *
  * <p>
- * Only {@linkplain Dependent dependent} objects, may obtain information about the injection point to
- * which they belong.
+ * Only {@linkplain Dependent dependent} objects, may obtain information about the injection point to which they belong.
  * </p>
  *
  * @author Gavin King

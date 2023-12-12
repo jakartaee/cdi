@@ -33,8 +33,7 @@ import jakarta.enterprise.inject.spi.configurator.ObserverMethodConfigurator;
  * {@link #setObserverMethod(ObserverMethod)} or {@link #configureObserverMethod()}.
  * If both methods are called within an observer notification an {@link IllegalStateException} is thrown.
  * The container must use the final value of this property, after all observers have been called, he container must use the
- * final
- * value of this property, after all observers have been called, whenever it performs observer resolution.
+ * final value of this property, after all observers have been called, whenever it performs observer resolution.
  * </p>
  * <p>
  * If any observer method of a {@code ProcessObserverMethod} event throws an exception, the exception is treated as a definition

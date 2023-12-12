@@ -25,8 +25,8 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  *
  * <p>
  * The {@link InjectionTargetFactory} obtained from {@link BeanManager#getInjectionTargetFactory(AnnotatedType)} is capable of
- * providing
- * container created injection targets. This factory can be wrapped to add behavior to container created injection targets.
+ * providing container created injection targets. This factory can be wrapped to add behavior to container created injection
+ * targets.
  * </p>
  *
  * <p>

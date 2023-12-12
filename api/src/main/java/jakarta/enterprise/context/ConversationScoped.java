@@ -34,10 +34,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  * <p>
  * While <code>ConversationScoped</code> must be associated with the built-in conversation context required by the
- * specification,
- * third-party extensions are
- * allowed to also associate it with their own context. Behavior described below is only related to the built-in conversation
- * context.
+ * specification, third-party extensions are allowed to also associate it with their own context. Behavior described below is
+ * only related to the built-in conversation context.
  * </p>
  * <p>
  * The conversation scope is active:
@@ -47,9 +45,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </ul>
  * <p>
  * An event with qualifier <code>@Initialized(ConversationScoped.class)</code> is fired when the conversation context is
- * initialized
- * and an event with qualifier <code>@Destroyed(ConversationScoped.class)</code> is fired when the conversation is destroyed.
- * The event payload is:
+ * initialized and an event with qualifier <code>@Destroyed(ConversationScoped.class)</code> is fired when the conversation is
+ * destroyed. The event payload is:
  * </p>
  * <ul>
  * <li>the conversation id if the conversation context is destroyed and is not associated with a current Servlet request,
@@ -68,11 +65,9 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <li>The container provides a filter with the name "CDI Conversation Filter", which may be mapped in <code>web.xml</code>,
  * allowing the user alter when the conversation is associated with the servlet request. If this filter is not mapped in any
  * <code>web.xml</code> in the application, the conversation associated with a Servlet request is determined at the beginning of
- * the
- * request before calling any <code>service()</code> method of any servlet in the web application, calling the
- * <code>doFilter()</code>
- * method of any servlet filter in the web application and before the container calls any <code>ServletRequestListener</code> or
- * <code>AsyncListener</code> in the web application.</li>
+ * the request before calling any <code>service()</code> method of any servlet in the web application, calling the
+ * <code>doFilter()</code> method of any servlet filter in the web application and before the container calls any
+ * <code>ServletRequestListener</code> or <code>AsyncListener</code> in the web application.</li>
  * </ul>
  *
  *
@@ -113,15 +108,13 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * any faces request (JSF form submission) that originates from that rendered page.</li>
  * <li>The long-running conversation context associated with a request that results in a JSF redirect (a redirect resulting from
  * a navigation rule or JSF <code>NavigationHandler</code>) is automatically propagated to the resulting non-faces request, and
- * to any other
- * subsequent request to the same URL. This is accomplished via use of a request parameter named <code>cid</code> containing the
- * unique identifier of the conversation.</li>
+ * to any other subsequent request to the same URL. This is accomplished via use of a request parameter named <code>cid</code>
+ * containing the unique identifier of the conversation.</li>
  * </ul>
  *
  * <p>
  * When no conversation is propagated to a Servlet request, or if a request parameter named <code>conversationPropagation</code>
- * has
- * the value <code>none</code> the request is associated with a new transient conversation.
+ * has the value <code>none</code> the request is associated with a new transient conversation.
  * All long-running conversations are scoped to a particular HTTP servlet session and may not cross session boundaries.
  * In the following cases, a propagated long-running conversation cannot be restored and re-associated with the request:
  * </p>

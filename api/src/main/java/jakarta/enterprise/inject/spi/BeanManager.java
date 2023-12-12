@@ -38,8 +38,8 @@ import jakarta.enterprise.util.Nonbinding;
  * </p>
  *
  * <p>
- * In CDI Lite environment, applications may obtain a {@code BeanManager}, but invoking methods that are not inherited
- * from {@link BeanContainer} results in non-portable behavior.
+ * In CDI Lite environment, applications may obtain a {@code BeanManager}, but invoking methods that are not inherited from
+ * {@link BeanContainer} results in non-portable behavior.
  * </p>
  *
  * <p>
@@ -53,8 +53,7 @@ import jakarta.enterprise.util.Nonbinding;
  *
  * <p>
  * Java EE components may obtain an instance of <code>BeanManager</code> from {@linkplain javax.naming JNDI} by looking up the
- * name
- * {@code java:comp/BeanManager}.
+ * name {@code java:comp/BeanManager}.
  * </p>
  *
  * <p>
@@ -236,10 +235,8 @@ public interface BeanManager extends BeanContainer {
     /**
      * Returns a wrapper {@link jakarta.el.ExpressionFactory} that delegates {@link jakarta.el.MethodExpression} and
      * {@link jakarta.el.ValueExpression} creation to the given {@link jakarta.el.ExpressionFactory}. When a Unified EL
-     * expression
-     * is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the wrapper
-     * {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope
-     * {@link Dependent}.
+     * expression is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the
+     * wrapper {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope {@link Dependent}.
      *
      * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
      * @param expressionFactory the {@link jakarta.el.ExpressionFactory} to wrap
@@ -343,8 +340,7 @@ public interface BeanManager extends BeanContainer {
      * The {@link InjectionTarget} creates and destroys instances of the bean, performs dependency injection and lifecycle
      * callbacks, and determines the return value of {@link Bean#getInjectionPoints()}. The {@link InjectionTarget} is obtained
      * from the {@link InjectionTargetFactory}. {@link #getInjectionTargetFactory(AnnotatedType)} allows use of a container
-     * created
-     * {@link InjectionTarget}.
+     * created {@link InjectionTarget}.
      * </p>
      *
      * @param <T> the type
