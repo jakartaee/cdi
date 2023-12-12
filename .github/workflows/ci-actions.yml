@@ -22,9 +22,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: "Maven install"
+      - if: ${{ matrix.java != '11' }}
+        name: "Maven install > 11"
         run: |
           mvn -Pstaging install -DskipTests=true -B -V
-      - name: "Maven test"
+      - if: ${{ matrix.java == '11' }}
+        name: "Maven install 11"
+        run: |
+          mvn -Pstaging -pl '!el' install -DskipTests=true -B -V
+      - if: ${{ matrix.java != '11' }}
+        name: "Maven test > 11"
         run: |
           mvn -Pstaging test -B
+      - if: ${{ matrix.java == '11' }}
+        name: "Maven test 11"
+        run: |
+          mvn -Pstaging -pl '!el' test -B
