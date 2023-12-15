@@ -341,6 +341,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+				<excludes>
+                        <!-- Exclude the overview.html javadoc from sources -->
+						<exclude>**/overview.html</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
