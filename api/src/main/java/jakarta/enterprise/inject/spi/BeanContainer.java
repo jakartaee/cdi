@@ -255,10 +255,10 @@ public interface BeanContainer {
     Instance<Object> createInstance();
 
     /**
-     * Returns true if a bean with given bean types and qualifiers would be assignable
-     * to an injection point with given required type and required qualifiers, false otherwise.
+     * Returns {@code true} if a bean with given bean types and qualifiers would be assignable
+     * to an injection point with given required type and required qualifiers, {@code false} otherwise.
      * <p>
-     * Callers do not need to include implied qualifiers ({@code @Default}, {@code Any}).
+     * Callers do not need to include implied qualifiers ({@code @Default}, {@code @Any}).
      * These will be automatically added where applicable.
      * <p>
      * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
@@ -267,18 +267,18 @@ public interface BeanContainer {
      * @param beanQualifiers qualifiers of a bean; must not be {@code null}
      * @param requiredType required type of an injection point; must not be {@code null}
      * @param requiredQualifiers required qualifiers of an injection point; must not be {@code null}
-     * @return true if a bean with given bean types and qualifiers would be assignable
-     *         to an injection point with given required type and required qualifiers, false otherwise
+     * @return {@code true} if a bean with given bean types and qualifiers would be assignable
+     *         to an injection point with given required type and required qualifiers, {@code false} otherwise
      */
     boolean isMatchingBean(Set<Type> beanTypes, Set<Annotation> beanQualifiers, Type requiredType,
             Set<Annotation> requiredQualifiers);
 
     /**
-     * Returns true if an event object with given type and qualifiers would match
-     * an observer method with given observed event type and observed event qualifiers, false otherwise.
+     * Returns {@code true} if an event object with given type and qualifiers would match
+     * an observer method with given observed event type and observed event qualifiers, {@code false} otherwise.
      * <p>
-     * Callers do not need to include implied qualifiers ({@code @Default}, {@code Any}).
-     * These will be automatically added where applicable.
+     * Callers do not need to include the implied qualifier ({@code @Any}).
+     * It will be automatically added where applicable.
      * <p>
      * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
      *
@@ -286,8 +286,8 @@ public interface BeanContainer {
      * @param eventQualifiers event qualifiers; must not be {@code null}
      * @param observedEventType observed event type of an observer method; must not be {@code null}
      * @param observedEventQualifiers observed event qualifiers on an observer method; must not be {@code null}
-     * @return true if an event object with given type and qualifiers would result in notifying
-     *         an observer method with given observed event type and observed event qualifiers, false otherwise
+     * @return {@code true} if an event object with given type and qualifiers would result in notifying
+     *         an observer method with given observed event type and observed event qualifiers, {@code false} otherwise
      */
     boolean isMatchingEvent(Type eventType, Set<Annotation> eventQualifiers, Type observedEventType,
             Set<Annotation> observedEventQualifiers);
