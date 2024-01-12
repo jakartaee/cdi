@@ -261,9 +261,11 @@ Instances of dependent scoped beans obtained with this `Instance` object must be
 
 If no qualifier is passed to `Instance.select()` method, the `@Default` qualifier is assumed.
 
-==== Assignability of beans and observers
+[[bm_bean_event_assignability]]
 
-The methods `BeanContainer.isMatchingBean()` and `isMatchingObserver()` provide access to assignability rules defined in <<typesafe_resolution>> and <<observer_resolution>>.
+==== Assignability of beans and events
+
+The methods `BeanContainer.isMatchingBean()` and `isMatchingEvent()` provide access to assignability rules defined in <<typesafe_resolution>> and <<observer_resolution>>.
 
 [source, java]
 ----
