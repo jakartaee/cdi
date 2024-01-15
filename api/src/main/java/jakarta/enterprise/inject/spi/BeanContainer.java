@@ -258,8 +258,12 @@ public interface BeanContainer {
      * Returns {@code true} if a bean with given bean types and qualifiers would be assignable
      * to an injection point with given required type and required qualifiers, {@code false} otherwise.
      * <p>
-     * Callers do not need to include implied qualifiers ({@code @Default}, {@code @Any}).
-     * These will be automatically added where applicable.
+     * In line with the specification for beans and typesafe resolution, the set of
+     * {@code beanTypes} is considered to always include {@code java.lang.Object}.
+     * The set of {@code beanQualifiers} is considered to always include {@code @Any} and
+     * also include {@code @Default} when it contains no other qualifier but {@code @Any}
+     * and {@code @Named}. The set of {@code requiredQualifiers} is considered to include
+     * {@code @Default} when it is empty.
      * <p>
      * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
      *
@@ -277,8 +281,8 @@ public interface BeanContainer {
      * Returns {@code true} if an event object with given type and qualifiers would match
      * an observer method with given observed event type and observed event qualifiers, {@code false} otherwise.
      * <p>
-     * Callers do not need to include the implied qualifier ({@code @Any}).
-     * It will be automatically added where applicable.
+     * In line with the specification for events and observer resolution, the set of
+     * {@code eventQualifiers} is considered to always include {@code @Any}.
      * <p>
      * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
      *
