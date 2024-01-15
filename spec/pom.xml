@@ -14,7 +14,7 @@
 	<description>CDI Specification documentation</description>
 
 	<properties>
-		<asciidoctor-maven.version>2.2.4</asciidoctor-maven.version>
+		<asciidoctor-maven.version>2.2.5</asciidoctor-maven.version>
 		<asciidoctorj.version>2.5.10</asciidoctorj.version>
 		<asciidoctorj-pdf.version>2.3.9</asciidoctorj-pdf.version>
 		<!-- asl2 for non-final releases, or final for EFSL -->
