@@ -275,12 +275,15 @@ public interface BeanContainer {
      * <p>
      * In line with the specification for beans and typesafe resolution, the set of
      * {@code beanTypes} is considered to always include {@code java.lang.Object}.
+     * Types in {@code beanTypes} that are not legal bean types are ignored.
      * The set of {@code beanQualifiers} is considered to always include {@code @Any} and
      * also include {@code @Default} when it contains no other qualifier but {@code @Any}
      * and {@code @Named}. The set of {@code requiredQualifiers} is considered to include
      * {@code @Default} when it is empty.
      * <p>
-     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
+     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}
+     * or if any of the {@code beanQualifiers} or {@code requiredQualifiers} is not
+     * a qualifier annotation.
      *
      * @param beanTypes bean types of a bean; must not be {@code null}
      * @param beanQualifiers qualifiers of a bean; must not be {@code null}
@@ -293,21 +296,28 @@ public interface BeanContainer {
             Set<Annotation> requiredQualifiers);
 
     /**
-     * Returns {@code true} if an event object with given type and qualifiers would match
-     * an observer method with given observed event type and observed event qualifiers, {@code false} otherwise.
+     * Returns {@code true} if an event with given specified type and specified qualifiers would
+     * match an observer method with given observed event type and observed event qualifiers,
+     * {@code false} otherwise.
      * <p>
-     * In line with the specification for events and observer resolution, the set of
-     * {@code eventQualifiers} is considered to always include {@code @Any}.
+     * For the purpose of observer resolution, the {@code specifiedType} is used as the event type
+     * directly (because there is no event object in this API) and {@code specifiedQualifiers} are
+     * used as event qualifiers. In line with the specification for events and observer resolution,
+     * the set of event qualifiers is considered to always include {@code @Any}. Further, an empty
+     * set of {@code specifiedQualifiers} is considered to match the set of {@code observedEventQualifiers}
+     * which contains {@code @Default}.
      * <p>
-     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null}.
+     * Throws {@link IllegalArgumentException} if any of the arguments is {@code null},
+     * if the {@code specifiedType} contains a type variable, or if any of the {@code specifiedQualifiers}
+     * or {@code observedEventQualifiers} is not a qualifier annotation.
      *
-     * @param eventType type of an event object; must not be {@code null}
-     * @param eventQualifiers event qualifiers; must not be {@code null}
+     * @param specifiedType specified type of an event; must not be {@code null}
+     * @param specifiedQualifiers specified qualifiers of an event; must not be {@code null}
      * @param observedEventType observed event type of an observer method; must not be {@code null}
      * @param observedEventQualifiers observed event qualifiers on an observer method; must not be {@code null}
      * @return {@code true} if an event object with given type and qualifiers would result in notifying
      *         an observer method with given observed event type and observed event qualifiers, {@code false} otherwise
      */
-    boolean isMatchingEvent(Type eventType, Set<Annotation> eventQualifiers, Type observedEventType,
+    boolean isMatchingEvent(Type specifiedType, Set<Annotation> specifiedQualifiers, Type observedEventType,
             Set<Annotation> observedEventQualifiers);
 }
