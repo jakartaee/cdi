@@ -86,7 +86,7 @@ When an application is started, the container performs the following steps:
 * Next, the container must fire an event of type `AfterTypeDiscovery`, as defined in <<after_type_discovery>>.
 * Next, the container must perform bean discovery, as defined in <<bean_discovery_steps_full>>.
 * Next, the container must fire an event of type `AfterBeanDiscovery`, as defined in <<after_bean_discovery>>, and abort initialization of the application if any observer registers a definition error.
-* Next, the container must detect deployment problems by validating bean dependencies and specialization and abort initialization of the application if any deployment problems exist, as defined in <<exceptions>>.
+* Next, the container must detect deployment problems by validating bean dependencies, specialization and <<invoker_lookups,invoker lookups>> and abort initialization of the application if any deployment problems exist, as defined in <<exceptions>>.
 * Next, the container must fire an event of type `AfterDeploymentValidation`, as defined in <<after_deployment_validation>>, and abort initialization of the application if any observer registers a deployment problem.
 * Finally, the container begins directing requests to the application.
 

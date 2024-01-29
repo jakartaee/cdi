@@ -81,7 +81,7 @@ At deployment time, the container performs the following steps:
   As part of that, the container must execute the <<bce_discovery,`@Discovery`>> and <<bce_enhancement,`@Enhancement`>> phases of build compatible extensions.
 * Next, the container must perform bean discovery, as defined in <<bean_discovery_steps>>.
   As part of that, the container must execute the <<bce_registration,`@Registration`>> and <<bce_synthesis,`@Synthesis`>> phases of build compatible extensions.
-* Finally, the container must detect deployment problems by validating bean dependencies.
+* Finally, the container must detect deployment problems by validating bean dependencies and <<invoker_lookups,invoker lookups>>.
   As part of that, the container must execute the <<bce_validation,`@Validation`>> phase of build compatible extensions.
 
 At any step, the container must abort deployment if any definition errors or deployment problems exist, as defined in <<exceptions>>.
