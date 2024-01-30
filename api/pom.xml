@@ -275,14 +275,6 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-			<resource>
-				<directory>src/main/javadoc</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>overview.html</include>
-				</includes>
-				<targetPath>${project.build.directory}/javadoc</targetPath>
-			</resource>
 		</resources>
 		<testResources>
 			<testResource>
@@ -383,6 +375,29 @@
 							<argLine>-Djava.security.manager -Djava.security.policy="${project.build.testOutputDirectory}/java.policy"</argLine>
 							<forkCount>1</forkCount>
 							<useModulePath>false</useModulePath>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>filter-overview</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/javadoc</directory>
+									<include>overview.html</include>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/javadoc</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
