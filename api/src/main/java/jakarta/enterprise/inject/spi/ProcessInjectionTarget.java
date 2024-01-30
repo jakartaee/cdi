@@ -18,8 +18,8 @@ package jakarta.enterprise.inject.spi;
 /**
  * <p>
  * The container fires an event of this type for every Java EE component class supporting injection that may be instantiated by
- * the container at runtime, including every managed bean declared using {@code jakarta.annotation.ManagedBean}, EJB session or
- * message-driven bean, enabled bean, enabled interceptor or enabled decorator.
+ * the container at runtime, including EJB session or message-driven bean, enabled bean, enabled interceptor or
+ * enabled decorator.
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link InjectionTarget}. The

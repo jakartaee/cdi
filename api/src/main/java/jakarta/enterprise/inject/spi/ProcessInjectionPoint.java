@@ -21,9 +21,8 @@ import jakarta.enterprise.inject.spi.configurator.InjectionPointConfigurator;
 /**
  * <p>
  * The container fires an event of this type for every injection point of every Java EE component class supporting injection
- * that may be instantiated by the container at runtime, including every managed bean declared using
- * {@code jakarta.annotation.ManagedBean}, EJB session or message-driven bean, enabled bean, enabled interceptor or enabled
- * decorator.
+ * that may be instantiated by the container at runtime, including every EJB session or message-driven bean, enabled
+ * bean, enabled interceptor or enabled decorator.
  * </p>
  * <p>
  * Any observer of this event is permitted to wrap and/or replace the {@link InjectionPoint} by calling either {@link #setInjectionPoint(InjectionPoint)} or {@link #configureInjectionPoint()}.
