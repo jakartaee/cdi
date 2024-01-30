@@ -62,13 +62,13 @@ When running in Jakarta EE, the container must extend the rules defined in <<pro
 
 ==== `ProcessInjectionPoint` event and EJB
 
-When running in Jakarta EE, the container must also fire an event for every injection point of every Jakarta EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using `@ManagedBean`, EJB session or message-driven bean.
+When running in Jakarta EE, the container must also fire an event for every injection point of every Jakarta EE component class supporting injection that may be instantiated by the container at runtime, including every EJB session or message-driven bean.
 
 [[process_injection_target_ee]]
 
 ==== `ProcessInjectionTarget` event and EJB
 
-When running in Jakarta EE, the container must also fire an event for every Jakarta EE component class supporting injection that may be instantiated by the container at runtime, including every managed bean declared using `@ManagedBean`, EJB session or message-driven bean.
+When running in Jakarta EE, the container must also fire an event for every Jakarta EE component class supporting injection that may be instantiated by the container at runtime, including every EJB session or message-driven bean.
 
 The container must extend the rules defined in <<process_injection_target>> for managed bean to EJB session bean and other Jakarta EE component class supporting injection.
 
