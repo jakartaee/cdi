@@ -28,7 +28,7 @@ This document is organized in 4 parts:
 ** {cdi_lite} specification: <<part_1a>>;
 ** {cdi_full} specification: <<part_1b>>.
 * Specific CDI features for Java SE: <<part_2>>.
-* Specific CDI features for Jakarta EE: <<part_3>>.
+
 
 
 === Major changes

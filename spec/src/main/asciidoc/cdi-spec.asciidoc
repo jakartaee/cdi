@@ -101,7 +101,4 @@ include::core/packagingdeployment_full.asciidoc[]
 
 include::javase/javase.asciidoc[]
 
-[[part_3]]
-= Part III - CDI in Jakarta EE
 
-include::javaee/javaeeintegration.asciidoc[]
