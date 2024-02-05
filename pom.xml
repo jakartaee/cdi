@@ -99,8 +99,6 @@
 						<!-- files which are themselves licenses -->
 						<exclude>**/speclicense.html</exclude>
 						<exclude>**/license-*.asciidoc</exclude>
-						<!-- docs -->
-						<exclude>docs/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
