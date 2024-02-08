@@ -49,7 +49,7 @@ Contributor Agreement (ECA) on file.
 For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
 
-## Eclipse Development Process
+== Eclipse Development Process
 
 This Eclipse Foundation open project is governed by the Eclipse Foundation
 Development Process and operates under the terms of the Eclipse IP Policy.
@@ -63,6 +63,32 @@ Jakarta EE specification projects.
 * https://www.eclipse.org/org/documents/Eclipse_IP_Policy.pdf
 * https://jakarta.ee/about/jesp/
 * https://www.eclipse.org/legal/efsp_non_assert.php
+
+== Copyright headers
+
+Every new file should start with one of the following headers in whatever comment format is appropriate for the file, where `{year}` is the year the file was created and `{owner}` is the copyright owner of the original contribution:
+
+[source]
+----
+Copyright (c) {year} Contributors to the Eclipse Foundation
+
+This program and the accompanying materials are made available under the
+Apache Software License 2.0 which is available at:
+https://www.apache.org/licenses/LICENSE-2.0.
+
+SPDX-License-Identifier: Apache-2.0
+----
+
+[source]
+----
+Copyright (c) {year} {owner} and others
+
+This program and the accompanying materials are made available under the
+Apache Software License 2.0 which is available at:
+https://www.apache.org/licenses/LICENSE-2.0.
+
+SPDX-License-Identifier: Apache-2.0
+----
 
 == Contact
 

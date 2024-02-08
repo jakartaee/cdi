@@ -1,3 +1,12 @@
+<!--
+    Copyright (c) 2011 Red Hat, Inc. and others
+    
+    This program and the accompanying materials are made available under the
+    Apache Software License 2.0 which is available at:
+    https://www.apache.org/licenses/LICENSE-2.0.
+    
+    SPDX-License-Identifier: Apache-2.0
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -80,9 +89,17 @@
 				<artifactId>apache-rat-plugin</artifactId>
 				<version>${rat.version}</version>
 				<configuration>
-					<includes>
-						<include>**/*.java</include>
-					</includes>
+					<excludes>
+						<!-- files which are generated or otherwise can't have copyright headers -->
+						<exclude>**/.cache/**</exclude>
+						<exclude>**/*.lock</exclude>
+						<exclude>src/main/asciidoc/dictionary.txt</exclude>
+						<!-- services files -->
+						<exclude>**/resources/META-INF/services/*</exclude>
+						<!-- files which are themselves licenses -->
+						<exclude>**/speclicense.html</exclude>
+						<exclude>**/license-*.asciidoc</exclude>
+					</excludes>
 				</configuration>
 				<executions>
 					<execution>

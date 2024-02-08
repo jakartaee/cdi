@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2012 Red Hat, Inc. and others
+    
+    This program and the accompanying materials are made available under the
+    Apache Software License 2.0 which is available at:
+    https://www.apache.org/licenses/LICENSE-2.0.
+    
+    SPDX-License-Identifier: Apache-2.0
+-->
 <beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="
