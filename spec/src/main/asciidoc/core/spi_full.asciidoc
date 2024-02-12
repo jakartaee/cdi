@@ -560,6 +560,13 @@ In addition to rules defined in <<bm_obtain_instance>>, the following rules appl
 
 The returned `Instance` object can only access instances of  beans that are available for injection in the module or library containing the class into which the `BeanManager` was injected or the Jakarta EE component from whose JNDI environment namespace the `BeanManager` was obtained, according to the rules defined in <<typesafe_resolution>>.
 
+[[el_support]]
+=== Unified EL integration API
+
+Since CDI version 4.1, the Unified EL integration API, which is part of the `BeanManager` API, is deprecated.
+The relevant methods are placed in a new interface `jakarta.enterprise.inject.spi.el.ELAwareBeanManager`, which is present in a new supplemental CDI API artifact: `jakarta.enterprise:jakarta.enterprise.cdi-el-api`.
+
+The requirements for supporting the Unified EL integration API are defined in the Jakarta EE Platform specification.
 [[alternative_metadata_sources]]
 
 === Alternative metadata sources
