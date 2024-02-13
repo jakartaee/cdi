@@ -67,6 +67,7 @@ Whether concurrent invocations of the target method are safe depends on the impl
 
 Whenever a direct invocation of a method on an object is a business method invocation, an indirect invocation of that method on that object through an invoker is also a business method invocation.
 
+[[invoke_behavior]]
 ==== Behavior of `invoke()`
 
 If the target method is `static`, the `instance` is ignored; by convention, it should be `null`.
@@ -200,6 +201,10 @@ When `withArgumentLookup()` is called on an invoker builder, the `invoke()` meth
 2. obtain and use a contextual reference for the identified bean and the declared type of the parameter.
 
 Calling `withArgumentLookup()` with `position` less than 0 or greater than or equal to the number of parameters of the target method leads to an `IllegalArgumentException`.
+
+Configuring a lookup using `withInstanceLookup()` or `withArgumentLookup()` does not relax the requirements defined in <<invoke_behavior>>.
+Notably, the `arguments` array must still have an element for each argument, regardless of whether a lookup was configured for it.
+This means that for a target method with N parameters, the `arguments` array must always have at least N elements.
 
 In the following paragraphs, the beans whose instances shall be obtained by `Invoker.invoke()` as a result of calling `withInstanceLookup()` and `withArgumentLookup()` are called _looked up beans_.
 
