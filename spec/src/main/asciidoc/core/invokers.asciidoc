@@ -67,6 +67,7 @@ Whether concurrent invocations of the target method are safe depends on the impl
 
 Whenever a direct invocation of a method on an object is a business method invocation, an indirect invocation of that method on that object through an invoker is also a business method invocation.
 
+[[invoke_behavior]]
 ==== Behavior of `invoke()`
 
 If the target method is `static`, the `instance` is ignored; by convention, it should be `null`.
@@ -97,8 +98,6 @@ Otherwise, runtime failures are likely to occur.
 
 If the target method returns normally, its return value is returned (after boxing conversion if the target method's return type is a primitive type), unless the target method is declared `void`, in which case `null` is returned.
 If the target method throws an exception, it is rethrown directly.
-
-// TODO when the `InvokerBuilder` applies transformations, some of the requirements above are no longer strictly necessary, we should reflect that in this text somehow
 
 ==== Example
 
@@ -141,7 +140,7 @@ invoker.invoke(myService, new Object[] {"world"})
 
 The return value is `"Hello world!"`.
 
-An implementation of the invoker above is equivalent to the following class:
+Internally, the container will create an implementation of the invoker, equivalent to the following class:
 
 [source,java]
 ----
@@ -180,4 +179,45 @@ public interface InvokerBuilder<T> {
 
 Calling `InvokerBuilder.build()` produces an opaque token (`InvokerInfo`) that can be passed as a parameter to a `SyntheticBeanBuilder` or `SyntheticObserverBuilder` and materializes as an `Invoker` at application runtime.
 
-// TODO lookups, transformers, wrappers
+[[invoker_lookups]]
+==== Configuring invoker lookups
+
+The `InvokerBuilder` allows configuring that the `instance` or any of the `arguments` passed to `Invoker.invoke()` should be ignored and a value should be looked up from the CDI container instead.
+
+[source,java]
+----
+public interface InvokerBuilder<T> {
+    InvokerBuilder<T> withInstanceLookup();
+    InvokerBuilder<T> withArgumentLookup(int position);
+}
+----
+
+When `withInstanceLookup()` is called on an invoker builder and the target method is not `static`, the `invoke()` method of the built invoker shall ignore the `instance` argument and instead obtain and use a contextual reference for the target bean and the bean type that declares the target method.
+Calling `withInstanceLookup()` on an invoker builder for a `static` target method has no effect.
+
+When `withArgumentLookup()` is called on an invoker builder, the `invoke()` method of the built invoker shall ignore the given element of the `arguments` array and instead:
+
+1. identify a bean according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, where the required type is the declared type of the corresponding parameter of the target method and the required qualifiers are all qualifiers present on the parameter, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>;
+2. obtain and use a contextual reference for the identified bean and the declared type of the parameter.
+
+Calling `withArgumentLookup()` with `position` less than 0 or greater than or equal to the number of parameters of the target method leads to an `IllegalArgumentException`.
+
+Configuring a lookup using `withInstanceLookup()` or `withArgumentLookup()` does not relax the requirements defined in <<invoke_behavior>>.
+Notably, the `arguments` array must still have an element for each argument, regardless of whether a lookup was configured for it.
+This means that for a target method with N parameters, the `arguments` array must always have at least N elements.
+
+In the following paragraphs, the beans whose instances shall be obtained by `Invoker.invoke()` as a result of calling `withInstanceLookup()` and `withArgumentLookup()` are called _looked up beans_.
+
+During deployment validation, implementations are required to identify all looked up beans for all built invokers, as described above.
+It is a deployment problem if an attempt to identify a looked up bean results in an unsatisfied dependency or an ambiguous dependency that is not resolvable.
+Implementations are permitted to remember the identified beans and not repeat the resolution process for each invocation of `Invoker.invoke()`.
+
+All instances of `@Dependent` looked up beans obtained during `Invoker.invoke()` are destroyed before the `invoke()` method returns or throws.
+The order in which the instances of `@Dependent` looked up beans are destroyed is not specified.
+
+The order in which instances of looked up beans are obtained during `Invoker.invoke()` in not specified.
+
+If an exception is thrown when creating an instance of a looked up bean during `Invoker.invoke()`, the exception is rethrown.
+
+NOTE: Destroying an instance is not permitted to throw an exception.
+See <<contextual>> for more information.
