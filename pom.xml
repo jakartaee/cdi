@@ -99,6 +99,8 @@
 						<!-- files which are themselves licenses -->
 						<exclude>**/speclicense.html</exclude>
 						<exclude>**/license-*.asciidoc</exclude>
+						<!-- metadata files which aren't automatically excluded -->
+						<exclude>CODE_OF_CONDUCT.md</exclude>
 					</excludes>
 				</configuration>
 				<executions>
