@@ -27,7 +27,16 @@ SPDX-License-Identifier: Apache-2.0
 
 The project maintains the following source code repositories:
 
-* https://github.com/eclipse-ee4j/cdi
+* https://github.com/jakartaee/cdi
+* https://github.com/jakartaee/cdi-tck
+* https://github.com/jakartaee/injection-api
+* https://github.com/jakartaee/injection-spec
+* https://github.com/jakartaee/injection-tck
+
+The project also maintains the following legacy CPL licensed source code repositories:
+
+* https://github.com/eclipse-ee4j/cdi-cpl.git
+* https://github.com/eclipse-ee4j/cdi-tck-cpl.git
 
 ## Third-party Content
 
