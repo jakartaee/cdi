@@ -18,13 +18,13 @@ cdi-tck - Project repository hosted on GitHub.
 `clone: https://github.com/jakartaee/cdi-tck.git`
 
 injection-api - Project repository hosted on GitHub.
-`clone: https://github.com/jakartaee/injection-api.git`
+`clone: https://github.com/jakartaee/inject.git`
 
 injection-spec - Project repository hosted on GitHub.
-`clone: https://github.com/jakartaee/injection-spec.git`
+`clone: https://github.com/jakartaee/inject-spec.git`
 
 injection-tck - Project repository hosted on GitHub.
-`clone: https://github.com/jakartaee/injection-tck.git`
+`clone: https://github.com/jakartaee/inject-tck.git`
 
 === Legacy CPL Licensed CDI Respositories
 cdi-tck-cpl - Project repository hosted on GitHub.
