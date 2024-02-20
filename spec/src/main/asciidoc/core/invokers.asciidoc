@@ -215,6 +215,19 @@ Implementations are permitted to remember the identified beans and not repeat th
 All instances of `@Dependent` looked up beans obtained during `Invoker.invoke()` are destroyed before the `invoke()` method returns or throws.
 The order in which the instances of `@Dependent` looked up beans are destroyed is not specified.
 
+This specification recognizes the existence of _asynchronous_ methods, where the action represented by the method does not always finish when the method returns; the _completion_ of the action is asynchronous to the method call.
+For target methods that are considered asynchronous by the CDI container, the requirement to destroy instances of `@Dependent` looked up beans is relaxed: the instances of `@Dependent` looked up beans need not be destroyed before `Invoker.invoke()` returns.
+It is recommended that the instances of `@Dependent` looked up beans are destroyed after the asynchronous action completes and before the completion is propagated to the caller of `Invoker.invoke()`; if an asynchronous target method completes synchronously or throws synchronously, it is recommended that the instances of `@Dependent` looked up beans are destroyed before `invoke()` returns or rethrows the exception.
+
+[CAUTION]
+====
+The rules for recognizing asynchronous methods are not specified.
+Applications which use invokers to call asynchronous methods are therefore not portable.
+Future versions of this specification may define an API to give greater control over the invocation of asynchronous methods.
+
+Implementations that support asynchronous methods are encouraged to document the rules they follow.
+====
+
 The order in which instances of looked up beans are obtained during `Invoker.invoke()` in not specified.
 
 If an exception is thrown when creating an instance of a looked up bean during `Invoker.invoke()`, the exception is rethrown.
