@@ -12,19 +12,19 @@ You can use the code from these repositories to experiment, test, build, create 
 
 === Current Respositories
 cdi - Project repository hosted on GitHub.
-`clone: https://github.com/eclipse-ee4j/cdi.git`
-
-injection-api - Project repository hosted on GitHub.
-`clone: https://github.com/eclipse-ee4j/injection-api.git`
-
-injection-spec - Project repository hosted on GitHub.
-`clone: https://github.com/eclipse-ee4j/injection-spec.git`
-
-injection-tck - Project repository hosted on GitHub.
-`clone: https://github.com/eclipse-ee4j/injection-tck.git`
+`clone: https://github.com/jakartaee/cdi.git`
 
 cdi-tck - Project repository hosted on GitHub.
-`clone: https://github.com/eclipse-ee4j/cdi-tck.git`
+`clone: https://github.com/jakartaee/cdi-tck.git`
+
+injection-api - Project repository hosted on GitHub.
+`clone: https://github.com/jakartaee/inject.git`
+
+injection-spec - Project repository hosted on GitHub.
+`clone: https://github.com/jakartaee/inject-spec.git`
+
+injection-tck - Project repository hosted on GitHub.
+`clone: https://github.com/jakartaee/inject-tck.git`
 
 === Legacy CPL Licensed CDI Respositories
 cdi-tck-cpl - Project repository hosted on GitHub.
@@ -39,12 +39,6 @@ Before your contribution can be accepted by the project team contributors must
 electronically sign the Eclipse Contributor Agreement (ECA).
 
 * http://www.eclipse.org/legal/ECA.php
-
-Commits that are provided by non-committers must have a Signed-off-by field in
-the footer indicating that the author is aware of the terms by which the
-contribution has been provided to the project. The non-committer must
-additionally have an Eclipse Foundation account and must have a signed Eclipse
-Contributor Agreement (ECA) on file.
 
 For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
