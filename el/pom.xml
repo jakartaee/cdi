@@ -31,7 +31,8 @@
 	</licenses>
 
 	<properties>
-		<uel.api.version>6.0.0-M1</uel.api.version>
+		<uel.api.version>6.0.0-M2</uel.api.version>
+		<maven.compiler.release>17</maven.compiler.release>
 	</properties>
 
 	<dependencyManagement>
