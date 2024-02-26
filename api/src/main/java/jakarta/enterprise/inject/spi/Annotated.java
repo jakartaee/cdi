@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * <p>
  * Represents a Java program element that can be annotated.
- * <p>
+ * </p>
  *
  * @see java.lang.reflect.AnnotatedElement
  *

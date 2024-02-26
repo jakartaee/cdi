@@ -95,7 +95,7 @@ public @interface RequestScoped {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<RequestScoped> implements RequestScoped {
-
+        /** Default RequestScope literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

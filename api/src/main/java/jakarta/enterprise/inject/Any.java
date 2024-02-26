@@ -83,7 +83,7 @@ public @interface Any {
      * @see Event
      */
     public static final class Literal extends AnnotationLiteral<Any> implements Any {
-
+        /** Default Any literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

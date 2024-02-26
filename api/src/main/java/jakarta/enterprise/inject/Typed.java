@@ -69,13 +69,20 @@ public @interface Typed {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<Typed> implements Typed {
-
+        /** Default Typed literal */
         public static final Literal INSTANCE = of(new Class<?>[] {});
 
         private static final long serialVersionUID = 1L;
 
+        /** */
         private final Class<?>[] value;
 
+        /**
+         * Obtain the Type literal of the provided bean classes
+         *
+         * @param value - the classes corresponding to the bean types of the bean
+         * @return a new Literal value for the provided classes
+         */
         public static Literal of(Class<?>[] value) {
             return new Literal(value);
         }
@@ -84,6 +91,9 @@ public @interface Typed {
             this.value = value;
         }
 
+        /**
+         * @return the classes corresponding to the bean types of the bean
+         */
         public Class<?>[] value() {
             return value;
         }

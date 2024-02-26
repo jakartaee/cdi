@@ -72,10 +72,28 @@ public interface NotificationOptions {
      */
     interface Builder {
 
+        /**
+         * Set the notification executor
+         *
+         * @param executor - {@linkplain Executor}
+         * @return this
+         */
         Builder setExecutor(Executor executor);
 
+        /**
+         * Set an option value
+         *
+         * @param optionName - name
+         * @param optionValue - value
+         * @return this
+         */
         Builder set(String optionName, Object optionValue);
 
+        /**
+         * Build the notification options
+         *
+         * @return NotificationOptions
+         */
         NotificationOptions build();
 
     }

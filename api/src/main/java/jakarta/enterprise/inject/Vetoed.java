@@ -58,7 +58,7 @@ public @interface Vetoed {
     public static final class Literal extends AnnotationLiteral<Vetoed> implements Vetoed {
 
         private static final long serialVersionUID = 1L;
-
+        /** Default Vetoed literal */
         public static final Literal INSTANCE = new Literal();
 
     }

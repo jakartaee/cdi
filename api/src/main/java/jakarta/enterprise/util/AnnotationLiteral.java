@@ -71,6 +71,9 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private transient Method[] members;
     private transient Integer cachedHashCode;
 
+    /**
+     * Default ctor
+     */
     protected AnnotationLiteral() {
     }
 

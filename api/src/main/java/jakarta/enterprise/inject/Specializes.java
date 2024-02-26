@@ -83,7 +83,7 @@ public @interface Specializes {
     public static final class Literal extends AnnotationLiteral<Specializes> implements Specializes {
 
         private static final long serialVersionUID = 1L;
-
+        /** Default Specializes literal */
         public static final Literal INSTANCE = new Literal();
 
     }

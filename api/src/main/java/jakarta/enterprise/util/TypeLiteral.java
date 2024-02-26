@@ -52,6 +52,9 @@ public abstract class TypeLiteral<T> implements Serializable {
 
     private transient Type actualType;
 
+    /**
+     * Default ctor
+     */
     protected TypeLiteral() {
     }
 

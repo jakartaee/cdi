@@ -23,7 +23,7 @@ import jakarta.inject.Qualifier;
  * @since 2.0
  */
 public final class QualifierLiteral extends AnnotationLiteral<Qualifier> implements Qualifier {
-
+    /** Default QualifierLiteral instance */
     public static final QualifierLiteral INSTANCE = new QualifierLiteral();
 
     private static final long serialVersionUID = 1L;

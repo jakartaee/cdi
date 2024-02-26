@@ -22,6 +22,7 @@ package jakarta.enterprise.inject.spi;
  */
 public interface CDIProvider extends Prioritized {
 
+    /** The default value for {@linkplain #getPriority()} */
     public static final int DEFAULT_CDI_PROVIDER_PRIORITY = 0;
 
     /**

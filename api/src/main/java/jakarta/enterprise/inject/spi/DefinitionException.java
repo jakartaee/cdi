@@ -41,16 +41,32 @@ public class DefinitionException extends RuntimeException {
 
     private static final long serialVersionUID = -2699170549782567339L;
 
-    public DefinitionException(String message, Throwable t) {
-        super(message, t);
+    /**
+     * Create exception with given message and cause
+     *
+     * @param message - context information
+     * @param cause - cause of exception
+     */
+    public DefinitionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     *
+     * @param message - context information
+     */
     public DefinitionException(String message) {
         super(message);
     }
 
-    public DefinitionException(Throwable t) {
-        super(t);
+    /**
+     * Create exception with given cause
+     *
+     * @param cause - cause of exception
+     */
+    public DefinitionException(Throwable cause) {
+        super(cause);
     }
 
 }

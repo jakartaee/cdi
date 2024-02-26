@@ -41,16 +41,32 @@ public class DeploymentException extends RuntimeException {
 
     private static final long serialVersionUID = 2604707587772339984L;
 
-    public DeploymentException(String message, Throwable t) {
-        super(message, t);
+    /**
+     * Create exception with given message and cause
+     *
+     * @param message - context information
+     * @param cause - cause of exception
+     */
+    public DeploymentException(String message, Throwable cause) {
+        super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     *
+     * @param message - context information
+     */
     public DeploymentException(String message) {
         super(message);
     }
 
-    public DeploymentException(Throwable t) {
-        super(t);
+    /**
+     * Create exception with given cause
+     *
+     * @param cause - cause of exception
+     */
+    public DeploymentException(Throwable cause) {
+        super(cause);
     }
 
 }

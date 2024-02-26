@@ -108,7 +108,7 @@ public @interface Dependent {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<Dependent> implements Dependent {
-
+        /** Default Dependent literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

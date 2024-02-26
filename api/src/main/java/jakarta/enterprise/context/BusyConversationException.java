@@ -41,18 +41,37 @@ public class BusyConversationException extends ContextException {
 
     private static final long serialVersionUID = -3599813072560026919L;
 
+    /**
+     * default ctor
+     */
     public BusyConversationException() {
         super();
     }
 
+    /**
+     * Create exception with given message
+     *
+     * @param message - context information
+     */
     public BusyConversationException(String message) {
         super(message);
     }
 
+    /**
+     * Create exception with given cause
+     *
+     * @param cause - cause of exception
+     */
     public BusyConversationException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     * Create exception with given message and cause
+     *
+     * @param message - context information
+     * @param cause - cause of exception
+     */
     public BusyConversationException(String message, Throwable cause) {
         super(message, cause);
     }

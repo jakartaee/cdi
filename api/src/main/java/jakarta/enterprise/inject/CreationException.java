@@ -26,18 +26,37 @@ public class CreationException extends InjectionException {
 
     private static final long serialVersionUID = 1002854668862145298L;
 
+    /**
+     * Default ctor
+     */
     public CreationException() {
 
     }
 
+    /**
+     * Create exception with given message
+     *
+     * @param message - context information
+     */
     public CreationException(String message) {
         super(message);
     }
 
+    /**
+     * Create exception with given cause
+     *
+     * @param cause - cause of exception
+     */
     public CreationException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     * Create exception with given message and cause
+     *
+     * @param message - context information
+     * @param cause - cause of exception
+     */
     public CreationException(String message, Throwable cause) {
         super(message, cause);
     }

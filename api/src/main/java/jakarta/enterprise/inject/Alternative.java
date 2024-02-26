@@ -71,7 +71,7 @@ public @interface Alternative {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<Alternative> implements Alternative {
-
+        /** Default Alternative literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

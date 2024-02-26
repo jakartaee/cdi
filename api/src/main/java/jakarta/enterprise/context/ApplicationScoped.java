@@ -91,7 +91,7 @@ public @interface ApplicationScoped {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<ApplicationScoped> implements ApplicationScoped {
-
+        /** Default ApplicationScoped literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

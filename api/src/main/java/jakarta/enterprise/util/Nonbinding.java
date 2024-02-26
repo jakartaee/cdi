@@ -56,7 +56,7 @@ public @interface Nonbinding {
      * @since 2.0
      */
     public static final class Literal extends AnnotationLiteral<Nonbinding> implements Nonbinding {
-
+        /** Default Nonbinding literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
