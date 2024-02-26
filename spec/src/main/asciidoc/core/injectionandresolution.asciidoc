@@ -672,7 +672,7 @@ The `iterator()` method must:
 * If typesafe resolution results in an unsatisfied dependency, the set of resulting beans is empty.
   If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains at least one alternative, the set of resulting beans contains all beans that were not eliminated during ambiguity resolution.
   If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains no alternative, the set of resulting beans contains all candidate beans.
-* Return an `Iterator`, that iterates over the set of contextual references for the resulting beans, as defined in <<contextual_reference>>.
+* Return an `Iterator`, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
 The `stream()` method must:
 
@@ -680,7 +680,7 @@ The `stream()` method must:
 * If typesafe resolution results in an unsatisfied dependency, the set of resulting beans is empty.
   If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains at least one alternative, the set of resulting beans contains all beans that were not eliminated during ambiguity resolution.
   If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains no alternative, the set of resulting beans contains all candidate beans.
-* Return a `Stream`, that can stream over the set of contextual references for the resulting beans, as defined in <<contextual_reference>>.
+* Return a `Stream`, that can stream over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
 The methods `isUnsatisfied()`, `isAmbiguous()` and `isResolvable()` must:
 
