@@ -79,6 +79,7 @@ public @interface Typed {
 
         /**
          * Obtain the Type literal of the provided bean classes
+         *
          * @param value - the classes corresponding to the bean types of the bean
          * @return a new Literal value for the provided classes
          */

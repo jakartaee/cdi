@@ -73,6 +73,7 @@ public @interface BeforeDestroyed {
 
         /**
          * Obtain the literal of the provided scope annotation
+         *
          * @param value - the scope annotation
          * @return a new Literal value for the provided scope annotation
          */

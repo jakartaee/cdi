@@ -35,6 +35,7 @@ public class ContextException extends RuntimeException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      */
     public ContextException(String message) {
@@ -43,6 +44,7 @@ public class ContextException extends RuntimeException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param cause - cause of exception
      */
     public ContextException(Throwable cause) {
@@ -51,6 +53,7 @@ public class ContextException extends RuntimeException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      * @param cause - cause of exception
      */

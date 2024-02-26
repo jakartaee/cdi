@@ -74,6 +74,7 @@ public interface NotificationOptions {
 
         /**
          * Set the notification executor
+         *
          * @param executor - {@linkplain Executor}
          * @return this
          */
@@ -81,6 +82,7 @@ public interface NotificationOptions {
 
         /**
          * Set an option value
+         *
          * @param optionName - name
          * @param optionValue - value
          * @return this
@@ -89,6 +91,7 @@ public interface NotificationOptions {
 
         /**
          * Build the notification options
+         *
          * @return NotificationOptions
          */
         NotificationOptions build();

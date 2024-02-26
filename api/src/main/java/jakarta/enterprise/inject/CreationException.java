@@ -35,6 +35,7 @@ public class CreationException extends InjectionException {
 
     /**
      * Create exception with given message
+     *
      * @param message - context information
      */
     public CreationException(String message) {
@@ -43,6 +44,7 @@ public class CreationException extends InjectionException {
 
     /**
      * Create exception with given cause
+     *
      * @param cause - cause of exception
      */
     public CreationException(Throwable cause) {
@@ -51,6 +53,7 @@ public class CreationException extends InjectionException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      * @param cause - cause of exception
      */

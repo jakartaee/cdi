@@ -34,6 +34,7 @@ public final class NamedLiteral extends AnnotationLiteral<Named> implements Name
 
     /**
      * Create a new NamedLiteral for the given name value
+     *
      * @param value - name
      * @return new NamedLiteral
      */

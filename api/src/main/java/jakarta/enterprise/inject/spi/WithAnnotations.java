@@ -45,8 +45,9 @@ import java.lang.annotation.Target;
 @Target(PARAMETER)
 public @interface WithAnnotations {
     /**
-     *  Event annotation types to observe
-     * @return  Event annotation types to observe
+     * Event annotation types to observe
+     *
+     * @return Event annotation types to observe
      */
     Class<? extends Annotation>[] value();
 

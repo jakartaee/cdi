@@ -34,6 +34,7 @@ public class AmbiguousResolutionException extends ResolutionException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      * @param throwable - cause of exception
      */
@@ -43,6 +44,7 @@ public class AmbiguousResolutionException extends ResolutionException {
 
     /**
      * Create exception with given message
+     *
      * @param message - context information
      */
     public AmbiguousResolutionException(String message) {
@@ -51,6 +53,7 @@ public class AmbiguousResolutionException extends ResolutionException {
 
     /**
      * Create exception with given cause
+     *
      * @param throwable - cause of exception
      */
     public AmbiguousResolutionException(Throwable throwable) {

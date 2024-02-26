@@ -50,6 +50,7 @@ public class BusyConversationException extends ContextException {
 
     /**
      * Create exception with given message
+     *
      * @param message - context information
      */
     public BusyConversationException(String message) {
@@ -58,6 +59,7 @@ public class BusyConversationException extends ContextException {
 
     /**
      * Create exception with given cause
+     *
      * @param cause - cause of exception
      */
     public BusyConversationException(Throwable cause) {
@@ -66,6 +68,7 @@ public class BusyConversationException extends ContextException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      * @param cause - cause of exception
      */

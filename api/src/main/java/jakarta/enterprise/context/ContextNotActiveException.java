@@ -41,6 +41,7 @@ public class ContextNotActiveException extends ContextException {
 
     /**
      * Create exception with given message
+     *
      * @param message - context information
      */
     public ContextNotActiveException(String message) {
@@ -49,6 +50,7 @@ public class ContextNotActiveException extends ContextException {
 
     /**
      * Create exception with given cause
+     *
      * @param cause - cause of exception
      */
     public ContextNotActiveException(Throwable cause) {
@@ -57,6 +59,7 @@ public class ContextNotActiveException extends ContextException {
 
     /**
      * Create exception with given message and cause
+     *
      * @param message - context information
      * @param cause - cause of exception
      */
