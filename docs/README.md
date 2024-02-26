@@ -23,7 +23,7 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 
 3. Fork the [project repository](https://github.com/eclipse-ee4j/cdi), then clone your fork.
 
-        git clone https://github.com/eclipse-ee4j/cdi
+        git clone https://github.com/jakartaee/cdi
 
 4. Change into the project directory:
 
@@ -44,17 +44,18 @@ These instructions will get you a copy of the eclipse-ee4j.github.io/cdi/ websit
 **For more regarding the use of Jekyll, please refer to the [Jekyll Step by Step Tutorial](https://jekyllrb.com/docs/step-by-step/01-setup/).**
 
 ## Writing a Blog Post
+
 To write a blog:
 
-- create an author entry in [_authors](https://github.com/eclipse-ee4j/cdi/tree/master/docs/_authors)
-- create an blog entry under [_posts](https://github.com/eclipse-ee4j/cdi/tree/master/docs/_posts)
-  -the file name is `yyyy-mm-dd-slug.adoc`
-- `tags` should be used with some care as an archive page is created for of them. Below are some basic rules to try follow:
+- create an author entry in [_authors](https://github.com/jakartaee/cdi/tree/master/docs/_authors)
+- create a blog entry under [_posts](https://github.com/jakartaee/cdi/tree/master/docs/_posts)
+  - the file name is `yyyy-mm-dd-slug.adoc`
+- `tag` or `tags` should be used with some care as an archive page is created for of them. Below are some basic rules to follow:
    - `cdi-release` used for CDI release blogs
    - `announcement` used for general announcement with some impact.
    - `development-tips` used for blogs with tips to develop with CDI.
    - tags are space separated list `tags:cdi-release announcement`
    - tags must be in lowercase
-- it's in markdown format, there is an example as shown with [2021-10-25-way-to-cdi4.md](https://github.com/eclipse-ee4j/cdi/blob/master/docs/_posts/2021-10-25-way-to-cdi4.md)
-   - Be aware that the `date` attribute in the asciidoc preamble defines when the article will be published. Use a present date while writing your article to test locally, then switch to the actual target date before submitting.
-- send a pull request against the master branch and when it is merged it will be automatically incorporated into the pages site.
+- it's in Markdown format, see [2021-10-25-way-to-cdi4.md](https://github.com/jakartaee/cdi/blob/master/docs/_posts/2021-10-25-way-to-cdi4.md) for example
+- the `date` attribute in the front matter defines when the article will be published. Use a present date while writing your article to test locally, then switch to the actual target date before submitting.
+- send a pull request against the `main` branch and when it is merged it will be automatically incorporated into the site.

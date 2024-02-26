@@ -5,6 +5,7 @@
 # https://www.apache.org/licenses/LICENSE-2.0.
 # 
 # SPDX-License-Identifier: Apache-2.0
+
 # Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
@@ -28,9 +29,9 @@
 title: Jakarta CDI
 email: cdi-dev@eclipse.org
 description: >- # this means to ignore newlines until "baseurl:"
-  This is the pages site for the Jakarta Contents and Dependency Injection API and Specifications project.
+  This is the site for the Jakarta Contexts and Dependency Injection API and Specification project.
 baseurl: "/cdi" # the subpath of your site, e.g. /blog
-url: "https://eclipse-ee4j.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://jakartaee.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username:
 #github_username:
 

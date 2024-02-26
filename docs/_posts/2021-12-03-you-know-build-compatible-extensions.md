@@ -1,23 +1,19 @@
-<!--
-    Copyright (c) 2021 Red Hat, Inc. and others
-    
-    This program and the accompanying materials are made available under the
-    Apache Software License 2.0 which is available at:
-    https://www.apache.org/licenses/LICENSE-2.0.
-    
-    SPDX-License-Identifier: Apache-2.0
--->
 ---
+# Copyright (c) 2021 Red Hat, Inc. and others
+#
+# This program and the accompanying materials are made available under the
+# Apache Software License 2.0 which is available at:
+# https://www.apache.org/licenses/LICENSE-2.0.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 title: "You already know Build Compatible Extensions"
 summary: Comparison of Portable Extensions and Build Compatible Extensions
-layout: post
 author: ladt
 tag: development-tips
-priority: 1
-change_frequency: daily
 ---
 
-As you have learned from a [previous post](https://eclipse-ee4j.github.io/cdi/2021/10/25/way-to-cdi4.html), CDI Lite comes with a new extension API called _Build Compatible Extensions_.
+As you have learned from a [previous post](https://jakartaee.github.io/cdi/2021/10/25/way-to-cdi4.html), CDI Lite comes with a new extension API called _Build Compatible Extensions_.
 In this post, you will learn more about this API by comparison with _Portable Extensions_ and my hope is that by the end, you will see that _you already know Build Compatible Extensions_.
 
 If you don't know Portable Extensions, don't worry.
