@@ -44,7 +44,10 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target(PARAMETER)
 public @interface WithAnnotations {
-
+    /**
+     *  Event annotation types to observe
+     * @return  Event annotation types to observe
+     */
     Class<? extends Annotation>[] value();
 
 }

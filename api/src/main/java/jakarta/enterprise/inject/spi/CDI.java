@@ -42,7 +42,9 @@ public abstract class CDI<T> implements Instance<T> {
 
     private static final Object lock = new Object();
     private static volatile boolean providerSetManually = false;
+    /** The set of discovered CDIProviders */
     protected static volatile Set<CDIProvider> discoveredProviders = null;
+    /** {@link CDIProvider} set by user or retrieved by serviceloader */
     protected static volatile CDIProvider configuredProvider = null;
 
     /**

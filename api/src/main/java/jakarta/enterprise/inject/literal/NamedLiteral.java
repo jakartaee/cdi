@@ -24,13 +24,19 @@ import jakarta.inject.Named;
  * @since 2.0
  */
 public final class NamedLiteral extends AnnotationLiteral<Named> implements Named {
-
+    /** Default NamedLiteral */
     public static final Named INSTANCE = of("");
 
     private static final long serialVersionUID = 1L;
 
+    /** */
     private final String value;
 
+    /**
+     * Create a new NamedLiteral for the given name value
+     * @param value - name
+     * @return new NamedLiteral
+     */
     public static NamedLiteral of(String value) {
         return new NamedLiteral(value);
     }

@@ -62,7 +62,7 @@ public @interface TransientReference {
     public static final class Literal extends AnnotationLiteral<TransientReference> implements TransientReference {
 
         private static final long serialVersionUID = 1L;
-
+        /** Default TransientReference literal */
         public static final Literal INSTANCE = new Literal();
 
     }

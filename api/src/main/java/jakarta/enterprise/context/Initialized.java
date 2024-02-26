@@ -55,19 +55,28 @@ public @interface Initialized {
      * @author Martin Kouba
      */
     public final static class Literal extends AnnotationLiteral<Initialized> implements Initialized {
-
+        /** Default RequestScoped literal */
         public static final Literal REQUEST = of(RequestScoped.class);
+        /** Default ConversationScoped literal */
 
         public static final Literal CONVERSATION = of(ConversationScoped.class);
+        /** Default SessionScoped literal */
 
         public static final Literal SESSION = of(SessionScoped.class);
+        /** Default ApplicationScoped literal */
 
         public static final Literal APPLICATION = of(ApplicationScoped.class);
 
         private static final long serialVersionUID = 1L;
 
+        /** */
         private final Class<? extends Annotation> value;
 
+        /**
+         * Obtain the literal of the provided scope annotation
+         * @param value - the scope annotation
+         * @return a new Literal value for the provided scope annotation
+         */
         public static Literal of(Class<? extends Annotation> value) {
             return new Literal(value);
         }

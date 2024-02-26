@@ -99,7 +99,7 @@ public @interface Default {
      * @see Event
      */
     public static final class Literal extends AnnotationLiteral<Default> implements Default {
-
+        /** The default Default literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;

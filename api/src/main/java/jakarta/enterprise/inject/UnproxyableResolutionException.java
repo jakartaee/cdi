@@ -27,20 +27,36 @@ public class UnproxyableResolutionException extends ResolutionException {
 
     private static final long serialVersionUID = 1667539354548135465L;
 
+    /**
+     * Default ctor
+     */
     public UnproxyableResolutionException() {
         super();
     }
 
-    public UnproxyableResolutionException(String message, Throwable throwable) {
-        super(message, throwable);
+    /**
+     * Create exception with given message and cause
+     * @param message - context information
+     * @param cause - cause of exception
+     */
+    public UnproxyableResolutionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     * @param message - context information
+     */
     public UnproxyableResolutionException(String message) {
         super(message);
     }
 
-    public UnproxyableResolutionException(Throwable throwable) {
-        super(throwable);
+    /**
+     * Create exception with given cause
+     * @param cause - cause of exception
+     */
+    public UnproxyableResolutionException(Throwable cause) {
+        super(cause);
     }
 
 }

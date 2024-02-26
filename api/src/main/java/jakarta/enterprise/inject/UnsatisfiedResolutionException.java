@@ -26,20 +26,36 @@ public class UnsatisfiedResolutionException extends ResolutionException {
 
     private static final long serialVersionUID = 5350603312442756709L;
 
+    /**
+     * Default ctor
+     */
     public UnsatisfiedResolutionException() {
         super();
     }
 
-    public UnsatisfiedResolutionException(String message, Throwable throwable) {
-        super(message, throwable);
+    /**
+     * Create exception with given message and cause
+     * @param message - context information
+     * @param cause - cause of exception
+     */
+    public UnsatisfiedResolutionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     * @param message - context information
+     */
     public UnsatisfiedResolutionException(String message) {
         super(message);
     }
 
-    public UnsatisfiedResolutionException(Throwable throwable) {
-        super(throwable);
+    /**
+     * Create exception with given cause
+     * @param cause - cause of exception
+     */
+    public UnsatisfiedResolutionException(Throwable cause) {
+        super(cause);
     }
 
 }

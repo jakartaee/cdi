@@ -22,18 +22,34 @@ public class ResolutionException extends InjectionException {
 
     private static final long serialVersionUID = -6280627846071966243L;
 
+    /**
+     * Default ctor
+     */
     public ResolutionException() {
         super();
     }
 
+    /**
+     * Create exception with given message and cause
+     * @param message - context information
+     * @param cause - cause of exception
+     */
     public ResolutionException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     * @param message - context information
+     */
     public ResolutionException(String message) {
         super(message);
     }
 
+    /**
+     * Create exception with given cause
+     * @param cause - cause of exception
+     */
     public ResolutionException(Throwable cause) {
         super(cause);
     }

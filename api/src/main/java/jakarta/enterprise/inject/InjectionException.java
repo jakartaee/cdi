@@ -23,19 +23,35 @@ public class InjectionException extends RuntimeException {
 
     private static final long serialVersionUID = -2132733164534544788L;
 
+    /**
+     * Default ctor
+     */
     public InjectionException() {
     }
 
-    public InjectionException(String message, Throwable throwable) {
-        super(message, throwable);
+    /**
+     * Create exception with given message and cause
+     * @param message - context information
+     * @param cause - cause of exception
+     */
+    public InjectionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
+    /**
+     * Create exception with given message
+     * @param message - context information
+     */
     public InjectionException(String message) {
         super(message);
     }
 
-    public InjectionException(Throwable throwable) {
-        super(throwable);
+    /**
+     * Create exception with given cause
+     * @param cause - cause of exception
+     */
+    public InjectionException(Throwable cause) {
+        super(cause);
     }
 
 }

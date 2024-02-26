@@ -64,7 +64,7 @@ public interface AnnotatedType<X> extends Annotated {
     /**
      * <p>
      * Get the {@linkplain AnnotatedField fields} of the type.
-     * <p>
+     * </p>
      *
      * @return the fields, or an empty set if none are defined
      */

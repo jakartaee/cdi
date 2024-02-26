@@ -11,6 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * The CDI exported package, dependency information and services
+ */
 module jakarta.cdi {
     exports jakarta.decorator;
     exports jakarta.enterprise.context;

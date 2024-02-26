@@ -23,7 +23,7 @@ import jakarta.inject.Inject;
  * @since 2.0
  */
 public final class InjectLiteral extends AnnotationLiteral<Inject> implements Inject {
-
+    /** Default Inject literal */
     public static final InjectLiteral INSTANCE = new InjectLiteral();
 
     private static final long serialVersionUID = 1L;

@@ -151,7 +151,7 @@ public @interface ConversationScoped {
      * @since 2.0
      */
     public final static class Literal extends AnnotationLiteral<ConversationScoped> implements ConversationScoped {
-
+        /** Default ConversationScoped literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
