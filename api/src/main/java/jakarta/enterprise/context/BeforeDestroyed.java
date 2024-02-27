@@ -54,28 +54,28 @@ public @interface BeforeDestroyed {
      * Supports inline instantiation of the {@link BeforeDestroyed} qualifier.
      */
     public final static class Literal extends AnnotationLiteral<BeforeDestroyed> implements BeforeDestroyed {
-        /** Default RequestScoped literal */
+        /** Default BeforeDestroyed literal for the RequestScoped scope */
         public static final Literal REQUEST = of(RequestScoped.class);
-        /** Default ConversationScoped literal */
 
+        /** Default BeforeDestroyed literal for the ConversationScoped scope */
         public static final Literal CONVERSATION = of(ConversationScoped.class);
-        /** Default SessionScoped literal */
 
+        /** Default BeforeDestroyed literal for the SessionScoped scope */
         public static final Literal SESSION = of(SessionScoped.class);
-        /** Default ApplicationScoped literal */
 
+        /** Default BeforeDestroyed literal for the ApplicationScoped scope */
         public static final Literal APPLICATION = of(ApplicationScoped.class);
 
         private static final long serialVersionUID = 1L;
 
-        /** */
+        /** The scope annotation */
         private final Class<? extends Annotation> value;
 
         /**
-         * Obtain the literal of the provided scope annotation
+         * Obtain the literal for the provided scope annotation
          *
-         * @param value - the scope annotation
-         * @return a new Literal value for the provided scope annotation
+         * @param value the scope annotation
+         * @return a new literal value for the provided scope annotation
          */
         public static Literal of(Class<? extends Annotation> value) {
             return new Literal(value);

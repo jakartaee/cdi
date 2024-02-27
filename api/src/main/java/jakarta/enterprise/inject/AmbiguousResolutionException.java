@@ -27,37 +27,37 @@ public class AmbiguousResolutionException extends ResolutionException {
     private static final long serialVersionUID = -2132733164534544788L;
 
     /**
-     * default ctor
+     * Creates the exception with no detail message or cause.
      */
     public AmbiguousResolutionException() {
     }
 
     /**
-     * Create exception with given message and cause
+     * Creates the exception with given detail message and cause.
      *
-     * @param message - context information
-     * @param throwable - cause of exception
+     * @param message the detail message
+     * @param cause the cause
      */
-    public AmbiguousResolutionException(String message, Throwable throwable) {
-        super(message, throwable);
+    public AmbiguousResolutionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
-     * Create exception with given message
+     * Creates the exception with given detail message.
      *
-     * @param message - context information
+     * @param message the detail message
      */
     public AmbiguousResolutionException(String message) {
         super(message);
     }
 
     /**
-     * Create exception with given cause
+     * Creates the exception with given cause.
      *
-     * @param throwable - cause of exception
+     * @param cause the cause
      */
-    public AmbiguousResolutionException(Throwable throwable) {
-        super(throwable);
+    public AmbiguousResolutionException(Throwable cause) {
+        super(cause);
     }
 
 }

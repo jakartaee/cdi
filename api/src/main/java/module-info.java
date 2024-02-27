@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 /**
- * The CDI exported package, dependency information and services
+ * The {@code jakarta.cdi} module; defines the CDI API exported packages, dependencies and services.
  */
 module jakarta.cdi {
     exports jakarta.decorator;

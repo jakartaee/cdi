@@ -53,7 +53,7 @@ public abstract class TypeLiteral<T> implements Serializable {
     private transient Type actualType;
 
     /**
-     * Default ctor
+     * The literal constructor, only for subclasses.
      */
     protected TypeLiteral() {
     }

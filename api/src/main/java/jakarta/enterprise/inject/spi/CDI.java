@@ -44,7 +44,7 @@ public abstract class CDI<T> implements Instance<T> {
     private static volatile boolean providerSetManually = false;
     /** The set of discovered CDIProviders */
     protected static volatile Set<CDIProvider> discoveredProviders = null;
-    /** {@link CDIProvider} set by user or retrieved by serviceloader */
+    /** {@link CDIProvider} set by user or retrieved by service loader */
     protected static volatile CDIProvider configuredProvider = null;
 
     /**
