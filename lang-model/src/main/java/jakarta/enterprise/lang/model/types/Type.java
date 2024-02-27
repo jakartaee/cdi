@@ -68,22 +68,28 @@ public interface Type extends AnnotationTarget {
         return this;
     }
 
+    /**
+     * The type kind: void, primitive, class, array, parameterized type, type variable, wildcard type
+     */
     enum Kind {
-        /** E.g. when method returns {@code void}. */
+        /** The void pseudo-type, e.g. when method returns {@code void}. */
         VOID,
-        /** E.g. when method returns {@code int}. */
+        /** A primitive type, e.g. when method returns {@code int}. */
         PRIMITIVE,
-        /** E.g. when method returns {@code String}. */
+        /** A class type, e.g. when method returns {@code String}. */
         CLASS,
-        /** E.g. when method returns {@code int[]} or {@code String[][]}. */
+        /** An array type, e.g. when method returns {@code int[]} or {@code String[][]}. */
         ARRAY,
-        /** E.g. when method returns {@code List<String>}. */
+        /** A parameterized type, e.g. when method returns {@code List<String>}. */
         PARAMETERIZED_TYPE,
-        /** E.g. when method returns {@code T} and {@code T} is a type parameter of the declaring class. */
+        /**
+         * A type variable, e.g. when method returns {@code T} and {@code T} is a type parameter
+         * of the declaring class.
+         */
         TYPE_VARIABLE,
         /**
-         * E.g. when method returns {@code List<? extends Number>}. The kind of such type is {@code PARAMETERIZED_TYPE},
-         * but the first (and only) type argument is a {@code WILDCARD_TYPE}.
+         * A wildcard type, e.g. when method returns {@code List<? extends Number>}. The kind of such type
+         * is {@code PARAMETERIZED_TYPE}, but the first (and only) type argument is a {@code WILDCARD_TYPE}.
          */
         WILDCARD_TYPE,
     }

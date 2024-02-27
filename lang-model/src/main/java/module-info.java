@@ -11,6 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * The {@code jakarta.cdi.lang.model} module; defines the CDI Language Model API exported packages
+ */
 module jakarta.cdi.lang.model {
     exports jakarta.enterprise.lang.model;
     exports jakarta.enterprise.lang.model.declarations;

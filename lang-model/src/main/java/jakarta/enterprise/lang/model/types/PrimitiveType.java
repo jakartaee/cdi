@@ -30,14 +30,41 @@ package jakarta.enterprise.lang.model.types;
  * @since 4.0
  */
 public interface PrimitiveType extends Type {
+    /**
+     * The primitive type kind: boolean, byte, short, int, long, float, double, char
+     */
     enum PrimitiveKind {
+        /**
+         * The {@code boolean} primitive type
+         */
         BOOLEAN,
+        /**
+         * The {@code byte} primitive type
+         */
         BYTE,
+        /**
+         * The {@code short} primitive type
+         */
         SHORT,
+        /**
+         * The {@code int} primitive type
+         */
         INT,
+        /**
+         * The {@code long} primitive type
+         */
         LONG,
+        /**
+         * The {@code float} primitive type
+         */
         FLOAT,
+        /**
+         * The {@code double} primitive type
+         */
         DOUBLE,
+        /**
+         * The {@code char} primitive type
+         */
         CHAR,
     }
 
