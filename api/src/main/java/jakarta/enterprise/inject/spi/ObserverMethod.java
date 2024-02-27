@@ -40,7 +40,7 @@ import jakarta.enterprise.event.TransactionPhase;
  * @param <T> the event type
  */
 public interface ObserverMethod<T> extends Prioritized {
-    /** The default observer notification priority */
+    /** The default observer priority */
     public static final int DEFAULT_PRIORITY = jakarta.interceptor.Interceptor.Priority.APPLICATION + 500;
 
     /**

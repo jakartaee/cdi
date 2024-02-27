@@ -72,7 +72,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
     private transient Integer cachedHashCode;
 
     /**
-     * Default ctor
+     * The literal constructor, only for subclasses.
      */
     protected AnnotationLiteral() {
     }

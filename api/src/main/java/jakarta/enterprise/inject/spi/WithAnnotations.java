@@ -45,9 +45,10 @@ import java.lang.annotation.Target;
 @Target(PARAMETER)
 public @interface WithAnnotations {
     /**
-     * Event annotation types to observe
+     * The annotation types that must be present on the {@link AnnotatedType}
+     * for the {@code ProcessAnnotatedType} observer to be notified.
      *
-     * @return Event annotation types to observe
+     * @return required annotation types
      */
     Class<? extends Annotation>[] value();
 

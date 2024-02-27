@@ -54,8 +54,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
 public @interface Typed {
     /**
      * <p>
-     * Selects the bean types of the bean. Every class must correspond to a type in the unrestricted set of bean types of a
-     * bean.
+     * Selects the bean types of the bean. Every class must correspond to a type in the unrestricted set of bean types
+     * of a bean.
      * </p>
      *
      * @return the classes corresponding to the bean types of the bean
@@ -74,13 +74,13 @@ public @interface Typed {
 
         private static final long serialVersionUID = 1L;
 
-        /** */
+        /** The classes corresponding to the bean types of the bean */
         private final Class<?>[] value;
 
         /**
-         * Obtain the Type literal of the provided bean classes
+         * Obtain the Typed literal for the provided bean types
          *
-         * @param value - the classes corresponding to the bean types of the bean
+         * @param value the classes corresponding to the bean types of the bean
          * @return a new Literal value for the provided classes
          */
         public static Literal of(Class<?>[] value) {

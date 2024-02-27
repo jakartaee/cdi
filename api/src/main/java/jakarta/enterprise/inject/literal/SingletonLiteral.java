@@ -23,7 +23,7 @@ import jakarta.inject.Singleton;
  * @since 2.0
  */
 public final class SingletonLiteral extends AnnotationLiteral<Singleton> implements Singleton {
-    /** Default SingletonLiteral instance */
+    /** Default Singleton literal */
     public static final SingletonLiteral INSTANCE = new SingletonLiteral();
 
     private static final long serialVersionUID = 1L;

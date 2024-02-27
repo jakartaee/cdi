@@ -26,35 +26,35 @@ public class IllegalProductException extends InjectionException {
     private static final long serialVersionUID = -6280627846071966243L;
 
     /**
-     * Default ctor
+     * Creates the exception with no detail message or cause.
      */
     public IllegalProductException() {
         super();
     }
 
     /**
-     * Create exception with given message and cause
+     * Creates the exception with given detail message and cause.
      *
-     * @param message - context information
-     * @param cause - cause of exception
+     * @param message the detail message
+     * @param cause the cause
      */
     public IllegalProductException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Create exception with given message
+     * Creates the exception with given detail message.
      *
-     * @param message - context information
+     * @param message the detail message
      */
     public IllegalProductException(String message) {
         super(message);
     }
 
     /**
-     * Create exception with given cause
+     * Creates the exception with given cause.
      *
-     * @param cause - cause of exception
+     * @param cause the cause
      */
     public IllegalProductException(Throwable cause) {
         super(cause);
