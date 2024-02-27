@@ -11,6 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * The {@code jakarta.cdi.el} module; defines the CDI EL API exported packages and dependencies.
+ */
 module jakarta.cdi.el {
     exports jakarta.enterprise.inject.spi.el;
 

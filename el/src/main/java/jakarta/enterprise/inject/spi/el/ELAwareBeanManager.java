@@ -19,8 +19,8 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 /**
- * A {@link BeanManager} that allows integrators to obtain Unified EL objects
- * that are integrated with the CDI container as described in the CDI specification.
+ * A {@link BeanManager} that allows integrators to obtain Unified EL objects that are
+ * integrated with the CDI container as described in the Jakarta EE Platform specification.
  *
  * @since 4.1
  */
