@@ -26,6 +26,7 @@ import jakarta.enterprise.lang.model.types.Type;
  * <li>{@linkplain FieldInfo fields}</li>
  * <li>{@linkplain MethodInfo methods}, including constructors</li>
  * <li>{@linkplain ParameterInfo method parameters}, including constructor parameters</li>
+ * <li>{@linkplain RecordComponentInfo record components}</li>
  * </ul>
  *
  * @since 4.0
@@ -51,12 +52,33 @@ public interface DeclarationInfo extends AnnotationTarget {
         throw new IllegalStateException("Not a type");
     }
 
+    /**
+     * The declaration kind: package, class, method, parameter, field, record component.
+     */
     enum Kind {
+        /**
+         * Package
+         */
         PACKAGE,
+        /**
+         * Class, interface, enum, annotation, or record
+         */
         CLASS,
+        /**
+         * Method or constructor
+         */
         METHOD,
+        /**
+         * Method parameter or constructor parameter
+         */
         PARAMETER,
+        /**
+         * Field
+         */
         FIELD,
+        /**
+         * Record component
+         */
         RECORD_COMPONENT,
     }
 
