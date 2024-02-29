@@ -35,8 +35,16 @@ This document is organized in 4 parts:
 
 ==== Jakarta Contexts and Dependency Injection 4.1
 
-link:https://jakarta.ee/specifications/cdi/4.1/[CDI 4.1] deprecates the Unified EL integration API in `BeanManager` and places the relevant methods to a dedicated interface `ELAwareBeanManager`, which is present in a new supplemental API artifact: `jakarta.enterprise:jakarta.enterprise.cdi-el-api`.
+link:https://jakarta.ee/specifications/cdi/4.1/[CDI 4.1] no longer specifies integration with Jakarta EE. This will now be specified in the Jakarta EE Platform, Web Profile and Core Profile specifications.
+
+The Unified EL integration API in `BeanManager` has been deprecated and the relevant methods added to a dedicated interface `ELAwareBeanManager`, which is present in a new supplemental API artifact: `jakarta.enterprise:jakarta.enterprise.cdi-el-api`.
 This supplemental artifact declares a JPMS module `jakarta.cdi.el`, which declares a dependency on `jakarta.cdi` and `jakarta.el`.
+
+The <<method_invokers,method invokers>> API has been added to allow frameworks to more easily call methods on managed beans and optionally look up the bean instance and arguments using CDI.
+
+New methods have been added to `BeanContainer` to check <<bm_bean_event_assignability,assignability of beans and events>> and to <<bm_obtain_contexts,obtain contexts for a scope>>.
+
+The `@Priority` annotation can now be placed on producer methods and producer fields directly.
 
 ==== Jakarta Contexts and Dependency Injection 4.0
 link:https://jakarta.ee/specifications/cdi/4.0/[CDI 4.0] splits the CDI core into Lite and Full. Lite contains a subset of original features which are designed to work in more restricted environments. CDI Full contains everything that is in Lite plus all other features that were formerly in core CDI and are not in Lite.
