@@ -121,10 +121,10 @@
 
 
 	<properties>
-		<annotation.api.version>3.0.0-M1</annotation.api.version>
+		<annotation.api.version>3.0.0</annotation.api.version>
 		<atinject.api.version>2.0.1</atinject.api.version>
-		<uel.api.version>5.0.1</uel.api.version>
-		<interceptor.api.version>2.2.0-M1</interceptor.api.version>
+		<uel.api.version>6.0.0</uel.api.version>
+		<interceptor.api.version>2.2.0</interceptor.api.version>
 		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 	</properties>
 
