@@ -1,7 +1,5 @@
-<!--
-    SPDX-License-Identifier: Apache-2.0
--->
 ---
+# SPDX-License-Identifier: Apache-2.0
 name: Compatibility certification request
 about: Request certification of a compatibile implementation of Jakarta EE
 title: Compatibility certification request [CDI]
