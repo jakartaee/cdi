@@ -46,6 +46,9 @@ New methods have been added to `BeanContainer` to check <<bm_bean_event_assignab
 
 The `@Priority` annotation can now be placed on producer methods and producer fields directly.
 
+A new `beans.xml` 4.1 schema file has been added and the namespace of the
+`beans_4_1.xsd` schema file is `xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee"`. The only change in the schema is to update the default value for the version to 4.1 and update the example to use the new version.
+
 ==== Jakarta Contexts and Dependency Injection 4.0
 link:https://jakarta.ee/specifications/cdi/4.0/[CDI 4.0] splits the CDI core into Lite and Full. Lite contains a subset of original features which are designed to work in more restricted environments. CDI Full contains everything that is in Lite plus all other features that were formerly in core CDI and are not in Lite.
 
