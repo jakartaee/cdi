@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright (c) 2024 Red Hat, Inc. and others
+
+	This program and the accompanying materials are made available under the
+	Apache Software License 2.0 which is available at:
+	https://www.apache.org/licenses/LICENSE-2.0.
+
+	SPDX-License-Identifier: Apache-2.0
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.9</version>
+    </parent>
+
+    <!-- A pom file to generate the combined JavaDoc for Jakarta CDI APIs from the individual API source artifacts:
+        jakarta.enterprise.cdi-api
+        jakarta.enterprise.cdi-el-api
+        jakarta.enterprise.lang-model
+        The combined JavaDoc is generated in the target/all-apidocs directory.
+
+        The CI release job will use this pom file to generate the combined JavaDoc for the Jakarta CDI APIs
+        after the build of the
+    -->
+    <groupId>jakarta.enterprise</groupId>
+    <artifactId>jakarta.enterprise.cdi-javadoc</artifactId>
+    <version>${releaseVersion}</version>
+    <name>Jakarta CDI Combined JavaDoc</name>
+    <description>Jakarta CDI Combined JavaDoc</description>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.glassfish.build</groupId>
+                <artifactId>glassfishbuild-maven-plugin</artifactId>
+                <version>3.2.28</version>
+                <executions>
+                    <execution>
+                        <id>unpack-sources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack-sources</goal>
+                        </goals>
+                        <configuration>
+                            <attachSources>false</attachSources>
+                            <excludeTransitive>true</excludeTransitive>
+                            <excludes>module-info.java</excludes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>filter-overview</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/javadoc</directory>
+                                    <include>overview.html</include>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <description>Jakarta Contexts and Dependency Injection API</description>
+                    <doctitle>Jakarta Contexts and Dependency Injection API</doctitle>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <overview>${project.build.directory}/javadoc/overview.html</overview>
+                    <windowtitle>Jakarta Contexts and Dependency Injection API</windowtitle>
+                    <header><![CDATA[<br>Jakarta Contexts and Dependency Injection ${project.version}]]>
+                    </header>
+                    <bottom><![CDATA[
+Comments to: <a href="mailto:cdi-dev@eclipse.org">cdi-dev@eclipse.org</a>.<br>
+Copyright &#169; 2018,2024 Eclipse Foundation.<br>
+Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
+                    </bottom>
+                    <sourcepath>target/sources-dependency</sourcepath>
+                    <outputDirectory>target</outputDirectory>
+                    <destDir>all-apidocs</destDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-el-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.lang-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>
