@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11', '17', '21' ]
+        java: [ '17', '21' ]
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Set up JDK ${{ matrix.java }}
@@ -29,19 +29,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - if: ${{ matrix.java != '11' }}
-        name: "Maven install > 11"
+      - name: "Maven install"
         run: |
           mvn -Pstaging install -DskipTests=true -Dno-format -B -V
-      - if: ${{ matrix.java == '11' }}
-        name: "Maven install 11"
-        run: |
-          mvn -Pstaging -pl '!el' install -DskipTests=true -Dno-format -B -V
-      - if: ${{ matrix.java != '11' }}
-        name: "Maven test > 11"
+      - name: "Maven test"
         run: |
           mvn -Pstaging test -B
-      - if: ${{ matrix.java == '11' }}
-        name: "Maven test 11"
-        run: |
-          mvn -Pstaging -pl '!el' test -B
