@@ -153,12 +153,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>jakarta.el</groupId>
-				<artifactId>jakarta.el-api</artifactId>
-				<version>${uel.api.version}</version>
-			</dependency>
-
-			<dependency>
 				<groupId>jakarta.interceptor</groupId>
 				<artifactId>jakarta.interceptor-api</artifactId>
 				<version>${interceptor.api.version}</version>
@@ -175,11 +169,6 @@
 		<dependency>
 			<groupId>jakarta.annotation</groupId>
 			<artifactId>jakarta.annotation-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>jakarta.el</groupId>
-			<artifactId>jakarta.el-api</artifactId>
 		</dependency>
 
 		<dependency>
@@ -307,7 +296,6 @@
 							jakarta.enterprise.*;version=5.0,
 						</Export-Package>
 						<Import-Package>
-							jakarta.el;version=6.0,
 							*
 						</Import-Package>
 					</instructions>
