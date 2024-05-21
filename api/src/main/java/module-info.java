@@ -33,7 +33,6 @@ module jakarta.cdi {
     requires transitive jakarta.interceptor;
     requires transitive jakarta.cdi.lang.model;
     requires transitive jakarta.inject;
-    requires static jakarta.el;
     // For javadoc
     requires static java.naming;
     //TODO: requires static jakarta.transation;

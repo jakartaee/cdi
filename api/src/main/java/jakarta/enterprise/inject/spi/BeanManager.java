@@ -19,8 +19,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.el.ELResolver;
-import jakarta.el.ExpressionFactory;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.AmbiguousResolutionException;
@@ -220,28 +218,6 @@ public interface BeanManager extends BeanContainer {
      * @since 1.1
      */
     public int getInterceptorBindingHashCode(Annotation interceptorBinding);
-
-    /**
-     * Returns a {@link jakarta.el.ELResolver} that resolves beans by EL name.
-     *
-     * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
-     * @return the {@link jakarta.el.ELResolver}
-     */
-    @Deprecated(since = "4.1", forRemoval = true)
-    public ELResolver getELResolver();
-
-    /**
-     * Returns a wrapper {@link jakarta.el.ExpressionFactory} that delegates {@link jakarta.el.MethodExpression} and
-     * {@link jakarta.el.ValueExpression} creation to the given {@link jakarta.el.ExpressionFactory}. When a Unified EL
-     * expression is evaluated using a {@link jakarta.el.MethodExpression} or {@link jakarta.el.ValueExpression} returned by the
-     * wrapper {@link jakarta.el.ExpressionFactory}, the container handles destruction of objects with scope {@link Dependent}.
-     *
-     * @deprecated use {@code ELAwareBeanManager}, this method will be removed in CDI 5.0
-     * @param expressionFactory the {@link jakarta.el.ExpressionFactory} to wrap
-     * @return the wrapped {@link jakarta.el.ExpressionFactory}
-     */
-    @Deprecated(since = "4.1", forRemoval = true)
-    public ExpressionFactory wrapExpressionFactory(ExpressionFactory expressionFactory);
 
     /**
      * Obtain an {@link AnnotatedType} that may be used to read the annotations of the given class or interface.
