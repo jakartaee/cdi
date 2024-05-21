@@ -17,6 +17,7 @@ package org.jboss.cdi.api.test.se;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
+import jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension;
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import jakarta.enterprise.inject.spi.Extension;
@@ -61,6 +62,11 @@ public class DummySeContainerInitializer extends SeContainerInitializer {
     @SafeVarargs
     @Override
     public final SeContainerInitializer addExtensions(Class<? extends Extension>... extensions) {
+        return null;
+    }
+
+    @Override
+    public SeContainerInitializer addBuildCompatibleExtensions(Class<? extends BuildCompatibleExtension>... extensions) {
         return null;
     }
 
