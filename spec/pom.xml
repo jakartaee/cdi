@@ -30,7 +30,7 @@
 		<license-file>asl2</license-file>
 		<!-- Draft for non-final releases, or Final for spec release -->
 		<revremark>Draft(M1)</revremark>
-		<revnumber>4.1</revnumber> <!-- major.minor only -->
+		<revnumber>5.0</revnumber> <!-- major.minor only -->
 		<maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
 		<revisiondate>${maven.build.timestamp}</revisiondate>
 	</properties>

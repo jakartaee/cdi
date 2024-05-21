@@ -72,7 +72,7 @@
 				<configuration>
 					<instructions>
 						<Export-Package>
-							jakarta.enterprise.lang.model.*;version=4.1,
+							jakarta.enterprise.lang.model.*;version=5.0,
 						</Export-Package>
 					</instructions>
 				</configuration>

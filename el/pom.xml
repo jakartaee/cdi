@@ -99,7 +99,7 @@
 				<configuration>
 					<instructions>
 						<Export-Package>
-							jakarta.enterprise.inject.spi.el;version="4.1";uses:="jakarta.el"
+							jakarta.enterprise.inject.spi.el;version="5.0";uses:="jakarta.el"
 						</Export-Package>
 						<Import-Package>
 							jakarta.el;version="6.0",jakarta.enterprise.context,jakarta.enterprise.inject.spi
