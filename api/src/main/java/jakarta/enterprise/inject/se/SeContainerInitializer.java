@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
+import jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension;
 import jakarta.enterprise.inject.spi.Extension;
 
 /**
@@ -190,21 +191,31 @@ public abstract class SeContainerInitializer {
     public abstract SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
 
     /**
-     * Add extensions to the set of extensions.
+     * Add portable extensions to the set of extensions.
      *
-     * @param extensions extensions to use in the container
+     * @param extensions portable extensions to use in the container
      * @return self
      */
     public abstract SeContainerInitializer addExtensions(Extension... extensions);
 
     /**
-     * Add extensions to the set of extensions.
+     * Add portable extensions to the set of extensions.
      *
-     * @param extensions extensions class to use in the container
+     * @param extensions portable extension classes to use in the container
      * @return self
      */
     @SuppressWarnings("unchecked")
     public abstract SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+
+    /**
+     * Add build compatible extensions to the set of extensions.
+     *
+     * @param extensions build compatible extension classes to use in the container
+     * @return self
+     */
+    @SuppressWarnings("unchecked")
+    public abstract SeContainerInitializer addBuildCompatibleExtensions(
+            Class<? extends BuildCompatibleExtension>... extensions);
 
     /**
      * Add interceptor classes to the list of enabled interceptors for the synthetic bean archive.

@@ -46,6 +46,7 @@ public abstract class SeContainerInitializer {
     public SeContainerInitializer addPackages(boolean scanRecursively, Package... packages);
     public SeContainerInitializer addExtensions(Extension... extensions);
     public SeContainerInitializer addExtensions(Class<? extends Extension>... extensions);
+    public SeContainerInitializer addBuildCompatibleExtensions(Class<? extends BuildCompatibleExtension>... extensions);
     public SeContainerInitializer enableInterceptors(Class<?>... interceptorClasses);
     public SeContainerInitializer enableDecorators(Class<?>... decoratorClasses);
     public SeContainerInitializer selectAlternatives(Class<?>... alternativeClasses);
@@ -65,7 +66,8 @@ Each call returns a new instance of `SeContainerInitializer`. This method throws
 * `addBeanClasses()` adds classes to the the synthetic bean archive
 * `addPackages()` adds packages content to the synthetic bean archive.
 There are other versions of this method, which enables user to add a package according to class or classes it contains and also to add packages recursively.
-* `addExtensions()` adds the provided extensions (class or instance) to the synthetic bean archive.
+* `addExtensions()` adds the provided portable extensions (class or instance) to the synthetic bean archive.
+* `addBuildCompatibleExtensions()` adds the provided build compatible extensions (classes) to the synthetic bean archive.
 * `enableInterceptors()` adds interceptor classes to the list of enabled interceptors for the synthetic bean archive.
 * `enableDecorators()` adds decorator classes to the list of enabled decorators for the synthetic bean archive.
 * `selectAlternatives()` adds alternatives classes to the list of selected alternatives for the synthetic bean archive.
