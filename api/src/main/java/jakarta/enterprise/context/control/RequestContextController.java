@@ -17,7 +17,7 @@ package jakarta.enterprise.context.control;
 import jakarta.enterprise.context.ContextNotActiveException;
 
 /**
- * The CDI container provides a built in instance of RequestContextController that is dependent scoped for the purposes
+ * The CDI container provides a built-in instance of {@code RequestContextController} that is dependent scoped for the purposes
  * of activating and deactivating. For example:
  *
  * <pre>
@@ -26,12 +26,15 @@ import jakarta.enterprise.context.ContextNotActiveException;
  *
  * public void doRequest(String body) {
  *     // activate request context
- *     requestContextController.activate();
- *
- *     // do work in a request context.
- *
- *     // deactivate the request context
- *     requestContextController.deactivate();
+ *     boolean activated = requestContextController.activate();
+ *     try {
+ *         // do work in a request context.
+ *     } finally {
+ *         // deactivate the request context if we activated it earlier
+ *         if (activated) {
+ *             requestContextController.deactivate();
+ *         }
+ *     }
  * }
  * </pre>
  *
