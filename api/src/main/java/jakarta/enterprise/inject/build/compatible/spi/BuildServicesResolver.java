@@ -50,8 +50,8 @@ public final class BuildServicesResolver {
         Set<BuildServices> factories = new TreeSet<>(
                 Comparator.comparingInt(BuildServices::getPriority).reversed());
 
-        ServiceLoader<BuildServices> loader = SecurityActions.loadService(
-                BuildServices.class, BuildServicesResolver.class.getClassLoader());
+        ServiceLoader<BuildServices> loader = ServiceLoader.load(BuildServices.class,
+                BuildServicesResolver.class.getClassLoader());
 
         if (!loader.iterator().hasNext()) {
             throw new IllegalStateException("Unable to locate BuildServices implementation");

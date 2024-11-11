@@ -334,27 +334,6 @@
 							<systemPropertyVariables>
 								<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
 							</systemPropertyVariables>
-							<excludes>
-								<exclude>**/privileged/**</exclude>
-							</excludes>
-							<useModulePath>false</useModulePath>
-						</configuration>
-					</execution>
-					<execution>
-						<id>privileged-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<systemPropertyVariables>
-								<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
-							</systemPropertyVariables>
-							<includes>
-								<include>**/privileged/**</include>
-							</includes>
-							<argLine>-Djava.security.manager -Djava.security.policy="${project.build.testOutputDirectory}/java.policy"</argLine>
-							<forkCount>1</forkCount>
 							<useModulePath>false</useModulePath>
 						</configuration>
 					</execution>
