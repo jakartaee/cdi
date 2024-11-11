@@ -31,10 +31,6 @@ import jakarta.enterprise.inject.Instance;
  * </p>
  *
  * <p>
- * Reflection operations are using {@link SecurityActions} utility class to support security manager.
- * </p>
- *
- * <p>
  * An instance of an annotation type may be obtained by subclassing <code>AnnotationLiteral</code>.
  * The subclass must implement the annotation interface to satisfy the {@link Annotation} contract.
  * </p>
@@ -79,7 +75,7 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private Method[] getMembers() {
         if (members == null) {
-            members = SecurityActions.getDeclaredMethods(annotationType());
+            members = annotationType().getDeclaredMethods();
             if (members.length > 0 && !annotationType().isAssignableFrom(this.getClass())) {
                 throw new RuntimeException(getClass() + " does not implement the annotation type with members "
                         + annotationType().getName());
@@ -288,8 +284,9 @@ public abstract class AnnotationLiteral<T extends Annotation> implements Annotat
 
     private static Object invoke(Method method, Object instance) {
         try {
-            if (!method.canAccess(instance))
-                SecurityActions.setAccessible(method);
+            if (!method.canAccess(instance)) {
+                method.setAccessible(true);
+            }
             return method.invoke(instance);
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException("Error checking value of member method " + method.getName() + " on "
