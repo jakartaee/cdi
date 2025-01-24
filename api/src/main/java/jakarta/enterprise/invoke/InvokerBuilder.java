@@ -59,6 +59,9 @@ package jakarta.enterprise.invoke;
 public interface InvokerBuilder<T> {
     /**
      * Enables lookup of the target bean instance.
+     * <p>
+     * When enabled, the {@code instance} passed to {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}
+     * is ignored and the target instance is looked up from the CDI container instead.
      *
      * @return this builder
      */
@@ -66,6 +69,10 @@ public interface InvokerBuilder<T> {
 
     /**
      * Enables lookup of the argument on given {@code position}.
+     * <p>
+     * When enabled, the corresponding element of the {@code arguments} array passed
+     * to {@link Invoker#invoke(Object, Object[]) Invoker.invoke()} is ignored and the argument
+     * is looked up from the CDI container instead.
      *
      * @param position zero-based position of the target method parameter for which lookup should be enabled
      * @return this builder
