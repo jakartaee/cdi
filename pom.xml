@@ -119,7 +119,7 @@
 	<properties>
 		<!-- Definitions for the Jakarta EE API dependency versions -->
 		<annotation.api.version>3.0.0</annotation.api.version>
-		<atinject.api.version>2.0.1</atinject.api.version>
+		<atinject.api.version>2.0.1.MR</atinject.api.version>
 		<uel.api.version>6.0.1</uel.api.version>
 		<interceptor.api.version>2.2.0</interceptor.api.version>
 
