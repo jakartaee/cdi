@@ -18,7 +18,7 @@ import jakarta.enterprise.inject.Instance;
  * to obtain an instance of the synthetic bean. Implementations must be {@code public}
  * classes with a {@code public} zero-parameter constructor; they must not be beans.
  *
- * @param <T> the bean class of the synthetic bean
+ * @param <T> the implementation class of the synthetic bean
  * @since 4.0
  */
 public interface SyntheticBeanCreator<T> {
