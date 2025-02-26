@@ -106,6 +106,15 @@ public interface ClassInfo extends DeclarationInfo {
     List<ClassInfo> superInterfacesDeclarations();
 
     /**
+     * Returns a collection of permitted subclasses of this {@linkplain #isSealed() sealed} class.
+     * If this class is not sealed, returns an empty collection.
+     *
+     * @return immutable collection of permitted subclasses, never {@code null}
+     * @since 5.0
+     */
+    Collection<ClassInfo> permittedSubclasses();
+
+    /**
      * Returns whether this class is a plain class. That is, not an interface,
      * not an enum, not an annotation, and not a record.
      *
@@ -150,7 +159,7 @@ public interface ClassInfo extends DeclarationInfo {
      * An interface or an annotation is always abstract.
      * A record is never abstract.
      *
-     * @return whether this class is {@code abstract}
+     * @return whether this class is abstract
      */
     boolean isAbstract();
 
@@ -160,6 +169,14 @@ public interface ClassInfo extends DeclarationInfo {
      * @return whether this class is {@code final}
      */
     boolean isFinal();
+
+    /**
+     * Returns whether this class is {@code sealed}.
+     *
+     * @return whether this class is {@code sealed}
+     * @since 5.0
+     */
+    boolean isSealed();
 
     /**
      * Returns the modifiers of this class as an {@code int}.
