@@ -354,10 +354,12 @@ The `SyntheticBeanBuilder` and `SyntheticObserverBuilder` interfaces are used to
 
 * bean or observer attributes, such as scope, bean types, qualifiers, or observed event type;
 * class of a bean creation/destruction function or observer notification function;
+* injection points (only `SyntheticBeanBuilder`);
 * a string-keyed parameter map.
 
 The container creates an instance of the bean creation/destruction function or observer notification function whenever it needs to create an instance of the bean, destroy the instance of the bean, or notify the observer.
 When invoking the bean creation/destruction function or observer notification function, the container passes the parameter map to it.
+When invoking the bean creation/destruction function, the container also passes the set of injectable references for all defined injection points.
 
 The parameter map may contain values of the following types:
 
