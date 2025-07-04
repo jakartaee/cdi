@@ -27,15 +27,21 @@ import jakarta.enterprise.lang.model.types.WildcardType;
  */
 public interface Types {
     /**
-     * Returns a type from given class literal.
+     * Returns a type from given class literal. The result may be:
+     * <ul>
+     * <li>{@link VoidType}</li>
+     * <li>{@link PrimitiveType}</li>
+     * <li>{@link ClassType}</li>
+     * <li>{@link ArrayType} where the element type is either {@code PrimitiveType} or {@code ClassType}</li>
+     * </ul>
      * For example:
      * <ul>
      * <li>{@code of(void.class)}: same as {@link #ofVoid() ofVoid}{@code ()}</li>
      * <li>{@code of(int.class)}: same as {@link #ofPrimitive(PrimitiveType.PrimitiveKind)
      * ofPrimitive}{@code (PrimitiveKind.INT)}</li>
-     * <li>{@code of(String.class)}: same as {@link #ofClass(ClassInfo) ofClass}{@code (... ClassInfo for String ...)}</li>
+     * <li>{@code of(String.class)}: same as {@link #ofClass(String) ofClass}{@code ("java.lang.String")}</li>
      * <li>{@code of(int[].class)}: same as {@link #ofArray(Type, int) ofArray}{@code (ofPrimitive(PrimitiveKind.INT), 1)}</li>
-     * <li>{@code of(String[][].class)}: same as {@code ofArray(ofClass(... ClassInfo for String ...), 2)}</li>
+     * <li>{@code of(String[][].class)}: same as {@code ofArray(ofClass("java.lang.String"), 2)}</li>
      * </ul>
      *
      * @param clazz the class literal, must not be {@code null}

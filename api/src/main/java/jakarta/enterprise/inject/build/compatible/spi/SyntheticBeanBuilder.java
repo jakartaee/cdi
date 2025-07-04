@@ -21,7 +21,7 @@ import jakarta.enterprise.lang.model.types.Type;
  * Instances are not reusable. For each synthetic bean, new instance
  * must be created by {@link SyntheticComponents#addBean(Class)}.
  *
- * @param <T> the bean class of this synthetic bean
+ * @param <T> the implementation class of this synthetic bean
  * @since 4.0
  */
 public interface SyntheticBeanBuilder<T> {
@@ -450,6 +450,66 @@ public interface SyntheticBeanBuilder<T> {
      * @since 4.1
      */
     SyntheticBeanBuilder<T> withParam(String key, InvokerInfo[] value);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with given {@code qualifiers}.
+     * If no qualifier is passed, {@code @Default} is assumed.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @param qualifiers the qualifiers of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Class<?> type, Annotation... qualifiers);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with given {@code qualifiers}.
+     * If no qualifier is passed, {@code @Default} is assumed.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @param qualifiers the qualifiers of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Class<?> type, AnnotationInfo... qualifiers);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with given {@code qualifiers}.
+     * If no qualifier is passed, {@code @Default} is assumed.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @param qualifiers the qualifiers of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Type type, Annotation... qualifiers);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with given {@code qualifiers}.
+     * If no qualifier is passed, {@code @Default} is assumed.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @param qualifiers the qualifiers of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Type type, AnnotationInfo... qualifiers);
 
     /**
      * Sets the class of the synthetic bean {@linkplain SyntheticBeanCreator creation} function.
