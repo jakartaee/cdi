@@ -21,7 +21,7 @@ The container injects references to contextual instances to the following kinds 
 References to contextual instances may also be obtained by programmatic lookup.
 
 In general, a bean type or bean name does not uniquely identify a bean.
-When resolving a bean at an injection point, the container considers bean type, qualifiers and selected alternatives.
+When resolving a bean at an injection point, the container considers bean type, qualifiers, selected alternatives and selected reserves.
 This allows bean developers to decouple type from implementation.
 
 The container is required to support circularities in the bean dependency graph where at least one bean participating in every circular chain of dependencies has a normal scope, as defined in <<normal_scope>>.
@@ -40,6 +40,8 @@ A bean packaged in a certain module is available for injection, lookup and name 
 
 An alternative is not available for injection, lookup or name resolution to classes in a module unless the alternative is _selected_ for the application.
 
+A reserve is not available for injection, lookup or name resolution to classes in a module unless the reserve is _selected_ for the application.
+
 [[declaring_selected_alternatives]]
 
 ==== Declaring selected alternatives
@@ -51,12 +53,30 @@ An alternative is not available for injection, lookup or name resolution to clas
 
 ===== Declaring selected alternatives for an application
 
-An alternative may be given a priority for the application:
+An alternative may be selected for the application:
 
 * by placing the `@Priority` annotation on the bean class of a managed bean, or
 * by placing the `@Priority` annotation on the producer method, field or resource, or
 * by placing the `@Priority` annotation on the bean class that declares the producer method, field or resource, or
 * by placing the `@Priority` annotation on a stereotype that is applied to the bean class, producer method or producer field.
+
+[[declaring_selected_reserves]]
+
+==== Declaring selected reserves
+
+CDI defines one method of selecting reserves: the `@Priority` annotation allows a reserve to be selected for an entire application.
+
+[[declaring_selected_reserves_application]]
+
+===== Declaring selected reserves for an application
+
+A reserve may be selected for the application:
+
+* by placing the `@Priority` annotation on the bean class of a managed bean, or
+* by placing the `@Priority` annotation on the producer method, field or resource, or
+* by placing the `@Priority` annotation on a stereotype that is applied to the bean class, producer method or producer field.
+
+NOTE: Unlike alternative producers, reserve producers do _not_ inherit priority from their declaring beans.
 
 [[enablement]]
 
@@ -65,8 +85,9 @@ An alternative may be given a priority for the application:
 A bean is said to be _enabled_ if:
 
 * it is deployed in a bean archive, and
-* it is not a producer method or field of a disabled bean, and either
-* it is not an alternative, or it is a selected alternative for the application.
+* it is not a producer method or field of a disabled bean, and
+* either it is not an alternative, or it is a selected alternative for the application, and
+* either it is not a reserve, or it is a selected reserve for the application.
 
 Otherwise, the bean is said to be disabled.
 
@@ -79,6 +100,7 @@ A bean is _available for injection_ in a certain module if:
 * the bean is not an interceptor
 * the bean is enabled,
 * the bean is either not an alternative, or the bean is a selected alternative for the application, and
+* the bean is either not a reserve, or the bean is a selected reserve for the application, and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
 [[typesafe_resolution]]
@@ -103,7 +125,6 @@ Parameterized and raw types are considered to match if they are identical or if 
 * The bean has all the required qualifiers.
 If no required qualifiers were explicitly specified, the container assumes the required qualifier `@Default`. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@jakarta.enterprise.util.Nonbinding`.
 
-
 A bean is eligible for injection to a certain injection point if:
 
 * it is available for injection in the module that contains the class that declares the injection point, and
@@ -116,21 +137,28 @@ A bean is eligible for injection to a certain injection point if:
 An _unsatisfied dependency_ exists at an injection point when no bean is eligible for injection to the injection point.
 An _ambiguous dependency_ exists at an injection point when multiple beans are eligible for injection to the injection point.
 
-When an ambiguous dependency exists, the container attempts to resolve the ambiguity.
-The container eliminates all eligible beans that are not alternatives, except for producer methods and fields of beans that are alternatives.
-If:
+When an ambiguous dependency exists, the container attempts to resolve the ambiguity:
 
-* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
-* all the beans left are alternatives with a priority, or producer methods or fields of beans that are alternatives with a priority, then the container will determine the highest priority value and eliminate all beans, except for:
+. The term _candidate beans_ below means all beans that are eligible for injection to the injection point.
+. The container eliminates all candidate beans that are reserves.
+. If there is exactly one bean remaining, the container selects this bean, and the ambiguous dependency is called resolvable.
+. Otherwise, if there is no bean remaining and all candidate beans are reserves, then:
+.. The container determines the highest priority value and eliminates all candidate beans except for reserves with the highest priority value.
+.. If there is exactly one bean remaining, the container selects this bean, and the ambiguous dependency is called resolvable.
+.. Otherwise, the ambiguous dependency is unresolvable.
+. Otherwise, the container eliminates all candidate beans that are not alternatives, except for producer methods and fields of candidate beans that are alternatives.
+. If there is exactly one bean remaining, the container selects this bean, and the ambiguous dependency is called resolvable.
+. Otherwise, if all the candidate beans left are alternatives with a priority, or producer methods or fields of candidate beans that are alternatives with a priority, then:
+.. The container determines the highest priority value and eliminates all candidate beans, except for:
 +
 --
 ** alternatives with the highest priority value,
 ** producer methods and fields of alternatives, where either the producer method or field has the highest priority value, or the declaring alternative has the highest priority value.
 --
-+
-If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called resolvable.
+.. If there is exactly one bean remaining, the container selects this bean, and the ambiguous dependency is called resolvable.
+.. Otherwise, the ambiguous dependency is unresolvable.
 
-For the purpose of determining the priority of any producer method or field during ambiguity resolution, the priority of the producer method or field is considered first.
+For the purpose of determining the priority of any producer method or field during step 7. a. above, the priority of the producer method or field is considered first.
 If the producer method or field does not have a priority, the priority of the managed bean that declares the producer method or field is used.
 
 The container must validate all injection points of all enabled beans, all observer methods and all disposer methods when the application is initialized to ensure that there are no unsatisfied or unresolvable ambiguous dependencies.
@@ -284,22 +312,34 @@ For a custom implementation of the `Bean` interface defined in <<bean>>, the con
 ==== Ambiguous names
 
 An _ambiguous name_ exists when a name resolves to multiple beans.
-When an ambiguous name exists, the container attempts to resolve the ambiguity.
-The container eliminates all eligible beans that are not alternatives selected for the application, except for producer methods and fields of beans that are alternatives.
-If:
 
-* there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
-* all the beans left are alternatives with a priority, then the container will determine the highest priority value, and eliminate all beans, except for producer methods and fields of beans that are alternatives with the highest priority value.
-If there is exactly one bean remaining, the container will select this bean, and the ambiguous dependency is called _resolvable_.
+When an ambiguous name exists, the container attempts to resolve the ambiguity:
 
-All unresolvable ambiguous names are detected by the container when the application is initialized.
-Suppose two beans are both available for injection in a certain module, and either:
+. The term _candidate beans_ below means all beans to which the name resolves.
+. The container eliminates all candidate beans that are reserves.
+. If there is exactly one bean remaining, the container selects this bean, and the ambiguous name is called resolvable.
+. Otherwise, if there is no bean remaining and all candidate beans are reserves, then:
+.. The container determines the highest priority value and eliminates all candidate beans except for reserves with the highest priority value.
+.. If there is exactly one bean remaining, the container selects this bean, and the ambiguous name is called resolvable.
+.. Otherwise, the ambiguous name is unresolvable.
+. Otherwise, the container eliminates all candidate beans that are not alternatives, except for producer methods and fields of candidate beans that are alternatives.
+. If there is exactly one bean remaining, the container selects this bean, and the ambiguous name is called resolvable.
+. Otherwise, if all the candidate beans left are alternatives with a priority, or producer methods or fields of candidate beans that are alternatives with a priority, then:
+.. The container determines the highest priority value and eliminates all candidate beans, except for:
++
+--
+** alternatives with the highest priority value,
+** producer methods and fields of alternatives, where either the producer method or field has the highest priority value, or the declaring alternative has the highest priority value.
+--
+.. If there is exactly one bean remaining, the container selects this bean, and the ambiguous name is called resolvable.
+.. Otherwise, the ambiguous name is unresolvable.
 
-* the two beans have the same bean name and the name is not resolvable, or
-* the bean name of one bean is of the form `x.y`, where `y` is a valid bean name, and `x` is the bean name of the other bean,
+For the purpose of determining the priority of any producer method or field during step 7. a. above, the priority of the producer method or field is considered first.
+If the producer method or field does not have a priority, the priority of the managed bean that declares the producer method or field is used.
 
+All unresolvable ambiguous names are detected by the container when the application is initialized and treated as a deployment problem.
 
-the container automatically detects the problem and treats it as a deployment problem.
+If there are two beans that are both available for injection in a certain module, and the bean name of one bean is of the form `x.y`, where `y` is a valid bean name, and `x` is the bean name of the other bean, then the container treats it as a deployment problem.
 
 [[client_proxies]]
 
@@ -670,22 +710,15 @@ The `get()` method must:
 * If typesafe resolution results in an unsatisfied dependency, throw an `UnsatisfiedResolutionException`. If typesafe resolution results in an unresolvable ambiguous dependency, throw an `AmbiguousResolutionException`.
 * Otherwise, obtain a contextual reference for the bean and the required type, as defined in <<contextual_reference>>.
 
-
 The `iterator()` method must:
 
 * Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
 * If typesafe resolution results in an unsatisfied dependency, the set of resulting beans is empty.
-  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains at least one alternative, the set of resulting beans contains all beans that were not eliminated during ambiguity resolution.
-  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains no alternative, the set of resulting beans contains all candidate beans.
+  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains at least one alternative or reserve, the set of resulting beans contains all beans that were not eliminated during ambiguity resolution.
+  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains no alternative or reserve, the set of resulting beans contains all candidate beans.
 * Return an `Iterator`, that iterates over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
 
-The `stream()` method must:
-
-* Identify the set of beans that have the required type and required qualifiers and are eligible for injection into the class into which the parent `Instance` was injected, according to the rules of typesafe resolution, as defined in <<performing_typesafe_resolution>>, resolving ambiguities according to <<unsatisfied_and_ambig_dependencies>>.
-* If typesafe resolution results in an unsatisfied dependency, the set of resulting beans is empty.
-  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains at least one alternative, the set of resulting beans contains all beans that were not eliminated during ambiguity resolution.
-  If typesafe resolution results in an ambiguous dependency and the set of candidate beans contains no alternative, the set of resulting beans contains all candidate beans.
-* Return a `Stream`, that can stream over the set of contextual references for the resulting beans and required type, as defined in <<contextual_reference>>.
+The `stream()` method is a `Stream` equivalent of the aforementioned `iterator()` method.
 
 The methods `isUnsatisfied()`, `isAmbiguous()` and `isResolvable()` must:
 
@@ -710,7 +743,7 @@ The `handles()` method must:
 * Allow iterating over contextual reference handles for all beans that would be produced by the `iterator()` (or `stream()`) method.
 * Return stateless `Iterable`. Therefore, each `Iterable#iterator()` produces a new set of handles.
 
-The `handlesStream()` is a `Stream` equivalent of the aforementioned `handles()` method.
+The `handlesStream()` method is a `Stream` equivalent of the aforementioned `handles()` method.
 
 [[handle_interface]]
 ===== The `Handle` interface
@@ -724,10 +757,10 @@ Last but not least, this interface can be used to destroy the contextual instanc
 ----
 public interface Handle<T> extends AutoCloseable {
 
-        T get();
-        Bean<T> getBean();
-        void destroy();
-        void close();
+    T get();
+    Bean<T> getBean();
+    void destroy();
+    void close();
 
 }
 ----
@@ -810,6 +843,7 @@ The following built-in annotations define a `Literal` static nested class to sup
 * `jakarta.enterprise.context.Dependent`
 * `jakarta.enterprise.context.ConversationScoped`
 * `jakarta.enterprise.inject.Alternative`
+* `jakarta.enterprise.inject.Reserve`
 * `jakarta.enterprise.inject.Typed`
 
 The `Literal` class might be used to instantiate the matching `AnnotationLiteral`:

@@ -19,6 +19,7 @@ import java.lang.reflect.Type;
 import java.util.Set;
 
 import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Reserve;
 import jakarta.enterprise.inject.Stereotype;
 
 /**
@@ -76,5 +77,19 @@ public interface BeanAttributes<T> {
      *         otherwise.
      */
     public boolean isAlternative();
+
+    /**
+     * Determines if the bean is a {@linkplain Reserve reserve}.
+     *
+     * A custom implementation of {@link Bean} may implement {@link Prioritized} in order to be selected for the application.
+     * {@link Prioritized#getPriority()} determines the priority used to resolve ambiguities.
+     *
+     * @return <code>true</code> if the bean is a {@linkplain Reserve reserve}, and <code>false</code>
+     *         otherwise.
+     */
+    public default boolean isReserve() {
+        // `default` to avoid breaking older `Bean` implementations
+        return false;
+    }
 
 }

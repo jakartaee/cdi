@@ -40,7 +40,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </pre>
  *
  * <p>
- * During typesafe resolution, alternatives take precedence over other, non-alternative beans.
+ * During typesafe resolution, alternative beans take precedence over non-alternative beans.
  * </p>
  *
  * <p>

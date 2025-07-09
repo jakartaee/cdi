@@ -34,11 +34,13 @@ public interface BeanAttributes<T> {
     public String getName();
     public Set<Class<? extends Annotation>> getStereotypes();
     public boolean isAlternative();
+    public boolean isReserve();
 }
 ----
 
 * `getTypes()`, `getQualifiers()`, `getScope()`, `getName()` and `getStereotypes()` must return the bean types, qualifiers, scope type, bean name and stereotypes of the bean, as defined in <<concepts>>.
 * `isAlternative()` must return `true` if the bean is an alternative, and `false` otherwise.
+* `isReserve()` must return `true` if the bean is a reserve, and `false` otherwise.
 
 The interface `jakarta.enterprise.inject.spi.Bean` defines everything the container needs to manage instances of a certain bean.
 
@@ -503,8 +505,8 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 The method `BeanManager.createBean()` returns a container provided implementation of `Bean`. The methods accept:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, and the return values of `isAlternative()`, and
-* a class, which determines the return value of `Bean.getClass()`.
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()` and `isReserve()`, and
+* a class, which determines the return value of `Bean.getClass()`, and
 * an `InjectionTargetFactory`, which is used to obtain an `InjectionTarget`. The `InjectionTarget` is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of `Bean.getInjectionPoints()`.
 
 
@@ -517,8 +519,8 @@ public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass,
 A second version of the method is provided to create a `Bean` from a producer.
 The method accepts:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, and the return values of `isAlternative()`, and
-* a class, which determines the return value of `Bean.getClass()`.
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()` and `isReserve()`, and
+* a class, which determines the return value of `Bean.getClass()`, and
 * a `ProducerFactory`, which is used to obtain a `Producer`. The `Producer` is used to create and destroy instances of the bean, and which determines the return value of `Bean.getInjectionPoints()`.
 
 
@@ -965,6 +967,7 @@ The event object must be of type `jakarta.enterprise.inject.spi.AfterTypeDiscove
 ----
 public interface AfterTypeDiscovery {
     public List<Class<?>> getAlternatives();
+    public List<Class<?>> getReserves();
     public List<Class<?>> getInterceptors();
     public List<Class<?>> getDecorators();
     public void addAnnotatedType(AnnotatedType<?> type, String id);
@@ -974,6 +977,7 @@ public interface AfterTypeDiscovery {
 
 * `getAlternatives()` returns the ordered list of enabled alternatives for the application, sorted by priority in ascending order.
 Alternatives enabled for a bean archive are not included in the list.
+* `getReserves()` returns the ordered list of enabled reserves for the application, sorted by priority in ascending order.
 * `getInterceptors()` returns the ordered list of enabled interceptors for the application, sorted by priority in ascending order.
 Interceptors enabled for a bean archive are not included in the list.
 * `getDecorators()` returns the ordered list of enabled decorators for the application, sorted by priority in ascending order.
@@ -983,10 +987,10 @@ Decorators enabled for a bean archive are not included in the list.
 The second version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of observer invocation.
 The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
 
-If an alternative, interceptor or decorator is added using `AfterTypeDiscovery.addAnnotatedType()`, non-portable behavior results.
+If an alternative, reserve, interceptor or decorator is added using `AfterTypeDiscovery.addAnnotatedType()`, non-portable behavior results.
 
-Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of interceptors or list of decorators.
-The container must use the final values of these collections, after all observers of `AfterTypeDiscovery` have been called, to determine the order of the enabled alternatives, interceptors, and decorators for application.
+Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of reserves, list of interceptors or list of decorators.
+The container must use the final values of these collections, after all observers of `AfterTypeDiscovery` have been called, to determine the order of the enabled alternatives, reserves, interceptors, and decorators for application.
 The initial values of these collections are defined by the `@Priority` annotation.
 
 [source, java]
@@ -994,11 +998,9 @@ The initial values of these collections are defined by the `@Priority` annotatio
 void afterTypeDiscovery(@Observes AfterTypeDiscovery event) { ... }
 ----
 
-
 If any observer method of a `AfterTypeDiscovery` event throws an exception, the exception is treated as a definition error by the container.
 
 If any `AfterTypeDiscovery` method is called outside of the observer method invocation, an `IllegalStateException` is thrown.
-
 
 [[after_bean_discovery]]
 
@@ -1068,7 +1070,7 @@ It can be done from an existing `BeanAttributes`  or by reading metadata on a gi
 * Add multiple injection points for the bean with `addInjectionPoints` methods.
 * Replace all injection points for the bean with `injectionPoints` methods.
 * Make the bean implements `PassivationCapable` and set its id with `id` method.
-* Set the priority of the bean, if it is an alternative, with `priority` method.
+* Set the priority of the bean, if it is an alternative or a reserve, with `priority` method.
 * Set a callback to create a bean instance with `createWith()` or `produceWith()` method.
 * Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
@@ -1357,6 +1359,7 @@ With `BeanAttributesConfigurator` you can perform the following operations :
 * Set or add multiple stereotypes with `addStereotypes` and `stereotypes` methods.
 * Set the bean name `name` method.
 * Make the bean an alternative with `alternative` methods.
+* Make the bean a reserve with `reserve` methods.
 
 
 [[process_bean]]
