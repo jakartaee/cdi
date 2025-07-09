@@ -25,9 +25,10 @@ import jakarta.enterprise.inject.spi.configurator.AnnotatedTypeConfigurator;
  * </p>
  * <p>
  * Any observer of this event is permitted to add classes to, or remove classes from, the list of alternatives, list of
- * interceptors or list of decorators. The container will use the final values of these lists, after all observers have been
- * called, to determine the enabled alternatives, interceptors, and decorators for application.
- * Changes made to these lists after the invocation of the last observer method of the {@code AfterTypeDiscovery} are ignored.
+ * standbys, list of interceptors or list of decorators. The container will use the final values of these lists, after
+ * all observers have been called, to determine the enabled alternatives, standbys, interceptors, and decorators for
+ * application. Changes made to these lists after the invocation of the last observer method of the {@code AfterTypeDiscovery}
+ * are ignored.
  * </p>
  *
  * <p>
@@ -46,6 +47,12 @@ public interface AfterTypeDiscovery {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public List<Class<?>> getAlternatives();
+
+    /**
+     * @return the list of enabled standbys for the application, sorted by priority in ascending order.
+     * @throws IllegalStateException if called outside of the observer method invocation
+     */
+    public List<Class<?>> getStandbys();
 
     /**
      * @return the list of enabled interceptors for the application, sorted by priority in ascending order. Interceptors enabled

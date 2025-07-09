@@ -318,6 +318,15 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> alternative(boolean value);
 
     /**
+     * Change the standby status of the configured bean.
+     * By default the configured bean is not a standby.
+     *
+     * @param value value for standby property
+     * @return self
+     */
+    BeanConfigurator<T> standby(boolean value);
+
+    /**
      * Set the priority of the configured bean.
      * By default, the configured bean does not have a priority.
      * <p>

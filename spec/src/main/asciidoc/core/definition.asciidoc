@@ -27,7 +27,7 @@ A bean comprises the following attributes:
 * A bean implementation
 
 
-Furthermore, a bean may or may not be an alternative.
+Furthermore, a bean may or may not be an alternative or a standby.
 
 A bean developer provides the bean implementation by writing business logic in Java code.
 The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
@@ -705,6 +705,8 @@ If an interceptor has a name, non-portable behavior results.
 
 An _alternative_ is a bean that must be explicitly selected if it should be available for lookup, injection or name resolution.
 
+Alternatives take precedence over other, non-alternative beans.
+
 [[declaring_alternative]]
 
 ==== Declaring an alternative
@@ -721,6 +723,32 @@ Alternatively, an alternative may be declared by annotating a bean, producer met
 
 If an interceptor is an alternative, non-portable behavior results.
 
+[[standbys]]
+
+=== Standbys
+
+A _standby_ is a bean that must be explicitly selected if it should be available for lookup, injection or name resolution.
+
+Other, non-standby beans take precedence over standbys.
+
+[[declaring_standby]]
+
+==== Declaring a standby
+
+A standby may be declared by annotating the bean class or producer method or field with the `@Standby` annotation.
+
+[source, java]
+----
+@Standby
+public class DefaultOrder extends Order { ... }
+----
+
+Alternatively, a standby may be declared by annotating a bean, producer method or producer field with a stereotype that declares a `@Standby` annotation.
+
+If a standby is also an alternative, the container automatically detects the problem and treats it as a definition error.
+
+If an interceptor is a standby, non-portable behavior results.
+
 [[stereotypes]]
 
 === Stereotypes
@@ -733,13 +761,12 @@ A stereotype encapsulates any combination of:
 * a default scope, and
 * a set of interceptor bindings.
 
-
 A stereotype may also specify that:
 
 * all beans with the stereotype have defaulted bean names, or that
 * all beans with the stereotype are alternatives, or that
-* all beans with the stereotype have predefined `@Priority`.
-
+* all beans with the stereotype have predefined `@Priority`, or that
+* all beans with the stereotype are standbys.
 
 A bean may declare zero, one or multiple stereotypes.
 
@@ -866,6 +893,26 @@ Following sample shows a stereotype that can be used to mark bean as globally en
 @Retention(RUNTIME)
 public @interface Mock {}
 ----
+
+[[standby_stereotype]]
+
+===== Declaring a `@Standby` stereotype
+
+A stereotype may declare a `@Standby` annotation, which specifies that every bean with the stereotype is a standby.
+
+We may specify that all default impl objects are standbys:
+
+[source, java]
+----
+@Standby
+@Priority(Interceptor.Priority.APPLICATION)
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface DefaultImpl {}
+----
+
+If a stereotype declares both `@Alternative` and `@Standby`, the container automatically detects the problem and treats it as a definition error.
 
 [[stereotypes_with_additional_stereotypes]]
 
