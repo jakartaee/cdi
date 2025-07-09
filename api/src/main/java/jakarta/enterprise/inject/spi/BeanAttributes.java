@@ -52,9 +52,10 @@ public interface BeanAttributes<T> {
     public Class<? extends Annotation> getScope();
 
     /**
-     * Obtains the {@linkplain jakarta.enterprise.inject EL name} of a bean, if it has one.
+     * Obtains the bean name of the bean, if it has one.
+     * If this bean has no name, returns {@code null}.
      *
-     * @return the {@linkplain jakarta.enterprise.inject EL name}
+     * @return the bean name
      */
     public String getName();
 

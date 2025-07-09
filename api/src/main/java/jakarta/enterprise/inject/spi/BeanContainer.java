@@ -104,15 +104,15 @@ public interface BeanContainer {
     Set<Bean<?>> getBeans(Type beanType, Annotation... qualifiers);
 
     /**
-     * Return the set of beans which have the given EL name and are available for injection in the module or library containing
-     * the class into which the <code>BeanManager</code>/<code>BeanContainer</code> was injected or, in the Jakarta EE
-     * environment, the Jakarta EE component from whose JNDI environment namespace the
-     * <code>BeanManager</code>/<code>BeanContainer</code> was obtained, according to the rules of EL name resolution.
+     * Return the set of beans which have the given bean name and are available for injection in the module or library
+     * containing the class into which the <code>BeanManager</code>/<code>BeanContainer</code> was injected or, in
+     * the Jakarta EE environment, the Jakarta EE component from whose JNDI environment namespace the
+     * <code>BeanManager</code>/<code>BeanContainer</code> was obtained, according to the rules of name resolution.
      * <p>
      * Note that when called during invocation of an {@link AfterBeanDiscovery} event observer,
      * this method will only return beans discovered by the container before the {@link AfterBeanDiscovery} event is fired.
      *
-     * @param name the EL name
+     * @param name the bean name
      * @return the resulting set of {@linkplain Bean beans}
      * @throws IllegalStateException if called during application initialization, before the {@link AfterBeanDiscovery}
      *         event is fired.
