@@ -113,23 +113,37 @@ public interface SyntheticBeanBuilder<T> {
      * Marks this synthetic bean as an alternative if desired. To make this synthetic bean
      * an enabled alternative, call both {@code alternative(true)} and {@code priority(some priority)}.
      * <p>
-     * If this synthetic bean is an alternative, not setting a priority means
-     * that it is not enabled, which is equivalent to not registering it at all.
+     * If this synthetic bean is an alternative, not setting a priority means that it is not enabled.
      * <p>
      * If not called, this synthetic bean will not be an alternative.
      *
      * @param isAlternative whether this synthetic bean should be an alternative
      * @return this {@code SyntheticBeanBuilder}
      * @throws IllegalStateException if this method is called multiple times
+     *         or if the bean was previously marked as {@linkplain #reserve(boolean) reserve}.
      */
     SyntheticBeanBuilder<T> alternative(boolean isAlternative);
 
     /**
-     * Sets a priority of this synthetic bean. To make this synthetic bean an enabled alternative,
-     * call both {@code alternative(true)} and {@code priority(some priority)}.
+     * Marks this synthetic bean as a reserve if desired. To make this synthetic bean
+     * an enabled reserve, call both {@code reserve(true)} and {@code priority(some priority)}.
      * <p>
-     * If this synthetic bean is an alternative, not setting a priority means
-     * that it is not enabled, which is equivalent to not registering it at all.
+     * If this synthetic bean is a reserve, not setting a priority means that it is not enabled.
+     * <p>
+     * If not called, this synthetic bean will not be a reserve.
+     *
+     * @param isReserve whether this synthetic bean should be a reserve
+     * @return this {@code SyntheticBeanBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     *         or if the bean was previously marked as {@linkplain #alternative(boolean) alternative}.
+     */
+    SyntheticBeanBuilder<T> reserve(boolean isReserve);
+
+    /**
+     * Sets a priority of this synthetic bean. To make this synthetic bean an enabled alternative
+     * or reserve, call both {@code alternative(true)}/{@code reserve(true)} and {@code priority(some priority)}.
+     * <p>
+     * If this synthetic bean is an alternative or reserve, not setting a priority means that it is not enabled.
      * <p>
      * If not called, this synthetic bean will not have a priority.
      *
