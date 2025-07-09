@@ -22,8 +22,8 @@ package jakarta.enterprise.inject.spi;
  * <p>
  * For instance {@link ObserverMethod} extends this interface to set the observer priority.
  *
- * A custom alternative {@link Bean}, {@link Interceptor} or {@link Decorator} may implement this interface to be activated
- * with a given priority
+ * A custom alternative or reserve {@link Bean}, {@link Interceptor} or {@link Decorator} may implement
+ * this interface to be enabled with a given priority.
  *
  * </p>
  *

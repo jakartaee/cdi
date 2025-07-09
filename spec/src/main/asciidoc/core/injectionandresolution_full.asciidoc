@@ -87,12 +87,11 @@ A bean is said to be _enabled_ if:
 
 * it is deployed in a bean archive, and
 * it is not a producer method or field of a disabled bean, and
-* it is not specialized by any other enabled bean, as defined in <<specialization>>, and either
-* it is not an alternative, or it is a selected alternative of at least one bean archive or the application.
-
+* it is not specialized by any other enabled bean, as defined in <<specialization>>, and
+* either it is not an alternative, or it is a selected alternative for at least one bean archive or for the application, and
+* either it is not a reserve, or it is a selected reserve for the application.
 
 Otherwise, the bean is said to be disabled.
-
 
 [[inconsistent_specialization]]
 
@@ -113,6 +112,7 @@ A bean is _available for injection_ in a certain module if:
 * the bean is not an interceptor or decorator,
 * the bean is enabled,
 * the bean is either not an alternative, or the bean is a selected alternative for the application, or the module is a bean archive and the bean is a selected alternative of the bean archive, and
+* the bean is either not a reserve, or the bean is a selected reserve for the application, and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
 For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getBeanClass()` to determine the bean class of the bean and `InjectionPoint.getMember()` and then `Member.getDeclaringClass()` to determine the class that declares an injection point.
@@ -148,17 +148,6 @@ Furthermore, for a custom implementation of the `Bean` interface defined in <<be
 In addition to rules defined in <<assignable_parameters>>, the following rules apply.
 
 A special set of rules, defined in <<delegate_assignable_parameters>>, apply if and only if the injection point is a decorator delegate injection point.
-
-[[injection_point_full]]
-
-[[ambig_names_full]]
-
-==== Ambiguous names in {cdi_full}
-
-In addition to rules defined in <<ambig_names>>, the following rules apply.
-
-When an ambiguous name exists, the container attempts to resolve the ambiguity.
-The container eliminates all eligible beans that are not alternatives selected for the bean archive or selected for the application, except for producer methods and fields of beans that are alternatives.
 
 [[client_proxies_full]]
 
