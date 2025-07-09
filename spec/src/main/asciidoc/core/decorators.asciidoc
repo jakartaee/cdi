@@ -255,6 +255,12 @@ In addition to rules defined in <<declaring_alternative>>, the following rules a
 
 If a decorator is an alternative, non-portable behavior results.
 
+==== Standbys
+
+In addition to rules defined in <<declaring_standby>>, the following rules apply.
+
+If a decorator is a standby, non-portable behavior results.
+
 === Managed beans
 
 In addition to rules defined in <<managed_beans>>, the following rules apply.
