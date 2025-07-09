@@ -45,9 +45,9 @@ import jakarta.inject.Scope;
  * <li>No injected instance of the bean is ever shared between multiple injection points.</li>
  * <li>Any instance of the bean injected into an object that is being created by the container is bound to the lifecycle of the
  * newly created object.</li>
- * <li>When a Unified EL expression in a JSF or JSP page that refers to the bean by its EL name is evaluated, at most one
- * instance of the bean is instantiated. This instance exists to service just a single evaluation of the EL expression. It is
- * reused if the bean EL name appears multiple times in the EL expression, but is never reused when the EL expression is
+ * <li>When a Unified EL expression that refers to the bean by its bean name is evaluated, at most one instance
+ * of the bean is instantiated. This instance exists to service just a single evaluation of the EL expression. It is
+ * reused if the bean name appears multiple times in the EL expression, but is never reused when the EL expression is
  * evaluated again, or when another EL expression is evaluated.</li>
  * <li>Any instance of the bean that receives a producer method, producer field, disposer method or observer method invocation
  * exists to service that invocation only.</li>

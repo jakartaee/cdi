@@ -26,7 +26,7 @@ import jakarta.enterprise.inject.spi.BeanManager;
  */
 public interface ELAwareBeanManager extends BeanManager {
     /**
-     * Returns a {@link jakarta.el.ELResolver} that resolves beans by EL name.
+     * Returns a {@link jakarta.el.ELResolver} that resolves beans by bean name.
      *
      * @return the {@link jakarta.el.ELResolver}
      */

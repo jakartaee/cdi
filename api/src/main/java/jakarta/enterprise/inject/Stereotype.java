@@ -81,7 +81,7 @@ import java.lang.annotation.Target;
  * </p>
  *
  * <ul>
- * <li>all beans with the stereotype have defaulted bean EL names, or that</li>
+ * <li>all beans with the stereotype have defaulted bean names, or that</li>
  * <li>all beans with the stereotype are alternatives, or that</li>
  * <li>all beans with the stereotype have predefined {@code @Priority}.</li>
  * </ul>
