@@ -83,7 +83,8 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>all beans with the stereotype have defaulted bean names, or that</li>
  * <li>all beans with the stereotype are alternatives, or that</li>
- * <li>all beans with the stereotype have predefined {@code @Priority}.</li>
+ * <li>all beans with the stereotype have predefined {@code @Priority}, or that</li>
+ * <li>all beans with the stereotype are standbys.</li>
  * </ul>
  *
  * <p>
@@ -129,6 +130,21 @@ import java.lang.annotation.Target;
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
  * public @interface Mock {
+ * }
+ * </pre>
+ *
+ * <p>
+ * A stereotype may declare a {@link Standby &#064;Standby} annotation, which specifies that every bean with the
+ * stereotype is a standby.
+ * </p>
+ *
+ * <pre>
+ * &#064;Standby
+ * &#064;Priority(1)
+ * &#064;Stereotype
+ * &#064;Target(TYPE)
+ * &#064;Retention(RUNTIME)
+ * public @interface DefaultImpl {
  * }
  * </pre>
  *

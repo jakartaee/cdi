@@ -123,6 +123,13 @@ public interface BeanInfo {
     boolean isAlternative();
 
     /**
+     * Returns whether this bean is a {@linkplain jakarta.enterprise.inject.Standby standby}.
+     *
+     * @return whether this bean is a {@linkplain jakarta.enterprise.inject.Standby standby}
+     */
+    boolean isStandby();
+
+    /**
      * Returns the {@linkplain jakarta.annotation.Priority priority} declared on this bean, or {@code null}
      * if this bean does not declare a priority. Declaring a priority on an alternative bean makes it an enabled
      * alternative. Similarly, declaring a priority on an interceptor makes it an enabled interceptor.

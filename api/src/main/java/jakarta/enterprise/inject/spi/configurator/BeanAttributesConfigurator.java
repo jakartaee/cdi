@@ -199,4 +199,14 @@ public interface BeanAttributesConfigurator<T> {
      */
     BeanAttributesConfigurator<T> alternative(boolean value);
 
+    /**
+     *
+     * Change the standby status of the configured bean.
+     * By default the configured bean is not a standby.
+     *
+     * @param value value for standby property
+     * @return self
+     */
+    BeanAttributesConfigurator<T> standby(boolean value);
+
 }
