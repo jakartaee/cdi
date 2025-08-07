@@ -14,7 +14,7 @@
     <parent>
         <groupId>jakarta.enterprise</groupId>
         <artifactId>jakarta.enterprise.cdi-parent</artifactId>
-        <version>5.0.0.Alpha1-SNAPSHOT</version>
+        <version>5.0.0.Alpha2-SNAPSHOT</version>
     </parent>
 
     <artifactId>cdi-ide-config</artifactId>
