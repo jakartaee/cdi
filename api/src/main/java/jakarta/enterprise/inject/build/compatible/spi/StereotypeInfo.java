@@ -17,9 +17,9 @@ import jakarta.enterprise.lang.model.AnnotationInfo;
 /**
  * A stereotype. May define {@linkplain #defaultScope() default scope},
  * a set of {@linkplain #interceptorBindings() interceptor bindings},
- * default {@linkplain #priority() priority}, and whether all beans
- * with the stereotype are {@linkplain #isAlternative() alternatives}
- * or have {@linkplain #isNamed() default names}.
+ * default {@linkplain #priority() priority}, whether all beans with
+ * the stereotype are {@linkplain #isAlternative() alternatives}
+ * or {@linkplain #isReserve() reserves}, or have {@linkplain #isNamed() default names}.
  *
  * @since 4.0
  */
@@ -47,6 +47,14 @@ public interface StereotypeInfo {
      * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Alternative @Alternative}
      */
     boolean isAlternative();
+
+    /**
+     * Returns whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Reserve @Reserve}.
+     * This means that all beans with this stereotype are reserves.
+     *
+     * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Reserve @Reserve}
+     */
+    boolean isReserve();
 
     /**
      * Returns the priority value this stereotype declares using the {@link jakarta.annotation.Priority @Priority}
