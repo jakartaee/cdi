@@ -255,6 +255,12 @@ In addition to rules defined in <<declaring_alternative>>, the following rules a
 
 If a decorator is an alternative, non-portable behavior results.
 
+==== Reserves
+
+In addition to rules defined in <<declaring_reserve>>, the following rules apply.
+
+If a decorator is a reserve, non-portable behavior results.
+
 === Managed beans
 
 In addition to rules defined in <<managed_beans>>, the following rules apply.

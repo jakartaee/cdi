@@ -274,6 +274,7 @@ public interface BeanInfo {
     MethodInfo producerMethod();
     FieldInfo producerField();
     boolean isAlternative();
+    boolean isReserve();
     Integer priority();
     String name();
     DisposerInfo disposer();
