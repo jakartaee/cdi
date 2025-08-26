@@ -318,6 +318,15 @@ public interface BeanConfigurator<T> {
     BeanConfigurator<T> alternative(boolean value);
 
     /**
+     * Change the reserve status of the configured bean.
+     * By default the configured bean is not a reserve.
+     *
+     * @param value value for reserve property
+     * @return self
+     */
+    BeanConfigurator<T> reserve(boolean value);
+
+    /**
      * Set the priority of the configured bean.
      * By default, the configured bean does not have a priority.
      * <p>
@@ -326,7 +335,7 @@ public interface BeanConfigurator<T> {
      * {@link jakarta.enterprise.inject.spi.Bean Bean} class implement
      * {@link jakarta.enterprise.inject.spi.Prioritized Prioritized}.
      * <p>
-     * This method has no effect if the configured bean is not an alternative.
+     * This method has no effect if the configured bean is not an alternative or reserve.
      *
      * @param priority the priority value
      * @return self

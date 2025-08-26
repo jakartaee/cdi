@@ -123,9 +123,16 @@ public interface BeanInfo {
     boolean isAlternative();
 
     /**
+     * Returns whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}.
+     *
+     * @return whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}
+     */
+    boolean isReserve();
+
+    /**
      * Returns the {@linkplain jakarta.annotation.Priority priority} declared on this bean, or {@code null}
-     * if this bean does not declare a priority. Declaring a priority on an alternative bean makes it an enabled
-     * alternative. Similarly, declaring a priority on an interceptor makes it an enabled interceptor.
+     * if this bean does not declare a priority. Priority is used to select alternatives and reserves for application
+     * and order them during typesafe resolution, and to enable interceptors and order them during invocation.
      *
      * @return the priority of this bean, or {@code null} if this bean does not declare a priority
      */
