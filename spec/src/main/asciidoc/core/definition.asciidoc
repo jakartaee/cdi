@@ -720,6 +720,8 @@ public class MockOrder extends Order { ... }
 
 Alternatively, an alternative may be declared by annotating a bean, producer method or producer field with a stereotype that declares an `@Alternative` annotation.
 
+If an alternative managed bean declares a reserve producer, the container automatically detects the problem and treats it as a definition error.
+
 If an interceptor is an alternative, non-portable behavior results.
 
 [[reserves]]
@@ -745,6 +747,8 @@ public class DefaultOrder extends Order { ... }
 Alternatively, a reserve may be declared by annotating a bean, producer method or producer field with a stereotype that declares a `@Reserve` annotation.
 
 If a reserve is also an alternative, the container automatically detects the problem and treats it as a definition error.
+
+If a reserve managed bean declares an alternative producer, the container automatically detects the problem and treats it as a definition error.
 
 If an interceptor is a reserve, non-portable behavior results.
 
