@@ -26,8 +26,7 @@ A bean comprises the following attributes:
 * A set of interceptor bindings
 * A bean implementation
 
-
-Furthermore, a bean may or may not be an alternative.
+Furthermore, a bean may be an alternative or a reserve.
 
 A bean developer provides the bean implementation by writing business logic in Java code.
 The developer then defines the remaining attributes by explicitly annotating the bean class, or by allowing them to be defaulted by the container, as specified in <<implementation>>.
@@ -705,6 +704,8 @@ If an interceptor has a name, non-portable behavior results.
 
 An _alternative_ is a bean that must be explicitly selected if it should be available for lookup, injection or name resolution.
 
+During <<typesafe_resolution>>, alternatives take precedence over other, non-alternative beans.
+
 [[declaring_alternative]]
 
 ==== Declaring an alternative
@@ -719,7 +720,37 @@ public class MockOrder extends Order { ... }
 
 Alternatively, an alternative may be declared by annotating a bean, producer method or producer field with a stereotype that declares an `@Alternative` annotation.
 
+If an alternative managed bean declares a reserve producer, the container automatically detects the problem and treats it as a definition error.
+
 If an interceptor is an alternative, non-portable behavior results.
+
+[[reserves]]
+
+=== Reserves
+
+A _reserve_ is a bean that must be explicitly selected if it should be available for lookup, injection or name resolution.
+
+During <<typesafe_resolution>>, other, non-reserve beans take precedence over reserves.
+
+[[declaring_reserve]]
+
+==== Declaring a reserve
+
+A reserve may be declared by annotating the bean class or producer method or field with the `@Reserve` annotation.
+
+[source, java]
+----
+@Reserve
+public class DefaultOrder extends Order { ... }
+----
+
+Alternatively, a reserve may be declared by annotating a bean, producer method or producer field with a stereotype that declares a `@Reserve` annotation.
+
+If a reserve is also an alternative, the container automatically detects the problem and treats it as a definition error.
+
+If a reserve managed bean declares an alternative producer, the container automatically detects the problem and treats it as a definition error.
+
+If an interceptor is a reserve, non-portable behavior results.
 
 [[stereotypes]]
 
@@ -733,13 +764,12 @@ A stereotype encapsulates any combination of:
 * a default scope, and
 * a set of interceptor bindings.
 
-
 A stereotype may also specify that:
 
 * all beans with the stereotype have defaulted bean names, or that
 * all beans with the stereotype are alternatives, or that
-* all beans with the stereotype have predefined `@Priority`.
-
+* all beans with the stereotype have predefined `@Priority`, or that
+* all beans with the stereotype are reserves.
 
 A bean may declare zero, one or multiple stereotypes.
 
@@ -866,6 +896,26 @@ Following sample shows a stereotype that can be used to mark bean as globally en
 @Retention(RUNTIME)
 public @interface Mock {}
 ----
+
+[[reserve_stereotype]]
+
+===== Declaring a `@Reserve` stereotype
+
+A stereotype may declare a `@Reserve` annotation, which specifies that every bean with the stereotype is a reserve.
+
+We may specify that all beans annotated with `@DefaultImpl` are reserves:
+
+[source, java]
+----
+@Reserve
+@Priority(Interceptor.Priority.APPLICATION)
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface DefaultImpl {}
+----
+
+If a stereotype declares both `@Alternative` and `@Reserve`, the container automatically detects the problem and treats it as a definition error.
 
 [[stereotypes_with_additional_stereotypes]]
 

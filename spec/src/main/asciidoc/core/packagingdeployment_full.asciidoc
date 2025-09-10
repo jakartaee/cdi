@@ -20,7 +20,7 @@ When an application is started, the container must perform _bean discovery_, det
 Bean discovery is the process of determining:
 
 * The bean archives that exist in the application, and the beans they contain
-* Which alternatives, interceptors and decorators are _enabled_ for each bean archive
+* Which alternatives, reserves, interceptors and decorators are _enabled_ for each bean archive
 * The _ordering_ of enabled interceptors and decorators
 
 
@@ -210,7 +210,7 @@ For every type in the set of discovered types (as defined in <<type_discovery_st
 * detect definition errors by validating the class and its metadata, and then
 * if the class is a managed bean, fire an event of type `ProcessInjectionPoint` for each injection point in the class, as defined in <<process_injection_point>>, and then
 * if the class is a managed bean, fire an event of type `ProcessInjectionTarget`, as defined in <<process_injection_target>>, and then
-* determine which alternatives, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and then
+* determine which alternatives, reserves, interceptors and decorators are enabled, according to the rules defined in <<enablement>>, <<enabled_interceptors>> and <<enabled_decorators>>, and then
 * if the class is an enabled bean, interceptor or decorator, fire an event of type `ProcessBeanAttributes`, as defined in <<process_bean_attributes>>, and then
 * if the class is an enabled bean, interceptor or decorator and if `ProcessBeanAttributes.veto()` wasn't called in previous step, fire an event which is a subtype of `ProcessBean`, as defined in <<process_bean>>.
 
