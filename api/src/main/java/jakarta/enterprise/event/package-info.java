@@ -54,8 +54,8 @@
  * </p>
  *
  * <p>
- * The event types of the event include all superclasses and
- * interfaces of the runtime class of the event object. An event type
+ * The event types of the event include all superclass types and
+ * superinterface types of the runtime class of the event object. An event type
  * may not contain a type variable.
  * </p>
  *

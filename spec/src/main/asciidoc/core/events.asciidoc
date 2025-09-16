@@ -33,7 +33,7 @@ An observer method will be notified of an event if the event object is assignabl
 === Event types and qualifier types
 
 An event object is an instance of a concrete Java class with no unresolvable type variables.
-The _event types_ of the event include all superclasses and interfaces of the runtime class of the event object.
+The _event types_ of the event include all superclass types and superinterface types of the runtime class of the event object.
 
 An event type may not contain an unresolvable type variable. A wildcard type is not considered an unresolvable type variable.
 

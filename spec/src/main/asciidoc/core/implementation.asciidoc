@@ -60,7 +60,7 @@ An application can prevent packages being split across jars by sealing the packa
 
 ==== Bean types of a managed bean
 
-The unrestricted set of bean types for a managed bean contains the bean class, every superclass and all interfaces it implements directly or indirectly.
+The unrestricted set of bean types for a managed bean contains the bean class, every superclass type and all superinterface types it implements directly or indirectly.
 
 The resulting set of bean types for a managed bean consists only of <<legal_bean_types,legal bean types>>, all other types are removed from the set of bean types.
 
@@ -157,7 +157,7 @@ The bean types of a producer method depend upon the method return type:
 
 * If the return type is an interface, the unrestricted set of bean types contains the return type, all interfaces it extends directly or indirectly and `java.lang.Object`.
 * If a return type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the method return type and `java.lang.Object`.
-* If the return type is a class, the unrestricted set of bean types contains the return type, every superclass and all interfaces it implements directly or indirectly.
+* If the return type is a class, the unrestricted set of bean types contains the return type, every superclass type and all superinterface types it implements directly or indirectly.
 
 The resulting set of bean types for a producer method consists only of <<legal_bean_types,legal bean types>>, all other types are removed from the set of bean types.
 
@@ -265,7 +265,7 @@ The bean types of a producer field depend upon the field type:
 
 * If the field type is an interface, the unrestricted set of bean types contains the field type, all interfaces it extends directly or indirectly and `java.lang.Object`.
 * If a field type is primitive or is a Java array type, the unrestricted set of bean types contains exactly two types: the field type and `java.lang.Object`.
-* If the field type is a class, the unrestricted set of bean types contains the field type, every superclass and all interfaces it implements directly or indirectly.
+* If the field type is a class, the unrestricted set of bean types contains the field type, every superclass type and all superinterface types it implements directly or indirectly.
 
 The resulting set of bean types for a producer field consists only of <<legal_bean_types,legal bean types>>, all other types are removed from the set of bean types.
 
