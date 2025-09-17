@@ -33,7 +33,7 @@ An observer method will be notified of an event if the event object is assignabl
 === Event types and qualifier types
 
 An event object is an instance of a concrete Java class with no unresolvable type variables.
-The _event types_ of the event include all superclass types and superinterface types of the runtime class of the event object.
+The _event types_ of the event include all superclass types and superinterface types of the runtime type of the event object.
 
 An event type may not contain an unresolvable type variable. A wildcard type is not considered an unresolvable type variable.
 
@@ -438,7 +438,7 @@ public interface EventMetadata {
 
 * `getQualifiers()` returns the set of qualifiers with which the event was fired.
 * `getInjectionPoint()` returns the `InjectionPoint` from which this event payload was fired, or `null` if it was fired from `BeanContainer.getEvent()`.
-* `getType()` returns the type representing runtime class of the event object with type variables resolved.
+* `getType()` returns the type representing runtime type of the event object with type variables resolved.
 
 
 The container must provide a bean with scope `@Dependent`, bean type `EventMetadata` and qualifier `@Default`, allowing observer methods to obtain information about the events they observe.
