@@ -167,6 +167,10 @@ Event<AdminLoggedInEvent> admin = any.select(
 
 If the specified type contains a type variable, an `IllegalArgumentException` is thrown.
 
+The specified type must not be a wildcard type.
+If an injected `Event` has a specified type that is a wildcard type, the container treats it as a definition error.
+If a programmatically obtained `Event` has a specified type that is a wildcard type, non-portable behavior results.
+
 If two instances of the same non repeating qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
 
 If an instance of an annotation that is not a qualifier type is passed to `select()`, an `IllegalArgumentException` is thrown.
