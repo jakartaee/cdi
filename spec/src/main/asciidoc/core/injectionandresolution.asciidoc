@@ -653,6 +653,11 @@ Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select(
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );
 ----
 
+The required type must not be a wildcard type.
+If an injected `Instance` has a required type that is either a wildcard type or an `Event` whose specified type is a wildcard type, the container treats it as a definition error.
+If a programmatically obtained `Instance` has a required type that is a wildcard type, non-portable behavior results.
+
+
 If an injection point of raw type `Instance` is defined, the container automatically detects the problem and treats it as a definition error.
 
 If two instances of the same non repeating qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
