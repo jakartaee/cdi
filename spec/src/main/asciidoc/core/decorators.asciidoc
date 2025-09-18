@@ -26,7 +26,7 @@ A decorator instance is a dependent object of the object it decorates.
 === Decorator beans
 
 A decorator is a managed bean.
-The set of decorated types of a decorator includes all bean types of the managed bean which are Java interfaces, except for `java.io.Serializable`. The decorator bean class and its superclasses are not decorated types of the decorator.
+The set of decorated types of a decorator includes all bean types of the managed bean which are Java interfaces, except for `java.io.Serializable`. The decorator bean class and its superclass types are not decorated types of the decorator.
 The decorator class may be abstract.
 
 If the set of decorated types of a decorator is empty, the container automatically detects the problem and treats it as a definition error.
