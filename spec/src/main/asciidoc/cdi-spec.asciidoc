@@ -101,4 +101,7 @@ include::core/packagingdeployment_full.asciidoc[]
 
 include::javase/javase.asciidoc[]
 
+[[part_3]]
+= Part III - Glossary
 
+include::glossary.asciidoc[]

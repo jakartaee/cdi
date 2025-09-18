@@ -1,0 +1,45 @@
+////
+Copyright (c) 2025 Contributors to the Eclipse Foundation
+
+This program and the accompanying materials are made available under the
+Apache Software License 2.0 which is available at:
+https://www.apache.org/licenses/LICENSE-2.0.
+
+SPDX-License-Identifier: Apache-2.0
+////
+
+This glossary includes terms used throughout the CDI specification that are either defined in other specifications, in which case links are provided, or are used in the CDI specification but not defined precisely, in which case the terms are defined here.
+Under no circumstances should the definitions here be interpreted as affecting other specifications that might use the same terms.
+
+The other specifications referenced here are:
+
+- link:https://docs.oracle.com/javase/specs/jls/se17/html/index.html[The Java Language Specification, Java SE 17 Edition] (_JLS_ for short)
+- link:https://jakarta.ee/specifications/interceptors/2.2/jakarta-interceptors-spec-2.2[Jakarta Interceptors 2.2]
+
+WARNING: The glossary is very much not complete at the moment.
+Completing it is work in progress.
+
+// please keep the following list in alphabetical order
+
+Actual type:: A type that does not contain wildcard types or type variables. Specifically, an _actual type_ is:
+
+* a primitive type,
+* a class type, including raw types,
+* an array type, if the component type is an actual type,
+* a parameterized type, if all type arguments are actual types.
+
+Direct superclass type:: link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.4[JLS 8.1.4]
+
+Direct superinterface type:: link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.5[JLS 8.1.5] and link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-9.html#jls-9.1.3[JLS 9.1.3]
+
+Superclass:: link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.4[JLS 8.1.4]
+
+Superclass type:: The _superclass type_ relationship is the transitive closure of the _direct superclass type_ relationship.
++
+The JLS uses this term as well, but does not define it.
+
+Superinterface:: link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-8.html#jls-8.1.5[JLS 8.1.5] and link:https://docs.oracle.com/javase/specs/jls/se17/html/jls-9.html#jls-9.1.3[JLS 9.1.3]
+
+Superinterface type:: The _superinterface type_ relationship is the transitive closure of the _direct superinterface type_ relationship.
++
+The JLS uses this term as well, but does not define it.
