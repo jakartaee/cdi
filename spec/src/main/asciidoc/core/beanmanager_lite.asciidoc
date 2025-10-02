@@ -282,3 +282,16 @@ public boolean isMatchingBean(Set<Type> beanTypes, Set<Annotation> beanQualifier
 
 public boolean isMatchingEvent(Type eventType, Set<Annotation> eventQualifiers, Type observedEventType, Set<Annotation> observedEventQualifiers);
 ----
+
+[[bm_proxy_unwrap]]
+
+==== Unwrapping a client proxy
+
+Normal scoped beans use client proxies and the method `BeanContainer.unwrapClientProxy()` unwraps the proxy and returns the underlying contextual instance.
+
+NOTE: While this is useful for introspection of the contextual instance by frameworks/libraries, it should not be a common pattern to unwrap proxies and invoke business methods directly on contextual instances!
+
+[source, java]
+----
+public <T> T unwrapClientProxy(T reference);
+----
