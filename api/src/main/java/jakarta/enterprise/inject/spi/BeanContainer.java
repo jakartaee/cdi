@@ -318,4 +318,15 @@ public interface BeanContainer {
      */
     boolean isMatchingEvent(Type specifiedType, Set<Annotation> specifiedQualifiers, Type observedEventType,
             Set<Annotation> observedEventQualifiers);
+
+    /**
+     * If the given {@code reference} is a client proxy for a bean, returns the contextual instance of the bean.
+     * Otherwise, including when {@code reference} is {@code null}, returns {@code reference} itself.
+     * <p>
+     * If the bean's scope is not active, this method rethrows the {@code ContextNotActiveException}
+     * or {@code IllegalStateException}.
+     *
+     * @param reference the client proxy to unwrap
+     */
+    <T> T unwrapClientProxy(T reference);
 }
