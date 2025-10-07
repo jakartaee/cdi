@@ -39,7 +39,6 @@ import jakarta.enterprise.util.TypeLiteral;
 public interface BeanAttributesConfigurator<T> {
 
     /**
-     *
      * Add a type to the bean types
      *
      * @param type the type to add
@@ -48,7 +47,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addType(Type type);
 
     /**
-     *
      * Add a type to the bean types
      *
      * @param typeLiteral the type to add
@@ -57,7 +55,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addType(TypeLiteral<?> typeLiteral);
 
     /**
-     *
      * Add types to the bean types
      *
      * @param types types to add
@@ -66,7 +63,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addTypes(Type... types);
 
     /**
-     *
      * Add types to the bean types
      *
      * @param types types to add
@@ -84,7 +80,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addTransitiveTypeClosure(Type type);
 
     /**
-     *
      * Replace bean types
      *
      * @param types the types of the configured bean
@@ -93,7 +88,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> types(Type... types);
 
     /**
-     *
      * Replace bean types
      *
      * @param types the types of the configured bean
@@ -102,7 +96,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> types(Set<Type> types);
 
     /**
-     *
      * Replace Bean scope
      *
      * @param scope new scope for the configured bean
@@ -111,7 +104,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> scope(Class<? extends Annotation> scope);
 
     /**
-     *
      * Add a qualifier to the configured bean
      *
      * @param qualifier qualifier to add
@@ -120,7 +112,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addQualifier(Annotation qualifier);
 
     /**
-     *
      * Add qualifiers to the bean.
      *
      * @param qualifiers qualifiers to add
@@ -129,7 +120,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addQualifiers(Annotation... qualifiers);
 
     /**
-     *
      * Add qualifiers to the bean.
      *
      * @param qualifiers qualifiers to add
@@ -154,7 +144,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> qualifiers(Set<Annotation> qualifiers);
 
     /**
-     *
      * Add a stereotype to the configured bean
      *
      * @param stereotype stereotype to add
@@ -163,7 +152,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addStereotype(Class<? extends Annotation> stereotype);
 
     /**
-     *
      * Add stereotypes to the configured bean
      *
      * @param stereotypes stereotypes to add
@@ -172,7 +160,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> addStereotypes(Set<Class<? extends Annotation>> stereotypes);
 
     /**
-     *
      * Replace stereotypes on the configured bean
      *
      * @param stereotypes for the configured bean
@@ -181,7 +168,6 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> stereotypes(Set<Class<? extends Annotation>> stereotypes);
 
     /**
-     *
      * Set the name of the configured bean
      *
      * @param name name for the configured bean
@@ -190,13 +176,21 @@ public interface BeanAttributesConfigurator<T> {
     BeanAttributesConfigurator<T> name(String name);
 
     /**
-     *
      * Change the alternative status of the configured bean.
-     * By default the configured bean is not an alternative.
+     * By default, the configured bean is not an alternative.
      *
      * @param value value for alternative property
      * @return self
      */
     BeanAttributesConfigurator<T> alternative(boolean value);
+
+    /**
+     * Change the reserve status of the configured bean.
+     * By default, the configured bean is not a reserve.
+     *
+     * @param value value for reserve property
+     * @return self
+     */
+    BeanAttributesConfigurator<T> reserve(boolean value);
 
 }
