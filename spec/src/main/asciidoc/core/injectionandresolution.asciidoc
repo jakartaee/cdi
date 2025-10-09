@@ -38,7 +38,7 @@ Other kinds of bean archives exist in {cdi_full}.
 
 A bean packaged in a certain module is available for injection, lookup and name resolution to classes packaged in some other module if and only if the bean class of the bean is required to be _accessible_ to the other module by the class accessibility requirements of the module architecture.
 
-An alternative is not available for injection, lookup or name resolution to classes in a module unless the module is a bean archive and the alternative is explicitly _selected_ for the application.
+An alternative is not available for injection, lookup or name resolution to classes in a module unless the alternative is _selected_ for the application.
 
 [[declaring_selected_alternatives]]
 
