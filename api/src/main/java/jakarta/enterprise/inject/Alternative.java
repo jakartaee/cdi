@@ -23,6 +23,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import jakarta.annotation.Priority;
 import jakarta.enterprise.util.AnnotationLiteral;
 
 /**
@@ -33,20 +34,26 @@ import jakarta.enterprise.util.AnnotationLiteral;
  *
  * <pre>
  * &#064;Alternative
+ * &#064;Priority(1)
+ * &#064;Dependent
  * public class MockOrder extends Order { ... }
  * </pre>
  *
  * <p>
- * An alternative is not available for injection, lookup or EL resolution to classes or JSP/JSF pages in a module unless the
- * module is a bean archive and the alternative is explicitly <em>selected</em> in that bean archive. An alternative is never
- * available for injection, lookup or EL resolution in a module that is not a bean archive.
+ * During typesafe resolution, alternatives take precedence over other, non-alternative beans.
+ * </p>
+ *
+ * <p>
+ * An alternative is not available for injection, lookup or name resolution in a module unless
+ * the alternative is <em>selected</em> for the application (by adding the {@link Priority} annotation)
+ * or the module is a bean archive and the alternative is <em>selected</em> for that bean archive.
  * </p>
  *
  * <p>
  * By default, a bean archive has no selected alternatives. An alternative must be explicitly declared using the
  * <code>&lt;alternatives&gt;</code> element of the <code>beans.xml</code> file of the bean archive. The
- * <code>&lt;alternatives&gt;</code> element contains a list of bean classes and stereotypes. An alternative is selected for the
- * bean archive if either:
+ * <code>&lt;alternatives&gt;</code> element contains a list of bean classes and stereotypes. An alternative
+ * is selected for the bean archive if either:
  * </p>
  *
  * <ul>
