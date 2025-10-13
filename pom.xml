@@ -21,6 +21,7 @@
 	<packaging>pom</packaging>
 	<version>5.0.0.Alpha2-SNAPSHOT</version>
 
+	<name>CDI Parent</name>
 	<description>Parent module for CDI Specification</description>
 
 	<licenses>

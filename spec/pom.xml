@@ -19,7 +19,7 @@
 	<artifactId>jakarta.enterprise.cdi-spec-doc</artifactId>
 	<packaging>pom</packaging>
 
-
+	<name>CDI Specification</name>
 	<description>CDI Specification documentation</description>
 
 	<properties>
