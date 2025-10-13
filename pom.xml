@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.eclipse.ee4j</groupId>
 		<artifactId>project</artifactId>
-		<version>1.0.9</version>
+		<version>2.0.0-M1</version>
 	</parent>
 
 	<groupId>jakarta.enterprise</groupId>
@@ -137,45 +137,9 @@
 		<formatter.version>2.29.0</formatter.version>
 		<impsort.version>1.12.0</impsort.version>
 		<rat.version>0.16.1</rat.version>
-
-		<sonatypeOssDistMgmtNexusUrl>https://jakarta.oss.sonatype.org/</sonatypeOssDistMgmtNexusUrl>
-		<sonatypeOssDistMgmtStagingUrl>${sonatypeOssDistMgmtNexusUrl}content/repositories/staging/</sonatypeOssDistMgmtStagingUrl>
 	</properties>
 
 	<profiles>
-		<!-- A profile that allows to consume staged but unreleased Jakarta artifacts -->
-		<profile>
-			<id>staging</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>${sonatypeOssDistMgmtStagingUrl}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>sonatype-nexus-staging</id>
-					<name>Sonatype Nexus Staging</name>
-					<url>${sonatypeOssDistMgmtStagingUrl}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories>
-		</profile>
 		<!-- Formatting setup, inherited by all projects using this parent -->
 		<profile>
 			<id>format</id>
