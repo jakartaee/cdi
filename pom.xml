@@ -90,19 +90,19 @@
 				<artifactId>apache-rat-plugin</artifactId>
 				<version>${rat.version}</version>
 				<configuration>
-					<excludes>
+					<inputExcludes>
 						<!-- files which are generated or otherwise can't have copyright headers -->
-						<exclude>**/.cache/**</exclude>
-						<exclude>**/*.lock</exclude>
-						<exclude>src/main/asciidoc/dictionary.txt</exclude>
+						<inputExclude>**/.cache/**</inputExclude>
+						<inputExclude>**/*.lock</inputExclude>
+						<inputExclude>**/src/main/asciidoc/dictionary.txt</inputExclude>
 						<!-- services files -->
-						<exclude>**/resources/META-INF/services/*</exclude>
+						<inputExclude>**/resources/META-INF/services/*</inputExclude>
 						<!-- files which are themselves licenses -->
-						<exclude>**/speclicense.html</exclude>
-						<exclude>**/license-*.asciidoc</exclude>
+						<inputExclude>**/speclicense.html</inputExclude>
+						<inputExclude>**/license-*.asciidoc</inputExclude>
 						<!-- metadata files which aren't automatically excluded -->
-						<exclude>CODE_OF_CONDUCT.md</exclude>
-					</excludes>
+						<inputExclude>CODE_OF_CONDUCT.md</inputExclude>
+					</inputExcludes>
 				</configuration>
 				<executions>
 					<execution>
