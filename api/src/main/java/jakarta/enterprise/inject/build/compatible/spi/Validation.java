@@ -21,6 +21,7 @@ import java.lang.annotation.Target;
  * <p>
  * Methods annotated {@code @Validation} may declare parameters of these types:
  * <ul>
+ * <li>{@link InvokerValidation}</li>
  * <li>{@link Messages}</li>
  * <li>{@link Types}</li>
  * </ul>

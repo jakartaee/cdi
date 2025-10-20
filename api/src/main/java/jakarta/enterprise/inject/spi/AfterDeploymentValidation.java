@@ -13,6 +13,8 @@
  */
 package jakarta.enterprise.inject.spi;
 
+import java.util.function.Supplier;
+
 /**
  * <p>
  * The event type of the third event fired by the container after it has validated that there are no deployment problems and
@@ -39,5 +41,27 @@ public interface AfterDeploymentValidation {
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addDeploymentProblem(Throwable t);
+
+    /**
+     * Ensures that an {@linkplain jakarta.enterprise.invoke.AsyncHandler async handler} exists for the given async type.
+     * If it does not exist, registers a deployment problem as if {@link #addDeploymentProblem(Throwable)} was called.
+     *
+     * @param asyncType the required async type, must not be {@code null}
+     * @throws IllegalStateException if called outside of the observer method invocation
+     */
+    public default void ensureAsyncHandlerExists(Class<?> asyncType) {
+        ensureAsyncHandlerExists(asyncType, () -> null);
+    }
+
+    /**
+     * Ensures that an {@linkplain jakarta.enterprise.invoke.AsyncHandler async handler} exists for the given async type.
+     * If it does not exist, registers a deployment problem as if {@link #addDeploymentProblem(Throwable)} was called.
+     * The deployment problem includes the given {@code message} in a suitable, implementation-defined manner.
+     *
+     * @param asyncType the required async type, must not be {@code null}
+     * @param message supplier of the error message, must not be {@code null} but may return {@code null}
+     * @throws IllegalStateException if called outside of the observer method invocation
+     */
+    public void ensureAsyncHandlerExists(Class<?> asyncType, Supplier<String> message);
 
 }

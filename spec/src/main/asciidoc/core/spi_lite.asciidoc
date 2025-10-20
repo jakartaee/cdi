@@ -384,8 +384,21 @@ In this phase, build compatible extensions may perform custom validation.
 
 Extension methods annotated `@Validation` may declare parameters of the following types:
 
-* `Types`
+* `InvokerValidation`
 * `Messages`
+* `Types`
+
+[source,java]
+----
+public interface InvokerValidation {
+    void ensureAsyncHandlerExists(Class<?> asyncType);
+    void ensureAsyncHandlerExists(Class<?> asyncType, Supplier<String> message);
+}
+----
+
+Calling `InvokerValidation.ensureAsyncHandlerExists()` makes sure that an async handler for the given async type exists.
+If it does not exist, it registers a deployment problem as if `Messages.error()` was called.
+See <<invoker_asynchronous_methods>> for more information about async handlers.
 
 [source, java]
 ----
