@@ -52,6 +52,13 @@ package jakarta.enterprise.invoke;
  * The invoker would look up the instance of the target bean automatically, so the method would be
  * invoked correctly and the return value would be {@code "Hello world!"}.
  *
+ * <h2>Asynchronous invocations</h2>
+ *
+ * By calling {@link #withAsync(boolean)}, it is possible to specify that the invoker should
+ * be asynchronous. An asynchronous invoker does not destroy instances of {@code @Dependent}
+ * looked up beans after the method returns/throws, but when the asynchronous action started
+ * by the method completes.
+ *
  * @param <T> type of outcome of this builder; always represents an {@code Invoker},
  *        but does not necessarily have to be an {@code Invoker} instance directly
  * @since 4.1
@@ -80,6 +87,17 @@ public interface InvokerBuilder<T> {
      *         or equal to the number of parameters declared by the target method
      */
     InvokerBuilder<T> withArgumentLookup(int position);
+
+    /**
+     * When the {@code isAsync} parameter is {@code true}, the built invoker is asynchronous.
+     * <p>
+     * This method must be called when the target method is asynchronous and must not be called
+     * when the target method is not asynchronous.
+     *
+     * @param isAsync whether the built invoker should be asynchronous
+     * @return this builder
+     */
+    InvokerBuilder<T> withAsync(boolean isAsync);
 
     /**
      * Returns the built {@link Invoker} or some representation of it. Implementations are allowed
