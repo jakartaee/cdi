@@ -244,6 +244,13 @@ A parameterized event type is considered assignable to a parameterized observed 
 * the observed event type parameter is a wildcard and the event type parameter is assignable to the upper bound, if any, of the wildcard and assignable from the lower bound, if any, of the wildcard, or
 * the observed event type parameter is a type variable and the event type parameter is assignable to the upper bound, if any, of the type variable.
 
+[[observers_primitive_types]]
+
+==== Primitive types
+
+For the purpose of observer resolution, primitive types and their corresponding wrapper types in the package `java.lang` are considered identical and assignable.
+The container performs unboxing when it invokes an observer method that declares a primitive event parameter.
+
 [[event_qualifier_types_with_members]]
 
 ==== Event qualifier types with members
@@ -374,7 +381,9 @@ If the event parameter does not explicitly declare any qualifier, the observer m
 
 The event parameter type may contain a type variable or wildcard.
 
-The event parameter may be an array type whose component type contains a type variable or a wildcard.
+The event parameter type may be an array type whose component type contains a type variable or a wildcard.
+
+The event parameter type may be a primitive type.
 
 Modifications made to the event parameter in an observer method are propagated to following observers.
 The container is not required to guarantee a consistent state for an event parameter modified by asynchronous observers.
