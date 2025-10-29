@@ -25,7 +25,7 @@
 	<properties>
 		<asciidoctor-maven.version>3.2.0</asciidoctor-maven.version>
 		<asciidoctorj.version>3.0.0</asciidoctorj.version>
-		<asciidoctorj-pdf.version>2.3.21</asciidoctorj-pdf.version>
+		<asciidoctorj-pdf.version>2.3.23</asciidoctorj-pdf.version>
 		<!-- asl2 for non-final releases, or final for EFSL -->
 		<license-file>asl2</license-file>
 		<!-- Draft for non-final releases, or Final for spec release -->
