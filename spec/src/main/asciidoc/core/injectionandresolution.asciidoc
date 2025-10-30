@@ -835,6 +835,7 @@ The following built-in annotations define a `Literal` static nested class to sup
 * `jakarta.enterprise.inject.Specializes`
 * `jakarta.enterprise.inject.Vetoed`
 * `jakarta.enterprise.util.Nonbinding`
+* `jakarta.enterprise.context.Eager`
 * `jakarta.enterprise.context.Initialized`
 * `jakarta.enterprise.context.Destroyed`
 * `jakarta.enterprise.context.RequestScoped`
