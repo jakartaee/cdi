@@ -19,7 +19,8 @@ import jakarta.enterprise.lang.model.AnnotationInfo;
  * a set of {@linkplain #interceptorBindings() interceptor bindings},
  * default {@linkplain #priority() priority}, whether all beans with
  * the stereotype are {@linkplain #isAlternative() alternatives}
- * or {@linkplain #isReserve() reserves}, or have {@linkplain #isNamed() default names}.
+ * or {@linkplain #isReserve() reserves}, are {@linkplain #isEager() eagerly initialized},
+ * or have {@linkplain #isNamed() default names}.
  *
  * @since 4.0
  */
@@ -67,6 +68,15 @@ public interface StereotypeInfo {
      *         if this stereotype is not meta-annotated {@code @Priority}
      */
     Integer priority();
+
+    /**
+     * Returns whether this stereotype is meta-annotated {@link jakarta.enterprise.context.Eager @Eager}.
+     * This means that all beans with this stereotype are eagerly initialized.
+     *
+     * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.context.Eager @Eager}
+     * @since 5.0
+     */
+    boolean isEager();
 
     /**
      * Returns whether this stereotype is meta-annotated {@link jakarta.inject.Named @Named}.
