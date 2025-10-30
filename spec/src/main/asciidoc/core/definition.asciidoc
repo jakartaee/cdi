@@ -752,6 +752,20 @@ If a reserve managed bean declares an alternative producer, the container automa
 
 If an interceptor is a reserve, non-portable behavior results.
 
+[[eager_initialization]]
+
+=== Eager initialization
+
+A bean class of a managed bean, a producer method and a producer field may be annotated `@Eager`.
+This annotation marks the bean as _eagerly initialized_.
+
+Contextual instance of an eagerly initialized bean is created no later than at the moment the container fires <<startup_event, the `Startup` event>>.
+More precisely, it is as if an enabled bean existed that declared a synchronous observer with observed event type of `Startup`, no observed event qualifier, priority of `Integer.MIN_VALUE`, and this observer method obtained a contextual instance of the eagerly initialized bean.
+
+Only `@ApplicationScoped` beans may be eagerly initialized.
+If a bean of any other normal scope or the `@Dependent` pseudo-scope is eagerly initialized, definition error occurs.
+If a bean of any other pseudo-scope is eagerly initialized, non-portable behavior results.
+
 [[stereotypes]]
 
 === Stereotypes
@@ -769,7 +783,8 @@ A stereotype may also specify that:
 * all beans with the stereotype have defaulted bean names, or that
 * all beans with the stereotype are alternatives, or that
 * all beans with the stereotype have predefined `@Priority`, or that
-* all beans with the stereotype are reserves.
+* all beans with the stereotype are reserves, or that
+* all beans with the stereotype are eagerly initialized.
 
 A bean may declare zero, one or multiple stereotypes.
 
@@ -916,6 +931,26 @@ public @interface DefaultImpl {}
 ----
 
 If a stereotype declares both `@Alternative` and `@Reserve`, the container automatically detects the problem and treats it as a definition error.
+
+[[eager_init_stereotype]]
+
+===== Declaring an `@Eager` stereotype
+
+A stereotype may declare an `@Eager` annotation, which specifies that every bean with the stereotype is eagerly initialized.
+
+We may specify that all beans annotated with `@InitOnStartup` are `@ApplicationScoped` and eagerly initialized:
+
+[source, java]
+----
+@ApplicationScoped
+@Eager
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface InitOnStartup {}
+----
+
+If a stereotype declares both `@Eager` and a default scope for which eager initialization is not permitted (see <<eager_initialization>>), the container automatically detects the problem and treats it as a definition error.
 
 [[stereotypes_with_additional_stereotypes]]
 
