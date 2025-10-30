@@ -411,3 +411,20 @@ where `X` is the scope type associated with the context.
 A suitable event payload should be chosen.
 
 Build compatible extensions may define custom context classes for custom scopes, but they may not define custom context classes for built-in scopes.
+
+[[eager_initialization]]
+
+=== Eager initialization
+
+A bean class of a managed bean, a producer method and a producer field may be annotated `@Eager`.
+This annotation marks the bean as _eagerly initialized_.
+
+An eagerly initialized bean is treated as if it declared an empty non-static synchronous observer method with:
+
+- observed event type of `Startup`,
+- no observed event qualifier,
+- priority of `Integer.MIN_VALUE`.
+
+Only `@ApplicationScoped` beans may be eagerly initialized.
+If a bean of any other normal scope or the `@Dependent` pseudo-scope is eagerly initialized, definition error occurs.
+If a bean of any other pseudo-scope is eagerly initialized, non-portable behavior results.
