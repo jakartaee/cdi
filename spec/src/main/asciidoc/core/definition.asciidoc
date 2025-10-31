@@ -769,7 +769,8 @@ A stereotype may also specify that:
 * all beans with the stereotype have defaulted bean names, or that
 * all beans with the stereotype are alternatives, or that
 * all beans with the stereotype have predefined `@Priority`, or that
-* all beans with the stereotype are reserves.
+* all beans with the stereotype are reserves, or that
+* all beans with the stereotype are eagerly initialized.
 
 A bean may declare zero, one or multiple stereotypes.
 
@@ -916,6 +917,27 @@ public @interface DefaultImpl {}
 ----
 
 If a stereotype declares both `@Alternative` and `@Reserve`, the container automatically detects the problem and treats it as a definition error.
+
+[[eager_init_stereotype]]
+
+===== Declaring an `@Eager` stereotype
+
+A stereotype may declare an `@Eager` annotation, which specifies that every bean with the stereotype is eagerly initialized.
+
+We may specify that all beans annotated with `@InitOnStartup` are `@ApplicationScoped` and eagerly initialized:
+
+[source, java]
+----
+@ApplicationScoped
+@Eager
+@Priority(Interceptor.Priority.APPLICATION)
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface InitOnStartup {}
+----
+
+If a stereotype declares both `@Eager` and a default scope for which eager initialization is not permitted (see <<eager_initialization>>), the container automatically detects the problem and treats it as a definition error.
 
 [[stereotypes_with_additional_stereotypes]]
 
