@@ -47,7 +47,8 @@ public interface EventMetadata {
     public Set<Annotation> getQualifiers();
 
     /**
-     * Get the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event
+     * Returns the {@link InjectionPoint} representing the injected {@link Event} instance which fired the event.
+     * If the event was fired from {@link BeanContainer#getEvent()}, returns {@code null}.
      *
      * @return InjectionPoint of the Event
      */
