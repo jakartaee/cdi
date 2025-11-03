@@ -30,22 +30,23 @@ import jakarta.enterprise.inject.Produces;
  * Provides access to metadata about an injection point. May represent an {@linkplain jakarta.inject.Inject injected field} or a
  * parameter of a {@linkplain jakarta.inject.Inject bean constructor}, {@linkplain jakarta.inject.Inject initializer method},
  * {@linkplain Produces producer method}, {@linkplain Disposes disposer method} or {@linkplain Observes observer method}.
+ * If the injection point does not belong to a bean or belongs to a synthetic bean, some methods may return {@code null}.
  * </p>
  *
  * <p>
- * If the injection point is a dynamically selected reference obtained then the metadata obtain reflects the injection point of
- * the {@link Instance}, with the required type and any additional required qualifiers defined by {@linkplain Instance
- * Instance.select()}.
+ * If the injection point is a dynamically obtained instance, then the required type and required qualifiers are
+ * defined by the {@link Instance} and other metadata reflect the injection point of the {@code Instance}.
+ * If the {@code Instance} is not injected, some methods may return {@code null}.
  * </p>
  *
  * <p>
- * Occasionally, a bean with scope {@link Dependent &#064;Dependent} needs to access metadata relating to the object to which it
+ * Occasionally, a bean with scope {@link Dependent @Dependent} needs to access metadata relating to the object to which it
  * belongs. The bean may inject an {@code InjectionPoint} representing the injection point into which the bean was injected.
  * </p>
  *
  * <p>
- * For example, the following producer method creates injectable <code>Logger</code> s. The log category of a
- * <code>Logger</code> depends upon the class of the object into which it is injected.
+ * For example, the following producer method creates injectable {@code Logger}s. The log category of a
+ * {@code Logger} depends upon the class of the object into which it is injected.
  * </p>
  *
  * <pre>
@@ -56,7 +57,7 @@ import jakarta.enterprise.inject.Produces;
  * </pre>
  *
  * <p>
- * Only {@linkplain Dependent dependent} objects, may obtain information about the injection point to which they belong.
+ * Only {@linkplain Dependent dependent} objects may obtain information about the injection point to which they belong.
  * </p>
  *
  * @author Gavin King
@@ -65,58 +66,68 @@ import jakarta.enterprise.inject.Produces;
 public interface InjectionPoint {
 
     /**
-     * Get the required type of injection point.
+     * Returns the required type of injection point.
      *
-     * @return the required type
+     * @return the required type, never {@code null}
      */
     public Type getType();
 
     /**
-     * Get the required qualifiers of the injection point.
+     * Returns the required qualifiers of the injection point.
      *
-     * @return the required qualifiers
+     * @return the required qualifiers, never {@code null}
      */
     public Set<Annotation> getQualifiers();
 
     /**
-     * Get the {@link Bean} object representing the bean that defines the injection point. If the
-     * injection point does not belong to a bean, return a null value.
+     * Returns the {@link Bean} that defines the injection point.
+     * <p>
+     * If the injection point belongs to a synthetic bean, may return {@code null}.
+     * If the injection point does not belong to a bean or belongs to a dynamically obtained instance
+     * where the {@code Instance} is not injected, returns {@code null}.
      *
-     * @return the {@link Bean} object representing bean that defines the injection point, of null
-     *         if the injection point does not belong to a bean
+     * @return the bean that defines the injection point, may be {@code null}
      */
     public Bean<?> getBean();
 
     /**
-     * Get the {@link java.lang.reflect.Field} object in the case of field injection, the {@link java.lang.reflect.Method}
-     * object in the case of method parameter injection or the {@link java.lang.reflect.Constructor} object in the case of
-     * constructor parameter injection.
+     * Returns the {@link java.lang.reflect.Field Field} in the case of field injection,
+     * the {@link java.lang.reflect.Method Method} in the case of method parameter injection,
+     * or the {@link java.lang.reflect.Constructor Constructor} in the case of constructor parameter injection.
+     * <p>
+     * If the injection point belongs to a synthetic bean, may return {@code null}.
+     * If the injection point belongs to a dynamically obtained instance where the {@code Instance}
+     * is not injected, returns {@code null}.
      *
-     * @return the member
+     * @return the member, may be {@code null}
      */
     public Member getMember();
 
     /**
-     * Obtain an instance of {@link AnnotatedField} or
-     * {@link AnnotatedParameter}, depending upon whether the injection point is an injected field
-     * or a constructor/method parameter.
+     * Returns an {@link AnnotatedField} or {@link AnnotatedParameter}, depending on
+     * whether the injection point is a field or a constructor/method parameter.
+     * <p>
+     * If the injection point belongs to a synthetic bean, may return {@code null}.
+     * If the injection point belongs to a dynamically obtained instance where the {@code Instance}
+     * is not injected, returns {@code null}.
+     * <p>
+     * May always return {@code null} when the container only supports CDI Lite.
      *
-     * @return an {@code AnnotatedField} or {@code AnnotatedParameter}
+     * @return the annotated member, may be {@code null}
      */
     public Annotated getAnnotated();
 
     /**
-     * Determines if the injection point is a decorator delegate injection point.
+     * Returns whether the injection point is a decorator {@link jakarta.decorator.Delegate @Delegate} injection point.
      *
-     * @return <code>true</code> if the injection point is a decorator delegate injection point, and <code>false</code>
-     *         otherwise
+     * @return {@code true} if the injection point is a decorator delegate injection point, and {@code false} otherwise
      */
     public boolean isDelegate();
 
     /**
-     * Determines if the injection is a transient field.
+     * Returns whether the {@link #getMember()} method returns a {@code Field} which is declared {@code transient}.
      *
-     * @return <code>true</code> if the injection point is a transient field, and <code>false</code> otherwise
+     * @return {@code true} if the injection point is a {@code transient} field, and {@code false} otherwise
      */
     public boolean isTransient();
 }

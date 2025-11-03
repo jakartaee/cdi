@@ -487,8 +487,9 @@ The interface `jakarta.enterprise.inject.spi.InjectionPoint` provides access to 
 An instance of `InjectionPoint` may represent:
 
 * an injected field or a parameter of a bean constructor, initializer method, producer method, disposer method or observer method, or
+* an injection into a synthetic bean (where an injected field or parameter does not necessarily have to exist), or
 * an instance obtained dynamically using `Instance.get()`.
-
+An `InjectionPoint` exists both when the `Instance` is injected and when it is obtained programmatically.
 
 [source, java]
 ----
@@ -503,22 +504,28 @@ public interface InjectionPoint {
 }
 ----
 
+* The `getType()` method returns the required type of the injection point.
+If the injection point represents a dynamically obtained instance, the `getType()` method returns the required type of the `Instance`, including any required subtype as defined by `Instance.select()`.
+* The `getQualifiers()` method returns the required qualifiers of the injection point.
+If the injection point represents a dynamically obtained instance, the `getQualifiers()` method returns the required qualifiers of the `Instance`, including any additional required qualifiers as defined by `Instance.select()`.
 * The `getBean()` method returns the `Bean` object representing the bean that defines the injection point.
-If the injection point does not belong to a bean, `getBean()` returns a null value.
-If the injection point represents a dynamically obtained instance, the `getBean()` method should return the `Bean` object representing the bean that defines the `Instance` injection point.
-* The `getType()` and `getQualifiers()` methods return the required type and required qualifiers of the injection point.
-If the injection point represents a dynamically obtained instance, the `getType()` and `getQualifiers()` methods should return the required type (as defined by `Instance.select()`), and required qualifiers of the injection point including any additional required qualifiers (as defined by `Instance.select()`).
+If the injection point does not belong to a bean, the `getBean()` method returns `null`.
+If the injection point belongs to a synthetic bean, the `getBean()` method may return `null`.
+If the injection point represents a dynamically obtained instance, the `getBean()` method returns the `Bean` object representing the bean that defines the `Instance` injection point; if the `Instance` is not injected, the `getBean()` method returns `null`.
 * The `getMember()` method returns the `Field` object in the case of field injection, the `Method` object in the case of method parameter injection, or the `Constructor` object in the case of constructor parameter injection.
-If the injection point represents a dynamically obtained instance, the `getMember()` method returns the `Field` object representing the field that defines the `Instance` injection point in the case of field injection, the `Method` object representing the method that defines the `Instance` injection point in the case of method parameter injection, or the `Constructor` object representing the constructor that defines the `Instance` injection point in the case of constructor parameter injection.
-* The `getAnnotated()` method may, in {cdi_lite} environment, always return `null`.
-Behavior of this method in {cdi_full} is specified therein.
+If the injection point belongs to a synthetic bean, the `getMember()` method may return `null`.
+If the injection point represents a dynamically obtained instance, the `getMember()` method returns the `Field` object representing the field that defines the `Instance` injection point in the case of field injection, the `Method` object representing the method that defines the `Instance` injection point in the case of method parameter injection, or the `Constructor` object representing the constructor that defines the `Instance` injection point in the case of constructor parameter injection; if the `Instance` is not injected, the `getMember()` method returns `null`.
+* The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
+If the injection point belongs to a synthetic bean, the `getAnnotated()` method may return `null`.
+If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter; if the `Instance` is not injected, the `getAnnotated()` method returns `null`.
++
+In {cdi_lite} environment, the `getAnnotated()` method may always return `null`.
 * The `isDelegate()` method may, in {cdi_lite} environment, always return `false`.
 Behavior of this method in {cdi_full} is specified therein.
-* The `isTransient()` method returns `true` if the injection point is a transient field, and `false` otherwise.
-If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise.
+* The `isTransient()` method returns `true` if the `getMember()` method returns a `Field` which is declared `transient`, and `false` otherwise.
 
 Occasionally, a bean with scope `@Dependent` needs to access metadata relating to the object into which it is injected.
-For example, the following producer method creates injectable `Logger` s.
+For example, the following producer method creates injectable ``Logger``s.
 The log category of a `Logger` depends upon the class of the object into which it is injected:
 
 [source, java]

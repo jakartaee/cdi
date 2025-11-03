@@ -165,12 +165,10 @@ Therefore, the container must use a client proxy whenever a bean with normal sco
 
 The behavior of `InjectionPoint` metadata is overridden as follows:
 
-* The `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter`, depending upon whether the injection point is an injected field or a constructor/method parameter.
-If the injection point represents a dynamically obtained instance, then the `getAnnotated()` method returns an instance of `jakarta.enterprise.inject.spi.AnnotatedField` or `jakarta.enterprise.inject.spi.AnnotatedParameter` representing the `Instance` injection point, depending upon whether the injection point is an injected field or a constructor/method parameter.
 * The `isDelegate()` method returns `true` if the injection point is a decorator delegate injection point, and `false` otherwise.
-If the injection point represents a dynamically obtained instance then `isDelegate()` returns false.
-
-If the injection point represents a dynamically obtained instance then the `isTransient()` method returns `true` if the `Instance` injection point is a transient field, and `false` otherwise. If this injection point is declared as transient, after bean's passivation, the value will not be restored. Instance<> injection point is the preferred approach.
+If the injection point represents an injection into a synthetic bean or a dynamically obtained instance, the `isDelegate()` method returns `false`.
+* The `isTransient()` method returns `true` if the `getMember()` method returns a `Field` which is declared `transient`, and `false` otherwise.
+If the injection point is declared transient, after bean's passivation, the value will not be restored. `Instance` injection point is the preferred approach.
 
 In {cdi_full}, the built-in implementation of `InjectionPoint` must be a passivation capable dependency, as defined in <<passivation_capable_dependency>>.
 
