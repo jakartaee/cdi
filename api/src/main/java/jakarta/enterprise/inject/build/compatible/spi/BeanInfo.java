@@ -126,6 +126,7 @@ public interface BeanInfo {
      * Returns whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}.
      *
      * @return whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}
+     * @since 5.0
      */
     boolean isReserve();
 
