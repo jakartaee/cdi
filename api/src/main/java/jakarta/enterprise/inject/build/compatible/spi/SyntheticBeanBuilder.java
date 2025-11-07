@@ -138,6 +138,7 @@ public interface SyntheticBeanBuilder<T> {
      * @return this {@code SyntheticBeanBuilder}
      * @throws IllegalStateException if this method is called multiple times
      *         or if the bean was previously marked as {@linkplain #alternative(boolean) alternative}.
+     * @since 5.0
      */
     SyntheticBeanBuilder<T> reserve(boolean isReserve);
 

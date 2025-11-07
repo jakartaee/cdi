@@ -51,6 +51,7 @@ public interface AfterTypeDiscovery {
     /**
      * @return the list of enabled reserves for the application, sorted by priority in ascending order.
      * @throws IllegalStateException if called outside of the observer method invocation
+     * @since 5.0
      */
     public List<Class<?>> getReserves();
 

@@ -54,6 +54,7 @@ public interface StereotypeInfo {
      * This means that all beans with this stereotype are reserves.
      *
      * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.inject.Reserve @Reserve}
+     * @since 5.0
      */
     boolean isReserve();
 
