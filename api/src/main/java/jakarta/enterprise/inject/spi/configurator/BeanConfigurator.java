@@ -323,6 +323,7 @@ public interface BeanConfigurator<T> {
      *
      * @param value value for reserve property
      * @return self
+     * @since 5.0
      */
     BeanConfigurator<T> reserve(boolean value);
 
