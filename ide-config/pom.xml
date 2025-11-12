@@ -12,12 +12,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>jakarta.enterprise</groupId>
-        <artifactId>jakarta.enterprise.cdi-parent</artifactId>
+        <groupId>jakarta.cdi</groupId>
+        <artifactId>jakarta.cdi-parent</artifactId>
         <version>5.0.0.Beta1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>cdi-ide-config</artifactId>
+    <artifactId>jakarta.cdi-ide-config</artifactId>
 
     <name>CDI IDE Config</name>
     <description>Formatting config and import sorting</description>
