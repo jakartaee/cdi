@@ -11,12 +11,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>jakarta.enterprise</groupId>
-		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
+		<groupId>jakarta.cdi</groupId>
+		<artifactId>jakarta.cdi-parent</artifactId>
 		<version>5.0.0.Beta1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jakarta.enterprise.cdi-spec-doc</artifactId>
+	<artifactId>jakarta.cdi-spec-doc</artifactId>
 	<packaging>pom</packaging>
 
 	<name>CDI Specification</name>
