@@ -20,6 +20,7 @@ import jakarta.enterprise.lang.model.AnnotationInfo;
  * default {@linkplain #priority() priority}, whether all beans with
  * the stereotype are {@linkplain #isAlternative() alternatives}
  * or {@linkplain #isReserve() reserves}, are {@linkplain #isEager() eagerly initialized},
+ * are {@linkplain #isAutoClose() auto-closeable},
  * or have {@linkplain #isNamed() default names}.
  *
  * @since 4.0
@@ -78,6 +79,15 @@ public interface StereotypeInfo {
      * @since 5.0
      */
     boolean isEager();
+
+    /**
+     * Returns whether this stereotype is meta-annotated {@link jakarta.enterprise.context.AutoClose @AutoClose}.
+     * This means that all beans with this stereotype are auto-closeable.
+     *
+     * @return whether this stereotype is meta-annotated {@link jakarta.enterprise.context.AutoClose @AutoClose}
+     * @since 5.0
+     */
+    boolean isAutoClose();
 
     /**
      * Returns whether this stereotype is meta-annotated {@link jakarta.inject.Named @Named}.

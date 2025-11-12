@@ -766,6 +766,16 @@ Only `@ApplicationScoped` beans may be eagerly initialized.
 If a bean of any other normal scope or the `@Dependent` pseudo-scope is eagerly initialized, definition error occurs.
 If a bean of any other pseudo-scope is eagerly initialized, non-portable behavior results.
 
+[[auto_closing]]
+
+=== Automatic closing
+
+A bean class of a managed bean, a producer method and a producer field may be annotated `@AutoClose`.
+This annotation marks the bean as _auto-closeable_.
+
+If the class of a contextual instance of an auto-closeable bean implements the `java.lang.AutoCloseable` interface, the `close()` method is called on the instance during destruction.
+See <<managed_bean_lifecycle>>, <<producer_method_lifecycle>> and <<producer_field_lifecycle>> for details.
+
 [[stereotypes]]
 
 === Stereotypes
@@ -951,6 +961,23 @@ public @interface InitOnStartup {}
 ----
 
 If a stereotype declares both `@Eager` and a default scope for which eager initialization is not permitted (see <<eager_initialization>>), the container automatically detects the problem and treats it as a definition error.
+
+[[auto_close_stereotype]]
+
+===== Declaring an `@AutoClose` stereotype
+
+A stereotype may declare an `@AutoClose` annotation, which specifies that every bean with the stereotype is auto-closeable.
+
+We may specify that all beans annotated with `@CloseOnDestroy` are auto-closeable:
+
+[source, java]
+----
+@AutoClose
+@Stereotype
+@Target(TYPE)
+@Retention(RUNTIME)
+public @interface CloseOnDestroy {}
+----
 
 [[stereotypes_with_additional_stereotypes]]
 

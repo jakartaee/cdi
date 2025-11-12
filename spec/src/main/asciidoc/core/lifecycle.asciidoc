@@ -120,7 +120,9 @@ The actual mechanics of bean creation and destruction varies according to what k
 
 When the `create()` method of the `Bean` object that represents a managed bean is called, the container obtains an instance of the bean, calling the bean constructor as defined by <<instantiation>>, and performing dependency injection as defined in <<fields_initializer_methods>>.
 
-When the `destroy()` method is called, the container destroys the instance, and any dependent objects, as defined in <<dependent_objects_destruction>>.
+When the `destroy()` method is called, the container destroys the instance.
+Then, if the managed bean is auto-closeable and the class of the contextual instance implements `AutoCloseable`, the `close()` method is called on the instance.
+Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
 
 
 
@@ -136,6 +138,7 @@ If the producer method returns a null value and the producer method bean has the
 Otherwise, if the producer method returns a null value, and the scope of the producer method is not `@Dependent`, the `create()` method throws an `IllegalProductException`.
 
 When the `destroy()` method is called, and if there is a disposer method for this producer method, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to `destroy()` to the disposed parameter.
+Then, if the producer method bean is auto-closeable and the class of the contextual instance implements `AutoCloseable`, the `close()` method is called on the instance.
 Finally, the container destroys dependent objects, as defined in <<dependent_objects_destruction>>.
 
 [[producer_field_lifecycle]]
@@ -150,4 +153,5 @@ If the producer field contains a null value and the producer field bean has the 
 Otherwise, if the producer field contains a null value, and the scope of the producer field is not `@Dependent`, the `create()` method throws an `IllegalProductException`.
 
 When the `destroy()` method is called, and if there is a disposer method for this producer field, the container must invoke the disposer method as defined by <<producer_or_disposer_methods_invocation>>, passing the instance given to `destroy()` to the disposed parameter.
+Then, if the producer field bean is auto-closeable and the class of the contextual instance implements `AutoCloseable`, the `close()` method is called on the instance.
 

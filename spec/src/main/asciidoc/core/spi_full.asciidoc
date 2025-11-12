@@ -36,6 +36,7 @@ public interface BeanAttributes<T> {
     public boolean isAlternative();
     public boolean isReserve();
     public boolean isEager();
+    public boolean isAutoClose();
 }
 ----
 
@@ -43,6 +44,7 @@ public interface BeanAttributes<T> {
 * `isAlternative()` must return `true` if the bean is an alternative, and `false` otherwise.
 * `isReserve()` must return `true` if the bean is a reserve, and `false` otherwise.
 * `isEager()` must return `true` if the bean is eagerly initialized, and `false` otherwise.
+* `isAutoClose()` must return `true` if the bean is auto-closeable, and `false` otherwise.
 
 The interface `jakarta.enterprise.inject.spi.Bean` defines everything the container needs to manage instances of a certain bean.
 
@@ -186,7 +188,7 @@ For a `Producer` that represents a class:
 
 * `produce()` calls the constructor annotated `@Inject` if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the class has interceptors, `produce()` is responsible for building the interceptors and decorators of the instance.
 The instance returned by `produce()` may be a proxy.
-* `dispose()` does nothing.
+* `dispose()` only does one thing: if the bean is auto-closeable and the class of the contextual instance of the bean implements `AutoCloseable`, the `close()` method is called on the instance.
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all injected fields, bean constructor parameters and initializer method parameters.
 
 
@@ -194,6 +196,7 @@ For a `Producer` that represents a producer method or field:
 
 * `produce()` calls the producer method on, or accesses the producer field of, a contextual instance of the bean that declares the producer method, as defined in <<producer_or_disposer_methods_invocation>>.
 * `dispose()` calls the disposer method, if any, on a contextual instance of the bean that declares the disposer method, as defined in <<producer_or_disposer_methods_invocation>>, or performs any additional required cleanup, if any, to destroy state associated with a resource.
+Then, if the bean is auto-closeable and the class of the contextual instance of the bean implements `AutoCloseable`, the `close()` method is called on the instance.
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all parameters of the producer method.
 
 
@@ -507,7 +510,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 The method `BeanManager.createBean()` returns a container provided implementation of `Bean`. The methods accept:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, and `isEager()`, and
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, `isEager()`, and `isAutoClose()`, and
 * a class, which determines the return value of `Bean.getClass()`, and
 * an `InjectionTargetFactory`, which is used to obtain an `InjectionTarget`. The `InjectionTarget` is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of `Bean.getInjectionPoints()`.
 
@@ -521,7 +524,7 @@ public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass,
 A second version of the method is provided to create a `Bean` from a producer.
 The method accepts:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, and `isEager()`, and
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, `isEager()`, and `isAutoClose()`, and
 * a class, which determines the return value of `Bean.getClass()`, and
 * a `ProducerFactory`, which is used to obtain a `Producer`. The `Producer` is used to create and destroy instances of the bean, and which determines the return value of `Bean.getInjectionPoints()`.
 
