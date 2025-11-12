@@ -428,7 +428,7 @@ The container must ensure that:
 
 ==== Destruction of dependent objects
 
-When the container destroys an instance of a bean, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the `@PreDestroy` callback completes.
+When the container destroys an instance of a bean, the container destroys all dependent objects, as defined in <<dependent_destruction>>, after the `@PreDestroy` callback completes and after the possible `AutoCloseable.close()` call returns.
 
 [[producer_or_disposer_methods_invocation]]
 
@@ -835,6 +835,7 @@ The following built-in annotations define a `Literal` static nested class to sup
 * `jakarta.enterprise.inject.Specializes`
 * `jakarta.enterprise.inject.Vetoed`
 * `jakarta.enterprise.util.Nonbinding`
+* `jakarta.enterprise.context.AutoClose`
 * `jakarta.enterprise.context.Eager`
 * `jakarta.enterprise.context.Initialized`
 * `jakarta.enterprise.context.Destroyed`

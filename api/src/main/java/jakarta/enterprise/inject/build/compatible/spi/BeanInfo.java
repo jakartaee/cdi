@@ -148,6 +148,14 @@ public interface BeanInfo {
     boolean isEager();
 
     /**
+     * Returns whether this bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable}.
+     *
+     * @return whether this bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable}
+     * @since 5.0
+     */
+    boolean isAutoClose();
+
+    /**
      * Returns the bean name of this bean. A bean name is usually defined
      * using the {@link jakarta.inject.Named @Named} annotation.
      * Returns {@code null} if the bean does not have a name.
