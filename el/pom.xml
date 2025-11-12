@@ -11,12 +11,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>jakarta.enterprise</groupId>
-		<artifactId>jakarta.enterprise.cdi-parent</artifactId>
+		<groupId>jakarta.cdi</groupId>
+		<artifactId>jakarta.cdi-parent</artifactId>
 		<version>5.0.0.Beta1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>jakarta.enterprise.cdi-el-api</artifactId>
+	<artifactId>jakarta.cdi-el-api</artifactId>
 	<packaging>jar</packaging>
 
 	<name>CDI EL integration API</name>
@@ -33,8 +33,8 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>jakarta.enterprise</groupId>
-				<artifactId>jakarta.enterprise.cdi-api</artifactId>
+				<groupId>jakarta.cdi</groupId>
+				<artifactId>jakarta.cdi-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -47,8 +47,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>jakarta.enterprise</groupId>
-			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+			<groupId>jakarta.cdi</groupId>
+			<artifactId>jakarta.cdi-api</artifactId>
 		</dependency>
 
 		<dependency>
