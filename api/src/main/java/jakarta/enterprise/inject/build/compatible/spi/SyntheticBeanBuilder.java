@@ -157,7 +157,7 @@ public interface SyntheticBeanBuilder<T> {
     SyntheticBeanBuilder<T> priority(int priority);
 
     /**
-     * Marks this synthetic bean as a {@linkplain jakarta.enterprise.context.Eager eagerly initialized} if desired.
+     * Marks this synthetic bean as {@linkplain jakarta.enterprise.context.Eager eagerly initialized} if desired.
      * <p>
      * If not called, this synthetic bean will not be eagerly initialized.
      * <p>
@@ -170,6 +170,18 @@ public interface SyntheticBeanBuilder<T> {
      * @since 5.0
      */
     SyntheticBeanBuilder<T> eager(boolean isEager);
+
+    /**
+     * Marks this synthetic bean as {@linkplain jakarta.enterprise.context.AutoClose automatically closed} if desired.
+     * <p>
+     * If not called, this synthetic bean will not be automatically closed.
+     *
+     * @param isAutoClose whether this synthetic bean should be automatically closed
+     * @return this {@code SyntheticBeanBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> autoClose(boolean isAutoClose);
 
     /**
      * Sets the bean name of this synthetic bean. If {@code beanName} is {@code null},
