@@ -35,3 +35,6 @@ jobs:
       - name: "Maven test"
         run: |
           mvn -Pstaging test -B
+      - name: "Maven test"
+        run: |
+          mvn -Pstaging install -DskipTests=true -Dno-format -B -V -f relocation/pom.xml

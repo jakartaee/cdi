@@ -16,8 +16,8 @@
 		<version>2.0.0-M1</version>
 	</parent>
 
-	<groupId>jakarta.enterprise</groupId>
-	<artifactId>jakarta.enterprise.cdi-parent</artifactId>
+	<groupId>jakarta.cdi</groupId>
+	<artifactId>jakarta.cdi-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>5.0.0.Beta1-SNAPSHOT</version>
 
@@ -56,8 +56,8 @@
 					<version>${formatter.version}</version>
 					<dependencies>
 						<dependency>
-							<groupId>jakarta.enterprise</groupId>
-							<artifactId>cdi-ide-config</artifactId>
+							<groupId>jakarta.cdi</groupId>
+							<artifactId>jakarta.cdi-ide-config</artifactId>
 							<version>${project.version}</version>
 						</dependency>
 					</dependencies>
