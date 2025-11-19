@@ -190,7 +190,28 @@ public interface BeanAttributesConfigurator<T> {
      *
      * @param value value for reserve property
      * @return self
+     * @since 5.0
      */
     BeanAttributesConfigurator<T> reserve(boolean value);
+
+    /**
+     * Change the eagerly initialized status of the configured bean.
+     * By default, the configured bean is not eagerly initialized.
+     *
+     * @param value value for eagerly initialized property
+     * @return self
+     * @since 5.0
+     */
+    BeanAttributesConfigurator<T> eager(boolean value);
+
+    /**
+     * Change the automatically closed status of the configured bean.
+     * By default, the configured bean is not automatically closed.
+     *
+     * @param value value for automatically closed property
+     * @return self
+     * @since 5.0
+     */
+    BeanAttributesConfigurator<T> autoClose(boolean value);
 
 }

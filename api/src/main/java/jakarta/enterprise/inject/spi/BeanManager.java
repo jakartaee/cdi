@@ -319,7 +319,8 @@ public interface BeanManager extends BeanContainer {
      *
      * @param <T> the type
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
-     *        the returned {@link Bean}, and the return value of {@link Bean#isAlternative()} and {@link Bean#isReserve()}
+     *        the returned {@link Bean}, and the return value of {@link Bean#isAlternative()}, {@link Bean#isReserve()},
+     *        {@link Bean#isEager()} and {@link Bean#isAutoClose()}
      * @param beanClass a class, which determines the return value of {@link Bean#getBeanClass()}
      * @param injectionTargetFactory an {@link InjectionTargetFactory}, used to obtain an {@link InjectionTarget}
      * @return a container provided implementation of {@link Bean}
@@ -343,7 +344,8 @@ public interface BeanManager extends BeanContainer {
      * @param <T> the type
      * @param <X> the type of the declaring bean
      * @param attributes a {@link BeanAttributes} which determines the bean types, qualifiers, scope, name and stereotypes of
-     *        the returned {@link Bean}, and the return value of {@link Bean#isAlternative()} and {@link Bean#isReserve()}
+     *        the returned {@link Bean}, and the return value of {@link Bean#isAlternative()}, {@link Bean#isReserve()},
+     *        {@link Bean#isEager()} and {@link Bean#isAutoClose()}
      * @param beanClass a class, which determines the return value of <code>Bean.getClass()</code>
      * @param producerFactory a {@link ProducerFactory}, used to obtain a {@link Producer}
      * @return a container provided implementation of {@link Bean}
