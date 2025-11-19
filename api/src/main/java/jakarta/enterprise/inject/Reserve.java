@@ -47,6 +47,8 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * Unlike {@linkplain Alternative alternatives}, reserves cannot be selected for a bean archive in {@code beans.xml}.
  * </p>
+ *
+ * @since 5.0
  */
 @Target({ TYPE, METHOD, FIELD })
 @Retention(RUNTIME)
@@ -59,5 +61,8 @@ public @interface Reserve {
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
+
+        private Literal() {
+        }
     }
 }
