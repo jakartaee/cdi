@@ -19,7 +19,7 @@
     <parent>
         <groupId>jakarta.enterprise</groupId>
         <artifactId>jakarta.enterprise.cdi-parent</artifactId>
-        <version>5.0.0.Alpha3</version>
+        <version>5.0.0.Alpha4-SNAPSHOT</version>
     </parent>
 
     <artifactId>jakarta.enterprise.cdi-el-api</artifactId>
