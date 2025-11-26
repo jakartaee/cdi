@@ -20,13 +20,13 @@
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
         <version>2.0.0-M1</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>jakarta.enterprise</groupId>
     <artifactId>jakarta.enterprise.cdi-parent</artifactId>
     <packaging>pom</packaging>
-    <version>5.0.0.Beta1-SNAPSHOT</version>
+    <version>5.0.0.Alpha3</version>
 
     <name>CDI Parent (Relocation)</name>
     <description>Parent module for CDI Specification</description>
@@ -43,7 +43,7 @@
         <connection>scm:git:git://github.com/eclipse-ee4j/cdi.git</connection>
         <developerConnection>scm:git:git@github.com:eclipse-ee4j/cdi.git</developerConnection>
         <url>https://github.com/eclipse-ee4j/cdi</url>
-        <tag>HEAD</tag>
+        <tag>5.0.0.Alpha3-relocation</tag>
     </scm>
 
     <distributionManagement>
