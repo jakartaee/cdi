@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>jakarta.cdi</groupId>
 		<artifactId>jakarta.cdi-parent</artifactId>
-		<version>5.0.0.Alpha2</version>
+		<version>5.0.0.Alpha3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jakarta.cdi-lang-model-api</artifactId>

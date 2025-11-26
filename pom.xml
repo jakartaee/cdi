@@ -19,7 +19,7 @@
 	<groupId>jakarta.cdi</groupId>
 	<artifactId>jakarta.cdi-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>5.0.0.Alpha2</version>
+	<version>5.0.0.Alpha3-SNAPSHOT</version>
 
 	<name>CDI Parent</name>
 	<description>Parent module for CDI Specification</description>
@@ -36,7 +36,7 @@
 		<connection>scm:git:git://github.com/eclipse-ee4j/cdi.git</connection>
 		<developerConnection>scm:git:git@github.com:eclipse-ee4j/cdi.git</developerConnection>
 		<url>https://github.com/eclipse-ee4j/cdi</url>
-		<tag>5.0.0.Alpha2</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<modules>
