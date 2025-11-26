@@ -39,6 +39,13 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git://github.com/eclipse-ee4j/cdi.git</connection>
+        <developerConnection>scm:git:git@github.com:eclipse-ee4j/cdi.git</developerConnection>
+        <url>https://github.com/eclipse-ee4j/cdi</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <distributionManagement>
         <relocation>
             <groupId>jakarta.cdi</groupId>
