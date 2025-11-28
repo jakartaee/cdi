@@ -138,6 +138,7 @@ public interface SyntheticBeanBuilder<T> {
      * @return this {@code SyntheticBeanBuilder}
      * @throws IllegalStateException if this method is called multiple times
      *         or if the bean was previously marked as {@linkplain #alternative(boolean) alternative}.
+     * @since 5.0
      */
     SyntheticBeanBuilder<T> reserve(boolean isReserve);
 
@@ -154,6 +155,21 @@ public interface SyntheticBeanBuilder<T> {
      * @throws IllegalStateException if this method is called multiple times
      */
     SyntheticBeanBuilder<T> priority(int priority);
+
+    /**
+     * Marks this synthetic bean as a {@linkplain jakarta.enterprise.context.Eager eagerly initialized} if desired.
+     * <p>
+     * If not called, this synthetic bean will not be eagerly initialized.
+     * <p>
+     * If this synthetic bean does not have a scope that permits eager initialization,
+     * the synthetic bean registration will fail.
+     *
+     * @param isEager whether this synthetic bean should be eagerly initialized
+     * @return this {@code SyntheticBeanBuilder}
+     * @throws IllegalStateException if this method is called multiple times
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> eager(boolean isEager);
 
     /**
      * Sets the bean name of this synthetic bean. If {@code beanName} is {@code null},
