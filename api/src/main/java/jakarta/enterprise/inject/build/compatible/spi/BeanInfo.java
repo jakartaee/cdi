@@ -126,6 +126,7 @@ public interface BeanInfo {
      * Returns whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}.
      *
      * @return whether this bean is a {@linkplain jakarta.enterprise.inject.Reserve reserve}
+     * @since 5.0
      */
     boolean isReserve();
 
@@ -137,6 +138,22 @@ public interface BeanInfo {
      * @return the priority of this bean, or {@code null} if this bean does not declare a priority
      */
     Integer priority();
+
+    /**
+     * Returns whether this bean is {@linkplain jakarta.enterprise.context.Eager eagerly initialized}.
+     *
+     * @return whether this bean is {@linkplain jakarta.enterprise.context.Eager eagerly initialized}
+     * @since 5.0
+     */
+    boolean isEager();
+
+    /**
+     * Returns whether this bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable}.
+     *
+     * @return whether this bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable}
+     * @since 5.0
+     */
+    boolean isAutoClose();
 
     /**
      * Returns the bean name of this bean. A bean name is usually defined

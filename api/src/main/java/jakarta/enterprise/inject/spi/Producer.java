@@ -55,12 +55,15 @@ public interface Producer<T> {
      * Destroys the instance.
      * </p>
      * <p>
-     * If the {@code Producer} represents a class, then this operation does nothing.
+     * If the {@code Producer} represents a class, then this operation does only one thing:
+     * if the bean is auto-closeable and the class of the contextual instance implements {@link AutoCloseable},
+     * {@code close()} is called on the instance.
      * </p>
      * <p>
      * If the {@code Producer} represents a producer field or method, this calls the disposer method, if any, on a contextual
      * instance of the bean that declares the disposer method or performs any additional required cleanup, if any, to destroy
-     * state associated with a resource.
+     * state associated with a resource. Then, if the bean is auto-closeable and the class of the contextual instance
+     * implements {@link AutoCloseable}, {@code close()} is called on the instance.
      * </p>
      *
      * @param instance The instance to dispose
@@ -69,7 +72,7 @@ public interface Producer<T> {
 
     /**
      * <p>
-     * Returns the set of all {@code InjectionPoints}. If the {@code Producer} represents a class, then this returns returns the
+     * Returns the set of all {@code InjectionPoints}. If the {@code Producer} represents a class, then this returns the
      * set of {@code InjectionPoint} objects representing all injected fields, bean constructor parameters and initializer
      * method parameters. For a producer method, this returns the set of {@code InjectionPoint} objects representing all
      * parameters of the producer method.
