@@ -53,6 +53,9 @@ public interface ProducerConfigurator<T> {
 
     /**
      * Set a callback to destroy the produced instance.
+     * <p>
+     * After the callback's execution completes, {@code close()} is called on the instance when the bean
+     * is auto-closeable and the class of the contextual instance implements {@link AutoCloseable}.
      *
      * @param callback a {@link Consumer} defining the callback to set
      * @return self
