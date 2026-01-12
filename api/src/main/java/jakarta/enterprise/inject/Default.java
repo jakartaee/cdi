@@ -20,6 +20,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -98,11 +99,30 @@ public @interface Default {
      * @see Instance
      * @see Event
      */
-    public static final class Literal extends AnnotationLiteral<Default> implements Default {
+    final class Literal extends AnnotationLiteral<Default> implements Default {
         /** The default Default literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
 
+        public Class<? extends Annotation> annotationType() {
+            return Default.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Default.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.inject.Default()";
+        }
     }
 }

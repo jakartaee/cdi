@@ -18,6 +18,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -80,11 +81,30 @@ public @interface Specializes {
      * @see Instance
      * @see Event
      */
-    public static final class Literal extends AnnotationLiteral<Specializes> implements Specializes {
+    final class Literal extends AnnotationLiteral<Specializes> implements Specializes {
 
         private static final long serialVersionUID = 1L;
         /** Default Specializes literal */
         public static final Literal INSTANCE = new Literal();
 
+        public Class<? extends Annotation> annotationType() {
+            return Specializes.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Specializes.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.inject.Specializes()";
+        }
     }
 }

@@ -19,9 +19,11 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.util.Arrays;
 
 import jakarta.enterprise.util.AnnotationLiteral;
 
@@ -68,7 +70,7 @@ public @interface Typed {
      * @author Martin Kouba
      * @since 2.0
      */
-    public final static class Literal extends AnnotationLiteral<Typed> implements Typed {
+    final class Literal extends AnnotationLiteral<Typed> implements Typed {
         /** Default Typed literal */
         public static final Literal INSTANCE = of(new Class<?>[] {});
 
@@ -96,6 +98,40 @@ public @interface Typed {
          */
         public Class<?>[] value() {
             return value;
+        }
+
+        public Class<? extends Annotation> annotationType() {
+            return Typed.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else if (other instanceof Typed that) {
+                return Arrays.equals(this.value, that.value());
+            } else {
+                return false;
+            }
+        }
+
+        public int hashCode() {
+            int result = 0;
+            result += 127 * "value".hashCode() ^ Arrays.hashCode(this.value);
+            return result;
+        }
+
+        public String toString() {
+            StringBuilder result = new StringBuilder("@jakarta.enterprise.inject.Typed({");
+            boolean first = true;
+            for (Class<?> clazz : this.value) {
+                if (!first) {
+                    result.append(", ");
+                }
+                result.append(clazz.getName()).append(".class");
+                first = false;
+            }
+            result.append("})");
+            return result.toString();
         }
     }
 

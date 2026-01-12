@@ -54,7 +54,7 @@ public @interface Destroyed {
      *
      * @author Martin Kouba
      */
-    public final static class Literal extends AnnotationLiteral<Destroyed> implements Destroyed {
+    final class Literal extends AnnotationLiteral<Destroyed> implements Destroyed {
         /** Default Destroyed literal for the RequestScoped scope */
         public static final Literal REQUEST = of(RequestScoped.class);
 
@@ -88,6 +88,30 @@ public @interface Destroyed {
 
         public Class<? extends Annotation> value() {
             return value;
+        }
+
+        public Class<? extends Annotation> annotationType() {
+            return Destroyed.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else if (other instanceof Destroyed that) {
+                return this.value.equals(that.value());
+            } else {
+                return false;
+            }
+        }
+
+        public int hashCode() {
+            int result = 0;
+            result += 127 * "value".hashCode() ^ this.value.hashCode();
+            return result;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.context.Destroyed(" + this.value.getName() + ".class)";
         }
     }
 

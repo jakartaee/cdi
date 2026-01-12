@@ -53,7 +53,7 @@ public @interface BeforeDestroyed {
     /**
      * Supports inline instantiation of the {@link BeforeDestroyed} qualifier.
      */
-    public final static class Literal extends AnnotationLiteral<BeforeDestroyed> implements BeforeDestroyed {
+    final class Literal extends AnnotationLiteral<BeforeDestroyed> implements BeforeDestroyed {
         /** Default BeforeDestroyed literal for the RequestScoped scope */
         public static final Literal REQUEST = of(RequestScoped.class);
 
@@ -87,6 +87,30 @@ public @interface BeforeDestroyed {
 
         public Class<? extends Annotation> value() {
             return value;
+        }
+
+        public Class<? extends Annotation> annotationType() {
+            return BeforeDestroyed.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else if (other instanceof BeforeDestroyed that) {
+                return this.value.equals(that.value());
+            } else {
+                return false;
+            }
+        }
+
+        public int hashCode() {
+            int result = 0;
+            result += 127 * "value".hashCode() ^ this.value.hashCode();
+            return result;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.context.BeforeDestroyed(" + this.value.getName() + ".class)";
         }
     }
 

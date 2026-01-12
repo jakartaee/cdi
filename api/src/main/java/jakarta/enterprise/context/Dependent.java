@@ -19,6 +19,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -107,11 +108,30 @@ public @interface Dependent {
      * @author Martin Kouba
      * @since 2.0
      */
-    public final static class Literal extends AnnotationLiteral<Dependent> implements Dependent {
+    final class Literal extends AnnotationLiteral<Dependent> implements Dependent {
         /** Default Dependent literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
 
+        public Class<? extends Annotation> annotationType() {
+            return Dependent.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Dependent.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.context.Dependent()";
+        }
     }
 }

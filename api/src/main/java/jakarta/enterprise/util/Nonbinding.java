@@ -17,6 +17,7 @@ package jakarta.enterprise.util;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -55,11 +56,30 @@ public @interface Nonbinding {
      * @author Martin Kouba
      * @since 2.0
      */
-    public static final class Literal extends AnnotationLiteral<Nonbinding> implements Nonbinding {
+    final class Literal extends AnnotationLiteral<Nonbinding> implements Nonbinding {
         /** Default Nonbinding literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
 
+        public Class<? extends Annotation> annotationType() {
+            return Nonbinding.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Nonbinding.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.util.Nonbinding()";
+        }
     }
 }

@@ -14,6 +14,7 @@
 
 package jakarta.enterprise.inject;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -55,12 +56,30 @@ public @interface Vetoed {
      * @see Instance
      * @see Event
      */
-    public static final class Literal extends AnnotationLiteral<Vetoed> implements Vetoed {
-
+    final class Literal extends AnnotationLiteral<Vetoed> implements Vetoed {
         private static final long serialVersionUID = 1L;
         /** Default Vetoed literal */
         public static final Literal INSTANCE = new Literal();
 
+        public Class<? extends Annotation> annotationType() {
+            return Vetoed.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Vetoed.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.inject.Vetoed()";
+        }
     }
 
 }
