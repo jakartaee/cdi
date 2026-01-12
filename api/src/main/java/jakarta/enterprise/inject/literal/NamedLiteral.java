@@ -13,6 +13,8 @@
  */
 package jakarta.enterprise.inject.literal;
 
+import java.lang.annotation.Annotation;
+
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Named;
 
@@ -42,12 +44,35 @@ public final class NamedLiteral extends AnnotationLiteral<Named> implements Name
         return new NamedLiteral(value);
     }
 
-    public String value() {
-        return value;
-    }
-
     private NamedLiteral(String value) {
         this.value = value;
     }
 
+    public String value() {
+        return value;
+    }
+
+    public Class<? extends Annotation> annotationType() {
+        return Named.class;
+    }
+
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        } else if (other instanceof Named that) {
+            return this.value.equals(that.value());
+        } else {
+            return false;
+        }
+    }
+
+    public int hashCode() {
+        int result = 0;
+        result += 127 * "value".hashCode() ^ this.value.hashCode();
+        return result;
+    }
+
+    public String toString() {
+        return "@jakarta.inject.Named(\"" + this.value + "\")";
+    }
 }

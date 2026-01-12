@@ -15,6 +15,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -59,5 +60,25 @@ public @interface Reserve {
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
+
+        public Class<? extends Annotation> annotationType() {
+            return Reserve.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Reserve.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.inject.Reserve()";
+        }
     }
 }

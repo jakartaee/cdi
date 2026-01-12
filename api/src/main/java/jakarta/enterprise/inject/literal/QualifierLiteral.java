@@ -13,6 +13,8 @@
  */
 package jakarta.enterprise.inject.literal;
 
+import java.lang.annotation.Annotation;
+
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.inject.Qualifier;
 
@@ -28,4 +30,23 @@ public final class QualifierLiteral extends AnnotationLiteral<Qualifier> impleme
 
     private static final long serialVersionUID = 1L;
 
+    public Class<? extends Annotation> annotationType() {
+        return Qualifier.class;
+    }
+
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        } else {
+            return other instanceof Annotation that && Qualifier.class.equals(that.annotationType());
+        }
+    }
+
+    public int hashCode() {
+        return 0;
+    }
+
+    public String toString() {
+        return "@jakarta.inject.Qualifier()";
+    }
 }

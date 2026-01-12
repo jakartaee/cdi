@@ -17,6 +17,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 
+import java.lang.annotation.Annotation;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.BeforeDestroyed;
 import jakarta.enterprise.context.ConversationScoped;
@@ -39,6 +41,7 @@ import jakarta.enterprise.inject.literal.SingletonLiteral;
 import jakarta.enterprise.util.AnnotationLiteral;
 import jakarta.enterprise.util.Nonbinding;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.inject.Qualifier;
 import jakarta.inject.Singleton;
 
@@ -215,4 +218,91 @@ public class AnnotationLiteralTest {
         }, TransientReference.Literal.INSTANCE);
     }
 
+    // the `Usages` and `UsagesAnn` classes include all annotations for which a literal exists
+    // a few of them are present multiple times for better test coverage
+
+    static class Usages {
+        @Alternative
+        @Any
+        @ApplicationScoped
+        @BeforeDestroyed(UsagesAnn.class)
+        @ConversationScoped
+        @Default
+        @Dependent
+        @Destroyed(UsagesAnn.class)
+        @Initialized(UsagesAnn.class)
+        @Inject
+        @Named
+        @RequestScoped
+        @SessionScoped
+        @Singleton
+        @Typed
+        String field;
+
+        @Nonbinding
+        @Typed(UsagesAnn.class)
+        void method(@TransientReference String param) {
+        }
+    }
+
+    @BeforeDestroyed(RequestScoped.class)
+    @Destroyed(RequestScoped.class)
+    @Initialized(RequestScoped.class)
+    @Qualifier
+    @Specializes
+    @Typed({ Usages.class, UsagesAnn.class })
+    @Vetoed
+    @interface UsagesAnn {
+    }
+
+    @Test
+    public void testAgainstActualUsages() throws NoSuchFieldException, NoSuchMethodException {
+        assertCorrect(getUsageFromField(Alternative.class), Alternative.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(Any.class), Any.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(ApplicationScoped.class), ApplicationScoped.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(BeforeDestroyed.class), BeforeDestroyed.Literal.of(UsagesAnn.class));
+        assertCorrect(getUsageFromField(ConversationScoped.class), ConversationScoped.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(Default.class), Default.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(Dependent.class), Dependent.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(Destroyed.class), Destroyed.Literal.of(UsagesAnn.class));
+        assertCorrect(getUsageFromField(Initialized.class), Initialized.Literal.of(UsagesAnn.class));
+        assertCorrect(getUsageFromField(Inject.class), InjectLiteral.INSTANCE);
+        assertCorrect(getUsageFromField(Named.class), NamedLiteral.INSTANCE);
+        assertCorrect(getUsageFromField(RequestScoped.class), RequestScoped.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(SessionScoped.class), SessionScoped.Literal.INSTANCE);
+        assertCorrect(getUsageFromField(Singleton.class), SingletonLiteral.INSTANCE);
+        assertCorrect(getUsageFromField(Typed.class), Typed.Literal.INSTANCE);
+        assertCorrect(getUsageFromMethod(Nonbinding.class), Nonbinding.Literal.INSTANCE);
+        assertCorrect(getUsageFromMethod(Typed.class), Typed.Literal.of(new Class[] { UsagesAnn.class }));
+        assertCorrect(getUsageFromMethodParam(TransientReference.class), TransientReference.Literal.INSTANCE);
+        assertCorrect(getUsageFromAnnType(BeforeDestroyed.class), BeforeDestroyed.Literal.REQUEST);
+        assertCorrect(getUsageFromAnnType(Destroyed.class), Destroyed.Literal.REQUEST);
+        assertCorrect(getUsageFromAnnType(Initialized.class), Initialized.Literal.REQUEST);
+        assertCorrect(getUsageFromAnnType(Qualifier.class), QualifierLiteral.INSTANCE);
+        assertCorrect(getUsageFromAnnType(Specializes.class), Specializes.Literal.INSTANCE);
+        assertCorrect(getUsageFromAnnType(Typed.class), Typed.Literal.of(new Class[] { Usages.class, UsagesAnn.class }));
+        assertCorrect(getUsageFromAnnType(Vetoed.class), Vetoed.Literal.INSTANCE);
+    }
+
+    private <T extends Annotation> T getUsageFromField(Class<T> type) throws NoSuchFieldException {
+        return Usages.class.getDeclaredField("field").getAnnotation(type);
+    }
+
+    private <T extends Annotation> T getUsageFromMethod(Class<T> type) throws NoSuchMethodException {
+        return Usages.class.getDeclaredMethod("method", String.class).getAnnotation(type);
+    }
+
+    private <T extends Annotation> T getUsageFromMethodParam(Class<T> type) throws NoSuchMethodException {
+        return Usages.class.getDeclaredMethod("method", String.class).getParameters()[0].getAnnotation(type);
+    }
+
+    private <T extends Annotation> T getUsageFromAnnType(Class<T> type) {
+        return UsagesAnn.class.getAnnotation(type);
+    }
+
+    private <T extends Annotation> void assertCorrect(T usage, T literal) {
+        assertEquals(usage, literal);
+        assertEquals(literal, usage);
+        assertEquals(literal.hashCode(), usage.hashCode());
+    }
 }

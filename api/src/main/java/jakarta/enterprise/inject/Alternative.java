@@ -19,6 +19,7 @@ import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -77,12 +78,31 @@ public @interface Alternative {
      * @author Martin Kouba
      * @since 2.0
      */
-    public final static class Literal extends AnnotationLiteral<Alternative> implements Alternative {
+    final class Literal extends AnnotationLiteral<Alternative> implements Alternative {
         /** Default Alternative literal */
         public static final Literal INSTANCE = new Literal();
 
         private static final long serialVersionUID = 1L;
 
+        public Class<? extends Annotation> annotationType() {
+            return Alternative.class;
+        }
+
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            } else {
+                return other instanceof Annotation that && Alternative.class.equals(that.annotationType());
+            }
+        }
+
+        public int hashCode() {
+            return 0;
+        }
+
+        public String toString() {
+            return "@jakarta.enterprise.inject.Alternative()";
+        }
     }
 
 }
