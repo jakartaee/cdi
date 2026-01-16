@@ -166,6 +166,17 @@ All pseudo-scopes must be explicitly declared `@Scope`, to indicate to the conta
 
 All scopes defined by this specification, except for the `@Dependent` pseudo-scope, are normal scopes.
 
+[[global_scope]]
+
+=== Global scopes
+
+Several scopes defined by this specification are _global_.
+A global scope has exactly one context object, which is:
+
+* initialized once, when the container starts up, before the event with qualifier `@Initialized(ApplicationScoped.class)` is fired,
+* destroyed once, when the container shuts down, after the event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is fired,
+* active on all application threads from the point the context object is initialized until it is destroyed.
+
 [[dependent_context]]
 
 === Dependent pseudo-scope
@@ -184,7 +195,7 @@ Every invocation of the `get()` operation of the `Context` object for the `@Depe
 
 Every invocation of the `get()` operation of the `Context` object for the `@Dependent` scope with no `CreationalContext` returns a null value.
 
-The `@Dependent` scope is always active.
+The `@Dependent` scope is global.
 
 [[dependent_objects]]
 
@@ -235,11 +246,11 @@ If there is exactly one active instance of `Context` associated with the scope t
 
 [[activating_builtin_contexts]]
 
-==== Activating Built In Contexts
+==== Activating Built-in Contexts
 
-Certain built in contexts support the ability to be activated and deactivated.  This allows developers to control built-in contexts in ways that they could also manage custom built contexts.
+Certain built-in contexts support the ability to be activated and deactivated.  This allows developers to control built-in contexts in ways that they could also manage custom built contexts.
 
-When activating and deactivating built in contexts, it is important to realize that they can only be activated if not already active within a given thread.
+When activating and deactivating built-in contexts, it is important to realize that they can only be activated if not already active within a given thread.
 
 [[activating_request_context]]
 
@@ -247,7 +258,7 @@ When activating and deactivating built in contexts, it is important to realize t
 
 Request contexts can be managed either programmatically or via interceptor.
 
-To programmatically manage request contexts, the container provides a built in bean that is `@Dependent` scoped and of type `RequestContextController` that allows you to activate and deactivate a request context on the current thread.  The object should be considered stateful, invoking the same instance on different threads may not work properly, non-portable behavior may occur.
+To programmatically manage request contexts, the container provides a built-in bean that is `@Dependent` scoped and of type `RequestContextController` that allows you to activate and deactivate a request context on the current thread.  The object should be considered stateful, invoking the same instance on different threads may not work properly, non-portable behavior may occur.
 
 [source, java]
 ----
@@ -390,11 +401,17 @@ The request context is destroyed:
 
 ==== Application context lifecycle
 
+The application scope is global.
+
 The _application context_ is provided by a built-in context object for the built-in scope type `@ApplicationScoped`.
 
 An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously fired when the application context is initialized.
 An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired when the application context is about to be destroyed, i.e. before the actual destruction.
 An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired when the application context is destroyed, i.e. after the actual destruction.
+
+The payload of the event fired when the application context is initialized or destroyed is:
+
+* any `java.lang.Object`.
 
 [[custom_contexts]]
 
@@ -410,4 +427,6 @@ where `X` is the scope type associated with the context.
 
 A suitable event payload should be chosen.
 
-Build compatible extensions may define custom context classes for custom scopes, but they may not define custom context classes for built-in scopes.
+Build compatible extensions may define custom context classes for non-global built-in scopes and for custom scopes.
+For example, a remoting framework might provide a request context object for the built-in request scope.
+If an attempt to register a custom context class for a global built-in scope is made, deployment problem occurs.
