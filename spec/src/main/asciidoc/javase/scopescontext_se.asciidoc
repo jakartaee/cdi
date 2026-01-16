@@ -11,27 +11,10 @@ SPDX-License-Identifier: Apache-2.0
 
 == Scopes and contexts in Java SE
 
-[[builtin_contexts_se]]
+[[global_scope_se]]
 
-=== Context management for built-in scopes in Java SE
+=== Global scopes in Java SE
 
-When running in Java SE, the container must extend the rules defined in <<builtin_contexts>> and is also required to ensure the following rules for built-in context implementation.
+In addition to rules defined in <<global_scope>>, the following rules apply.
 
-[[application_context_se]]
-
-==== Application context lifecycle in Java SE
-
-When running in Java SE the container must extend the rules defined in <<application_context>> and is also required to ensure the following rules.
-
-The application scope is active:
-
-* during any method invocation
-
-The application context is shared between all method invocations that execute within the same container.
-
-The application context is destroyed when the container is shut down.
-
-The payload of the event fired when the application context is initialized or destroyed is:
-
-* any `java.lang.Object`.
-
+A context object for a global scope only exists within a container and is not active in other containers.
