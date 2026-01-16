@@ -53,9 +53,6 @@ import java.util.concurrent.Flow;
  * {@link java.util.concurrent.CompletionStage CompletionStage},
  * {@link java.util.concurrent.CompletableFuture CompletableFuture} and
  * {@link Flow.Publisher Flow.Publisher}.
- * These are used by passing {@code AsyncHandler.ForCompletionStage.class},
- * {@code AsyncHandler.ForCompletableFuture.class} or {@code AsyncHandler.ForFlowPublisher.class},
- * respectively, to {@link InvokerBuilder#withAsync(Class)}.
  *
  * @param <T> the type that represents the asynchronous action
  */
@@ -106,38 +103,5 @@ public interface AsyncHandler<T> {
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.RUNTIME)
     @interface ParameterType {
-    }
-
-    /**
-     * When {@code AsyncHandler.ForCompletionStage.class} is passed to
-     * {@link InvokerBuilder#withAsync(Class)}, it means the container should
-     * use its built-in implementation of {@link AsyncHandler}
-     * for the {@link java.util.concurrent.CompletionStage CompletionStage} return type.
-     * <p>
-     * This interface should not be used in any other way.
-     */
-    interface ForCompletionStage<T> extends AsyncHandler<CompletionStage<T>> {
-    }
-
-    /**
-     * When {@code AsyncHandler.ForCompletableFuture.class} is passed to
-     * {@link InvokerBuilder#withAsync(Class)}, it means the container should
-     * use its built-in implementation of {@link AsyncHandler}
-     * for the {@link java.util.concurrent.CompletableFuture CompletableFuture} return type.
-     * <p>
-     * This interface should not be used in any other way.
-     */
-    interface ForCompletableFuture<T> extends AsyncHandler<CompletableFuture<T>> {
-    }
-
-    /**
-     * When {@code AsyncHandler.ForFlowPublisher.class} is passed to
-     * {@link InvokerBuilder#withAsync(Class)}, it means the container should
-     * use its built-in implementation of {@link AsyncHandler}
-     * for the {@link Flow.Publisher Flow.Publisher} return type.
-     * <p>
-     * This interface should not be used in any other way.
-     */
-    interface ForFlowPublisher<T> extends AsyncHandler<Flow.Publisher<T>> {
     }
 }

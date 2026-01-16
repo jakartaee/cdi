@@ -226,8 +226,9 @@ See <<contextual>> for more information.
 [[invoker_asynchronous_methods]]
 ===== Asynchronous methods
 
-For the purpose of method invokers, a target method is _asynchronous_ if it matches an _async handler_.
-In case of an asynchronous method, the action started by the method does not necessarily finish when the method returns; the _completion_ of the action is asynchronous to the method call.
+Sometimes, the action started by the method does not necessarily finish when the method returns; the _completion_ of the action is asynchronous to the method call.
+Such methods are called _asynchronous_ methods.
+Method invokers have special support for asynchronous methods when it comes to destroying instances of looked up `@Dependent` beans.
 
 [source,java]
 ----
@@ -246,32 +247,27 @@ Each async handler must be annotated either `@AsyncHandler.ReturnType` or `@Asyn
 If an async handler is annotated `@AsyncHandler.ReturnType`, the target method matches the async handler if the erasure of its return type is identical to the async type of the async handler.
 If an async handler is annotated `@AsyncHandler.ParameterType`, the target method matches the async handler if it declares exactly one parameter whose type's erasure is identical to the async type of the async handler; this parameter is called an _async parameter_.
 
-[source,java]
-----
-public interface InvokerBuilder<T> {
-    InvokerBuilder<T> withAsync(Class<? extends AsyncHandler> asyncHandler);
-}
-----
-
-If the target method is asynchronous, the `withAsync()` method on `InvokerBuilder` must be called, otherwise deployment problem occurs.
-If the target method is not asynchronous, the `withAsync()` method on `InvokerBuilder` must not be called, otherwise deployment problem occurs.
-
-If the `asyncHandler` passed to `withAsync()` is not `null`, the invoker becomes asynchronous.
-The class passed to `withAsync()` must name an existing async handler that matches the target method of the invoker, otherwise deployment problem occurs.
-
-An asynchronous invoker calls the `transform()` method of the given async handler exactly once during `invoke()`.
-If the async handler is annotated `@AsyncHandler.ReturnType`, the `transform()` method is called after the target method is called, with the return value of the target method as the `original`, and the result is returned to the caller.
-If the async handler is annotated `@AsyncHandler.ParameterType`, the `transform()` method is called before the target method is called, with the given argument value of the async parameter as the `original`, and the result is passed to the target method as the argument value of the async parameter.
+If the target method matches exactly one async handler, the invoker becomes asynchronous.
+An asynchronous invoker calls the `transform()` method of the matching async handler exactly once during `invoke()`.
+If the matching async handler is annotated `@AsyncHandler.ReturnType`, the `transform()` method is called after the target method is called, with the return value of the target method as the `original`, and the result is returned to the caller.
+If the matching async handler is annotated `@AsyncHandler.ParameterType`, the `transform()` method is called before the target method is called, with the given argument value of the async parameter as the `original`, and the result is passed to the target method as the argument value of the async parameter.
 The async handler signals completion of the asynchronous action by calling `completion.run()`.
 
 The requirement to destroy instances of `@Dependent` looked up beans is different for asynchronous invokers.
 The instances of `@Dependent` looked up beans are destroyed when the asynchronous action completes, as signalled by the async handler.
 If an asynchronous target method throws synchronously, instances of `@Dependent` looked up beans are destroyed before `invoke()` rethrows the exception; in this case, the async handler is still permitted to call `completion.run()`, but the call must be ignored.
 
-It is permitted (but not recommended) to pass `null` to `withAsync()`, in which case the built invoker is not asynchronous.
-
 The CDI container must include async handlers for the following return types:
 
-- `java.util.concurrent.CompletionStage` (used by passing `AsyncHandler.ForCompletionStage.class`)
-- `java.util.concurrent.CompletableFuture` (used by passing `AsyncHandler.ForCompletableFuture.class`)
-- `java.util.concurrent.Flow.Publisher` (used by passing `AsyncHandler.ForFlowPublisher.class`)
+- `java.util.concurrent.CompletionStage`
+- `java.util.concurrent.CompletableFuture`
+- `java.util.concurrent.Flow.Publisher`
+
+If the target method matches more than one async handler, by default a deployment problem occurs.
+Containers are required to provide implementation-defined means of configuring an async handler that should be used for any given async type.
+If such configuration is present, other async handlers for the given async type are ignored; the target method only matches the configured async handler.
+If the configured async handler does not exist, deployment problem occurs.
+It is possible to configure a custom async handler for the built-in return types listed above.
+
+Containers are encouraged to detect asynchronous methods for which an invoker is built but a matching async handler does not exist and provide a warning in a suitable form.
+Such detection is likely based on a set of well-known asynchronous types.
