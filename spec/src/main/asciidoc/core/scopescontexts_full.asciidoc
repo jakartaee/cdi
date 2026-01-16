@@ -218,5 +218,6 @@ If `begin()` is called with an explicit conversation identifier, and a long-runn
 
 In addition to rules defined in <<custom_contexts>>, the following rule applies.
 
-A portable extension may define a custom context object for built-in scopes and custom scopes.
+A portable extension may define a custom context object for built-in scopes that are not always active and for custom scopes.
 For example, a remoting framework might provide a request context object for the built-in request scope.
+If an attempt to register a custom context object for an always active built-in scope is made, deployment problem occurs.

@@ -396,6 +396,16 @@ An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously
 An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired when the application context is about to be destroyed, i.e. before the actual destruction.
 An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired when the application context is destroyed, i.e. after the actual destruction.
 
+The application context is always active.
+
+The application context is shared between all method invocations.
+
+The application context is destroyed when the application is shut down.
+
+The payload of the event fired when the application context is initialized or destroyed is:
+
+* any `java.lang.Object`.
+
 [[custom_contexts]]
 
 === Context management for custom scopes
@@ -410,4 +420,6 @@ where `X` is the scope type associated with the context.
 
 A suitable event payload should be chosen.
 
-Build compatible extensions may define custom context classes for custom scopes, but they may not define custom context classes for built-in scopes.
+Build compatible extensions may define custom context classes for built-in scopes that are not always active and for custom scopes.
+For example, a remoting framework might provide a request context object for the built-in request scope.
+If an attempt to register a custom context class for an always active built-in scope is made, deployment problem occurs.

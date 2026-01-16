@@ -15,23 +15,14 @@ SPDX-License-Identifier: Apache-2.0
 
 === Context management for built-in scopes in Java SE
 
-When running in Java SE, the container must extend the rules defined in <<builtin_contexts>> and is also required to ensure the following rules for built-in context implementation.
+When running in Java SE, the container must extend the rules defined in <<builtin_contexts>> and is also required to ensure the following rules for built-in context implementations.
 
 [[application_context_se]]
 
 ==== Application context lifecycle in Java SE
 
-When running in Java SE the container must extend the rules defined in <<application_context>> and is also required to ensure the following rules.
-
-The application scope is active:
-
-* during any method invocation
+When running in Java SE, the container must extend the rules defined in <<application_context>>, except of the two that are overridden by the following rules.
 
 The application context is shared between all method invocations that execute within the same container.
 
 The application context is destroyed when the container is shut down.
-
-The payload of the event fired when the application context is initialized or destroyed is:
-
-* any `java.lang.Object`.
-
