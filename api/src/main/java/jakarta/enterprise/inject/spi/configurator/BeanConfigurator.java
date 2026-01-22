@@ -310,7 +310,7 @@ public interface BeanConfigurator<T> {
 
     /**
      * Change the alternative status of the configured bean.
-     * By default the configured bean is not an alternative.
+     * By default, the configured bean is not an alternative.
      *
      * @param value value for alternative property
      * @return self
@@ -319,10 +319,11 @@ public interface BeanConfigurator<T> {
 
     /**
      * Change the reserve status of the configured bean.
-     * By default the configured bean is not a reserve.
+     * By default, the configured bean is not a reserve.
      *
      * @param value value for reserve property
      * @return self
+     * @since 5.0
      */
     BeanConfigurator<T> reserve(boolean value);
 
@@ -341,5 +342,15 @@ public interface BeanConfigurator<T> {
      * @return self
      */
     BeanConfigurator<T> priority(int priority);
+
+    /**
+     * Change the eagerly initialized status of the configured bean.
+     * By default, the configured bean is not eagerly initialized.
+     *
+     * @param value value for eagerly initialized property
+     * @return self
+     * @since 5.0
+     */
+    BeanConfigurator<T> eager(boolean value);
 
 }

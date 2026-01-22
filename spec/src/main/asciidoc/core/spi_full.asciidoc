@@ -35,12 +35,14 @@ public interface BeanAttributes<T> {
     public Set<Class<? extends Annotation>> getStereotypes();
     public boolean isAlternative();
     public boolean isReserve();
+    public boolean isEager();
 }
 ----
 
 * `getTypes()`, `getQualifiers()`, `getScope()`, `getName()` and `getStereotypes()` must return the bean types, qualifiers, scope type, bean name and stereotypes of the bean, as defined in <<concepts>>.
 * `isAlternative()` must return `true` if the bean is an alternative, and `false` otherwise.
 * `isReserve()` must return `true` if the bean is a reserve, and `false` otherwise.
+* `isEager()` must return `true` if the bean is eagerly initialized, and `false` otherwise.
 
 The interface `jakarta.enterprise.inject.spi.Bean` defines everything the container needs to manage instances of a certain bean.
 
@@ -505,7 +507,7 @@ public BeanAttributes<?> createBeanAttributes(AnnotatedMember<?> member);
 
 The method `BeanManager.createBean()` returns a container provided implementation of `Bean`. The methods accept:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()` and `isReserve()`, and
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, and `isEager()`, and
 * a class, which determines the return value of `Bean.getClass()`, and
 * an `InjectionTargetFactory`, which is used to obtain an `InjectionTarget`. The `InjectionTarget` is used to create and destroy instances of the bean, to perform dependency injection and lifecycle callbacks, and which determines the return value of `Bean.getInjectionPoints()`.
 
@@ -519,7 +521,7 @@ public <T> Bean<T> createBean(BeanAttributes<T> attributes, Class<T> beanClass,
 A second version of the method is provided to create a `Bean` from a producer.
 The method accepts:
 
-* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()` and `isReserve()`, and
+* a `BeanAttributes`, which determines the bean types, qualifiers, scope, name and stereotypes of the returned `Bean`, the return values of `isAlternative()`, `isReserve()`, and `isEager()`, and
 * a class, which determines the return value of `Bean.getClass()`, and
 * a `ProducerFactory`, which is used to obtain a `Producer`. The `Producer` is used to create and destroy instances of the bean, and which determines the return value of `Bean.getInjectionPoints()`.
 

@@ -86,8 +86,21 @@ public interface BeanAttributes<T> {
      *
      * @return <code>true</code> if the bean is a {@linkplain Reserve reserve}, and <code>false</code>
      *         otherwise.
+     * @since 5.0
      */
     public default boolean isReserve() {
+        // `default` to avoid breaking older `Bean` implementations
+        return false;
+    }
+
+    /**
+     * Determines if the bean is {@linkplain jakarta.enterprise.context.Eager eagerly initialized}.
+     *
+     * @return <code>true</code> if the bean is {@linkplain jakarta.enterprise.context.Eager eagerly initialized},
+     *         and <code>false</code> otherwise.
+     * @since 5.0
+     */
+    public default boolean isEager() {
         // `default` to avoid breaking older `Bean` implementations
         return false;
     }
