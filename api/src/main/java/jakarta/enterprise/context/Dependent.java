@@ -67,7 +67,7 @@ import jakarta.inject.Scope;
  * </p>
  *
  * <p>
- * The <code>@Dependent</code> scope is always active.
+ * The dependent scope is global. Extensions are not allowed to register a custom context for it.
  * </p>
  *
  * <p>

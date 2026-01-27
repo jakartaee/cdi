@@ -33,12 +33,7 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <p>
- * The application context is always active. It is destroyed when the application is shut down.
- * </p>
- *
- * <p>
- * Third-party extensions are not allowed to register a custom context for the application scope, because
- * the application scope is always active.
+ * The application scope is global. Extensions are not allowed to register a custom context for it.
  * </p>
  *
  * <p>

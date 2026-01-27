@@ -71,7 +71,7 @@ public interface MetaAnnotations {
      * @param scopeAnnotation the scope annotation type, must not be {@code null}
      * @param contextClass the context class, must not be {@code null}
      * @throws jakarta.enterprise.inject.spi.DeploymentException if the {@code scopeAnnotation} represents
-     *         a built-in scope that is always active
+     *         a global built-in scope
      * @throws IllegalArgumentException if the {@code scopeAnnotation} is not meta-annotated {@code @NormalScope}
      *         or {@code @Scope}
      */
@@ -89,7 +89,7 @@ public interface MetaAnnotations {
      * @param isNormal whether the scope is normal
      * @param contextClass the context class, must not be {@code null}
      * @throws jakarta.enterprise.inject.spi.DeploymentException if the {@code scopeAnnotation} represents
-     *         a built-in scope that is always active
+     *         a global built-in scope
      */
     void addContext(Class<? extends Annotation> scopeAnnotation, boolean isNormal,
             Class<? extends AlterableContext> contextClass);

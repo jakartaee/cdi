@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 import jakarta.interceptor.InterceptorBinding;
 
 /**
- * The container provides a built in interceptor that may be used to annotate classes and methods to indicate
+ * The container provides a built-in interceptor that may be used to annotate classes and methods to indicate
  * that a request context should be activated when this method is invoked.
  *
  * The request context will be activated before the method is called, and deactivated when the method invocation is
