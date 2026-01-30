@@ -98,7 +98,7 @@ The `jakarta.enterprise.inject.se.SeContainer` interface provides access to the 
 
 [source, java]
 ----
-public interface SeContainer extends Instance<Object>,AutoCloseable {
+public interface SeContainer extends Instance<Object>, AutoCloseable {
     void close();
     boolean isRunning();
     BeanManager getBeanManager();
@@ -113,7 +113,8 @@ If it is called and the container was already shutdown, it throws an `IllegalSta
 If it is called and the container was already shutdown, it throws an `IllegalStateException`.
 
 `SeContainer` implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
-If no qualifier is passed to `SeContainer.select()` method, the `@Default` qualifier is assumed.
+Initially, the required type of the `Instance` is `java.lang.Object` and there are no required qualifiers.
+If no qualifier is passed to `Instance.select()`, there is one required qualifier: `@Default`.
 
 If any `Instance.select()` method is called and the container was already shutdown, the `IllegalStateException` is thrown.
 
