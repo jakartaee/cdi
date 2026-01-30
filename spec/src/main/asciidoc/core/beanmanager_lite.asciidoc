@@ -61,7 +61,8 @@ An object may obtain a reference to the current container by calling `CDI.curren
 If methods on `CDI` are called at any other time, non-portable behavior results.
 
 `CDI` implements `jakarta.enterprise.inject.Instance` and therefore might be used to perform programmatic lookup as defined in <<dynamic_lookup>>.
-If no qualifier is passed to `CDI.select()` method, the `@Default` qualifier is assumed.
+Initially, the required type of the `Instance` is `java.lang.Object` and there are no required qualifiers.
+If no qualifier is passed to `Instance.select()`, there is one required qualifier: `@Default`.
 
 When `CDI.current()` is called, `getCDI()` method is called on `jakarta.enterprise.inject.spi.CDIProvider`.
 
@@ -268,7 +269,8 @@ Instance<Object> createInstance();
 
 Instances of dependent scoped beans obtained with this `Instance` object must be explicitly released by calling `Instance.destroy()` method.
 
-If no qualifier is passed to `Instance.select()` method, the `@Default` qualifier is assumed.
+Initially, the required type of the `Instance` is `java.lang.Object` and there are no required qualifiers.
+If no qualifier is passed to `Instance.select()`, there is one required qualifier: `@Default`.
 
 [[bm_bean_event_assignability]]
 

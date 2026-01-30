@@ -28,7 +28,9 @@ import jakarta.enterprise.inject.Instance;
  *
  * <p>
  * CDI implements {@link Instance} and therefore might be used to perform programmatic lookup.
- * If no qualifier is passed to {@link #select} method, the <code>@Default</code> qualifier is assumed.
+ * Initially, the required type of the {@code Instance} is {@code java.lang.Object} and there
+ * are no required qualifiers. If no qualifier is passed to {@code Instance.select()}, there
+ * is one required qualifier: {@code @Default}.
  * </p>
  *
  *

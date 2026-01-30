@@ -258,7 +258,9 @@ public interface BeanContainer {
      * Instances of dependent scoped beans obtained with this <code>Instance</code> must be explicitly destroyed by calling
      * {@link Instance#destroy(Object)}
      * <p>
-     * If no qualifier is passed to {@link Instance#select} method, the <code>@Default</code> qualifier is assumed.
+     * Initially, the required type of the {@code Instance} is {@code java.lang.Object} and there
+     * are no required qualifiers. If no qualifier is passed to {@code Instance.select()}, there
+     * is one required qualifier: {@code @Default}.
      *
      * @return an {@link Instance} object to request beans instances
      * @throws IllegalStateException if called during application initialization, before the {@link AfterDeploymentValidation}
