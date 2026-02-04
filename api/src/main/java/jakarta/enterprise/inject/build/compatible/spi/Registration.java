@@ -60,7 +60,26 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Registration {
     /**
-     * Defines the set of <em>expected types</em>.
+     * Defines the set of <em>expected types</em>. Any type is directly included in the set of expected types,
+     * unless it is a class type whose direct superclass type's erasure is {@link jakarta.enterprise.util.TypeLiteral}.
+     * In that case, the type argument to {@code TypeLiteral} is included in the set of expected types.
+     * <p>
+     * If the type argument to {@code TypeLiteral} contains type variables, the container treats it as a definition error.
+     * (This restriction shall be lifted in the future, because {@code @Dependent} beans may have type variables
+     * in their bean types. What it means for a set of bean types to contain an expected type is not immediately
+     * obvious in case type variables are present. More specification work is required.)
+     * <p>
+     * If the direct superclass type is a raw {@code TypeLiteral}, the container treats it as a definition error.
+     * <p>
+     * For example, to observe all beans whose set of bean types contains the {@code CharSequence} type,
+     * you would write {@code @Registration(types = CharSequence.class)}. To observe all beans whose set of bean types
+     * contains the {@code List<CharSequence>} type, you would write {@code @Registration(types = ListOfCharSequence.class)}
+     * where {@code ListOfCharSequence} is defined as:
+     *
+     * <pre>{@code
+     * static class ListOfCharSequence extends TypeLiteral<List<CharSequence>> {
+     * }
+     * }</pre>
      *
      * @return the set of <em>expected types</em>
      */
