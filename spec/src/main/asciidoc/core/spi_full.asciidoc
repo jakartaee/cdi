@@ -937,7 +937,7 @@ public interface BeforeBeanDiscovery {
 * `addScope()` declares an annotation type as a scope type.
 * `addStereotype()` declares an annotation type as a stereotype, and specifies its meta-annotations.
 * `addInterceptorBinding()` declares an annotation type as an interceptor binding type, and specifies its meta-annotations.
-* `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an optional identifier.
+* `addAnnotatedType()` adds a given `AnnotatedType` to the set of types discovered during type discovery, with an identifier.
 +
 Second version of the method returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of the observer invocation.
 The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.
@@ -982,7 +982,7 @@ Alternatives enabled for a bean archive are not included in the list.
 Interceptors enabled for a bean archive are not included in the list.
 * `getDecorators()` returns the ordered list of enabled decorators for the application, sorted by priority in ascending order.
 Decorators enabled for a bean archive are not included in the list.
-* `addAnnotatedType()` adds a given `AnnotatedType` to the set of types which will be scanned during bean discovery, with an identifier.
+* `addAnnotatedType()` adds a given `AnnotatedType` to the set of types discovered during type discovery, with an identifier.
 +
 The second version of the method, returns a new `AnnotatedTypeConfigurator` as defined in <<annotated_type_configurator>> to easily configure the `AnnotatedType` which will be added at the end of observer invocation.
 The returned `AnnotatedTypeConfigurator` is initialized with type and annotations of the provided class.

@@ -20,7 +20,6 @@ package jakarta.enterprise.inject.build.compatible.spi;
 public interface ScannedClasses {
     /**
      * Adds a class with given name to the set of types discovered during type discovery.
-     * The class will therefore be scanned during bean discovery.
      * <p>
      * Adding the same class multiple times, or adding a class that is automatically discovered
      * by the container, leads to non-portable behavior.

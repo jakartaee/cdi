@@ -140,7 +140,7 @@ public interface BeforeBeanDiscovery {
 
     /**
      * <p>
-     * Adds a given {@link AnnotatedType} to the set of types which will be scanned during bean discovery.
+     * Adds a given {@link AnnotatedType} to the set of types discovered during type discovery.
      * </p>
      *
      * <p>
@@ -155,7 +155,7 @@ public interface BeforeBeanDiscovery {
      * </p>
      *
      * @param type The {@link AnnotatedType} to add for later scanning
-     * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
+     * @param id the identifier used to distinguish this AnnotatedType from another one based on the same underlying type
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 1.1
      */
@@ -163,8 +163,8 @@ public interface BeforeBeanDiscovery {
 
     /**
      * <p>
-     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link AnnotatedType} and
-     * add it to the set of types which will be scanned during bean discovery at the end of the observer invocation
+     * Obtains a new {@link AnnotatedTypeConfigurator} to configure a new {@link AnnotatedType} and add it
+     * to the set of types discovered during type discovery at the end of the observer invocation.
      * </p>
      *
      * <p>
@@ -183,9 +183,9 @@ public interface BeforeBeanDiscovery {
      *
      *
      * @param <T> class type
-     * @param type class used to initialized the type and annotations on the {@link AnnotatedTypeConfigurator}
-     * @param id the identifier used to distinguish this AnnotatedType from an other one based on the same underlying type
-     * @return a non reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
+     * @param type class used to initialize the type and annotations on the {@link AnnotatedTypeConfigurator}
+     * @param id the identifier used to distinguish this AnnotatedType from another one based on the same underlying type
+     * @return a non-reusable {@link AnnotatedTypeConfigurator} to configure the new AnnotatedType
      * @throws IllegalStateException if called outside of the observer method invocation
      * @since 2.0
      */
