@@ -117,6 +117,7 @@ public interface AfterBeanDiscovery {
      * Registers a custom {@link Context} object with the container.
      *
      * @param context The custom context to add to the deployment
+     * @throws DeploymentException if the custom context declares a global built-in scope
      * @throws IllegalStateException if called outside of the observer method invocation
      */
     public void addContext(Context context);

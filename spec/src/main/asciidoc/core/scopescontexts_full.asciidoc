@@ -29,7 +29,7 @@ When the container calls `get()` or `destroy()` for a context that is associated
 
 The `Context` interface may be called by portable extensions.
 
-A context object may be defined for any of the built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
+A context object may be defined for any of the non-global built-in scopes and registered with the container using the `AfterBeanDiscovery` event as described in <<after_bean_discovery>>.
 
 [[dependent_context_full]]
 
@@ -218,5 +218,6 @@ If `begin()` is called with an explicit conversation identifier, and a long-runn
 
 In addition to rules defined in <<custom_contexts>>, the following rule applies.
 
-A portable extension may define a custom context object for built-in scopes and custom scopes.
+A portable extension may define a custom context object for non-global built-in scopes and for custom scopes.
 For example, a remoting framework might provide a request context object for the built-in request scope.
+If an attempt to register a custom context object for a global built-in scope is made, deployment problem occurs.

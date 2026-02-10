@@ -31,41 +31,16 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <p>
  * Specifies that a bean is application scoped.
  * </p>
+ *
  * <p>
- * While <code>ApplicationScoped</code> must be associated with the built-in application context required by the specification,
- * third-party extensions are allowed to also associate it with their own context. Behavior described below is only related to
- * the built-in application context.
+ * The application scope is global. Extensions are not allowed to register a custom context for it.
  * </p>
  *
  * <p>
- * The application scope is active:
- * </p>
- *
- * <ul>
- * <li>during the <code>service()</code> method of any servlet in the web application, during the <code>doFilter()</code> method
- * of any servlet filter and when the container calls any <code>ServletContextListener</code>, <code>HttpSessionListener</code>,
- * <code>AsyncListener</code> or <code>ServletRequestListener</code>,</li>
- * <li>during any Java EE web service invocation,</li>
- * <li>during any remote method invocation of any EJB, during any asynchronous method invocation of any EJB, during any call to
- * an EJB timeout method and during message delivery to any EJB message-driven bean,</li>
- * <li>when the disposer method or <code>@PreDestroy</code> callback of any bean with any normal scope other than
- * <code>@ApplicationScoped</code> is called, and</li>
- * <li>during <code>@PostConstruct</code> callback of any bean.</li>
- * </ul>
- *
- * <p>
- * The application context is shared between all servlet requests, web service invocations, EJB remote method invocations, EJB
- * asynchronous method invocations, EJB timeouts and message deliveries to message-driven beans that execute within the same
- * application.
- * </p>
- * <p>
- * The application context is destroyed when the application is shut down.
- * </p>
- *
- * <p>
- * An event with qualifier <code>@Initialized(ApplicationScoped.class)</code> is fired when the application context is
- * initialized and an event with qualifier <code>@Destroyed(ApplicationScoped.class)</code> when the application context is
- * destroyed. The event payload is:
+ * An event with qualifier {@code @Initialized(ApplicationScoped.class)} is fired after the application context
+ * is initialized. An event with qualifier {@code @BeforeDestroyed(ApplicationScoped.class)} is fired before
+ * the application context is destroyed. An event with qualifier {@code @Destroyed(ApplicationScoped.class)} is fired
+ * after the application context is destroyed. In all cases, the event payload is:
  * </p>
  *
  * <ul>
