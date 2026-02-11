@@ -199,7 +199,7 @@ An explicit bean archive may be marked as 'trimmed' by adding the `<trim />` ele
 
 If an explicit bean archive contains the `<trim/>` element in its `beans.xml` file, types that don't have either a bean defining annotation (as defined in <<bean_defining_annotations>>) or any scope annotation, are removed from the set of discovered types.
 
-
+If an archive other than an explicit bean archive is marked as 'trimmed', the container automatically detects it and treats it as a deployment problem.
 
 [[bean_discovery_steps_full]]
 
