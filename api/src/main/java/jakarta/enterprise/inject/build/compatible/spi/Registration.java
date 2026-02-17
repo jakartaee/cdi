@@ -60,7 +60,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Registration {
     /**
-     * Defines the set of <em>expected types</em>.
+     * Defines the set of <em>expected types</em>. Any type is directly included in the set of expected types,
+     * unless it is a class type whose direct superclass type's erasure is {@link jakarta.enterprise.util.TypeLiteral}.
+     * In that case, the type argument to {@code TypeLiteral} is included in the set of expected types.
+     * If the direct superclass type is a raw {@code TypeLiteral}, the container treats it as a definition error.
      *
      * @return the set of <em>expected types</em>
      */
