@@ -213,20 +213,8 @@ It is a deployment problem if an attempt to identify a looked up bean results in
 Implementations are permitted to remember the identified beans and not repeat the resolution process for each invocation of `Invoker.invoke()`.
 
 All instances of `@Dependent` looked up beans obtained during `Invoker.invoke()` are destroyed before the `invoke()` method returns or throws.
+(See <<invoker_asynchronous_methods>> for a variation of this rule for asynchronous methods.)
 The order in which the instances of `@Dependent` looked up beans are destroyed is not specified.
-
-This specification recognizes the existence of _asynchronous_ methods, where the action represented by the method does not always finish when the method returns; the _completion_ of the action is asynchronous to the method call.
-For target methods that are considered asynchronous by the CDI container, the requirement to destroy instances of `@Dependent` looked up beans is relaxed: the instances of `@Dependent` looked up beans need not be destroyed before `Invoker.invoke()` returns.
-It is recommended that the instances of `@Dependent` looked up beans are destroyed after the asynchronous action completes and before the completion is propagated to the caller of `Invoker.invoke()`; if an asynchronous target method completes synchronously or throws synchronously, it is recommended that the instances of `@Dependent` looked up beans are destroyed before `invoke()` returns or rethrows the exception.
-
-[CAUTION]
-====
-The rules for recognizing asynchronous methods are not specified.
-Applications which use invokers to call asynchronous methods are therefore not portable.
-Future versions of this specification may define an API to give greater control over the invocation of asynchronous methods.
-
-Implementations that support asynchronous methods are encouraged to document the rules they follow.
-====
 
 The order in which instances of looked up beans are obtained during `Invoker.invoke()` in not specified.
 
@@ -234,3 +222,52 @@ If an exception is thrown when creating an instance of a looked up bean during `
 
 NOTE: Destroying an instance is not permitted to throw an exception.
 See <<contextual>> for more information.
+
+[[invoker_asynchronous_methods]]
+===== Asynchronous methods
+
+Sometimes, the action started by the method does not necessarily finish when the method returns; the _completion_ of the action is asynchronous to the method call.
+Such methods are called _asynchronous_ methods.
+Method invokers have special support for asynchronous methods when it comes to destroying instances of looked up `@Dependent` beans.
+
+[source,java]
+----
+public interface AsyncHandler<T> {
+    T transform(T original, Runnable completion);
+}
+----
+
+An _async handler_ is a service provider of `jakarta.enterprise.invoke.AsyncHandler`.
+An async handler may not declare a provider method; it must declare a provider constructor.
+An async handler must have a direct superinterface type that is a parameterized type whose generic interface is `AsyncHandler` and its sole type argument is a class type, interface type or parameterized type, otherwise deployment problem occurs.
+The erasure of the type argument to `AsyncHandler` is called the _async type_ of the async handler.
+An async handler must be stateless (and therefore thread safe); there are no guarantees about its lifecycle.
+
+Each async handler must be annotated either `@AsyncHandler.ReturnType` or `@AsyncHandler.ParameterType`, otherwise deployment problem occurs.
+If an async handler is annotated `@AsyncHandler.ReturnType`, the target method matches the async handler if the erasure of its return type is identical to the async type of the async handler.
+If an async handler is annotated `@AsyncHandler.ParameterType`, the target method matches the async handler if it declares exactly one parameter whose type's erasure is identical to the async type of the async handler; this parameter is called an _async parameter_.
+
+If the target method matches exactly one async handler, the invoker becomes asynchronous.
+An asynchronous invoker calls the `transform()` method of the matching async handler exactly once during `invoke()`.
+If the matching async handler is annotated `@AsyncHandler.ReturnType`, the `transform()` method is called after the target method is called, with the return value of the target method as the `original`, and the result is returned to the caller.
+If the matching async handler is annotated `@AsyncHandler.ParameterType`, the `transform()` method is called before the target method is called, with the given argument value of the async parameter as the `original`, and the result is passed to the target method as the argument value of the async parameter.
+The async handler signals completion of the asynchronous action by calling `completion.run()`.
+
+The requirement to destroy instances of `@Dependent` looked up beans is different for asynchronous invokers.
+The instances of `@Dependent` looked up beans are destroyed when the asynchronous action completes, as signalled by the async handler.
+If an asynchronous target method throws synchronously, instances of `@Dependent` looked up beans are destroyed before `invoke()` rethrows the exception; in this case, the async handler is still permitted to call `completion.run()`, but the call must be ignored.
+
+The CDI container must include async handlers for the following return types:
+
+- `java.util.concurrent.CompletionStage`
+- `java.util.concurrent.CompletableFuture`
+- `java.util.concurrent.Flow.Publisher`
+
+If the target method matches more than one async handler, by default a deployment problem occurs.
+Containers are required to provide implementation-defined means of configuring an async handler that should be used for any given async type.
+If such configuration is present, other async handlers for the given async type are ignored; the target method only matches the configured async handler.
+If the configured async handler does not exist, deployment problem occurs.
+It is possible to configure a custom async handler for the built-in return types listed above.
+
+Containers are encouraged to detect asynchronous methods for which an invoker is built but a matching async handler does not exist and provide a warning in a suitable form.
+Such detection is likely based on a set of well-known asynchronous types.
