@@ -35,8 +35,7 @@ public interface SyntheticBeanDisposer<T> {
      * <p>
      * The {@link SyntheticInjections} parameter may be used to simulate disposer method parameter injection.
      * All injectable references looked up from {@code SyntheticInjections} have to previously be registered using
-     * {@code SyntheticBeanBuilder.withInjectionPoint()}. All {@code @Dependent} bean instances obtained
-     * from {@code SyntheticInjections} during execution are destroyed when execution completes.
+     * {@code SyntheticBeanBuilder.withInjectionPoint()}.
      * <p>
      * Trying to look up {@code InjectionPoint} from the {@code SyntheticInjections} parameter is invalid.
      * <p>

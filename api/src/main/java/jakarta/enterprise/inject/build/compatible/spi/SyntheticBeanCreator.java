@@ -36,10 +36,7 @@ public interface SyntheticBeanCreator<T> {
      * <p>
      * The {@link SyntheticInjections} parameter may be used to simulate producer method parameter injection.
      * All injectable references looked up from {@code SyntheticInjections} have to previously be registered using
-     * {@code SyntheticBeanBuilder.withInjectionPoint()}. All {@code @Dependent} bean instances obtained from
-     * {@code SyntheticInjections} during execution remain managed until the synthetic bean instance is destroyed.
-     * Therefore, implementations are encouraged to destroy unneeded {@code @Dependent} bean instances obtained
-     * from {@code SyntheticInjections}.
+     * {@code SyntheticBeanBuilder.withInjectionPoint()}.
      * <p>
      * If the synthetic bean is {@code @Dependent}, the {@code InjectionPoint} to which it is injected
      * may be obtained from the {@code SyntheticInjections} parameter, if previously registered.

@@ -15,9 +15,12 @@ import java.lang.annotation.Annotation;
 import jakarta.enterprise.util.TypeLiteral;
 
 /**
- * Contains injectable references for injection points registered for a synthetic bean.
+ * Provides injectable references for injection points registered for a synthetic bean.
  * A synthetic bean creation/destruction function can look up beans in this container
  * that were previously registered using {@code SyntheticBeanBuilder.withInjectionPoint()}.
+ * <p>
+ * All {@code @Dependent} bean instances created by {@code SyntheticInjections} are destroyed
+ * when the corresponding synthetic bean instance is destroyed.
  *
  * @since 5.0
  */
