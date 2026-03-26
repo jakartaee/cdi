@@ -43,9 +43,10 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * <li>during all Servlet requests.</li>
  * </ul>
  * <p>
- * An event with qualifier <code>@Initialized(ConversationScoped.class)</code> is fired when the conversation context is
- * initialized and an event with qualifier <code>@Destroyed(ConversationScoped.class)</code> is fired when the conversation is
- * destroyed. The event payload is:
+ * An event with qualifier {@code @Initialized(ConversationScoped.class)} is fired immediately after the conversation context
+ * is initialized. An event with qualifier {@code @BeforeDestroyed(ConversationScoped.class)} is fired immediately before
+ * the conversation context is destroyed. An event with qualifier {@code @Destroyed(ConversationScoped.class)} is fired
+ * immediately after the conversation context is destroyed. In all cases, the event payload is:
  * </p>
  * <ul>
  * <li>the conversation id if the conversation context is destroyed and is not associated with a current Servlet request,

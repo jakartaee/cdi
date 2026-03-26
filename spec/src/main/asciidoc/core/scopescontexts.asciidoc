@@ -383,9 +383,9 @@ The context does not propagate across remote method invocations or to asynchrono
 
 The _request context_ is provided by a built-in context object for the built-in scope type `@RequestScoped`.
 
-An event with qualifier `@Initialized(RequestScoped.class)` is synchronously fired when the request context is initialized.
-An event with qualifier `@BeforeDestroyed(RequestScoped.class)` is synchronously fired when the request context is about to be destroyed, i.e. before the actual destruction.
-An event with qualifier `@Destroyed(RequestScoped.class)` is synchronously fired when the request context is destroyed, i.e. after the actual destruction.
+An event with qualifier `@Initialized(RequestScoped.class)` is synchronously fired immediately after the request context is initialized.
+An event with qualifier `@BeforeDestroyed(RequestScoped.class)` is synchronously fired immediately before the request context is destroyed.
+An event with qualifier `@Destroyed(RequestScoped.class)` is synchronously fired immediately after the request context is destroyed.
 
 The request context is active:
 
@@ -405,9 +405,9 @@ The application scope is global.
 
 The _application context_ is provided by a built-in context object for the built-in scope type `@ApplicationScoped`.
 
-An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously fired when the application context is initialized.
-An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired when the application context is about to be destroyed, i.e. before the actual destruction.
-An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired when the application context is destroyed, i.e. after the actual destruction.
+An event with qualifier `@Initialized(ApplicationScoped.class)` is synchronously fired immediately after the application context is initialized.
+An event with qualifier `@BeforeDestroyed(ApplicationScoped.class)` is synchronously fired immediately before the application context is destroyed.
+An event with qualifier `@Destroyed(ApplicationScoped.class)` is synchronously fired immediately after the application context is destroyed.
 
 The payload of the event fired when the application context is initialized or destroyed is:
 
@@ -419,9 +419,9 @@ The payload of the event fired when the application context is initialized or de
 
 Custom context implementations are encouraged to synchronously fire:
 
-* an event with qualifier `@Initialized(X.class)` when a custom context is initialized, i.e. ready for use,
-* an event with qualifier `@BeforeDestroyed(X.class)` when a custom context is about to be destroyed, i.e. before the actual destruction,
-* an event with qualifier `@Destroyed(X.class)` when a custom context is destroyed, i.e. after the actual destruction,
+* an event with qualifier `@Initialized(X.class)` immediately after a custom context is initialized,
+* an event with qualifier `@BeforeDestroyed(X.class)` immediately before a custom context is destroyed,
+* an event with qualifier `@Destroyed(X.class)` immediately after a custom context is destroyed,
 
 where `X` is the scope type associated with the context.
 
