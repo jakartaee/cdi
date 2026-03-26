@@ -37,10 +37,10 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </p>
  *
  * <p>
- * An event with qualifier {@code @Initialized(ApplicationScoped.class)} is fired after the application context
- * is initialized. An event with qualifier {@code @BeforeDestroyed(ApplicationScoped.class)} is fired before
+ * An event with qualifier {@code @Initialized(ApplicationScoped.class)} is fired immediately after the application context
+ * is initialized. An event with qualifier {@code @BeforeDestroyed(ApplicationScoped.class)} is fired immediately before
  * the application context is destroyed. An event with qualifier {@code @Destroyed(ApplicationScoped.class)} is fired
- * after the application context is destroyed. In all cases, the event payload is:
+ * immediately after the application context is destroyed. In all cases, the event payload is:
  * </p>
  *
  * <ul>

@@ -66,9 +66,10 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </ul>
  *
  * <p>
- * An event with qualifier <code>@Initialized(RequestScoped.class)</code> is fired when the request context is initialized and
- * an event with qualifier <code>@Destroyed(RequestScoped.class)</code> when the request context is destroyed. The event payload
- * is:
+ * An event with qualifier {@code @Initialized(RequestScoped.class)} is fired immediately after the request context
+ * is initialized. An event with qualifier {@code @BeforeDestroyed(RequestScoped.class)} is fired immediately before
+ * the request context is destroyed. An event with qualifier {@code @Destroyed(RequestScoped.class)} is fired
+ * immediately after the request context is destroyed. In all cases, the event payload is:
  * </p>
  *
  * <ul>
