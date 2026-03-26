@@ -17,6 +17,7 @@ package jakarta.enterprise.inject.spi;
 import java.util.Set;
 
 import jakarta.enterprise.context.spi.Contextual;
+import jakarta.enterprise.context.spi.CreationalContext;
 
 /**
  * <p>
@@ -29,6 +30,29 @@ import jakarta.enterprise.context.spi.Contextual;
  * @param <T> the class of the bean instance
  */
 public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
+
+    /**
+     * Destroy an instance of this bean.
+     * <p>
+     * Implementations of {@code Bean} that are not backed by a {@link Producer} should include the following code
+     * at the end of {@code destroy()} to satisfy the {@link Contextual#destroy(Object, CreationalContext)} requirements
+     * and support auto-closeable beans:
+     *
+     * <pre>{@code
+     * if (isAutoClose() && instance instanceof AutoCloseable ac) {
+     *     try {
+     *         ac.close();
+     *     } catch (Exception e) {
+     *         // log an error or handle the exception in some other way
+     *         // bean destruction is not allowed to throw an exception
+     *     }
+     * }
+     *
+     * creationalContext.release();
+     * }</pre>
+     */
+    @Override
+    public void destroy(T instance, CreationalContext<T> creationalContext);
 
     /**
      * The bean {@linkplain Class class} of the managed bean or session bean or of the bean that declares the producer method or
