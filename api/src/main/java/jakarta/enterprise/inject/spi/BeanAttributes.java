@@ -105,4 +105,16 @@ public interface BeanAttributes<T> {
         return false;
     }
 
+    /**
+     * Determines if the bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable}.
+     *
+     * @return <code>true</code> if the bean is {@linkplain jakarta.enterprise.context.AutoClose auto-closeable},
+     *         and <code>false</code> otherwise.
+     * @since 5.0
+     */
+    public default boolean isAutoClose() {
+        // `default` to avoid breaking older `Bean` implementations
+        return false;
+    }
+
 }

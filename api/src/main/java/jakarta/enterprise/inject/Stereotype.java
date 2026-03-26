@@ -85,7 +85,8 @@ import java.lang.annotation.Target;
  * <li>all beans with the stereotype are alternatives, or that</li>
  * <li>all beans with the stereotype have predefined {@code @Priority}, or that</li>
  * <li>all beans with the stereotype are reserves, or that</li>
- * <li>all beans with the stereotype are eagerly initialized.</li>
+ * <li>all beans with the stereotype are eagerly initialized, or that</li>
+ * <li>all beans with the stereotype are auto-closeable.</li>
  * </ul>
  *
  * <p>
@@ -161,6 +162,20 @@ import java.lang.annotation.Target;
  * &#064;Target(TYPE)
  * &#064;Retention(RUNTIME)
  * public @interface InitOnStartup {
+ * }
+ * </pre>
+ *
+ * <p>
+ * A stereotype may declare an {@link jakarta.enterprise.context.AutoClose &#064;AutoClose} annotation, which specifies
+ * that every bean with the stereotype is auto-closeable.
+ * </p>
+ *
+ * <pre>
+ * &#064;AutoClose
+ * &#064;Stereotype
+ * &#064;Target(TYPE)
+ * &#064;Retention(RUNTIME)
+ * public @interface CloseOnDestroy {
  * }
  * </pre>
  *
