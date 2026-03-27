@@ -61,10 +61,10 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * </ul>
  *
  * <p>
- * An event with qualifier <code>@Initialized(SessionScoped.class)</code> is fired when the session context is initialized and
- * an event with qualifier <code>@Destroyed(SessionScoped.class)</code> when the session context is destroyed. The event payload
- * is the <code>HttpSession</code>
- *
+ * An event with qualifier {@code @Initialized(SessionScoped.class)} is fired immediately after the session context
+ * is initialized. An event with qualifier {@code @BeforeDestroyed(SessionScoped.class)} is fired immediately before
+ * the session context is destroyed. An event with qualifier {@code @Destroyed(SessionScoped.class)} is fired
+ * immediately after the session context is destroyed. In all cases, the event payload is the {@code HttpSession}.
  * <p>
  * CDI Lite implementations are not required to provide support for the session scope.
  * </p>
