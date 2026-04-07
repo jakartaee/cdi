@@ -11,10 +11,8 @@
 package jakarta.enterprise.inject.build.compatible.spi;
 
 /**
- * Build compatible extensions are service providers for this interface, as defined in {@link java.util.ServiceLoader}.
- * This means: they are classes that implement this interface, provide a {@code META-INF/services} file,
- * and satisfy all other service provider constraints. Additionally, build compatible extensions must not be beans
- * and must not be referred to by application code.
+ * Build compatible extensions are service providers for this interface declared in {@code META-INF/services}.
+ * Additionally, build compatible extensions must not be beans and must not be referred to by application code.
  * <p>
  * Build compatible extensions may define arbitrary {@code public}, non-{@code static}, {@code void}-returning methods
  * without type parameters, annotated with one of the extension annotations. Such methods are called extension methods.

@@ -17,7 +17,7 @@ A build compatible extension may integrate with the container during deployment 
 
 === The `BuildCompatibleExtension` interface
 
-A build compatible extension is a service provider of the `jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension` interface, declared in `META-INF/services`.
+A build compatible extension is a service provider of the `jakarta.enterprise.inject.build.compatible.spi.BuildCompatibleExtension` interface declared in `META-INF/services`.
 
 [source, java]
 ----
