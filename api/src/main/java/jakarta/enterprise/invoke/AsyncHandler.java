@@ -10,98 +10,113 @@
 
 package jakarta.enterprise.invoke;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Flow;
-
 /**
- * Includes logic for determining when an asynchronous action started by an invocation
- * of an asynchronous method completes. Service providers of this interface are called
- * <em>async handlers</em>. For the purpose of method invokers, a method is called
- * <em>asynchronous</em> if it matches an async handler.
+ * Determines when an asynchronous action started by an invocation of an asynchronous method
+ * completes. For the purpose of method invokers, a method is called <em>asynchronous</em> if it matches
+ * exactly one async handler. An <em>async handler</em> is either a {@linkplain ReturnType return type async handler}
+ * or a {@linkplain ParameterType parameter type async handler}. For an asynchronous method, the matching async handler
+ * is called during {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}.
  * <p>
- * An <em>async type</em> of an async handler is the erasure of the type argument
- * to the {@code AsyncHandler} direct superinterface type.
+ * Async handlers must be stateless. No guarantees about their lifecycle are made.
  * <p>
- * An async handler must be annotated either {@link ReturnType} or {@link ParameterType}.
- * This annotation determines how methods are matched and how the async handler is used.
- * <p>
- * The {@link #transform(Object, Runnable) transform()} method of a matching async handler
- * is called exactly once by {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}.
- * It takes an {@code original} asynchronous action and returns a transformation of it.
- * This transformation calls {@code completion.run()} exactly once, when the asynchronous
- * action completes.
- * <p>
- * For example, an async handler for {@link java.util.concurrent.CompletionStage} may look like:
- *
- * <pre>
- * &#064;ReturnType
- * public class CompletionStageAsyncHandler&lt;T&gt; implements AsyncHandler&lt;CompletionStage&lt;T&gt;&gt; {
- *     public CompletionStage&lt;T&gt; transform(CompletionStage&lt;T&gt; original, Runnable completion) {
- *         return original.whenComplete((value, error) -> {
- *             completion.run();
- *         });
- *     }
- * }
- * </pre>
- *
- * The CDI container must provide an async handler for the return types of
+ * The CDI container provides built-in return type async handlers for
  * {@link java.util.concurrent.CompletionStage CompletionStage},
- * {@link java.util.concurrent.CompletableFuture CompletableFuture} and
- * {@link Flow.Publisher Flow.Publisher}.
+ * {@link java.util.concurrent.CompletableFuture CompletableFuture}
+ * and {@link java.util.concurrent.Flow.Publisher Flow.Publisher}.
  *
- * @param <T> the type that represents the asynchronous action
  */
-public interface AsyncHandler<T> {
+public interface AsyncHandler {
     /**
-     * Takes the {@code original} asynchronous action and returns a variant of it, transformed
-     * such that {@code completion.run()} is called on completion. Note that {@code completion.run()}
-     * must be called exactly once.
+     * A <em>return type async handler</em> is a service provider for this interface declared
+     * in {@code META-INF/services}. The <em>async type</em> of a return type async handler is the erasure
+     * of the type argument to the {@code AsyncHandler.ReturnType} direct superinterface type.
      * <p>
-     * It is recommended that {@code completion.run()} is called <em>before</em> completion
-     * is propagated to the caller.
+     * A target method matches a return type async handler when the erasure of the method's return type
+     * is identical to the async type of the async handler.
      *
-     * @param original the original asynchronous action
-     * @param completion action that must be executed when the asynchronous action completes
-     * @return the transformed async action
+     * @see #transform(Object, Runnable)
+     * @param <T> the async type of the handler
      */
-    T transform(T original, Runnable completion);
-
-    /**
-     * If an async handler is annotated {@code @ReturnType}, the target method matches when
-     * the erasure of its return type is identical to the async type of the async handler.
-     * <p>
-     * In such case, the {@code AsyncHandler.transform()} method is called after the target
-     * method returns. The original return value is passed to {@code transform()} as
-     * {@code original} and the return value of {@code transform()} is returned to the caller.
-     * <p>
-     * If an async handler is annotated {@code @ReturnType}, it must not be annotated
-     * {@code @ParameterType}, otherwise deployment problem occurs.
-     */
-    @Target(ElementType.TYPE)
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface ReturnType {
+    interface ReturnType<T> {
+        /**
+         * Called once by {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}, after the target method
+         * returns. When the target method throws an exception synchronously, this method is not called.
+         * <p>
+         * Takes the {@code original} return value and returns a variant of it, transformed such that
+         * {@code completion.run()} is called on completion. Note that {@code completion.run()} must be called
+         * exactly once. The result is returned to the invoker caller instead of the {@code original}.
+         * <p>
+         * It is recommended that {@code completion.run()} is called <em>before</em> completion is propagated
+         * to the caller.
+         *
+         * @param original the original asynchronous return value
+         * @param completion action that must be executed when the asynchronous action completes
+         * @return the transformed asynchronous return value
+         */
+        T transform(T original, Runnable completion);
     }
 
     /**
-     * If an async handler is annotated {@code @ParameterType}, the target method matches when
-     * it declares exactly one parameter whose type's erasure is identical to the async type
-     * of the async handler.
+     * A <em>parameter type async handler</em> is a service provider for this interface declared
+     * in {@code META-INF/services}. An <em>async type</em> of a parameter type async handler is the erasure
+     * of the type argument to the {@code AsyncHandler.ParameterType} direct superinterface type.
      * <p>
-     * In such case, the {@code AsyncHandler.transform()} method is called before the target
-     * method is called. The original argument value is passed to {@code transform()} as
-     * {@code original} and the return value of {@code transform()} is passed as an argument
-     * to the target method.
-     * <p>
-     * If an async handler is annotated {@code @ParameterType}, it must not be annotated
-     * {@code @ReturnType}, otherwise deployment problem occurs.
+     * A target method matches a parameter type async handler when it declares exactly one parameter
+     * whose type's erasure is identical to the async type of the async handler. This parameter is called
+     * the <em>async parameter</em>.
+     *
+     * @see #transformArgument(Object, Runnable)
+     * @see #transformReturnValue(Object, Runnable)
+     * @param <T> the async type of the handler
      */
-    @Target(ElementType.TYPE)
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface ParameterType {
+    interface ParameterType<T> {
+        /**
+         * Called once by {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}, before the target method
+         * is invoked.
+         * <p>
+         * Takes the {@code original} argument value for the async parameter and returns a variant of it,
+         * transformed such that {@code completion.run()} is called on completion. The result is passed to the
+         * target method instead of the {@code original}.
+         * <p>
+         * The net effect of this method and {@link #transformReturnValue(Object, Runnable)} must be that
+         * {@code completion.run()} is called exactly once, after the asynchronous action completes. It is
+         * recommended that {@code completion.run()} is called <em>before</em> completion is propagated to the
+         * caller.
+         *
+         * @param original the original argument value for the async parameter
+         * @param completion action that must be executed when the asynchronous action completes
+         * @return the transformed argument value for the async parameter
+         */
+        T transformArgument(T original, Runnable completion);
+
+        /**
+         * Called once by {@link Invoker#invoke(Object, Object[]) Invoker.invoke()}, after the target method
+         * returns. When the target method throws an exception synchronously, this method is not called.
+         * <p>
+         * Takes the {@code original} return value and returns a variant of it, performing any transformation
+         * necessary such that that {@code completion.run()} is called on completion. The result is returned
+         * to the invoker caller instead of the {@code original}.
+         * <p>
+         * The net effect of this method and {@link #transformArgument(Object, Runnable)} must be that
+         * {@code completion.run()} is called exactly once, after the asynchronous action completes. It is
+         * recommended that {@code completion.run()} is called <em>before</em> completion is propagated to the
+         * caller.
+         * <p>
+         * The default implementation returns {@code original} directly.
+         * <p>
+         * Note that vast majority of parameter type async handlers do <em>not</em> need to implement
+         * this method, because completion is usually signaled solely through the async parameter. This method
+         * only needs to be implemented if the return value may also be used to signal completion.
+         * As of this writing, the only known situation when this occurs is Kotlin {@code suspend} functions,
+         * where synchronous completion is signaled through the return value and asynchronous completion
+         * is signaled through the {@code Continuation} parameter.
+         *
+         * @param original the original return value
+         * @param completion action that must be executed when the asynchronous action completes
+         * @return the transformed return value
+         */
+        default Object transformReturnValue(Object original, Runnable completion) {
+            return original;
+        }
     }
 }
