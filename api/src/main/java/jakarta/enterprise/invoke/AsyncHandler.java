@@ -72,6 +72,25 @@ public interface AsyncHandler<T> {
     T transform(T original, Runnable completion);
 
     /**
+     * Called only on {@link ParameterType @ParameterType} async handlers, after the target
+     * method returns normally. Allows the async handler to detect synchronous completion
+     * of the asynchronous action based on the return value of the target method.
+     * <p>
+     * In some async protocols, the target method may complete synchronously without invoking
+     * the callback that was wrapped by {@link #transform(Object, Runnable) transform()}.
+     * This method should detect such synchronous completion and call {@code completion.run()}.
+     * <p>
+     * The default implementation does nothing. This is the correct behavior for most
+     * {@link ParameterType @ParameterType} async handlers; the only known situation when
+     * this method needs to be implemented is invoking Kotlin {@code suspend} functions.
+     *
+     * @param returnValue the return value of the target method
+     * @param completion the same completion action that was passed to {@code transform()}
+     */
+    default void checkReturnValue(Object returnValue, Runnable completion) {
+    }
+
+    /**
      * If an async handler is annotated {@code @ReturnType}, the target method matches when
      * the erasure of its return type is identical to the async type of the async handler.
      * <p>
