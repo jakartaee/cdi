@@ -19,7 +19,7 @@
 	<groupId>jakarta.cdi</groupId>
 	<artifactId>jakarta.cdi-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>5.0.0.Alpha5</version>
+	<version>5.0.0.Alpha6-SNAPSHOT</version>
 
 	<name>CDI Parent</name>
 	<description>Parent module for CDI Specification</description>
