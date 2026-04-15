@@ -14,7 +14,7 @@ SPDX-License-Identifier: Apache-2.0
 In Java SE, the CDI container must be explicitly bootstrapped by the user.
 This is performed by the `SeContainerInitializer` abstract class and its static method `newInstance()`.
 
-`SeContainerInitializer` is a service provider of the service `jakarta.enterprise.inject.se.SeContainerInitializer` declared in META-INF/services.
+`SeContainerInitializer` is a service provider of the service `jakarta.enterprise.inject.se.SeContainerInitializer` declared in `META-INF/services`.
 This class allows a user to configure the CDI container before it is bootstrapped.
 The `SeContainerInitializer.initialize()` method bootstraps the container and returns a `SeContainer` instance.
 
