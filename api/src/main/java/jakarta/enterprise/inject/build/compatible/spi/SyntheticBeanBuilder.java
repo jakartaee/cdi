@@ -469,6 +469,19 @@ public interface SyntheticBeanBuilder<T> {
 
     /**
      * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with the {@code @Default} qualifier.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Class<?> type);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
      * look up a bean of given {@code type} with given {@code qualifiers}.
      * If no qualifier is passed, {@code @Default} is assumed.
      * <p>
@@ -496,6 +509,19 @@ public interface SyntheticBeanBuilder<T> {
      * @since 5.0
      */
     SyntheticBeanBuilder<T> withInjectionPoint(Class<?> type, AnnotationInfo... qualifiers);
+
+    /**
+     * Declares that the creation or destruction function for this synthetic bean will potentially
+     * look up a bean of given {@code type} with the {@code @Default} qualifier.
+     * <p>
+     * The registered injection point will be validated. If no matching bean exists,
+     * the container treats it as a deployment problem.
+     *
+     * @param type the type of the bean that may be looked up in the creation/destruction function
+     * @return this {@code SyntheticBeanBuilder}
+     * @since 5.0
+     */
+    SyntheticBeanBuilder<T> withInjectionPoint(Type type);
 
     /**
      * Declares that the creation or destruction function for this synthetic bean will potentially
