@@ -147,7 +147,7 @@ public interface BeanConfigurator<T> {
      * If no dispose callback is specified, a NOOP callback is automatically set.
      * <p>
      * The {@link Instance} argument might be used to simulate disposer method parameter injection. All dependent scoped bean
-     * instances obtained from {@link Instance} during the callback execution are destroyed when the execution completes.
+     * instances obtained from the {@link Instance} during the callback execution are destroyed when the execution completes.
      *
      * @param callback the callback to dispose the instance
      * @return self
@@ -352,5 +352,15 @@ public interface BeanConfigurator<T> {
      * @since 5.0
      */
     BeanConfigurator<T> eager(boolean value);
+
+    /**
+     * Change the auto-closeable status of the configured bean.
+     * By default, the configured bean is not auto-closeable.
+     *
+     * @param value value for auto-closeable property
+     * @return self
+     * @since 5.0
+     */
+    BeanConfigurator<T> autoClose(boolean value);
 
 }

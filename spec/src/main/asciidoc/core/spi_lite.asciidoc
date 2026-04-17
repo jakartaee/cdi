@@ -277,6 +277,7 @@ public interface BeanInfo {
     boolean isReserve();
     Integer priority();
     boolean isEager();
+    boolean isAutoClose();
     String name();
     DisposerInfo disposer();
     Collection<StereotypeInfo> stereotypes();
