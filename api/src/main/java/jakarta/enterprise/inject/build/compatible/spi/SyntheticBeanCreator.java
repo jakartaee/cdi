@@ -38,6 +38,10 @@ public interface SyntheticBeanCreator<T> {
      * All injectable references looked up from {@code SyntheticInjections} have to previously be registered using
      * {@code SyntheticBeanBuilder.withInjectionPoint()}.
      * <p>
+     * All {@code @Dependent} bean instances created by {@code SyntheticInjections} for this creation function
+     * are dependent objects of the created synthetic bean and so are destroyed when the synthetic bean instance
+     * is destroyed.
+     * <p>
      * If the synthetic bean is {@code @Dependent}, the {@code InjectionPoint} to which it is injected
      * may be obtained from the {@code SyntheticInjections} parameter, if previously registered.
      * <p>

@@ -19,8 +19,9 @@ import jakarta.enterprise.util.TypeLiteral;
  * A synthetic bean creation/destruction function can look up beans in this container
  * that were previously registered using {@code SyntheticBeanBuilder.withInjectionPoint()}.
  * <p>
- * All {@code @Dependent} bean instances created by {@code SyntheticInjections} are destroyed
- * when the corresponding synthetic bean instance is destroyed.
+ * The synthetic bean creation/destruction functions do <em>not</em> share the instance
+ * of {@code SyntheticInjections} and do <em>not</em> share the injectable references
+ * for registered injection points.
  *
  * @since 5.0
  */

@@ -37,6 +37,9 @@ public interface SyntheticBeanDisposer<T> {
      * All injectable references looked up from {@code SyntheticInjections} have to previously be registered using
      * {@code SyntheticBeanBuilder.withInjectionPoint()}.
      * <p>
+     * All {@code @Dependent} bean instances created by {@code SyntheticInjections} for this destruction function
+     * are destroyed when the {@code dispose()} invocation completes.
+     * <p>
      * Trying to look up {@code InjectionPoint} from the {@code SyntheticInjections} parameter is invalid.
      * <p>
      * The parameter map contains the same values that were passed to {@code SyntheticBeanBuilder.withParam()}.
