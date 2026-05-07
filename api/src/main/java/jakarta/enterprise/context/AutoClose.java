@@ -25,8 +25,18 @@ import jakarta.enterprise.util.AnnotationLiteral;
  * Marks the annotated bean as auto-closeable. May be applied to a bean class,
  * producer method or field or {@linkplain jakarta.enterprise.inject.Stereotype stereotype}.
  * <p>
- * Auto-closeable beans may implement the {@link AutoCloseable} interface. If they do,
- * the {@link AutoCloseable#close()} method is called during bean destruction.
+ * For an auto-closeable managed bean, the bean class must be assignable to {@link AutoCloseable}.
+ * For an auto-closeable producer method, the return type of the method must be assignable to
+ * {@link AutoCloseable}.
+ * For an auto-closeable producer field, the type of the field must be assignable to
+ * {@link AutoCloseable}.
+ * These requirements apply regardless of whether the bean is auto-closeable due to a direct
+ * {@code @AutoClose} annotation or due to a {@linkplain jakarta.enterprise.inject.Stereotype stereotype}.
+ * If these requirements are not satisfied, the container automatically detects
+ * the problem and treats it as a definition error.
+ * <p>
+ * During bean destruction, the {@link AutoCloseable#close()} method is called on
+ * the contextual instance.
  * Note that bean destruction ({@link Contextual#destroy(Object, CreationalContext)})
  * may not throw, so exceptions thrown by {@link AutoCloseable#close()} are swallowed.
  *

@@ -175,6 +175,9 @@ public interface SyntheticBeanBuilder<T> {
      * Marks this synthetic bean as {@linkplain jakarta.enterprise.context.AutoClose auto-closeable} if desired.
      * <p>
      * If not called, this synthetic bean will not be auto-closeable.
+     * <p>
+     * If this synthetic bean is marked as auto-closeable and its implementation class is not assignable to
+     * {@link AutoCloseable}, the synthetic bean registration will fail.
      *
      * @param isAutoClose whether this synthetic bean should be auto-closeable
      * @return this {@code SyntheticBeanBuilder}

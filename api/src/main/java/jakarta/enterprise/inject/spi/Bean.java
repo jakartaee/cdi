@@ -46,10 +46,18 @@ public interface Bean<T> extends Contextual<T>, BeanAttributes<T> {
      *         // log an error or handle the exception in some other way
      *         // bean destruction is not allowed to throw an exception
      *     }
+     * } else if (isAutoClose()) {
+     *     // log an error: auto-closeable bean instance does not implement AutoCloseable
      * }
      *
      * creationalContext.release();
      * }</pre>
+     *
+     * For container-managed beans (class-based and producer-based), the container validates at initialization
+     * time that the statically-known type is assignable to {@link AutoCloseable}, so the {@code instanceof}
+     * check always succeeds. For custom {@code Bean} implementations registered via portable extensions,
+     * the check serves as a defensive guard; if it fails, the container logs an error and skips
+     * the {@code close()} call.
      */
     @Override
     public void destroy(T instance, CreationalContext<T> creationalContext);

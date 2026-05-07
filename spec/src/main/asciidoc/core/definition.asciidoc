@@ -772,8 +772,17 @@ If a bean of any other pseudo-scope is eagerly initialized, non-portable behavio
 
 A bean class of a managed bean, a producer method and a producer field may be annotated `@AutoClose`.
 This annotation marks the bean as _auto-closeable_.
+A bean that has a stereotype which declares `@AutoClose` is also auto-closeable (see <<auto_close_stereotype>>).
 
-If the class of a contextual instance of an auto-closeable bean implements the `java.lang.AutoCloseable` interface, the `close()` method is called on the instance during destruction.
+The statically-known type of an auto-closeable bean must be assignable to the `java.lang.AutoCloseable` interface:
+
+* For an auto-closeable managed bean, the bean class must be assignable to `AutoCloseable`.
+* For an auto-closeable producer method, the return type of the producer method must be assignable to `AutoCloseable`.
+* For an auto-closeable producer field, the type of the producer field must be assignable to `AutoCloseable`.
+
+If an auto-closeable bean does not satisfy these requirements, the container automatically detects the problem and treats it as a definition error.
+
+During destruction of an auto-closeable bean, the `close()` method is called on the contextual instance.
 See <<managed_bean_lifecycle>>, <<producer_method_lifecycle>> and <<producer_field_lifecycle>> for details.
 
 [[stereotypes]]

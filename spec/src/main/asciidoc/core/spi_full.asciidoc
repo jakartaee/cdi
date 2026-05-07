@@ -188,7 +188,7 @@ For a `Producer` that represents a managed bean:
 
 * `produce()` calls the constructor annotated `@Inject` if it exists, or the constructor with no parameters otherwise, as defined in <<instantiation>>, and returns the resulting instance. If the bean has interceptors or decorators, `produce()` is responsible for building the interceptors and decorators of the instance.
 The instance returned by `produce()` may be a proxy.
-* `dispose()` only does one thing: if the bean is auto-closeable and the class of the contextual instance of the bean implements `AutoCloseable`, the `close()` method is called on the instance.
+* `dispose()` only does one thing: if the bean is auto-closeable, the `close()` method is called on the contextual instance.
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all injected fields, bean constructor parameters and initializer method parameters.
 
 
@@ -196,7 +196,7 @@ For a `Producer` that represents a producer method or field:
 
 * `produce()` calls the producer method on, or accesses the producer field of, a contextual instance of the bean that declares the producer method, as defined in <<producer_or_disposer_methods_invocation>>.
 * `dispose()` calls the disposer method, if any, on a contextual instance of the bean that declares the disposer method, as defined in <<producer_or_disposer_methods_invocation>>, or performs any additional required cleanup, if any, to destroy state associated with a resource.
-Then, if the bean is auto-closeable and the class of the contextual instance of the bean implements `AutoCloseable`, the `close()` method is called on the instance.
+Then, if the bean is auto-closeable, the `close()` method is called on the contextual instance.
 * `getInjectionPoints()` returns the set of `InjectionPoint` objects representing all parameters of the producer method.
 
 
@@ -1080,6 +1080,8 @@ It can be done from an existing `BeanAttributes`  or by reading metadata on a gi
 * Set a callback to destroy a bean instance with `destroyWith()` or `disposeWith()` method.
 
 If a `BeanConfigurator` has no scope specified, the default scope rules, defined in <<default_scope>>, apply.
+
+If a bean configured via `BeanConfigurator` is marked as auto-closeable but the contextual instance does not implement `AutoCloseable` at destruction time, the container must log an error message; since destroying an instance is not permitted to throw an exception, the `close()` call is skipped.
 
 [[observer_method_configurator]]
 

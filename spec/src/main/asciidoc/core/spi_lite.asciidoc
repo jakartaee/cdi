@@ -359,6 +359,9 @@ The `SyntheticBeanBuilder` and `SyntheticObserverBuilder` interfaces are used to
 * injection points (only `SyntheticBeanBuilder`);
 * a string-keyed parameter map.
 
+If a synthetic bean is marked as auto-closeable, its implementation class must be assignable to `AutoCloseable`.
+If this requirement is not satisfied, the container automatically detects the problem and treats it as a definition error.
+
 The container creates an instance of the bean creation/destruction function or observer notification function whenever it needs to create an instance of the bean, destroy the instance of the bean, or notify the observer.
 When invoking the bean creation/destruction function or observer notification function, the container passes the parameter map to it.
 When invoking the bean creation/destruction function, the container also passes an object that allows obtaining an injectable reference for each defined injection point.

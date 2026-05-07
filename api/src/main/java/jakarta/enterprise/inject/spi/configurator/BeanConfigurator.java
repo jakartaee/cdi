@@ -356,6 +356,11 @@ public interface BeanConfigurator<T> {
     /**
      * Change the auto-closeable status of the configured bean.
      * By default, the configured bean is not auto-closeable.
+     * <p>
+     * Since the actual class of the contextual instance cannot always be determined statically for beans
+     * configured via portable extensions, no definition error is raised. Instead, if the contextual instance
+     * does not implement {@link AutoCloseable} at destruction time, the container logs an error and skips
+     * the {@code close()} call.
      *
      * @param value value for auto-closeable property
      * @return self
