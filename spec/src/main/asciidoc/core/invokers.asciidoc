@@ -279,7 +279,7 @@ When the target method throws an exception synchronously, the `transformReturnVa
 The async handler signals completion of the asynchronous action by calling `completion.run()`.
 
 The requirement to destroy instances of `@Dependent` looked up beans is different for asynchronous invokers.
-The instances of `@Dependent` looked up beans are destroyed when the asynchronous action completes, as signaled by the async handler.
+The instances of `@Dependent` looked up beans are destroyed either after the target method returns or after the asynchronous action completes, whichever happens later.
 If an asynchronous target method throws synchronously, instances of `@Dependent` looked up beans are destroyed before `invoke()` rethrows the exception; in this case, the async handler is still permitted to call `completion.run()`, but the call must be ignored.
 
 The CDI container must include return type async handlers for the following types:
