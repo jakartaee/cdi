@@ -317,8 +317,8 @@ If the bean has scope `@Dependent`, the container must associate it with the `Cr
 
 The container must ensure that every injection point of type `InjectionPoint` and qualifier `@Default` of any dependent object instantiated during this process receives:
 
-* an instance of `InjectionPoint` representing the injection point into which the dependent object will be injected, or
-* a null value if it is not being injected into any injection point.
+* an instance of `InjectionPoint` representing the injection point into which the dependent object will be injected, as defined in <<injection_point>>, or
+* a `null` value when no injection point exists.
 
 [[contextual_reference_validity]]
 
