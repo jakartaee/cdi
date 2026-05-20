@@ -115,7 +115,7 @@ A bean is _available for injection_ in a certain module if:
 * the bean is either not a reserve, or the bean is a selected reserve for the application, and
 * the bean class is required to be accessible to classes in the module, according to the class accessibility requirements of the module architecture.
 
-For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getBeanClass()` to determine the bean class of the bean and `InjectionPoint.getMember()` and then `Member.getDeclaringClass()` to determine the class that declares an injection point.
+For a custom implementation of the `Bean` interface defined in <<bean>>, the container calls `getBeanClass()` to determine the bean class of the bean.
 
 [[typesafe_resolution_full]]
 
