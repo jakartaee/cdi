@@ -229,7 +229,7 @@ In {cdi_full} environment, qualifier types are also used to bind decorators to b
 
 ==== Built-in qualifier types
 
-Three standard qualifier types are defined in the package `jakarta.enterprise.inject`. In addition, the built-in qualifier type `@Named` is defined by the package `jakarta.inject`.
+The standard qualifier types `@Any` and `@Default` are defined in the package `jakarta.enterprise.inject`. In addition, the built-in qualifier type `@Named` is defined in the package `jakarta.inject`.
 
 Every bean has the built-in qualifier `@Any`, even if it does not explicitly declare this qualifier.
 
