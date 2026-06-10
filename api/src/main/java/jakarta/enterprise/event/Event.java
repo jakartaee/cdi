@@ -73,7 +73,8 @@ import jakarta.enterprise.util.TypeLiteral;
  * </p>
  *
  * <ul>
- * <li>the <em>specified type</em> is the type parameter specified at the injection point, and</li>
+ * <li>the <em>specified type</em> is the type argument specified at the injection point, or the type argument's
+ * lower bound if the type argument is a wildcard, and</li>
  * <li>the <em>specified qualifiers</em> are the qualifiers specified at the injection point.</li>
  * </ul>
  *
