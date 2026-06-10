@@ -73,7 +73,8 @@ import jakarta.inject.Provider;
  * </p>
  *
  * <ul>
- * <li>the <em>required type</em> is the type parameter specified at the injection point, and</li>
+ * <li>the <em>required type</em> is the type argument specified at the injection point, or the type argument's
+ * upper bound if the type argument is a wildcard, and</li>
  * <li>the <em>required qualifiers</em> are the qualifiers specified at the injection point.</li>
  * </ul>
  *
