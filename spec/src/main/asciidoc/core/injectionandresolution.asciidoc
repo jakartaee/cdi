@@ -794,13 +794,13 @@ The `close()` method delegates to the aforementioned `destroy()` method.
 
 ==== The built-in `Instance`
 
-The container must provide a built-in bean that:
+The container must provide a built-in bean with:
 
-* is eligible for injection to any injection point with required type `Instance<X>` or `Provider<X>`, for any legal bean type `X`,
-* has any qualifiers
-* has scope `@Dependent`,
-* has no bean name, and
-* has an implementation provided automatically by the container.
+* `Instance<X>` and `Provider<X>` for every legal bean type `X` in its set of bean types,
+* every qualifier type in its set of qualifier types,
+* scope `@Dependent`,
+* no bean name, and
+* an implementation provided automatically by the container.
 
 [[annotationliteral_typeliteral]]
 
