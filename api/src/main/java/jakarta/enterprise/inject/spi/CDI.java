@@ -85,7 +85,6 @@ public abstract class CDI<T> implements Instance<T> {
                 throw e;
             }
         }
-        configuredProvider = null;
         // Discover providers and cache
         if (discoveredProviders == null) {
             synchronized (lock) {
