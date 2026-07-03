@@ -39,8 +39,7 @@ public class CDITest {
     private static abstract class CDIChild<T> extends CDI<T> {
 
         public static void resetCDI() {
-            configuredProvider = null;
-            discoveredProviders = null;
+            providerState.set(initialState());
         }
 
     }
