@@ -10,12 +10,12 @@
 
 package jakarta.enterprise.inject.build.compatible.spi;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * An internal helper to resolve {@link BuildServices} implementations.
@@ -24,29 +24,23 @@ import java.util.TreeSet;
  * @since 4.0
  */
 public final class BuildServicesResolver {
-    private static final Object lock = new Object();
-    private static volatile Set<BuildServices> discoveredBuildServices;
-    private static volatile BuildServices configuredBuildServices;
+    private static final AtomicReference<BuildServices> configuredBuildServices = new AtomicReference<>();
 
     static BuildServices get() {
-        if (configuredBuildServices != null) {
-            return configuredBuildServices;
+        BuildServices current = configuredBuildServices.get();
+        if (current != null) {
+            return current;
         }
 
-        if (discoveredBuildServices == null) {
-            synchronized (lock) {
-                if (discoveredBuildServices == null) {
-                    discoverFactories();
-                }
-            }
+        BuildServices found = discoverFactories().iterator().next();
+
+        if (configuredBuildServices.compareAndSet(null, found)) {
+            return found;
         }
-
-        configuredBuildServices = discoveredBuildServices.iterator().next();
-
-        return configuredBuildServices;
+        return configuredBuildServices.get();
     }
 
-    private static void discoverFactories() {
+    private static Set<BuildServices> discoverFactories() {
         Set<BuildServices> factories = new TreeSet<>(
                 Comparator.comparingInt(BuildServices::getPriority).reversed());
 
@@ -58,14 +52,14 @@ public final class BuildServicesResolver {
         }
 
         try {
-            for (BuildServices buildServicies : loader) {
-                factories.add(buildServicies);
+            for (BuildServices buildServices : loader) {
+                factories.add(buildServices);
             }
         } catch (ServiceConfigurationError e) {
             throw new IllegalStateException(e);
         }
 
-        BuildServicesResolver.discoveredBuildServices = Collections.unmodifiableSet(factories);
+        return factories;
     }
 
     /**
@@ -81,6 +75,6 @@ public final class BuildServicesResolver {
         if (instance == null) {
             throw new IllegalArgumentException("BuildServices instance must not be null");
         }
-        configuredBuildServices = instance;
+        configuredBuildServices.set(instance);
     }
 }

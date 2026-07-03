@@ -14,12 +14,12 @@
 
 package jakarta.enterprise.inject.spi;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicReference;
 
 import jakarta.enterprise.inject.Instance;
 
@@ -27,7 +27,7 @@ import jakarta.enterprise.inject.Instance;
  * Provides access to the current container.
  *
  * <p>
- * CDI implements {@link Instance} and therefore might be used to perform programmatic lookup.
+ * {@code CDI} implements {@link Instance} and therefore might be used to perform programmatic lookup.
  * Initially, the required type of the {@code Instance} is {@code java.lang.Object} and there
  * are no required qualifiers. If no qualifier is passed to {@code Instance.select()}, there
  * is one required qualifier: {@code @Default}.
@@ -42,12 +42,14 @@ import jakarta.enterprise.inject.Instance;
  */
 public abstract class CDI<T> implements Instance<T> {
 
-    private static final Object lock = new Object();
-    private static volatile boolean providerSetManually = false;
-    /** The set of discovered CDIProviders */
-    protected static volatile Set<CDIProvider> discoveredProviders = null;
-    /** {@link CDIProvider} set by user or retrieved by service loader */
-    protected static volatile CDIProvider configuredProvider = null;
+    protected record ProviderState(CDIProvider provider, boolean setManually) {
+    }
+
+    protected static ProviderState initialState() {
+        return new ProviderState(null, false);
+    }
+
+    protected static final AtomicReference<ProviderState> providerState = new AtomicReference<>(initialState());
 
     /**
      * <p>
@@ -75,29 +77,31 @@ public abstract class CDI<T> implements Instance<T> {
      * @return the {@link CDIProvider} set by user or retrieved by serviceloader
      */
     private static CDIProvider getCDIProvider() {
-        try {
-            if (configuredProvider != null && configuredProvider.getCDI() != null) {
-                return configuredProvider;
-            }
-        } catch (IllegalStateException e) {
-            //if the provider is set manually we do not look for a different provider.
-            if (providerSetManually) {
-                throw e;
-            }
-        }
-        configuredProvider = null;
-        // Discover providers and cache
-        if (discoveredProviders == null) {
-            synchronized (lock) {
-                if (discoveredProviders == null) {
-                    findAllProviders();
+        while (true) {
+            ProviderState current = providerState.get();
+
+            if (current.provider() != null) {
+                try {
+                    if (current.provider().getCDI() != null) {
+                        return current.provider();
+                    }
+                } catch (IllegalStateException e) {
+                    if (current.setManually()) {
+                        throw e;
+                    }
                 }
             }
+
+            CDIProvider found = findAllProviders()
+                    .stream()
+                    .filter(CDI::checkProvider)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
+
+            if (providerState.compareAndSet(current, new ProviderState(found, false))) {
+                return found;
+            }
         }
-        configuredProvider = discoveredProviders.stream()
-                .filter(CDI::checkProvider)
-                .findFirst().orElseThrow(() -> new IllegalStateException("Unable to access CDI"));
-        return configuredProvider;
     }
 
     private static boolean checkProvider(CDIProvider c) {
@@ -124,16 +128,13 @@ public abstract class CDI<T> implements Instance<T> {
         if (provider == null) {
             throw new IllegalArgumentException("CDIProvider must not be null");
         }
-        providerSetManually = true;
-        configuredProvider = provider;
+        providerState.set(new ProviderState(provider, true));
     }
 
-    private static void findAllProviders() {
-
-        ServiceLoader<CDIProvider> providerLoader;
+    private static Set<CDIProvider> findAllProviders() {
         Set<CDIProvider> providers = new TreeSet<>(Comparator.comparingInt(CDIProvider::getPriority).reversed());
 
-        providerLoader = ServiceLoader.load(CDIProvider.class, CDI.class.getClassLoader());
+        ServiceLoader<CDIProvider> providerLoader = ServiceLoader.load(CDIProvider.class, CDI.class.getClassLoader());
 
         if (!providerLoader.iterator().hasNext()) {
             throw new IllegalStateException("Unable to locate CDIProvider");
@@ -144,7 +145,7 @@ public abstract class CDI<T> implements Instance<T> {
         } catch (ServiceConfigurationError e) {
             throw new IllegalStateException(e);
         }
-        CDI.discoveredProviders = Collections.unmodifiableSet(providers);
+        return providers;
     }
 
     // Helper methods
