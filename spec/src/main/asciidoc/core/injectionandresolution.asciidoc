@@ -125,6 +125,12 @@ Parameterized and raw types are considered to match if they are identical or if 
 * The bean has all the required qualifiers.
 If no required qualifiers were explicitly specified, the container assumes the required qualifier `@Default`. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@jakarta.enterprise.util.Nonbinding`.
 
+For the built-in beans defined in <<builtin_instance>> and <<builtin_event>>, the rules above do not apply.
+Instead:
+
+* The built-in bean for `Instance` is assignable to all injection points with required type `Instance<X>` or `Provider<X>`, where `X` is a legal bean type, regardless of required qualifiers.
+* The built-in bean for `Event` is assignable to all injection points with required type `Event<X>`, where `X` is a type that does not contain a type variable, regardless of required qualifiers.
+
 A bean is eligible for injection to a certain injection point if:
 
 * it is available for injection in the module that contains the class that declares the injection point, and
@@ -796,8 +802,8 @@ The `close()` method delegates to the aforementioned `destroy()` method.
 
 The container must provide a built-in bean with:
 
-* `Instance<X>` and `Provider<X>` for every legal bean type `X` in its set of bean types,
-* every qualifier type in its set of qualifier types,
+* bean types `Instance<X>` and `Provider<X>`, where `X` is a type variable without bounds,
+* qualifier `@Default`,
 * scope `@Dependent`,
 * no bean name, and
 * an implementation provided automatically by the container.
