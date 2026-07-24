@@ -125,6 +125,12 @@ Parameterized and raw types are considered to match if they are identical or if 
 * The bean has all the required qualifiers.
 If no required qualifiers were explicitly specified, the container assumes the required qualifier `@Default`. A bean has a required qualifier if it has a qualifier with (a) the same type and (b) the same annotation member value for each member which is not annotated `@jakarta.enterprise.util.Nonbinding`.
 
+For the built-in beans defined in <<builtin_instance>> and <<builtin_event>>, the rules above do not apply.
+Instead:
+
+* The built-in bean for `Instance` is assignable to all injection points with required type `Instance<X>` or `Provider<X>`, where `X` is a legal bean type, regardless of required qualifiers.
+* The built-in bean for `Event` is assignable to all injection points with required type `Event<X>`, where `X` is a type that does not contain a type variable, regardless of required qualifiers.
+
 A bean is eligible for injection to a certain injection point if:
 
 * it is available for injection in the module that contains the class that declares the injection point, and
@@ -677,7 +683,7 @@ public interface Instance<T> extends Iterable<T>, Provider<T> {
 
 For an injected `Instance`:
 
-* the _required type_ is the type parameter specified at the injection point, and
+* the _required type_ is the type argument specified at the injection point, or the type argument's upper bound if the type argument is a wildcard, and
 * the _required qualifiers_ are the qualifiers specified at the injection point.
 
 
@@ -700,12 +706,15 @@ Instance<AsynchronousPaymentProcessor> async = anyPaymentProcessor.select(
             AsynchronousPaymentProcessor.class, new AsynchronousQualifier() );
 ----
 
-The required type must not be a wildcard type.
-If an injected `Instance` has a required type that is either a wildcard type or an `Event` whose specified type is a wildcard type, the container treats it as a definition error.
-If a programmatically obtained `Instance` has a required type that is a wildcard type, non-portable behavior results.
+If an injection point of
 
+* raw type `Instance`, or
+* type `Instance<? super X>`, for any type `X`, or
+* type `Instance<X>` or `Instance<? extends X>`, where `X` is a type for which an injection point may not exist, as specified in <<builtin_event>>,
 
-If an injection point of raw type `Instance` is defined, the container automatically detects the problem and treats it as a definition error.
+is defined, the container automatically detects the problem and treats it as a definition error.
+
+If the application attempts to programmatically obtain an `Instance` whose required type is a wildcard with lower bound, an `IllegalArgumentException` is thrown.
 
 If two instances of the same non repeating qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
 
@@ -791,13 +800,13 @@ The `close()` method delegates to the aforementioned `destroy()` method.
 
 ==== The built-in `Instance`
 
-The container must provide a built-in bean that:
+The container must provide a built-in bean with:
 
-* is eligible for injection to any injection point with required type `Instance<X>` or `Provider<X>`, for any legal bean type `X`,
-* has any qualifiers
-* has scope `@Dependent`,
-* has no bean name, and
-* has an implementation provided automatically by the container.
+* bean types `Instance<X>` and `Provider<X>`, where `X` is a type variable without bounds,
+* qualifier `@Default`,
+* scope `@Dependent`,
+* no bean name, and
+* an implementation provided automatically by the container.
 
 [[annotationliteral_typeliteral]]
 

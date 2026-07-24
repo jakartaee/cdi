@@ -142,7 +142,7 @@ public interface Event<T> {
 
 For an injected `Event`:
 
-* the _specified type_ is the type parameter specified at the injection point, and
+* the _specified type_ is the type argument specified at the injection point, or the type argument's lower bound if the type argument is a wildcard, and
 * the _specified qualifiers_ are the qualifiers specified at the injection point.
 
 
@@ -167,9 +167,7 @@ Event<AdminLoggedInEvent> admin = any.select(
 
 If the specified type contains a type variable, an `IllegalArgumentException` is thrown.
 
-The specified type must not be a wildcard type.
-If an injected `Event` has a specified type that is a wildcard type, the container treats it as a definition error.
-If a programmatically obtained `Event` has a specified type that is a wildcard type, non-portable behavior results.
+If the application attempts to programmatically obtain an `Event` whose specified type is a wildcard without lower bound, an `IllegalArgumentException` is thrown.
 
 If two instances of the same non repeating qualifier type are passed to `select()`, an `IllegalArgumentException` is thrown.
 
@@ -197,14 +195,19 @@ If the runtime type of the event object is assignable to the type of a container
 
 The container must provide a built-in bean with:
 
-* `Event<X>` in its set of bean types, for every Java type `X` that does not contain a type variable,
-* every event qualifier type in its set of qualifier types,
+* bean type `Event<X>`, where `X` is a type variable without bounds,
+* qualifier `@Default`,
 * scope `@Dependent`,
 * no bean name, and
 * an implementation provided automatically by the container.
 
+If an injection point of
 
-If an injection point of raw type `Event` is defined, the container automatically detects the problem and treats it as a definition error.
+* raw type `Event`, or
+* type `Event<?>`, or
+* type `Event<? extends X>`, for any type `X`,
+
+is defined, the container automatically detects the problem and treats it as a definition error.
 
 [[observer_resolution]]
 
