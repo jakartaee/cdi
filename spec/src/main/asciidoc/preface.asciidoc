@@ -33,6 +33,32 @@ This document is organized in 4 parts:
 
 === Major changes
 
+==== Jakarta Contexts and Dependency Injection 5.0
+
+link:https://jakarta.ee/specifications/cdi/5.0/[CDI 5.0] increases the minimum required Java version to Java SE 17.
+
+Several additions have been made to the programming model:
+
+* A new `@Reserve` annotation provides a means of declaring a default bean.
+* A new `@Eager` annotation requests eager initialization of `@ApplicationScoped` beans.
+* A new `@AutoClose` annotation arranges for `close()` to be invoked automatically on `AutoCloseable` beans during their destruction.
+* Asynchronous invokers have been introduced via the `AsyncHandler` API.
+* Synthetic beans may now declare injection points through the new `SyntheticInjections` API.
+* Build compatible extensions can now be registered programmatically in CDI SE.
+* The build compatible extension `@Registration` annotation may now specify parameterized types.
+* The behavior of `InjectionPoint` when a bean is obtained via `CDI.current()` has been defined.
+
+The concept of global scopes has been introduced and the application scope is now a global scope.
+
+Trimming is no longer allowed in non-explicit bean archives.
+
+The Unified EL integration methods on `BeanManager`, which were deprecated and moved to the `ELAwareBeanManager` interface in CDI 4.1, have been removed. All usage of and references to the Java `SecurityManager` have been removed. The existing `SyntheticBeanCreator` and `SyntheticBeanDisposer` methods that do not use `SyntheticInjections` have been deprecated for removal.
+
+The Maven coordinates of the CDI API and TCK artifacts have changed: both the `groupId` and `artifactId` have changed, for example `jakarta.enterprise:jakarta.enterprise.cdi-api` is now `jakarta.cdi:jakarta.cdi-api`. The CDI API provides relocation artifacts for the 5.0 release to ease migration; the CDI TCK coordinates have changed as well but without relocation artifacts.
+
+A new `beans.xml` 5.0 schema file has been added and the namespace of the
+`beans_5_0.xsd` schema file is `xmlns:jakartaee="https://jakarta.ee/xml/ns/jakartaee"`. The only change in the schema is to update the default value for the version to 5.0. The schema is backward compatible with CDI 4.1.
+
 ==== Jakarta Contexts and Dependency Injection 4.1
 
 link:https://jakarta.ee/specifications/cdi/4.1/[CDI 4.1] no longer specifies integration with Jakarta EE. This will now be specified in the Jakarta EE Platform, Web Profile and Core Profile specifications.
