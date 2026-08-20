@@ -21,8 +21,6 @@ This specification is licensed under the Eclipse Foundation Specification Licens
 
 === Eclipse Foundation Specification License - v2.0
 
-(Copy of the EFSL license link:https://www.eclipse.org/legal/efsl.php[here])
-
 This license (the "License") governs the use, modification and distribution of a specification generated pursuant to the Eclipse Foundation Specification Process.
 
 By using the file or document that incorporates this License (the "Document"), you (the licensee) agree that you have read, understood, and will comply with the following terms and conditions.
